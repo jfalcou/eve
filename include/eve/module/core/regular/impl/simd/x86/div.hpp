@@ -96,22 +96,19 @@ namespace eve::detail
     }
     else if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
-      if constexpr(current_api >= avx512)
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
+      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-        {
-          auto vv = combine(v, v);
-          auto ww = combine(w, w);
-          auto vvpww = div[o](vv, ww);
-          auto s =  slice(vvpww, eve::upper_);
-          return if_else(cx,s,src);
-        }
+        auto vv = combine(v, v);
+        auto ww = combine(w, w);
+        auto vvpww = div[o](vv, ww);
+        auto s =  slice(vvpww, eve::upper_);
+        return if_else(cx,s,src);
       }
-      return div.behavior(cpu_{}, o, v, w);
     }
     else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
                        O::contains(downward) || O::contains(to_nearest))

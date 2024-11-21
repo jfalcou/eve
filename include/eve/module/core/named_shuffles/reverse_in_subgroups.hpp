@@ -79,9 +79,9 @@ struct reverse_in_subgroups_t
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t SubG>
   static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::fixed<SubG> sub_g)
   {
-    const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
-    const std::size_t    sub_size = g_size * SubG;
-    const std::size_t    reg_size   = sizeof(element_type_t<T>) * T::size();
+    constexpr std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
+    constexpr std::size_t    sub_size = g_size * SubG;
+    constexpr std::size_t    reg_size   = sizeof(element_type_t<T>) * T::size();
 
     if constexpr( SubG == 1 ) return 0;
     else if constexpr( SubG == 2 ) return swap_adjacent.level(tgt, g);
@@ -93,40 +93,37 @@ struct reverse_in_subgroups_t
       return level(as<half_t> {}, g, sub_g);
     }
 
-    if( current_api >= sve )
+    else if constexpr ( current_api >= sve )
     {
-      if( !logical_value<T> )
+      if constexpr ( !logical_value<T> )
       {
-        if( sub_size <= 8 ) return 2;
-        return 3;
+        if constexpr ( sub_size <= 8 ) return 2;
+        else return 3;
       }
-      return level(detail::mask_type(tgt), g, sub_g) + 4;
+      else return level(detail::mask_type(tgt), g, sub_g) + 4;
     }
 
-    if( current_api >= vmx ) return 3;
-    if( current_api >= neon ) return 2;
+    else if constexpr ( current_api >= vmx ) return 3;
+    else if constexpr ( current_api >= neon ) return 2;
 
-    if( current_api == avx512 && logical_value<T> )
+    else if constexpr ( current_api == avx512 && logical_value<T> )
     {
       return level(detail::mask_type(tgt), g, sub_g) + 4;
     }
 
-    if (sub_size == 32) {
-      if (g_size == 8) return 2;
-      if (g_size == 4) return 3;
-      if (g_size == 2 && current_api >= avx512) return 3;
-      return 5;
+    else if constexpr (sub_size == 32) {
+      if constexpr (g_size == 8) return 2;
+      else if constexpr (g_size == 4) return 3;
+      else if constexpr (g_size == 2 && current_api >= avx512) return 3;
+      else return 5;
     }
 
-    if( g_size >= 4 ) return 2;
-
-    if (current_api == avx && reg_size == 32) return 9;
-
-    if( current_api >= ssse3 ) return 3;
-
-    if( g_size == 2 ) return 4;
-    if (reg_size <= 8) return 8;
-    return 10;
+    else if constexpr ( g_size >= 4 ) return 2;
+    else if constexpr (current_api == avx && reg_size == 32) return 9;
+    else if constexpr ( current_api >= ssse3 ) return 3;
+    else if constexpr ( g_size == 2 ) return 4;
+    else if constexpr (reg_size <= 8) return 8;
+    else return 10;
   }
 };
 

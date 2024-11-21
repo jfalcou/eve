@@ -38,7 +38,7 @@ namespace eve::detail
         else if constexpr( c == category::uint64x2 ) return r_t(_mm_lzcnt_epi64(a0));
         else if constexpr( c == category::uint32x4 ) return r_t(_mm_lzcnt_epi32(a0));
       }
-      else if constexpr( current_api >= sse2 )
+      else
       {
         //Inspired from: https://stackoverflow.com/questions/58823140/count-leading-zero-bits-for-each-element-in-avx2-vector-emulate-mm256-lzcnt-ep
         using ri_t       = wide<std::int32_t,N>;
@@ -55,8 +55,6 @@ namespace eve::detail
         }
         else return countl_zero.behavior(cpu_{}, opts, a0);
       }
-      else
-        return countl_zero.behavior(cpu_{}, opts, a0);
     }
     else
     {

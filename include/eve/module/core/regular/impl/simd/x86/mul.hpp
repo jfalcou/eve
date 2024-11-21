@@ -135,23 +135,19 @@ namespace eve::detail
 
     if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
     {
-      if constexpr(current_api >= avx512)
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_mul_round_pd (src, m, a, b, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_mul_round_ps (src, m, a, b, dir);
+      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_mul_round_pd (src, m, a, b, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_mul_round_ps (src, m, a, b, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-        {
-          auto aa = eve::combine(a, a);
-          auto bb = eve::combine(b, b);
-          auto aapbb = mul[opts.drop(condition_key)](aa, bb);
-          auto s =  slice(aapbb, eve::upper_);
-          return if_else(cx,s,src);
-        }
-        else                                             return add.behavior(cpu_{}, opts, a, b);
+        auto aa = eve::combine(a, a);
+        auto bb = eve::combine(b, b);
+        auto aapbb = mul[opts.drop(condition_key)](aa, bb);
+        auto s =  slice(aapbb, eve::upper_);
+        return if_else(cx,s,src);
       }
-      else                                               return add.behavior(cpu_{}, opts, a, b);
+      else                                             return add.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {

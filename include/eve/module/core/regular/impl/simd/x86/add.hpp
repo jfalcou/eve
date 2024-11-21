@@ -126,42 +126,36 @@ namespace eve::detail
 
     if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
     {
-      if constexpr(current_api >= avx512)
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_add_round_pd (src, m, v, w, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_add_round_ps (src, m, v, w, dir);
+      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_add_round_pd (src, m, v, w, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_add_round_ps (src, m, v, w, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-        {
-          auto vv = eve::combine(v, w);
-          auto ww = eve::combine(w, v);
-          auto vvpww = add[opts.drop(condition_key)](vv, ww);
-          auto s =  slice(vvpww, eve::upper_);
-          return if_else(cx,s,src);
-        }
-        else                                             return add.behavior(cpu_{}, opts, v, w);
+        auto vv = eve::combine(v, w);
+        auto ww = eve::combine(w, v);
+        auto vvpww = add[opts.drop(condition_key)](vv, ww);
+        auto s =  slice(vvpww, eve::upper_);
+        return if_else(cx,s,src);
       }
-      else                                               return add.behavior(cpu_{}, opts, v, w);
+      else                                             return add.behavior(cpu_{}, opts, v, w);
     }
     else if constexpr(O::contains(saturated))
     {
-      constexpr auto sup_avx2 = current_api >= avx2;
-
-      if      constexpr( floating_value<T>        )             return add[cx](v, w);
-      else if constexpr( c == category::int16x32  )             return _mm512_mask_adds_epi16(src, m, v, w);
-      else if constexpr( c == category::uint16x32 )             return _mm512_mask_adds_epu16(src, m, v, w);
-      else if constexpr( c == category::int8x64   )             return _mm512_mask_adds_epi8(src, m, v, w);
-      else if constexpr( c == category::uint8x64  )             return _mm512_mask_adds_epu8(src, m, v, w);
-      else if constexpr( sup_avx2 && c == category::int16x16  ) return _mm256_mask_adds_epi16(src, m, v, w);
-      else if constexpr( sup_avx2 && c == category::uint16x16 ) return _mm256_mask_adds_epu16(src, m, v, w);
-      else if constexpr( sup_avx2 && c == category::int8x32   ) return _mm256_mask_adds_epi8(src, m, v, w);
-      else if constexpr( sup_avx2 && c == category::uint8x32  ) return _mm256_mask_adds_epu8(src, m, v, w);
-      else if constexpr( c == category::int16x8   )             return _mm_mask_adds_epi16(src, m, v, w);
-      else if constexpr( c == category::uint16x8  )             return _mm_mask_adds_epu16(src, m, v, w);
-      else if constexpr( c == category::int8x16   )             return _mm_mask_adds_epi8(src, m, v, w);
-      else if constexpr( c == category::uint8x16  )             return _mm_mask_adds_epu8(src, m, v, w);
-      else                                                      return add.behavior(cpu_{}, opts, v, w);
+      if      constexpr( floating_value<T>        ) return add[cx](v, w);
+      else if constexpr( c == category::int16x32  ) return _mm512_mask_adds_epi16(src, m, v, w);
+      else if constexpr( c == category::uint16x32 ) return _mm512_mask_adds_epu16(src, m, v, w);
+      else if constexpr( c == category::int8x64   ) return _mm512_mask_adds_epi8(src, m, v, w);
+      else if constexpr( c == category::uint8x64  ) return _mm512_mask_adds_epu8(src, m, v, w);
+      else if constexpr( c == category::int16x16  ) return _mm256_mask_adds_epi16(src, m, v, w);
+      else if constexpr( c == category::uint16x16 ) return _mm256_mask_adds_epu16(src, m, v, w);
+      else if constexpr( c == category::int8x32   ) return _mm256_mask_adds_epi8(src, m, v, w);
+      else if constexpr( c == category::uint8x32  ) return _mm256_mask_adds_epu8(src, m, v, w);
+      else if constexpr( c == category::int16x8   ) return _mm_mask_adds_epi16(src, m, v, w);
+      else if constexpr( c == category::uint16x8  ) return _mm_mask_adds_epu16(src, m, v, w);
+      else if constexpr( c == category::int8x16   ) return _mm_mask_adds_epi8(src, m, v, w);
+      else if constexpr( c == category::uint8x16  ) return _mm_mask_adds_epu8(src, m, v, w);
+      else                                          return add.behavior(cpu_{}, opts, v, w);
     }
     else
     {

@@ -107,24 +107,20 @@ namespace eve::detail
       {
         if constexpr(!O::contains(strict))
         {
-          if constexpr(current_api >= avx512)
+          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr  ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (v, m, w, x, dir);
+          else if constexpr  ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (v, m, w, x, dir);
+          else if constexpr  ( cx == category::float64x4 ||  cx == category::float64x2 ||
+                                cx == category::float32x8 ||  cx == category::float32x4 || cx == category::float32x2)
           {
-            auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-            if      constexpr  ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (v, m, w, x, dir);
-            else if constexpr  ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (v, m, w, x, dir);
-            else if constexpr  ( cx == category::float64x4 ||  cx == category::float64x2 ||
-                                 cx == category::float32x8 ||  cx == category::float32x4 || cx == category::float32x2)
-            {
-              auto aa = eve::combine(v, v);
-              auto bb = eve::combine(w, w);
-              auto cc = eve::combine(x, x);
-              auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
-              auto s =  slice(aabbcc, eve::upper_);
-              return if_else(mask,s,src);
-            }
-            else                                             return fms.behavior(cpu_{}, opts, v, w, x);
+            auto aa = eve::combine(v, v);
+            auto bb = eve::combine(w, w);
+            auto cc = eve::combine(x, x);
+            auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
+            auto s =  slice(aabbcc, eve::upper_);
+            return if_else(mask,s,src);
           }
-          else                                               return fms.behavior(cpu_{}, opts, v, w, x);
+          else                                             return fms.behavior(cpu_{}, opts, v, w, x);
         }
         else                                                 return fms.behavior(cpu_{}, opts, v, w, x);
       }
