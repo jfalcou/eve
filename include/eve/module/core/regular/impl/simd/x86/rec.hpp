@@ -66,16 +66,19 @@ namespace eve::detail
       {
         if      constexpr( c == category::float32x16) return _mm512_div_ps(one(eve::as(v)), v);
         else if constexpr( c == category::float64x8 ) return _mm512_div_pd(one(eve::as(v)), v);
+        else                                          return rec.behavior(cpu_{}, o, v);
       }
       else if constexpr (current_api >= avx)
       {
         if      constexpr( c == category::float32x8 ) return _mm256_div_ps(one(eve::as(v)), v);
         else if constexpr( c == category::float64x4 ) return _mm256_div_pd(one(eve::as(v)), v);
+        else                                          return rec.behavior(cpu_{}, o, v);
       }
       else
       {
         if      constexpr( c == category::float32x4 ) return _mm_div_ps(one(eve::as(v)), v);
         else if constexpr( c == category::float64x2 ) return _mm_div_pd(one(eve::as(v)), v);
+        else                                          return rec.behavior(cpu_{}, o, v);
       }
     }
     else
