@@ -70,7 +70,6 @@ namespace eve
   {
     using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
-    public:
     //! The type stored in the register.
     using value_type = Type;
 
@@ -88,6 +87,14 @@ namespace eve
 
     //! Opt-in for like concept
     using is_like = value_type;
+
+    //! Type representing a wide of the same type but with a cardinal twice the size
+    using combined_type = wide<Type, typename Cardinal::combined_type>;
+
+    //! Type representing a wide of the same type but with a cardinal half the size
+    template<typename N = Cardinal>
+    requires (N::Value > 1)
+    using split_type = wide<Type, typename N::split_type>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.

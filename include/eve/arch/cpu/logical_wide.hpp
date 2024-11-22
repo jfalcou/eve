@@ -56,7 +56,6 @@ namespace eve
   {
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
-    public:
     //! The type stored in the register.
     using value_type    = logical<Type>;
 
@@ -77,6 +76,14 @@ namespace eve
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Cardinal>;
+
+    //! Type representing a logical wide of the same type but with a cardinal twice the size
+    using combined_type = logical<wide<Type, typename Cardinal::combined_type>>;
+
+    //! Type representing a logical wide of the same type but with a cardinal half the size
+    template<typename N = Cardinal>
+    requires (N::Value > 1)
+    using split_type = logical<typename wide<Type, N>::split_type>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
