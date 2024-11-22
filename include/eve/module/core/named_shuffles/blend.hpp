@@ -111,7 +111,7 @@ struct blend_t
       if constexpr ( current_api >= neon )
       {
         if constexpr ( current_api >= asimd && (count_from_x == 1 || count_from_y == 1) ) return 2;
-        return 3;
+        else return 3;
       }
       else if constexpr ( current_api >= sse2 )
       {

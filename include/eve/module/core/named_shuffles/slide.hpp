@@ -119,13 +119,13 @@ struct slide_left_impl_t
       else if constexpr ( current_api >= avx512 )
       {
         if constexpr ( is_shift_by_4 ) return 2;
-        if constexpr ( reg_size <= 16 ) return 2;
-        if constexpr ( is_shift_by_2 ) return 3;
-        if constexpr (reg_size == 64) return 5; // this is not yet done
-        else return 2;
+        else if constexpr ( reg_size <= 16 ) return 2;
+        else if constexpr ( is_shift_by_2 ) return 3;
+        else if constexpr (reg_size == 64) return 5; // this is not yet done
       }
-      else if constexpr ( reg_size == 32 && is_shift_by_16 ) return 2;
-      else if constexpr ( current_api >= avx2 && reg_size == 32 ) { return 4; }
+
+      if constexpr ( reg_size == 32 && is_shift_by_16 ) return 2;
+      else if constexpr ( current_api >= avx2 && reg_size == 32 ) return 4;
       else return 2;
     }
   }
@@ -157,7 +157,8 @@ struct slide_left_impl_t
       if constexpr ( is_shift_by_4 ) return 2;
       else if constexpr ( is_shift_by_2 ) return 3;
     }
-    else if constexpr ( is_shift_by_16 && reg_size == 32 ) return 2;
+
+    if constexpr ( is_shift_by_16 && reg_size == 32 ) return 2;
     else if constexpr ( current_api >= avx2 && reg_size == 32 ) return 4;
 
     else if constexpr ( current_api >= sse4_2 ) return 2;
