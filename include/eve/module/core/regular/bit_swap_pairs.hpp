@@ -82,6 +82,15 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, conditional_expr C, value T, integral_value I0, integral_value I1>
+    constexpr T bit_swap_pairs_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, I0 i0, I1 i1) noexcept
+    {
+      auto i0m = if_else(cx, i0, zero);
+      auto i1m = if_else(cx, i1, zero);
+
+      return bit_swap_pairs(a, i0m, i1m);
+    }
+
     template<callable_options O, value T, integral_value I0, integral_value I1>
     constexpr T bit_swap_pairs_(EVE_REQUIRES(cpu_), O const&, T a, I0 i0, I1 i1) noexcept
     {
