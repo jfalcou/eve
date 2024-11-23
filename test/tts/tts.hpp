@@ -345,6 +345,22 @@ namespace tts::detail
   template<typename T>
   concept streamable = requires(T e, std::ostream& o) { o << e; };
 }
+#if defined(_MSC_VER)
+  #define TTS_DISABLE_WARNING_PUSH           __pragma(warning( push ))
+  #define TTS_DISABLE_WARNING_POP            __pragma(warning( pop ))
+  #define TTS_DISABLE_WARNING(warningNumber) __pragma(warning( disable : warningNumber ))
+  #define TTS_DISABLE_WARNING_SHADOW
+#elif defined(__GNUC__) || defined(__clang__)
+  #define TTS_DO_PRAGMA(X)                    _Pragma(#X)
+  #define TTS_DISABLE_WARNING_PUSH            TTS_DO_PRAGMA(GCC diagnostic push)
+  #define TTS_DISABLE_WARNING_POP             TTS_DO_PRAGMA(GCC diagnostic pop)
+  #define TTS_DISABLE_WARNING(warningName)    TTS_DO_PRAGMA(GCC diagnostic ignored #warningName)
+  #define TTS_DISABLE_WARNING_SHADOW          TTS_DISABLE_WARNING(-Wshadow)
+#else
+  #define TTS_DISABLE_WARNING_PUSH
+  #define TTS_DISABLE_WARNING_POP
+  #define TTS_DISABLE_WARNING_SHADOW
+#endif
 #ifndef TTS_FUNCTION
 #define TTS_FUNCTION TTS_UNIQUE(tts_function)
 #endif
@@ -432,6 +448,7 @@ namespace tts
   };
   template<typename... Ls> struct concatenate { using type = decltype( (Ls{} + ...) ); };
   template<typename... Ls> using concatenate_t = typename concatenate<Ls...>::type;
+  
   // filter types with predicate
   template<template<typename> typename Pred, typename Type> struct filter
   {
@@ -445,7 +462,7 @@ namespace tts
     }
     using type = decltype(filter_impl(Type {}));
   };
-
+  
   template<typename T> struct type {};
   using real_types        = types < double,float>;
   using int_types         = types < std::int64_t , std::int32_t , std::int16_t , std::int8_t>;
@@ -620,9 +637,9 @@ namespace tts
 #define TTS_EXPECT_(EXPR)         TTS_EXPECT_IMPL((EXPR),TTS_FAIL)
 #define TTS_EXPECT_REQUIRED(EXPR) TTS_EXPECT_IMPL((EXPR),TTS_FATAL)
 #define TTS_EXPECT_IMPL(EXPR,FAILURE)                                                               \
-[&](auto&& expr)                                                                                    \
+[&](auto&& local_tts_expr)                                                                          \
 {                                                                                                   \
-  if( expr )                                                                                        \
+  if( local_tts_expr )                                                                              \
   {                                                                                                 \
     ::tts::global_runtime.pass(); return ::tts::detail::logger{false};                              \
   }                                                                                                 \
@@ -637,9 +654,9 @@ namespace tts
 #define TTS_EXPECT_NOT_(EXPR)           TTS_EXPECT_NOT_IMPL(EXPR,TTS_FAIL)
 #define TTS_EXPECT_NOT_REQUIRED(EXPR)   TTS_EXPECT_NOT_IMPL(EXPR,TTS_FATAL)
 #define TTS_EXPECT_NOT_IMPL(EXPR,FAILURE)                                                           \
-[&](auto&& expr)                                                                                    \
+[&](auto&& local_tts_expr)                                                                          \
 {                                                                                                   \
-  if( !expr )                                                                                       \
+  if( !local_tts_expr )                                                                             \
   {                                                                                                 \
     ::tts::global_runtime.pass(); return ::tts::detail::logger{false};                              \
   }                                                                                                 \
@@ -1075,15 +1092,15 @@ namespace tts
   }
 }
 #define TTS_RELATION_BASE(A, B, OP, T, F, FAILURE)                                                \
-if( ::tts::detail::OP(tts_param_a,tts_param_b) )                                                  \
+if( ::tts::detail::OP(local_tts_a,local_tts_b) )                                                  \
 {                                                                                                 \
   ::tts::global_runtime.pass(); return ::tts::detail::logger{false};                              \
 }                                                                                                 \
 else                                                                                              \
 {                                                                                                 \
   FAILURE (   "Expression: "  << TTS_STRING(A) << " " T " " << TTS_STRING(B)                      \
-          <<  " is false because: " << ::tts::as_string(tts_param_a)                              \
-          <<  " " F " " << ::tts::as_string(tts_param_b)                                          \
+          <<  " is false because: " << ::tts::as_string(local_tts_a)                              \
+          <<  " " F " " << ::tts::as_string(local_tts_b)                                          \
           );                                                                                      \
   return ::tts::detail::logger{};                                                                 \
 }                                                                                                 \
@@ -1109,7 +1126,7 @@ else                                                                            
 #define TTS_RELATION_(A, B, OP, T, F)         TTS_RELATION_IMPL(A,B,OP,T,F,TTS_FAIL)
 #define TTS_RELATION_REQUIRED(A, B, OP, T, F) TTS_RELATION_IMPL(A,B,OP,T,F,TTS_FATAL)
 #define TTS_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                                  \
-[&](auto&& tts_param_a, auto&& tts_param_b)                                                         \
+[&](auto&& local_tts_a, auto&& local_tts_b)                                                         \
 {                                                                                                   \
   TTS_RELATION_BASE(A, B, OP, T, F, FAILURE)                                                        \
 }(A,B)                                                                                              \
@@ -1141,10 +1158,10 @@ do                                                                              
 #define TTS_TYPED_RELATION_(A, B, OP, T, F)         TTS_TYPED_RELATION_IMPL(A,B,OP,T,F,TTS_FAIL)
 #define TTS_TYPED_RELATION_REQUIRED(A, B, OP, T, F) TTS_TYPED_RELATION_IMPL(A,B,OP,T,F,TTS_FATAL)
 #define TTS_TYPED_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                            \
-[&](auto&& tts_param_a, auto&& tts_param_b)                                                         \
+[&](auto&& local_tts_a, auto&& local_tts_b)                                                         \
 {                                                                                                   \
-  using type_a = std::remove_cvref_t<decltype(tts_param_a)>;                                        \
-  using type_b = std::remove_cvref_t<decltype(tts_param_b)>;                                        \
+  using type_a = std::remove_cvref_t<decltype(local_tts_a)>;                                        \
+  using type_b = std::remove_cvref_t<decltype(local_tts_b)>;                                        \
                                                                                                     \
   if ( !tts::same_as<type_a, type_b> )                                                              \
   {                                                                                                 \
@@ -1237,6 +1254,8 @@ do                                                                              
 }(::tts::type<decltype(TTS_REMOVE_PARENS(EXPR))>{}, ::tts::type<TTS_REMOVE_PARENS(TYPE)>{})         \
 
 #define TTS_EXPECT_COMPILES_IMPL(EXPR, ...)                                                         \
+TTS_DISABLE_WARNING_PUSH                                                                            \
+TTS_DISABLE_WARNING_SHADOW                                                                          \
 [&]( TTS_ARG(__VA_ARGS__) )                                                                         \
 {                                                                                                   \
   if constexpr( requires TTS_REMOVE_PARENS(EXPR) )                                                  \
@@ -1250,6 +1269,7 @@ do                                                                              
             );                                                                                      \
     return ::tts::detail::logger{};                                                                 \
   }                                                                                                 \
+TTS_DISABLE_WARNING_POP                                                                             \
 }(__VA_ARGS__)                                                                                      \
 
 #if defined(TTS_DOXYGEN_INVOKED)
@@ -1258,6 +1278,8 @@ do                                                                              
 #define TTS_EXPECT_COMPILES(...) TTS_VAL(TTS_EXPECT_COMPILES_IMPL TTS_REVERSE(__VA_ARGS__) )
 #endif
 #define TTS_EXPECT_NOT_COMPILES_IMPL(EXPR, ...)                                                     \
+TTS_DISABLE_WARNING_PUSH                                                                            \
+TTS_DISABLE_WARNING_SHADOW                                                                          \
 [&]( TTS_ARG(__VA_ARGS__) )                                                                         \
 {                                                                                                   \
   if constexpr( !(requires TTS_REMOVE_PARENS(EXPR)) )                                               \
@@ -1269,6 +1291,7 @@ do                                                                              
     TTS_FAIL("Expression: " << TTS_STRING(TTS_REMOVE_PARENS(EXPR)) << " compiles unexpectedly." );  \
     return ::tts::detail::logger{};                                                                 \
   }                                                                                                 \
+TTS_DISABLE_WARNING_POP                                                                             \
 }(__VA_ARGS__)                                                                                      \
 
 #if defined(TTS_DOXYGEN_INVOKED)
@@ -1492,9 +1515,9 @@ namespace detail
   }
 }
 #define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, FUNC, PREC,FAILURE)                                   \
-[&](auto lhs, auto rhs)                                                                             \
+[&](auto local_tts_lhs, auto local_tts_rhs)                                                         \
 {                                                                                                   \
-  auto r = FUNC (lhs,rhs);                                                                          \
+  auto r = FUNC (local_tts_lhs,local_tts_rhs);                                                      \
                                                                                                     \
   if(r <= N)                                                                                        \
   {                                                                                                 \
@@ -1504,7 +1527,8 @@ namespace detail
   {                                                                                                 \
     FAILURE ( "Expected: " << TTS_STRING(LHS) << " == " << TTS_STRING(RHS)                          \
                             << " but "                                                              \
-                            << ::tts::as_string(lhs) << " == " << ::tts::as_string(rhs)             \
+                            << ::tts::as_string(local_tts_lhs)                                      \
+                            << " == " << ::tts::as_string(local_tts_rhs)                            \
                             << " within " << std::setprecision(PREC) << std::fixed                  \
                             << r << std::defaultfloat                                               \
                             << " " << UNIT << " when "                                              \
@@ -1522,22 +1546,22 @@ namespace detail
 #define TTS_ABSOLUTE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"unit", ::tts::absolute_distance, 8, __VA_ARGS__ )
 #define TTS_RELATIVE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"%"   , ::tts::relative_distance, 8, __VA_ARGS__ )
 #define TTS_ULP_EQUAL(L,R,N,...)      TTS_PRECISION(L,R,N,"ULP" , ::tts::ulp_distance     , 2, __VA_ARGS__ )
-#define TTS_DO_IEEE_EQUAL_IMPL(LHS, RHS, FAILURE)                                                   \
-[&](auto lhs, auto rhs)                                                                             \
-{                                                                                                   \
-  if(::tts::is_ieee_equal(lhs,rhs))                                                                 \
-  {                                                                                                 \
-    ::tts::global_runtime.pass(); return ::tts::detail::logger{false};                              \
-  }                                                                                                 \
-  else                                                                                              \
-  {                                                                                                 \
-    FAILURE ( "Expected: " << TTS_STRING(LHS) << " == " << TTS_STRING(RHS)                          \
-                            << " but "                                                              \
-                            << ::tts::as_string(lhs) << " != " << ::tts::as_string(rhs)             \
-            );                                                                                      \
-    return ::tts::detail::logger{};                                                                 \
-  }                                                                                                 \
-}(LHS,RHS)                                                                                          \
+#define TTS_DO_IEEE_EQUAL_IMPL(LHS, RHS, FAILURE)                                                         \
+[&](auto local_tts_lhs, auto local_tts_rhs)                                                               \
+{                                                                                                         \
+  if(::tts::is_ieee_equal(local_tts_lhs,local_tts_rhs))                                                   \
+  {                                                                                                       \
+    ::tts::global_runtime.pass(); return ::tts::detail::logger{false};                                    \
+  }                                                                                                       \
+  else                                                                                                    \
+  {                                                                                                       \
+    FAILURE ( "Expected: " << TTS_STRING(LHS) << " == " << TTS_STRING(RHS)                                \
+                          << " but "                                                                      \
+                          << ::tts::as_string(local_tts_lhs) << " != " << ::tts::as_string(local_tts_rhs) \
+            );                                                                                            \
+    return ::tts::detail::logger{};                                                                       \
+  }                                                                                                       \
+}(LHS,RHS)                                                                                                \
 
 #define TTS_DO_IEEE_EQUAL(L,R,...)    TTS_DO_IEEE_EQUAL_ ## __VA_ARGS__ (L,R)
 #define TTS_DO_IEEE_EQUAL_(L,R)         TTS_DO_IEEE_EQUAL_IMPL(L,R,TTS_FAIL)
@@ -1797,21 +1821,21 @@ namespace tts::detail
   };
 }
 #define TTS_ALL_IMPL(SEQ1,SEQ2,OP,N,UNIT,FAILURE)                                                   \
-[](auto const& a, auto const& b)                                                                    \
+[](auto const& local_tts_a, auto const& local_tts_b)                                                \
 {                                                                                                   \
-  if( std::size(b) != std::size(a) )                                                                \
+  if( std::size(local_tts_b) != std::size(local_tts_a) )                                            \
   {                                                                                                 \
     FAILURE ( "Expected: "  << TTS_STRING(SEQ1) << " == " << TTS_STRING(SEQ2)                       \
                             << " but sizes does not match: "                                        \
-                            << "size(" TTS_STRING(SEQ1) ") = " << std::size(a)                      \
-                            << " while size(" TTS_STRING(SEQ2) ") = " << std::size(b)               \
+                            << "size(" TTS_STRING(SEQ1) ") = " << std::size(local_tts_a)            \
+                            << " while size(" TTS_STRING(SEQ2) ") = " << std::size(local_tts_b)     \
             );                                                                                      \
     return ::tts::detail::logger{};                                                                 \
   }                                                                                                 \
                                                                                                     \
-  auto ba = std::begin(a);                                                                          \
-  auto bb = std::begin(b);                                                                          \
-  auto ea = std::end(a);                                                                            \
+  auto ba = std::begin(local_tts_a);                                                                \
+  auto bb = std::begin(local_tts_b);                                                                \
+  auto ea = std::end(local_tts_a);                                                                  \
                                                                                                     \
   std::vector < ::tts::detail::failure< std::remove_cvref_t<decltype(*ba)>                          \
                                       , std::remove_cvref_t<decltype(*bb)>                          \
@@ -1876,12 +1900,17 @@ namespace tts::detail
   };
 }
 #define TTS_WHEN(STORY)                                                                             \
+TTS_DISABLE_WARNING_PUSH                                                                            \
+TTS_DISABLE_WARNING_SHADOW                                                                          \
   std::cout << "[^] - For: " << ::tts::detail::current_test << "\n";                                \
   std::cout << "When      : " << STORY << std::endl;                                                \
   for(int tts_section = 0, tts_count = 1; tts_section < tts_count; tts_count -= 0==tts_section++)   \
     for( tts::detail::only_once tts_only_once_setup{}; tts_only_once_setup; )                       \
+TTS_DISABLE_WARNING_POP                                                                             \
 
 #define TTS_AND_THEN_IMPL(TTS_LOCAL_ID, ...)                                                        \
+TTS_DISABLE_WARNING_PUSH                                                                            \
+TTS_DISABLE_WARNING_SHADOW                                                                          \
   static int TTS_LOCAL_ID = 0;                                                                      \
   std::ostringstream TTS_CAT(desc_,TTS_LOCAL_ID);                                                   \
   if(::tts::detail::section_guard(TTS_LOCAL_ID, tts_section, tts_count )                            \
@@ -1891,5 +1920,6 @@ namespace tts::detail
     )                                                                                               \
   for(int tts_section = 0, tts_count = 1; tts_section < tts_count; tts_count -= 0==tts_section++ )  \
     for(tts::detail::only_once tts__only_once_section{}; tts__only_once_section; )                  \
+TTS_DISABLE_WARNING_POP                                                                             \
 
 #define TTS_AND_THEN(...) TTS_AND_THEN_IMPL(TTS_UNIQUE(id), __VA_ARGS__)
