@@ -68,7 +68,7 @@ namespace eve
 struct blend_t
 {
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr auto pattern(eve::as<T>, eve::as<T>, eve::fixed<G>, pattern_t<I...>)
+  static consteval auto pattern(eve::as<T>, eve::as<T>, eve::fixed<G>, pattern_t<I...>)
   {
     static_assert(((0 <= I && I <= 1) && ...), "pattern for blend has to only contain 0 and 1");
     static_assert(pattern_t<I...>::size() * G == T::size(), "pattern has wrong number of elements");
@@ -82,7 +82,7 @@ struct blend_t
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr std::ptrdiff_t level(eve::as<T>, eve::as<T>, eve::fixed<G> g, pattern_t<I...> p)
+  static consteval std::ptrdiff_t level(eve::as<T>, eve::as<T>, eve::fixed<G> g, pattern_t<I...> p)
   {
     if constexpr( sizeof...(I) == 1 ) return 0;
     else if constexpr( eve::has_aggregated_abi_v<T> )
@@ -142,14 +142,14 @@ struct blend_t
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr auto
+  static consteval auto
   pattern(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, pattern_formula auto gen)
   {
     return pattern(tgt, tgt, g, fix_pattern<T::size() / G>(gen));
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr auto level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, pattern_formula auto gen)
+  static consteval auto level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, pattern_formula auto gen)
   {
     return level(tgt, tgt, g, fix_pattern<T::size() / G>(gen));
   }

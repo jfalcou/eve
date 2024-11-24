@@ -68,14 +68,14 @@ struct slide_left_impl_t
 {
   // One agr
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<S>)
+  static consteval auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<S>)
   {
     static_assert(G > 0 && 0 <= S && S <= T::size() / G);
     return eve::fix_pattern<T::size() / G>([](int i, int n) { return (i + S) < n ? i + S : na_; });
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
+  static consteval std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
   {
     using abi_t                             = typename T::abi_type;
     constexpr std::size_t    reg_size       = sizeof(element_type_t<T>) * T::size();
@@ -133,7 +133,7 @@ struct slide_left_impl_t
   // Two args
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr std::ptrdiff_t
+  static consteval std::ptrdiff_t
   level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
   {
     using abi_t                       = typename T::abi_type;

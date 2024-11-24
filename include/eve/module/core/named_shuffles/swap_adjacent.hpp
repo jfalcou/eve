@@ -53,7 +53,7 @@ namespace eve
 struct swap_adjacent_t
 {
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  static consteval auto pattern(eve::as<T>, eve::fixed<G>)
   requires(G < T::size())
   {
     return eve::fix_pattern<T::size() / G>(
@@ -65,7 +65,7 @@ struct swap_adjacent_t
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static consteval std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
   {
     constexpr std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
     constexpr std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
