@@ -66,73 +66,68 @@ struct reverse_t
     if constexpr( eve::has_aggregated_abi_v<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
-      else
-      {
-        using half_t = decltype(T {}.slice(lower_));
-        return level(as<half_t> {}, g);
-      }
+      using half_t = decltype(T {}.slice(lower_));
+      return level(as<half_t> {}, g);
     }
-    else
+
+    const std::ptrdiff_t g_size     = sizeof(element_type_t<T>) * G;
+    const std::size_t    reg_size   = sizeof(element_type_t<T>) * T::size();
+    const bool is_expected_cardinal = T::size() == eve::expected_cardinal_v<element_type_t<T>>;
+
+    if( current_api >= sve )
     {
-      constexpr std::ptrdiff_t g_size     = sizeof(element_type_t<T>) * G;
-      constexpr std::size_t    reg_size   = sizeof(element_type_t<T>) * T::size();
-      constexpr bool is_expected_cardinal = T::size() == eve::expected_cardinal_v<element_type_t<T>>;
-
-      if constexpr ( current_api >= sve )
+      if( !logical_value<T> )
       {
-        if constexpr ( !logical_value<T> )
-        {
-          if constexpr ( reg_size <= 8 ) return 2;
-          else if constexpr ( is_expected_cardinal && g_size <= 8 ) return 2;
-          else if constexpr ( is_expected_cardinal && g_size == reg_size / 2 ) return 2;
-          else return 3;
-        }
-        else if constexpr ( is_expected_cardinal && g_size <= 8 ) return 2;
-        else return level(detail::mask_type(tgt), g) + 4;
+        if( reg_size <= 8 ) return 2;
+        if( is_expected_cardinal && g_size <= 8 ) return 2;
+        if( is_expected_cardinal && g_size == reg_size / 2 ) return 2;
+        return 3;
       }
-
-      else if constexpr (current_api >= neon) {
-        if constexpr ( reg_size <= 8 ) return 2;
-        if constexpr ( g_size == 8 ) return 2;
-        if constexpr ( current_api >= asimd ) return 3;
-        else return 4;
-      }
-
-      else if constexpr ( current_api >= vmx ) return 3;
-
-      else if constexpr ( current_api == avx512 && logical_value<T> ) { return level(detail::mask_type(tgt), g) + 4; }
-
-      else if constexpr ( current_api >= avx2 && reg_size >= 32 )
-      {
-        if constexpr ( g_size >= 16 ) return 2;
-        else if constexpr ( g_size >= 8 ) return reg_size == 64 ? 3 : 2;
-        else if constexpr ( g_size >= 4 ) return 3;
-        else if constexpr ( g_size == 2 && current_api >= avx512 ) return 3;
-        else return 5;
-      }
-
-      else if constexpr ( current_api == avx && reg_size >= 32 )
-      {
-        if constexpr ( g_size >= 16 ) return 2;
-        else if constexpr ( g_size >= 4 ) return 4;
-        else if constexpr ( g_size == 2 && current_api >= avx512 ) return 3;
-        else return 9;
-      }
-
-      else if constexpr ( g_size >= 4 ) return 2;
-      else if constexpr ( g_size == 2 && reg_size <= 8 ) return 2;
-
-      else if constexpr ( current_api >= ssse3 ) return 3;
-
-      else if constexpr ( g_size == 2 ) return 6;
-
-      // chars on sse2
-      else if constexpr ( reg_size == 2 ) return 6;
-
-      // swap chars + reverse shorts
-      else if constexpr ( reg_size <= 8 ) return 8;
-      else return 12;
+      if( is_expected_cardinal && g_size <= 8 ) return 2;
+      return level(detail::mask_type(tgt), g) + 4;
     }
+
+    if (current_api >= neon) {
+      if ( reg_size <= 8 ) return 2;
+      if ( g_size == 8 ) return 2;
+      if ( current_api >= asimd ) return 3;
+      return 4;
+    }
+
+    if( current_api >= vmx ) return 3;
+
+    if( current_api == avx512 && logical_value<T> ) { return level(detail::mask_type(tgt), g) + 4; }
+
+    if( current_api >= avx2 && reg_size >= 32 )
+    {
+      if( g_size >= 16 ) return 2;
+      if( g_size >= 8 ) return reg_size == 64 ? 3 : 2;
+      if( g_size >= 4 ) return 3;
+      if( g_size == 2 && current_api >= avx512 ) return 3;
+      return 5;
+    }
+
+    if( current_api == avx && reg_size >= 32 )
+    {
+      if( g_size >= 16 ) return 2;
+      if( g_size >= 4 ) return 4;
+      if( g_size == 2 && current_api >= avx512 ) return 3;
+      return 9;
+    }
+
+    if( g_size >= 4 ) return 2;
+    if( g_size == 2 && reg_size <= 8 ) return 2;
+
+    if( current_api >= ssse3 ) return 3;
+
+    if( g_size == 2 ) return 6;
+
+    // chars on sse2
+    if( reg_size == 2 ) return 6;
+
+    // swap chars + reverse shorts
+    if( reg_size <= 8 ) return 8;
+    return 12;
   }
 };
 

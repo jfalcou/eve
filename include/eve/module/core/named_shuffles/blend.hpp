@@ -95,50 +95,42 @@ struct blend_t
                       level(as<half_t> {}, as<half_t> {}, g, p1));
     }
 
-    else if constexpr ( ((I == 0) && ...) ) return 0;
-    else if constexpr ( ((I == 1) && ...) ) return 0;
+    if( ((I == 0) && ...) ) return 0;
+    if( ((I == 1) && ...) ) return 0;
 
-    else if constexpr ( current_api >= sve ) return logical_simd_value<T> ? 6 : 2;
-    else if constexpr ( current_api >= avx512 ) return logical_simd_value<T> ? 6 : 2;
-    else if constexpr ( current_api >= vmx ) return 3;
-    else
+    if( current_api >= sve ) return logical_simd_value<T> ? 6 : 2;
+    if( current_api >= avx512 ) return logical_simd_value<T> ? 6 : 2;
+    if( current_api >= vmx ) return 3;
+
+    const std::ptrdiff_t g_size       = sizeof(element_type_t<T>) * G;
+    const std::size_t    reg_size     = sizeof(element_type_t<T>) * T::size();
+    const std::size_t    count_from_x = ((I == 0) + ...);
+    const std::size_t    count_from_y = ((I == 1) + ...);
+
+    if( current_api >= neon )
     {
-      constexpr std::ptrdiff_t g_size       = sizeof(element_type_t<T>) * G;
-      constexpr std::size_t    reg_size     = sizeof(element_type_t<T>) * T::size();
-      constexpr std::size_t    count_from_x = ((I == 0) + ...);
-      constexpr std::size_t    count_from_y = ((I == 1) + ...);
-
-      if constexpr ( current_api >= neon )
-      {
-        if constexpr ( current_api >= asimd && (count_from_x == 1 || count_from_y == 1) ) return 2;
-        else return 3;
-      }
-      else if constexpr ( current_api >= sse2 )
-      {
-        if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
-        {
-          using half_t  = decltype(T {}.slice(lower_));
-          auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
-          auto l0       = level(as<half_t> {}, as<half_t> {}, g, p0);
-          auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
-          return detail::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {l0, l1, 4});
-        }
-        else if constexpr ( current_api >= sse4_1 )
-        {
-          return g_size >= 4 ? 2 : 3;
-        }
-        else
-        {
-          if constexpr ( g_size >= 8 ) return 2;
-          else if constexpr ( g_size == 2 && reg_size == 4 ) return 6;
-          else return 7;
-        }
-      }
-      else
-      {
-        return 2;
-      }
+      if( current_api >= asimd && (count_from_x == 1 || count_from_y == 1) ) return 2;
+      return 3;
     }
+
+    if( current_api >= sse2 )
+    {
+      if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
+      {
+        using half_t  = decltype(T {}.slice(lower_));
+        auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
+        auto l0       = level(as<half_t> {}, as<half_t> {}, g, p0);
+        auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
+        return detail::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {l0, l1, 4});
+      }
+      if( current_api >= sse4_1 ) return g_size >= 4 ? 2 : 3;
+
+      if( g_size >= 8 ) return 2;
+      if( g_size == 2 && reg_size == 4 ) return 6;
+      return 7;
+    }
+
+    return 2;
   }
 
   template<simd_value T, std::ptrdiff_t G>

@@ -68,8 +68,8 @@ struct broadcast_lane_t
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
   static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<I> i)
   {
-    constexpr std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
-    constexpr std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
+    const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
+    const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
 
     if constexpr( eve::has_aggregated_abi_v<T> )
     {
@@ -80,47 +80,47 @@ struct broadcast_lane_t
     else if constexpr( current_api >= vmx ) return 2;
     else if constexpr( current_api >= sve )
     {
-      if constexpr ( !logical_value<T> ) return g_size > 8 ? 3 : 2;
-      else if constexpr ( G == 1 ) return 4;
-      else if constexpr ( g_size <= 8 ) return 6;
-      else return 7;
+      if( !logical_value<T> ) return g_size > 8 ? 3 : 2;
+      if( G == 1 ) return 4;
+      if( g_size <= 8 ) return 6;
+      return 7;
     }
     else if constexpr( current_api >= neon )
     {
-      if constexpr ( current_api >= asimd ) return 2;
-      else if constexpr ( reg_size <= 8 ) return 2;
-      else return 4;
+      if( current_api >= asimd ) return 2;
+      if( reg_size <= 8 ) return 2;
+      return 4;
     }
 
     // x86
 
-    if constexpr (current_api == avx512 && logical_value<T>)
+    if (current_api == avx512 && logical_value<T>)
     {
-      if constexpr (G == 1) return 4;
-      else return level(detail::mask_type(tgt), g, i) + 4;
+      if (G == 1) return 4;
+      return level(detail::mask_type(tgt), g, i) + 4;
     }
-    else if constexpr (reg_size == 64)
+
+    if (reg_size == 64)
     {
-      if constexpr (g_size >= 16) return 2;
-      else if constexpr (g_size >= 2) return 3;
-      else return 4;
+      if (g_size >= 16) return 2;
+      if (g_size >= 2) return 3;
+      return 4;
     }
-    else if constexpr (reg_size == 32)
+
+    if (reg_size == 32)
     {
-      if constexpr (g_size >= 16) return 2;
-      if constexpr (current_api == avx) return 4;
-      if constexpr (g_size >= 8) return 2;
-      if constexpr (g_size >= 4) return 3;
-      if constexpr (g_size >= 2 && current_api == avx512) return 3;
-      else return 4;
+      if (g_size >= 16) return 2;
+      if (current_api == avx) return 4;
+      if (g_size >= 8) return 2;
+      if (g_size >= 4) return 3;
+      if (g_size >= 2 && current_api == avx512) return 3;
+      return 4;
     }
-    else
-    {
-      if constexpr ( g_size >= 4 ) return 2;
-      else if constexpr ( g_size == 2 && reg_size <= 8 ) return 2;
-      else if constexpr ( current_api >= ssse3 ) return 3;
-      else return 4;
-    }
+
+    if ( g_size >= 4 ) return 2;
+    if ( g_size == 2 && reg_size <= 8 ) return 2;
+    if ( current_api >= ssse3 ) return 3;
+    return 4;
   }
 };
 

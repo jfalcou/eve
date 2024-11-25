@@ -114,24 +114,24 @@ namespace detail
 
     static constexpr bool is_cheap_impl()
     {
-      if constexpr ( has_emulated_abi_v<logical_type> ) return true;
-      else if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
+      if ( has_emulated_abi_v<logical_type> ) return true;
+      if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
 
-      else if constexpr ( x86_abi<abi_type> ) return true;
-      else if constexpr ( ppc_abi<abi_type> ) return true;
+      if ( x86_abi<abi_type> ) return true;
+      if ( ppc_abi<abi_type> ) return true;
 
-      else if constexpr ( arm_abi<abi_type> )
+      if ( arm_abi<abi_type> )
       {
-        if constexpr ( static_size == 1 ) return true;
-        else if constexpr ( static_size * sizeof(scalar_type) <= 4 ) return true;
-        else if constexpr ( current_api >= eve::asimd )
+        if ( static_size == 1 ) return true;
+        if ( static_size * sizeof(scalar_type) <= 4 ) return true;
+        if ( current_api >= eve::asimd )
         {
-          if constexpr ( sizeof(scalar_type) >= 2 ) return true;
+          if ( sizeof(scalar_type) >= 2 ) return true;
           return static_size <= 8;  // 16 chars is expensive
         }
-        else return false;
+        return false;
       }
-      else return false;
+      return false;
     }
 
    public:

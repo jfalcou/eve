@@ -78,7 +78,7 @@ struct slide_left_impl_t
   static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
   {
     using abi_t                             = typename T::abi_type;
-    constexpr std::size_t    reg_size       = sizeof(element_type_t<T>) * T::size();
+    const std::size_t        reg_size       = sizeof(element_type_t<T>) * T::size();
     constexpr std::ptrdiff_t S              = G * S_;
     constexpr bool           is_shift_by_16 = (S * sizeof(element_type_t<T>) % 16) == 0;
     constexpr bool           is_shift_by_4  = (S * sizeof(element_type_t<T>) % 4) == 0;
@@ -110,23 +110,22 @@ struct slide_left_impl_t
     }
     else if constexpr( current_api >= neon || current_api >= sve )
     {
-      if constexpr ( reg_size <= 8 ) return 2;
-      else return 3;
+      if( reg_size <= 8 ) return 2;
+      return 3;
     }
     else
     {
-      if constexpr ( reg_size <= 8 ) return 2;
-      else if constexpr ( current_api >= avx512 )
+      if( reg_size <= 8 ) return 2;
+      if( current_api >= avx512 )
       {
-        if constexpr ( is_shift_by_4 ) return 2;
-        else if constexpr ( reg_size <= 16 ) return 2;
-        else if constexpr ( is_shift_by_2 ) return 3;
-        else if constexpr (reg_size == 64) return 5; // this is not yet done
+        if( is_shift_by_4 ) return 2;
+        if( reg_size <= 16 ) return 2;
+        if( is_shift_by_2 ) return 3;
+        if (reg_size == 64) return 5; // this is not yet done
       }
-
-      if constexpr ( reg_size == 32 && is_shift_by_16 ) return 2;
-      else if constexpr ( current_api >= avx2 && reg_size == 32 ) return 4;
-      else return 2;
+      if( reg_size == 32 && is_shift_by_16 ) return 2;
+      if( current_api >= avx2 && reg_size == 32 ) { return 4; }
+      return 2;
     }
   }
 
@@ -138,7 +137,7 @@ struct slide_left_impl_t
   {
     using abi_t                       = typename T::abi_type;
     constexpr std::ptrdiff_t S        = S_ * G;
-    constexpr std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
+    const std::size_t        reg_size = sizeof(element_type_t<T>) * T::size();
 
     constexpr bool is_shift_by_16 = (S * sizeof(element_type_t<T>) % 16) == 0;
     constexpr bool is_shift_by_8  = (S * sizeof(element_type_t<T>) % 8) == 0;
@@ -146,24 +145,23 @@ struct slide_left_impl_t
     constexpr bool is_shift_by_2  = (S * sizeof(element_type_t<T>) % 2) == 0;
 
     if constexpr( S == 0 || S == T::size() ) return 0;
-    else if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
+    if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
     {
       auto mask = detail::mask_type(tgt);
       return level(mask, mask, g, s) + 6;
     }
-    else if constexpr( current_api >= neon || current_api >= sve ) return 2;
-    else if constexpr ( current_api >= avx512 )
+    if constexpr( current_api >= neon || current_api >= sve ) return 2;
+    if( current_api >= avx512 )
     {
-      if constexpr ( is_shift_by_4 ) return 2;
-      else if constexpr ( is_shift_by_2 ) return 3;
+      if( is_shift_by_4 ) return 2;
+      if( is_shift_by_2 ) return 3;
     }
+    if( is_shift_by_16 && reg_size == 32 ) return 2;
+    if( current_api >= avx2 && reg_size == 32 ) return 4;
 
-    if constexpr ( is_shift_by_16 && reg_size == 32 ) return 2;
-    else if constexpr ( current_api >= avx2 && reg_size == 32 ) return 4;
-
-    else if constexpr ( current_api >= sse4_2 ) return 2;
+    if( current_api >= sse4_2 ) return 2;
     // sse2
-    else return is_shift_by_8 ? 2 : 6;
+    return is_shift_by_8 ? 2 : 6;
   }
 };
 
