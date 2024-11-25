@@ -18,8 +18,8 @@ namespace eve::detail
   // Wide to Logical
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
-      requires arm_abi<abi_t<T, N>>
+  EVE_FORCEINLINE logical<wide<T, N>> to_logical(wide<T, N> v) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
     [[maybe_unused]] auto const nez  = [](auto x) { return logical<T>(x != 0); };
@@ -64,6 +64,6 @@ namespace eve::detail
       else  if constexpr( cat == category::int64x2)   return nope(vceqq_s64(v, z));
       else  if constexpr( cat == category::uint64x2)  return nope(vceqq_u64(v, z));
     }
-    else  if constexpr( sizeof(T) == 8 )            return map(nez, v);
+    else  if constexpr( sizeof(T) == 8 )            return map(as<logical<wide<T, N>>>{}, nez, v);
   }
 }

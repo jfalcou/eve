@@ -17,8 +17,8 @@ namespace eve::detail
   // Interleave pairs of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
-  requires (N::value > 1) && x86_abi<abi_t<T,N>>
+  EVE_FORCEINLINE kumi::tuple<wide<T, N>, wide<T, N>> interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
+    requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
     constexpr auto c = categorize<type>();
@@ -170,7 +170,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1);
     }
   }
 
@@ -214,7 +214,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1);
     }
   }
 
@@ -235,7 +235,7 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave.behavior(cpu_{},o,v0,v1,v2);
+        return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1, v2);
       }
       else if constexpr(N::value == 4)
       {
@@ -265,7 +265,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1,v2);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1, v2);
     }
   }
 
@@ -286,7 +286,7 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave.behavior(cpu_{},o,v0,v1,v2,v3);
+        return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1, v2, v3);
       }
       else if constexpr(N::value == 4)
       {
@@ -309,7 +309,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o, v0,v1,v2,v3);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, v0, v1, v2, v3);
     }
   }
 }
