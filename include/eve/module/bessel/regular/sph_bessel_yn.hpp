@@ -16,11 +16,12 @@ namespace eve
   template<typename Options>
   struct sph_bessel_yn_t : strict_elementwise_callable<sph_bessel_yn_t, Options>
   {
-    template<eve::value N, eve::floating_value T>
-    requires (same_lanes_or_scalar<N, T>)
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const noexcept
-    { return EVE_DISPATCH_CALL(n, x); }
+    template<value N, floating_value T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(N n, T x) const noexcept
+      requires (same_lanes_or_scalar<N, T>)
+    {
+      return this->behavior(as<as_wide_as_t<T, N>>{}, eve::current_api, this->options(), n, x);
+    }
 
     EVE_CALLABLE_OBJECT(sph_bessel_yn_t, sph_bessel_yn_);
   };

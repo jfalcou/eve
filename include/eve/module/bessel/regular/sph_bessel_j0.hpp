@@ -17,9 +17,11 @@ namespace eve
   template<typename Options>
   struct sph_bessel_j0_t : elementwise_callable<sph_bessel_j0_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T a) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(sph_bessel_j0_t, sph_bessel_j0_);
   };
