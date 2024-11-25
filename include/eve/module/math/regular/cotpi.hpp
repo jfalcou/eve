@@ -21,8 +21,11 @@ namespace eve
   template<typename Options>
   struct cotpi_t : elementwise_callable<cotpi_t, Options, quarter_circle_option>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(cotpi_t, cotpi_);
   };

@@ -18,17 +18,19 @@ namespace eve
   template<typename Options>
   struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0,T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<floating_value T0, floating_value T1, floating_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return this->behavior(as<common_value_t<T0, T1, Ts...>>{}, eve::current_api, this->options(), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept  requires(kumi::size_v<Tup> >= 2)  { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const& t) const noexcept 
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return this->behavior(as<kumi::apply_traits_t<common_value, Tup>>{}, eve::current_api, this->options(), t);
+    }
 
     EVE_CALLABLE_OBJECT(geommean_t, geommean_);
   };

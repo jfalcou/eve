@@ -21,8 +21,11 @@ namespace eve
   template<typename Options>
   struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(exp10_t, exp10_);
   };

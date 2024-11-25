@@ -14,15 +14,18 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct expmx2_t : elementwise_callable<expmx2_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(expmx2_t, expmx2_);
   };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{

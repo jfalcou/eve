@@ -16,8 +16,11 @@ namespace eve
   template<typename Options>
   struct deginrad_t : elementwise_callable<deginrad_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(deginrad_t, deginrad_);
   };

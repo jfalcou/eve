@@ -27,8 +27,11 @@ namespace eve
                                         , full_circle_option, medium_option, big_option
                                         >
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE zipped<T, T> operator()(T v) const
+    {
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sincos_t, sincos_);
   };

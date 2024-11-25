@@ -18,14 +18,18 @@ namespace eve
   template<typename Options>
   struct powm1_t : elementwise_callable<powm1_t, Options, raw_option>
   {
-    template<eve::floating_scalar_value T, eve::integral_scalar_value U>
+    template<floating_scalar_value T, integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, w);
+    }
 
-    template<eve::value T, eve::value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), v, w);
+    }
 
     EVE_CALLABLE_OBJECT(powm1_t, powm1_);
   };

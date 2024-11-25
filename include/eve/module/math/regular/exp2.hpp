@@ -15,22 +15,23 @@ namespace eve
   template<typename Options>
   struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, saturated_option>
   {
-    template<eve::value T>
+    template<value T>
     EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
     {
-      if constexpr(eve::integral_value<T>)
+      if constexpr (integral_value<T>)
       {
-        using vt_t = eve::element_type_t<T>;
-        EVE_ASSERT(eve::all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
-        EVE_ASSERT(eve::all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
+        using vt_t = element_type_t<T>;
+        EVE_ASSERT(all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
+        EVE_ASSERT(all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
       }
-      return EVE_DISPATCH_CALL(s);
+
+      return this->behavior(as<T>{}, eve::current_api, this->options(), s);
     }
 
-    template<eve::integral_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T>operator()(T v, eve::as<U> target ) const noexcept
+    template<integral_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(exp2_t, exp2_);

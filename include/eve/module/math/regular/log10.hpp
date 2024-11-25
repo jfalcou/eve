@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct log10_t : elementwise_callable<log10_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(log10_t, log10_);
   };

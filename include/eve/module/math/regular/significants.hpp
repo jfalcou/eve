@@ -21,7 +21,8 @@ namespace eve
     {
       EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
       EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
-      return EVE_DISPATCH_CALL(t0, n);
+
+      return this->behavior(as<as_wide_as_t<T0, T1>>{}, eve::current_api, this->options(), t0, n);
     }
 
     EVE_CALLABLE_OBJECT(significants_t, significants_);
@@ -73,8 +74,7 @@ namespace eve
 namespace detail
 {
   template<floating_value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
+  EVE_FORCEINLINE constexpr auto significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
   {
     using r_t = as_wide_as_t<T, U>;
     if constexpr(integral_value<U>)
