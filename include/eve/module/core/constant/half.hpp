@@ -17,14 +17,17 @@ namespace eve
   struct half_t : constant_callable<half_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if      constexpr(std::same_as<T, float> ) return T(0x1p-1);
-      else if constexpr(std::same_as<T, double>) return T(0x1p-1f);
+      if      constexpr (std::same_as<T, float> ) return T{0x1p-1};
+      else if constexpr (std::same_as<T, double>) return T{0x1p-1f};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(half_t, half_);
   };

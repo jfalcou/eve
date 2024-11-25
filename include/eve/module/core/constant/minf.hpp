@@ -17,13 +17,16 @@ namespace eve
   struct minf_t : constant_callable<minf_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      return  T(-std::numeric_limits<T>::infinity());
+      return  T{-std::numeric_limits<T>::infinity()};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(minf_t, minf_);
   };

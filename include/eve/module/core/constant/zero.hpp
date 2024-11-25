@@ -18,24 +18,27 @@ namespace eve
   {
     struct fill_zero
     {
-      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
+      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as{m}); }
     };
 
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if constexpr( kumi::product_type<T> )
+      if constexpr (kumi::product_type<T>)
       {
         // Can't just T{kumi::map} because that may not work for scalar product types
         T res;
         kumi::for_each(fill_zero{}, res);
         return res;
       }
-      else return T(0);
+      else return T{0};
     }
 
     template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);
   };

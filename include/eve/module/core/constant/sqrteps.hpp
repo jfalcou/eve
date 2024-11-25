@@ -17,18 +17,21 @@ namespace eve
   struct sqrteps_t : constant_callable<sqrteps_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(std::same_as<T, float>  )
+      if constexpr (std::same_as<T, float>)
       {
-        if constexpr(Opts::contains(upper))        return T(0x1.6a09e8p-12f);
-        else                                        return T(0x1.6a09e6p-12f);
+        if constexpr (Opts::contains(upper))       return T{0x1.6a09e8p-12f};
+        else                                       return T{0x1.6a09e6p-12f};
       }
-      else if constexpr(std::same_as<T, double> ) return T(0x1p-26);
+      else if constexpr (std::same_as<T, double> ) return T{0x1p-26};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sqrteps_t, sqrteps_);
   };

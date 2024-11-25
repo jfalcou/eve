@@ -17,16 +17,19 @@ namespace eve
   struct mantissamask_t : constant_callable<mantissamask_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr auto value(as<T>, auto const&)
     {
       using i_t = as_uinteger_t<T>;
 
-      if      constexpr(std::same_as<T, float>  ) return i_t(0x807FFFFFU);
-      else if constexpr(std::same_as<T, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
+      if      constexpr (std::same_as<T, float> ) return i_t{0x807FFFFFU};
+      else if constexpr (std::same_as<T, double>) return i_t{0x800FFFFFFFFFFFFFULL};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr as_uinteger_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr as_uinteger_t<T> operator()(as<T> v) const
+    {
+      return this->behavior(as<as_uinteger_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(mantissamask_t, mantissamask_);
   };

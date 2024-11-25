@@ -17,13 +17,15 @@ namespace eve
   struct valmax_t : constant_callable<valmax_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
       return std::numeric_limits<T>::max();
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(valmax_t, valmax_);
   };

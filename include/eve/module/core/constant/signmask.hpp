@@ -18,22 +18,25 @@ namespace eve
   struct signmask_t : constant_callable<signmask_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if      constexpr( std::same_as<T, float>   ) return T(-0x0p+0f);
-      else if constexpr( std::same_as<T, double>  ) return T(-0x0p+0);
-      else if constexpr( std::same_as<T, uint8_t> ) return T(0x80U);
-      else if constexpr( std::same_as<T, uint16_t>) return T(0x8000U);
-      else if constexpr( std::same_as<T, uint32_t>) return T(0x80000000U);
-      else if constexpr( std::same_as<T, uint64_t>) return T(0x8000000000000000ULL);
-      else if constexpr( std::same_as<T, int8_t>  ) return T(-128);
-      else if constexpr( std::same_as<T, int16_t> ) return T(-32768);
-      else if constexpr( std::same_as<T, int32_t> ) return T(-2147483648LL);
-      else if constexpr( std::same_as<T, int64_t> ) return T(-9223372036854775807LL - 1);
+      if      constexpr (std::same_as<T, float>   ) return T{-0x0p+0f};
+      else if constexpr (std::same_as<T, double>  ) return T{-0x0p+0};
+      else if constexpr (std::same_as<T, uint8_t> ) return T{0x80U};
+      else if constexpr (std::same_as<T, uint16_t>) return T{0x8000U};
+      else if constexpr (std::same_as<T, uint32_t>) return T{0x80000000U};
+      else if constexpr (std::same_as<T, uint64_t>) return T{0x8000000000000000ULL};
+      else if constexpr (std::same_as<T, int8_t>  ) return T{-128};
+      else if constexpr (std::same_as<T, int16_t> ) return T{-32768};
+      else if constexpr (std::same_as<T, int32_t> ) return T{-2147483648LL};
+      else if constexpr (std::same_as<T, int64_t> ) return T{-9223372036854775807LL - 1};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(signmask_t, signmask_);
   };

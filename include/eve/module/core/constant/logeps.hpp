@@ -17,14 +17,17 @@ namespace eve
   struct logeps_t : constant_callable<logeps_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if      constexpr(std::same_as<T, float> ) return T(-0x1.fe2804p+3);
-      else if constexpr(std::same_as<T, double>) return T(-0x1.205966f2b4f12p+5);
+      if      constexpr (std::same_as<T, float> ) return T{-0x1.fe2804p+3};
+      else if constexpr (std::same_as<T, double>) return T{-0x1.205966f2b4f12p+5};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(logeps_t, logeps_);
   };

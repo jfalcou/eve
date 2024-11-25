@@ -14,23 +14,25 @@
 
 namespace eve
 {
-template<typename Options>
-struct allbits_t : constant_callable<allbits_t, Options, lower_option, upper_option>
-{
-  template<typename T>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+  template<typename Options>
+  struct allbits_t : constant_callable<allbits_t, Options, lower_option, upper_option>
   {
-    constexpr auto mask = ~0ULL;
-    if      constexpr(std::integral<T>       )  return T(mask);
-    else if constexpr(std::same_as<T, double>)  return T(std::bit_cast<double>(~0ULL));
-    else if constexpr(std::same_as<T, float >)  return T(std::bit_cast<float>(~0U));
-  }
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
+    {
+      if      constexpr (std::integral<T>       )  return ~T{0};
+      else if constexpr (std::same_as<T, double>)  return T{std::bit_cast<double>(~0ULL)};
+      else if constexpr (std::same_as<T, float >)  return T{std::bit_cast<float>(~0U)};
+    }
 
-  template<plain_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<plain_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
-  EVE_CALLABLE_OBJECT(allbits_t, allbits_);
-};
+    EVE_CALLABLE_OBJECT(allbits_t, allbits_);
+  };
 
 //================================================================================================
 //! @addtogroup core_constants
