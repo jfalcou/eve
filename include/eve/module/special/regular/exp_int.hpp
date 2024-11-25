@@ -20,13 +20,18 @@ namespace eve
   template<typename Options>
   struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option>
   {
-    template<eve::floating_value T, eve::value I>
-    requires (same_lanes_or_scalar<I, T>)
-      EVE_FORCEINLINE  constexpr eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept
-    { return EVE_DISPATCH_CALL(n, v); }
+    template<floating_value T, value I>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, I> operator()(I n, T v) const noexcept
+      requires (same_lanes_or_scalar<I, T>)
+    {
+      return this->behavior(as<as_wide_as_t<T, I>>{}, eve::current_api, this->options(), n, v);
+    }
 
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(exp_int_t, exp_int_);
   };

@@ -17,9 +17,11 @@ namespace eve
   template<typename Options>
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    zipped<T,T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr zipped<T, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
   };

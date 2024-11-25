@@ -23,10 +23,12 @@ namespace eve
   template<typename Options>
   struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options>
   {
-    template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
-    requires (same_lanes_or_scalar<T0, T1, T2>)
-    EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
-    { return EVE_DISPATCH_CALL(a, b, c); }
+    template<floating_value T0, floating_value T1, floating_value T2>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2>)
+    {
+      return this->behavior(as<common_value_t<T0, T1, T2>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(betainc_inv_t, betainc_inv_);
   };
