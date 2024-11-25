@@ -13,31 +13,34 @@
 
 namespace eve
 {
-template<typename Options>
-struct four_minus_pi_t : constant_callable<four_minus_pi_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct four_minus_pi_t : constant_callable<four_minus_pi_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.b7812cp-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.b7812ap-1);
-      else                                         return T(0x1.b7812ap-1);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.b7812cp-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.b7812ap-1};
+        else                                      return T{0x1.b7812ap-1};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.b7812aeef4b9fp-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.b7812aeef4b9ep-1};
+        else                                      return T{0x1.b7812aeef4b9fp-1};
+      }
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.b7812aeef4b9fp-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.b7812aeef4b9ep-1);
-      else                                         return T(0x1.b7812aeef4b9fp-1);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-
-  EVE_CALLABLE_OBJECT(four_minus_pi_t, four_minus_pi_);
-};
+    EVE_CALLABLE_OBJECT(four_minus_pi_t, four_minus_pi_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants

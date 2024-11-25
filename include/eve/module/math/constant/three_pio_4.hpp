@@ -13,31 +13,34 @@
 
 namespace eve
 {
-template<typename Options>
-struct three_pio_4_t : constant_callable<three_pio_4_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct three_pio_4_t : constant_callable<three_pio_4_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.2d97c8p+1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.2d97c6p+1);
-      else                                         return T(0x1.2d97c8p+1);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.2d97c8p+1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.2d97c6p+1};
+        else                                      return T{0x1.2d97c8p+1};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.2d97c7f3321d3p+1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.2d97c7f3321d2p+1};
+        else                                      return T{0x1.2d97c7f3321d2p+1};
+      }
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.2d97c7f3321d3p+1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.2d97c7f3321d2p+1);
-      else                                         return T(0x1.2d97c7f3321d2p+1);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-
-  EVE_CALLABLE_OBJECT(three_pio_4_t, three_pio_4_);
-};
+    EVE_CALLABLE_OBJECT(three_pio_4_t, three_pio_4_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants

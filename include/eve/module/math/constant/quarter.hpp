@@ -13,20 +13,23 @@
 
 namespace eve
 {
-template<typename Options>
-struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_option>
   {
-    return T(0.25);
-  }
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
+    {
+      return T{0.25};
+    }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
-  EVE_CALLABLE_OBJECT(quarter_t, quarter_);
-};
+    EVE_CALLABLE_OBJECT(quarter_t, quarter_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants

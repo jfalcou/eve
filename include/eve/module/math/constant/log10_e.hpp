@@ -13,31 +13,34 @@
 
 namespace eve
 {
-template<typename Options>
-struct log10_e_t : constant_callable<log10_e_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct log10_e_t : constant_callable<log10_e_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.bcb7b2p-2);
-      else if constexpr(Opts::contains(lower)) return T(0x1.bcb7bp-2 );
-      else                                         return T(0x1.bcb7b2p-2);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.bcb7b2p-2};
+        else if constexpr (Opts::contains(lower)) return T{0x1.bcb7bp-2 };
+        else                                      return T{0x1.bcb7b2p-2};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.bcb7b1526e50fp-2};
+        else if constexpr (Opts::contains(lower)) return T{0x1.bcb7b1526e50ep-2};
+        else                                      return T{0x1.bcb7b1526e50ep-2};
+      }
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.bcb7b1526e50fp-2);
-      else if constexpr(Opts::contains(lower)) return T(0x1.bcb7b1526e50ep-2);
-      else                                         return T(0x1.bcb7b1526e50ep-2);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-
-  EVE_CALLABLE_OBJECT(log10_e_t, log10_e_);
-};
+    EVE_CALLABLE_OBJECT(log10_e_t, log10_e_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants

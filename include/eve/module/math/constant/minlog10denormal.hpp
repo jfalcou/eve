@@ -13,27 +13,24 @@
 
 namespace eve
 {
-template<typename Options>
-struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      return T(-0x1.693c6cp+5);
+      if constexpr(std::same_as<T, float>) return T{-0x1.693c6cp+5};
+      else                                 return T{-0x1.439b7422d1bfbp+8};
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      return T(-0x1.439b7422d1bfbp+8);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-
-  EVE_CALLABLE_OBJECT(minlog10denormal_t, minlog10denormal_);
-};
+    EVE_CALLABLE_OBJECT(minlog10denormal_t, minlog10denormal_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants
