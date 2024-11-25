@@ -106,13 +106,13 @@ namespace detail
       else                            return movemask(logical_type{}).first;
     }
 
-    EVE_FORCEINLINE static consteval std::ptrdiff_t bits_per_element_impl()
+    EVE_FORCEINLINE static constexpr std::ptrdiff_t bits_per_element_impl()
     {
       if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
       else                           return decltype(movemask(logical_type{}).second){}();
     }
 
-    static consteval bool is_cheap_impl()
+    static constexpr bool is_cheap_impl()
     {
       if constexpr ( has_emulated_abi_v<logical_type> ) return true;
       else if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
