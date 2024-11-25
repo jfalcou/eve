@@ -15,10 +15,10 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> to_logical(wide<T, N> v) noexcept
-    requires sve_abi<abi_t<T, N>>
-  {
-    return v != 0;
-  }
+template<typename T, typename N>
+EVE_FORCEINLINE auto
+to_logical(wide<T, N> const& v) noexcept requires sve_abi<abi_t<T, N>>
+{
+  return v != 0;
+}
 }

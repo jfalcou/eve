@@ -24,7 +24,8 @@ namespace eve::detail
 // Wide to Logical
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE logical<wide<T, N>> to_logical(wide<T, N> v) noexcept
+EVE_FORCEINLINE auto
+to_logical(wide<T, N> const& v) noexcept
 {
   if constexpr( is_aggregated_v<abi_t<T, N>> )
   {
@@ -39,21 +40,24 @@ EVE_FORCEINLINE logical<wide<T, N>> to_logical(wide<T, N> v) noexcept
 }
 
 template<value T>
-EVE_FORCEINLINE logical<T> to_logical(logical<T> v) noexcept
+EVE_FORCEINLINE auto
+to_logical(logical<T> v) noexcept
 {
   return v;
 }
 
 template<scalar_value T>
-EVE_FORCEINLINE logical<T> to_logical(T v) noexcept
+EVE_FORCEINLINE auto
+to_logical(T v) noexcept
 {
   return logical<T>(v);
 }
 
 template<relative_conditional_expr C, simd_value T>
-EVE_FORCEINLINE as_logical_t<T> to_logical(C c, as<T>) noexcept
+EVE_FORCEINLINE auto
+to_logical(C c, eve::as<T>) noexcept
 {
-  using l_t = as_logical_t<T>;
+  using l_t = typename as_logical<T>::type;
 
   // When dealing with large vector of small integer, the size can't be
   // represented. We then use an unsigned version of the index type.
@@ -86,7 +90,7 @@ EVE_FORCEINLINE as_logical_t<T> to_logical(C c, as<T>) noexcept
   }
   else
   {
-    auto           i     = eve::iota(as<i_t>{});
+    auto           i     = eve::iota(eve::as<i_t>());
     std::ptrdiff_t count = c.count(as<i_t> {});
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
