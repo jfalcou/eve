@@ -18,20 +18,22 @@ namespace eve
   template<typename Options>
   struct prime_floor_t : strict_elementwise_callable<prime_floor_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::unsigned_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
-    template<eve::unsigned_value T, unsigned_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
+    }
+
+    template<unsigned_value T, unsigned_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(prime_floor_t, prime_floor_);
