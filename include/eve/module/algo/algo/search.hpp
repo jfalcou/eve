@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/algo/algo/for_each_selected.hpp>
+#include <eve/module/algo/algo/for_each_iteration_with_expensive_optional_part.hpp>
 #include <eve/module/algo/algo/views/convert.hpp>
 #include <eve/module/algo/algo/views/zip.hpp>
 #include <eve/module/core.hpp>
@@ -29,13 +29,20 @@ namespace detail
    */
   struct for_each_possibly_matching_for_search_
   {
-    template<typename NeedleWide, typename Equal, typename Verify> struct delegate
+    template<
+      typename HaystackI,
+      typename NeedleWide,
+      typename Equal,
+      typename Verify> struct delegate
     {
       NeedleWide needle_front;
       NeedleWide needle_back;
       Equal      equal_fn;
       Verify&    verify;
-      bool       was_stopped = false;
+
+      bool was_stopped = false;
+      unaligned_t<HaystackI> pos = {};
+      decltype(equal_fn(wide_value_type_t<HaystackI>{}, NeedleWide{})) precheck = {};
 
       template<typename I> EVE_FORCEINLINE auto make_verify_adapter(I haystack_it)
       {
@@ -50,39 +57,48 @@ namespace detail
         return res_t {verify, unalign(haystack_it)};
       }
 
-      EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
+      EVE_FORCEINLINE auto tail(auto zip_it, eve::relative_conditional_expr auto ignore)
       {
-        auto front_it = get<0>(zip_it);
+        pos = get<0>(zip_it);
 
         // not loading from `zip_it` here, becasue it's much more expensive for tails.
-        auto         haystack_front = eve::load[ignore](front_it);
-        eve::logical precheck       = equal_fn(haystack_front, needle_front);
+        auto         haystack_front = eve::load[ignore](pos);
+        precheck     = equal_fn(haystack_front, needle_front);
 
-        was_stopped = eve::iterate_selected[ignore](precheck, make_verify_adapter(front_it));
-        return was_stopped;
+        if (!eve::any[ignore](precheck)) {
+          return continue_break_expensive::continue_;
+        }
+
+        precheck = precheck && ignore.mask(as(precheck));
+
+        return continue_break_expensive::expensive;
       }
 
-      EVE_FORCEINLINE bool main_part(auto zip_it)
+      EVE_FORCEINLINE auto main_part(auto zip_it)
       {
         auto [haystack_front, haystack_back] = eve::load(zip_it);
 
-        eve::logical precheck =
-            equal_fn(haystack_front, needle_front) && equal_fn(haystack_back, needle_back);
-        was_stopped = eve::iterate_selected(precheck, make_verify_adapter(get<0>(zip_it)));
+        pos = get<0>(zip_it);
+        precheck = equal_fn(haystack_front, needle_front) && equal_fn(haystack_back, needle_back);
 
-        return was_stopped;
+        if (!eve::any(precheck)) {
+          return continue_break_expensive::continue_;
+        }
+
+        return continue_break_expensive::expensive;
       }
 
       template<eve::relative_conditional_expr C>
-      EVE_FORCEINLINE bool step(auto zip_it, C ignore, auto /*idx*/)
+      EVE_FORCEINLINE auto step(auto zip_it, C ignore)
       {
         if constexpr( C::is_complete && C::is_inverted ) { return main_part(zip_it); }
         else { return tail(zip_it, ignore); }
       }
 
-      EVE_FORCEINLINE bool unrolled_step(auto arr)
+      EVE_FORCEINLINE bool expensive_part()
       {
-        return unroll_by_calling_single_step {}(arr, *this);
+        was_stopped = eve::iterate_selected(precheck, make_verify_adapter(pos));
+        return was_stopped;
       }
     };
 
@@ -103,9 +119,11 @@ namespace detail
       auto haystack_front_back_range =
           views::zip(as_range(haystack_f, haystack_l), unalign(haystack_f) + (needle_len - 1));
 
-      auto iteration = algo::for_each_iteration(
+      auto iteration = algo::for_each_iteration_with_expensive_optional_part(
           traits, haystack_front_back_range.begin(), haystack_front_back_range.end());
-      delegate<NeedleWide, Equal, Verify> d {needle_front, needle_back, equal_fn, verify};
+      delegate<HaystackI, NeedleWide, Equal, Verify> d {
+        needle_front, needle_back, equal_fn, verify, {}, {},
+        };
       iteration(d);
       return d.was_stopped;
     }
@@ -419,6 +437,6 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!
 //!   @godbolt{doc/algo/search.cpp}
 //================================================================================================
-inline constexpr auto search = function_with_traits<search_>;
+inline constexpr auto search = function_with_traits<search_>[eve::algo::unroll<2>];
 
 }
