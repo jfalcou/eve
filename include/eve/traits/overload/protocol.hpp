@@ -141,17 +141,6 @@ using callable_tag_type     = TYPE                                              
 //======================================================================================================================
 //! @addtogroup extensions
 //! @{
-//!   @def EVE_DISPATCH_CALL
-//!   @brief Generate the proper call to current EVE's @callable implementation
-//! @}
-//======================================================================================================================
-#define EVE_DISPATCH_CALL(...)                                                                                         \
-this->behavior(eve::current_api, this->options(), __VA_ARGS__)                                                         \
-/**/
-
-//======================================================================================================================
-//! @addtogroup extensions
-//! @{
 //!   @def EVE_CALLABLE_NAMESPACE
 //!   @brief Register a namespace as suitable for containing eve::callable overloads.
 //! @}
