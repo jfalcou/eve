@@ -26,7 +26,7 @@ namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  min_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  min_(EVE_REQUIRES(cpu_), O const& o, T0 r0, T1 r1, Ts... rs) noexcept
   {
     using r_t = common_value_t<T0, T1, Ts...>;
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
@@ -94,17 +94,20 @@ namespace eve::detail
       return that;
     }
   }
+}
 
-  //================================================================================================
-  // Predicate case
-  //================================================================================================
-  template<typename Callable, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  min_(EVE_REQUIRES(cpu_), O const &, Callable const& f) noexcept
+namespace eve
+{
+  template<typename Options>
+  template<typename Callable>
+  requires (!kumi::product_type<Callable> && !value<Callable>)
+  EVE_FORCEINLINE constexpr auto min_t<Options>::operator()(Callable const& f) const noexcept
   {
-    if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min;
-    else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max;
+    if      constexpr (std::same_as<Callable, callable_is_less_>   ) return eve::min;
+    else if constexpr (std::same_as<Callable, callable_is_greater_>) return eve::max;
     else
+    {
       return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
+    }
   }
 }

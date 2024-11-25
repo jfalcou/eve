@@ -15,20 +15,20 @@ namespace eve
   template<typename Options>
   struct rotl_t : strict_elementwise_callable<rotl_t, Options>
   {
-    template<eve::unsigned_value T, eve::integral_value S>
-    constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
-      requires(eve::same_lanes_or_scalar<T, S>)
+    template<unsigned_value T, integral_value S>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, S> operator()(T v, S s) const
+      requires (same_lanes_or_scalar<T, S>)
     {
-      return EVE_DISPATCH_CALL(v, s);
+      return this->behavior(as<as_wide_as_t<T, S>>{}, eve::current_api, this->options(), v, s);
     }
 
-    template<eve::unsigned_value T, auto S>
+    template<unsigned_value T, auto S>
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S > -l), "[eve::rotl] Rotation is out of range.");
 
-      return EVE_DISPATCH_CALL(v, s);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, s);
     }
 
     EVE_CALLABLE_OBJECT(rotl_t, rotl_);

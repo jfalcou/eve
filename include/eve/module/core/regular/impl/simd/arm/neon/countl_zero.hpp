@@ -28,6 +28,6 @@ namespace eve::detail
     else if constexpr( c == category::uint16x4 ) return vclz_u16(a0);
     else if constexpr( c == category::uint8x16 ) return vclzq_u8(a0);
     else if constexpr( c == category::uint8x8  ) return vclz_u8(a0);
-    else return map(countl_zero, a0);
+    else return map(as<wide<T, N>>{}, countl_zero, a0);
   }
 }

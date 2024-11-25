@@ -18,7 +18,7 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     // saturated integer has no intrinsic and floating is better by default
-    if constexpr((O::contains(saturated) && std::integral<T>) || floating_value<T>) return minus.behavior(cpu_{},o,v);
+    if constexpr((O::contains(saturated) && std::integral<T>) || floating_value<T>) return minus.behavior(as<wide<T, N>>{}, cpu_{},o,v);
     else                                                                             return svneg_x(sve_true<T>(),v);
   }
 
@@ -33,7 +33,7 @@ namespace eve::detail
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
-      if constexpr(O::contains(saturated) && std::integral<T>) return minus.behavior(cpu_{},o,v);
+      if constexpr(O::contains(saturated) && std::integral<T>) return minus.behavior(as<wide<T, N>>{}, cpu_{},o,v);
       else                                                      return svneg_m(alt,expand_mask(mask, as(v)),v);
     }
   }

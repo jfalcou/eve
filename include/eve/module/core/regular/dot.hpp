@@ -15,10 +15,12 @@ namespace eve
   template<typename Options>
   struct dot_t : elementwise_callable<dot_t, Options>
   {
-    template<eve::value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(dot_t, dot_);
   };
@@ -66,9 +68,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    dot_(EVE_REQUIRES(cpu_), O const &, T a,  U b) noexcept
+    template<callable_options O, typename T, typename U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> dot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
       return mul(a, b);
     }

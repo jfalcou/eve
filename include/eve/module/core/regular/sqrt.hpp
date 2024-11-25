@@ -17,9 +17,11 @@ namespace eve
   struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option,
                                        lower_option, upper_option, strict_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(sqrt_t, sqrt_);
   };

@@ -20,13 +20,14 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct ilogb_t : elementwise_callable<ilogb_t, Options>
   {
-    template<eve::floating_value T>
+    template<floating_value T>
     constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<as_integer_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(ilogb_t, ilogb_);
   };

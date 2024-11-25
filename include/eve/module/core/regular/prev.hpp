@@ -28,16 +28,18 @@ namespace eve
   template<typename Options>
   struct prev_t : strict_elementwise_callable<prev_t, Options, pedantic_option,  saturated_option, raw_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
     {
-      EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
-      return EVE_DISPATCH_CALL(v, n);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
+
+    template<value T, integral_value N>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
+       requires(same_lanes_or_scalar<T, N>)
+    {
+      EVE_ASSERT(all(is_gez(n)), "[eve::prev] : second parameter must be positive");
+      return this->behavior(as<as_wide_as_t<T, N>>{}, eve::current_api, this->options(), v, n);
     }
 
     EVE_CALLABLE_OBJECT(prev_t, prev_);

@@ -18,8 +18,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
-      return mul.behavior(cpu_{}, opts, a, b);
+    if constexpr (O::contains(widen))
+      return mul.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, a, b);
+    if constexpr (O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else
       return wide<T, N>(vec_mul(a.storage(), b.storage()));
   }

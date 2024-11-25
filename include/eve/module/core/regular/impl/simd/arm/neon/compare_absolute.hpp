@@ -34,7 +34,7 @@ namespace eve::detail
         if constexpr( c == category::float64x1 ) return vcale_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vcaleq_f64 (v, w);
       }
-      else return compare_absolute.behavior(cpu_{}, v, w, f);
+      else return compare_absolute.behavior(as<logical<wide<T, N>>>{}, cpu_{}, v, w, f);
     }
     else if constexpr(F{} ==  is_greater_equal)
     {
@@ -45,7 +45,7 @@ namespace eve::detail
         if constexpr( c == category::float64x1 ) return vcage_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vcageq_f64 (v, w);
       }
-      else return compare_absolute.behavior(cpu_{}, v, w, f);
+      else return compare_absolute.behavior(as<logical<wide<T, N>>>{}, cpu_{}, v, w, f);
     }
     else if constexpr(F{} == is_less)
     {
@@ -56,7 +56,7 @@ namespace eve::detail
         if constexpr( c == category::float64x1 ) return vcalt_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vcaltq_f64 (v, w);
       }
-      else return compare_absolute.behavior(cpu_{}, v, w, f);
+      else return compare_absolute.behavior(as<logical<wide<T, N>>>{}, cpu_{}, v, w, f);
     }
     else if constexpr(F{} == is_greater)
     {
@@ -67,8 +67,8 @@ namespace eve::detail
         if constexpr( c == category::float64x1 ) return vcagt_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vcagtq_f64 (v, w);
       }
-      else return compare_absolute.behavior(cpu_{}, v, w, f);
+      else return compare_absolute.behavior(as<logical<wide<T, N>>>{}, cpu_{}, v, w, f);
     }
-    else return compare_absolute.behavior(cpu_{}, v, w, f);
+    else return compare_absolute.behavior(as<logical<wide<T, N>>>{}, cpu_{}, v, w, f);
   }
 }

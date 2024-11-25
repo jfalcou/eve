@@ -12,6 +12,8 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/detail/fmx_utils.hpp>
+
 
 namespace eve
 {
@@ -19,14 +21,19 @@ namespace eve
   struct fnma_t : strict_elementwise_callable<fnma_t, Options, pedantic_option, promote_option,
                                              lower_option, upper_option, strict_option>
   {
-    template<eve::value T,eve::value U,eve::value V>
-    requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<eve::value T, eve::value U, eve::value V>
+    constexpr EVE_FORCEINLINE detail::fmx_promote_rt<T, U, V> operator()(T a, U b, V c) const noexcept
+      requires (Options::contains(promote))
+    {
+      return this->behavior(as<detail::fmx_promote_rt<T, U, V>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
-    template<eve::value T,eve::value U,eve::value V>
-    requires(!Options::contains(promote))
-      constexpr EVE_FORCEINLINE
-    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<eve::value T, eve::value U, eve::value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
+      requires (!Options::contains(promote))
+    {
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(fnma_t, fnma_);
   };
@@ -97,7 +104,7 @@ namespace eve
       if constexpr(O::contains(promote))
       {
         using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
-        constexpr auto tgt = as(eve::as<er_t>());
+        constexpr auto tgt = as{as<er_t>{}};
         return fma[o.drop(promote)](minus(convert(a, tgt)), convert(b, tgt), convert(c,tgt));
       }
       else

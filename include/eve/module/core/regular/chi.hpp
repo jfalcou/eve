@@ -19,19 +19,17 @@ namespace eve
   struct chi_t : callable<chi_t, Options, conditional_option>
   {
     template<value T, value U, value V>
-    requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
-    operator()(T a, U lo, V hi) const noexcept
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U lo, V hi) const noexcept
+      requires(same_lanes_or_scalar<T, U, V>)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::chi] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL(a, lo, hi);
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, lo, hi);
     }
 
-    template<value T,  typename  B>
-    constexpr EVE_FORCEINLINE T
-    operator()(T a, B const & belongs) const noexcept
+    template<value T, typename  B>
+    constexpr EVE_FORCEINLINE T operator()(T a, B const & belongs) const noexcept
     {
-      return EVE_DISPATCH_CALL(a, belongs);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a, belongs);
     }
 
     EVE_CALLABLE_OBJECT(chi_t, chi_);

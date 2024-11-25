@@ -30,7 +30,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return rec.behavior(cpu_{}, opts, v0);
+      return rec.behavior(as<wide<T, N>>{}, cpu_{}, opts, v0);
     }
     else if constexpr (O::contains(raw))
     {

@@ -42,7 +42,7 @@ namespace eve ::detail
           _mm256_andnot_ps(_mm256_castsi256_ps(v1), _mm256_castsi256_ps(v0)));
     }
     else if constexpr( i && std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_andnot_si512(v1, v0);
-    else return bit_andnot.behavior(cpu_{}, v1, v0);
+    else return bit_andnot.behavior(as<wide<T, N>>{}, cpu_{}, v1, v0);
   }
 
   // -----------------------------------------------------------------------------------------------

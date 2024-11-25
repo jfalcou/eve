@@ -23,10 +23,11 @@ namespace eve
   template<typename Options>
   struct of_class_t : strict_elementwise_callable<of_class_t, Options>
   {
-    template<std::uint8_t I, eve::floating_value T>
-    constexpr EVE_FORCEINLINE logical<T>
-    operator()(T v, fp_class<I> i) const noexcept
-    { return EVE_DISPATCH_CALL( v, i); }
+    template<std::uint8_t I, floating_value T>
+    constexpr EVE_FORCEINLINE logical<T> operator()(T v, fp_class<I> i) const noexcept
+    {
+      return this->behavior(as<logical<T>>{}, eve::current_api, this->options(), v, i);
+    }
 
     EVE_CALLABLE_OBJECT(of_class_t, of_class_);
   };
@@ -95,8 +96,7 @@ namespace eve
   {
 
     template<std::uint8_t I, typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    of_class_(EVE_REQUIRES(cpu_), O const &, T const& x,  fp_class<I>) noexcept
+    EVE_FORCEINLINE constexpr auto of_class_(EVE_REQUIRES(cpu_), O const&, T const& x, fp_class<I>) noexcept
     {
       using li_t = logical<T>;
       li_t r{false};

@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if constexpr(O::contains_any(widen, left))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -31,7 +31,7 @@ namespace eve::detail
       if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                    (O::contains(saturated) && std::integral<T>))
       {
-        return sub.behavior(cpu_{}, opts, a, b);
+        return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
       //  If not, we can mask if there is no alterative value
       else  if  constexpr( !C::has_alternative )
@@ -42,7 +42,7 @@ namespace eve::detail
       // If not, we delegate to the automasking
       else
       {
-        return sub.behavior(cpu_{}, opts, a, b);
+        return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
     }
   }
@@ -57,14 +57,14 @@ namespace eve::detail
     }
     else if constexpr(O::contains(widen))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
       // We call the saturated sub if required or we just go to the common case of doing a-b
       if constexpr((O::contains(lower) || O::contains(upper)) && floating_value<T>)
       {
-        return sub.behavior(cpu_{}, opts, a, b);
+        return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
       else if constexpr(O::contains(saturated) && std::integral<T>) return wide<T, N>(svqsub(a, b));
       else                                                          return wide<T, N>(svsub_x(sve_true<T>(), a, b));

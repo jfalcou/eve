@@ -24,25 +24,42 @@ namespace eve
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr
-    zipped<common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires(same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return this->behavior(as<zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>>>{}, eve::current_api, this->options(), t0, t1, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    auto operator()(Tup const & t) const noexcept -> decltype(zip(min(t),max(t)))
-    requires(kumi::size_v<Tup> >= 2)
-    { return EVE_DISPATCH_CALL(t); }
+    template <kumi::non_empty_product_type Tup>
+    using r_t = decltype(zip(min(std::declval<Tup>()), max(std::declval<Tup>())));
 
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr r_t<Tup> operator()(Tup const& t) const noexcept
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return this->behavior(as<r_t<Tup>>{}, eve::current_api, this->options(), t);
+    }
+
+    // This function is out-of-line because of a circular dependency involving is_less
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    EVE_FORCEINLINE constexpr auto operator()(Callable const& f) const noexcept
+      requires(!kumi::product_type<Callable> && !value<Callable>)
+    {
+      if constexpr (std::same_as<Callable, callable_is_less_>) return functor<minmax_t>;
+      else if constexpr (std::same_as<Callable, callable_is_greater_>)
+      {
+        return [](auto x, auto y) { return kumi::reorder<1,0>(functor<minmax_t>(x,y)); };
+      }
+      else
+      {
+        return [f](auto x, auto y)
+        {
+          auto check = f(y, x);
+          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
+        };
+      }
+    }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
   };
@@ -123,7 +140,7 @@ namespace eve
     template<typename W>
     constexpr bool prefer_min_max() noexcept
     {
-      if constexpr( scalar_value<W> ) return true;
+      if constexpr (scalar_value<W>) return true;
       else
       {
         constexpr bool is_ints64 = match(categorize<W>(),
@@ -138,12 +155,11 @@ namespace eve
     }
 
 
-    template<value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
+    template<callable_options O, value T0, value T1, value... Ts>
+    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), O const&, T0 v0, T1 v1, Ts... vs) noexcept
+      -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
     {
-      if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>()  || sizeof...(Ts) > 0)
+      if constexpr (prefer_min_max<common_value_t<T0,T1,Ts...>>() || (sizeof...(Ts) > 0))
       {
         return zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...));
       }
@@ -156,30 +172,9 @@ namespace eve
       }
     }
 
-    // -----  Predicate case
-    template<typename Callable, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
-    {
-      if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
-      else if constexpr( std::same_as<Callable, callable_is_greater_> )
-      {
-        return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
-      }
-      else
-      {
-        return [f](auto x, auto y)
-        {
-          auto check = f(y, x);
-          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
-        };
-      }
-    }
-
-    template<conditional_expr C, value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), C const& c, O const &, T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
+    template<callable_options O, conditional_expr C, value T0, value T1, value... Ts>
+    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), C const& c, O const&, T0 v0, T1 v1, Ts... vs) noexcept
+      -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
     {
       return zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...));
     }

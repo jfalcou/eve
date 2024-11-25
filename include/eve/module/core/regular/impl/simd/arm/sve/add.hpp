@@ -20,7 +20,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return add.behavior(cpu_{}, opts, v, w);
+      return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -32,13 +32,13 @@ namespace eve::detail
       if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
                    (O::contains(saturated) && std::integral<T>))
       {
-        return add.behavior(cpu_{}, opts, v, w);
+        return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
       else
       {
         //  if saturated on integer, we don't have masked op so we delegate
         if        constexpr (O::contains(saturated) && std::integral<T>)
-          return add.behavior(cpu_{}, opts, v, w);
+          return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
         //  If not, we can mask if there is no alterative value
         else  if  constexpr (!C::has_alternative)
         {
@@ -48,7 +48,7 @@ namespace eve::detail
         // If not, we delegate to the automasking
         else
         {
-          return add.behavior(cpu_{}, opts, v, w);
+          return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
         }
       }
     }
@@ -61,14 +61,14 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return add.behavior(cpu_{}, opts, v, w);
+      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
       // We call the saturated add if required or we just go to the common case of doing v+w
       if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) )
       {
-        return add.behavior(cpu_{}, opts, v, w);
+        return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
       else if constexpr(O::contains(saturated) && std::integral<T>)
       {

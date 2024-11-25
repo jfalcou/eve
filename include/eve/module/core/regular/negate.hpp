@@ -17,9 +17,11 @@ namespace eve
   struct negate_t : elementwise_callable<negate_t, Options>
   {
     template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(negate_t, negate_);
   };
@@ -74,9 +76,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    negate_(EVE_REQUIRES(cpu_), O const &, T const &a,  T const &b) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto negate_(EVE_REQUIRES(cpu_), O const&, T const &a, T const &b) noexcept
     {
       if constexpr( signed_value<T> )
         return a * sign(b);

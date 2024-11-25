@@ -26,6 +26,6 @@ namespace eve::detail
     // PEDANTIC, INTEGRAL, UPPER, ETC... ---
     // We don't care about PROMOTE as we only accept similar types.
     else
-      return fma.behavior(cpu_{}, opts, a, b, c);
+      return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
   }
 }

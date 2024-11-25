@@ -17,13 +17,14 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-  requires (x86_abi<abi_t<T, N>> && O::contains(widen))
+    requires (x86_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return mul.behavior(cpu_{}, opts, v, w);
+    return mul.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+    requires (x86_abi<abi_t<T, N>> && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
@@ -41,13 +42,13 @@ namespace eve::detail
           auto aapbb = mul[opts](aa, bb);
           return slice(aapbb, eve::upper_);
         }
-        else                                             return mul.behavior(cpu_{}, opts, a, b);
+        else                                             return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
      }
-      else                                               return mul.behavior(cpu_{}, opts, a, b);
+      else                                               return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -119,7 +120,7 @@ namespace eve::detail
         constexpr auto smul = [](auto va, auto vb) { return va * vb; };
 
         if constexpr (N::value >= 2) return aggregate(smul, s, b);
-        else                         return map(smul, s, b);
+        else                         return map(as<wide<T, N>>{}, smul, s, b);
       }
     }
   }
@@ -149,13 +150,13 @@ namespace eve::detail
           auto s =  slice(aapbb, eve::upper_);
           return if_else(cx,s,src);
         }
-        else                                             return add.behavior(cpu_{}, opts, a, b);
+        else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
-      else                                               return add.behavior(cpu_{}, opts, a, b);
+      else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -165,7 +166,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
-      else                                          return mul.behavior(cpu_{}, opts, a, b);
+      else                                          return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
   }
 }

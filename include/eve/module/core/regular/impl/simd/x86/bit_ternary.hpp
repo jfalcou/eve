@@ -53,7 +53,7 @@ namespace eve::detail
         else if constexpr(K == 0xb1) return bit_or(bit_and(a, c), bit_andnot(bit_not(b), c));
         else if constexpr(K == 0xc5) return bit_or(bit_and(a, b), bit_notand(a, bit_not(c)));
         else if constexpr(K == 0xd1) return bit_or(bit_not(bit_or(b, c)), bit_and(a, b));
-        else return bit_ternary.behavior(cpu_{}, o, c_t{}, a, b, c);
+        else return bit_ternary.behavior(as<wide<T, N>>{}, cpu_{}, o, c_t{}, a, b, c);
       };
       return bit_cast(doit(opts,va, vb, vc), as<w_t>());
     }
@@ -70,7 +70,7 @@ namespace eve::detail
         else if constexpr( ca == category::uint32x16) return _mm512_ternarylogic_epi32(a, b, c, K);
         else if constexpr( ca == category::uint32x8 ) return _mm256_ternarylogic_epi32(a, b, c, K);
         else if constexpr( ca == category::uint32x4 ) return _mm_ternarylogic_epi32(a, b, c, K);
-        else return bit_ternary.behavior(cpu_{}, o, c_t{}, a, b, c);
+        else return bit_ternary.behavior(as<wide<T, N>>{}, cpu_{}, o, c_t{}, a, b, c);
       };
       return bit_cast(doit(opts, va, vb, vc), as<w_t>());
     }

@@ -24,7 +24,7 @@ requires ppc_abi<abi_t<double, N>>
 
   if constexpr( c_o == category::int64x2 ) return vec_cts(r, 0);
   else if constexpr( c_o == category::uint64x2 ) return vec_ctu(r, 0);
-  else return map(convert, v, tgt);
+  else return map(as<wide<U, N>>{}, convert, v, tgt);
 }
 
 template<typename N, arithmetic_scalar_value U>
@@ -36,7 +36,7 @@ requires ppc_abi<abi_t<float, N>>
 
   if constexpr( c_o == category::int32x4 ) return vec_cts(r, 0);
   else if constexpr( c_o == category::uint32x4 ) return vec_ctu(r, 0);
-  else return map(convert, v, tgt);
+  else return map(as<wide<U, N>>{}, convert, v, tgt);
 }
 
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>

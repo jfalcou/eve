@@ -19,7 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return add.behavior(cpu_{}, opts, v, w);
+    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, typename T, typename N>
@@ -44,11 +44,11 @@ namespace eve::detail
             auto vvpww = add[opts](vv, ww);
             return slice(vvpww, eve::upper_);
           }
-          else                                             return add.behavior(cpu_{}, opts, v, w);
+          else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
         }
-        else                                               return add.behavior(cpu_{}, opts, v, w);
+        else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
-      else                                                 return add.behavior(cpu_{}, opts, v, w);
+      else                                                 return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else if constexpr(O::contains(saturated) && std::integral<T>)
     {
@@ -66,7 +66,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x8  )             return _mm_adds_epu16   (v, w);
       else if constexpr( c == category::int8x16   )             return _mm_adds_epi8    (v, w);
       else if constexpr( c == category::uint8x16  )             return _mm_adds_epu8    (v, w);
-      else                                                      return add.behavior(cpu_{}, opts, v, w);
+      else                                                      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -140,9 +140,9 @@ namespace eve::detail
           auto s =  slice(vvpww, eve::upper_);
           return if_else(cx,s,src);
         }
-        else                                             return add.behavior(cpu_{}, opts, v, w);
+        else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
-      else                                               return add.behavior(cpu_{}, opts, v, w);
+      else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else if constexpr(O::contains(saturated))
     {
@@ -161,7 +161,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x8  )             return _mm_mask_adds_epu16(src, m, v, w);
       else if constexpr( c == category::int8x16   )             return _mm_mask_adds_epi8(src, m, v, w);
       else if constexpr( c == category::uint8x16  )             return _mm_mask_adds_epu8(src, m, v, w);
-      else                                                      return add.behavior(cpu_{}, opts, v, w);
+      else                                                      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -184,7 +184,7 @@ namespace eve::detail
       else if constexpr( match(c,category::int8x64 , category::uint8x64 ) ) return _mm512_mask_add_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x32 , category::uint8x32 ) ) return _mm256_mask_add_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x16 , category::uint8x16 ) ) return _mm_mask_add_epi8    (src, m, v, w);
-      else                                                                  return add.behavior(cpu_{}, opts, v, w);
+      else                                                                  return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
   }
 }

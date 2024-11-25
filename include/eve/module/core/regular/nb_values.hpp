@@ -22,9 +22,11 @@ namespace eve
  template<typename Options>
   struct nb_values_t : elementwise_callable<nb_values_t, Options>
   {
-    template<value T,  value U>
+    template<value T, value U>
     EVE_FORCEINLINE constexpr as_integer_t<common_value_t<T, U>, unsigned> operator()(T a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    {
+      return this->behavior(as<as_integer_t<common_value_t<T, U>, unsigned>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(nb_values_t, nb_values_);
   };
@@ -76,7 +78,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto nb_values_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       using ui_t = as_integer_t<T, unsigned>;
@@ -84,12 +86,12 @@ namespace eve
       {
         auto aa = eve::detail::bitinteger(a);
         auto bb = eve::detail::bitinteger(b);
-        auto z  = if_else(is_unordered(a, b), eve::valmax(eve::as<ui_t>()), bit_cast(dist(bb, aa), as<ui_t>()));
+        auto z  = if_else(is_unordered(a, b), eve::valmax(as<ui_t>{}), bit_cast(dist(bb, aa), as<ui_t>{}));
         return inc[is_ltz(signnz(a) * signnz(b))](z);
       }
       else
       {
-        return dist[saturated](bit_cast(a, as<ui_t>()), bit_cast(b, as<ui_t>()));
+        return dist[saturated](bit_cast(a, as<ui_t>{}), bit_cast(b, as<ui_t>{}));
       }
     }
   }

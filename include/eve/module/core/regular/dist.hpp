@@ -20,14 +20,16 @@
 
 namespace eve
 {
- template<typename Options>
+  template<typename Options>
   struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option,
                                                upper_option, lower_option, strict_option>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires(eve::same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(dist_t, dist_);
   };

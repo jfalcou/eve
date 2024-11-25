@@ -17,12 +17,12 @@ namespace eve
   template<typename Options>
   struct is_lessgreater_t : strict_elementwise_callable<is_lessgreater_t, Options, definitely_option>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (same_lanes_or_scalar<T, U>)
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_lessgreater] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL(a, b);
+      return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_lessgreater_t, is_lessgreater_);
@@ -76,20 +76,20 @@ namespace eve
 
   namespace detail
   {
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_lessgreater_(EVE_REQUIRES(cpu_),
-                    O const & ,
-                    logical<T> const& a, logical<U> const& b) noexcept
+                    O const& ,
+                    logical<T> a, logical<U> b) noexcept
     {
       if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a != b);
       else                                              return a != b;
     }
 
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr  common_logical_t<T,U>
     is_lessgreater_(EVE_REQUIRES(cpu_),
-                    O const & o,
+                    O const& o,
                     T const& a, U const& b)  noexcept
     {
       return  is_not_equal[o](a, b) && is_ordered(a, b);

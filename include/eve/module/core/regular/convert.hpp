@@ -16,23 +16,26 @@ namespace eve
   template<typename Options>
   struct convert_t: callable<convert_t, Options, saturated_option>
   {
+    template<product_type T, product_type U>
+    using r_t = std::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
+
     template<product_type Src, product_type Tgt>
-    requires(kumi::result::flatten_all_t<Src>::size() == kumi::result::flatten_all_t<Tgt>::size())
-    EVE_FORCEINLINE constexpr auto operator()(Src const& src, as<Tgt> tgt) const noexcept
+    EVE_FORCEINLINE constexpr r_t<Src, Tgt> operator()(Src const& src, as<Tgt> tgt) const noexcept
+      requires(kumi::result::flatten_all_t<Src>::size() == kumi::result::flatten_all_t<Tgt>::size())
     {
-      return EVE_DISPATCH_CALL(src, tgt);
+      return this->behavior(as<r_t<Src, Tgt>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     template<logical_value Src, logical_scalar_value Tgt>
     EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
-      return EVE_DISPATCH_CALL(src, tgt);
+      return this->behavior(as<as_wide_as_t<Tgt, Src>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     template<value Src, plain_scalar_value Tgt>
     EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
-      return EVE_DISPATCH_CALL(src, tgt);
+      return this->behavior(as<as_wide_as_t<Tgt, Src>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     EVE_CALLABLE_OBJECT(convert_t, convert_);

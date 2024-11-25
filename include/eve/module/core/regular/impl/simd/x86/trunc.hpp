@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
     }
     else
-      return trunc.behavior(cpu_{}, o, a0);
+      return trunc.behavior(as<wide<T, N>>{}, cpu_{}, o, a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -70,6 +70,6 @@ namespace eve::detail
       else return if_else(cx, v, src);
     }
     else
-      return trunc.behavior(cpu_{}, cx, o, v);
+      return trunc.behavior(as<wide<T, N>>{}, cpu_{}, cx, o, v);
   }
 }

@@ -24,9 +24,11 @@ namespace eve
  template<typename Options>
   struct ulpdist_t : elementwise_callable<ulpdist_t, Options>
   {
-    template<value T,  value U>
+    template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(ulpdist_t, ulpdist_);
   };
@@ -82,7 +84,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr T ulpdist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       if constexpr( integral_value<T> )
@@ -92,13 +94,13 @@ namespace eve
       else if constexpr( scalar_value<T> )
       {
         if( is_equal[numeric](a, b) ) return T(0);
-        if( is_unordered(a, b) ) return inf(eve::as<T>());
-        return nb_values(a, b)*half(eve::as(a));
+        if( is_unordered(a, b) ) return inf(as<T>{});
+        return nb_values(a, b)*half(eve::as{a});
       }
       else if constexpr( simd_value<T> )
       {
         auto inen = is_not_equal[numeric](a, b);
-        return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+convert(nb_values(a, b), eve::as<eve::element_type_t<T>>()));
+        return half[inen](eve::as{a})*(eve::inf[is_unordered(a, b)&&inen](as{a})+convert(nb_values(a, b), as<eve::element_type_t<T>>{}));
       }
     }
   }

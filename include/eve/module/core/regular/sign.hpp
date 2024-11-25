@@ -24,7 +24,7 @@ namespace eve
   {
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    { return this->behavior(as<T>{}, eve::current_api, this->options(), a); }
 
     EVE_CALLABLE_OBJECT(sign_t, sign_);
   };
@@ -80,17 +80,17 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T sign_(EVE_REQUIRES(cpu_),
                                       O const&,
                                       T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return one[is_nez(a)](eve::as(a));
+        return one[is_nez(a)](eve::as{a});
       else  if constexpr( floating_value<T> )
         return signnz[is_nez(a)](a);
       else
-        return eve::max(eve::min(a,one(eve::as(a))), mone(eve::as(a)));
+        return eve::max(eve::min(a,one(eve::as{a})), mone(eve::as{a}));
     }
   }
 }

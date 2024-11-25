@@ -27,7 +27,7 @@ namespace eve::detail
       constexpr auto cat = categorize<wide<T, N>>();
 
       if      constexpr( match(cat, category::unsigned_)  ) return v;
-      else if constexpr( match(cat, category::size64_)    ) return map(eve::abs, v);
+      else if constexpr( match(cat, category::size64_)    ) return map(as<wide<T, N>>{}, eve::abs, v);
       else if constexpr( cat == category::float32x4       ) return vabsq_f32(v);
       else if constexpr( cat == category::int32x4         ) return vabsq_s32(v);
       else if constexpr( cat == category::int16x8         ) return vabsq_s16(v);

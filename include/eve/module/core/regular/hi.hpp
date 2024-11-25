@@ -21,12 +21,14 @@ namespace eve
     template<typename T>
     struct result
     {
-      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>, unsigned>>,T>;
     };
 
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type
-    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<value T>
+    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T a) const noexcept
+    {
+      return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(hi_t, hi_);
   };

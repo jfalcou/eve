@@ -20,27 +20,27 @@ namespace eve
     template<typename C, typename T, typename U> struct result;
 
     template<typename C, typename T, typename U>
-    requires(requires { typename common_value<T,U>::type; } && !conditional_expr<C>)
-    struct result<C,T,U> : as_wide_as<common_value_t<T,U>,C> {};
+    requires(requires { typename common_value<T, U>::type; } && !conditional_expr<C>)
+    struct result<C, T, U> : as_wide_as<common_value_t<T, U>, C> {};
 
     template<typename C, typename T, typename U>
-    requires(requires { typename common_logical<T,U>::type; } && !conditional_expr<C>)
-    struct result<C, logical<T>, logical<U>> : as_wide_as<common_logical_t<T,U>,C> {};
+    requires(requires { typename common_logical<T, U>::type; } && !conditional_expr<C>)
+    struct result<C, logical<T>, logical<U>> : as_wide_as<common_logical_t<T, U>, C> {};
 
     template<typename C, typename  T, generator U>
     requires(!conditional_expr<C>)
-    struct result<C, T, U> : as_wide_as<T,C>
+    struct result<C, T, U> : as_wide_as<T, C>
     {};
 
     template<typename C, generator T, typename  U>
     requires(!conditional_expr<C>)
-    struct result<C, T, U> : as_wide_as<U,C>
+    struct result<C, T, U> : as_wide_as<U, C>
     {};
 
     // Handle conditional_expr so that mask is properly computed in all case
     template<conditional_expr C, typename T, typename U>
-    requires(requires { typename common_value<T,U>::type; })
-    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<common_value_t<T,U>>>{})),T,U>
+    requires(requires { typename common_value<T, U>::type; })
+    struct result<C, T, U> : result<decltype(std::declval<C>().mask(as<as_logical_t<common_value_t<T, U>>>{})), T, U>
     {};
 
     template<conditional_expr C, typename T, typename U>
@@ -51,66 +51,60 @@ namespace eve
     {};
 
     template<conditional_expr C, typename T, generator U>
-    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<T>>{})),T,U>
+    struct result<C, T, U> : result<decltype(std::declval<C>().mask(as<as_logical_t<T>>{})), T, U>
     {};
 
     template<conditional_expr C, generator T, typename U>
-    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<U>>{})),T,U>
+    struct result<C, T, U> : result<decltype(std::declval<C>().mask(as<as_logical_t<U>>{})), T, U>
     {};
 
     //==================================================================================================================
 
     // IF_ELSE with a value as condition
     template<value C, value T, value U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
-    operator()(C mask, T v0, U v1) const noexcept
-    requires(eve::same_lanes_or_scalar<C,T,U>)
+    EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
+      requires (eve::same_lanes_or_scalar<C, T, U>)
     {
-      return EVE_DISPATCH_CALL(mask,v0,v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     template<value C, typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
-    operator()(C mask, T v0, U v1) const noexcept
-    requires(   (eve::same_lanes_or_scalar<C,T> && generator<U> && value<T>)
-            ||  (eve::same_lanes_or_scalar<C,U> && generator<T> && value<U>)
-            )
+    EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
+      requires(   (eve::same_lanes_or_scalar<C, T> && generator<U> && value<T>)
+              ||  (eve::same_lanes_or_scalar<C, U> && generator<T> && value<U>)
+              )
     {
-      return EVE_DISPATCH_CALL(mask,v0,v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     // IF_ELSE with a conditional_expr as condition
     template<conditional_expr C, value T, value U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
-    operator()(C mask, T v0, U v1) const noexcept
-    requires(eve::same_lanes_or_scalar<T,U>)
+    EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
+      requires (eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(mask,v0,v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     template<conditional_expr C, typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
-    operator()(C mask, T v0, U v1) const noexcept
-    requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
+    EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
+      requires ((generator<U> && value<T>) || (generator<T> && value<U>))
     {
-      return EVE_DISPATCH_CALL(mask,v0,v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     // IF_ELSE with explicit bool
     template<value T, value U>
-    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
-    operator()(bool mask, T v0, U v1) const noexcept
-    requires(eve::same_lanes_or_scalar<T,U>)
+    EVE_FORCEINLINE constexpr typename result<bool, T, U>::type operator()(bool mask, T v0, U v1) const noexcept
+      requires (eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
+      return this->behavior(as<typename result<bool, T, U>::type>{}, eve::current_api, this->options(), logical<std::uint8_t>(mask), v0, v1);
     }
 
     template<typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
-    operator()(bool mask, T v0, U v1) const noexcept
-    requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
+    EVE_FORCEINLINE constexpr typename result<bool, T, U>::type operator()(bool mask, T v0, U v1) const noexcept
+      requires ((generator<U> && value<T>) || (generator<T> && value<U>))
     {
-      return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
+      return this->behavior(as<typename result<bool, T, U>::type>{}, eve::current_api, this->options(), logical<std::uint8_t>(mask), v0, v1);
     }
 
     EVE_CALLABLE_OBJECT(if_else_t, if_else_);

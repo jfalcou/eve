@@ -22,7 +22,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_greater_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_greater_(EVE_REQUIRES(avx512_),
                                                        C          const& mask,
                                                        O          const& opts,
                                                        wide<T, N> const& v,
@@ -31,7 +31,7 @@ namespace eve::detail
   {
     if constexpr( C::has_alternative || O::contains(definitely))
     {
-      return is_greater.behavior(cpu_{}, opts, v, w);
+      return is_greater.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v, w);
     }
     else
     {

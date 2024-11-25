@@ -22,9 +22,11 @@ namespace eve
 template<typename Options>
 struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option>
 {
-  template<eve::value T>
+  template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  {
+    return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+  }
 
   EVE_CALLABLE_OBJECT(sqr_t, sqr_);
 };
@@ -74,8 +76,8 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!     3.  Contrary to the  non-decorated case, it guarantees
 //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
 //!      specifically, for any integer value `x`, the call evaluates to:
-//!      [`valmax(as(x))`](@ref valmax) as soon as `abs[saturated](x)`
-//!      is greater than `sqrtvalmax(as(x))`.
+//!      [`valmax(as{x})`](@ref valmax) as soon as `abs[saturated](x)`
+//!      is greater than `sqrtvalmax(as{x})`.
 //!     4. The square is done in a 'round toward \f$-\infty\f$ mode. The product is guaranted
 //!       to be less or equal to the exact one.
 //!     5. The square is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
@@ -83,7 +85,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!
 //!  @note
 //!      For  [integral signed values](@ref eve::value)   if `eve::abs[eve::saturated](x)`
-//!      is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
+//!      is greater than `eve::Sqrtvalmax(as{x})` the corresponding element result
 //!      is undefined.
 //!
 //!  @groupheader{Example}
@@ -95,21 +97,21 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //================================================================================================
 
   namespace detail
-  { 
+  {
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    sqr_(EVE_REQUIRES(cpu_), O const &o, T const &a0) noexcept
+    sqr_(EVE_REQUIRES(cpu_), O const&o, T const &a0) noexcept
     {
       if constexpr(O::contains(saturated))
       {
         if constexpr( scalar_value<T> )
         {
-          return (eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
+          return (abs[saturated](a0) > sqrtvalmax(as{a0})) ? valmax(as{a0}) : sqr(a0);
         }
         else
         {
-          return if_else(eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
+          return if_else(abs[saturated](a0) > sqrtvalmax(as{a0}), valmax(as{a0}), sqr(a0));
         }
       }
       else
@@ -117,4 +119,4 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
     }
   }
 }
- 
+

@@ -24,7 +24,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, v0);
+    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, v0);
     else if constexpr( current_api >= asimd )
     {
       if      constexpr( cat == category::float32x2 ) return vsqrt_f32(v0);

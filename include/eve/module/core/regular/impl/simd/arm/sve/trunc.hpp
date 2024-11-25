@@ -34,6 +34,6 @@ namespace eve::detail
 
     if      constexpr(C::is_complete && !C::is_inverted)  return alt;
     else if constexpr(!O::contains(almost  ))            return svrintz_m(alt, cond.mask(as(v)), v);
-    else                                                  return trunc.behavior(cpu_{}, opts, v);
+    else                                                  return trunc.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
   }
 }

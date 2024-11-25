@@ -37,7 +37,7 @@ requires x86_abi<abi_t<T, N>>
     else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_CEIL);
   }
   else
-    return ceil.behavior(cpu_{}, o, a0);
+    return ceil.behavior(as<wide<T, N>>{}, cpu_{}, o, a0);
 }
 
   // -----------------------------------------------------------------------------------------------
@@ -61,6 +61,6 @@ requires x86_abi<abi_t<T, N>>
       else if constexpr( match(c, category::float_))   return if_else(cx, eve::ceil(v), src);
     }
     else
-      return ceil.behavior(cpu_{}, cx, o, v);
+      return ceil.behavior(as<wide<T, N>>{}, cpu_{}, cx, o, v);
   }
 }

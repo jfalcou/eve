@@ -24,8 +24,8 @@ namespace eve::detail
       constexpr auto cat = categorize<wide<T, N>>();
       if      constexpr( cat == category::uint8x16    ) return vrbitq_u8(v);
       else if constexpr( cat == category::uint8x8     ) return vrbit_u8(v);
-      else return bit_reverse.behavior(cpu_{}, opts, v);
+      else return bit_reverse.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     }
-    else return bit_reverse.behavior(cpu_{}, opts, v);
+    else return bit_reverse.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
   }
 }

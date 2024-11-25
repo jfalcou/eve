@@ -16,16 +16,15 @@ namespace eve
   template<typename Options>
   struct fmod_t : elementwise_callable<fmod_t, Options>
   {
-    template<eve::floating_value T0, floating_value T1>
-    requires(eve::same_lanes_or_scalar<T0, T1>)
+    template<floating_value T0, floating_value T1>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
     {
-      return EVE_DISPATCH_CALL(t0, t1);
+      return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), t0, t1);
     }
 
     EVE_CALLABLE_OBJECT(fmod_t, fmod_);
   };
-
 
 //================================================================================================
 //! @addtogroup core_arithmetic

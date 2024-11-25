@@ -21,7 +21,7 @@ namespace eve::detail
                                      wide<T, N> a1) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if( sizeof(T) == 8 ) return negate.behavior(cpu_{}, opts, a0, a1);
+    if( sizeof(T) == 8 ) return negate.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0, a1);
     else if( sizeof(T) == 4 ) return _mm_sign_epi32(a0, a1);
     else if( sizeof(T) == 2 ) return _mm_sign_epi16(a0, a1);
     else if( sizeof(T) == 1 ) return _mm_sign_epi8(a0, a1);
@@ -36,7 +36,7 @@ namespace eve::detail
                                      wide<T, N> a1) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if( sizeof(T) == 8 ) return negate.behavior(cpu_{}, opts, a0, a1);
+    if( sizeof(T) == 8 ) return negate.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0, a1);
     else if( sizeof(T) == 4 ) return _mm256_sign_epi32(a0, a1);
     else if( sizeof(T) == 2 ) return _mm256_sign_epi16(a0, a1);
     else if( sizeof(T) == 1 ) return _mm256_sign_epi8(a0, a1);

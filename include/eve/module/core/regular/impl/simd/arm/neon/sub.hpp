@@ -41,7 +41,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x4 ) return fix(vsubl_u16(v, w));
       else if constexpr( c == category::int8x8   ) return fix(vsubl_s8 (v, w));
       else if constexpr( c == category::uint8x8  ) return fix(vsubl_u8 (v, w));
-      else return sub.behavior(cpu_{}, opts, v, w);
+      else return sub.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
     }
   }
 
@@ -55,11 +55,11 @@ namespace eve::detail
     }
     else if constexpr(O::contains_any(lower, upper))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && integral_value<T>)
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {

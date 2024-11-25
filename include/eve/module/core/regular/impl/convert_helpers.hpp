@@ -88,7 +88,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_un
 //================================================================================================
 // wide<->wide default convert implementation
 template<typename In, typename Out>
-EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
+EVE_FORCEINLINE as_wide_t<Out, cardinal_t<In>> convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
   using out_t = as_wide_t<Out, cardinal_t<In>>;
 
@@ -99,7 +99,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexce
   }
   else
   {
-    return map(convert, v0, tgt);
+    return map(as<out_t>{}, convert, v0, tgt);
   }
 }
 
@@ -151,14 +151,14 @@ EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 }
 
 template<typename T, typename N, typename U>
-EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
+EVE_FORCEINLINE wide<U, N> convert_slice(wide<T, N> v, as<U> tgt)
 {
   if constexpr( N::value > 1 )
   {
     auto [l, h] = v.slice();
     return wide<U, N>(convert(l, tgt), convert(h, tgt));
   }
-  else return map(convert, v, tgt);
+  else return map(as<wide<U, N>>{}, convert, v, tgt);
 }
 
 // Convert integer from 2^n -> 2^n+1

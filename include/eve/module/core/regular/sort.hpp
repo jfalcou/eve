@@ -16,13 +16,17 @@ namespace eve
   template<typename Options>
   struct sort_t : callable<sort_t, Options>
   {
-    template<eve::simd_value T, typename Less>
+    template<simd_value T, typename Less>
     constexpr EVE_FORCEINLINE T operator()(T v, Less l) const noexcept
-    { return EVE_DISPATCH_CALL(v, l); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, l);
+    }
 
-     template<eve::value T>
+     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sort_t, sort_);
   };
@@ -111,7 +115,7 @@ namespace eve
       else
       {
         T ab = x;
-        T ba = eve::swap_adjacent(ab, g);
+        T ba = swap_adjacent(ab, g);
         auto [aa, bb] = minmax(less)(ab, ba);
         x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
         return bitonic_merge_impl(x, less, full, lane<G / 2>);
@@ -123,7 +127,7 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T bitonic_merge(T x, Less less, fixed<G>) noexcept
     {
-      return bitonic_merge_impl(x, less, lane<G * 2>, eve::lane<G>);
+      return bitonic_merge_impl(x, less, lane<G * 2>, lane<G>);
     }
 
     // G - length of monotonic sequence
@@ -142,16 +146,16 @@ namespace eve
 
     template <typename T, typename Less, callable_options O>
     constexpr EVE_FORCEINLINE
-    T sort_(EVE_REQUIRES(cpu_), O const &, T x, Less less) noexcept
+    T sort_(EVE_REQUIRES(cpu_), O const&, T x, Less less) noexcept
     {
-      return make_bitonic(x, less, eve::lane<T::size()>);
+      return make_bitonic(x, less, lane<T::size()>);
     }
 
     template <typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    T sort_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
+    T sort_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
-      return sort(x, eve::is_less);
+      return sort(x, is_less);
     }
   }
 }

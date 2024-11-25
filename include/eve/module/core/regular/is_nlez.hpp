@@ -17,11 +17,10 @@ namespace eve
   template<typename Options>
   struct is_nlez_t : elementwise_callable<is_nlez_t, Options>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_nlez_t, is_nlez_);
@@ -76,20 +75,19 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_nlez_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_nlez_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr( unsigned_value<T> )
+      if constexpr (unsigned_value<T>)
         return is_nez(a);
       else
       {
-        if constexpr( scalar_value<T> )
+        if constexpr (scalar_value<T>)
         {
-          if constexpr( integral_value<T> ) return is_gtz(a);
-          else if constexpr( floating_value<T> ) return is_gtz(a) || is_nan(a);
+          if constexpr (integral_value<T>) return is_gtz(a);
+          else if constexpr (floating_value<T>) return is_gtz(a) || is_nan(a);
         }
-        else return is_not_less_equal(a, zero(eve::as(a)));
+        else return is_not_less_equal(a, zero(as{a}));
       }
     }
   }

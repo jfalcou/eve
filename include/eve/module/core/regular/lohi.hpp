@@ -21,12 +21,15 @@ namespace eve
     template<typename T>
     struct result
     {
-      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>, unsigned>>, T>;
       using type = zipped<base, base>;
     };
 
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const
+    {
+      return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(lohi_t, lohi_);
   };
@@ -73,7 +76,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
     lohi_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
     {
@@ -81,7 +84,7 @@ namespace eve
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto uia0  = bit_cast(a0, as<ui_t>());
+        auto uia0  = bit_cast(a0, as<ui_t>{});
         return zip(ui_t(uia0 & ui_t(0xF)), ui_t((uia0 & ui_t(0xF0)) >> 4));
       }
       else
@@ -98,14 +101,14 @@ namespace eve
           using vi_t = wide<si_t, cardinal_t<T>>;
           auto constexpr p = as_pattern([](auto i, auto c) { return (i < c/2) ? 2*i : 2*(i - c/2) + 1; });
 
-          auto uia0 = bit_cast(a0, as<ui_t>());
+          auto uia0 = bit_cast(a0, as<ui_t>{});
           auto z    = eve::shuffle(uia0, p).slice();
-          return zip(bit_cast(z[lo_idx], as<vi_t>()), bit_cast(z[hi_idx], as<vi_t>()));
+          return zip(bit_cast(z[lo_idx], as<vi_t>{}), bit_cast(z[hi_idx], as<vi_t>{}));
         }
         else
         {
           using r_t  = std::array<si_t, 2>;
-          auto z     = bit_cast(a0, as<r_t>());
+          auto z     = bit_cast(a0, as<r_t>{});
           return zip(z[lo_idx], z[hi_idx]);
         }
       }

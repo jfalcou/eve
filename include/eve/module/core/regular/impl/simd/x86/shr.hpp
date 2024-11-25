@@ -39,7 +39,7 @@ namespace eve::detail
     else  if constexpr(              c == category::uint64x2 ) return _mm_srli_epi64(w, s);
     else  if constexpr(              c == category::uint32x4 ) return _mm_srli_epi32(w, s);
     else  if constexpr(              c == category::uint16x8 ) return _mm_srli_epi16(w, s);
-    else                                                       return shr.behavior(cpu_{}, opts, w, s);
+    else                                                       return shr.behavior(as<wide<T, N>>{}, cpu_{}, opts, w, s);
   }
 
   template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value S>
@@ -69,7 +69,7 @@ namespace eve::detail
     else  if constexpr(                 c == category::uint64x8 ) return _mm512_srlv_epi64(w, sc);
     else  if constexpr(                 c == category::uint32x16) return _mm512_srlv_epi32(w, sc);
     else  if constexpr(                 c == category::uint16x32) return _mm512_srlv_epi16(w, sc);
-    else                                                          return shr.behavior(cpu_{}, opts, w, s);
+    else                                                          return shr.behavior(as<wide<T, N>>{}, cpu_{}, opts, w, s);
   }
 
   // shr[mask](wide_val, wide_mask)

@@ -20,7 +20,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(saturated))
     {
-      return is_eqz.behavior(cpu_{}, opts, v);
+      return is_eqz.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
     else if constexpr( current_api >= asimd      )
     {
@@ -45,8 +45,8 @@ namespace eve::detail
       else if constexpr( cat == category::uint64x2 ) return vceqzq_u64(v);
       else if constexpr( cat == category::int64x1  ) return vceqz_s64(v);
       else if constexpr( cat == category::int64x2  ) return vceqzq_s64(v);
-      else return is_eqz.behavior(cpu_{}, opts, v);
+      else return is_eqz.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
-    else return is_eqz.behavior(cpu_{}, opts, v);
+    else return is_eqz.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
   }
 }

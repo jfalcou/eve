@@ -20,9 +20,11 @@ namespace eve
   template<typename Options>
   struct bitofsign_t : elementwise_callable<bitofsign_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(bitofsign_t, bitofsign_);
   };
@@ -89,7 +91,7 @@ namespace eve
     template<value T, callable_options O>
     constexpr T  bitofsign_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      return bit_and(a, signmask(eve::as(a)));
+      return bit_and(a, signmask(as{a}));
     }
   }
 }

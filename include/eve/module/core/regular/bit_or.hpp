@@ -19,20 +19,20 @@ namespace eve
     template<value T0, value T1>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1);
+      return this->behavior(as<bit_value_t<T0, T1>>{}, eve::current_api, this->options(), t0, t1);
     }
     
     template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return this->behavior(as<bit_value_t<T0, T1, Ts...>>{}, eve::current_api, this->options(), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
       requires (kumi::size_v<Tup> >= 2)
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<kumi::apply_traits_t<bit_value, Tup>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(bit_or_t, bit_or_);

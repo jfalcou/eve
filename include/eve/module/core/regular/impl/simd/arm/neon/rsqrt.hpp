@@ -19,7 +19,7 @@ namespace eve::detail
     constexpr auto cat = categorize<that_t>();
     if constexpr(O::contains(pedantic))
     {
-      return rsqrt.behavior(cpu_{}, o, v0);
+      return rsqrt.behavior(as<wide<T, N>>{}, cpu_{}, o, v0);
     }
     else if constexpr(O::contains(raw))
     {
@@ -30,7 +30,7 @@ namespace eve::detail
         if constexpr( cat == category::float64x1 ) return vrsqrte_f64(v0);
         else if constexpr( cat == category::float64x2 ) return vrsqrteq_f64(v0);
       }
-      else return map(rsqrt, v0);
+      else return map(as<wide<T, N>>{}, rsqrt, v0);
     }
     else
     {
@@ -63,7 +63,7 @@ namespace eve::detail
           return that_t(vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv));
         }
       }
-      else return map(rsqrt, v0);
+      else return map(as<wide<T, N>>{}, rsqrt, v0);
     }
   }
 }

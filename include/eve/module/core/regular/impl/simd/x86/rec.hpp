@@ -28,7 +28,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, o, v);
+    if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
     else if constexpr(O::contains(raw))
     {
      if      constexpr( c == category::float32x16) return _mm512_rcp14_ps(v);
@@ -77,7 +77,7 @@ namespace eve::detail
         if      constexpr( c == category::float32x4 ) return _mm_div_ps(one(eve::as(v)), v);
         else if constexpr( c == category::float64x2 ) return _mm_div_pd(one(eve::as(v)), v);
       }
-      return rec.behavior(cpu_{}, o, v);
+      return rec.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
     }
     else
     {
@@ -110,7 +110,7 @@ namespace eve::detail
     auto src = alternative(mask, a0, as(a0));
 
     if constexpr( C::is_complete )                              return src;
-    else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, opts, a0);
+    else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
     else
     {
       auto m   = expand_mask(mask, as(a0)).storage().value;

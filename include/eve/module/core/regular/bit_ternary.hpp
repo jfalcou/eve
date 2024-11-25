@@ -25,11 +25,10 @@ namespace eve
   struct bit_ternary_t : callable<bit_ternary_t, Options>
   {
     template<std::uint8_t K, value T0, value T1, value T2>
-    requires(eve::same_lanes_or_scalar<T0, T1, T2>)
-      EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2>
-    operator()( std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2> operator()(std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
+      requires(eve::same_lanes_or_scalar<T0, T1, T2>)
     {
-      return EVE_DISPATCH_CALL(k, t0,  t1, t2);
+      return this->behavior(as<bit_value_t<T0, T1, T2>>{}, eve::current_api, this->options(), k, t0, t1, t2);
     }
 
     EVE_CALLABLE_OBJECT(bit_ternary_t, bit_ternary_);
@@ -125,7 +124,7 @@ namespace eve
       auto xc = bit_cast(wc, as<i_t>());
       auto doit = []([[maybe_unused]] auto a,  [[maybe_unused]] auto b, [[maybe_unused]]  auto c)
       {
-        if constexpr(K == 0x00) return zero(as(a));
+        if constexpr(K == 0x00) return zero(as{a});
         if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
         if constexpr(K == 0x02) return bit_notand(bit_or(a, b), c);
         if constexpr(K == 0x03) return bit_not(bit_or(a, b));
@@ -380,9 +379,9 @@ namespace eve
         if constexpr(K == 0xfc) return bit_or(b, a);
         if constexpr(K == 0xfd) return bit_or(a, b, bit_not(c));
         if constexpr(K == 0xfe) return bit_or(a, b, c);
-        if constexpr(K == 0xff) return eve::allbits(as(a));
+        if constexpr(K == 0xff) return eve::allbits(as{a});
       };
-      return bit_cast(doit(xa, xb, xc), as<T>());
+      return bit_cast(doit(xa, xb, xc), as<T>{});
     }
   }
   template < int a, int b, int c, int d, int e, int f , int g, int h>

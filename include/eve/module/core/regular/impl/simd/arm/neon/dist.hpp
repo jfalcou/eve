@@ -21,7 +21,7 @@ namespace eve::detail
   {
     if constexpr((O::contains(saturated) && std::integral<T>) || O::contains(lower) || O::contains(upper))
     {
-      return dist.behavior(cpu_{}, opts, v, w);
+      return dist.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -45,9 +45,9 @@ namespace eve::detail
       {
               if constexpr( c == category::float64x1 ) return vabd_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vabdq_f64 (v, w);
-        else return dist.behavior(cpu_{}, opts, v, w);
+        else return dist.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
-      else return dist.behavior(cpu_{}, opts, v, w);
+      else return dist.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
   }
 }

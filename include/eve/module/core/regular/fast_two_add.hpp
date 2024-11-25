@@ -19,10 +19,11 @@ namespace eve
   struct fast_two_add_t : elementwise_callable<fast_two_add_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>>
-    operator()(T t, U u) const noexcept
-    { return EVE_DISPATCH_CALL(t, u); }
+    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>> operator()(T t, U u) const noexcept
+      requires(eve::same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<zipped<common_value_t<T, U>, common_value_t<T, U>>>{}, eve::current_api, this->options(), t, u);
+    }
 
     EVE_CALLABLE_OBJECT(fast_two_add_t, fast_two_add_);
   };

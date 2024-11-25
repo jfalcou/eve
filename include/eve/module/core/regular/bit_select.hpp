@@ -17,10 +17,11 @@ namespace eve
   template<typename Options>
   struct bit_select_t : strict_elementwise_callable<bit_select_t, Options>
   {
-    template<eve::value M, value T, value U>
-    constexpr EVE_FORCEINLINE bit_value_t<T, U, M>
-    operator()(M m, T u, U v) const
-    { return EVE_DISPATCH_CALL(m, u, v); }
+    template<value M, value T, value U>
+    constexpr EVE_FORCEINLINE bit_value_t<T, U, M> operator()(M m, T u, U v) const
+    {
+      return this->behavior(as<bit_value_t<T, U, M>>{}, eve::current_api, this->options(), m, u, v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_select_t, bit_select_);
   };

@@ -21,7 +21,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, a0);
+    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
     else if constexpr( c == category::float64x8 ) return _mm512_sqrt_pd(a0);
     else if constexpr( c == category::float32x16) return _mm512_sqrt_ps(a0);
     else if constexpr( c == category::float64x4 ) return _mm256_sqrt_pd(a0);
@@ -47,7 +47,7 @@ namespace eve::detail
     {
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-      if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, a0);
+      if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
       else if constexpr( c == category::float32x16) return _mm512_mask_sqrt_ps(src, m, a0);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_sqrt_pd(src, m, a0);
       else if constexpr( c == category::float32x8 ) return _mm256_mask_sqrt_ps(src, m, a0);

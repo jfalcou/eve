@@ -53,14 +53,14 @@ namespace eve::detail
           auto v32 = bit_cast(r_t(32u), as<ru_t2>{});
           return bit_cast(eve::min(w,v32), as<r_t>());
         }
-        else return countl_zero.behavior(cpu_{}, opts, a0);
+        else return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
       }
       else
-        return countl_zero.behavior(cpu_{}, opts, a0);
+        return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
     }
     else
     {
-      return countl_zero.behavior(cpu_{}, opts, a0);
+      return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
     }
   }
 
@@ -83,6 +83,6 @@ namespace eve::detail
     else if constexpr( c == category::uint32x8 ) return r_t(_mm256_mask_lzcnt_epi32(src, m, a0));
     else if constexpr( c == category::uint64x2 ) return r_t(_mm_mask_lzcnt_epi64(src, m, a0));
     else if constexpr( c == category::uint32x4 ) return r_t(_mm_mask_lzcnt_epi32(src, m, a0));
-    else return countl_zero.behavior(cpu_{}, opts, a0);
+    else return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, a0);
   }
 }

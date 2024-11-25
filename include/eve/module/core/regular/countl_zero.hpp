@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/countl_zero.hpp>
 #include <bit>
 
 namespace eve
@@ -18,9 +17,11 @@ namespace eve
   template<typename Options>
   struct countl_zero_t : elementwise_callable<countl_zero_t, Options>
   {
-    template<eve::unsigned_value T>
+    template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(countl_zero_t, countl_zero_);
   };
@@ -76,13 +77,13 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T countl_zero_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       if constexpr( scalar_value<T> )
         return T(std::countl_zero(x));
       else
-        return map(countl_zero, x);
+        return map(as<T>{}, countl_zero, x);
     }
   }
 }

@@ -31,10 +31,12 @@ namespace eve
   template<typename Options>
   struct agm_t : elementwise_callable<agm_t, Options>
   {
-    template<eve::floating_value T,  floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<floating_value T, floating_value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires(same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(agm_t, agm_);
   };

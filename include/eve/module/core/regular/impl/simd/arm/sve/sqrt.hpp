@@ -30,7 +30,7 @@ namespace eve::detail
     }
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v);
+      return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     }
     else
     {
@@ -47,7 +47,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v);
+      return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     }
     else
       return svsqrt_z(sve_true<T>(),v);

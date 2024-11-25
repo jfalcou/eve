@@ -18,15 +18,19 @@ namespace eve
   struct fsnm_t : strict_elementwise_callable<fsnm_t, Options, pedantic_option, promote_option,
                                              lower_option, upper_option, strict_option>
   {
-    template<value T,  value U,  value V>
-    requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const
-    { return EVE_DISPATCH_CALL(a, b, c); }
+    template<value T, value U, value V>
+    constexpr EVE_FORCEINLINE detail::fmx_promote_rt<T, U, V> operator()(T a, U b, V c) const
+      requires (Options::contains(promote))
+    {
+      return this->behavior(as<detail::fmx_promote_rt<T, U, V>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
-    template<eve::value T,eve::value U,eve::value V>
-    requires(!Options::contains(promote))
-    constexpr EVE_FORCEINLINE
-    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<value T, value U, value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
+      requires (!Options::contains(promote))
+    {
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(fsnm_t, fsnm_);
   };

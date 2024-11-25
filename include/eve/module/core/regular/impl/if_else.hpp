@@ -58,7 +58,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
     using e_t = element_type_t<r_t>;
 
     if      constexpr(kumi::product_type<U> && kumi::product_type<V>) return tuple_select(cond, t, f);
-    else if constexpr(has_emulated_abi_v<T>)                          return map(if_else, cond, r_t(t), r_t(f));
+    else if constexpr(has_emulated_abi_v<T>)                          return map(as<r_t>{}, if_else, cond, r_t(t), r_t(f));
     else if constexpr(has_aggregated_abi_v<T>)                        return aggregate(if_else, cond, r_t(t), r_t(f));
     else if constexpr(std::same_as<logical<e_t>, element_type_t<T>>)
     {

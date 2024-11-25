@@ -47,7 +47,7 @@ namespace eve::detail
         return xn;
       }
       else
-        return map(rsqrt, v0);
+        return map(as<wide<T, N>>{}, rsqrt, v0);
     }
   }
 }

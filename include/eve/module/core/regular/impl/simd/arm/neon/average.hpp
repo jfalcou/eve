@@ -22,17 +22,17 @@ namespace eve::detail
 template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> average_(EVE_REQUIRES(neon128_),
                                     O          const &opts,
-                                    wide<T, N> const &v0,
-                                    wide<T, N> const &v1) noexcept
+                                    wide<T, N> v0,
+                                    wide<T, N> v1) noexcept
 requires arm_abi<abi_t<T, N>>
 {
   constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( O::contains(upper) && integral_value<T>)
-    return average.behavior(cpu_{}, opts, v0, v1);
-  if constexpr( std::is_floating_point_v<T> )
+  if constexpr (O::contains(upper) && integral_value<T>)
+    return average.behavior(as<wide<T, N>>{}, cpu_{}, opts, v0, v1);
+  if constexpr (std::is_floating_point_v<T> )
     return fma[opts](v0, half(eve::as(v0)), v1 * half(eve::as(v1)));
-  else if constexpr( sizeof(T) == 8 ) return map(average, v0, v1);
+  else if constexpr( sizeof(T) == 8 ) return map(as<wide<T, N>>{}, average, v0, v1);
   else if constexpr( cat == category::int32x4 ) return vhaddq_s32(v0, v1);
   else if constexpr( cat == category::int16x8 ) return vhaddq_s16(v0, v1);
   else if constexpr( cat == category::int8x16 ) return vhaddq_s8(v0, v1);

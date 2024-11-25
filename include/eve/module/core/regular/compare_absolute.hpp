@@ -17,17 +17,17 @@ namespace eve
   template<typename Options>
   struct compare_absolute_t : strict_elementwise_callable<compare_absolute_t, Options, saturated_option>
   {
-    template< value T, typename F>
-    constexpr EVE_FORCEINLINE logical<T>  operator()(T a, F f) const
+    template<value T, typename F>
+    constexpr EVE_FORCEINLINE logical<T> operator()(T a, F f) const
     {
-      return EVE_DISPATCH_CALL(a, f);
+      return this->behavior(as<logical<T>>{}, eve::current_api, this->options(), a, f);
     }
 
     template<value T, value U, typename F>
-    requires(eve::same_lanes_or_scalar<T, U>)
-      constexpr EVE_FORCEINLINE common_logical_t<T, U>  operator()(T a, U b, F f) const
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b, F f) const
+      requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(a, b, f);
+      return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b, f);
     }
 
     EVE_CALLABLE_OBJECT(compare_absolute_t, compare_absolute_);

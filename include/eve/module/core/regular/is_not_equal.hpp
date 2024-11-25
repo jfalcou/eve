@@ -27,11 +27,11 @@ namespace eve
   struct is_not_equal_t : strict_elementwise_callable<is_not_equal_t, Options, numeric_option, definitely_option>
   {
     template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires(eve::same_lanes_or_scalar<T, U>)
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_equal] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL(a, b);
+      return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
 
@@ -104,40 +104,38 @@ namespace eve
   namespace detail
   {
 
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_not_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    template<callable_options O, value T, value U>
+    EVE_FORCEINLINE constexpr common_logical_t<T, U> is_not_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
     {
-      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a != b);
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T, U>(a != b);
       else                                              return a != b;
     }
 
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_not_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, U const& b) noexcept
+    template<callable_options O, value T, value U>
+    EVE_FORCEINLINE constexpr common_logical_t<T, U> is_not_equal_(EVE_REQUIRES(cpu_),O const& o, T const& a, U const& b) noexcept
     {
-      if constexpr(O::contains(definitely))
+      if constexpr (O::contains(definitely))
       {
-        using w_t = common_logical_t<T,U>;
+        using w_t = common_logical_t<T, U>;
         using r_t = common_value_t<T, U>;
 
         auto tol = o[definitely].value(r_t{});
 
         if constexpr(integral_value<decltype(tol)>)
-          return if_else(nb_values(a, b) > tol, true_(as<w_t>()), false_(as<w_t>())) ;
+          return if_else(nb_values(a, b) > tol, true_(as<w_t>{}), false_(as<w_t>{})) ;
         else
           return dist[pedantic](a, b) > tol * max(eve::abs(a), eve::abs(b));
       }
-      else if constexpr(O::contains(numeric))
+      else if constexpr (O::contains(numeric))
       {
         using r_t = common_value_t<T, U>;
         auto tmp  = is_not_equal(a, b);
-        if constexpr( floating_value<r_t> ) return tmp && (is_not_nan(a) || is_not_nan(b));
-        else                                return tmp;
+        if constexpr (floating_value<r_t>) return tmp && (is_not_nan(a) || is_not_nan(b));
+        else                               return tmp;
       }
       else
       {
-        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(a != b);
+        if constexpr (scalar_value<U> && scalar_value<T>) return common_logical_t<T, U>(a != b);
         else                                              return a != b;
       }
     }

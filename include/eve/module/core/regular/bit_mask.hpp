@@ -16,9 +16,11 @@ namespace eve
   template<typename Options>
   struct bit_mask_t : elementwise_callable<bit_mask_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE auto operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE as_arithmetic_t<T> operator()(T v) const
+    {
+      return this->behavior(as<as_arithmetic_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);
   };
@@ -73,9 +75,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    bit_mask_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto bit_mask_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       return is_nez(v).mask();
     }

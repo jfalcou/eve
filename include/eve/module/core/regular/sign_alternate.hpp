@@ -19,11 +19,11 @@ namespace eve
   template<typename Options>
   struct sign_alternate_t : elementwise_callable<sign_alternate_t, Options>
   {
-    template<eve::signed_value T>
+    template<signed_value T>
     constexpr EVE_FORCEINLINE T operator()(T n) const noexcept
     {
-      EVE_ASSERT(eve::all(is_flint(n)), "sign_alternate : some entries are not flint");
-      return EVE_DISPATCH_CALL(n);
+      EVE_ASSERT(all(is_flint(n)), "sign_alternate : some entries are not flint");
+      return this->behavior(as<T>{}, eve::current_api, this->options(), n);
     }
 
     EVE_CALLABLE_OBJECT(sign_alternate_t, sign_alternate_);
@@ -76,11 +76,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    sign_alternate_(EVE_REQUIRES(cpu_), O const &, T const& n) noexcept
+    sign_alternate_(EVE_REQUIRES(cpu_), O const&, T const& n) noexcept
     {
-      return if_else(is_odd(n), mone, one(as(n)));
+      return if_else(is_odd(n), mone, one(as{n}));
     }
   }
 }

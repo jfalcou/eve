@@ -29,7 +29,7 @@ namespace eve::detail
     }
     else
     {
-           if constexpr((current_api >= avx512) || (sizeof(T) == 8))        return sign.behavior(cpu_{}, o, a);
+           if constexpr((current_api >= avx512) || (sizeof(T) == 8))        return sign.behavior(as<wide<T, N>>{}, cpu_{}, o, a);
       else if constexpr((current_api >= avx2) && (c == category::int32x8))  return _mm256_sign_epi32(one(tgt), a);
       else if constexpr((current_api >= avx2) && (c == category::int16x16)) return _mm256_sign_epi16(one(tgt), a);
       else if constexpr((current_api >= avx2) && (c == category::int8x32))  return _mm256_sign_epi8 (one(tgt), a);
@@ -41,7 +41,7 @@ namespace eve::detail
       else if constexpr(c == category::int32x4) return _mm_sign_epi32(one(tgt), a);
       else if constexpr(c == category::int16x8) return _mm_sign_epi16(one(tgt), a);
       else if constexpr(c == category::int8x16) return _mm_sign_epi8(one(tgt), a);
-      else return sign.behavior(cpu_{}, o, a);
+      else return sign.behavior(as<wide<T, N>>{}, cpu_{}, o, a);
     }
   }
 }

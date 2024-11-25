@@ -19,11 +19,10 @@ namespace eve
   template<typename Options>
   struct is_flint_t : elementwise_callable<is_flint_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_flint_t, is_flint_);
@@ -73,7 +72,7 @@ namespace eve
 //!     2. Always returns `true`
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!     4. The call `is_flint[pedantic](x)` also check that the input is not greater or equal to the
-//!        largest consecutive integer in the element type of `x` (`maxflint(as(x))`).
+//!        largest consecutive integer in the element type of `x` (`maxflint(as{x})`).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_flint.cpp}
@@ -85,19 +84,17 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_flint_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_flint_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr( integral_value<T> )
-        return true_(eve::as<T>());
+      if constexpr (integral_value<T>)
+        return true_(as<T>{});
       else
       {
-        auto r = is_eqz(frac[raw](a));
-        if constexpr( O::contains(pedantic) )
-          return r && (a <= eve::maxflint(eve::as<T>()));
+        if constexpr (O::contains(pedantic))
+          return is_eqz(frac(a)) && (a <= eve::maxflint(as<T>{}));
         else
-          return r;
+          return is_eqz(frac[raw](a));
       }
     }
   }

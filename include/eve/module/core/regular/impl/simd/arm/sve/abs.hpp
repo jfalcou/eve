@@ -38,7 +38,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
     
-    if      constexpr(O::contains(saturated))          return abs.behavior(cpu_{}, opts, v);
+    if      constexpr(O::contains(saturated))          return abs.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     else if constexpr( match(c, category::unsigned_) )  return v;
     else                                                return svabs_z(sve_true<T>(),v);
   }

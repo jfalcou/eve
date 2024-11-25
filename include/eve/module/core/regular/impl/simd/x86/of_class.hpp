@@ -38,7 +38,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<std::uint8_t I, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto of_class_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> of_class_(EVE_REQUIRES(avx512_),
                                    C const& cx,
                                    O const& o,
                                    fp_class<I>,
@@ -49,7 +49,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return of_class.behavior(cpu_{}, o, v, v);
+      return of_class.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v, v);
     }
     else
     {

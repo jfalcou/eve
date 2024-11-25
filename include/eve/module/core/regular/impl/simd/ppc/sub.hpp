@@ -22,8 +22,10 @@ namespace eve::detail
     {
       return sub[opts.drop(left)](b, a);
     }
-    else if constexpr( O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
-      return sub.behavior(cpu_{}, opts, a, b);
+    else if constexpr (O::contains(widen))
+      return sub.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, a, b);
+    else if constexpr( O::contains_any(lower, upper) || (O::contains(saturated) && std::integral<T>))
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else
       return wide<T, N>(vec_sub(a.storage(), b.storage()));
   }

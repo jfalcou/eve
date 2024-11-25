@@ -16,18 +16,18 @@ namespace eve
   template<typename Options>
   struct trunc_t : strict_elementwise_callable<trunc_t, Options, almost_option, raw_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
-      return EVE_DISPATCH_CALL(v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
-    template<eve::value T, only_if<signed,unsigned>  U>
-    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
+    template<value T, only_if<signed,unsigned> U>
+    constexpr EVE_FORCEINLINE as_integer_t<T, U> operator()(T v, as<U> target) const noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
-      return EVE_DISPATCH_CALL(v, target);
+      return this->behavior(as<as_integer_t<T, U>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(trunc_t, trunc_);
@@ -89,9 +89,9 @@ namespace eve
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/trunc)
 //================================================================================================
   inline constexpr auto trunc = functor<trunc_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/trunc.hpp>

@@ -17,9 +17,11 @@ namespace eve
   template<typename Options>
   struct countr_one_t : elementwise_callable<countr_one_t, Options>
   {
-    template<eve::unsigned_value T>
+    template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(countr_one_t, countr_one_);
   };
@@ -75,7 +77,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T countr_one_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       if constexpr( scalar_value<T> )

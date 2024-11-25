@@ -23,13 +23,17 @@ namespace eve
   template<typename Options>
   struct bit_reverse_t : strict_elementwise_callable<bit_reverse_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
-    template<eve::value T, integral_scalar_value I >
+    template<value T, integral_scalar_value I >
     constexpr EVE_FORCEINLINE T operator()(T v, I i) const
-    { return EVE_DISPATCH_CALL(v, i); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, i);
+    }
 
     EVE_CALLABLE_OBJECT(bit_reverse_t, bit_reverse_);
   };
