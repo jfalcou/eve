@@ -11,10 +11,14 @@
 //==================================================================================================
 // type tests
 //==================================================================================================
+template<typename T>
+constexpr typename T::split_type test_split(T) { return {}; }
+
 TTS_CASE_TPL( "Check return types of logical operators on wide", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
+  using c_t = eve::cardinal_t<T>;
 
   TTS_EXPR_IS( eve::logical<T>()    && eve::logical<T>()  , eve::logical<T>);
   TTS_EXPR_IS( eve::logical<T>()    && eve::logical<v_t>(), eve::logical<T>);
@@ -23,6 +27,18 @@ TTS_CASE_TPL( "Check return types of logical operators on wide", eve::test::simd
   TTS_EXPR_IS( eve::logical<T>()    || eve::logical<v_t>(), eve::logical<T>);
   TTS_EXPR_IS( eve::logical<v_t>()  || eve::logical<T>()  , eve::logical<T>);
   TTS_EXPR_IS( !eve::logical<T>()                         , eve::logical<T>);
+
+  if constexpr (c_t::value == 1)
+  {
+    auto x = eve::logical<T>{};
+    TTS_EXPECT_NOT_COMPILES(x, { test_split(x); });
+  }
+  else
+  {
+    TTS_EXPR_IS((typename eve::logical<T>::split_type){}, eve::logical<typename T::split_type>);
+  }
+
+  TTS_EXPR_IS((typename eve::logical<T>::combined_type){}, eve::logical<typename T::combined_type>);
 };
 
 //==================================================================================================

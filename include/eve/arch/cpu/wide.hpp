@@ -39,6 +39,21 @@
 
 #include <type_traits>
 
+namespace eve::detail
+{
+  template<typename T, typename N>
+  struct wide_split_type_helper
+  { };
+
+  template<typename T, typename N>
+  requires(N::value > 1)
+  struct wide_split_type_helper<T, N>
+  {
+    //! Type representing a wide of the same type but with a cardinal half the size
+    using split_type = wide<T, typename N::split_type>;
+  };
+}
+
 #if !defined(EVE_DOXYGEN_INVOKED)
 namespace eve
 {
@@ -66,11 +81,11 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>,
+        detail::wide_split_type_helper<Type, Cardinal>
   {
     using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
-    public:
     //! The type stored in the register.
     using value_type = Type;
 
@@ -88,6 +103,9 @@ namespace eve
 
     //! Opt-in for like concept
     using is_like = value_type;
+
+    //! Type representing a wide of the same type but with a cardinal twice the size
+    using combined_type = wide<Type, typename Cardinal::combined_type>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.

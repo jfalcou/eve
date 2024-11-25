@@ -34,6 +34,21 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    template<typename T, typename N>
+    struct logical_split_type_helper
+    { };
+
+    template<typename T, typename N>
+    requires(N::value > 1)
+    struct logical_split_type_helper<T, N>
+    {
+      //! Type representing a logical of the same type but with a cardinal half the size
+      using split_type = logical<wide<T, typename N::split_type>>;
+    };
+  }
+
   //================================================================================================
   //! @addtogroup simd_types
   //! @{
@@ -52,11 +67,11 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>,
+          detail::logical_split_type_helper<Type, Cardinal>
   {
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
-    public:
     //! The type stored in the register.
     using value_type    = logical<Type>;
 
@@ -77,6 +92,9 @@ namespace eve
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Cardinal>;
+
+    //! Type representing a logical wide of the same type but with a cardinal twice the size
+    using combined_type = logical<wide<Type, typename Cardinal::combined_type>>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.

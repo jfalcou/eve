@@ -270,3 +270,28 @@ TTS_CASE_TPL("Check eve::wide insert/set", eve::test::simd::all_types)
     }
   }
 };
+
+//==================================================================================================
+// Split/Combine
+//==================================================================================================
+template<typename T>
+constexpr typename T::split_type test_split(T) { return {}; }
+
+TTS_CASE_TPL("Check eve::wide split_type/combined_type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using c_t = eve::cardinal_t<T>;
+
+  if constexpr (c_t::value == 1)
+  {
+    auto x = T{};
+    TTS_EXPECT_NOT_COMPILES(x, { test_split(x); });
+  }
+  else
+  {
+    TTS_EXPR_IS((typename T::split_type){}, (eve::wide<v_t, typename c_t::split_type>));
+  }
+
+  TTS_EXPR_IS((typename T::combined_type){}, (eve::wide<v_t, typename c_t::combined_type>));
+};
