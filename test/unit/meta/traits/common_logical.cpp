@@ -61,21 +61,24 @@ TTS_CASE_TPL("eve::common_logical on wide x wide"
             )
 <typename T, typename U>( tts::type<kumi::tuple<T, U>> )
 {
-  using Wt = eve::wide<T>;
-  using Wu = eve::wide<U>;
+  using Wt = eve::wide<T, eve::fixed<4>>;
+  using Wu = eve::wide<U, eve::fixed<4>>;
+  using LWt = eve::logical<Wt>;
+  using LWu = eve::logical<Wu>;
 
-  TTS_TYPE_IS((eve::common_logical_t<Wt, Wu>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<Wu>>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, Wu>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, eve::logical<Wu>>), eve::logical<Wt>);
+  TTS_TYPE_IS((eve::common_logical_t<Wt, Wu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<Wt, LWu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<LWt, Wu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<LWt, LWu>), LWt);
 
-  TTS_TYPE_IS((eve::common_logical_t<T, Wu>), eve::logical<Wu>);
-  TTS_TYPE_IS((eve::common_logical_t<T, eve::logical<Wu>>), eve::logical<Wu>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, Wu>), eve::logical<Wu>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, eve::logical<Wu>>), eve::logical<Wu>);
+  // ensure compatibility with eve::detail::map
+  TTS_TYPE_IS((eve::common_logical_t<T, Wu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<T, LWu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, Wu>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, LWu>), LWt);
 
-  TTS_TYPE_IS((eve::common_logical_t<Wt, U>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<U>>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, U>), eve::logical<Wt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, eve::logical<U>>), eve::logical<Wt>);
+  TTS_TYPE_IS((eve::common_logical_t<Wt, U>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<U>>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<LWt, U>), LWt);
+  TTS_TYPE_IS((eve::common_logical_t<LWt, eve::logical<U>>), LWt);
 };
