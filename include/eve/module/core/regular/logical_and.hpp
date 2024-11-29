@@ -20,14 +20,7 @@ namespace eve
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const noexcept
       requires (same_lanes_or_scalar<T, U> && !arithmetic_simd_value<T> && !arithmetic_simd_value<U>)
     {
-      if constexpr (has_emulated_abi_v<common_logical_t<T, U>>)
-      {
-        return convert(EVE_DISPATCH_CALL(a, b), as_element<common_logical_t<T, U>>{});
-      }
-      else
-      {
-        return EVE_DISPATCH_CALL(a, b);
-      }
+      return EVE_DISPATCH_CALL(a, b);
     }
 
     EVE_CALLABLE_OBJECT(logical_and_t, logical_and_);
@@ -91,7 +84,7 @@ namespace eve
       else if constexpr (scalar_value<T> && logical_simd_value<U>)
       {
         using lw_t = as_logical_t<as_wide_as_t<T, U>>;
-        return logical_and(lw_t{a}, lw_t{b});
+        return logical_and(lw_t{a}, convert(b, as_element<lw_t>{}));
       }
       else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>) 
       {
