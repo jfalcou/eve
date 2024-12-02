@@ -84,6 +84,16 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
+
+  namespace detail
+  {
+    // This function is forward declared wrapper around convert, so that internally we can call it anywhere.
+    template<typename T, typename Target>
+    EVE_FORCEINLINE auto call_convert(T x, as<Target> tgt)
+    {
+      return eve::convert(x, tgt);
+    }
+  }
 }
 
 #include <eve/module/core/regular/impl/convert.hpp>
