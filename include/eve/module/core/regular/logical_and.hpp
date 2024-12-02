@@ -81,12 +81,8 @@ namespace eve
       else if constexpr (std::same_as<T, bool>)                                      return logical_and(U{a}, b);
       else if constexpr (std::same_as<U, bool>)                                      return logical_and(a, T{b});
       else if constexpr (logical_simd_value<T> && scalar_value<U>)                   return logical_and(a, T{b});
-      else if constexpr (scalar_value<T> && logical_simd_value<U>)
-      {
-        using lw_t = as_logical_t<as_wide_as_t<T, U>>;
-        return logical_and(lw_t{a}, convert(b, as_element<lw_t>{}));
-      }
-      else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>) 
+      else if constexpr (scalar_value<T> && logical_simd_value<U>)                   return logical_and(b, U{a});
+      else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>)
       {
         if constexpr (scalar_value<T> && scalar_value<U>)                           return T{a && b};
         else                                                                        return bit_cast(a.bits() & b.bits(), as<as_logical_t<T>>{});
@@ -100,7 +96,7 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/logical_and.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/logical_and.hpp>
 #endif
 

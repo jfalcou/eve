@@ -112,7 +112,7 @@ namespace eve
       {
         constexpr bool any_emulated       = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
         constexpr bool has_implementation = requires{ func_t::deferred_call(a, o, x, xs...); };
-        
+
         if constexpr (any_emulated)
         {
           constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
