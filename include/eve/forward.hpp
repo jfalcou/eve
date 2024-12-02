@@ -52,4 +52,7 @@ EVE_FORCEINLINE auto mask_op(C const&                     c,
 template <typename From, typename To>
 To call_simd_cast(From, as<To>);
 
+// This is an inderect wrapper of eve::convert to avoid cycling dependencies
+template <typename From, typename To>
+auto call_convert(From, as<To>);
 }

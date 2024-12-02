@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/as_element.hpp>
 #include <eve/detail/overload.hpp>  // TEMPORARY
 #include <eve/forward.hpp>
 
@@ -235,6 +236,46 @@ namespace eve
     requires(!match_option<condition_key,O,ignore_none_>)
     {
       return base_t::behavior(arch,opts,x0,xs...);
+    }
+  };
+
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct logical_elementwise_callable
+  //!   @brief CRTP base class giving an EVE's @callable the logical elementwise function semantic
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/traits/overload.hpp>
+  //!   @endcode
+  //!
+  //!   Logical elementwise functions in EVE behave as strict elementwise callables but with the added ability to convert
+  //!   the output to a common logical type.
+  //!
+  //!   @tparam Func          Type of current @callable being implemented.
+  //!   @tparam OptionsValues Type of stored options.
+  //!   @tparam Options       List of supported option specifications.
+  //!
+  //!   @see strict_elementwise_callable
+  //! @}
+  //====================================================================================================================
+  template< template<typename> class Func
+          , typename OptionsValues
+          , typename... Options
+          >
+  struct logical_elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
+  {
+    using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
+    {
+      using c_t = common_logical_t<T, Ts...>;
+      auto r = base_t::behavior(arch, opts, x0, xs...);
+      if constexpr (!std::same_as<c_t, bool>) return detail::call_convert(r, as_element<c_t>{});
+      else                                    return r;
     }
   };
 

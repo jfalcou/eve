@@ -12,15 +12,15 @@
 using namespace eve;
 
 template<typename L1> struct rewrap;
-template<typename... Ts> 
+template<typename... Ts>
 struct rewrap<kumi::tuple<Ts...>> { using type = tts::types<Ts...>; };
 
 template<typename L1, typename L2> struct cartesian;
 
-template<typename... T1s, typename... T2s> 
+template<typename... T1s, typename... T2s>
 struct cartesian<tts::types<T1s...>, tts::types<T2s...>>
 {
-  using base       = kumi::result::cartesian_product_t<kumi::tuple<T1s...>,kumi::tuple<T2s...>>; 
+  using base       = kumi::result::cartesian_product_t<kumi::tuple<T1s...>,kumi::tuple<T2s...>>;
   using types_list = typename rewrap<base>::type;
 };
 
@@ -67,7 +67,7 @@ template<typename T, typename U>
 auto test_type(T a, U b) -> decltype(logical_and(a, b)) { return logical_and(a, b); }
 
 TTS_CASE_TPL("Check behavior of eve::logical_and(wide)"
-            , cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types> 
+            , cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>
             )
 <typename T, typename U>( tts::type<kumi::tuple<T, U>> )
 {
@@ -114,4 +114,8 @@ TTS_CASE_WITH("Check behavior of eve::logical_and(logical<wide>)",
             tts::map([](auto e, auto f) -> l_t { return (f > 1) && e; }, l1, da0));
   TTS_EQUAL(eve::logical_and(da0 > 1, l1),
             tts::map([](auto e, auto f) -> dl_t { return bool((e > 1) && f); }, da0, l1));
+
+  // Mixed type regression test, see #1959
+  TTS_EQUAL(eve::logical_and((da0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return e && (da0 > 1).get(0); }, l0));
+  TTS_EQUAL(eve::logical_and(l0, (da0 > 1).get(0)), tts::map([&](auto e) -> l_t { return e && (da0 > 1).get(0); }, l0));
 };
