@@ -88,8 +88,8 @@ namespace eve
   namespace detail
   {
     // This function is forward declared wrapper around convert, so that internally we can call it anywhere.
-    template<typename T, typename Target>
-    EVE_FORCEINLINE auto call_convert(T x, as<Target> tgt)
+    template<simd_value Src, typename Tgt>
+    EVE_FORCEINLINE as_wide_as_t<Tgt, Src> call_convert(Src x, as<Tgt> tgt)
     {
       return eve::convert(x, tgt);
     }

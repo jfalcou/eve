@@ -99,7 +99,8 @@ namespace eve
 
     friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
     {
-      return logical{v && w.value()};
+      return v ? w : logical{false};
+      //return logical{v && w.value()};
     }
 
     template<arithmetic_scalar_value U>
