@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of eve::logical_and(logical<wide>)",
   TTS_EQUAL(eve::logical_and(l0, l1.get(0)),
             tts::map([&](auto e) -> l_t { return e && l1.get(0); }, l0));
   TTS_EQUAL(eve::logical_and(l0.get(0), l1),
-            tts::map([&](auto f) -> l_t { return l0.get(0) && f; }, l1));
+            tts::map([&](auto e) -> l_t { return l0.get(0) && e; }, l1));
   using v_t  = eve::element_type_t<T>;
   using d_t  = eve::downgrade_t<v_t>;
   auto da0   = eve::convert(a0, eve::as<d_t>());

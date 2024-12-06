@@ -74,20 +74,15 @@ namespace eve
 
   namespace detail
   {
+    template <typename T>
+    concept bool_or_scalar = scalar_value<T> || std::same_as<T, bool>;
+
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+      requires (bool_or_scalar<T> && bool_or_scalar<U>) || (std::same_as<T, U>)
     {
-      if      constexpr (std::same_as<T, bool> && std::same_as<U, bool>)             return a && b;
-      else if constexpr (std::same_as<T, bool>)                                      return logical_and(U{a}, b);
-      else if constexpr (std::same_as<U, bool>)                                      return logical_and(a, T{b});
-      else if constexpr (logical_simd_value<T> && scalar_value<U>)                   return logical_and(a, T{b});
-      else if constexpr (scalar_value<T> && logical_simd_value<U>)                   return logical_and(b, U{a});
-      else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>)
-      {
-        if constexpr (scalar_value<T> && scalar_value<U>)                           return T{a && b};
-        else                                                                        return bit_cast(a.bits() & b.bits(), as<as_logical_t<T>>{});
-      }
-      else                                                                          return logical_and(a, convert(b, as<as_logical_t<typename T::value_type>>{}));
+      if  constexpr (bool_or_scalar<T>) return a && b;
+      else                              return bit_cast(a.bits() & b.bits(), as<T>{});
     }
   }
 }

@@ -268,14 +268,36 @@ namespace eve
   struct logical_elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
   {
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
+    using ignore = typename base_t::ignore;
+    using func_t = typename base_t::func_t;
+
+    template<typename T, typename c_t>
+    EVE_FORCEINLINE static constexpr c_t cvt(T e, as<c_t>)
+    {
+      if      constexpr (std::same_as<T, c_t>)                     return e;
+      else if constexpr (std::same_as<T, bool> || scalar_value<T>) return c_t{e};
+      else                                                         return detail::call_convert(e, as_element<c_t>{});
+    }
 
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
     {
       using c_t = common_logical_t<T, Ts...>;
-      auto r = base_t::behavior(arch, opts, x0, xs...);
-      if constexpr (!std::same_as<c_t, bool>) return detail::call_convert(r, as_element<c_t>{});
-      else                                    return r;
+
+      if constexpr (std::same_as<c_t, bool>)
+      {
+        return base_t::adapt_call(arch, opts, x0, xs...);
+      }
+      else
+      {
+        constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+        constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
+        constexpr bool is_convertible = requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
+
+        if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x0, xs...);
+        else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
+        else                              return ignore{};
+      }
     }
   };
 
