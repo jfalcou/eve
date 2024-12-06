@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/as_element.hpp>
 #include <eve/detail/overload.hpp>  // TEMPORARY
 #include <eve/forward.hpp>
 
@@ -105,15 +106,25 @@ namespace eve
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
     {
-      constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
-      constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
-      constexpr bool any_emulated               = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-      constexpr bool any_aggregated             = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
+      constexpr bool any_aggregated = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
 
-      if      constexpr(any_aggregated)                             return aggregate(this->derived(), x, xs...);
-      else if constexpr(any_emulated && supports_map_no_conversion) return map(this->derived(), x, xs...);
-      else if constexpr(has_implementation)                         return func_t::deferred_call(a, o, x, xs...);
-      else                                                          return ignore{};
+      if constexpr (any_aggregated) return aggregate(this->derived(), x, xs...);
+      else
+      {
+        constexpr bool any_emulated       = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+        constexpr bool has_implementation = requires{ func_t::deferred_call(a, o, x, xs...); };
+
+        if constexpr (any_emulated)
+        {
+          constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
+
+          if      constexpr (supports_map_no_conversion) return map(this->derived(), x, xs...);
+          else if constexpr (has_implementation)         return func_t::deferred_call(a, o, x, xs...);
+          else                                           return ignore{};
+        }
+        else if constexpr(has_implementation) return func_t::deferred_call(a, o, x, xs...);
+        else                                  return ignore{};
+      }
     }
 
     template<callable_options O, typename T, typename... Ts>
@@ -225,6 +236,68 @@ namespace eve
     requires(!match_option<condition_key,O,ignore_none_>)
     {
       return base_t::behavior(arch,opts,x0,xs...);
+    }
+  };
+
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct logical_elementwise_callable
+  //!   @brief CRTP base class giving an EVE's @callable the logical elementwise function semantic
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/traits/overload.hpp>
+  //!   @endcode
+  //!
+  //!   Logical elementwise functions in EVE behave as strict elementwise callables but with the added ability to convert
+  //!   the output to a common logical type.
+  //!
+  //!   @tparam Func          Type of current @callable being implemented.
+  //!   @tparam OptionsValues Type of stored options.
+  //!   @tparam Options       List of supported option specifications.
+  //!
+  //!   @see strict_elementwise_callable
+  //! @}
+  //====================================================================================================================
+  template< template<typename> class Func
+          , typename OptionsValues
+          , typename... Options
+          >
+  struct logical_elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
+  {
+    using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
+    using ignore = typename base_t::ignore;
+    using func_t = typename base_t::func_t;
+
+    template<typename T, typename c_t>
+    EVE_FORCEINLINE static constexpr c_t cvt(T e, as<c_t>)
+    {
+      if      constexpr (std::same_as<T, c_t>)                     return e;
+      else if constexpr (std::same_as<T, bool> || scalar_value<T>) return c_t{e};
+      else                                                         return detail::call_convert(e, as_element<c_t>{});
+    }
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
+    {
+      using c_t = common_logical_t<T, Ts...>;
+
+      if constexpr (std::same_as<c_t, bool>)
+      {
+        return base_t::adapt_call(arch, opts, x0, xs...);
+      }
+      else
+      {
+        constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+        constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
+        constexpr bool is_convertible = requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
+
+        if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x0, xs...);
+        else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
+        else                              return ignore{};
+      }
     }
   };
 
