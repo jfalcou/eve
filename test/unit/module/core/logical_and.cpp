@@ -106,16 +106,30 @@ TTS_CASE_WITH("Check behavior of eve::logical_and(logical<wide>)",
             tts::map([&](auto e) -> l_t { return e && l1.get(0); }, l0));
   TTS_EQUAL(eve::logical_and(l0.get(0), l1),
             tts::map([&](auto e) -> l_t { return l0.get(0) && e; }, l1));
+
+  // downgraded
   using v_t  = eve::element_type_t<T>;
   using d_t  = eve::downgrade_t<v_t>;
+  using ld_t  = eve::as_logical_t<d_t>;
   auto da0   = eve::convert(a0, eve::as<d_t>());
-  using dl_t = eve::as_logical_t<d_t>;
   TTS_EQUAL(eve::logical_and(l1, da0 > 1),
-            tts::map([](auto e, auto f) -> l_t { return (f > 1) && e; }, l1, da0));
+            tts::map([](auto e, auto f) -> ld_t { return bool{(f > 1) && e}; }, l1, da0));
   TTS_EQUAL(eve::logical_and(da0 > 1, l1),
-            tts::map([](auto e, auto f) -> dl_t { return bool((e > 1) && f); }, da0, l1));
+            tts::map([](auto e, auto f) -> ld_t { return bool{(e > 1) && f}; }, da0, l1));
 
   // Mixed type regression test, see #1959
-  TTS_EQUAL(eve::logical_and((da0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return e && (da0 > 1).get(0); }, l0));
-  TTS_EQUAL(eve::logical_and(l0, (da0 > 1).get(0)), tts::map([&](auto e) -> l_t { return e && (da0 > 1).get(0); }, l0));
+  TTS_EQUAL(eve::logical_and((da0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{e && (da0 > 1).get(0)}; }, l0));
+  TTS_EQUAL(eve::logical_and(l0, (da0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{e && (da0 > 1).get(0)}; }, l0));
+
+  // upgraded
+  using u_t  = eve::upgrade_t<v_t>;
+  auto ua0   = eve::convert(a0, eve::as<u_t>());
+  TTS_EQUAL(eve::logical_and(l1, ua0 > 1),
+            tts::map([](auto e, auto f) -> l_t { return (f > 1) && e; }, l1, ua0));
+  TTS_EQUAL(eve::logical_and(ua0 > 1, l1),
+            tts::map([](auto e, auto f) -> l_t { return bool((e > 1) && f); }, ua0, l1));
+
+  // // Mixed type regression test, see #1959
+  TTS_EQUAL(eve::logical_and((ua0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{e && (ua0 > 1).get(0)}; }, l0));
+  TTS_EQUAL(eve::logical_and(l0, (ua0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{e && (ua0 > 1).get(0)}; }, l0));
 };

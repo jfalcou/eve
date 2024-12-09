@@ -22,6 +22,11 @@ namespace eve
   {
   };
 
+  // template<>
+  // struct is_logical<bool> : std::true_type
+  // {
+  // };
+
   template<typename T>
   using is_logical_t = typename is_logical<T>::type;
 
