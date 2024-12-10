@@ -108,8 +108,8 @@ namespace eve::detail
       // unsigned first
       else if constexpr (signed_value<ea_t> != signed_value<eb_t>)
       {
-        if constexpr (signed_value<ea_t>) return find_common_logical_reducer<A>{};
-        else                                        return find_common_logical_reducer<B>{};
+        if constexpr (signed_value<ea_t>)           return find_common_logical_reducer<B>{};
+        else                                        return find_common_logical_reducer<A>{};
       }
       // integral first
       else if constexpr (integral_value<ea_t> != integral_value<eb_t>)
@@ -117,6 +117,8 @@ namespace eve::detail
         if constexpr (integral_value<ea_t>)         return find_common_logical_reducer<A>{};
         else                                        return find_common_logical_reducer<B>{};
       }
+      // both types have the same size, signedness and integral-ness, they are functionally the same.
+      else                                          return find_common_logical_reducer<A>{};
     }
 
     template <typename U>
