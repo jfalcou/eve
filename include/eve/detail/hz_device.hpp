@@ -49,13 +49,13 @@ namespace eve
   {
     if constexpr(eve::scalar_value<R>)
     {
-      if(todo){ r = f(ts...); return false_(as(r));}
-      return false_(as(r));
+      if(todo){ r = f(ts...); return false_(as(todo));}
+      return false_(as(todo));
     }
     else
     {
       if(eve::any(todo))  r = if_else(todo, f(ts...), r);
-      return eve::false_(as(r));
+      return eve::false_(as(todo));
     }
   }
 }

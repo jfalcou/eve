@@ -6,51 +6,10 @@
 **/
 //==================================================================================================
 
-#include <eve/module/core.hpp>
 #include "test.hpp"
+#include "unit/module/core/logical_ops.hpp"
 
-template<typename L1> struct rewrap;
-template<typename... Ts>
-struct rewrap<kumi::tuple<Ts...>> { using type = tts::types<Ts...>; };
-
-template<typename L1, typename L2> struct cartesian;
-
-template <typename A, typename B>
-static constexpr auto find_priority_type()
-{
-  using ea_t = eve::as_arithmetic_t<eve::element_type_t<A>>;
-  using eb_t = eve::as_arithmetic_t<eve::element_type_t<B>>;
-
-  if constexpr (std::same_as<ea_t, eb_t>)      return A{};
-  // smallest type
-  else if constexpr (sizeof(ea_t) != sizeof(eb_t))
-  {
-    if constexpr (sizeof(ea_t) < sizeof(eb_t)) return A{};
-    else                                       return B{};
-  }
-  // unsigned first
-  else if constexpr (eve::signed_value<ea_t> != eve::signed_value<eb_t>)
-  {
-    if constexpr (eve::signed_value<ea_t>)     return A{};
-    else                                       return B{};
-  }
-  // integral first
-  else if constexpr (eve::integral_value<ea_t> != eve::integral_value<eb_t>)
-  {
-    if constexpr (eve::integral_value<ea_t>)   return A{};
-    else                                       return B{};
-  }
-}
-
-template<typename T, typename U>
-using priority_t = eve::as_logical_t<decltype(find_priority_type<T, U>())>;
-
-template<typename... T1s, typename... T2s>
-struct cartesian<tts::types<T1s...>, tts::types<T2s...>>
-{
-  using base       = kumi::result::cartesian_product_t<kumi::tuple<T1s...>,kumi::tuple<T2s...>>;
-  using types_list = typename rewrap<base>::type;
-};
+#include <eve/module/core.hpp>
 
 TTS_CASE("eve::common_logical on boolean x boolean")
 {
@@ -73,7 +32,7 @@ TTS_CASE_TPL("eve::common_logical on boolean x other", eve::test::simd::all_type
   TTS_TYPE_IS((eve::common_logical_t<eve::logical<S>, bool>), eve::logical<S>);
 };
 
-TTS_CASE_TPL("eve::common_logical on scalar x scalar", cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
+TTS_CASE_TPL("eve::common_logical on scalar x scalar", tts::cartesian_square<eve::test::scalar::all_types>)
 <typename T, typename U>( tts::type<kumi::tuple<T,U>> )
 {
   using expected_t = priority_t<T, U>;
@@ -84,7 +43,7 @@ TTS_CASE_TPL("eve::common_logical on scalar x scalar", cartesian<eve::test::scal
   TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, eve::logical<U>>), expected_t);
 };
 
-TTS_CASE_TPL("eve::common_logical on wide x wide", cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
+TTS_CASE_TPL("eve::common_logical on wide x wide", tts::cartesian_square<eve::test::scalar::all_types>)
 <typename T, typename U>( tts::type<kumi::tuple<T, U>> )
 {
   using Wt = eve::wide<T, eve::fixed<4>>;
@@ -108,4 +67,13 @@ TTS_CASE_TPL("eve::common_logical on wide x wide", cartesian<eve::test::scalar::
   TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<U>>), LWt);
   TTS_TYPE_IS((eve::common_logical_t<LWt, U>), LWt);
   TTS_TYPE_IS((eve::common_logical_t<LWt, eve::logical<U>>), LWt);
+};
+
+TTS_CASE("eve::common_logical on tuples")
+{
+  using t1 = kumi::tuple<float, unsigned char>;
+  using t2 = kumi::tuple<long long, double>;
+
+  TTS_TYPE_IS((eve::common_logical_t<t1, t2>), eve::logical<float>);
+  TTS_TYPE_IS((eve::common_logical_t<eve::wide<t1>, eve::wide<t2>>), eve::logical<eve::wide<float>>);
 };

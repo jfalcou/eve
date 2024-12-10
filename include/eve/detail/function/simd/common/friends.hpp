@@ -16,6 +16,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/traits/product_type.hpp>
+#include <eve/as_element.hpp>
 #include <eve/forward.hpp>
 
 // Register tag here so we can use them in tagged_dispatch situation
@@ -28,35 +29,6 @@ namespace eve
 namespace eve::detail
 {
   //================================================================================================
-  template<typename T, typename U, typename N>
-  EVE_FORCEINLINE auto self_logor(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
-  {
-    using abi_t = typename logical<wide<T,N>>::abi_type;
-    using abi_u = typename logical<wide<U,N>>::abi_type;
-
-    // Both arguments are aggregated, we can safely slice
-    if constexpr( is_aggregated_v<abi_t> && is_aggregated_v<abi_u> )
-    {
-      auto [vl, vh] = v.slice();
-      auto [wl, wh] = w.slice();
-      return logical<wide<T,N>> { self_logor(eve::current_api,vl, wl)
-                                , self_logor(eve::current_api,vh, wh)
-                                };
-    }
-    else
-    {
-      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> && (sizeof(T) == sizeof(U)) )
-      {
-        return bit_cast ( v.bits() | w.bits(), as(v) );
-      }
-      else
-      {
-        return self_logor(cpu_{}, v, convert(w, as<logical<T>>()));
-      }
-    }
-  }
-
-  //================================================================================================
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
   requires( kumi::product_type<element_type_t<Wide>> )
@@ -67,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      return v.storage() == w.storage();
+      return convert(v.storage() == w.storage(), as_element<as_logical_t<Wide>>());
     }
   }
 
@@ -105,7 +77,7 @@ namespace eve::detail
     }
     else
     {
-      return v.storage() != w.storage();
+      return convert(v.storage() != w.storage(), as_element<as_logical_t<Wide>>());
     }
   }
 
@@ -132,7 +104,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return kumi::to_tuple(v) < kumi::to_tuple(w);
+      return convert(kumi::to_tuple(v) < kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
     }
     else
     {
@@ -146,7 +118,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return kumi::to_tuple(v) <= kumi::to_tuple(w);
+      return convert(kumi::to_tuple(v) <= kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
     }
     else
     {
@@ -160,7 +132,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return kumi::to_tuple(v) > kumi::to_tuple(w);
+      return convert(kumi::to_tuple(v) > kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
     }
     else
     {
@@ -174,7 +146,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return kumi::to_tuple(v) >= kumi::to_tuple(w);
+      return convert(kumi::to_tuple(v) >= kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
     }
     else
     {

@@ -74,9 +74,6 @@ namespace eve
 
   namespace detail
   {
-    template <typename T>
-    concept bool_or_scalar = scalar_value<T> || std::same_as<T, bool>;
-
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
       requires (bool_or_scalar<T> && bool_or_scalar<U>) || (std::same_as<T, U>)
