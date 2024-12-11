@@ -282,21 +282,33 @@ namespace eve
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
     {
-      using c_t = common_logical_t<T, Ts...>;
-
-      if constexpr (std::same_as<c_t, bool>)
+      if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        return base_t::adapt_call(arch, opts, x0, xs...);
+        using cl_t = common_logical_t<T, Ts...>;
+
+        if constexpr (std::same_as<cl_t, bool>)
+        {
+          // treat boolean as a special case: if the output is a boolean then all inputs must be booleans too.
+          return base_t::adapt_call(arch, opts, x0, xs...);
+        }
+        else
+        {
+          // special case: if non of the inputs are logical values, the operation must not be performed on wrapped logicals.
+          constexpr bool non_logical = !eve::logical_value<T> && (... && !eve::logical_value<Ts>);
+          using c_t = std::conditional_t<non_logical, typename cl_t::mask_type, cl_t>;
+
+          constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+          constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
+          constexpr bool is_convertible = requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
+
+          if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x0, xs...);
+          else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
+          else                              return ignore{};
+        }
       }
       else
       {
-        constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-        constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
-        constexpr bool is_convertible = requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
-
-        if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x0, xs...);
-        else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
-        else                              return ignore{};
+        return base_t::behavior(arch, opts, x0, xs...);
       }
     }
   };
