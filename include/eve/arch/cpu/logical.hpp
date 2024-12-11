@@ -140,9 +140,9 @@ namespace eve
     // Comparison operators
     //==============================================================================================
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator==(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
     {
-      return v.value() == w.value();
+      return common_logical_t<T, U>{v.value() == w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator==(logical const& v, bool w) noexcept
@@ -156,9 +156,9 @@ namespace eve
     }
 
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
     {
-      return v.value() != w.value();
+      return common_logical_t<T, U>{v.value() != w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator!=(logical const& v, bool w) noexcept
