@@ -158,31 +158,31 @@ void logical_test_compile_reject(F f)
 }
 
 template<typename M, typename T, typename F, typename FS>
-void logical_test_simd(F f, FS fs, M l0, M l1, T a0)
+void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
 {
   using l_t = eve::element_type_t<M>;
 
-  TTS_EQUAL(f(l0, l1), tts::map([&](auto e, auto f) -> l_t { return fs(e, f); }, l0, l1));
-  TTS_EQUAL(f(l0, l1.get(0)), tts::map([&](auto e) -> l_t { return fs(e, l1.get(0)); }, l0));
-  TTS_EQUAL(f(l0.get(0), l1), tts::map([&](auto e) -> l_t { return fs(l0.get(0), e); }, l1));
+  TTS_EQUAL(ff(l0, l1), tts::map([&](auto e, auto f) -> l_t { return fs(e, f); }, l0, l1));
+  TTS_EQUAL(ff(l0, l1.get(0)), tts::map([&](auto e) -> l_t { return fs(e, l1.get(0)); }, l0));
+  TTS_EQUAL(ff(l0.get(0), l1), tts::map([&](auto e) -> l_t { return fs(l0.get(0), e); }, l1));
 
   // downgraded
   using v_t  = eve::element_type_t<T>;
   using d_t  = eve::downgrade_t<v_t>;
   using ld_t  = eve::as_logical_t<d_t>;
   auto da0   = eve::convert(a0, eve::as<d_t>());
-  TTS_EQUAL(f(l1, da0 > 1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e, f > 1)}; }, l1, da0));
-  TTS_EQUAL(f(da0 > 1, l1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e > 1, f)}; }, da0, l1));
+  TTS_EQUAL(ff(l1, da0 > 1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e, f > 1)}; }, l1, da0));
+  TTS_EQUAL(ff(da0 > 1, l1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e > 1, f)}; }, da0, l1));
 
-  TTS_EQUAL(f((da0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{fs((da0 > 1).get(0), e)}; }, l0));
-  TTS_EQUAL(f(l0, (da0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{fs(e, (da0 > 1).get(0))}; }, l0));
+  TTS_EQUAL(ff((da0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{fs((da0 > 1).get(0), e)}; }, l0));
+  TTS_EQUAL(ff(l0, (da0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{fs(e, (da0 > 1).get(0))}; }, l0));
 
   // upgraded
   using u_t  = eve::upgrade_t<v_t>;
   auto ua0   = eve::convert(a0, eve::as<u_t>());
-  TTS_EQUAL(f(l1, ua0 > 1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e, f > 1)}; }, l1, ua0));
-  TTS_EQUAL(f(ua0 > 1, l1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e > 1, f)}; }, ua0, l1));
+  TTS_EQUAL(ff(l1, ua0 > 1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e, f > 1)}; }, l1, ua0));
+  TTS_EQUAL(ff(ua0 > 1, l1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e > 1, f)}; }, ua0, l1));
 
-  TTS_EQUAL(f((ua0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{fs((ua0 > 1).get(0), e)}; }, l0));
-  TTS_EQUAL(f(l0, (ua0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{fs(e, (ua0 > 1).get(0))}; }, l0));
+  TTS_EQUAL(ff((ua0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{fs((ua0 > 1).get(0), e)}; }, l0));
+  TTS_EQUAL(ff(l0, (ua0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{fs(e, (ua0 > 1).get(0))}; }, l0));
 }
