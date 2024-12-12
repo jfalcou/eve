@@ -78,8 +78,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_andnot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
       requires (bool_or_scalar<T> && bool_or_scalar<U>) || (std::same_as<T, U>)
     {
-      if  constexpr (bool_or_scalar<T>) return a && !b;
-      else                              return bit_cast(a.bits() & (!b).bits(), as<T>{});
+      return a && !b;
     }
   }
 }

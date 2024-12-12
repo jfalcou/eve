@@ -14,19 +14,10 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, scalar_value U, callable_options O>
-  EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(avx512_),
-                                    O                  const& ,
-                                    logical<wide<T,N>> const& a,
-                                    logical<wide<U,N>> const& b) noexcept
-  requires ( x86_abi<abi_t<T,N>> || x86_abi<abi_t<U,N>>)
+  template<arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
+    requires (x86_abi<abi_t<T, N>>)
   {
-    if constexpr(std::same_as<T,U>)
-    {
-      return logical<wide<T,N>>(a.storage() ^ b.storage());
-    }
-    else
-    {
-      return logical_xor(a, convert(b,as<logical<T>>{}));                       }
+    return logical<wide<T, N>>{a.storage() ^ b.storage()};
   }
 }
