@@ -276,42 +276,44 @@ namespace eve
     //==============================================================================================
     //! Perform a logical and operation between two eve::logical
     template<typename U>
-    friend EVE_FORCEINLINE auto operator&&(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
+    friend EVE_FORCEINLINE common_logical_t<logical, logical<wide<U, Cardinal>>>
+    operator&&(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_and(a, b);
     }
 
     //! Perform a logical and operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&&(logical const& w, S s) noexcept
+    friend EVE_FORCEINLINE common_logical_t<logical, S> operator&&(logical const& w, S s) noexcept
     {
       return logical_and(w, s);
     }
 
     //! Perform a logical and operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&&(S s, logical const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<S, logical> operator&&(S s, logical const& w) noexcept
     {
       return logical_and(s, w);
     }
 
     //! Perform a logical or operation between two eve::logical
     template<typename U>
-    friend EVE_FORCEINLINE auto operator||(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
+    friend EVE_FORCEINLINE common_logical_t<logical, logical<wide<U, Cardinal>>>
+    operator||(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_or(a, b);
     }
 
     //! Perform a logical or operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator||(logical const& w, S s) noexcept
+    friend EVE_FORCEINLINE common_logical_t<logical, S> operator||(logical const& w, S s) noexcept
     {
       return logical_or(w, s);
     }
 
     //! Perform a logical or operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator||(S s, logical const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<S, logical> operator||(S s, logical const& w) noexcept
     {
       return logical_or(s, w);
     }
