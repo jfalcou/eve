@@ -21,6 +21,23 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @{
+  //! @concept bool_or_scalar
+  //! @brief The concept `bool_or_scalar<T>` is satisfied if and only if T is a boolean value or
+  //! satisfies the `eve::scalar_value` concept.
+  //!
+  //! @groupheader{Examples}
+  //! - `eve::logical<char>`
+  //! - `float`
+  //! - `bool`
+  //================================================================================================
+  template <typename T> concept bool_or_scalar       = scalar_value<T> || std::same_as<T, bool>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @{
   //! @concept value
   //! @brief The concept `value<T>` is satisfied if and only if T satisfies
   //! either `eve::scalar_value` or `eve::simd_value`.
@@ -150,8 +167,4 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
-
-  //! DOC: TODO
-  template <typename T>
-  concept bool_or_scalar = scalar_value<T> || std::same_as<T, bool>;
 }
