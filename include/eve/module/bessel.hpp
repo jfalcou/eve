@@ -41,3 +41,5 @@
 #include <eve/module/bessel/regular/sph_bessel_y0.hpp>
 #include <eve/module/bessel/regular/sph_bessel_y1.hpp>
 #include <eve/module/bessel/regular/sph_bessel_yn.hpp>
+#include <eve/module/bessel/regular/bessel_j.hpp>
+#include <eve/module/bessel/regular/bessel_y.hpp>
