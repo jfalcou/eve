@@ -278,7 +278,7 @@ namespace eve
 
         if constexpr (std::same_as<cl_t, bool>)
         {
-          // treat boolean as a special case: if the output is a boolean then all inputs must be booleans too.
+          // Booleans never require complex conversion. So we just call the function.
           return base_t::adapt_call(arch, opts, x0, xs...);
         }
         else
