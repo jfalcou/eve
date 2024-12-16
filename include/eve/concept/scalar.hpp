@@ -133,4 +133,22 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 //================================================================================================
 template<typename T>
 concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
+
+//================================================================================================
+//! @ingroup simd_concepts
+//! @{
+//! @concept relaxed_logical_scalar_value
+//! @brief The concept `relaxed_logical_scalar_value<T>` is satisfied if and only if T is a
+//! boolean value or satisfies the `eve::scalar_value` concept.
+//!
+//! @groupheader{Examples}
+//! - `eve::logical<char>`
+//! - `float`
+//! - `bool`
+//================================================================================================
+template <typename T>
+concept relaxed_logical_scalar_value = scalar_value<T> || std::same_as<T, bool>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
