@@ -7,7 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "unit/module/core/logical_ops.hpp"
+#include "unit/module/core/logical_test.hpp"
 
 #include <eve/module/core.hpp>
 
