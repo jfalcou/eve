@@ -15,7 +15,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct bessel_j_t : eve::strict_elementwise_callable<bessel_j_t, Options, eve::spherical_option, eve::cylindrical_option>
+  struct bessel_i_t : eve::strict_elementwise_callable<bessel_i_t, Options, eve::spherical_option, eve::cylindrical_option>
   {
     template<eve::value N, eve::floating_value Z>
     EVE_FORCEINLINE constexpr Z  operator()(N const& n, Z const & z) const noexcept
@@ -26,14 +26,14 @@ namespace eve
         return cb_y(n, z);
     }
 
-    EVE_CALLABLE_OBJECT(bessel_j_t, bessel_j_);
+    EVE_CALLABLE_OBJECT(bessel_i_t, bessel_i_);
   };
 
 //======================================================================================================================
 //! @addtogroup functions
 //! @{
-//!   @var  bessel_j
-//!   @brief Computes the spherical or cylindrical Bessel functions of the second kind,
+//!   @var  bessel_i
+//!   @brief Computes the spherical or cylindrical Modified Bessel functions of the first kind,
 //!
 //!   @code
 //!   #include <eve/functions.hpp>
@@ -45,14 +45,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template<eve::floating_value T> constexpr auto bessel_y(value auto n, floating_value auto z)             noexcept; // 1
+//!      template<eve::floating_value T> constexpr auto bessel_i(value auto n, floating_value auto z)             noexcept; // 1
 //!
 //!      // Semantic modifyier
-//!      template<eve::floating_value T> constexpr auto bessel_y[spherical](value auto n, floating_value auto z)  noexcept; // 2
+//!      template<eve::floating_value T> constexpr auto bessel_i[spherical](value auto n, floating_value auto z)  noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bessel_y[conditional_expr auto c](/*any previous overload*/)                              noexcept; // 3
-//!      constexpr auto bessel_y[logical_value auto m](/*any previous overload*/)                                 noexcept; // 3
+//!      constexpr auto bessel_i[conditional_expr auto c](/*any previous overload*/)                              noexcept; // 3
+//!      constexpr auto bessel_i[logical_value auto m](/*any previous overload*/)                                 noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -77,9 +77,9 @@ namespace eve
 //!   *  [DLMF: Bessel functions](https://dlmf.nist.gov/10.2)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/bessel_y.cpp}
+//!  @godbolt{doc/bessel_i.cpp}
 //======================================================================================================================
-  inline constexpr auto bessel_y = eve::functor<bessel_y_t>;
+  inline constexpr auto bessel_i = eve::functor<bessel_i_t>;
 //======================================================================================================================
 //! @}
 //======================================================================================================================
