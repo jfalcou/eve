@@ -174,8 +174,8 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
   }
   else
   {
-    auto y1 = [](auto x){return cb_y1(x); };
-    auto y0 = [](auto x){return cb_y0(x); };
+    auto y1 = [](auto x1){return cb_y1(x1); };
+    auto y0 = [](auto x2){return cb_y0(x2); };
     using elt_t = element_type_t<T>;
     auto r      = nan(as(x));
     auto isinfx = x == inf(as(x));
