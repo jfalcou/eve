@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-  
+
   template < typename I,  typename T > constexpr EVE_FORCEINLINE
   T cb_j(I nu, T x) noexcept
   {
@@ -46,16 +46,16 @@ namespace eve::detail
             return if_else(flint_nu, kernel_bessel_j_int(nu_int, x), kernel_bessel_j_flt(nu_flt, x));
           }
         }
-      }     
-      else // nu is integral
-      {
-        if      constexpr(simd_value<I> && scalar_value<T>)   return cb_j(nu, w_t(x));
-        else if constexpr(scalar_value<I> && scalar_value<T>) return kernel_bessel_j_int(nu, x);
-        else if constexpr(simd_value<T>)                      return kernel_bessel_j_int(convert(nu, as_element(x)), x);
       }
     }
+    else // nu is integral
+    {
+      if      constexpr(simd_value<I> && scalar_value<T>)   return cb_j(nu, w_t(x));
+      else if constexpr(scalar_value<I> && scalar_value<T>) return kernel_bessel_j_int(nu, x);
+      else if constexpr(simd_value<T>)                      return kernel_bessel_j_int(convert(nu, as_element(x)), x);
+    }
   }
-  
+
   template < typename I,  typename T > constexpr EVE_FORCEINLINE
   T sb_j(I n, T x) noexcept
   {
@@ -64,6 +64,6 @@ namespace eve::detail
     else return if_else(abs(x) < eps(as(x)) && is_gez(n),
                         if_else(is_eqz(n), one(as(x)), zero),
                         detail::cb_j(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));
-    
+
   }
 }

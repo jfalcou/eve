@@ -68,8 +68,11 @@ namespace eve
 //!     2. returns \f$y_n\f$(z) (spherical).
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @note  `cylindical` option can be used and its result is identical to the regular call (no option).
-//!
+//!  @note
+//!   *  `cylindical` option can be used and its result is identical to the regular call (no option).
+//!   *  if n is not integral nor flint negative z entries produce NaN outputs as the correct result is not real. You may want
+//!       to use **KYOSU** to avoid this behavior and produce complex outputs (that are not available in **EVE**).
+///!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Bessel Function of the Second Kind](https://mathworld.wolfram.com/BesselFunctionoftheSecondKind.html)
 //!   *  [Wolfram MathWorld: Spherical Bessel Function of the Second Kind](https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html)

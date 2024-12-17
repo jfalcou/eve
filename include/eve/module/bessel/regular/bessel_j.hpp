@@ -72,7 +72,7 @@ namespace eve
 //!  @note
 //!   *  `cylindical` option can be used and its result is identical to the regular call (no option).
 //!   *  if n is not integral nor flint negative z entries produce NaN outputs as the correct result is not real. You may want
-//       to use **KYOSU** to avoid this behavior and produce complex outputs (that are not available in **EVE**).
+//!       to use **KYOSU** to avoid this behavior and produce complex outputs (that are not available in **EVE**).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Bessel Function of the First Kind](https://mathworld.wolfram.com/BesselFunctionoftheFirstKind.html)
