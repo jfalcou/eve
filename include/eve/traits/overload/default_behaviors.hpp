@@ -274,24 +274,27 @@ namespace eve
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        using cl_t = common_logical_t<T, Ts...>;
+        using c_t = common_logical_t<T, Ts...>;
 
-        if constexpr (std::same_as<cl_t, bool>)
+        if constexpr (std::same_as<c_t, bool>)
         {
           // Booleans never require complex conversion. So we just call the function.
           return base_t::adapt_call(arch, opts, x0, xs...);
         }
         else
         {
-          // special case: if non of the inputs are logical values, the operation must not be performed on wrapped logicals.
-          constexpr bool non_logical = !eve::logical_value<T> && (... && !eve::logical_value<Ts>);
-          using c_t = std::conditional_t<non_logical, typename cl_t::mask_type, cl_t>;
+          // If none of the inputs are logical values, the operation must not convert the parameters.
+          // for example: `is_less(3, 3.4)` should not convert the parameters to int as it would result in `is_less(3, 3)`
+          // which would not give the expected result.
+          constexpr bool disallows_conversions = !eve::logical_value<T> && (... && !eve::logical_value<Ts>);
+          constexpr bool is_convertible = !disallows_conversions && requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
 
+          // If we are emulating the operation, we force the conversion to the common logical type. Otherwise, this would be
+          // caught by `map` and produce invalid results for some input type pairs.
           constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
           constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
-          constexpr bool is_convertible = requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
 
-          if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x0, xs...);
+          if      constexpr(is_callable   ) return cvt(base_t::adapt_call(arch, opts, x0, xs...) , as<c_t>{});
           else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
           else                              return ignore{};
         }
