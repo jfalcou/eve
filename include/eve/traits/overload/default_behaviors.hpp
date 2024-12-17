@@ -107,7 +107,7 @@ namespace eve
     constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
     {
       constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
-          constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
+      constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
       constexpr bool any_emulated               = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
       constexpr bool any_aggregated             = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
 
@@ -255,9 +255,10 @@ namespace eve
           , typename OptionsValues
           , typename... Options
           >
-  struct logical_elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
+  struct logical_elementwise_callable : elementwise_callable<Func, OptionsValues, Options...>
   {
-    using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
+    using base_t        = elementwise_callable<Func, OptionsValues, Options...>;
+    using strict_base_t = typename base_t::base_t;
     using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
@@ -274,29 +275,58 @@ namespace eve
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        using c_t = common_logical_t<T, Ts...>;
+        using cl_t = common_logical_t<T, Ts...>;
 
-        if constexpr (std::same_as<c_t, bool>)
+        if constexpr (std::same_as<cl_t, bool>)
         {
-          // Booleans never require complex conversion. So we just call the function.
-          return base_t::adapt_call(arch, opts, x0, xs...);
+          // Booleans never require complex conversions. So we just call the function if possible.
+          constexpr bool has_implementation = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
+          if constexpr(has_implementation) return func_t::deferred_call(arch, opts, x0, xs...);
+          else
+          {
+            static_assert ( has_implementation
+                          , "[EVE] - Implementation for current logical callable cannot be called or is ambiguous"
+                          );
+            return ignore{};
+          }
         }
         else
         {
-          // If none of the inputs are logical values, the operation must not convert the parameters.
-          // for example: `is_less(3, 3.4)` should not convert the parameters to int as it would result in `is_less(3, 3)`
-          // which would not give the expected result.
-          constexpr bool disallows_conversions = !eve::logical_value<T> && (... && !eve::logical_value<Ts>);
-          constexpr bool is_convertible = !disallows_conversions && requires { func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...); };
-
-          // If we are emulating the operation, we force the conversion to the common logical type. Otherwise, this would be
-          // caught by `map` and produce invalid results for some input type pairs.
+          constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
           constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-          constexpr bool is_callable = !any_emulated && !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x0, xs...))>;
 
-          if      constexpr(is_callable   ) return cvt(base_t::adapt_call(arch, opts, x0, xs...) , as<c_t>{});
-          else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
-          else                              return ignore{};
+          if constexpr(no_logicals)
+          {
+            if constexpr(any_emulated)
+            {
+              using c_t = common_value_t<T, Ts...>;
+              return strict_base_t::behavior(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
+            }
+            else
+            {
+              //  Non-emulated, no logical case
+              return cvt(base_t::behavior(arch, opts, x0, xs...), as<cl_t>{});
+            }
+          }
+          else
+          {
+            if constexpr(any_emulated)
+            {
+              return strict_base_t::behavior(arch, opts, cvt(x0, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+            }
+            else
+            {
+              constexpr bool is_callable = !std::same_as<ignore, decltype(strict_base_t::adapt_call(arch, opts, x0, xs...))>;
+              if constexpr(is_callable)
+              {
+                return cvt(strict_base_t::behavior(arch, opts, x0, xs...), as<cl_t>{});
+              }
+              else
+              {
+                return strict_base_t::behavior(arch, opts, cvt(x0, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+              }
+            }
+          }
         }
       }
       else
