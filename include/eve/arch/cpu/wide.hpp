@@ -30,6 +30,8 @@
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/regular/shl.hpp>
+#include <eve/module/core/regular/shr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 

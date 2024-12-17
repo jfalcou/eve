@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/as_element.hpp>
 #include <eve/detail/overload.hpp>  // TEMPORARY
 #include <eve/forward.hpp>
 
@@ -225,6 +226,113 @@ namespace eve
     requires(!match_option<condition_key,O,ignore_none_>)
     {
       return base_t::behavior(arch,opts,x0,xs...);
+    }
+  };
+
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct logical_elementwise_callable
+  //!   @brief CRTP base class giving an EVE's @callable the logical elementwise function semantic
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/traits/overload.hpp>
+  //!   @endcode
+  //!
+  //!   Logical elementwise functions in EVE behave as strict elementwise callables but with the added ability to convert
+  //!   the output to a common logical type.
+  //!
+  //!   @tparam Func          Type of current @callable being implemented.
+  //!   @tparam OptionsValues Type of stored options.
+  //!   @tparam Options       List of supported option specifications.
+  //!
+  //!   @see strict_elementwise_callable
+  //! @}
+  //====================================================================================================================
+  template< template<typename> class Func
+          , typename OptionsValues
+          , typename... Options
+          >
+  struct logical_elementwise_callable : elementwise_callable<Func, OptionsValues, Options...>
+  {
+    using base_t        = elementwise_callable<Func, OptionsValues, Options...>;
+    using strict_base_t = typename base_t::base_t;
+    using ignore = typename base_t::ignore;
+    using func_t = typename base_t::func_t;
+
+    template<typename T, typename c_t>
+    EVE_FORCEINLINE static constexpr c_t cvt(T e, as<c_t>)
+    {
+      if      constexpr (std::same_as<T, c_t>)                     return e;
+      else if constexpr (std::same_as<T, bool> || scalar_value<T>) return c_t{e};
+      else                                                         return detail::call_convert(e, as_element<c_t>{});
+    }
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
+    {
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        using cl_t = common_logical_t<T, Ts...>;
+
+        if constexpr (std::same_as<cl_t, bool>)
+        {
+          // Booleans never require complex conversions. So we just call the function if possible.
+          constexpr bool has_implementation = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
+          if constexpr(has_implementation) return func_t::deferred_call(arch, opts, x0, xs...);
+          else
+          {
+            static_assert ( has_implementation
+                          , "[EVE] - Implementation for current logical callable cannot be called or is ambiguous"
+                          );
+            return ignore{};
+          }
+        }
+        else
+        {
+          constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
+          constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+
+          if constexpr(no_logicals)
+          {
+            if constexpr(any_emulated)
+            {
+              using c_t = common_value_t<T, Ts...>;
+              return strict_base_t::behavior(arch, opts, cvt(x0, as<c_t>{}), cvt(xs, as<c_t>{})...);
+            }
+            else
+            {
+              //  Non-emulated, no logical case
+              return cvt(base_t::behavior(arch, opts, x0, xs...), as<cl_t>{});
+            }
+          }
+          else
+          {
+            if constexpr(any_emulated)
+            {
+              return strict_base_t::behavior(arch, opts, cvt(x0, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+            }
+            else
+            {
+              constexpr bool is_callable = !std::same_as<ignore, decltype(strict_base_t::adapt_call(arch, opts, x0, xs...))>;
+              if constexpr(is_callable)
+              {
+                return cvt(strict_base_t::behavior(arch, opts, x0, xs...), as<cl_t>{});
+              }
+              else
+              {
+                return strict_base_t::behavior(arch, opts, cvt(x0, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+              }
+            }
+          }
+        }
+      }
+      else
+      {
+        return base_t::behavior(arch, opts, x0, xs...);
+      }
     }
   };
 
