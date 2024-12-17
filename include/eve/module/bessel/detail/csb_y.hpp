@@ -70,7 +70,7 @@ namespace eve::detail
   T sb_y(I n, T x) noexcept
   {
     using elt_t = element_type_t<T>;
-    if constexpr( integral_value<I> ) return sph_bessel_yn(convert(n, as<elt_t>()), x);
-    else                              return cyl_bessel_yn(n + half(as(x)), x) * rsqrt(2 * x * inv_pi(as(x)));
+    if constexpr( integral_value<I> ) return sb_y(convert(n, as<elt_t>()), x);
+    else                              return cb_y(n + half(as(x)), x) * rsqrt(2 * x * inv_pi(as(x)));
    }
 }

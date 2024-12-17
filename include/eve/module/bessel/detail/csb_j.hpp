@@ -15,7 +15,6 @@
 
 namespace eve::detail
 {
-
   template < typename I,  typename T > constexpr EVE_FORCEINLINE
   T cb_j(I nu, T x) noexcept
   {
@@ -60,7 +59,7 @@ namespace eve::detail
   T sb_j(I n, T x) noexcept
   {
     using elt_t = element_type_t<T>;
-    if constexpr( integral_value<I> ) return sph_bessel_jn(convert(n, as<elt_t>()), x);
+    if constexpr( integral_value<I> ) return sb_j(convert(n, as<elt_t>()), x);
     else return if_else(abs(x) < eps(as(x)) && is_gez(n),
                         if_else(is_eqz(n), one(as(x)), zero),
                         detail::cb_j(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));

@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/bessel/detail/kernel_bessel_j0.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_j1.hpp>   
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
@@ -35,8 +37,8 @@ template<floating_value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
 {
-  auto prev    = j0; // cyl_bessel_j0(x);
-  auto current = j1; // cyl_bessel_j1(x);
+  auto prev    = j0; 
+  auto current = j1; 
   T    scale(1), value(j0);
   auto nn = if_else(n < x, n, zero);
   for( int k = 1; k < eve::maximum(nn); ++k )
@@ -93,8 +95,8 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
   EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int_pos : somme n are not floating integer");
   EVE_ASSERT(eve::all(is_nltz(x)), "kernel_bessel_j_int_pos : somme x are not positive");
   EVE_ASSERT(eve::all(is_nltz(n)), "kernel_bessel_j_int_pos : somme n are not positive");
-  auto j0 = cyl_bessel_j0(x);
-  auto j1 = cyl_bessel_j1(x);
+  auto j0 = cb_j0(x);
+  auto j1 = cb_j1(x);
 
   auto br_large   = [](auto nn, auto xx) { return kernel_bessel_j_int_large(nn, xx); };
   auto br_forward = [j0, j1](auto nn, auto xx) { return kernel_bessel_j_int_forward(nn, xx, j0, j1); };
@@ -105,8 +107,8 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
   {
     if( x == inf(as(x)) ) return zero(as(x));
     if( asymptotic_bessel_large_x_limit(T(n), x) ) return br_large(T(n), x);
-    if( n == 0 ) return j0;                                    // cyl_bessel_j0(x);
-    if( n == 1 ) return j1;                                    // cyl_bessel_j1(x);
+    if( n == 0 ) return j0;                                    // bessel_j0(x);
+    if( n == 1 ) return j1;                                    // bessel_j1(x);
     if( is_eqz(x) ) return x;                                  // as n >= 2
     if( n < x ) return br_forward(n, x);                       // forward recurrence
     if( (n > x * x / 4) || (x < 5) ) return br_small(T(n), x); // serie

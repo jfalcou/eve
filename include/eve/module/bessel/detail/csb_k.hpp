@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/module/bessel/detail/kernel_bessel_y0.hpp>
-#include <eve/module/bessel/detail/kernel_bessel_y1.hpp>
-#include <eve/module/bessel/detail/kernel_bessel_y.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_k0.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_k1.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_k.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
@@ -25,7 +25,7 @@ namespace eve::detail
       {
         auto flintx = is_flint(nu);
         return flintx ? kernel_bessel_k_int(nu, x) : kernel_bessel_k_flt(T(nu), x);
-      }  
+      }
       else if constexpr( scalar_value<T> )
       {
         auto flintx = is_flint(nu);

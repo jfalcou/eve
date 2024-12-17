@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/module/bessel/detail/kernel_bessel_y0.hpp>
-#include <eve/module/bessel/detail/kernel_bessel_y1.hpp>
-#include <eve/module/bessel/detail/kernel_bessel_y.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_i0.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_i1.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_i.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
