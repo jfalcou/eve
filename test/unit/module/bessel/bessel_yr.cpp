@@ -9,7 +9,7 @@
 
 #include <eve/module/bessel.hpp>
 
-TTS_CASE_TPL ( "Check eve::cyl_bessel_y over real floating orders"
+TTS_CASE_TPL ( "Check eve::cyl_bessel_y over real,  positive floating orders"
              , eve::test::scalar::ieee_reals
               )
 <typename T>(tts::type<T>)

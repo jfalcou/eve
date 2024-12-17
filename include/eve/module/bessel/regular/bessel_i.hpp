@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/bessel/detail/csb_i.hpp>
 
 namespace eve
 {
@@ -21,9 +22,9 @@ namespace eve
     EVE_FORCEINLINE constexpr Z  operator()(N const& n, Z const & z) const noexcept
     {
       if constexpr(Options::contains(eve::spherical))
-        return sb_y(n, z);
+        return detail::sb_i(n, z);
       else
-        return cb_y(n, z);
+        return detail::cb_i(n, z);
     }
 
     EVE_CALLABLE_OBJECT(bessel_i_t, bessel_i_);

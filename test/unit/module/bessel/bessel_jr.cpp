@@ -9,7 +9,7 @@
 
 #include <eve/module/bessel.hpp>
 
-TTS_CASE_TPL ( "Check eve::cyl_bessel_j over real"
+TTS_CASE_TPL ( "Check eve::cyl_bessel_j over real, floating positive orsers"
              , eve::test::scalar::ieee_reals
               )
 <typename T>(tts::type<T>)
@@ -62,7 +62,7 @@ TTS_CASE_TPL ( "Check eve::cyl_bessel_j over real"
   }
 };
 
-TTS_CASE_TPL ( "Check eve::cyl_bessel_jn over real"
+TTS_CASE_TPL ( "Check eve::cyl_bessel_jn over real,  floating negative orders"
              , eve::test::scalar::ieee_reals
               )
 <typename T>(tts::type<T>)

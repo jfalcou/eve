@@ -21,6 +21,7 @@ namespace eve::detail
   {
     if constexpr( integral_value<I> )
     {
+      nu = eve::abs(nu);  //DLMF 10.27.1 I-n(z) = In(z),
       if constexpr( simd_value<I> && scalar_value<T> )
       {
         using c_t = wide<T, cardinal_t<I>>;
@@ -57,7 +58,7 @@ namespace eve::detail
 
   // T is always floating
   template < typename I,  typename T > constexpr EVE_FORCEINLINE
-  T sb_i(I nu, T x) noexcept
+  T sb_i(I n, T x) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( integral_value<I> ) return sb_i(convert(n, as<elt_t>()), x);

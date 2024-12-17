@@ -9,7 +9,7 @@
 
 #include <eve/module/bessel.hpp>
 
-TTS_CASE_TPL ( "Check eve::cyl_bessel_yn over real"
+TTS_CASE_TPL ( "Check eve::cyl_bessel_yn over real,  integral positive orders"
              , eve::test::scalar::ieee_reals
               )
 <typename T>(tts::type<T>)
