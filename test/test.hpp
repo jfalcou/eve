@@ -448,7 +448,7 @@ namespace tts
       }
     }();
   }
-  
+
   template<typename Fn, typename Wm, typename... Args>
   auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::detail::get_at(wm, 0), eve::detail::get_at(args, 0)...)), eve::cardinal_t<Wm>>
   {
@@ -480,4 +480,21 @@ int main(int argc, char const **argv)
 
   eve_entry_point(argc, argv);
   return tts::report(0,0);
+}
+
+namespace tts
+{
+
+  //==================================================================================================
+  // default relative precsion
+  //==================================================================================================
+  template <typename T> inline double constexpr prec()
+  {
+    if constexpr( sizeof(eve::element_type_t<T>) == 4) return 1.0e-3; else return 1.0e-6;
+  }
+
+  template <typename T> inline double constexpr prec(double f,  double d)
+  {
+    if constexpr( sizeof(eve::element_type_t<T>) == 4) return f; else return d;
+  }
 }

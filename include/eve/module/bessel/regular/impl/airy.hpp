@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_in.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_kn.hpp>
+#include <eve/module/bessel/regular/bessel_i.hpp>
+#include <eve/module/bessel/regular/bessel_j.hpp>
+#include <eve/module/bessel/regular/bessel_k.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -27,18 +27,18 @@ namespace eve::detail
     T    v        = T(1.0 / 3);
     auto br_0     = [v, p, rac, racthird]()
     {
-      T j1 = cyl_bessel_jn(v, p);
-      T j2 = cyl_bessel_jn(-v, p);
+      T j1 = bessel_j(v, p);
+      T j2 = bessel_j(-v, p);
       return zip(rac * (j1 + j2) / 3, racthird * (j2 - j1));
     };
 
     auto br_small = []() { return eve::zip(T(0.355028053887817), T(0.614926627446001)); };
     auto br_last  = [v, p, rac, racthird]()
     {
-      T    j1 = cyl_bessel_in(v, p);
-      T    j2 = cyl_bessel_in(-v, p);
+      T    j1 = bessel_i(v, p);
+      T    j2 = bessel_i(-v, p);
       auto bi = racthird * (j1 + j2);
-      auto ai = cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
+      auto ai = bessel_k(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
       return zip(ai, bi);
     };
 

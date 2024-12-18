@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/bessel/detail/kernel_bessel_ik.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_k0.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_k1.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_k0.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_k1.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
@@ -37,8 +37,8 @@ kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
   }
   else
   {
-    auto prev    = k0; // cyl_bessel_j0(x);
-    auto current = k1; // cyl_bessel_j1(x);
+    auto prev    = k0;
+    auto current = k1;
     T    scale(1), value(0);
     for( int k = 1; k < eve::maximum(nn); k++ )
     {
@@ -83,8 +83,8 @@ kernel_bessel_k_int(I n, T x) noexcept
 {
   n = eve::abs(n);
   EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int : somme n are not floating integer");
-  auto k0         = cyl_bessel_k0(x);
-  auto k1         = cyl_bessel_k1(x);
+  auto k0         = cb_k0(x);
+  auto k1         = cb_k1(x);
   auto br_forward = [k0, k1](auto nn, auto xx) { return kernel_bessel_k_int_forward(nn, xx, k0, k1); };
 
   if constexpr( scalar_value<T> )
@@ -92,8 +92,8 @@ kernel_bessel_k_int(I n, T x) noexcept
     if( is_ngez(x) ) return nan(as(x));
     if( is_eqz(x) ) return (n == 0) ? one(as(x)) : zero(as(x));
     if( x == inf(as(x)) ) return inf(as(x));
-    if( n == 0 ) return k0;  // cyl_bessel_k0(x);
-    if( n == 1 ) return k1;  // cyl_bessel_k1(x);
+    if( n == 0 ) return k0;
+    if( n == 1 ) return k1;
     return br_forward(n, x); // general
   }
   else
@@ -105,9 +105,9 @@ kernel_bessel_k_int(I n, T x) noexcept
     auto iseqzx = is_eqz(x);
     auto iseqzn = is_eqz(n);
     if( eve::any(iseqzx) ) { r = if_else(iseqzx, if_else(iseqzn, zero, one(as(x))), r); }
-    if( eve::any(iseqzn) ) { r = if_else(iseqzn, cyl_bessel_k0(x), r); }
+    if( eve::any(iseqzn) ) { r = if_else(iseqzn, cb_k0(x), r); }
     auto iseq1n = n == one(as(n));
-    if( eve::any(iseq1n) ) { r = if_else(n == one(as(n)), cyl_bessel_k1(x), r); }
+    if( eve::any(iseq1n) ) { r = if_else(n == one(as(n)), cb_k1(x), r); }
     auto notdone = is_gez(x) && !(iseqzn || iseq1n);
     x            = if_else(notdone, x, allbits);
     if( eve::any(notdone) ) return if_else(notdone, br_forward(n, x), r);
