@@ -44,7 +44,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto airy_bi(floating_value auto x) -> decltype(x)           noexcept; // 1
+//!      constexpr auto airy_bi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto airy_bi[conditional_expr auto c](floating_value auto x) noexcept; // 2
@@ -64,7 +64,7 @@ namespace eve
 //!      \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
 //!      \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
 //!      is returned.
-//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!    2. [The operation is performed conditionaly.](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Airy Functions](https://mathworld.wolfram.com/AiryFunctions.html)

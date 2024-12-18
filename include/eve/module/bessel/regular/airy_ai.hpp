@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto airy_ai(floating_value auto x) -> decltype(x)           noexcept; // 1
+//!      constexpr auto airy_ai(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto airy_ai[conditional_expr auto c](floating_value auto x) noexcept; // 2
@@ -61,7 +61,7 @@ namespace eve
 //!
 //!      1. The value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos
 //!      \left( \frac{t^3}{3}+xt \right) \,dt\f$ is returned.
-//!      2. [The operation is performed conditionnaly.](@ref conditional).
+//!      2. [The operation is performed conditionaly.](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Airy Functions](https://mathworld.wolfram.com/AiryFunctions.html)

@@ -46,14 +46,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template<eve::floating_value T> constexpr auto bessel_i(value auto n, floating_value auto z)             noexcept; // 1
+//!      constexpr auto bessel_i(value auto n, floating_value auto z)                noexcept; // 1
 //!
 //!      // Semantic modifyier
-//!      template<eve::floating_value T> constexpr auto bessel_i[spherical](value auto n, floating_value auto z)  noexcept; // 2
+//!      constexpr auto bessel_i[spherical](value auto n, floating_value auto z)     noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bessel_i[conditional_expr auto c](/*any previous overload*/)                              noexcept; // 3
-//!      constexpr auto bessel_i[logical_value auto m](/*any previous overload*/)                                 noexcept; // 3
+//!      constexpr auto bessel_i[conditional_expr auto c](/*any previous overload*/) noexcept; // 3
+//!      constexpr auto bessel_i[logical_value auto m](/*any previous overload*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -67,7 +67,7 @@ namespace eve
 //!
 //!     1. returns \f$Y_n\f$(z) (cylindrical).
 //!     2. returns \f$y_n\f$(z) (spherical).
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionaly](@ref conditional).
 //!
 //!  @note  `cylindical` option can be used and its result is identical to the regular call (no option).
 //!
