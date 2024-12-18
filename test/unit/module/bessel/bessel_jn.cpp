@@ -50,7 +50,6 @@ TTS_CASE_TPL ( "Check eve::cyl_bessel_jn over real,  integral orders"
     auto fac = eve::sqrt(eve::pio_2(eve::as(c))*eve::rec(c));
     for(int i=0; i < N; ++i)
     {
-      //      std::cout<< "j " << j  << " c[" << i << "] = " << c << std::endl;
       auto res = resN16[i][j];
       TTS_RELATIVE_EQUAL(eve::bessel_j(i, c), res, tts::prec<T>());
       TTS_RELATIVE_EQUAL(eve::bessel_j(-i, c), eve::sign_alternate(i)*res, tts::prec<T>());

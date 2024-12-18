@@ -54,7 +54,6 @@ TTS_CASE_TPL ( "Check eve::cyl_bessel_j over real, floating positive orsers"
     for(int i=0; i < N; ++i)
     {
       auto v =  v0+i;
-//      std::cout<< "v " << v << " j " << j  << " c[" << i << "] = " << c << std::endl;
       auto res = resN8[i][j];
       TTS_RELATIVE_EQUAL(eve::bessel_j(v, c), res, pr);
       TTS_RELATIVE_EQUAL(eve::bessel_j[spherical](v, c), eve::bessel_j(v+h, c)*fac, tts::prec<T>());
@@ -106,7 +105,6 @@ TTS_CASE_TPL ( "Check eve::cyl_bessel_jn over real,  floating negative orders"
     for(int i=0; i < N; ++i)
     {
       auto v =  v0-i;
-//      std::cout<< "v " << v << " j " << j  << " c[" << i << "] = " << c << std::endl;
       auto res = resN8[i][j];
       TTS_RELATIVE_EQUAL(eve::bessel_j(v, c), res, pr);
       TTS_RELATIVE_EQUAL(eve::bessel_j[spherical](v, c), eve::bessel_j(v+h, c)*fac, tts::prec<T>());
