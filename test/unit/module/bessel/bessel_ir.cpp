@@ -51,7 +51,7 @@ TTS_CASE_TPL ( "Check eve::cyl_bessel_i over real, positive floating orders"
     auto fac = eve::sqrt(eve::pio_2(eve::as(c))*eve::rec(c));
     for(int i=0; i < N; ++i)
     {
-      auto v =  v0+i;
+      auto v = v0+i;
       auto res = resN8[i][j];
       TTS_RELATIVE_EQUAL(eve::bessel_i(v, c), res, tts::prec<T>());
       TTS_RELATIVE_EQUAL(eve::bessel_i[spherical](v, c), eve::bessel_i(v+h, c)*fac, tts::prec<T>());
