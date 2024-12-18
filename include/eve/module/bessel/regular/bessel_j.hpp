@@ -48,7 +48,7 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto bessel_j(value auto n, floating_value auto z)                  noexcept; // 1
 //!
-//!      // Semantic modifyier
+//!      // Semantic modifier
 //!      constexpr auto bessel_j[spherical](value auto n, floating_value auto z)       noexcept; // 2
 //!
 //!      // Lanes masking
@@ -67,7 +67,7 @@ namespace eve
 //!
 //!     1. returns \f$J_n\f$(z) (cylindrical).
 //!     2. returns \f$j_n\f$(z) (spherical).
-//!     3. [The operation is performed conditionaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @note
 //!   *  `cylindical` option can be used and its result is identical to the regular call (no option).
