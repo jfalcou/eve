@@ -408,12 +408,12 @@ namespace eve
     //==============================================================================================
 
     //! @brief Performs a bitwise complement on all the wide lanes
-    friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
+    friend EVE_FORCEINLINE wide operator~(wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_bitnot(v);
+      return bit_not(v);
     }
 
     //! @brief Performs a compound bitwise and on all the wide lanes and assign the result to the current
