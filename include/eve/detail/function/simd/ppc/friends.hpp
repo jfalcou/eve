@@ -15,13 +15,6 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T,N> self_bitnot(wide<T,N> const& v) noexcept
-    requires ppc_abi<abi_t<T, N>>
-  {
-    return vec_nor(v.storage(), v.storage());
-  }
-
-  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_eq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

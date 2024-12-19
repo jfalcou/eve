@@ -14,35 +14,6 @@
 namespace eve::detail
 {
   //================================================================================================
-  // operator~ implementation
-  //================================================================================================
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T,N> self_bitnot(wide<T,N> const& v) noexcept
-      requires arm_abi<abi_t<T, N>>
-  {
-    constexpr auto c = categorize<wide<T, N>>();
-    using i_t  = wide<as_integer_t<T, unsigned>, N>;
-
-          if constexpr(c == category::int64x1 ) return vreinterpret_s64_s8(vmvn_s8(vreinterpret_s8_s64(v)));
-    else  if constexpr(c == category::uint64x1) return vreinterpret_u64_u8(vmvn_u8(vreinterpret_u8_u64(v)));
-    else  if constexpr(c == category::int64x2 ) return vreinterpretq_s64_s8(vmvnq_s8(vreinterpretq_s8_s64(v)));
-    else  if constexpr(c == category::uint64x2) return vreinterpretq_u64_u8(vmvnq_u8(vreinterpretq_u8_u64(v)));
-    else  if constexpr(c == category::int32x2 ) return vmvn_s32(v);
-    else  if constexpr(c == category::uint32x2) return vmvn_u32(v);
-    else  if constexpr(c == category::int32x4 ) return vmvnq_s32(v);
-    else  if constexpr(c == category::uint32x4) return vmvnq_u32(v);
-    else  if constexpr(c == category::int16x4 ) return vmvn_s16(v);
-    else  if constexpr(c == category::uint16x4) return vmvn_u16(v);
-    else  if constexpr(c == category::int16x8 ) return vmvnq_s16(v);
-    else  if constexpr(c == category::uint16x8) return vmvnq_u16(v);
-    else  if constexpr(c == category::int8x8  ) return vmvn_s8(v);
-    else  if constexpr(c == category::uint8x8 ) return vmvn_u8(v);
-    else  if constexpr(c == category::int8x16 ) return vmvnq_s8(v);
-    else  if constexpr(c == category::uint8x16) return vmvnq_u8(v);
-    else                                        return bit_cast(~bit_cast(v,as<i_t>{}), as(v));
-  }
-
-  //================================================================================================
   // operator== implementation
   //================================================================================================
   template<arithmetic_scalar_value T, typename N>

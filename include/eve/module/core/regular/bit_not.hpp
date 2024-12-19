@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 
 namespace eve
 {
@@ -74,12 +75,17 @@ namespace eve
   namespace detail
   {
     template<value T, callable_options O>
-    constexpr T  bit_not_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    constexpr T bit_not_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
-      if constexpr( floating_scalar_value<T> )
-        return bit_cast(~bit_cast(v, as<as_integer_t<T>> {}), as(v));
-      else
-        return T(~v);
+      return v ^ allbits(eve::as(v));
     }
   }
 }
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/bit_not.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_not.hpp>
+#endif
