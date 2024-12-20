@@ -200,68 +200,6 @@ namespace eve
     using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
-    {
-      using          cv_t           = common_value_t<T,Ts...>;
-      constexpr bool is_callable    = !std::same_as<ignore, decltype(base_t::adapt_call(a,o,x,xs...))>;
-      constexpr bool is_convertible = requires{ func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...); };
-
-      if      constexpr(is_callable   ) return base_t::adapt_call(a,o,x,xs...);
-      else if constexpr(is_convertible) return func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...);
-      else                              return ignore{};
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-    requires(match_option<condition_key,O,ignore_none_>)
-    {
-      constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
-      return adapt_call(arch,opts,x0,xs...);
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-    requires(!match_option<condition_key,O,ignore_none_>)
-    {
-      return base_t::behavior(arch,opts,x0,xs...);
-    }
-  };
-
-  //====================================================================================================================
-  //! @addtogroup extensions
-  //! @{
-  //!   @struct logical_elementwise_callable
-  //!   @brief CRTP base class giving an EVE's @callable the logical elementwise function semantic
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/traits/overload.hpp>
-  //!   @endcode
-  //!
-  //!   Logical elementwise functions in EVE behave as strict elementwise callables but with the added ability to convert
-  //!   the output to a common logical type.
-  //!
-  //!   @tparam Func          Type of current @callable being implemented.
-  //!   @tparam OptionsValues Type of stored options.
-  //!   @tparam Options       List of supported option specifications.
-  //!
-  //!   @see strict_elementwise_callable
-  //! @}
-  //====================================================================================================================
-  template< template<typename> class Func
-          , typename OptionsValues
-          , typename... Options
-          >
-  struct logical_elementwise_callable : elementwise_callable<Func, OptionsValues, Options...>
-  {
-    using base_t        = elementwise_callable<Func, OptionsValues, Options...>;
-    using strict_base_t = typename base_t::base_t;
-    using ignore = typename base_t::ignore;
-    using func_t = typename base_t::func_t;
-
     template<typename T, typename c_t>
     EVE_FORCEINLINE static constexpr c_t cvt(T e, as<c_t>)
     {
@@ -271,11 +209,80 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x, Ts const&... xs) const
+    {
+      // we test for no logicals first to prevent mishandling bools
+      constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
+      constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
+      constexpr bool all_bools   = (std::same_as<T, bool> && ... && std::same_as<Ts, bool>);
+
+      if constexpr (all_bools)
+      {
+        constexpr bool has_implementation = requires{ func_t::deferred_call(arch, opts, x, xs...); };
+        if constexpr(has_implementation) return func_t::deferred_call(arch, opts, x, xs...);
+        else
+        {
+          static_assert ( has_implementation
+                        , "[EVE] - Implementation for current logical callable cannot be called or is ambiguous"
+                        );
+          return ignore{};
+        }
+      }
+      else if constexpr (no_logicals)
+      {
+        using          cv_t           = common_value_t<T, Ts...>;
+        constexpr bool is_convertible = requires{ func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...); };
+
+        if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x, xs...);
+        else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...);
+        else                              return ignore{};
+      }
+      else
+      {
+        using           cl_t        = common_logical_t<T, Ts...>;
+        constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+
+        if      constexpr(any_emulated) return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+        else if constexpr(is_callable)  return base_t::behavior(arch, opts, x, xs...);
+        else                            return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+      }
+    }
+
+    template<callable_options O, typename T, typename... Ts>
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    {
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
+        static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
+        return adapt_call(arch, opts, x0, xs...);
+      }
+      else
+      {
+        return base_t::behavior(arch, opts, x0, xs...);
+      }
+    }
+  };
+
+  //====================================================================================================================
+  template< template<typename> class Func
+          , typename OptionsValues
+          , typename... Options
+          >
+  struct old_logical_elementwise_callable : elementwise_callable<Func, OptionsValues, Options...>
+  {
+    using base_t        = elementwise_callable<Func, OptionsValues, Options...>;
+    using strict_base_t = typename base_t::base_t;
+    using ignore = typename base_t::ignore;
+    using func_t = typename base_t::func_t;
+
+    template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        using cl_t = common_logical_t<T, Ts...>;
+              using cl_t = common_logical_t<T, Ts...>;
+
 
         if constexpr (std::same_as<cl_t, bool>)
         {
