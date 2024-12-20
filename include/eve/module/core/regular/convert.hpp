@@ -91,7 +91,7 @@ namespace eve
     template<simd_value Src, typename Tgt>
     EVE_FORCEINLINE as_wide_as_t<Tgt, Src> call_convert(Src x, as<Tgt> tgt)
     {
-      return eve::convert(x, tgt);
+      return convert(x, tgt);
     }
   }
 }

@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct logical_notand_t : logical_elementwise_callable<logical_notand_t, Options>
+  struct logical_notand_t : elementwise_callable<logical_notand_t, Options>
   {
     template<typename T, typename U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const noexcept
