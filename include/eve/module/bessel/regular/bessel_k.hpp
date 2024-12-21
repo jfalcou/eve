@@ -48,6 +48,7 @@ namespace eve
 //!      constexpr auto bessel_k(value auto n, floating_value auto z)                  noexcept; // 1
 //!
 //!      // Semantic modifier
+//!      constexpr auto bessel_k[cylindrical](value auto n, floating_value auto z)     noexcept; // 1
 //!      constexpr auto bessel_k[spherical](value auto n, floating_value auto z)       noexcept; // 2
 //!
 //!      // Lanes masking
@@ -68,9 +69,7 @@ namespace eve
 //!     2. returns \f$y_n\f$(z) (spherical).
 //!     3. [The operation is performed conditionally](@ref conditional).
 //!
-//!  @note
-//!   *  `cylindical` option can be used and its result is identical to the regular call (no option).
-//!   *  if n is not integral nor flint negative z entries produce NaN outputs as the correct result is not real. You may want
+//!  @note if n is not integral nor flint negative z entries produce NaN outputs as the correct result is not real. You may want
 //!       to use **KYOSU** to avoid this behavior and produce complex outputs (that are not available in **EVE**).
 //!
 //!  @groupheader{External references}
@@ -80,7 +79,7 @@ namespace eve
 //!   *  [DLMF: Modified Bessel functions](https://dlmf.nist.gov/10.25)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/bessel_k.cpp}
+//!  @godbolt{doc/bessel/bessel_k.cpp}
 //======================================================================================================================
   inline constexpr auto bessel_k = eve::functor<bessel_k_t>;
 //======================================================================================================================
