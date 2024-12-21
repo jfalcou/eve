@@ -49,6 +49,7 @@ namespace eve
 //!      constexpr auto bessel_i(value auto n, floating_value auto z)                noexcept; // 1
 //!
 //!      // Semantic modifier
+//!      constexpr auto bessel_i[cylindrical](value auto n, floating_value auto z)   noexcept; // 1
 //!      constexpr auto bessel_i[spherical](value auto n, floating_value auto z)     noexcept; // 2
 //!
 //!      // Lanes masking
@@ -69,8 +70,6 @@ namespace eve
 //!     2. returns \f$y_n\f$(z) (spherical).
 //!     3. [The operation is performed conditionally](@ref conditional).
 //!
-//!  @note  `cylindical` option can be used and its result is identical to the regular call (no option).
-//!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Bessel Function of the Second Kind](https://mathworld.wolfram.com/BesselFunctionoftheSecondKind.html)
 //!   *  [Wolfram MathWorld: Spherical Bessel Function of the Second Kind](https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html)
@@ -78,7 +77,7 @@ namespace eve
 //!   *  [DLMF: Bessel functions](https://dlmf.nist.gov/10.2)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/bessel_i.cpp}
+//!  @godbolt{doc/bessel/bessel_i.cpp}
 //======================================================================================================================
   inline constexpr auto bessel_i = eve::functor<bessel_i_t>;
 //======================================================================================================================
