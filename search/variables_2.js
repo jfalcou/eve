@@ -39,17 +39,5 @@ var searchData=
   ['csc_36',['csc',['../group__math__trig_ga58de56369367394561f438e248bb51d7.html#ga58de56369367394561f438e248bb51d7',1,'eve']]],
   ['cscd_37',['cscd',['../group__math__trig_ga1757277f030d17b22e7ac6b665094bb5.html#ga1757277f030d17b22e7ac6b665094bb5',1,'eve']]],
   ['csch_38',['csch',['../group__math__hyper_ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e.html#ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e',1,'eve']]],
-  ['cscpi_39',['cscpi',['../group__math__trig_ga2049fa9458e2c3dafdf24ace92544e03.html#ga2049fa9458e2c3dafdf24ace92544e03',1,'eve']]],
-  ['cyl_5fbessel_5fi0_40',['cyl_bessel_i0',['../group__bessel_ga554a210d654536505239aacec3ad797d.html#ga554a210d654536505239aacec3ad797d',1,'eve']]],
-  ['cyl_5fbessel_5fi1_41',['cyl_bessel_i1',['../group__bessel_gaa331e11a94570522eb63c32a21374007.html#gaa331e11a94570522eb63c32a21374007',1,'eve']]],
-  ['cyl_5fbessel_5fin_42',['cyl_bessel_in',['../group__bessel_ga3a3b70da6f6328a60cfddeb0856af224.html#ga3a3b70da6f6328a60cfddeb0856af224',1,'eve']]],
-  ['cyl_5fbessel_5fj0_43',['cyl_bessel_j0',['../group__bessel_ga0b166f521255e4c265aa66740f0573d8.html#ga0b166f521255e4c265aa66740f0573d8',1,'eve']]],
-  ['cyl_5fbessel_5fj1_44',['cyl_bessel_j1',['../group__bessel_ga347a7131caf78668eb32f8af1993cb17.html#ga347a7131caf78668eb32f8af1993cb17',1,'eve']]],
-  ['cyl_5fbessel_5fjn_45',['cyl_bessel_jn',['../group__bessel_ga11c5014f356db3fe04b718bf724d9306.html#ga11c5014f356db3fe04b718bf724d9306',1,'eve']]],
-  ['cyl_5fbessel_5fk0_46',['cyl_bessel_k0',['../group__bessel_ga9ec8220dbe3ffa18502f95742cb47ef3.html#ga9ec8220dbe3ffa18502f95742cb47ef3',1,'eve']]],
-  ['cyl_5fbessel_5fk1_47',['cyl_bessel_k1',['../group__bessel_gaad2e346fd393c61fa4f42fac4dda08fd.html#gaad2e346fd393c61fa4f42fac4dda08fd',1,'eve']]],
-  ['cyl_5fbessel_5fkn_48',['cyl_bessel_kn',['../group__bessel_gaa62759b5bed95d57b9a143d219a10826.html#gaa62759b5bed95d57b9a143d219a10826',1,'eve']]],
-  ['cyl_5fbessel_5fy0_49',['cyl_bessel_y0',['../group__bessel_ga08971c587bc18a4dc76f4c98ab620baf.html#ga08971c587bc18a4dc76f4c98ab620baf',1,'eve']]],
-  ['cyl_5fbessel_5fy1_50',['cyl_bessel_y1',['../group__bessel_ga5716e26cf2fa9dc5621ad1de2961e883.html#ga5716e26cf2fa9dc5621ad1de2961e883',1,'eve']]],
-  ['cyl_5fbessel_5fyn_51',['cyl_bessel_yn',['../group__bessel_ga03818074bfcd8527b7c842915adb4162.html#ga03818074bfcd8527b7c842915adb4162',1,'eve']]]
+  ['cscpi_39',['cscpi',['../group__math__trig_ga2049fa9458e2c3dafdf24ace92544e03.html#ga2049fa9458e2c3dafdf24ace92544e03',1,'eve']]]
 ];

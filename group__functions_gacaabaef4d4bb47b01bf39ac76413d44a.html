@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::cyl_bessel_y0</title>
+<title>E.V.E: eve::bessel_k</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__bessel_ga08971c587bc18a4dc76f4c98ab620baf.html',''); initResizable(true); });
+$(function(){initNavTree('group__functions_gacaabaef4d4bb47b01bf39ac76413d44a.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -126,8 +126,8 @@ $(function(){initNavTree('group__bessel_ga08971c587bc18a4dc76f4c98ab620baf.html'
 </div>
 
 <div class="contents">
-<a id="ga08971c587bc18a4dc76f4c98ab620baf" name="ga08971c587bc18a4dc76f4c98ab620baf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga08971c587bc18a4dc76f4c98ab620baf">&#9670;&#160;</a></span>cyl_bessel_y0</h2>
+<a id="gacaabaef4d4bb47b01bf39ac76413d44a" name="gacaabaef4d4bb47b01bf39ac76413d44a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacaabaef4d4bb47b01bf39ac76413d44a">&#9670;&#160;</a></span>bessel_k</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,7 +136,7 @@ $(function(){initNavTree('group__bessel_ga08971c587bc18a4dc76f4c98ab620baf.html'
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::cyl_bessel_y0 = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;cyl_bessel_y0_t&gt;</td>
+          <td class="memname">auto eve::bessel_k = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">eve::functor</a>&lt;bessel_k_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,63 +145,52 @@ $(function(){initNavTree('group__bessel_ga08971c587bc18a4dc76f4c98ab620baf.html'
   </tr>
 </table>
 </div><div class="memdoc">
-<p>It is a solution of \( x^{2}y&#39;&#39;+xy&#39;+x^2y=0\) for which \( y(0) = \infty\).</p>
-<h2 class="groupheader">Header file </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/functions.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">cyl_bessel_y0</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) -&gt; <span class="keyword">decltype</span>(x)           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gacaabaef4d4bb47b01bf39ac76413d44a">bessel_k</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic modifier</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gacaabaef4d4bb47b01bf39ac76413d44a">bessel_k</a>[spherical](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">cyl_bessel_y0</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">cyl_bessel_y0</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gacaabaef4d4bb47b01bf39ac76413d44a">bessel_k</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any previous overload*/</span>)   <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gacaabaef4d4bb47b01bf39ac76413d44a">bessel_k</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any previous overload*/</span>)      <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
-<div class="ttc" id="agroup__bessel_ga08971c587bc18a4dc76f4c98ab620baf_html_ga08971c587bc18a4dc76f4c98ab620baf"><div class="ttname"><a href="#ga08971c587bc18a4dc76f4c98ab620baf">eve::cyl_bessel_y0</a></div><div class="ttdeci">constexpr auto cyl_bessel_y0</div><div class="ttdoc">elementwise_callable object computing the Bessel function of the second kind,  .</div><div class="ttdef"><b>Definition</b> cyl_bessel_y0.hpp:76</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__functions_gacaabaef4d4bb47b01bf39ac76413d44a_html_gacaabaef4d4bb47b01bf39ac76413d44a"><div class="ttname"><a href="#gacaabaef4d4bb47b01bf39ac76413d44a">eve::bessel_k</a></div><div class="ttdeci">constexpr auto bessel_k</div><div class="ttdoc">Computes the modified spherical or cylindrical Bessel functions of the second kind,...</div><div class="ttdef"><b>Definition</b> bessel_k.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: positive <a class="el" href="concepteve_1_1floating__value.html">floating argument</a>.</li>
-<li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
+<li><code>n</code>: order (integral or floating)</li>
+<li><code>z</code>: Value to process.</li>
 <li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>The value of  \(\displaystyle Y_0(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
-      {\sqrt{\tau^2-1}}\,\mathrm {d} \tau\) is returned.</li>
-<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>returns \(Y_n\)(z) (cylindrical).</li>
+<li>returns \(y_n\)(z) (spherical).</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionally</a>.</li>
 </ol>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li><code>cylindical</code> option can be used and its result is identical to the regular call (no option).</li>
+<li>if n is not integral nor flint negative z entries produce NaN outputs as the correct result is not real. You may want to use <b>KYOSU</b> to avoid this behavior and produce complex outputs (that are not available in <b>EVE</b>).</li>
+</ul>
+</dd></dl>
 <h2 class="groupheader">External references </h2>
 <ul>
-<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/cyl_neumann">C++ standard reference</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Bessel_function">Wikipedia: Bessel Functions</a></li>
-<li><a href="https://dlmf.nist.gov/10.2">DLMF: Bessel Functions</a></li>
+<li><a href="https://mathworld.wolfram.com/BesselFunctionoftheSecondKind.html">Wolfram MathWorld: Modified Bessel Function of the second Kind</a></li>
+<li><a href="https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html">Wolfram MathWorld: Modified Spherical Bessel Function of the second Kind</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bessel_function">Wikipedia: Bessel function</a></li>
+<li><a href="https://dlmf.nist.gov/10.25">DLMF: Modified Bessel functions</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wf0([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i+c/2);});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a>         wf1{-0.5, 1.5, 0.1, 1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cyl_bessel_y0(wf0)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">eve::cyl_bessel_y0</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cyl_bessel_y0[ignore_last(2)](wf0)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">eve::cyl_bessel_y0</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cyl_bessel_y0[wf0!= -2.0f](wf0)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">eve::cyl_bessel_y0</a>[wf0!= -2.0f](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cyl_bessel_y0(wf1)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga08971c587bc18a4dc76f4c98ab620baf">eve::cyl_bessel_y0</a>(wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:332</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:86</div></div>
-</div><!-- fragment --> 
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
