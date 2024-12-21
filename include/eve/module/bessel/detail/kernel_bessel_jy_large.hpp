@@ -9,8 +9,8 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_j0.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_j1.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_j0.hpp>
+#include <eve/module/bessel/detail/kernel_bessel_j1.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
@@ -30,7 +30,7 @@ namespace eve::detail
 // large values routines
 ///////////////////////////////////////////////////////////////////////////////
 
-template<floating_value T> 
+template<floating_value T>
 EVE_FORCEINLINE constexpr T
 asymptotic_bessel_amplitude(T v, T x) noexcept
 {

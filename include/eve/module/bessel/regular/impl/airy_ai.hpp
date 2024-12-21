@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
-#include <eve/module/bessel/regular/cyl_bessel_kn.hpp>
+#include <eve/module/bessel/regular/bessel_j.hpp>
+#include <eve/module/bessel/regular/bessel_k.hpp>
 #include <eve/module/math.hpp>
 
 namespace eve::detail
@@ -25,8 +25,8 @@ namespace eve::detail
 
     auto br_0   = [v, p, rac]()
     {
-      T j1 = cyl_bessel_jn(v, p);
-      T j2 = cyl_bessel_jn(-v, p);
+      T j1 = bessel_j(v, p);
+      T j2 = bessel_j(-v, p);
       return rac * (j1 + j2) / 3;
     };
 
@@ -34,7 +34,7 @@ namespace eve::detail
 
     auto br_last  = [v, p, rac]()
     {
-      return cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
+      return bessel_k(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
     };
 
     elt_t constexpr thresh = (sizeof(elt_t) == 8) ? (4.440892098500626e-16) : (2.3841858e-07);
