@@ -35,12 +35,11 @@ namespace detail
           template <int i>
           EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
           {
-            if (f == l) return true;
-
             delegate_reply = delegate.step(f, eve::ignore_none);
             f += iterator_cardinal_v<I>;
 
-            return delegate_reply != continue_break_expensive::continue_;
+            if (delegate_reply != continue_break_expensive::continue_) return true;
+            return f == l;
           }
       };
 
@@ -50,6 +49,8 @@ namespace detail
                                       S l,
                                       Delegate &delegate) const {
         auto delegate_reply = continue_break_expensive::continue_;
+        if (f == l) return delegate_reply;
+
         while (true) {
           if (eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
             small_steps_lambda<I, S, Delegate>{f, l, delegate_reply, delegate}
