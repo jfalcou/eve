@@ -24,41 +24,38 @@ namespace detail
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
-      template <typename I, typename S, typename Delegate>
-      struct small_steps_lambda
+    template<typename I, typename S, typename Delegate> struct small_steps_lambda
+    {
+      I&                        f;
+      S&                        l;
+      continue_break_expensive& delegate_reply;
+      Delegate&                 delegate;
+
+      template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
       {
-          I& f;
-          S& l;
-          continue_break_expensive& delegate_reply;
-          Delegate& delegate;
+        delegate_reply = delegate.step(f, eve::ignore_none);
+        f += iterator_cardinal_v<I>;
 
-          template <int i>
-          EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
-          {
-            delegate_reply = delegate.step(f, eve::ignore_none);
-            f += iterator_cardinal_v<I>;
+        if( delegate_reply != continue_break_expensive::continue_ ) return true;
+        return f == l;
+      }
+    };
 
-            if (delegate_reply != continue_break_expensive::continue_) return true;
-            return f == l;
-          }
-      };
+    template<typename Traits, typename I, typename S, typename Delegate>
+    EVE_FORCEINLINE continue_break_expensive main_loop(Traits, I& f, S l, Delegate& delegate) const
+    {
+      auto delegate_reply = continue_break_expensive::continue_;
+      if( f == l ) return delegate_reply;
 
-      template<typename Traits, typename I, typename S, typename Delegate>
-      EVE_FORCEINLINE continue_break_expensive main_loop(Traits,
-                                      I &f,
-                                      S l,
-                                      Delegate &delegate) const {
-        auto delegate_reply = continue_break_expensive::continue_;
-        if (f == l) return delegate_reply;
-
-        while (true) {
-          if (eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
-            small_steps_lambda<I, S, Delegate>{f, l, delegate_reply, delegate}
-          )) {
-            return delegate_reply;
-          }
+      while( true )
+      {
+        if( eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
+                small_steps_lambda<I, S, Delegate> {f, l, delegate_reply, delegate}) )
+        {
+          return delegate_reply;
         }
       }
+    }
   };
 
   template<typename Traits, iterator I, sentinel_for<I> S>
@@ -88,10 +85,9 @@ namespace detail
       while( true )
       {
         action = this->main_loop(traits, f, l, delegate);
-        if( action == continue_break_expensive::expensive) {
-          if( !delegate.expensive_part() ) {
-            continue;
-          }
+        if( action == continue_break_expensive::expensive )
+        {
+          if( !delegate.expensive_part() ) { continue; }
         }
         return;
       }
@@ -131,7 +127,8 @@ namespace detail
         action = delegate.step(f, ignore);
       }
 
-      if( action == continue_break_expensive::expensive ) {
+      if( action == continue_break_expensive::expensive )
+      {
         // hack to exit after the `expensive_part` without any extra checks.
         l = precise_l;
         goto expensive_part;
@@ -146,12 +143,12 @@ namespace detail
 
   template<typename Traits, iterator I, sentinel_for<I> S>
   struct for_each_iteration_with_expensive_optional_part_aligning
-    : for_each_iteration_with_expensive_optional_part_common
+      : for_each_iteration_with_expensive_optional_part_common
   {
     Traits traits;
-    I base;
-    I f;
-    S l;
+    I      base;
+    I      f;
+    S      l;
 
     for_each_iteration_with_expensive_optional_part_aligning(Traits traits, I f, S l)
         : traits(traits)
@@ -178,7 +175,7 @@ namespace detail
         if( action == continue_break_expensive::expensive ) goto expensive_part;
         aligned_f += iterator_cardinal_v<I>;
 
-     main_loop:
+      main_loop:
         // handles aligned_f == aligned_l
         action = this->main_loop(traits, aligned_f, aligned_l, delegate);
         if( action == continue_break_expensive::break_ ) return;
@@ -191,8 +188,9 @@ namespace detail
         eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
         action = delegate.step(aligned_l, ignore_first && ignore_last);
       }
-      if( action == continue_break_expensive::expensive ) {
-        l = aligned_l;  // hack that pevents comming here after the expensive part
+      if( action == continue_break_expensive::expensive )
+      {
+        l = aligned_l; // hack that pevents comming here after the expensive part
         goto expensive_part;
       }
       return;
