@@ -35,7 +35,7 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var jacobi_elliptic
-//!   @brief `elementwise_callable` object computing the  Jacobi's sn, cn and dn function.
+//!   @brief `elementwise_callable` object computing the  Jacobi's sn, cn and dn function simultaneously.
 //!
 //!   @groupheader{Header file}
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. return a `kumi::tuple` containing `sn``cn` and `dn` values . Take care that the meaning of the second parameters
+//!      1. return a `kumi::tuple` containing `sn``cn` and `dn` values. Take care that the meaning of the second parameters
 //!         depends on the option used (see note below).
 //!      2. [The operation is performed conditionally](@ref conditional)
 //!
