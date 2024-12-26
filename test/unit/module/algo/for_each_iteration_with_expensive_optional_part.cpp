@@ -43,7 +43,6 @@ struct test_delegate {
   char* data;
   std::vector<std::ptrdiff_t> where_to_expensive;
   std::ptrdiff_t expensive_returns_true_at;
-  std::ptrdiff_t stop_at = -1;
 
   std::ptrdiff_t where_to_expensive_pos = 0;
   char* remembered_expesnive = nullptr;
@@ -51,14 +50,12 @@ struct test_delegate {
   test_delegate(
     char* data,
     std::vector<std::ptrdiff_t> where_to_expensive,
-    std::ptrdiff_t expensive_returns_true_at = -1,
-    std::ptrdiff_t stop_at = -1
+    std::ptrdiff_t expensive_returns_true_at = -1
   ) : data(data),
       where_to_expensive(where_to_expensive),
-      expensive_returns_true_at(expensive_returns_true_at),
-      stop_at(stop_at) {}
+      expensive_returns_true_at(expensive_returns_true_at) {}
 
-  eve::algo::continue_break_expensive step(auto it, auto ignore) {
+  bool step(auto it, auto ignore) {
 
     auto  tgt = eve::as<eve::wide<std::int8_t, eve::fixed<4>>> {};
     char *ptr = it.ptr;
@@ -77,14 +74,11 @@ struct test_delegate {
 
       if ( it_idx <= next_expensive && next_expensive < it_idx + 4 ) {
         remembered_expesnive = data + next_expensive;
-        return eve::algo::continue_break_expensive::expensive;
+        return true;
       }
     }
 
-    if ( stop_at != -1 && stop_at < it_idx + 4) {
-      return eve::algo::continue_break_expensive::break_;
-    }
-    return eve::algo::continue_break_expensive::continue_;
+    return false;
   }
 
   bool expensive_part() {
@@ -102,7 +96,6 @@ struct run_test_impl {
   int size;
   std::vector<std::ptrdiff_t> where_to_expensive;
   int expensive_returns_true_at;
-  int stop_at;
 
 
   template <bool divisible>
@@ -114,8 +107,7 @@ struct run_test_impl {
     test_delegate d {
       fix.data.data(),
       where_to_expensive,
-      expensive_returns_true_at,
-      stop_at
+      expensive_returns_true_at
     };
 
     auto iter = eve::algo::for_each_iteration_with_expensive_optional_part(
@@ -198,31 +190,27 @@ run_test(
   int offset,
   int size,
   std::vector<std::ptrdiff_t> where_to_expensive = {},
-  int expensive_returns_true_at = -1,
-  int stop_at = -1
+  int expensive_returns_true_at = -1
 ) {
   std::string unroll1 = run_test_impl<align, 1>{
     offset,
     size,
     where_to_expensive,
-    expensive_returns_true_at,
-    stop_at
+    expensive_returns_true_at
   }();
 
   std::string unroll2 = run_test_impl<align, 2>{
     offset,
     size,
     where_to_expensive,
-    expensive_returns_true_at,
-    stop_at
+    expensive_returns_true_at
   }();
 
   std::string unroll4 = run_test_impl<align, 4>{
     offset,
     size,
     where_to_expensive,
-    expensive_returns_true_at,
-    stop_at
+    expensive_returns_true_at
   }();
 
   TTS_EQUAL(unroll1, unroll2);

@@ -57,7 +57,7 @@ namespace detail
         return res_t {verify, unalign(haystack_it)};
       }
 
-      EVE_FORCEINLINE auto tail(auto zip_it, eve::relative_conditional_expr auto ignore)
+      EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
       {
         pos = get<0>(zip_it);
 
@@ -66,30 +66,25 @@ namespace detail
         precheck     = equal_fn(haystack_front, needle_front);
 
         if (!eve::any[ignore](precheck)) {
-          return continue_break_expensive::continue_;
+          return false;
         }
 
         precheck = precheck && ignore.mask(as(precheck));
 
-        return continue_break_expensive::expensive;
+        return true;
       }
 
-      EVE_FORCEINLINE auto main_part(auto zip_it)
+      EVE_FORCEINLINE bool main_part(auto zip_it)
       {
         auto [haystack_front, haystack_back] = eve::load(zip_it);
 
         pos = get<0>(zip_it);
         precheck = equal_fn(haystack_front, needle_front) && equal_fn(haystack_back, needle_back);
-
-        if (!eve::any(precheck)) {
-          return continue_break_expensive::continue_;
-        }
-
-        return continue_break_expensive::expensive;
+        return eve::any(precheck);
       }
 
       template<eve::relative_conditional_expr C>
-      EVE_FORCEINLINE auto step(auto zip_it, C ignore)
+      EVE_FORCEINLINE bool step(auto zip_it, C ignore)
       {
         if constexpr( C::is_complete && C::is_inverted ) { return main_part(zip_it); }
         else { return tail(zip_it, ignore); }

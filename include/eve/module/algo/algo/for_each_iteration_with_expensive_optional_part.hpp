@@ -14,37 +14,31 @@
 namespace eve::algo
 {
 
-enum class continue_break_expensive {
-  continue_,
-  break_,
-  expensive,
-};
-
 namespace detail
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
     template<typename I, typename S, typename Delegate> struct small_steps_lambda
     {
-      I&                        f;
-      S&                        l;
-      continue_break_expensive& delegate_reply;
-      Delegate&                 delegate;
+      I&        f;
+      S&        l;
+      bool&     delegate_reply;
+      Delegate& delegate;
 
       template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
       {
         delegate_reply = delegate.step(f, eve::ignore_none);
         f += iterator_cardinal_v<I>;
 
-        if( delegate_reply != continue_break_expensive::continue_ ) return true;
+        if( delegate_reply ) return true;
         return f == l;
       }
     };
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE continue_break_expensive main_loop(Traits, I& f, S l, Delegate& delegate) const
+    EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
     {
-      auto delegate_reply = continue_break_expensive::continue_;
+      auto delegate_reply = false;
       if( f == l ) return delegate_reply;
 
       while( true )
@@ -81,15 +75,10 @@ namespace detail
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
-      continue_break_expensive action;
       while( true )
       {
-        action = this->main_loop(traits, f, l, delegate);
-        if( action == continue_break_expensive::expensive )
-        {
-          if( !delegate.expensive_part() ) { continue; }
-        }
-        return;
+        if( !this->main_loop(traits, f, l, delegate) ) return;
+        if( delegate.expensive_part() ) return;
       }
     }
   };
@@ -114,26 +103,17 @@ namespace detail
     {
       I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
 
-      continue_break_expensive action = continue_break_expensive::continue_;
-
     main_loop:
-      action = this->main_loop(traits, f, precise_l, delegate);
-      if( action == continue_break_expensive::break_ ) return;
-      if( action == continue_break_expensive::expensive ) goto expensive_part;
+      if( this->main_loop(traits, f, precise_l, delegate) ) { goto expensive_part; }
 
       if( precise_l == l ) return;
       {
         eve::keep_first ignore {l - precise_l};
-        action = delegate.step(f, ignore);
-      }
+        if( !delegate.step(f, ignore) ) { return; }
 
-      if( action == continue_break_expensive::expensive )
-      {
         // hack to exit after the `expensive_part` without any extra checks.
         l = precise_l;
-        goto expensive_part;
       }
-      return;
 
     expensive_part:
       if( delegate.expensive_part() ) return;
@@ -162,38 +142,29 @@ namespace detail
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();
 
-      continue_break_expensive action = continue_break_expensive::continue_;
-
       eve::ignore_first ignore_first {f - aligned_f};
 
       if( aligned_f != aligned_l )
       {
-        action       = delegate.step(aligned_f, ignore_first);
-        ignore_first = eve::ignore_first {0};
+        {
+          bool first_step_res = delegate.step(aligned_f, ignore_first);
+          ignore_first        = eve::ignore_first {0};
+          if( first_step_res ) goto expensive_part;
+        }
 
-        if( action == continue_break_expensive::break_ ) return;
-        if( action == continue_break_expensive::expensive ) goto expensive_part;
         aligned_f += iterator_cardinal_v<I>;
 
       main_loop:
         // handles aligned_f == aligned_l
-        action = this->main_loop(traits, aligned_f, aligned_l, delegate);
-        if( action == continue_break_expensive::break_ ) return;
-        if( action == continue_break_expensive::expensive ) goto expensive_part;
+        if( this->main_loop(traits, aligned_f, aligned_l, delegate) ) goto expensive_part;
       }
 
-      if( aligned_f == l ) { return; }
-
+      if( aligned_f == l ) return;
       {
         eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
-        action = delegate.step(aligned_l, ignore_first && ignore_last);
-      }
-      if( action == continue_break_expensive::expensive )
-      {
+        if( !delegate.step(aligned_l, ignore_first && ignore_last) ) return;
         l = aligned_l; // hack that pevents comming here after the expensive part
-        goto expensive_part;
       }
-      return;
 
     expensive_part:
       if( delegate.expensive_part() ) return;
