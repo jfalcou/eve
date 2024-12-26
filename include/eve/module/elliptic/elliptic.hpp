@@ -17,3 +17,5 @@
 #include <eve/module/elliptic/ellint_rj.hpp>
 #include <eve/module/elliptic/am.hpp>
 #include <eve/module/elliptic/jacobi_elliptic.hpp>
+#include <eve/module/elliptic/jacobi_zeta.hpp>
+#include <eve/module/elliptic/heumann_lambda.hpp>

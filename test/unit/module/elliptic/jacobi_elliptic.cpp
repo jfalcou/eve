@@ -11,8 +11,8 @@
 
 TTS_CASE_TPL ( "Check jacobi_elliptic over real"
              , eve::test::scalar::ieee_reals
-              )
-<typename T>(tts::type<T>)
+             )
+  <typename T>(tts::type<T>)
 {
   auto pr = tts::prec<T>(1.0e-4, 1.0e-8);
   using a_t  = std::array<T, 7 >;
