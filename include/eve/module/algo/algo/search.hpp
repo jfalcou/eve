@@ -432,6 +432,6 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!
 //!   @godbolt{doc/algo/search.cpp}
 //================================================================================================
-inline constexpr auto search = function_with_traits<search_>[eve::algo::unroll<2>];
+inline constexpr auto search = function_with_traits<search_>[eve::algo::unroll<4>];
 
 }
