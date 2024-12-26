@@ -18,6 +18,18 @@ namespace detail
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
+    template<typename Traits, typename I, typename S, typename Delegate>
+    EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
+      requires (get_unrolling<Traits>() == 1)
+    {
+      while (f != l) {
+        bool check = delegate.step(f, eve::ignore_none);
+        f += iterator_cardinal_v<I>;
+        if (check) return true;
+      }
+      return false;
+    }
+
     template<typename I, typename S, typename Delegate> struct small_steps_lambda
     {
       I&        f;
@@ -35,6 +47,20 @@ namespace detail
       }
     };
 
+    template<typename I, typename S, typename Delegate> struct unrolled_steps_lambda
+    {
+      I&        f;
+      S&        l;
+      Delegate& delegate;
+
+      template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
+      {
+        bool test = delegate.step(f, eve::ignore_none);
+        f += iterator_cardinal_v<I>;
+        return test;
+      }
+    };
+
     template<typename Traits, typename I, typename S, typename Delegate>
     EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
     {
@@ -47,6 +73,16 @@ namespace detail
                 small_steps_lambda<I, S, Delegate> {f, l, delegate_reply, delegate}) )
         {
           return delegate_reply;
+        }
+
+        std::ptrdiff_t n = (l - f) / (iterator_cardinal_v<I> * get_unrolling<Traits>());
+
+        while (n--) {
+          if( eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
+                unrolled_steps_lambda<I, S, Delegate> {f, l, delegate}) )
+          {
+            return true;
+          }
         }
       }
     }
