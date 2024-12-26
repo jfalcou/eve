@@ -21,7 +21,7 @@
 namespace eve
 {
   template<typename Options>
-  struct heumann_lambda_t : elementwise_callable<heumann_lambda_t, Options>
+  struct heuman_lambda_t : elementwise_callable<heuman_lambda_t, Options>
   {
 
     template<eve::floating_value T0, eve::floating_value T1>
@@ -30,13 +30,13 @@ namespace eve
     auto operator()(T0 a, T1 b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
-    EVE_CALLABLE_OBJECT(heumann_lambda_t, heumann_lambda_);
+    EVE_CALLABLE_OBJECT(heuman_lambda_t, heuman_lambda_);
   };
 
 //================================================================================================
 //! @addtogroup elliptic
 //! @{
-//!   @var heumann_lambda
+//!   @var heuman_lambda
 //!   @brief `elementwise_callable` object computing the  Jacobi's sn, cn and dn function simultaneously.
 //!
 //!   @groupheader{Header file}
@@ -51,16 +51,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto heumann_lambda(floating_value auto u, floating_value auto x)                  noexcept; // 1
+//!      constexpr auto heuman_lambda(floating_value auto u, floating_value auto x)                  noexcept; // 1
 //!
 //!      //Semantic modifiers
-//!      constexpr auto heumann_lambda[modular](floating_value auto u, floating_value auto alpha)     noexcept; // 1
-//!      constexpr auto heumann_lambda[eccentric(floating_value auto u, floating_value auto k)        noexcept; // 1
-//!      constexpr auto heumann_lambda[threshold = tol](floating_value auto u, floating_value auto x) noexcept; // 1
+//!      constexpr auto heuman_lambda[modular](floating_value auto u, floating_value auto alpha)     noexcept; // 1
+//!      constexpr auto heuman_lambda[eccentric(floating_value auto u, floating_value auto k)        noexcept; // 1
+//!      constexpr auto heuman_lambda[threshold = tol](floating_value auto u, floating_value auto x) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto heumann_lambda[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 2
-//!      constexpr auto heumann_lambda[logical_value autolm](/*any of the above overloads*/)          noexcept; // 2
+//!      constexpr auto heuman_lambda[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 2
+//!      constexpr auto heuman_lambda[logical_value autolm](/*any of the above overloads*/)          noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -90,12 +90,12 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [DLMF: Jacobian Elliptic](https://dlmf.nist.gov/22.2)
 //!   *  [Wolfram MathWorld: Jacobi Elliptic Functions](https://mathworld.wolfram.com/JacobiEllipticFunctions.html)
-//!   *  [Wikipedia: Jacobi elliptic functions](https://en.wikipedia.org/wiki/heumann_lambda_functions)
+//!   *  [Wikipedia: Jacobi elliptic functions](https://en.wikipedia.org/wiki/heuman_lambda_functions)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/elliptic/heumann_lambda.cpp}
+//!  @godbolt{doc/elliptic/heuman_lambda.cpp}
 //================================================================================================
-  inline constexpr auto heumann_lambda = functor<heumann_lambda_t>;
+  inline constexpr auto heuman_lambda = functor<heuman_lambda_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -103,7 +103,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    auto heumann_lambda_(EVE_REQUIRES(cpu_), O const&, T phi, T k) noexcept
+    auto heuman_lambda_(EVE_REQUIRES(cpu_), O const&, T phi, T k) noexcept
     {
       auto test = eve::abs(phi) <= pio_2(as(k));
       auto k2 = sqr(k);
