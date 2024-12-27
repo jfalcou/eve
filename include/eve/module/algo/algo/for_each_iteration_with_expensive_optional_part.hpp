@@ -18,73 +18,61 @@ namespace detail
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
+    template <typename Traits, typename I, typename S>
+    auto unroll_l(Traits, I f, S l){
+      return eve::unalign(f) + (l - f - get_unrolling<Traits>() * iterator_cardinal_v<I>);
+    }
+
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
-      requires (get_unrolling<Traits>() == 1)
+    EVE_FORCEINLINE bool no_unrolling_loop(Traits, I& f, S l, Delegate& delegate) const
     {
-      while (f != l) {
+      while( f != l )
+      {
         bool check = delegate.step(f, eve::ignore_none);
         f += iterator_cardinal_v<I>;
-        if (check) return true;
+        if (check) return check;
       }
       return false;
     }
 
-    template<typename I, typename S, typename Delegate> struct small_steps_lambda
+    template<typename Traits, typename I, typename S, typename Delegate>
+    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto unroll_l, S l, Delegate& delegate) const
+    requires(get_unrolling<Traits>() == 1)
     {
-      I&        f;
-      S&        l;
-      bool&     delegate_reply;
-      Delegate& delegate;
-
-      template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
-      {
-        delegate_reply = delegate.step(f, eve::ignore_none);
-        f += iterator_cardinal_v<I>;
-
-        if( delegate_reply ) return true;
-        return f == l;
-      }
-    };
+      (void)unroll_l;
+      return no_unrolling_loop(tr, f, l, delegate);
+    }
 
     template<typename I, typename S, typename Delegate> struct unrolled_steps_lambda
     {
       I&        f;
-      S&        l;
       Delegate& delegate;
 
       template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
       {
-        bool test = delegate.step(f, eve::ignore_none);
-        f += iterator_cardinal_v<I>;
-        return test;
+        if( delegate.step(f + i * iterator_cardinal_v<I>, eve::ignore_none) )
+        {
+          f += i * iterator_cardinal_v<I>;
+          return true;
+        }
+        return false;
       }
     };
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
+    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto unroll_l, S l, Delegate& delegate) const
     {
-      auto delegate_reply = false;
-      if( f == l ) return delegate_reply;
-
-      while( true )
+      while( f <= unroll_l )
       {
         if( eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
-                small_steps_lambda<I, S, Delegate> {f, l, delegate_reply, delegate}) )
+                unrolled_steps_lambda<I, S, Delegate> {f, delegate}) )
         {
-          return delegate_reply;
+          return true;
         }
-
-        std::ptrdiff_t n = (l - f) / (iterator_cardinal_v<I> * get_unrolling<Traits>());
-
-        while (n--) {
-          if( eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
-                unrolled_steps_lambda<I, S, Delegate> {f, l, delegate}) )
-          {
-            return true;
-          }
-        }
+        f += get_unrolling<Traits>() * iterator_cardinal_v<I>;
       }
+
+      return no_unrolling_loop(tr, f, l, delegate);
     }
   };
 
@@ -111,9 +99,10 @@ namespace detail
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
+      auto unroll_l = this->unroll_l(traits, f, l);
       while( true )
       {
-        if( !this->main_loop(traits, f, l, delegate) ) return;
+        if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
         if( delegate.expensive_part() ) return;
       }
     }
@@ -138,9 +127,10 @@ namespace detail
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
       I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
+      auto unroll_l = this->unroll_l(traits, f, l);
 
     main_loop:
-      if( this->main_loop(traits, f, precise_l, delegate) ) { goto expensive_part; }
+      if( this->main_loop(traits, f, unroll_l, precise_l, delegate) ) { goto expensive_part; }
 
       if( precise_l == l ) return;
       {
@@ -177,6 +167,7 @@ namespace detail
     {
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();
+      auto unroll_l = this->unroll_l(traits, f, l);
 
       eve::ignore_first ignore_first {f - aligned_f};
 
@@ -185,14 +176,13 @@ namespace detail
         {
           bool first_step_res = delegate.step(aligned_f, ignore_first);
           ignore_first        = eve::ignore_first {0};
+          aligned_f += iterator_cardinal_v<I>;
           if( first_step_res ) goto expensive_part;
         }
 
-        aligned_f += iterator_cardinal_v<I>;
-
       main_loop:
         // handles aligned_f == aligned_l
-        if( this->main_loop(traits, aligned_f, aligned_l, delegate) ) goto expensive_part;
+        if( this->main_loop(traits, aligned_f, unroll_l, aligned_l, delegate) ) goto expensive_part;
       }
 
       if( aligned_f == l ) return;
