@@ -11,7 +11,7 @@
 #include <eve/module/elliptic.hpp>
 #include <eve/module/math.hpp>
 
-TTS_CASE_TPL ( "Check jacobi_elliptic over real"
+TTS_CASE_TPL ( "Check heuman_lambda over real"
              , eve::test::scalar::ieee_reals
              )
   <typename T>(tts::type<T>)

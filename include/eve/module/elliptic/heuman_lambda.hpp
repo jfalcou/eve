@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var heuman_lambda
-//!   @brief `elementwise_callable` object computing the  Jacobi's sn, cn and dn function simultaneously.
+//!   @brief `elementwise_callable` object computing the  Heuman lambda function.
 //!
 //!   @groupheader{Header file}
 //!
@@ -53,11 +53,6 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto heuman_lambda(floating_value auto u, floating_value auto x)                  noexcept; // 1
 //!
-//!      //Semantic modifiers
-//!      constexpr auto heuman_lambda[modular](floating_value auto u, floating_value auto alpha)     noexcept; // 1
-//!      constexpr auto heuman_lambda[eccentric(floating_value auto u, floating_value auto k)        noexcept; // 1
-//!      constexpr auto heuman_lambda[threshold = tol](floating_value auto u, floating_value auto x) noexcept; // 1
-//!
 //!      // Lanes masking
 //!      constexpr auto heuman_lambda[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 2
 //!      constexpr auto heuman_lambda[logical_value autolm](/*any of the above overloads*/)          noexcept; // 2
@@ -67,30 +62,19 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `u`: argument.
-//!     * `m`: amplitude parameter (\f$0\le m\le 1).
-//!     * `alpha `: modular angle in radian.
-//!     * `tol': accuracy tolerance (by defaut [epsilon](@ref eve::epsilon).
-//!     * `k`: elliptic modulus (eccentricity) .
+//!     * `x`: amplitude parameter (\f$0\le m\le 1\f$).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `l`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      1. return a `kumi::tuple` containing `sn``cn` and `dn` values. Take care that the meaning of the second parameters
-//!         depends on the option used (see note below).
+//!      1. return the Heuman lambda value
 //!      2. [The operation is performed conditionally](@ref conditional)
 //!
-//! @note
-//!   * \f$\alpha\f$ is named the modular angle given in radian (modular option).
-//!   * \f$ k = \sin\alpha \f$ is named the elliptic modulus or eccentricity (eccentric option).
-//!   * \f$ m = k^2 = \sin^2\alpha\f$ is named the parameter (no option).
-//!   Each of the above three quantities is completely determined by any of the others (given that they are non-negative).
-//!   Thus, they can be used interchangeably (give the right option).
-
 //!  @groupheader{External references}
-//!   *  [DLMF: Jacobian Elliptic](https://dlmf.nist.gov/22.2)
-//!   *  [Wolfram MathWorld: Jacobi Elliptic Functions](https://mathworld.wolfram.com/JacobiEllipticFunctions.html)
-//!   *  [Wikipedia: Jacobi elliptic functions](https://en.wikipedia.org/wiki/heuman_lambda_functions)
+//!   *  [Wolfram MathWorld: Heuman lambda Function](https://mathworld.wolfram.com/HeumanLambdaFunction.html)
+//!   *  [Wikipedia: Heuman Lambda functions](https://en.wikipedia.org/wiki/heuman_lambda_functions)
+//!   *  [Boost: Heuman lambda](https://www.boost.org/doc/libs/1_73_0/libs/math/doc/html/math_toolkit/ellint/heuman_lambda.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/elliptic/heuman_lambda.cpp}

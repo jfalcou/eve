@@ -65,10 +65,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `u`: argument.
-//!     * `m`: amplitude parameter (\f$0\le m\le 1).
-//!     * `alpha `: modular angle in radian.
-//!     * `tol': accuracy tolerance (by defaut [epsilon](@ref eve::epsilon).
-//!     * `k`: elliptic modulus (eccentricity) .
+//!     * `m`: amplitude parameter (\f$0\le m\le 1\f$).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `l`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -78,13 +75,6 @@ namespace eve
 //!         depends on the option used (see note below).
 //!      2. [The operation is performed conditionally](@ref conditional)
 //!
-//! @note
-//!   * \f$\alpha\f$ is named the modular angle given in radian (modular option).
-//!   * \f$ k = \sin\alpha \f$ is named the elliptic modulus or eccentricity (eccentric option).
-//!   * \f$ m = k^2 = \sin^2\alpha\f$ is named the parameter (no option).
-//!   Each of the above three quantities is completely determined by any of the others (given that they are non-negative).
-//!   Thus, they can be used interchangeably (give the right option).
-
 //!  @groupheader{External references}
 //!   *  [DLMF: Jacobian Elliptic](https://dlmf.nist.gov/22.2)
 //!   *  [Wolfram MathWorld: Jacobi Elliptic Functions](https://mathworld.wolfram.com/JacobiEllipticFunctions.html)

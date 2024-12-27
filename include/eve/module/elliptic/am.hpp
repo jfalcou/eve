@@ -68,10 +68,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `u`: argument.
-//!     * `m`: amplitude parameter (\f$0\le m\le 1).
-//!     * `alpha `: modular angle in radian.
-//!     * `tol': accuracy tolerance (by defaut [epsilon](@ref eve::epsilon).
-//!     * `k`: elliptic modulus (eccentricity) .
+//!     * `x`: amplitude parameter (\f$0\le m\le 1).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `l`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -90,9 +87,9 @@ namespace eve
 
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: am](https://en.cppreference.com/w/cpp/numeric/special_functions/am)
-//!   *  [DLMF: Jacobi Amplitude](https://dlmf.nist.gov/22.16)
-//!   *  [Wolfram MathWorld: Jacobi Amplitude](https://mathworld.wolfram.com/JacobiAmplitude.html)
-//!   *  [Wikipedia: Jacobi elliptic functions](https://en.wikipedia.org/wiki/Jacobi_elliptic_functions)
+//!   *  [DLMF: Jacobi zeta](https://dlmf.nist.gov/22.16)
+//!   *  [Wolfram MathWorld: Jacobi Zeta Function](https://mathworld.wolfram.com/JacobiZetaFunction.html)
+//!   *  [Boost: jacobi_zeta](https://beta.boost.org/doc/libs/1_84_0/libs/math/doc/html/math_toolkit/ellint/jacobi_zeta.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/elliptic/am.cpp}
@@ -150,7 +147,7 @@ namespace eve
           {
             phi = average(phi, asin(c[n]*sin(phi)/a[n]) );
           }
-          return phi;
+          return if_else(is_infinite(u) && is_eqz(k), u, phi);
         };
 
       T r;
