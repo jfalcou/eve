@@ -15,6 +15,8 @@
 
 namespace {
 
+constexpr std::size_t kMaxTestDataSize = 100;
+
 struct fixture
 {
   fixture()
@@ -36,7 +38,7 @@ struct fixture
 
   std::string_view res() { return data.data(); }
 
-  alignas(64) std::array<char, 100> data;
+  alignas(64) std::array<char, kMaxTestDataSize> data;
 };
 
 struct test_delegate {
@@ -62,6 +64,7 @@ struct test_delegate {
 
     std::ptrdiff_t it_idx = it.ptr - data;
     std::cerr << "step: it idx: " << it_idx << " ignore: " << ignore << std::endl;
+    TTS_LESS_EQUAL(it_idx, (std::ptrdiff_t)kMaxTestDataSize, REQUIRED) << "sanity check";
 
     for( std::ptrdiff_t i = ignore.offset(tgt); i; --i ) { *ptr++ = 'i'; }
     for( std::ptrdiff_t i = ignore.count(tgt); i; --i ) {
@@ -96,7 +99,6 @@ struct run_test_impl {
   int size;
   std::vector<std::ptrdiff_t> where_to_expensive;
   int expensive_returns_true_at;
-
 
   template <bool divisible>
   std::string run_impl(
