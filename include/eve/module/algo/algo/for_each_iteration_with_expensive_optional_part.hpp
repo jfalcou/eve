@@ -156,11 +156,11 @@ namespace detail
     I      f;
     S      l;
 
-    for_each_iteration_with_expensive_optional_part_aligning(Traits traits, I f, S l)
-        : traits(traits)
-        , base(f.previous_partially_aligned())
-        , f(f)
-        , l(l)
+    for_each_iteration_with_expensive_optional_part_aligning(Traits t, I i, S s)
+        : traits(t)
+        , base(i.previous_partially_aligned())
+        , f(i)
+        , l(s)
     {}
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
