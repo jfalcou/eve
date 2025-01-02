@@ -13,8 +13,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/traits/common_value.hpp>
-#include <iostream>
-
 
 namespace eve
 {
