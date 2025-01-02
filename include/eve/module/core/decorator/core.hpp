@@ -15,10 +15,6 @@
 #include <eve/as.hpp>
 #include <cfenv>
 
-//======================================================================================================================
-// New option style  - TODO rename later without the '2'
-// almost done : saturated is waiting for convert
-//======================================================================================================================
 namespace eve
 {
   struct almost_mode          {};
@@ -27,9 +23,11 @@ namespace eve
   struct condon_shortley_mode {};
   struct cylindrical_mode     {};
   struct definitely_mode      {};
+  struct eccentric_mode       {};
   struct kind_1_mode          {};
   struct kind_2_mode          {};
   struct left_mode            {};
+  struct modular_mode         {};
   struct numeric_mode         {};
   struct p_kind_mode          {};
   struct promote_mode         {};
@@ -37,6 +35,7 @@ namespace eve
   struct right_mode           {};
   struct spherical_mode       {};
   struct successor_mode       {};
+  struct threshold_mode       {};
 
   struct upper_mode       {static constexpr int value = FE_UPWARD;     };
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
@@ -58,9 +57,11 @@ namespace eve
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
+  [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}            );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
+  [[maybe_unused]] inline constexpr auto modular          = ::rbr::flag( modular_mode{}         );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
@@ -83,9 +84,11 @@ namespace eve
   struct compensated_option     : detail::exact_option<compensated>     {};
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct cylindrical_option     : detail::exact_option<cylindrical>     {};
+  struct eccentric_option       : detail::exact_option<eccentric>       {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
   struct left_option            : detail::exact_option<left>            {};
+  struct modular_option         : detail::exact_option<modular>         {};
   struct numeric_option         : detail::exact_option<numeric>         {};
   struct p_kind_option          : detail::exact_option<p_kind>          {};
   struct promote_option         : detail::exact_option<promote>         {};
@@ -153,4 +156,20 @@ namespace eve
 
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
+
+  // New threshold option that carry a value
+  template<typename Value> struct threshold_t;
+
+  struct threshold_option
+  {
+    template<typename Value>
+    EVE_FORCEINLINE constexpr auto process(auto const& base, threshold_t<Value> const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+  };
+
 }
