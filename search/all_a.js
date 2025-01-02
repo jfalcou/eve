@@ -14,11 +14,12 @@ var searchData=
   ['helpers_11',['Helpers',['../group__arch.html',1,'Architecture related Types and Helpers'],['../group__arch_gab4d8e703ad1e3e94918f3a3ff44e1324.html#autotoc_md6',1,'Helpers']]],
   ['helpers_12',['Accuracy helpers',['../group__core__accuracy.html',1,'']]],
   ['hermite_13',['hermite',['../group__polynomial_ga6cb61eb743e4ac43c44bd0b330f8a8c9.html#ga6cb61eb743e4ac43c44bd0b330f8a8c9',1,'eve']]],
-  ['hi_14',['hi',['../group__core__bitops_gac36375f33a27d2122d4ca0f3a006f7b2.html#gac36375f33a27d2122d4ca0f3a006f7b2',1,'eve']]],
-  ['higher_20order_20decorator_15',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
-  ['horner_16',['horner',['../group__math_ga0a17ee24ca2ace0f07eb87e494bce229.html#ga0a17ee24ca2ace0f07eb87e494bce229',1,'eve']]],
-  ['hub_17',['Writing the dynamic function hub',['../multiarch.html#autotoc_md121',1,'']]],
-  ['hyperbolic_18',['Hyperbolic',['../group__math__hyper.html',1,'']]],
-  ['hyperbolic_19',['Inverse hyperbolic',['../group__math__invhyper.html',1,'']]],
-  ['hypot_20',['hypot',['../group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370',1,'eve']]]
+  ['heuman_5flambda_14',['heuman_lambda',['../group__elliptic_ga24d1bc66420e69358ebd2eb5ff39bff2.html#ga24d1bc66420e69358ebd2eb5ff39bff2',1,'eve']]],
+  ['hi_15',['hi',['../group__core__bitops_gac36375f33a27d2122d4ca0f3a006f7b2.html#gac36375f33a27d2122d4ca0f3a006f7b2',1,'eve']]],
+  ['higher_20order_20decorator_16',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
+  ['horner_17',['horner',['../group__math_ga0a17ee24ca2ace0f07eb87e494bce229.html#ga0a17ee24ca2ace0f07eb87e494bce229',1,'eve']]],
+  ['hub_18',['Writing the dynamic function hub',['../multiarch.html#autotoc_md121',1,'']]],
+  ['hyperbolic_19',['Hyperbolic',['../group__math__hyper.html',1,'']]],
+  ['hyperbolic_20',['Inverse hyperbolic',['../group__math__invhyper.html',1,'']]],
+  ['hypot_21',['hypot',['../group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370',1,'eve']]]
 ];
