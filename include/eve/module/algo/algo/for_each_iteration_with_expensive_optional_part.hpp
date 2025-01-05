@@ -18,8 +18,8 @@ namespace detail
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
-    template <typename Traits, typename I, typename S>
-    auto unroll_l(Traits, I f, S l){
+    template<typename Traits, typename I, typename S> auto unroll_l(Traits, I f, S l)
+    {
       return eve::unalign(f) + (l - f - get_unrolling<Traits>() * iterator_cardinal_v<I>);
     }
 
@@ -30,7 +30,7 @@ namespace detail
       {
         bool check = delegate.step(f, eve::ignore_none);
         f += iterator_cardinal_v<I>;
-        if (check) return check;
+        if( check ) return check;
       }
       return false;
     }
@@ -100,10 +100,15 @@ namespace detail
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
       auto unroll_l = this->unroll_l(traits, f, l);
+      goto main_loop;
+
       while( true )
       {
-        if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
+        // expensive part before main loop should help when expensive part
+        // it forms a separate while loop.
         if( delegate.expensive_part() ) return;
+      main_loop:
+        if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
       }
     }
   };
@@ -126,9 +131,14 @@ namespace detail
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
-      I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
-      auto unroll_l = this->unroll_l(traits, f, l);
+      I    precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
+      auto unroll_l  = this->unroll_l(traits, f, l);
+      goto main_loop;
 
+    // expensive part before main loop should help when expensive part
+    // it forms a separate while loop.
+    expensive_part:
+      if( delegate.expensive_part() ) return;
     main_loop:
       if( this->main_loop(traits, f, unroll_l, precise_l, delegate) ) { goto expensive_part; }
 
@@ -139,11 +149,8 @@ namespace detail
 
         // hack to exit after the `expensive_part` without any extra checks.
         l = precise_l;
+        goto expensive_part;
       }
-
-    expensive_part:
-      if( delegate.expensive_part() ) return;
-      goto main_loop;
     }
   };
 
@@ -167,7 +174,7 @@ namespace detail
     {
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();
-      auto unroll_l = this->unroll_l(traits, f, l);
+      auto unroll_l  = this->unroll_l(traits, f, l);
 
       eve::ignore_first ignore_first {f - aligned_f};
 
@@ -177,9 +184,13 @@ namespace detail
           bool first_step_res = delegate.step(aligned_f, ignore_first);
           ignore_first        = eve::ignore_first {0};
           aligned_f += iterator_cardinal_v<I>;
-          if( first_step_res ) goto expensive_part;
+          if( !first_step_res ) goto main_loop;
         }
 
+      // expensive part before main loop should help when expensive part
+      // it forms a separate while loop.
+      expensive_part:
+        if( delegate.expensive_part() ) return;
       main_loop:
         // handles aligned_f == aligned_l
         if( this->main_loop(traits, aligned_f, unroll_l, aligned_l, delegate) ) goto expensive_part;
@@ -190,11 +201,8 @@ namespace detail
         eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
         if( !delegate.step(aligned_l, ignore_first && ignore_last) ) return;
         l = aligned_l; // hack that pevents comming here after the expensive part
+        goto expensive_part;
       }
-
-    expensive_part:
-      if( delegate.expensive_part() ) return;
-      goto main_loop;
     }
   };
 }
