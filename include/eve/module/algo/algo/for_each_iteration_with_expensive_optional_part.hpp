@@ -26,11 +26,10 @@ namespace detail
     template<typename Traits, typename I, typename S, typename Delegate>
     EVE_FORCEINLINE bool no_unrolling_loop(Traits, I& f, S l, Delegate& delegate) const
     {
-      while( f != l )
+      while( f < l )
       {
-        bool check = delegate.step(f, eve::ignore_none);
+        if (delegate.step(f, eve::ignore_none)) return true;
         f += iterator_cardinal_v<I>;
-        if( check ) return check;
       }
       return false;
     }
@@ -107,6 +106,7 @@ namespace detail
         // expensive part before main loop should help when expensive part
         // it forms a separate while loop.
         if( delegate.expensive_part() ) return;
+        f += iterator_cardinal_v<I>;
       main_loop:
         if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
       }
@@ -139,6 +139,7 @@ namespace detail
     // it forms a separate while loop.
     expensive_part:
       if( delegate.expensive_part() ) return;
+      f += iterator_cardinal_v<I>;
     main_loop:
       if( this->main_loop(traits, f, unroll_l, precise_l, delegate) ) { goto expensive_part; }
 
@@ -183,20 +184,23 @@ namespace detail
         {
           bool first_step_res = delegate.step(aligned_f, ignore_first);
           ignore_first        = eve::ignore_first {0};
-          aligned_f += iterator_cardinal_v<I>;
-          if( !first_step_res ) goto main_loop;
+          if( !first_step_res ) {
+            aligned_f += iterator_cardinal_v<I>;
+            goto main_loop;
+          }
         }
 
       // expensive part before main loop should help when expensive part
       // it forms a separate while loop.
       expensive_part:
         if( delegate.expensive_part() ) return;
+        aligned_f += iterator_cardinal_v<I>;
       main_loop:
         // handles aligned_f == aligned_l
         if( this->main_loop(traits, aligned_f, unroll_l, aligned_l, delegate) ) goto expensive_part;
       }
 
-      if( aligned_f == l ) return;
+      if( aligned_l == l ) return;
       {
         eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
         if( !delegate.step(aligned_l, ignore_first && ignore_last) ) return;

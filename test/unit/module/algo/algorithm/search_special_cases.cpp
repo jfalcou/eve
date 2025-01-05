@@ -34,6 +34,15 @@ TTS_CASE("eve.algo.search, smoke test")
   TTS_EQUAL(found - haystack.begin(), 35);
 };
 
+TTS_CASE("eve.algo.search, doesn't stop bug")
+{
+  std::vector<std::int8_t> haystack(1000U, 1);
+  std::vector<std::int8_t> needle{1, 2, 1};
+
+  auto found = eve::algo::search(haystack, needle);
+  TTS_EQUAL(found - haystack.begin(), (std::ptrdiff_t)haystack.size());
+};
+
 TTS_CASE("eve.algo.search, last char of 32") {
   std::vector<std::int8_t> haystack;
   haystack.resize(32);
