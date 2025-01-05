@@ -69,7 +69,10 @@ struct test_delegate
     TTS_LESS_EQUAL(it_idx, (std::ptrdiff_t)kMaxTestDataSize, REQUIRED) << "sanity check";
 
     for( std::ptrdiff_t i = ignore.offset(tgt); i; --i ) { *ptr++ = 'i'; }
-    for( std::ptrdiff_t i = ignore.count(tgt); i; --i ) { *ptr++ = 'a'; }
+    for( std::ptrdiff_t i = ignore.count(tgt); i; --i ) {
+      TTS_EXPECT(*ptr == 0 || *ptr == '_') << "repeated processing: " << *ptr << " ptr - data: "  << (ptr - data);
+      *ptr++ = 'a';
+    }
     for( std::ptrdiff_t i = ignore.roffset(tgt); i; --i ) { *ptr++ = 'i'; }
 
     if( where_to_expensive_pos < std::ssize(where_to_expensive) )
@@ -89,6 +92,7 @@ struct test_delegate
   bool expensive_part(auto base_expensive)
   {
     char *where_to_write = data + (base_expensive.ptr - data) + expensive_offset;
+    TTS_EQUAL(*where_to_write, 'a') << "repeated processing";
     *where_to_write      = 'e';
     if( where_to_write - data == expensive_returns_true_at ) { return true; }
     return false;
