@@ -65,12 +65,13 @@ struct test_delegate
     char *ptr = it.ptr;
 
     std::ptrdiff_t it_idx = it.ptr - data;
-    std::cerr << "step: it idx: " << it_idx << " ignore: " << ignore << std::endl;
     TTS_LESS_EQUAL(it_idx, (std::ptrdiff_t)kMaxTestDataSize, REQUIRED) << "sanity check";
 
     for( std::ptrdiff_t i = ignore.offset(tgt); i; --i ) { *ptr++ = 'i'; }
-    for( std::ptrdiff_t i = ignore.count(tgt); i; --i ) {
-      TTS_EXPECT(*ptr == 0 || *ptr == '_') << "repeated processing: " << *ptr << " ptr - data: "  << (ptr - data);
+    for( std::ptrdiff_t i = ignore.count(tgt); i; --i )
+    {
+      TTS_EXPECT(*ptr == 0 || *ptr == '_')
+          << "repeated processing: " << *ptr << " ptr - data: " << (ptr - data);
       *ptr++ = 'a';
     }
     for( std::ptrdiff_t i = ignore.roffset(tgt); i; --i ) { *ptr++ = 'i'; }
@@ -91,10 +92,25 @@ struct test_delegate
 
   bool expensive_part(auto base_expensive)
   {
-    char *where_to_write = data + (base_expensive.ptr - data) + expensive_offset;
-    TTS_EQUAL(*where_to_write, 'a') << "repeated processing";
-    *where_to_write      = 'e';
-    if( where_to_write - data == expensive_returns_true_at ) { return true; }
+    std::ptrdiff_t it_idx         = base_expensive.ptr - data;
+    std::ptrdiff_t interupted_for = it_idx + expensive_offset;
+
+    TTS_EQUAL(interupted_for, where_to_expensive[where_to_expensive_pos]);
+
+    do {
+      auto next_expensive = where_to_expensive[where_to_expensive_pos];
+
+      if( next_expensive >= it_idx + 4 ) { break; }
+
+      TTS_EQUAL(data[next_expensive], 'a');
+      data[next_expensive] = 'e';
+
+      if( next_expensive == expensive_returns_true_at ) { return true; }
+
+      ++where_to_expensive_pos;
+    }
+    while( where_to_expensive_pos < std::ssize(where_to_expensive) );
+
     return false;
   }
 };
@@ -272,5 +288,150 @@ TTS_CASE("eve.algo.for_each_iteration_with_expensive_optional_part, aligning, so
   TTS_EQUAL(run_test<true>(0,
                            4,
                            /*where to expensive*/ {0, 1, 2, 3}),
-            "eaaa");
+            "eeee");
+  TTS_EQUAL(run_test<true>(0,
+                           5,
+                           /*where to expensive*/ {0, 1, 2, 3}),
+            "eeeeaiii");
+  TTS_EQUAL(run_test<true>(1,
+                           5,
+                           /*where to expensive*/ {1}),
+            "ieaaaaii");
+  TTS_EQUAL(run_test<true>(1,
+                           5,
+                           /*where to expensive*/ {2, 3}),
+            "iaeeaaii");
+  TTS_EQUAL(run_test<true>(1,
+                           5,
+                           /*where to expensive*/ {2, 5}),
+            "iaeaaeii");
+
+  TTS_EQUAL(run_test<true>(1,
+                           22,
+                           /*where to expensive*/
+                           {
+                               // clang-format off
+                               1, 2, 3, 4,
+                               5, 6, 7, 8,
+                               9, 10, 11, 12,
+                               13, 14, 15, 16,
+                               17, 18, 19, 20,
+                               21, 22
+                               // clang-format on
+                           }),
+            "ieee"
+            "eeee"
+            "eeee"
+            "eeee"
+            "eeee"
+            "eeei");
+};
+
+TTS_CASE("eve.algo.for_each_iteration_with_expensive_optional_part, no aligning, some expensive")
+{
+  TTS_EQUAL(run_test<false>(0,
+                            1,
+                            /*where to expensive*/ {0}),
+            "eiii");
+  TTS_EQUAL(run_test<false>(0,
+                            4,
+                            /*where to expensive*/ {0, 1, 2, 3}),
+            "eeee");
+  TTS_EQUAL(run_test<false>(0,
+                            5,
+                            /*where to expensive*/ {0, 1, 2, 3}),
+            "eeeeaiii");
+  TTS_EQUAL(run_test<false>(1,
+                            5,
+                            /*where to expensive*/ {1}),
+            "_eaaaaiii");
+  TTS_EQUAL(run_test<false>(1,
+                            5,
+                            /*where to expensive*/ {2, 3}),
+            "_aeeaaiii");
+  TTS_EQUAL(run_test<false>(1,
+                            5,
+                            /*where to expensive*/ {2, 5}),
+            "_aeaaeiii");
+  TTS_EQUAL(run_test<false>(1,
+                            22,
+                            /*where to expensive*/
+                            {
+                                // clang-format off
+                               1, 2, 3, 4,
+                               5, 6, 7, 8,
+                               9, 10, 11, 12,
+                               13, 14, 15, 16,
+                               17, 18, 19, 20,
+                               21, 22
+                                // clang-format on
+                            }),
+            "_eee"
+            "eeee"
+            "eeee"
+            "eeee"
+            "eeee"
+            "eeei"
+            "i");
+};
+
+TTS_CASE("eve.algo.for_each_iteration_with_expensive_optional_part, some expensive, stop check")
+{
+  TTS_EQUAL(run_test<true>(0,
+                           5,
+                           /*where to expensive*/ {0, 1, 2, 3},
+                           /*stop at*/ 2),
+            "eeea");
+
+  TTS_EQUAL(run_test<false>(0,
+                           5,
+                           /*where to expensive*/ {0, 1, 2, 3},
+                           /*stop at*/ 2),
+            "eeea");
+  TTS_EQUAL(run_test<true>(1,
+                           5,
+                           /*where to expensive*/ {1},
+                           /*stop at*/ 1),
+            "ieaa");
+  TTS_EQUAL(run_test<false>(1,
+                           5,
+                           /*where to expensive*/ {1},
+                           /*stop at*/ 1),
+            "_eaaa");
+
+  TTS_EQUAL(run_test<true>(1,
+                           22,
+                           /*where to expensive*/
+                           {
+                               // clang-format off
+                               1, 2, 3, 4,
+                               5, 6, 7, 8,
+                               9, 10, 11, 12,
+                               13, 14, 15, 16,
+                               17, 18, 19, 20,
+                               21, 22
+                               // clang-format on
+                           },
+                           /*stop at*/ 10),
+            "ieee"
+            "eeee"
+            "eeea");
+  TTS_EQUAL(run_test<false>(1,
+                           22,
+                           /*where to expensive*/
+                           {
+                               // clang-format off
+                               1, 2, 3, 4,
+                               5, 6, 7, 8,
+                               9, 10, 11, 12,
+                               13, 14, 15, 16,
+                               17, 18, 19, 20,
+                               21, 22
+                               // clang-format on
+                           },
+                           /*stop at*/ 10),
+            "_eee"
+            "eeee"
+            "eeea"
+            "a");
 };

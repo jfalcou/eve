@@ -35,10 +35,9 @@ namespace detail
     }
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto unroll_l, S l, Delegate& delegate) const
+    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto /*unroll_l*/, S l, Delegate& delegate) const
     requires(get_unrolling<Traits>() == 1)
     {
-      (void)unroll_l;
       return no_unrolling_loop(tr, f, l, delegate);
     }
 
@@ -194,7 +193,7 @@ namespace detail
       // expensive part before main loop should help when expensive part
       // it forms a separate while loop.
       expensive_part:
-        if( delegate.expensive_part(f) ) return;
+        if( delegate.expensive_part(aligned_f) ) return;
         aligned_f += iterator_cardinal_v<I>;
       main_loop:
         // handles aligned_f == aligned_l
