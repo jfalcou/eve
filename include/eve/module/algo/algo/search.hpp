@@ -29,20 +29,16 @@ namespace detail
    */
   struct for_each_possibly_matching_for_search_
   {
-    template<
-      typename HaystackI,
-      typename NeedleWide,
-      typename Equal,
-      typename Verify> struct delegate
+    template<typename HaystackI, typename NeedleWide, typename Equal, typename Verify>
+    struct delegate
     {
       NeedleWide needle_front;
       NeedleWide needle_back;
       Equal      equal_fn;
       Verify&    verify;
 
-      bool was_stopped = false;
-      unaligned_t<HaystackI> pos = {};
-      decltype(equal_fn(wide_value_type_t<HaystackI>{}, NeedleWide{})) precheck = {};
+      bool                                                               was_stopped = false;
+      decltype(equal_fn(wide_value_type_t<HaystackI> {}, NeedleWide {})) precheck    = {};
 
       template<typename I> EVE_FORCEINLINE auto make_verify_adapter(I haystack_it)
       {
@@ -59,15 +55,11 @@ namespace detail
 
       EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
       {
-        pos = get<0>(zip_it);
-
         // not loading from `zip_it` here, becasue it's much more expensive for tails.
-        auto         haystack_front = eve::load[ignore](pos);
-        precheck     = equal_fn(haystack_front, needle_front);
+        auto haystack_front = eve::load[ignore](get<0>(zip_it));
+        precheck            = equal_fn(haystack_front, needle_front);
 
-        if (!eve::any[ignore](precheck)) {
-          return false;
-        }
+        if( !eve::any[ignore](precheck) ) { return false; }
 
         precheck = precheck && ignore.mask(as(precheck));
 
@@ -78,21 +70,19 @@ namespace detail
       {
         auto [haystack_front, haystack_back] = eve::load(zip_it);
 
-        pos = get<0>(zip_it);
         precheck = equal_fn(haystack_front, needle_front) && equal_fn(haystack_back, needle_back);
         return eve::any(precheck);
       }
 
-      template<eve::relative_conditional_expr C>
-      EVE_FORCEINLINE bool step(auto zip_it, C ignore)
+      template<eve::relative_conditional_expr C> EVE_FORCEINLINE bool step(auto zip_it, C ignore)
       {
         if constexpr( C::is_complete && C::is_inverted ) { return main_part(zip_it); }
         else { return tail(zip_it, ignore); }
       }
 
-      EVE_FORCEINLINE bool expensive_part()
+      EVE_FORCEINLINE bool expensive_part(auto it)
       {
-        was_stopped = eve::iterate_selected(precheck, make_verify_adapter(pos));
+        was_stopped = eve::iterate_selected(precheck, make_verify_adapter(get<0>(it)));
         return was_stopped;
       }
     };
@@ -117,8 +107,13 @@ namespace detail
       auto iteration = algo::for_each_iteration_with_expensive_optional_part(
           traits, haystack_front_back_range.begin(), haystack_front_back_range.end());
       delegate<HaystackI, NeedleWide, Equal, Verify> d {
-        needle_front, needle_back, equal_fn, verify, {}, {},
-        };
+          needle_front,
+          needle_back,
+          equal_fn,
+          verify,
+          {},
+          {},
+      };
       iteration(d);
       return d.was_stopped;
     }
@@ -320,8 +315,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     using I1 = decltype(processed_haystack.begin());
     using I2 = decltype(processed_needle.begin());
 
-    needle_checker<I1, I2, Equal> nc(
-        processed_needle.begin(), processed_needle.end(), equal_fn);
+    needle_checker<I1, I2, Equal> nc(processed_needle.begin(), processed_needle.end(), equal_fn);
 
     auto haystack_main_part_l = eve::unalign(haystack_f);
 
@@ -341,12 +335,8 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       }
     }
 
-    if( auto res = small_tail(haystack_main_part_l,
-                              haystack_l,
-                              processed_needle.begin(),
-                              equal_fn,
-                              needle_len,
-                              nc) )
+    if( auto res = small_tail(
+            haystack_main_part_l, haystack_l, processed_needle.begin(), equal_fn, needle_len, nc) )
     {
       return eve::unalign(haystack.begin()) + (*res - haystack_f);
     }

@@ -47,7 +47,7 @@ struct test_delegate {
   std::ptrdiff_t expensive_returns_true_at;
 
   std::ptrdiff_t where_to_expensive_pos = 0;
-  char* remembered_expesnive = nullptr;
+  std::ptrdiff_t expensive_offset = 0;
 
   test_delegate(
     char* data,
@@ -76,7 +76,7 @@ struct test_delegate {
       auto next_expensive = where_to_expensive[where_to_expensive_pos];
 
       if ( it_idx <= next_expensive && next_expensive < it_idx + 4 ) {
-        remembered_expesnive = data + next_expensive;
+        expensive_offset = next_expensive - it_idx;
         return true;
       }
     }
@@ -84,9 +84,10 @@ struct test_delegate {
     return false;
   }
 
-  bool expensive_part() {
-    *remembered_expesnive = 'e';
-    if (remembered_expesnive - data == expensive_returns_true_at) {
+  bool expensive_part(auto base_expensive) {
+    char* where_to_write = data + (base_expensive.ptr - data) + expensive_offset;
+    *where_to_write = 'e';
+    if (where_to_write - data == expensive_returns_true_at) {
       return true;
     }
     return false;

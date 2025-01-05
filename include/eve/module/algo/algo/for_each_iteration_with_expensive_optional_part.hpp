@@ -28,7 +28,7 @@ namespace detail
     {
       while( f < l )
       {
-        if (delegate.step(f, eve::ignore_none)) return true;
+        if( delegate.step(f, eve::ignore_none) ) return true;
         f += iterator_cardinal_v<I>;
       }
       return false;
@@ -105,7 +105,7 @@ namespace detail
       {
         // expensive part before main loop should help when expensive part
         // it forms a separate while loop.
-        if( delegate.expensive_part() ) return;
+        if( delegate.expensive_part(f) ) return;
         f += iterator_cardinal_v<I>;
       main_loop:
         if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
@@ -138,7 +138,7 @@ namespace detail
     // expensive part before main loop should help when expensive part
     // it forms a separate while loop.
     expensive_part:
-      if( delegate.expensive_part() ) return;
+      if( delegate.expensive_part(f) ) return;
       f += iterator_cardinal_v<I>;
     main_loop:
       if( this->main_loop(traits, f, unroll_l, precise_l, delegate) ) { goto expensive_part; }
@@ -184,7 +184,8 @@ namespace detail
         {
           bool first_step_res = delegate.step(aligned_f, ignore_first);
           ignore_first        = eve::ignore_first {0};
-          if( !first_step_res ) {
+          if( !first_step_res )
+          {
             aligned_f += iterator_cardinal_v<I>;
             goto main_loop;
           }
@@ -193,7 +194,7 @@ namespace detail
       // expensive part before main loop should help when expensive part
       // it forms a separate while loop.
       expensive_part:
-        if( delegate.expensive_part() ) return;
+        if( delegate.expensive_part(f) ) return;
         aligned_f += iterator_cardinal_v<I>;
       main_loop:
         // handles aligned_f == aligned_l
