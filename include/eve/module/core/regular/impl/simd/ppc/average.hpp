@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> average_(EVE_SUPPORTS(vmx_),
+  EVE_FORCEINLINE wide<T, N> average_(EVE_REQUIRES(vmx_),
                                       O          const &opts,
                                       wide<T, N> const &v0,
                                       wide<T, N> const &v1) noexcept requires ppc_abi<abi_t<T, N>>
