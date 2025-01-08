@@ -29,5 +29,5 @@ var searchData=
   ['operator_7c_26',['operator|',['../structeve_1_1wide.html#a510411035e4f3ab616a326c1cf600a43',1,'eve::wide::operator|'],['../structeve_1_1wide.html#a5d6f4e9aeb45c455bb46cf4ac44c25ba',1,'eve::wide::operator|'],['../structeve_1_1wide.html#abe226796fe038be31f1cd40c4c5c5f46',1,'eve::wide::operator|']]],
   ['operator_7c_3d_27',['operator|=',['../structeve_1_1wide.html#a831c238dece0b5e60ba7023c74e55e43',1,'eve::wide']]],
   ['operator_7c_7c_28',['operator||',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a01982a3c658025a2e2f9dd6b019f21b8',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::operator||'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae2ffc3a3b598538dfef3cbcc3f130eaa',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::operator||'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a6ce43ecc63fed35b4d4a76e33f8bbaee',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::operator||']]],
-  ['operator_7e_29',['operator~',['../structeve_1_1wide.html#aff1a293cd2c26ba5aeb7ec16c1f6c187',1,'eve::wide']]]
+  ['operator_7e_29',['operator~',['../structeve_1_1wide.html#a12fb180e15ba59b5a3a90887b466fbd7',1,'eve::wide']]]
 ];
