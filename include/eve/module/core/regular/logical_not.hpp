@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>
-
+#include <eve/module/core/regular/bit_cast.hpp>
 
 namespace eve
 {
@@ -93,3 +93,15 @@ namespace eve
     }
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/logical_not.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/logical_not.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/logical_not.hpp>
+#endif
