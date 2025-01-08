@@ -315,7 +315,7 @@ namespace eve
     //! Computes the logical complement of its parameter
     friend EVE_FORCEINLINE auto operator!(logical const& v) noexcept
     {
-      return detail::self_lognot(v);
+      return logical_not(v);
     }
 
     //==============================================================================================
