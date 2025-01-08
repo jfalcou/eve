@@ -20,12 +20,18 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(vmx_),
-                                    O          const&,
+                                    O          const& o,
                                     wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(raw) && std::same_as<T, float>)
+    if constexpr(O::contains(pedantic))
+    {
+      return rsqrt.behavior(cpu_{}, o, v0);
+    }
+    else if constexpr(O::contains(raw) && std::same_as<T, float>)
+    {
       return vec_rsqrte(v0.storage());
+    }
     else
     {
       if constexpr( std::same_as<T, float> )
@@ -46,8 +52,7 @@ namespace eve::detail
 
         return xn;
       }
-      else
-        return map(rsqrt, v0);
+      else return rsqrt.behavior(cpu_{}, o, v0);
     }
   }
 }
