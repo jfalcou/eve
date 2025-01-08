@@ -81,15 +81,9 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr auto logical_not_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr (scalar_value<T>)
-      {
-        return as_logical_t<T>(!a);
-      }
-      else
-      {
-        auto l = to_logical(a);
-        return bit_cast(~(l.bits()), as{l});
-      }
+      if      constexpr (scalar_value<T>)  return as_logical_t<T>(!a);
+      else if constexpr (logical_value<T>) return bit_cast(~(l.bits()), as{l});
+      else                                 return !to_logical(a);
     }
   }
 }
