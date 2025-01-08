@@ -227,7 +227,7 @@ Compilation</h2>
 <p>To compile code using <b>EVE</b>, use your C++20 aware favorite compiler, for example g++.</p>
 <pre class="fragment">$ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include/eve-&lt;version&gt; -o output
 </pre><p>Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
-<p>You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
+<p>You can notice we use the <code>-O3 -DNDEBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p>The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
 <h2><a class="anchor" id="autotoc_md91"></a>
 Instruction Set Selection</h2>
