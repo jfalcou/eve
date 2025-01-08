@@ -138,7 +138,7 @@ $ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include
 
 Don't forget the `--std=c++20` option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.
 
-You can notice we use the `-O3 -DNEDBUG` options. This is required if you want to be sure to get the best performance out of **EVE**.
+You can notice we use the `-O3 -DNDEBUG` options. This is required if you want to be sure to get the best performance out of **EVE**.
 
 The `-DNDEBUG` setting can be omitted but then asserts will be inserted into the code to prevent logic errors.
 
