@@ -82,7 +82,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto logical_not_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if      constexpr (scalar_value<T>)  return as_logical_t<T>(!a);
-      else if constexpr (logical_value<T>) return bit_cast(~(l.bits()), as{l});
+      else if constexpr (logical_value<T>) return bit_cast(~(a.bits()), as{a});
       else                                 return !to_logical(a);
     }
   }
