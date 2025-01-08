@@ -28,29 +28,6 @@ namespace eve
 namespace eve::detail
 {
   //================================================================================================
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_bitnot(wide<T,N> const& v) noexcept
-  {
-    if constexpr(is_native_v<abi_t<T, N>>)
-    {
-      auto that = v;
-      that ^= allbits(eve::as(v));
-      return that;
-    }
-    else
-    {
-      return  apply_over([]<typename E>(E const& e)
-              {
-                if constexpr(floating_scalar_value<E>)
-                  return bit_cast( ~bit_cast(e, as<as_integer_t<E>>{}), as(e));
-                else
-                  return E(~e);
-              }, v
-              );
-    }
-  }
-
-  //================================================================================================
   template<typename T, typename U, typename N>
   EVE_FORCEINLINE auto self_logand(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
   {
