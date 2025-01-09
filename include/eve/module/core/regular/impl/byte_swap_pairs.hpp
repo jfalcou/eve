@@ -20,11 +20,7 @@
 namespace eve::detail
 {
   template<typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
-  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
-                                     O const &,
-                                     T x ,
-                                     index_t<I0> const & ,
-                                     index_t<I1> const &) noexcept
+  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_), O const &, T x, index_t<I0>, index_t<I1>) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -54,12 +50,7 @@ namespace eve::detail
 
   // Masked case
   template<conditional_expr C, typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
-  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
-                                     C const& cond,
-                                     O const &,
-                                     T t,
-                                     index_t<I0> const & i0,
-                                     index_t<I1> const & i1) noexcept
+  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_), C const& cond, O const&, T t, index_t<I0> i0, index_t<I1> i1) noexcept
   {
     return mask_op(cond, eve::byte_swap_pairs, t, i0, i1);
   }

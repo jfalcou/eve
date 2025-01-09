@@ -12,9 +12,9 @@
 namespace eve
 {
   template<typename Options>
-  struct swap_pairs_t : strict_elementwise_callable<swap_pairs_t, Options>
+  struct swap_pairs_t : callable<swap_pairs_t, Options>
   {
-    template<value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
+    template<simd_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE T operator()(T x, index_t<I0> i0, index_t<I1> i1) const noexcept
     {
       return EVE_DISPATCH_CALL(x, i0, i1);
@@ -41,20 +41,19 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template<value T, std::ptrdiff_t I0, std::ptrdiff_t I1 >
+  //!      template<simd_value T, std::ptrdiff_t I0, std::ptrdiff_t I1 >
   //!      T swap_pairs(T x, index_t<I0> const & i0, index_t<I1> const & i1);
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [argument](@ref eve::value).
+  //!     * `x` :  [argument](@ref eve::simd_value).
   //!     * `i0` : first index
   //!     * `i1` : second index
   //!
   //!    **Return value**
   //!
-  //!    Return x with element i0 and i1 swapped. Action on scalar is identity.
-  //!    Assert if i0 or i1 are out of range.
+  //!    Return x with element i0 and i1 swapped.
   //!
   //!  @groupheader{Example}
   //!
