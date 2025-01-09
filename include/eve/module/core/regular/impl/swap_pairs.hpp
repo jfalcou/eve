@@ -13,11 +13,8 @@
 
 namespace eve::detail
 {
-  template<value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-  EVE_FORCEINLINE T
-  swap_pairs_(EVE_SUPPORTS(cpu_), T x
-                  , index_t<I0> const &
-                  , index_t<I1> const &  ) noexcept
+  template<callable_options O, value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
+  EVE_FORCEINLINE constexpr T swap_pairs_(EVE_REQUIRES(cpu_), O const&, T x, index_t<I0>, index_t<I1>) noexcept
   {
     [[maybe_unused]] constexpr std::ptrdiff_t C = scalar_value<T> ? 1 : cardinal_v<T>;
     EVE_ASSERT((I0 >= 0) && (I1 >= 0) && (I0 < C) && (I1 < C), "some index(es) are out or range");
