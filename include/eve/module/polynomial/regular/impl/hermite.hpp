@@ -26,21 +26,17 @@ namespace eve::detail
   {
     if constexpr(scalar_value<I>)
     {
-      if constexpr( has_native_abi_v<T> )
+      T p0 = one(as(x));
+      if( is_eqz(n) ) return p0;
+      T p1 = x + x;
+      I c  = one(as(n));
+      while( c < n )
       {
-        T p0 = one(as(x));
-        if( is_eqz(n) ) return p0;
-        T p1 = x + x;
-        I c  = one(as(n));
-        while( c < n )
-        {
-          std::swap(p0, p1);
-          p1 = hermite[successor](c, x, p0, p1);
-          ++c;
-        }
-        return p1;
+        std::swap(p0, p1);
+        p1 = hermite[successor](c, x, p0, p1);
+        ++c;
       }
-      else return apply_over(hermite, n, x);
+      return p1;
     }
     else if constexpr(simd_value<I>)
     {

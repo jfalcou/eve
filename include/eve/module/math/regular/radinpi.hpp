@@ -73,13 +73,9 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      if constexpr( has_native_abi_v<T> )
-        return inv_pi(eve::as(a)) * a;
-      else
-        return apply_over(radinpi, a);
+      return inv_pi(eve::as(a)) * a;
     }
   }
 }

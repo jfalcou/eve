@@ -71,55 +71,45 @@ namespace eve::detail
       }
       else
       {
-        if constexpr( has_native_abi_v<T> )
+        if constexpr(O::contains(p_kind) || O::contains(q_kind))
         {
-          if constexpr(O::contains(p_kind) || O::contains(q_kind))
-          {
-            auto xx = r_t(x);
-            using elt_t = element_type_t<T>;
-            auto p0     = one(as(xx));
-            r_t    p00;
-            auto iseqzn       = is_eqz(l);
-            auto p1           = xx;
-            auto out_of_range = eve::abs(xx) > one(as(xx));
+          auto xx = r_t(x);
+          using elt_t = element_type_t<T>;
+          auto p0     = one(as(xx));
+          r_t    p00;
+          auto iseqzn       = is_eqz(l);
+          auto p1           = xx;
+          auto out_of_range = eve::abs(xx) > one(as(xx));
 
-            if constexpr(O::contains(p_kind))
-            {
-              if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
-            }
-            else if constexpr(O::contains(q_kind))
-            {
-              p0  = atanh(xx);
-              p00 = p0;
-              if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, r_t(p0));
-              p1 = fms(x, p0, one(as(xx)));
-            }
-            auto n    = convert(l, as<elt_t>());
-            auto c    = one(as(n));
-            auto test = c < n;
-            while( eve::any(test) )
-            {
-              auto p = p0;
-              p0     = p1;
-              p1     = if_else(test, legendre[successor](c, xx, p0, p), p1);
-              c      = inc(c);
-              test   = c < n;
-            }
-            if constexpr(O::contains(p_kind))
-              p1 = if_else(iseqzn, one, p1);
-            else if constexpr(O::contains(q_kind) )
-              p1 = if_else(iseqzn, p00, p1);
-            return if_else(out_of_range, allbits, p1);
-          }
-          else return apply_over(legendre[p_kind], l, r_t(x));
-        }
-        else
-        {
           if constexpr(O::contains(p_kind))
-            return apply_over(legendre[p_kind], l, r_t(x));
-          else
-            return apply_over(legendre[q_kind], l, r_t(x));
+          {
+            if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
+          }
+          else if constexpr(O::contains(q_kind))
+          {
+            p0  = atanh(xx);
+            p00 = p0;
+            if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, r_t(p0));
+            p1 = fms(x, p0, one(as(xx)));
+          }
+          auto n    = convert(l, as<elt_t>());
+          auto c    = one(as(n));
+          auto test = c < n;
+          while( eve::any(test) )
+          {
+            auto p = p0;
+            p0     = p1;
+            p1     = if_else(test, legendre[successor](c, xx, p0, p), p1);
+            c      = inc(c);
+            test   = c < n;
+          }
+          if constexpr(O::contains(p_kind))
+            p1 = if_else(iseqzn, one, p1);
+          else if constexpr(O::contains(q_kind) )
+            p1 = if_else(iseqzn, p00, p1);
+          return if_else(out_of_range, allbits, p1);
         }
+        else return legendre[p_kind](l, r_t(x));
       }
     }
   }
@@ -183,64 +173,60 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( has_native_abi_v<T> )
+      auto iseqzm = is_eqz(m);
+      if( eve::all(iseqzm) )
       {
-        auto iseqzm = is_eqz(m);
-        if( eve::all(iseqzm) )
-        {
-          return legendre(l, x);
-        }
-        else
-        {
-          auto lpos    = is_gez(l);
-          auto mpos    = is_gez(m);
-          auto mlel    = m <= l;
-          auto inrange = eve::abs(x) <= one(as(x));
-          auto notdone_ = inrange && lpos && mpos;
-          auto r       = if_else(notdone_, zero, nan(as(x)));
-          notdone_     = notdone_ && mlel;
+        return legendre(l, x);
+      }
+      else
+      {
+        auto lpos    = is_gez(l);
+        auto mpos    = is_gez(m);
+        auto mlel    = m <= l;
+        auto inrange = eve::abs(x) <= one(as(x));
+        auto notdone_ = inrange && lpos && mpos;
+        auto r       = if_else(notdone_, zero, nan(as(x)));
+        notdone_     = notdone_ && mlel;
 
+        if( eve::any(notdone_) )
+        {
+          auto mz_case = [](auto ll, auto xx) { //(m == 0);
+            return legendre(ll, xx);
+          };
+
+          auto regular_case = [](auto ll, auto mm, auto x_, auto notdone) { // other cases
+            using elt_t          = element_type_t<T>;
+            auto ll_             = convert(ll, as<elt_t>());
+            auto mm_               = convert(mm, as<elt_t>());
+            using r_t            = decltype(x_ * ll_ * mm_);
+            auto sin_theta_power = eve::pow1p(-sqr(x_), eve::abs(mm_) / 2);
+
+            r_t p0 = convert(eve::double_factorial(convert(eve::max(2 * mm - 1, zero(as(mm))), uint_from<T>())),
+                              as<elt_t>())
+            * sin_theta_power;
+            auto p00  = p0;
+            auto p1   = x_ * (2 * mm_ + 1) * p0;
+            auto n    = if_else(notdone, inc(mm_), inc(ll_));
+            auto test = (n < ll_);
+            while( eve::any(test) )
+            {
+              auto p = p0;
+              p0     = p1;
+              p1     = if_else(test, legendre[associated][successor](n, mm_, x_, p0, p), p1);
+              n      = inc(n);
+              test   = n < ll_;
+            }
+            return if_else(mm_ == ll_, p00, p1);
+          };
+          auto mz = (m == 0);
+          notdone_ = next_interval(mz_case, notdone_, mz, r, l, x);
           if( eve::any(notdone_) )
           {
-            auto mz_case = [](auto ll, auto xx) { //(m == 0);
-              return legendre(ll, xx);
-            };
-
-            auto regular_case = [](auto ll, auto mm, auto x_, auto notdone) { // other cases
-              using elt_t          = element_type_t<T>;
-              auto ll_             = convert(ll, as<elt_t>());
-              auto mm_               = convert(mm, as<elt_t>());
-              using r_t            = decltype(x_ * ll_ * mm_);
-              auto sin_theta_power = eve::pow1p(-sqr(x_), eve::abs(mm_) / 2);
-
-              r_t p0 = convert(eve::double_factorial(convert(eve::max(2 * mm - 1, zero(as(mm))), uint_from<T>())),
-                               as<elt_t>())
-              * sin_theta_power;
-              auto p00  = p0;
-              auto p1   = x_ * (2 * mm_ + 1) * p0;
-              auto n    = if_else(notdone, inc(mm_), inc(ll_));
-              auto test = (n < ll_);
-              while( eve::any(test) )
-              {
-                auto p = p0;
-                p0     = p1;
-                p1     = if_else(test, legendre[associated][successor](n, mm_, x_, p0, p), p1);
-                n      = inc(n);
-                test   = n < ll_;
-              }
-              return if_else(mm_ == ll_, p00, p1);
-            };
-            auto mz = (m == 0);
-            notdone_ = next_interval(mz_case, notdone_, mz, r, l, x);
-            if( eve::any(notdone_) )
-            {
-              notdone_ = last_interval(regular_case, notdone_, r, l, m, x, notdone_);
-            }
+            notdone_ = last_interval(regular_case, notdone_, r, l, m, x, notdone_);
           }
-          return r;
         }
+        return r;
       }
-      else return apply_over(legendre[associated], l, m, x);
     }
   }
 }

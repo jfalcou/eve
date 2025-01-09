@@ -160,10 +160,6 @@ namespace eve
 
         if constexpr( std::same_as<elt_u, Target> )
           return a0;
-        else if constexpr( has_aggregated_abi_v<U> )
-          return aggregate(eve::saturate, a0, at);
-        else if constexpr( has_emulated_abi_v<U> )
-          return map(eve::saturate, a0, at);
         else
         {
           if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point

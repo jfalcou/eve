@@ -49,36 +49,32 @@ namespace eve::detail
       if constexpr( std::same_as<T, I> && std::same_as<T, U> && std::same_as<T, V>)
       {
         EVE_ASSERT(eve::all(is_flint(n)), "some elements of n are not flint");
-        if constexpr( has_native_abi_v<T> )
+        T    y0(1);
+        auto ap1   = inc(alpha);
+        auto apb   = alpha + beta;
+        auto a2mb2 = sqr(alpha) - sqr(beta);
+        auto y1    = fam(ap1, (apb + 2), (x - 1) * T(0.5));
+        T    yk    = y1;
+        T    k(2);
+        T    k2(4);
+        auto test = k <= n;
+        while( eve::any(test) )
         {
-          T    y0(1);
-          auto ap1   = inc(alpha);
-          auto apb   = alpha + beta;
-          auto a2mb2 = sqr(alpha) - sqr(beta);
-          auto y1    = fam(ap1, (apb + 2), (x - 1) * T(0.5));
-          T    yk    = y1;
-          T    k(2);
-          T    k2(4);
-          auto test = k <= n;
-          while( eve::any(test) )
-          {
-            T apbpk  = k + apb;
-            T apbpk2 = k + apbpk;
-            T denom  = k2 * apbpk * (apbpk2 - 2);
-            T gamma1 = (apbpk2 - 1) * fma(apbpk2 * (apbpk2 - 2), x, a2mb2);
-            T gamma0 = -2 * (k + alpha - 1) * (k + beta - 1) * apbpk2;
-            yk       = if_else(test,
-                               fma(gamma1, y1, gamma0 * y0) / denom,
-                               yk); // sum_of_prod(gamma1, y1, gamma0, y0)/denom, yk);
-            y0       = if_else(test, y1, y0);
-            y1       = if_else(test, yk, y1);
-            k        = inc(k);
-            k2 += 2;
-            test = k <= n;
-          }
-          return if_else(is_eqz(n), one, yk);
+          T apbpk  = k + apb;
+          T apbpk2 = k + apbpk;
+          T denom  = k2 * apbpk * (apbpk2 - 2);
+          T gamma1 = (apbpk2 - 1) * fma(apbpk2 * (apbpk2 - 2), x, a2mb2);
+          T gamma0 = -2 * (k + alpha - 1) * (k + beta - 1) * apbpk2;
+          yk       = if_else(test,
+                              fma(gamma1, y1, gamma0 * y0) / denom,
+                              yk); // sum_of_prod(gamma1, y1, gamma0, y0)/denom, yk);
+          y0       = if_else(test, y1, y0);
+          y1       = if_else(test, yk, y1);
+          k        = inc(k);
+          k2 += 2;
+          test = k <= n;
         }
-        else return apply_over(jacobi, n, alpha, beta, x);
+        return if_else(is_eqz(n), one, yk);
       }
       else
       {

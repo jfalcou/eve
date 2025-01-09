@@ -47,30 +47,26 @@ namespace eve::detail
     else
     {
       auto xx = c_t(x);
-      if( has_native_abi_v<T> )
-      {
-        auto   y0     = one(as(xx));
-        auto iseqzn   = is_eqz(nn);
-        if( eve::all(iseqzn) ) return y0;
-        auto n  = convert(nn, as(elt_t()));
-        auto    y1 = 2 * lambda * xx;
+      auto   y0     = one(as(xx));
+      auto iseqzn   = is_eqz(nn);
+      if( eve::all(iseqzn) ) return y0;
+      auto n  = convert(nn, as(elt_t()));
+      auto    y1 = 2 * lambda * xx;
 
-        auto    yk = y1;
-        elt_t   k(2);
-        auto    k_max = n * inc(eps(as(elt_t())));
-        auto    gamma = 2 * dec(lambda);
-        auto    test  = k < k_max;
-        while( eve::any(test) )
-        {
-          yk   = if_else(test, fms((2 + gamma / k) * xx, y1, inc(gamma / k) * y0), yk);
-          y0   = y1;
-          y1   = yk;
-          k    = inc(k);
-          test = k < k_max;
-        }
-        return if_else(iseqzn, one, yk);
+      auto    yk = y1;
+      elt_t   k(2);
+      auto    k_max = n * inc(eps(as(elt_t())));
+      auto    gamma = 2 * dec(lambda);
+      auto    test  = k < k_max;
+      while( eve::any(test) )
+      {
+        yk   = if_else(test, fms((2 + gamma / k) * xx, y1, inc(gamma / k) * y0), yk);
+        y0   = y1;
+        y1   = yk;
+        k    = inc(k);
+        test = k < k_max;
       }
-      else return apply_over(gegenbauer, nn, lambda, x);
+      return if_else(iseqzn, one, yk);
     }
   };
 }

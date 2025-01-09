@@ -71,13 +71,9 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    expmx2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    EVE_FORCEINLINE constexpr T expmx2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
-      if constexpr( has_native_abi_v<T> )
-        return rec[pedantic](eve::expx2(a0));
-      else
-        return apply_over(expmx2, a0);
+      return rec[pedantic](eve::expx2(a0));
     }
   }
 }
