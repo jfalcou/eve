@@ -81,11 +81,6 @@ requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-self_lognot(logical<wide<T, N>> v) noexcept -> logical<wide<T, N>>
-requires sve_abi<abi_t<T, N>> { return svnot_z(sve_true<T>(), v); }
-
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
 self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept -> logical<wide<T, N>>
 requires sve_abi<abi_t<T, N>> { return sveor_z(sve_true<T>(), v, w); }
 

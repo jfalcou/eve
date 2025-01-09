@@ -109,19 +109,6 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
-{
-  if constexpr( !abi_t<T, N>::is_wide_logical )
-  {
-    using l_t = logical<wide<T, N>>;
-    return l_t {~v.storage()};
-  }
-  else { return bit_cast(~v.bits(), as(v)); }
-}
-
-//================================================================================================
-template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_eq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {

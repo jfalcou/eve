@@ -87,21 +87,6 @@ namespace eve::detail
 
   //================================================================================================
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_lognot(Wide const& v) noexcept
-  {
-    if constexpr(has_native_abi_v<Wide>)
-    {
-      if constexpr( is_logical_v<Wide> )  return bit_cast(~v.bits(), as<Wide>{});
-      else                                return !to_logical(v);
-    }
-    else
-    {
-      return apply_over([]<typename E>(E const& e){ return as_logical_t<E>(!e); }, v);
-    }
-  }
-
-  //================================================================================================
-  template<simd_value Wide>
   EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
   requires( kumi::product_type<element_type_t<Wide>> )
   {

@@ -30,6 +30,7 @@
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
@@ -979,7 +980,7 @@ namespace eve
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_lognot(v);
+      return logical_not(v);
     }
 
     //! Inserts a eve::wide into a output stream

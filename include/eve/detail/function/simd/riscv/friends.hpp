@@ -253,13 +253,4 @@ requires(rvv_abi<abi_t<T, N>> || rvv_abi<abi_t<U, N>>)
     return logical<wide<T, N>> {lv || lw, hv || hw};
   }
 }
-
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-self_lognot(logical<wide<T, N>> v) noexcept -> logical<wide<T, N>>
-requires rvv_abi<abi_t<T, N>>
-{
-  return __riscv_vmnot(v, N::value);
-}
-
 }
