@@ -13,17 +13,19 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of swap_pairs(simd) on all types",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)
-                           )
+              tts::generate(tts::randoms(eve::valmin, eve::valmax))
              )
 <typename T>(T const& a0)
 {
-  using v_t = eve::element_type_t<T>;
   using eve::swap_pairs;
-  constexpr size_t S =  eve::cardinal_v<v_t>-1;
+  constexpr size_t S =  eve::cardinal_v<T> - 1;
   constexpr auto _0 = eve::index_t<0>();
   constexpr auto _S = eve::index_t<S>();
   constexpr auto _H = eve::index_t<S/2>();
-  TTS_EQUAL(swap_pairs(a0, _0, _S), tts::map([_0, _S](auto e) -> v_t { return swap_pairs(e, _0, _S); }, a0));
-  TTS_EQUAL(swap_pairs(a0, _0, _H), tts::map([_0, _H](auto e) -> v_t { return swap_pairs(e, _0, _H); }, a0));
+
+  T refS = [=](auto i, auto) { return i == 0 ? a0.get(S) : (i == S ? a0.get(0) : a0.get(i)); };
+  T refH = [=](auto i, auto) { return i == 0 ? a0.get(S/2) : (i == S/2 ? a0.get(0) : a0.get(i)); };
+
+  TTS_EQUAL(swap_pairs(a0, _0, _S), refS);
+  TTS_EQUAL(swap_pairs(a0, _0, _H), refH);
 };

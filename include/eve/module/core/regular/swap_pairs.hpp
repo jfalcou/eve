@@ -23,7 +23,6 @@ namespace eve
     EVE_CALLABLE_OBJECT(swap_pairs_t, swap_pairs_);
   };
 
-  //TODO DOC
   //================================================================================================
   //! @addtogroup core_bitops
   //! @{
@@ -42,7 +41,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template<simd_value T, std::ptrdiff_t I0, std::ptrdiff_t I1 >
-  //!      T swap_pairs(T x, index_t<I0> const & i0, index_t<I1> const & i1);
+  //!      T swap_pairs(T x, index_t<I0> i0, index_t<I1> i1);
   //!   @endcode
   //!
   //!   **Parameters**
