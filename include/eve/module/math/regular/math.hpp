@@ -80,7 +80,6 @@
 #include <eve/module/math/regular/radindeg.hpp>
 #include <eve/module/math/regular/radinpi.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
-#include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
 #include <eve/module/math/regular/sec.hpp>
 #include <eve/module/math/regular/secd.hpp>

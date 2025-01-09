@@ -17,10 +17,8 @@ int main()
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__rempio2 = [](auto x){return eve::rem_pio2(x);};
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(scalar std::rempio2), xp, std__rempio2 , arg0);
   run<EVE_VALUE>(EVE_NAME(rempio2) , xp, eve::rempio2 , arg0);
   run<EVE_TYPE> (EVE_NAME(rempio2) , xp, eve::rempio2 , arg0);
 }
