@@ -102,24 +102,20 @@ namespace eve
       }
       else
       {
-        if constexpr( has_native_abi_v<r_t> )
+        auto x = r_t(a);
+        auto y = r_t(b);
+        auto r = dec(pow(x, y));
+        auto test = (abs(y * dec(x)) < r_t(0.5) || (abs(y) < r_t(0.2)));
+        if( eve::any(test) )
         {
-          auto x = r_t(a);
-          auto y = r_t(b);
-          auto r = dec(pow(x, y));
-          auto test = (abs(y * dec(x)) < r_t(0.5) || (abs(y) < r_t(0.2)));
-          if( eve::any(test) )
-          {
-            // We don't have any good/quick approximation for log(x) * y
-            // so just try it and see:
-            auto l = y*log_abs(x);
-            auto tmp0 = expm1(l);
-            auto tmp1 = minus[is_ltz(x) && is_odd(x)](tmp0);
-            return if_else(l < T(0.5), tmp1, r);
-          }
-          else return r;
+          // We don't have any good/quick approximation for log(x) * y
+          // so just try it and see:
+          auto l = y*log_abs(x);
+          auto tmp0 = expm1(l);
+          auto tmp1 = minus[is_ltz(x) && is_odd(x)](tmp0);
+          return if_else(l < T(0.5), tmp1, r);
         }
-        else return apply_over(powm1, a, b);
+        else return r;
       }
     }
   }

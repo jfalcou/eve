@@ -98,61 +98,56 @@ namespace eve
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       using e_t = element_type_t<r_t>;
-      if constexpr( has_native_abi_v<r_t> )
+      if constexpr(sizeof...(Ts) == 0) // 2 parameters
       {
-        if constexpr(sizeof...(Ts) == 0) // 2 parameters
+        if constexpr(O::contains(pedantic))
         {
-          if constexpr(O::contains(pedantic))
-          {
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            //  This implementation is inspired by
-            //  AN IMPROVED ALGORITHM FOR HYPOT(A,B) arXiv:1904.09481v6 [math.NA] 14 Jun 2019, CARLOS F. BORGES
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            using eve::abs;
-            r_t ax(abs(r0));
-            r_t ay(abs(r1));
-            auto test = ax > ay;
-            eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
-            constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
-            auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
-                                , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
-                                         ,  one)
-                                );
-            ax *= scale;
-            ay *= scale;
-            auto h = sqrt(fma(ax,ax,ay*ay));
-            auto h2 = sqr(h);
-            auto ax2 = sqr(ax);
-            auto x = fma(-ay,ay,h2-ax2) + fma(h,h,-h2) - fma(ax,ax,-ax2);
-            h-= x/(2*h);
-            h /= scale;
-            h = if_else(is_eqz(ay), zero, h);
-            h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
-            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
-            return h;
-          }
-          else
-          {
-            return eve::sqrt(add(sqr(r_t(r0)), sqr(r_t(r1))));
-          }
+          ////////////////////////////////////////////////////////////////////////////////////////////////////
+          //  This implementation is inspired by
+          //  AN IMPROVED ALGORITHM FOR HYPOT(A,B) arXiv:1904.09481v6 [math.NA] 14 Jun 2019, CARLOS F. BORGES
+          ////////////////////////////////////////////////////////////////////////////////////////////////////
+          using eve::abs;
+          r_t ax(abs(r0));
+          r_t ay(abs(r1));
+          auto test = ax > ay;
+          eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
+          constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
+          auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
+                              , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
+                                        ,  one)
+                              );
+          ax *= scale;
+          ay *= scale;
+          auto h = sqrt(fma(ax,ax,ay*ay));
+          auto h2 = sqr(h);
+          auto ax2 = sqr(ax);
+          auto x = fma(-ay,ay,h2-ax2) + fma(h,h,-h2) - fma(ax,ax,-ax2);
+          h-= x/(2*h);
+          h /= scale;
+          h = if_else(is_eqz(ay), zero, h);
+          h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
+          h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
+          return h;
         }
-        else //N parameters
+        else
         {
-          if constexpr(O::contains(pedantic))
-          {
-            r_t that(hypot[o](r_t(r0), r_t(r1)));
-            ((that = hypot[o](that, r_t(rs))), ...);
-            return that;
-          }
-          else
-          {
-            r_t that = add(sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
-            return eve::sqrt(that);
-          }
+          return eve::sqrt(add(sqr(r_t(r0)), sqr(r_t(r1))));
         }
       }
-      else
-        return apply_over(hypot[o], r_t(r0), r_t(r1), r_t(rs)...);
+      else //N parameters
+      {
+        if constexpr(O::contains(pedantic))
+        {
+          r_t that(hypot[o](r_t(r0), r_t(r1)));
+          ((that = hypot[o](that, r_t(rs))), ...);
+          return that;
+        }
+        else
+        {
+          r_t that = add(sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
+          return eve::sqrt(that);
+        }
+      }
     }
   }
 }

@@ -26,9 +26,8 @@ namespace eve::detail
       if( n >= 0 ) return (v << n) | (v >> (-n & width));
       else         return (v << n) | (v >> n);
     }
-    else if constexpr( scalar_value<T> )                            return rotl[o](as_wide_as_t<T,S>(v), s);
-    else if constexpr( has_native_abi_v<T> && has_native_abi_v<S>)  return map(rotl[o], v, s);
-    else                                                            return apply_over(rotl[o], v, s);
+    else if constexpr (scalar_value<T>) return rotl[o](as_wide_as_t<T,S>(v), s);
+    else                                return map(rotl[o], v, s);
   }
 
   template<typename T, auto S, callable_options O>

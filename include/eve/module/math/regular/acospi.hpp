@@ -89,8 +89,7 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
-      else                                return apply_over(acospi[o], a0);
+      return radinpi(acos[o](a0));
     }
   }
 }

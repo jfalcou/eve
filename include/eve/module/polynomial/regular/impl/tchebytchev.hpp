@@ -56,34 +56,30 @@ namespace eve::detail
         }
         else
         {
-          if constexpr( has_native_abi_v<T> )
+          switch( int(n) )
           {
-            switch( int(n) )
+          case 0: return one(as(x));
+          case 1: return x;
+          case 2: return fma(x, x + x, mone(as(x)));
+          case 3: return x * fms(4 * x, x, 3);
+          case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
+          default:
+            auto nn   = T(n);
+            auto z    = eve::abs(x);
+            auto test = (z <= one(as(z)));
+            if( all(test) ) return cos(nn * acos(x));
+            else
             {
-            case 0: return one(as(x));
-            case 1: return x;
-            case 2: return fma(x, x + x, mone(as(x)));
-            case 3: return x * fms(4 * x, x, 3);
-            case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
-            default:
-              auto nn   = T(n);
-              auto z    = eve::abs(x);
-              auto test = (z <= one(as(z)));
-              if( all(test) ) return cos(nn * acos(x));
+              auto t = cosh(nn * acosh(z));
+              if( none(test) ) return if_else(is_gez(x), t, t * sign_alternate(nn));
               else
               {
-                auto t = cosh(nn * acosh(z));
-                if( none(test) ) return if_else(is_gez(x), t, t * sign_alternate(nn));
-                else
-                {
-                  auto r0 = cos(nn * acos(x));
-                  auto r1 = if_else(is_gez(x), t, t * sign_alternate(nn));
-                  return if_else(test, r0, r1);
-                }
+                auto r0 = cos(nn * acos(x));
+                auto r1 = if_else(is_gez(x), t, t * sign_alternate(nn));
+                return if_else(test, r0, r1);
               }
             }
           }
-          else return apply_over(tchebytchev, n, x);
         }
       }
       else if constexpr(simd_value<I>)
@@ -92,7 +88,7 @@ namespace eve::detail
         {
           return tchebytchev[o](n, r_t(x));
         }
-        else if constexpr( has_native_abi_v<T> )
+        else
         {
           auto nn   = convert(n, as<eve::element_type_t<T>>());
           auto z    = eve::abs(x);
@@ -105,7 +101,6 @@ namespace eve::detail
             return if_else(test, r, if_else(is_gez(x), t, t * sign_alternate(nn)));
           }
         }
-        else return apply_over(tchebytchev, n, x);
       }
     }
     else if constexpr(O::contains(kind_2))

@@ -25,7 +25,7 @@ namespace eve
   struct saturate_t : strict_elementwise_callable<saturate_t, Options>
   {
     template<value U, scalar_value T>
-    EVE_FORCEINLINE constexpr U operator()(U t0, as<T> const & target) const noexcept
+    EVE_FORCEINLINE constexpr U operator()(U t0, as<T> target) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, target);
     }
@@ -84,7 +84,7 @@ namespace eve
     EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
                                                O const &,
                                                U const & a0,
-                                               as<Target> const & at) noexcept
+                                               as<Target>) noexcept
     {
       if constexpr( scalar_value<U>)
       {
@@ -160,10 +160,6 @@ namespace eve
 
         if constexpr( std::same_as<elt_u, Target> )
           return a0;
-        else if constexpr( has_aggregated_abi_v<U> )
-          return aggregate(eve::saturate, a0, at);
-        else if constexpr( has_emulated_abi_v<U> )
-          return map(eve::saturate, a0, at);
         else
         {
           if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
