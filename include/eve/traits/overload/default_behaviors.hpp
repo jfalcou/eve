@@ -213,7 +213,6 @@ namespace eve
     {
       // we test for no logicals first to prevent mishandling bools
       constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
-      constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
       constexpr bool all_bools   = (std::same_as<T, bool> && ... && std::same_as<Ts, bool>);
 
       if constexpr (all_bools)
@@ -230,21 +229,38 @@ namespace eve
       }
       else if constexpr (no_logicals)
       {
-        using          cv_t           = common_value_t<T, Ts...>;
-        constexpr bool is_convertible = requires{ func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...); };
+        using cv_t  = common_value_t<T, Ts...>;
+        using cve_t = element_type_t<cv_t>;
 
-        if      constexpr(is_callable   ) return base_t::adapt_call(arch, opts, x, xs...);
-        else if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...);
-        else                              return ignore{};
+        constexpr auto s_cvt = [](auto e) {
+          if constexpr (scalar_value<decltype(e)>) return static_cast<cve_t>(e);
+          else                                     return e;
+        };
+
+        constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))>;
+
+        if constexpr (is_callable)     return base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...);
+        else
+        {
+          constexpr bool is_convertible = requires{ func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...); };
+
+          if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...);
+          else                         return ignore{};
+        }
       }
       else
       {
-        using           cl_t        = common_logical_t<T, Ts...>;
+        using          cl_t         = common_logical_t<T, Ts...>;
         constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
 
-        if      constexpr(any_emulated) return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
-        else if constexpr(is_callable)  return base_t::behavior(arch, opts, x, xs...);
-        else                            return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+        if constexpr(any_emulated)  return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+        else
+        {
+          constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
+          
+          if constexpr(is_callable) return base_t::behavior(arch, opts, x, xs...);
+          else                      return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
+        }
       }
     }
 
