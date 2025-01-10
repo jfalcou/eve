@@ -24,9 +24,19 @@ TTS_CASE_TPL ( "Check jacobi_elliptic over real"
   //results are taken from octave 9.2.0 ellipj outputs
   for(int i=0; i < 7; ++i)
   {
-    auto [sni, cni, dni] = eve::jacobi_elliptic[eve::eccentric](phi[i], m[i]);
+    auto mm = eve::sqrt(m[i]);
+    auto [sni, cni, dni] = eve::jacobi_elliptic(phi[i], mm);
+    mm = eve::asin(mm);
+    auto [msni, mcni, mdni] = eve::jacobi_elliptic[eve::modular](phi[i], mm);
+    auto [esni, ecni, edni] = eve::jacobi_elliptic[eve::eccentric](phi[i], m[i]);
     TTS_RELATIVE_EQUAL(sni, sn[i], pr);
+    TTS_RELATIVE_EQUAL(msni, sni, pr);
+    TTS_RELATIVE_EQUAL(esni, sni, pr);
     TTS_RELATIVE_EQUAL(cni, cn[i], pr);
+    TTS_RELATIVE_EQUAL(mcni, cni, pr);
+    TTS_RELATIVE_EQUAL(ecni, cni, pr);
     TTS_RELATIVE_EQUAL(dni, dn[i], pr);
+    TTS_RELATIVE_EQUAL(mdni, dni, pr);
+    TTS_RELATIVE_EQUAL(edni, dni, pr);
   }
 };
