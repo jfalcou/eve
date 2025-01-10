@@ -385,7 +385,7 @@ namespace eve
                                                          , as_wide_as<type, T>
                                                          >::type;
 
-        auto that = out_t{constant_value};
+        out_t that(constant_value);
 
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
         if constexpr(match_option<condition_key, O, ignore_none_>) return that;
