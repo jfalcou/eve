@@ -23,6 +23,11 @@ TTS_CASE_WITH("Check behavior of swap_pairs(simd) on all types",
   constexpr auto _S = eve::index_t<S>();
   constexpr auto _H = eve::index_t<S/2>();
 
+  if constexpr (sizeof(eve::element_type_t<T>) == 8)
+  {
+    std::cout << "a0: " << a0 << std::endl;
+  }
+  
   T refS = [=](auto i, auto) { return i == 0 ? a0.get(S) : (i == S ? a0.get(0) : a0.get(i)); };
   T refH = [=](auto i, auto) { return i == 0 ? a0.get(S/2) : (i == S/2 ? a0.get(0) : a0.get(i)); };
 
