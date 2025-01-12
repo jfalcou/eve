@@ -9,6 +9,7 @@
 
 #include <eve/module/elliptic/ellint_1.hpp>
 #include <eve/module/elliptic/ellint_2.hpp>
+#include <eve/module/elliptic/ellint_fe.hpp>
 #include <eve/module/elliptic/ellint_d.hpp>
 #include <eve/module/elliptic/ellint_rc.hpp>
 #include <eve/module/elliptic/ellint_rd.hpp>

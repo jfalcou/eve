@@ -15,7 +15,6 @@
 #include <eve/traits/common_value.hpp>
 #include <eve/module/elliptic/am.hpp>
 
-
 namespace eve
 {
   template<typename Options>
@@ -98,8 +97,8 @@ namespace eve
         else                                  return eps(as(element_type_t<T>()));
       }();
       x =  abs(x);
-      if (O::contains(modular)) x = sin(x);
-      else if (O::contains(eccentric)) x = sqrt(x);
+      if constexpr(O::contains(modular)) x = sin(x);
+      else if constexpr(O::contains(eccentric)) x = sqrt(x);
       auto phi = am[eve::threshold = tol](u, x);
       auto [sn, cn] = sincos(phi);
       return zip(sn, cn, sqrt(oneminus(sqr(x*sn))));

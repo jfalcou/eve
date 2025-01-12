@@ -55,7 +55,7 @@ namespace eve
 //!      //Semantic modifiers
 //!      constexpr auto am[modular](floating_value auto u, floating_value auto alpha)    noexcept; // 1
 //!      constexpr auto am[eccentric(floating_value auto u, floating_value auto k)       noexcept; // 1
-//!      constexpr auto am[threshold = tol](floating_value auto u, floating_value auto x) noexcept; // 1
+//!      constexpr auto am[threshold = tol](floating_value auto u, floating_value auto x) noexcept;// 3
 //!
 //!      // Lanes masking
 //!      constexpr auto am[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 2
@@ -67,6 +67,8 @@ namespace eve
 //!
 //!     * `u`: argument.
 //!     * `x`: amplitude parameter (\f$0\le m\le 1).
+//!     * `alpha`: modular angle given in radian (modular option).
+//!     * `m` : elliptic modulus or eccentricity (eccentric option).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `l`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -75,6 +77,7 @@ namespace eve
 //!      1. return the jacobian amplitude function. Take care that the meaning of the second parameters
 //!         depends on the option used (see note below).
 //!      2. [The operation is performed conditionally](@ref conditional)
+//!      3. a threshold can be given controlling the needed accuracy.
 //!
 //! @note
 //!   * \f$\alpha\f$ is named the modular angle given in radian (modular option).
@@ -104,11 +107,11 @@ namespace eve
     {
       auto tol = [&](){
         if constexpr (O::contains(threshold)) return o[threshold].value(x);
-        else  return eve::epsilon(x);
+        else  return eve::eps(eve::as(element_type_t<T>()));
       }();
       x =  abs(x);
-      if (O::contains(modular)) x = sin(x);
-      else if (O::contains(eccentric)) x = sqrt(x);
+      if constexpr(O::contains(modular)) x = sin(x);
+      else if constexpr(O::contains(eccentric)) x = sqrt(x);
 
       auto xx = eve::abs(x);
       auto xxisone = xx == one(as(x));
