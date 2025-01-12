@@ -112,7 +112,7 @@ namespace eve
     {
       x         = abs(x);
       if      (O::contains(modular))   x = sin(x);
-      else if (O::contains(eccentric)) x = sqrt(x);
+      else if constexpr(O::contains(eccentric)) x = sqrt(x);
       // Carlson's algorithm works only for |phi| <= pi/2,
       // use the integrand's periodicity to normalize phi
       //

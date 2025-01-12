@@ -106,7 +106,7 @@ namespace eve
     ellint_2_(EVE_REQUIRES(cpu_), O const&, T k)
     {
       if constexpr(O::contains(modular)) k = sin(k);
-      else if (O::contains(eccentric)) k = sqrt(k);
+      else if constexpr(O::contains(eccentric)) k = sqrt(k);
 
       auto k2 = sqr(k);
       auto r  = 2 * ellint_rg(zero(as(k)), oneminus(k2), one(as(k)));

@@ -111,7 +111,7 @@ namespace eve
       }();
       x =  abs(x);
       if constexpr(O::contains(modular)) x = sin(x);
-      else if (O::contains(eccentric)) x = sqrt(x);
+      else if constexpr(O::contains(eccentric)) x = sqrt(x);
 
       auto xx = eve::abs(x);
       auto xxisone = xx == one(as(x));
