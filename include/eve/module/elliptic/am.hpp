@@ -110,7 +110,7 @@ namespace eve
         else  return eve::epsilon(x);
       }();
       x =  abs(x);
-      if (O::contains(modular)) x = sin(x);
+      if constexpr(O::contains(modular)) x = sin(x);
       else if (O::contains(eccentric)) x = sqrt(x);
 
       auto xx = eve::abs(x);

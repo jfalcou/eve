@@ -105,7 +105,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T
     ellint_2_(EVE_REQUIRES(cpu_), O const&, T k)
     {
-      if (O::contains(modular)) k = sin(k);
+      if constexpr(O::contains(modular)) k = sin(k);
       else if (O::contains(eccentric)) k = sqrt(k);
 
       auto k2 = sqr(k);

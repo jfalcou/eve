@@ -135,7 +135,7 @@ namespace eve
       r_t x = r_t(xx);
       r_t phi0 = r_t(phi00);
       x        = eve::abs(x);
-      if (O::contains(modular)) x = sin(x);
+      if constexpr(O::contains(modular)) x = sin(x);
       else if (O::contains(eccentric)) x = sqrt(x);
 
       auto phi = abs(phi0);

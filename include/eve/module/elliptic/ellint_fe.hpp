@@ -28,7 +28,7 @@ namespace eve
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
     constexpr EVE_FORCEINLINE
-    auto operator()(T0 a, T1 b) const noexcept// -> decltype(kumi::zip<eve::common_value_t<T0, T1>, eve::common_value_t<T0, T1>>())
+    auto operator()(T0 a, T1 b) const noexcept -> decltype(eve::zip(eve::common_value_t<T0, T1>(), eve::common_value_t<T0, T1>()))
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(ellint_fe_t, ellint_fe_);
