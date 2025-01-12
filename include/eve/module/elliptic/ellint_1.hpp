@@ -108,14 +108,15 @@ namespace eve
     {
       auto tol = [&](){
         if constexpr (O::contains(threshold)) return o[threshold].value(x);
-        else  return eve::epsilon(x);
+        else  return eve::eps(as(x));
       }();
       auto xx = eve::abs(x);
       xx      = if_else(xx > one(as(x)), allbits, xx);
       auto a  = one(as(x));
       auto b  = sqrt(oneminus(sqr(xx)));
       auto c  = xx;
-      while( eve::any((eve::abs(c)>tol)))
+      int i = 0; 
+      while( eve::any((eve::abs(c)>tol)) && (++i < 100))
       {
         auto an = average(a, b);
         auto bn = sqrt(a * b);
