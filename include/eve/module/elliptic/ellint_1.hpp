@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct ellint_1_t : elementwise_callable<ellint_1_t, Options>
+  struct ellint_1_t : elementwise_callable<ellint_1_t, Options, modular_option, eccentric_option, threshold_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE
@@ -52,12 +52,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto ellint_1(floating_value auto k)                                   noexcept; // 1
-//!      constexpr auto ellint_1(floating_value auto phi, floating_value auto k)          noexcept; // 2
-//!
+//!      constexpr auto ellint_1(floating_value auto k)                                      noexcept; // 1
+//!      constexpr auto ellint_1(floating_value auto phi, floating_value auto k)             noexcept; // 2
+//!      constexpr auto ellint_2[modular](floating_value auto phi, floating_value auto alpha)noexcept; // 2
+//!      constexpr auto ellint_2[eccentric](floating_value auto phi, floating_value auto m)  noexcept; // 2
+ //!
 //!      // Lanes masking
-//!      constexpr auto ellint_1[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto ellint_1[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto ellint_1[conditional_expr auto c](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto ellint_1[logical_value auto m](/*any of the above overloads*/)       noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -102,14 +104,18 @@ namespace eve
 
     template<floating_value T, callable_options O>
     constexpr EVE_FORCEINLINE T
-    ellint_1_(EVE_REQUIRES(cpu_), O const& , T x)
+    ellint_1_(EVE_REQUIRES(cpu_), O const& o , T x)
     {
+      auto tol = [&](){
+        if constexpr (O::contains(threshold)) return o[threshold].value(x);
+        else  return eve::epsilon(x);
+      }();
       auto xx = eve::abs(x);
       xx      = if_else(xx > one(as(x)), allbits, xx);
       auto a  = one(as(x));
       auto b  = sqrt(oneminus(sqr(xx)));
       auto c  = xx;
-      while( eve::any((eve::abs(c) > eps(as(x)))) )
+      while( eve::any((eve::abs(c)>tol)))
       {
         auto an = average(a, b);
         auto bn = sqrt(a * b);
@@ -122,18 +128,22 @@ namespace eve
 
     template<floating_value T, floating_value U, callable_options O>
     constexpr common_value_t<T, U>
-    ellint_1_(EVE_REQUIRES(cpu_), O const&, T phi00, U xx)
+    ellint_1_(EVE_REQUIRES(cpu_), O const& o, T phi00, U xx)
     {
-      using r_t = common_value_t<T, U>;
+
+       using r_t = common_value_t<T, U>;
       r_t x = r_t(xx);
       r_t phi0 = r_t(phi00);
       x        = eve::abs(x);
+      if (O::contains(modular)) x = sin(x);
+      else if (O::contains(eccentric)) x = sqrt(x);
+
       auto phi = abs(phi0);
       // Carlson's algorithm works only for |phi| <= pi/2,
       // use the integrand's periodicity to normalize phi
       //
-      T    rphi         = rem(phi, pio_2(as(phi))); // rempio2 ?
-      T    m            = nearest((phi - rphi) / pio_2(as(phi)));
+      auto   rphi         = rem(phi, pio_2(as(phi))); // rempio2 ?
+      auto   m            = nearest((phi - rphi) / pio_2(as(phi)));
       auto oddm         = is_odd(m);
       m                 = inc[oddm](m);
       T s               = if_else(oddm, mone, one(as(x)));
@@ -155,11 +165,11 @@ namespace eve
       auto greatphi = eps(as(phi)) * phi > one(as(phi)) && notdone;
       if( eve::any((mgt0 || greatphi) && notdone) )
       {
-        auto z = ellint_1(x);
+        auto z = ellint_1[o](x);
         r += m * z;
         r = if_else(greatphi, phi * z / pio_2(as(x)), r);
       }
-      return copysign(r, phi);
+      return copysign(r, phi00);
     }
   }
 }

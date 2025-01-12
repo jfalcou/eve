@@ -52,30 +52,33 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto ellint_2(floating_value auto k)                                   noexcept; // 1
-//!      constexpr auto ellint_2(floating_value auto phi, floating_value auto k)          noexcept; // 2
+//!      constexpr auto ellint_2(floating_value auto k)                                      noexcept; // 1
+//!      constexpr auto ellint_2(floating_value auto phi, floating_value auto k)             noexcept; // 2
+//!      constexpr auto ellint_2[modular](floating_value auto phi, floating_value auto alpha)noexcept; // 2
+//!      constexpr auto ellint_2[eccentric](floating_value auto phi, floating_value auto m)  noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto ellint_2[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto ellint_2[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto ellint_2[conditional_expr auto c](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto ellint_2[logical_value auto l](/*any of the above overloads*/)       noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `phi`: [floating Jacobi amplitude](@ref eve::floating_value).
-//!     * `k`: [floating elliptic modulus](@ref eve::floating_value). `k` must satisfy
-//!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
-//!             \f$|k| \le 1\f$.
+//!     * `k`: amplitude parameter (\f$0\le k\le 1).
+//!     * `alpha`: amodular angle given in radian (modular option).
+//!     * `m` : elliptic modulus or eccentricity (eccentric option).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `l`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
 //!      1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ )of the second kind:
-//!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+//!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\f$ is returned.
 //!      2. the incomplete elliptic integrals of the second kind:
-//!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+//!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\f$ is returned.
+//!         \f$\alphaf$ is  \f$\sin k\f$ and \f$m\f$ is \sqrt(k)\f$
 //!      3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
@@ -102,6 +105,9 @@ namespace eve
     constexpr EVE_FORCEINLINE T
     ellint_2_(EVE_REQUIRES(cpu_), O const&, T k)
     {
+      if (O::contains(modular)) k = sin(k);
+      else if (O::contains(eccentric)) k = sqrt(k);
+
       auto k2 = sqr(k);
       auto r  = 2 * ellint_rg(zero(as(k)), oneminus(k2), one(as(k)));
       return if_else(k2 == one(as(k)), one, r);
@@ -147,7 +153,7 @@ namespace eve
         m = if_else(test1 || testz, zero, m);
         r += m * ellint_2(x);
       }
-      return copysign(r, phi);
+      return copysign(r, phi00);
     }
   }
 }
