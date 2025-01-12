@@ -107,7 +107,7 @@ namespace eve
     {
       auto tol = [&](){
         if constexpr (O::contains(threshold)) return o[threshold].value(x);
-        else  return eve::eps(aas(element_type_t<T>()));
+        else  return eve::eps(eve::as(element_type_t<T>()));
       }();
       x =  abs(x);
       if constexpr(O::contains(modular)) x = sin(x);
