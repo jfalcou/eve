@@ -103,13 +103,6 @@ namespace eve
 
   namespace detail
   {
-    template<callable_options O, typename T, typename U>
-    EVE_FORCEINLINE constexpr common_logical_t<T, U> is_not_equal_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
-    requires (relaxed_logical_scalar_value<T> && relaxed_logical_scalar_value<U>) || (std::same_as<T, U>)
-    {
-      return !(a == b);
-    }
-
     template<value T,callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_not_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, T const& b) noexcept

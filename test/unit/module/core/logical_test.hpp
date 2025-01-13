@@ -51,8 +51,6 @@ void logical_test_scalar_return_type(F f)
   TTS_EXPR_IS(f(logical<T>{}, logical<T>{}), logical<T>);
   TTS_EXPR_IS(f(bool{}, logical<T>{}), logical<T>);
   TTS_EXPR_IS(f(logical<T>{}, bool{}), logical<T>);
-  TTS_EXPR_IS(f(T{}, bool{}), logical<T>);
-  TTS_EXPR_IS(f(bool{}, T{}), logical<T>);
   TTS_EXPR_IS(f(bool{}, bool{}), bool);
 
   // test size
@@ -146,6 +144,11 @@ void logical_test_compile_reject(F f)
   [[maybe_unused]] const wide<U> wu{};
   [[maybe_unused]] const logical<wide<T>> lwt{};
   [[maybe_unused]] const logical<wide<U>> lwu{};
+  [[maybe_unused]] const bool b{};
+
+  TTS_EXPECT_NOT_COMPILES(t, u, { compile_test(f, t, u); });
+  TTS_EXPECT_NOT_COMPILES(t, b, { compile_test(f, t, b); });
+  TTS_EXPECT_NOT_COMPILES(b, t, { compile_test(f, b, t); });
 
   TTS_EXPECT_NOT_COMPILES(t, wu, { compile_test(f, t, wu); });
   TTS_EXPECT_NOT_COMPILES(lt, wu, { compile_test(f, lt, wu); });

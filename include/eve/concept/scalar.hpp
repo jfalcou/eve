@@ -139,7 +139,7 @@ concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 //! @{
 //! @concept relaxed_logical_scalar_value
 //! @brief The concept `relaxed_logical_scalar_value<T>` is satisfied if and only if T is a
-//! boolean value or satisfies the `eve::scalar_value` concept.
+//! boolean value or satisfies the `eve::logical_scalar_value` concept.
 //!
 //! @groupheader{Examples}
 //! - `eve::logical<char>`
@@ -147,7 +147,7 @@ concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 //! - `bool`
 //================================================================================================
 template <typename T>
-concept relaxed_logical_scalar_value = scalar_value<T> || std::same_as<T, bool>;
+concept relaxed_logical_scalar_value = logical_scalar_value<T> || std::same_as<T, bool>;
 //================================================================================================
 //! @}
 //================================================================================================
