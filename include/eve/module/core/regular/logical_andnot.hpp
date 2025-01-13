@@ -71,14 +71,6 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-  namespace detail
-  {
-    template<callable_options O, typename T, typename U>
-    EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_andnot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
-      requires (relaxed_logical_scalar_value<T> && relaxed_logical_scalar_value<U>) || (std::same_as<T, U>)
-    {
-      return a && !b;
-    }
-  }
 }
+
+#include <eve/module/core/regular/impl/logical_andnot.hpp>
