@@ -161,8 +161,6 @@ namespace eve
   //! @groupheader{Examples}
   //! - `eve::logical<char>`
   //! - `eve::logical<eve::wide<char>>`
-  //! - `float`
-  //! - `eve::wide<float>`
   //! - `bool`
   //================================================================================================
   template <typename T>

@@ -143,7 +143,6 @@ concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 //!
 //! @groupheader{Examples}
 //! - `eve::logical<char>`
-//! - `float`
 //! - `bool`
 //================================================================================================
 template <typename T>
