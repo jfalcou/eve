@@ -212,45 +212,4 @@ requires rvv_abi<abi_t<T, N>>
 {
   return __riscv_vmxor(lhs, rhs, N::value);
 }
-
-template<typename T, typename U, typename N>
-EVE_FORCEINLINE auto
-self_logand(rvv_ const&, logical<wide<T, N>> v, logical<wide<U, N>> w) noexcept
-    -> logical<wide<T, N>>
-requires(rvv_abi<abi_t<T, N>> || rvv_abi<abi_t<U, N>>)
-{
-  if constexpr( !is_aggregated_v<abi_t<T, N>> && !is_aggregated_v<abi_t<U, N>> )
-  {
-    auto                casted_w = bit_cast(w, as<logical<wide<T, N>>> {});
-    logical<wide<T, N>> to_ret   = __riscv_vmand(v, casted_w, N::value);
-    return to_ret;
-  }
-  else
-  {
-    auto [lv, hv] = v.slice();
-    auto [lw, hw] = w.slice();
-    auto res      = logical<wide<T, N>> {lv && lw, hv && hw};
-    return res;
-  }
-}
-
-template<typename T, typename U, typename N>
-EVE_FORCEINLINE auto
-self_logor(rvv_ const&, logical<wide<T, N>> v, logical<wide<U, N>> w) noexcept
-    -> logical<wide<T, N>>
-requires(rvv_abi<abi_t<T, N>> || rvv_abi<abi_t<U, N>>)
-{
-  if constexpr( !is_aggregated_v<abi_t<T, N>> && !is_aggregated_v<abi_t<U, N>> )
-  {
-    auto                casted_w = bit_cast(w, as<logical<wide<T, N>>> {});
-    logical<wide<T, N>> to_ret   = __riscv_vmor(v, casted_w, N::value);
-    return to_ret;
-  }
-  else
-  {
-    auto [lv, hv] = v.slice();
-    auto [lw, hw] = w.slice();
-    return logical<wide<T, N>> {lv || lw, hv || hw};
-  }
-}
 }
