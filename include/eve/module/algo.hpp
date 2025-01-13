@@ -30,12 +30,13 @@
 #include <eve/module/algo/algo/copy_if.hpp>
 #include <eve/module/algo/algo/equal.hpp>
 #include <eve/module/algo/algo/fill.hpp>
-#include <eve/module/algo/algo/find.hpp>
 #include <eve/module/algo/algo/find_last.hpp>
-#include <eve/module/algo/algo/for_each.hpp>
-#include <eve/module/algo/algo/for_each_iteration.hpp>
+#include <eve/module/algo/algo/find.hpp>
 #include <eve/module/algo/algo/for_each_iteration_fixed_overflow.hpp>
+#include <eve/module/algo/algo/for_each_iteration_with_expensive_optional_part.hpp>
+#include <eve/module/algo/algo/for_each_iteration.hpp>
 #include <eve/module/algo/algo/for_each_selected.hpp>
+#include <eve/module/algo/algo/for_each.hpp>
 #include <eve/module/algo/algo/inclusive_scan.hpp>
 #include <eve/module/algo/algo/iota.hpp>
 #include <eve/module/algo/algo/iterator_helpers.hpp>
