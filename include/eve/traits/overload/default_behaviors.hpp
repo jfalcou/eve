@@ -200,12 +200,12 @@ namespace eve
     using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
-    template<typename T, typename c_t>
-    EVE_FORCEINLINE static constexpr c_t cvt(T e, as<c_t>)
+    template<typename Src, typename Tgt>
+    EVE_FORCEINLINE static constexpr Tgt cvt(Src e, as<Tgt>)
     {
-      if      constexpr (std::same_as<T, c_t>)                     return e;
-      else if constexpr (std::same_as<T, bool> || scalar_value<T>) return c_t{e};
-      else                                                         return detail::call_convert(e, as_element<c_t>{});
+      if      constexpr (std::same_as<Src, Tgt>)                       return e;
+      else if constexpr (std::same_as<Src, bool> || scalar_value<Src>) return Tgt{e};
+      else                                                             return detail::call_convert(e, as_element<Tgt>{});
     }
 
     template<callable_options O, typename T, typename... Ts>
@@ -257,7 +257,7 @@ namespace eve
         else
         {
           constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
-          
+
           if constexpr(is_callable) return base_t::behavior(arch, opts, x, xs...);
           else                      return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
         }
