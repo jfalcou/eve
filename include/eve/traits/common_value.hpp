@@ -98,9 +98,8 @@ namespace eve::detail
       using ea_t = as_arithmetic_t<element_type_t<A>>;
       using eb_t = as_arithmetic_t<element_type_t<B>>;
 
-      if constexpr (std::same_as<ea_t, eb_t>)       return find_common_logical_reducer<A>{};
       // smallest type
-      else if constexpr (sizeof(ea_t) != sizeof(eb_t))
+      if constexpr (sizeof(ea_t) != sizeof(eb_t))
       {
         if constexpr (sizeof(ea_t) < sizeof(eb_t))  return find_common_logical_reducer<A>{};
         else                                        return find_common_logical_reducer<B>{};
@@ -126,22 +125,22 @@ namespace eve::detail
       find_common_logical_reducer,
       find_common_logical_reducer<U>
     ) {
-      if      constexpr (std::same_as<T, bool> && std::same_as<U, bool>) return find_common_logical_reducer<bool>{};
-      else if constexpr (std::same_as<T, bool>)                          return find_common_logical_reducer<as_logical_t<U>>{};
-      else if constexpr (std::same_as<U, bool>)                          return find_common_logical_reducer<as_logical_t<T>>{};
+      if      constexpr (std::same_as<T, U>)                 return find_common_logical_reducer<T>{};
+      else if constexpr (std::same_as<T, bool>)              return find_common_logical_reducer<U>{};
+      else if constexpr (std::same_as<U, bool>)              return find_common_logical_reducer<T>{};
       else if constexpr (simd_value<T>)
       {
-        if constexpr (simd_value<U>)                                     return tie_breaker<as_logical_t<T>, as_logical_t<U>>();
-        else                                                             return find_common_logical_reducer<as_logical_t<T>>{};
+        if constexpr (simd_value<U>)                         return tie_breaker<T, U>();
+        else                                                 return find_common_logical_reducer<T>{};
       }
-      else if constexpr (simd_value<U>)                                  return find_common_logical_reducer<as_logical_t<U>>{};
-      else if constexpr (scalar_value<T> && scalar_value<U>)             return tie_breaker<as_logical_t<T>, as_logical_t<U>>();
-      else                                                               return find_common_logical_reducer<void>{};
+      else if constexpr (simd_value<U>)                      return find_common_logical_reducer<U>{};
+      else if constexpr (scalar_value<T> && scalar_value<U>) return tie_breaker<T, U>();
+      else                                                   return find_common_logical_reducer<void>{};
     }
   };
 
   template<typename... Ts>
-  auto find_common_logical() -> typename decltype((find_common_logical_reducer<Ts>{} % ...))::type;
+  auto find_common_logical() -> typename decltype((find_common_logical_reducer<as_logical_t<Ts>>{} % ...))::type;
 
   template<typename, typename... Ts>
   struct common_logical_impl {};
