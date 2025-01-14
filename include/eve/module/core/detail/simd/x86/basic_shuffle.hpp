@@ -251,7 +251,7 @@ basic_shuffle_(EVE_SUPPORTS(avx_),
               [](auto i, auto c)
               {
                 Pattern r;
-                return (i < c / 2 ? r(i, c) : r(i - c / 2, c)) << 1;
+                return (r(i,c) % 2) << 1;
               });
 
           auto const m = as_indexes<wide<T, N>>(fixed_pattern);
