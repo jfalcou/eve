@@ -719,7 +719,7 @@ namespace kumi
       {
         return (res || ... || order(index_t<I>{}));
       }
-      (std::make_index_sequence<sizeof...(Us)-1>());
+      (std::make_index_sequence<sizeof...(Ts)-1>());
     }
     template<typename... Us>
     KUMI_TRIVIAL friend constexpr auto operator<=(tuple const &lhs, tuple<Us...> const &rhs) noexcept
