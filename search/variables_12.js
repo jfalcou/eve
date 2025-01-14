@@ -67,6 +67,6 @@ var searchData=
   ['supports_5fnans_64',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
   ['supports_5fnegative_5fzero_65',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
   ['swap_5fadjacent_66',['swap_adjacent',['../group__core__named__shuffles_gadf4386e52fdcc1b41879ce39ee4a518d.html#gadf4386e52fdcc1b41879ce39ee4a518d',1,'eve']]],
-  ['swap_5fpairs_67',['swap_pairs',['../group__core__bitops_gaa65d1bc90b342036bb8d0d0e90919b39.html#gaa65d1bc90b342036bb8d0d0e90919b39',1,'eve']]],
+  ['swap_5fpairs_67',['swap_pairs',['../group__core__bitops_ga10b54df6fa2ae24f1f0d6334e2c5be1b.html#ga10b54df6fa2ae24f1f0d6334e2c5be1b',1,'eve']]],
   ['swap_5franges_68',['swap_ranges',['../group__algos_ga32ab3292a3a43722ece241c921a73cad.html#ga32ab3292a3a43722ece241c921a73cad',1,'eve::algo']]]
 ];

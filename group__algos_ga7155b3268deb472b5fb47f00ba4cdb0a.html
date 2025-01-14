@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::views::iota</title>
+<title>E.V.E: eve::algo::for_each_iteration_with_expensive_optional_part</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__views_gadf2395068857da6f52c6438afc60b6e0.html',''); initResizable(true); });
+$(function(){initNavTree('group__algos_ga7155b3268deb472b5fb47f00ba4cdb0a.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -126,21 +126,23 @@ $(function(){initNavTree('group__views_gadf2395068857da6f52c6438afc60b6e0.html',
 </div>
 
 <div class="contents">
-<a id="gadf2395068857da6f52c6438afc60b6e0" name="gadf2395068857da6f52c6438afc60b6e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadf2395068857da6f52c6438afc60b6e0">&#9670;&#160;</a></span>[struct]</h2>
+<a id="ga7155b3268deb472b5fb47f00ba4cdb0a" name="ga7155b3268deb472b5fb47f00ba4cdb0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7155b3268deb472b5fb47f00ba4cdb0a">&#9670;&#160;</a></span>[struct]</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct  { ... }  eve::algo::views::iota</td>
+          <td class="memname">struct  { ... }  eve::algo::for_each_iteration_with_expensive_optional_part</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/module/algo/algo/views/iota.hpp&gt;</code></p>
-<p><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/views/iota.hpp&gt;</code></p>
-<p>Has a shorthand <code>eve::views::iota_with_step</code> in <code>&lt;eve/views/iota.hpp&gt;</code>. </p>
+<p><code>#include &lt;eve/module/algo/algo/for_each_iteration_with_expensive_optional_part.hpp&gt;</code></p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+</div><!-- fragment --><p><code>for_each_iteration</code>, even if not unrolled, generates a few copies of the callback code. For some algorithms we want to move out a piece of callback code but we still don't want a function call. Think search: we want to move the more expensive part of validating match outside.</p>
+<p>You can find example usage in the search implementation. </p>
 
 </div>
 </div>
@@ -150,7 +152,7 @@ $(function(){initNavTree('group__views_gadf2395068857da6f52c6438afc60b6e0.html',
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__views.html">Views</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

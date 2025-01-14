@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::copy_if</title>
+<title>E.V.E: eve::algo::views::map_convert</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__algos_gae38a65f5bbddc152a1e3b36263ab7090.html',''); initResizable(true); });
+$(function(){initNavTree('group__views_ga5c2e483eebeef44dd222eebd92ee555b.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -126,60 +126,23 @@ $(function(){initNavTree('group__algos_gae38a65f5bbddc152a1e3b36263ab7090.html',
 </div>
 
 <div class="contents">
-<a id="gae38a65f5bbddc152a1e3b36263ab7090" name="gae38a65f5bbddc152a1e3b36263ab7090"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae38a65f5bbddc152a1e3b36263ab7090">&#9670;&#160;</a></span>copy_if</h2>
+<a id="ga5c2e483eebeef44dd222eebd92ee555b" name="ga5c2e483eebeef44dd222eebd92ee555b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5c2e483eebeef44dd222eebd92ee555b">&#9670;&#160;</a></span>[struct]</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::algo::copy_if = function_with_traits&lt;copy_if_&gt;</td>
+          <td class="memname">struct  { ... }  eve::algo::views::map_convert</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/module/algo/algo/copy_if.hpp&gt;</code></p>
-<p><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you need to apply a transformation, you can use <code><a class="el" href="group__views_ga4ac48164461edac98b95a49d2587e972.html#ga4ac48164461edac98b95a49d2587e972" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">eve::algo::views::map</a></code> or <code><a class="el" href="group__algos_ga5f04bc8d4ca88114836570cbd5be9562.html#ga5f04bc8d4ca88114836570cbd5be9562" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">eve::algo::transform_copy_if</a></code>.</dd></dl>
-<p>The main difference from std::copy_if is that it accepts output range and not an output iterator. If the output doesn't have enough space, algorithm will fill all of the avaliable output and then stop. The interface difference allows eve to store more then just selected elements which is important for efficiency.</p>
-<dl class="section note"><dt>Note</dt><dd>fix-1656: unfortunately at the moment, we only return where writing output finished. We should return where the input stopped too but we couldn't solve that efficiently so far.</dd></dl>
-<p>Tuning:</p><ul>
-<li><a class="el" href="group__algo__traits_gab450c355e4ef74d7473519d8b5bdff24.html#gab450c355e4ef74d7473519d8b5bdff24" title="for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...">eve::algo::dense_output</a>/eve<a class="el" href="group__algo__traits_ga20320b3af45c2868e9a4e6c7a5049fa9.html#ga20320b3af45c2868e9a4e6c7a5049fa9" title="for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...">algo::sparse_output</a> - if you expect very sparse output (one or two trues per register) - you can pass sparse_output to try to optimize for that.</li>
-<li>Does not support unrolling at the moment. In the exepriments with compress it didn't prove beneficial, but you can always try with <code><a class="el" href="group__algos_ga7547375958ed972878636d26b215cf6e.html#ga7547375958ed972878636d26b215cf6e" title="a basic for_each algorithm.">eve::algo::for_each</a></code>, assuming you can overallocate the output.</li>
-<li>Algorithm switches to a much slower version, when there is not enough space to write a full register. Allocating more than input size won't help though.</li>
-</ul>
-<h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
-<div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;relaxed_range In, relaxed_range Out, <span class="keyword">typename</span> P&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gae38a65f5bbddc152a1e3b36263ab7090">copy_if</a>(In&amp;&amp; in, Out&amp;&amp; out, P p) -&gt; <a class="code hl_typedef" href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">unaligned_iterator_t&lt;Out&gt;</a></div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5_html_gafeacb9463c55a04e05119f27b880b0e5"><div class="ttname"><a href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_gae38a65f5bbddc152a1e3b36263ab7090_html_gae38a65f5bbddc152a1e3b36263ab7090"><div class="ttname"><a href="#gae38a65f5bbddc152a1e3b36263ab7090">eve::algo::copy_if</a></div><div class="ttdeci">constexpr auto copy_if</div><div class="ttdoc">SIMD variation on std::copy_if.</div><div class="ttdef"><b>Definition</b> copy_if.hpp:149</div></div>
-</div><!-- fragment --><p>** Parameters **</p>
-<ul>
-<li>in - <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> input</li>
-<li>out - <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> output</li>
-<li>p - simd prediocate for elmenets of <code>in</code></li>
-</ul>
-<p>** Return value **</p>
-<p><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a> past the last written element.</p>
-<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga1dfaa1ff5ad47985d1b0a624ba4404b9.html#ga1dfaa1ff5ad47985d1b0a624ba4404b9" title="In-place version of std::copy_if">keep_if</a></code> </dd>
-<dd>
-<code><a class="el" href="group__algos_gadd433852d81668a52c92e3778111e5ac.html#gadd433852d81668a52c92e3778111e5ac" title="SIMD version of std::remove_if.">remove_if</a></code> </dd>
-<dd>
-<code><a class="el" href="group__algos_gab70265959ede0dca152e7227f80cf0da.html#gab70265959ede0dca152e7227f80cf0da" title="In-place version of eve::algo::transform_copy_if">transform_keep_if</a></code> </dd>
-<dd>
-<code><a class="el" href="group__algos_ga5f04bc8d4ca88114836570cbd5be9562.html#ga5f04bc8d4ca88114836570cbd5be9562" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> </dd></dl>
+<p><code>#include &lt;eve/module/algo/algo/views/map.hpp&gt;</code></p>
+<p>operations has to be a template and accept scalar and all width wides for the value type of the underlying iterator/range.</p>
+<p>store operation, for conviniece accepts the as&lt;underlying_type&gt; as a second parameter. (this allows to define load/store ops without knowing the underlying iterator).</p>
+<p><b>Required header:</b> <code>#incude &lt;eve/module/algo/algo/views/map.hpp&gt;</code></p>
+<p>Has a shorthand <code>eve::views::map_convert</code> in <code>&lt;eve/views/map.hpp&gt;</code> </p>
 
 </div>
 </div>
@@ -189,7 +152,7 @@ $(function(){initNavTree('group__algos_gae38a65f5bbddc152a1e3b36263ab7090.html',
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
+    <li class="navelem"><a class="el" href="group__views.html">Views</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

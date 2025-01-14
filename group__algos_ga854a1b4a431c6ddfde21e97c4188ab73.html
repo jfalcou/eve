@@ -136,7 +136,7 @@ $(function(){initNavTree('group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html',
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::algo::search = function_with_traits&lt;search_&gt;</td>
+          <td class="memname">auto eve::algo::search = function_with_traits&lt;search_&gt;[<a class="el" href="group__algo__traits_gaa0edcdf11a934c3303c8dbac175f5340.html#gaa0edcdf11a934c3303c8dbac175f5340">eve::algo::unroll</a>&lt;4&gt;]</td>
         </tr>
       </table>
   </td>
@@ -167,7 +167,7 @@ $(function(){initNavTree('group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html',
 <div class="line">      -&gt; <a class="code hl_typedef" href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">unaligned_iterator_t&lt;R1&gt;</a></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5_html_gafeacb9463c55a04e05119f27b880b0e5"><div class="ttname"><a href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_ga854a1b4a431c6ddfde21e97c4188ab73_html_ga854a1b4a431c6ddfde21e97c4188ab73"><div class="ttname"><a href="#ga854a1b4a431c6ddfde21e97c4188ab73">eve::algo::search</a></div><div class="ttdeci">constexpr auto search</div><div class="ttdoc">SIMD version of std::search (subsequence in a sequence).</div><div class="ttdef"><b>Definition</b> search.hpp:422</div></div>
+<div class="ttc" id="agroup__algos_ga854a1b4a431c6ddfde21e97c4188ab73_html_ga854a1b4a431c6ddfde21e97c4188ab73"><div class="ttname"><a href="#ga854a1b4a431c6ddfde21e97c4188ab73">eve::algo::search</a></div><div class="ttdeci">constexpr auto search</div><div class="ttdoc">SIMD version of std::search (subsequence in a sequence).</div><div class="ttdef"><b>Definition</b> search.hpp:425</div></div>
 <div class="ttc" id="agroup__algos_gae4cc8e2b9746638638d756b76fd49158_html_gae4cc8e2b9746638638d756b76fd49158"><div class="ttname"><a href="group__algos_gae4cc8e2b9746638638d756b76fd49158.html#gae4cc8e2b9746638638d756b76fd49158">eve::algo::equal</a></div><div class="ttdeci">constexpr auto equal</div><div class="ttdoc">a SIMD version of std::equal</div><div class="ttdef"><b>Definition</b> equal.hpp:111</div></div>
 </div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code>. In order to mimic the behaviour of std::search, it will also cast the types, so that you can search unrelated types.</p>
 <p>Version (1) won't do implicit types conversions for you, you can either handle them in the predicate or use <code><a class="el" href="group__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">views::convert</a></code>.</p>
