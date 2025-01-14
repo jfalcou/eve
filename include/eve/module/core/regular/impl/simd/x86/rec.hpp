@@ -115,7 +115,9 @@ namespace eve::detail
     else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, opts, a0);
     else
     {
-      auto m   = expand_mask(mask, as(a0)).storage().value;
+      auto l   = expand_mask(mask, as(a0));
+      auto m   = l.storage().value;
+
       if constexpr(O::contains(raw))
       {
         if      constexpr( c == category::float32x16) return _mm512_mask_rcp14_ps(src, m, a0);
@@ -148,9 +150,10 @@ namespace eve::detail
         {
           x =  if_else(mask,fma(fnma(x, a0, one(eve::as(a0))), x, x), a0);
         }
-        return if_else(is_eqz(a0) && m,
+
+        return if_else(is_eqz(a0) && l,
                        a0 | inf(eve::as(a0)),
-                       if_else(is_infinite(a0) && m,
+                       if_else(is_infinite(a0) && l,
                                a0 & mzero(eve::as(a0)),
                                x)
                       );
