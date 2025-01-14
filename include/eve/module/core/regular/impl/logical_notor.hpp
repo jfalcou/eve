@@ -13,9 +13,8 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_notor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
-    requires (relaxed_logical_scalar_value<T> && relaxed_logical_scalar_value<U>) || (std::same_as<T, U>)
+  template<callable_options O, relaxed_logical_value T>
+  EVE_FORCEINLINE constexpr T logical_notor_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
     return !a || b;
   }
