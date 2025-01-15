@@ -7,17 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/convert.hpp>
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
-    requires (x86_abi<abi_t<T, N>>)
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> logical_and_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept
+    requires(sve_abi<abi_t<T, N>>)
   {
-    return logical<wide<T, N>>{a.storage() ^ b.storage()};
+    return svmov_z(v, w);
   }
 }

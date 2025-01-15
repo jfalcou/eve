@@ -456,6 +456,28 @@ namespace tts
     auto call_f = [&](auto idx) { return f(eve::detail::get_at(wm, idx), eve::detail::get_at(args, idx)...); };
     return eve::detail::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
   }
+
+  template<typename L1> struct rewrap;
+  template<typename... Ts>
+  struct rewrap<kumi::tuple<Ts...>> { using type = tts::types<Ts...>; };
+
+  template<typename L1, typename L2> struct cartesian;
+
+  template<typename... T1s, typename... T2s>
+  struct cartesian<tts::types<T1s...>, tts::types<T2s...>>
+  {
+    using base       = kumi::result::cartesian_product_t<kumi::tuple<T1s...>, kumi::tuple<T2s...>>;
+    using types_list = typename rewrap<base>::type;
+  };
+
+  template<typename Types> struct cartesian_square;
+
+  template<typename... Types>
+  struct cartesian_square<tts::types<Types...>>
+  {
+    using base       = kumi::result::cartesian_product_t<kumi::tuple<Types...>, kumi::tuple<Types...>>;
+    using types_list = typename rewrap<base>::type;
+  };
 }
 
 //==================================================================================================

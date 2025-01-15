@@ -7,17 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/convert.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
-    requires (x86_abi<abi_t<T, N>>)
+  template<callable_options O, relaxed_logical_value T>
+  EVE_FORCEINLINE constexpr T logical_xor_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    return logical<wide<T, N>>{a.storage() ^ b.storage()};
+    if  constexpr (relaxed_logical_scalar_value<T>) return a != b;
+    else                                            return bit_cast(a.bits() != b.bits(), as<T>{});
   }
 }

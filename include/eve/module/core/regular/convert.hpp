@@ -84,6 +84,16 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
+
+  namespace detail
+  {
+    // This function is forward declared wrapper around convert, so that internally we can call it anywhere.
+    template<simd_value Src, typename Tgt>
+    EVE_FORCEINLINE as_wide_as_t<Tgt, Src> call_convert(Src x, as<Tgt> tgt)
+    {
+      return convert(x, tgt);
+    }
+  }
 }
 
 #include <eve/module/core/regular/impl/convert.hpp>

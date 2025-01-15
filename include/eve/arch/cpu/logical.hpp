@@ -10,6 +10,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/traits/as_integer.hpp>
+#include <eve/traits/common_value.hpp>
 
 #include <bitset>
 #include <cstring>
@@ -87,35 +88,35 @@ namespace eve
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator&&(logical const& v, logical<U> const& w) noexcept
     {
-      return logical{v.value() && w.value()};
+      return common_logical_t<T, U>{v.value() && w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator&&(logical const& v, bool const& w) noexcept
     {
-      return logical{v.value() && w};
+      return w ? v : logical{false};
     }
 
     friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
     {
-      return logical{v && w.value()};
+      return v ? w : logical{false};
     }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator||(logical const& v, logical<U> const& w) noexcept
     {
-      return logical{v.value() || w.value()};
+      return common_logical_t<T, U>{v.value() || w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator||(logical const& v, bool const& w) noexcept
     {
-      return logical{v.value() || w};
+      return w ? logical{true} : v;
     }
 
     friend EVE_FORCEINLINE logical operator||(bool const& v, logical const& w) noexcept
     {
-      return logical{v || w.value()};
+      return v ? logical{true} : w;
     }
 
     //==============================================================================================
@@ -139,9 +140,9 @@ namespace eve
     // Comparison operators
     //==============================================================================================
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator==(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
     {
-      return v.value() == w.value();
+      return common_logical_t<T, U>{v.value() == w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator==(logical const& v, bool w) noexcept
@@ -155,9 +156,9 @@ namespace eve
     }
 
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
     {
-      return v.value() != w.value();
+      return common_logical_t<T, U>{v.value() != w.value()};
     }
 
     friend EVE_FORCEINLINE logical operator!=(logical const& v, bool w) noexcept

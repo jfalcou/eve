@@ -17,7 +17,7 @@ namespace eve
   struct bit_mask_t : elementwise_callable<bit_mask_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE auto operator()(T v) const
+    constexpr EVE_FORCEINLINE typename as_logical_t<T>::mask_type operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);
