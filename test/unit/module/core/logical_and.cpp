@@ -38,10 +38,10 @@ TTS_CASE("Check behavior of eve::logical_and(bool)")
   TTS_EQUAL(logical_and(false, false), false);
 };
 
-TTS_CASE_TPL("Check behavior of eve::logical_and(invalid)", tts::cartesian_square<eve::test::scalar::all_types>)
-<typename T, typename U>(tts::type<kumi::tuple<T, U>>)
+TTS_CASE_TPL("Check behavior of eve::logical_and(invalid)", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
-  logical_test_compile_reject<T, U>(logical_and);
+  logical_test_compile_reject<T>(logical_and);
 };
 
 TTS_CASE_WITH("Check behavior of eve::logical_and(logical<wide>)",

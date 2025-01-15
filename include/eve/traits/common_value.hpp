@@ -117,7 +117,12 @@ namespace eve::detail
         else                                        return find_common_logical_reducer<B>{};
       }
       // both types have the same size, signedness and integral-ness, they are functionally the same.
-      else                                          return find_common_logical_reducer<A>{};
+      else
+      {
+        // handles the (long, long long) and (unsigned long, unsigned long long) cases
+        if constexpr (std::same_as<decltype(ea_t{} + eb_t{}), ea_t>) return find_common_logical_reducer<A>{};
+        else                                                         return find_common_logical_reducer<B>{};
+      }
     }
 
     template <typename U>

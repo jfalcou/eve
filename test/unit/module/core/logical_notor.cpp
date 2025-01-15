@@ -36,10 +36,10 @@ TTS_CASE("Check behavior of eve::logical_notor(bool)")
   TTS_EQUAL(eve::logical_notor(false, false), true);
 };
 
-TTS_CASE_TPL("Check behavior of eve::logical_or(invalid)", tts::cartesian_square<eve::test::scalar::all_types>)
-<typename T, typename U>(tts::type<kumi::tuple<T, U>>)
+TTS_CASE_TPL("Check behavior of eve::logical_or(invalid)", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
-  logical_test_compile_reject<T, U>(eve::logical_notor);
+  logical_test_compile_reject<T>(eve::logical_notor);
 };
 
 TTS_CASE_WITH("Check behavior of eve::logical_notor(simd)",

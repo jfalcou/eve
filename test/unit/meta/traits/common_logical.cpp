@@ -7,66 +7,116 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "unit/module/core/logical_test.hpp"
 
 #include <eve/module/core.hpp>
 
-TTS_CASE("eve::common_logical on boolean x boolean")
+template<typename T, typename U, typename Expected>
+void test_with_types()
 {
-  TTS_TYPE_IS((eve::common_logical_t<bool, bool>), bool);
-};
+  TTS_TYPE_IS((eve::common_logical_t<T, U>), Expected);
+  TTS_TYPE_IS((eve::common_logical_t<U, T>), Expected);
+}
 
 TTS_CASE_TPL("eve::common_logical on boolean x other", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using S = eve::element_type_t<T>;
 
-  TTS_TYPE_IS((eve::common_logical_t<bool, T>), eve::logical<T>);
-  TTS_TYPE_IS((eve::common_logical_t<T, bool>), eve::logical<T>);
-  TTS_TYPE_IS((eve::common_logical_t<bool, eve::logical<T>>), eve::logical<T>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, bool>), eve::logical<T>);
-
-  TTS_TYPE_IS((eve::common_logical_t<bool, S>), eve::logical<S>);
-  TTS_TYPE_IS((eve::common_logical_t<S, bool>), eve::logical<S>);
-  TTS_TYPE_IS((eve::common_logical_t<bool, eve::logical<S>>), eve::logical<S>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<S>, bool>), eve::logical<S>);
+  test_with_types<bool, T, eve::logical<T>>();
+  test_with_types<bool, eve::logical<T>, eve::logical<T>>();
+  test_with_types<bool, S, eve::logical<S>>();
+  test_with_types<bool, eve::logical<S>, eve::logical<S>>();
 };
 
-TTS_CASE_TPL("eve::common_logical on scalar x scalar", tts::cartesian_square<eve::test::scalar::all_types>)
-<typename T, typename U>( tts::type<kumi::tuple<T,U>> )
+TTS_CASE_TPL("eve::common_logical on scalar x scalar", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
-  using expected_t = priority_t<T, U>;
+  // same type
+  TTS_TYPE_IS((eve::common_logical_t<T, T>), eve::logical<T>);
 
-  TTS_TYPE_IS((eve::common_logical_t<T, U>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<T, eve::logical<U>>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, U>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, eve::logical<U>>), expected_t);
+  // different floatiness
+  if constexpr (std::floating_point<T>)
+  {
+    using U = eve::as_integer_t<T>;
+    test_with_types<T, U, eve::logical<U>>();
+  }
+
+  // different signedness
+  if constexpr (std::signed_integral<T>)
+  {
+    using U = std::make_unsigned_t<T>;
+    test_with_types<T, U, eve::logical<U>>();
+  }
+
+  // different sizes
+  using D = eve::downgrade_t<T>;
+  using U = eve::upgrade_t<T>;
+
+  test_with_types<T, D, eve::logical<D>>();
+  test_with_types<T, U, eve::logical<T>>();
 };
 
-TTS_CASE_TPL("eve::common_logical on wide x wide", tts::cartesian_square<eve::test::scalar::all_types>)
-<typename T, typename U>( tts::type<kumi::tuple<T, U>> )
+TTS_CASE("eve::common_logical on special cases")
 {
-  using Wt = eve::wide<T, eve::fixed<4>>;
-  using Wu = eve::wide<U, eve::fixed<4>>;
+  TTS_TYPE_IS((eve::common_logical_t<bool, bool>), bool);
+
+  if constexpr (sizeof(long) == sizeof(long long))
+  {
+    test_with_types<long, long long, eve::logical<long long>>();
+  }
+};
+
+template<typename T, typename U, typename ES, typename EW = ES>
+void test_with_types_simd()
+{
+  using es_t = eve::logical<eve::wide<ES, eve::fixed<2>>>;
+  using ew_t = eve::logical<eve::wide<EW, eve::fixed<2>>>;
+
+  using Lt  = eve::logical<T>;
+  using Wt  = eve::wide<T, eve::fixed<2>>;
   using LWt = eve::logical<Wt>;
+
+  using Wu  = eve::wide<U, eve::fixed<2>>;
   using LWu = eve::logical<Wu>;
 
-  using expected_t = priority_t<LWt, LWu>;
+  test_with_types<T, Wu, es_t>();
+  test_with_types<Lt, Wu, es_t>();
+  test_with_types<T, LWu, es_t>();
+  test_with_types<Lt, LWu, es_t>();
+  
+  test_with_types<Wt, Wu, ew_t>();
+  test_with_types<LWt, Wu, ew_t>();
+  test_with_types<Wt, LWu, ew_t>();
+  test_with_types<LWt, LWu, ew_t>();
+}
 
-  TTS_TYPE_IS((eve::common_logical_t<Wt, Wu>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<Wt, LWu>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<LWt, Wu>), expected_t);
-  TTS_TYPE_IS((eve::common_logical_t<LWt, LWu>), expected_t);
+TTS_CASE_TPL("eve::common_logical on wides", eve::test::scalar::all_types)
+<typename T>( tts::type<T> )
+{
+  // same type
+  TTS_TYPE_IS((eve::common_logical_t<eve::wide<T>, eve::wide<T>>), eve::logical<eve::wide<T>>);
+  TTS_TYPE_IS((eve::common_logical_t<eve::logical<eve::wide<T>>, eve::logical<eve::wide<T>>>), eve::logical<eve::wide<T>>);
 
-  TTS_TYPE_IS((eve::common_logical_t<T, Wu>), LWu);
-  TTS_TYPE_IS((eve::common_logical_t<T, LWu>), LWu);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, Wu>), LWu);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, LWu>), LWu);
+  // different floatiness
+  if constexpr (std::floating_point<T>)
+  {
+    using U   = eve::as_integer_t<T>;
+    test_with_types_simd<T, U, U>();
+  }
 
-  TTS_TYPE_IS((eve::common_logical_t<Wt, U>), LWt);
-  TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<U>>), LWt);
-  TTS_TYPE_IS((eve::common_logical_t<LWt, U>), LWt);
-  TTS_TYPE_IS((eve::common_logical_t<LWt, eve::logical<U>>), LWt);
+  // different signedness
+  if constexpr (std::signed_integral<T>)
+  {
+    using U   = std::make_unsigned_t<T>;
+    test_with_types_simd<T, U, U>();
+  }
+
+  // different sizes
+  using D = eve::downgrade_t<T>;
+  using U = eve::upgrade_t<T>;
+
+  test_with_types_simd<T, D, D, D>();
+  test_with_types_simd<T, U, U, T>();
 };
 
 TTS_CASE("eve::common_logical on tuples")

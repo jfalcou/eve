@@ -38,10 +38,10 @@ TTS_CASE("Check behavior of eve::logical_xor(bool)")
   TTS_EQUAL(eve::logical_xor(false, false), false);
 };
 
-TTS_CASE_TPL("Check behavior of eve::logical_xor(invalid)", tts::cartesian_square<eve::test::scalar::all_types>)
-<typename T, typename U>(tts::type<kumi::tuple<T, U>>)
+TTS_CASE_TPL("Check behavior of eve::logical_xor(invalid)", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
-  logical_test_compile_reject<T, U>(eve::logical_xor);
+  logical_test_compile_reject<T>(eve::logical_xor);
 };
 
 TTS_CASE_WITH("Check behavior of eve::logical_xor(logical<wide>)",
