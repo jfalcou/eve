@@ -2,10 +2,10 @@ var NAVTREEINDEX0 =
 {
 "algo_rationale.html":[3,3,1],
 "changelog.html":[3,1],
-"concepteve_1_1has__plain__translation.html":[2,3,0,14],
+"concepteve_1_1has__plain__translation.html":[2,3,0,15],
 "concepteve_1_1match__option.html":[2,3,0,6],
 "concepteve_1_1only__if.html":[2,3,0,7],
-"concepteve_1_1pattern__formula.html":[2,3,0,35],
+"concepteve_1_1pattern__formula.html":[2,3,0,37],
 "concepteve_1_1scalar__value.html":[2,3,0,12],
 "concepts.html":[2,3],
 "conditional.html":[1,2,0],
