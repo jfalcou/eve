@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/concept/element_type.hpp>
+#include <eve/concept/compatible.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
@@ -23,11 +23,11 @@
 namespace eve
 {
   template<typename Options>
-  struct is_less_t : strict_elementwise_callable<is_less_t, Options, definitely_option>
+  struct is_less_t : elementwise_callable<is_less_t, Options, definitely_option>
   {
     template<arithmetic_value T, arithmetic_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires (same_lanes_or_scalar<T, U> && same_element_type_or_scalar<T, U>)
+      requires compatible_arithmetic_values<T, U>
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);

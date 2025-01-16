@@ -18,6 +18,8 @@ namespace eve::detail
     }
     else if constexpr (O::contains(definitely))
     {
+      static_assert(floating_value<T> && floating_value<U>, "[EVE] eve::is_less[definitely] only accepts floating point values.");
+
       using w_t = common_value_t<T, U>;
       auto aa = w_t{a};
       auto bb = w_t{b};
@@ -31,15 +33,17 @@ namespace eve::detail
     {
       if constexpr (scalar_value<T>)
       {
-        if      constexpr (scalar_value<U>)                    return common_logical_t<T, U>(a < b);
-        else if constexpr (std::same_as<T, element_type_t<U>>) return is_less(U{a}, b);
-        else                                                   return is_less(element_type_t<U>{a}, b);
+        if      constexpr (scalar_value<U>) return common_logical_t<T, U>(a < b);
+        // because of the auto-conversion rules in elementwise_callable,
+        // we can assume that T will have the type element_type<U> at that point
+        else                                return is_less(U{a}, b);
       }
       else
       {
-        if      constexpr (simd_value<U>)                      return map(is_less, a, b);
-        else if constexpr (std::same_as<element_type_t<T>, U>) return is_less(a, T{b});
-        else                                                   return is_less(a, element_type_t<T>{b});
+        if      constexpr (simd_value<U>) return map(is_less, a, b);
+        // because of the auto-conversion rules in elementwise_callable,
+        // we can assume that U will have the type element_type<T> at that point
+        else                              return is_less(a, T{b});
       }
     }
   }
