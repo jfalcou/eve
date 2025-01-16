@@ -34,15 +34,15 @@ namespace eve::detail
       if constexpr (scalar_value<T>)
       {
         if      constexpr (scalar_value<U>) return common_logical_t<T, U>(a < b);
-        // because of the auto-conversion rules in elementwise_callable,
-        // we can assume that T will have the type element_type<U> at that point
+        // because of the auto-conversion rules in elementwise_callable, we can assume that T will have the type
+        // element_type<U> at that point and that the appropriate wide<S> x S backend doesn't exist.
         else                                return is_less(U{a}, b);
       }
       else
       {
         if      constexpr (simd_value<U>) return map(is_less, a, b);
-        // because of the auto-conversion rules in elementwise_callable,
-        // we can assume that U will have the type element_type<T> at that point
+        // because of the auto-conversion rules in elementwise_callable, we can assume that U will have the type
+        // element_type<T> at that point and that the appropriate wide<S> x S backend doesn't exist.
         else                              return is_less(a, T{b});
       }
     }
