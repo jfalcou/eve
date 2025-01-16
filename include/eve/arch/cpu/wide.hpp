@@ -876,7 +876,7 @@ namespace eve
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return is_less(w, wide{s});
+      return is_less(w, s);
     }
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
@@ -886,7 +886,7 @@ namespace eve
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return is_less(wide{s}, w);
+      return is_less(s, w);
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide
