@@ -32,7 +32,7 @@ namespace eve
                                 || size_compatible_to<U, T>;
 
   template<typename T, typename... Ts>
-  concept same_value_type = (std::same_as<element_type_t<std::remove_cvref_t<T>>, element_type_t<std::remove_cvref_t<Ts>>> && ...);
+  concept same_element_type = (std::same_as<element_type_t<std::remove_cvref_t<T>>, element_type_t<std::remove_cvref_t<Ts>>> && ...);
 
   template<typename T, typename U>
   concept different_value_type = !std::same_as<element_type_t<U>, element_type_t<T>>;
