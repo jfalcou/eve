@@ -154,6 +154,25 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @{
+  //! @concept arithmetic_value
+  //! @brief The concept `plain_value<T>` is satisfied if and only if T satisfies
+  //! `eve::arithmetic_simd_value` or `eve::arithmetic_scalar_value`.
+  //!
+  //! @groupheader{Examples}
+  //! - `int`
+  //! - `eve::wide<double>`
+  //! - `kumi::tuple<double, int>`
+  //! - `eve::wide<kumi::tuple<double, int>>`
+  //================================================================================================
+  template <typename T>
+  concept arithmetic_value = arithmetic_simd_value<T> || arithmetic_scalar_value<T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @{
   //! @concept relaxed_logical_value
   //! @brief The concept `relaxed_logical_value<T>` is satisfied if and only if T is a
   //! boolean value or satisfies the `eve::logical_value` concept.

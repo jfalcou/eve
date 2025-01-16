@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/element_type.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
@@ -24,9 +25,9 @@ namespace eve
   template<typename Options>
   struct is_less_t : strict_elementwise_callable<is_less_t, Options, definitely_option>
   {
-    template<value T, value U>
+    template<arithmetic_value T, arithmetic_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires (same_lanes_or_scalar<T, U>)
+      requires (same_lanes_or_scalar<T, U> && same_element_type_or_scalar<T, U>)
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
@@ -95,40 +96,26 @@ namespace eve
 
 // Required for if_else optimisation detections
   using callable_is_less_ = tag_t<is_less>;
-
-  namespace detail
-  {
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_less_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
-    {
-      if constexpr (scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a < b);
-      else                                              return a < b;
-    }
-
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_less_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
-    {
-      if constexpr (O::contains(definitely))
-      {
-        using w_t = common_value_t<T, U>;
-        auto a = w_t(aa);
-        auto b = w_t(bb);
-
-        auto tol = o[definitely].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>) return a <  eve::prev(b, tol);
-        else              return a < fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
-      }
-      else
-      {
-        if constexpr (scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(aa < bb);
-        else                                              return aa < bb;
-      }
-    }
-  }
 }
+
+#include <eve/module/core/regular/impl/is_less.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_less.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/is_less.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_less.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/is_less.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/is_less.hpp>
 #endif
