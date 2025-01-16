@@ -19,6 +19,6 @@ namespace eve::detail
     requires ppc_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(definitely)) return is_less.behavior(cpu_{}, opts, a, b);
-    else                                   return logical<wide<T, N>>(vec_cmplt(v.storage(), w.storage()));
+    else                                   return logical<wide<T, N>>(vec_cmplt(a.storage(), b.storage()));
   }
 }
