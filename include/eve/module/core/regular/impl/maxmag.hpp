@@ -11,7 +11,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
@@ -21,7 +20,6 @@
 
 namespace eve::detail
 {
-
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
@@ -37,7 +35,7 @@ namespace eve::detail
         auto bbb = if_else(is_nan(b), a, b);
         return eve::maxmag[pedantic](aaa, bbb);
       }
-      if constexpr( has_native_abi_v<r_t> )
+      else
       {
         auto ra = r_t(a);
         auto rb = r_t(b);
@@ -54,8 +52,6 @@ namespace eve::detail
           return if_else(is_not_greater_equal(bb, aa), ra, tmp);
         }
       }
-      else
-        return arithmetic_call(maxmag[o], r_t(a), r_t(b));
     }
     else // N > 2 parameters
     {

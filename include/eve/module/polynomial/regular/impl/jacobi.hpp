@@ -85,7 +85,7 @@ namespace eve::detail
         r_t aalpha(convert(alpha, as<elt_t>()));
         r_t bbeta(convert(beta, as<elt_t>()));
         r_t xx(convert(x, as<elt_t>()));
-        return arithmetic_call(jacobi, nn, aalpha, bbeta, xx);
+        return jacobi(nn, aalpha, bbeta, xx);
       }
     }
   }
