@@ -13,7 +13,7 @@ namespace eve::detail
 // For now didn't figure out how to generalize
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_neon_reverse(P, fixed<G> g, wide<T, N> x)
+shuffle_l4_l5_neon_reverse(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( !idxm::is_reverse(P::idxs) )
     return kumi::tuple {no_matching_shuffle, eve::index<-1>};
