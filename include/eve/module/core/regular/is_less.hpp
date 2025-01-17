@@ -25,11 +25,18 @@ namespace eve
   template<typename Options>
   struct is_less_t : elementwise_callable<is_less_t, Options, definitely_option>
   {
-    template<arithmetic_value T, arithmetic_value U>
+    template<floating_value T, floating_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires compatible_arithmetic_values<T, U>
+      requires (compatible_arithmetic_values<T, U> && Options::contains(definitely))
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    template<arithmetic_value T, arithmetic_value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (compatible_arithmetic_values<T, U> && !Options::contains(definitely))
+    {
       return EVE_DISPATCH_CALL(a, b);
     }
 

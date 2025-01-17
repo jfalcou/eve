@@ -18,8 +18,6 @@ namespace eve::detail
     }
     else if constexpr (O::contains(definitely))
     {
-      static_assert(floating_value<T> && floating_value<U>, "[EVE] eve::is_less[definitely] only accepts floating point values.");
-
       using w_t = common_value_t<T, U>;
       auto aa = w_t{a};
       auto bb = w_t{b};
