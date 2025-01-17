@@ -149,11 +149,15 @@ $(function(){initNavTree('group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html',
 <p><code>#include &lt;eve/module/algo/algo/search.hpp&gt;</code></p>
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><p>Some ideas taken from previous work: Wojciech Mula: <a href="http://0x80.pl/articles/simd-strfind.html">http://0x80.pl/articles/simd-strfind.html</a> Ash Vardanian: <a href="https://github.com/ashvardanian/StringZilla/blob/07e0a2a4ad8330c91a20fccb66022715b386e1b4/include/stringzilla/stringzilla.h#L3784">https://github.com/ashvardanian/StringZilla/blob/07e0a2a4ad8330c91a20fccb66022715b386e1b4/include/stringzilla/stringzilla.h#L3784</a> strstr from glibc: <a href="https://codebrowser.dev/glibc/glibc/sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S.html">https://codebrowser.dev/glibc/glibc/sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S.html</a></p>
+</div><!-- fragment --><p>Some ideas are taken from the previous work:</p><ul>
+<li>Wojciech Mula: <a href="http://0x80.pl/articles/simd-strfind.html">http://0x80.pl/articles/simd-strfind.html</a></li>
+<li>Ash Vardanian: <a href="https://github.com/ashvardanian/StringZilla/blob/07e0a2a4ad8330c91a20fccb66022715b386e1b4/include/stringzilla/stringzilla.h#L3784">https://github.com/ashvardanian/StringZilla/blob/07e0a2a4ad8330c91a20fccb66022715b386e1b4/include/stringzilla/stringzilla.h#L3784</a></li>
+<li>strstr from glibc: <a href="https://codebrowser.dev/glibc/glibc/sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S.html">https://codebrowser.dev/glibc/glibc/sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S.html</a></li>
+</ul>
 <dl class="section note"><dt>Note</dt><dd>: to look for one element use <code><a class="el" href="group__algos_ga1a9ca77a585daafa9b1a61f18516a19a.html#ga1a9ca77a585daafa9b1a61f18516a19a" title="a version of find_if with a value to find instead of a predicate to test.">eve::algo::find</a></code>. It is also slightly faster, so if one element case is common - you might consider an <code>if</code> on the <code>needle</code> len.</dd></dl>
 <p>Tuning:</p><ul>
 <li>Aligning search for initial test. Passing <code>no_aligning</code> will remove this aligning.</li>
-<li>Unrolling search for initial test. Unlikely to be beneficial, but it's there to try.</li>
+<li>Unrolling search for initial test. By default we unroll 4 times, with expensive predicates might not be benificial</li>
 </ul>
 <h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
@@ -167,9 +171,9 @@ $(function(){initNavTree('group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html',
 <div class="line">      -&gt; <a class="code hl_typedef" href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">unaligned_iterator_t&lt;R1&gt;</a></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5_html_gafeacb9463c55a04e05119f27b880b0e5"><div class="ttname"><a href="group__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_ga854a1b4a431c6ddfde21e97c4188ab73_html_ga854a1b4a431c6ddfde21e97c4188ab73"><div class="ttname"><a href="#ga854a1b4a431c6ddfde21e97c4188ab73">eve::algo::search</a></div><div class="ttdeci">constexpr auto search</div><div class="ttdoc">SIMD version of std::search (subsequence in a sequence).</div><div class="ttdef"><b>Definition</b> search.hpp:425</div></div>
+<div class="ttc" id="agroup__algos_ga854a1b4a431c6ddfde21e97c4188ab73_html_ga854a1b4a431c6ddfde21e97c4188ab73"><div class="ttname"><a href="#ga854a1b4a431c6ddfde21e97c4188ab73">eve::algo::search</a></div><div class="ttdeci">constexpr auto search</div><div class="ttdoc">SIMD version of std::search (subsequence in a sequence).</div><div class="ttdef"><b>Definition</b> search.hpp:426</div></div>
 <div class="ttc" id="agroup__algos_gae4cc8e2b9746638638d756b76fd49158_html_gae4cc8e2b9746638638d756b76fd49158"><div class="ttname"><a href="group__algos_gae4cc8e2b9746638638d756b76fd49158.html#gae4cc8e2b9746638638d756b76fd49158">eve::algo::equal</a></div><div class="ttdeci">constexpr auto equal</div><div class="ttdoc">a SIMD version of std::equal</div><div class="ttdef"><b>Definition</b> equal.hpp:111</div></div>
-</div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code>. In order to mimic the behaviour of std::search, it will also cast the types, so that you can search unrelated types.</p>
+</div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code>. In order to mimic the behaviour of <code>std::search</code>, it will also cast the types, so that you can search unrelated types.</p>
 <p>Version (1) won't do implicit types conversions for you, you can either handle them in the predicate or use <code><a class="el" href="group__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">views::convert</a></code>.</p>
 <p><b>Parameters (1)</b></p>
 <ul>
@@ -178,7 +182,9 @@ $(function(){initNavTree('group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html',
 <li>equal - the predicate of the elements.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>unaligned iterator pointing to where in haystack the sequence is. If the needle is empty == haystack.begin() is returned. If the needle isn't found == haystack.end().</p>
+<p><code>unaligned iterator</code> pointing to where in haystack the sequence is. <br  />
+ If the needle is empty <code>found == haystack.begin()</code> is returned. <br  />
+ If the needle isn't <code>found == haystack.end()</code>.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
