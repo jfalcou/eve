@@ -371,11 +371,11 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!   #include <eve/module/algo.hpp>
 //!   @endcode
 //!
-//!   Some ideas taken from previous work:
-//!    Wojciech Mula: http://0x80.pl/articles/simd-strfind.html
-//!    Ash Vardanian:
+//!   Some ideas are taken from the previous work:
+//!    * Wojciech Mula: http://0x80.pl/articles/simd-strfind.html
+//!    * Ash Vardanian:
 //!      https://github.com/ashvardanian/StringZilla/blob/07e0a2a4ad8330c91a20fccb66022715b386e1b4/include/stringzilla/stringzilla.h#L3784
-//!    strstr from glibc:
+//!    * strstr from glibc:
 //!      https://codebrowser.dev/glibc/glibc/sysdeps/x86_64/multiarch/strstr-sse2-unaligned.S.html
 //!
 //!   @note: to look for one element use `eve::algo::find`. It is also slightly faster,
@@ -383,7 +383,8 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!
 //!   Tuning:
 //!    * Aligning search for initial test. Passing `no_aligning` will remove this aligning.
-//!    * Unrolling search for initial test. Unlikely to be beneficial, but it's there to try.
+//!    * Unrolling search for initial test. By default we unroll 4 times, with expensive
+//!      predicates might not be benificial
 //!
 //!   @groupheader{Callable Signatures}
 //!
@@ -400,7 +401,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!   }
 //!   @endcode
 //!
-//!   (2) calls (1) with `eve::is_equal`. In order to mimic the behaviour of std::search,
+//!   (2) calls (1) with `eve::is_equal`. In order to mimic the behaviour of `std::search`,
 //!   it will also cast the types, so that you can search unrelated types.
 //!
 //!   Version (1) won't do implicit types conversions for you, you can either handle them in
@@ -414,9 +415,9 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!
 //!   **Return value**
 //!
-//!   unaligned iterator pointing to where in haystack the sequence is.
-//!   If the needle is empty == haystack.begin() is returned.
-//!   If the needle isn't found == haystack.end().
+//!   `unaligned iterator` pointing to where in haystack the sequence is. \n
+//!   If the needle is empty `found == haystack.begin()` is returned. \n
+//!   If the needle isn't `found == haystack.end()`.
 //!
 //!   @groupheader{Example}
 //!
