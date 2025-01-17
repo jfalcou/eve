@@ -73,10 +73,9 @@ namespace eve::detail
         else if constexpr (c == category::float64x2) return _mm_cmplt_pd(a, b);
         else
         {
-          constexpr auto use_avx2 = current_api >= avx2;
-          constexpr auto use_avx = current_api >= avx;
+          constexpr auto use_avx2   = current_api >= avx2;
           constexpr auto use_sse4_1 = current_api >= sse4_1;
-          constexpr auto lt       = []<typename E>(E ev, E fv) { return as_logical_t<E>(ev < fv); };
+          constexpr auto lt         = []<typename E>(E ev, E fv) { return as_logical_t<E>(ev < fv); };
 
           [[maybe_unused]] auto unsigned_cmp = [](auto lhs, auto rhs)
           {
@@ -88,23 +87,20 @@ namespace eve::detail
           if      constexpr (use_avx2 && c == category::int64x4)   return _mm256_cmpgt_epi64(b, a);
           else if constexpr (use_avx2 && c == category::uint64x4)  return unsigned_cmp(a, b);
           else if constexpr (use_avx2 && c == category::int32x8)   return _mm256_cmpgt_epi32(b, a);
-          else if constexpr (use_avx2 && c == category::uint32x8)  return _mm256_xor_si256(
-                                                                            _mm256_cmpeq_epi32(
-                                                                                _mm256_min_epu32(a, b),
-                                                                                b),
-                                                                            _mm256_cmpeq_epi32(b, b));
+          else if constexpr (use_avx2 && c == category::uint32x8)
+          {
+            return _mm256_xor_si256(_mm256_cmpeq_epi32(_mm256_min_epu32(a, b), b), _mm256_cmpeq_epi32(b, b));
+          }
           else if constexpr (use_avx2 && c == category::int16x16)  return _mm256_cmpgt_epi16(b, a);
-          else if constexpr (use_avx2 && c == category::uint16x16) return _mm256_xor_si256(
-                                                                            _mm256_cmpeq_epi16(
-                                                                                _mm256_min_epu16(a, b),
-                                                                                b),
-                                                                            _mm256_cmpeq_epi16(b, b));
+          else if constexpr (use_avx2 && c == category::uint16x16)
+          {
+            return _mm256_xor_si256(_mm256_cmpeq_epi16(_mm256_min_epu16(a, b), b), _mm256_cmpeq_epi16(b, b));
+          }
           else if constexpr (use_avx2 && c == category::int8x32)   return _mm256_cmpgt_epi8(b, a);
-          else if constexpr (use_avx2 && c == category::uint8x32)  return _mm256_xor_si256(
-                                                                            _mm256_cmpeq_epi8(
-                                                                                _mm256_min_epu8(a, b),
-                                                                                b),
-                                                                            _mm256_cmpeq_epi8(b, b));
+          else if constexpr (use_avx2 && c == category::uint8x32)
+          {
+            return _mm256_xor_si256(_mm256_cmpeq_epi8(_mm256_min_epu8(a, b), b), _mm256_cmpeq_epi8(b, b));
+          }
           else if constexpr (c == category::int32x4)               return _mm_cmplt_epi32(a, b);
           else if constexpr (c == category::int16x8)               return _mm_cmplt_epi16(a, b);
           else if constexpr (c == category::int8x16)               return _mm_cmplt_epi8(a, b);
