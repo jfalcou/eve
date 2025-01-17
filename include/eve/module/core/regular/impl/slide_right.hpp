@@ -23,8 +23,9 @@ template<simd_value Wide, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto
 slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift <= Wide::size())
 {
+  using type = typename Wide::value_type;
   if constexpr( Shift == 0 ) return v;
-  else if constexpr( Shift == Wide::size() ) return Wide {0};
+  else if constexpr( Shift == Wide::size() ) return Wide {type{0}};
   else if constexpr( has_aggregated_abi_v<Wide> )
   {
     if constexpr( Shift >= Wide::size() / 2 )
@@ -32,7 +33,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift
       // We slide so much the lower part is full of zero
       // and the upper part is a slide of the former higher part
       auto l = v.slice(lower_);
-      return Wide {decltype(l) {0}, slide_right(l, index<Shift - Wide::size() / 2>)};
+      return Wide {decltype(l) {type{0}}, slide_right(l, index<Shift - Wide::size() / 2>)};
     }
     else
     {

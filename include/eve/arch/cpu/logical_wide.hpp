@@ -143,7 +143,7 @@ namespace eve
     }
 
     //! Construct from a scalar logical
-    template<typename U>
+    template<scalar_value U>
     EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
                   : storage_base(detail::make(eve::as<logical>{}, v)) {}
 

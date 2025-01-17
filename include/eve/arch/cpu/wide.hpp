@@ -194,10 +194,14 @@ namespace eve
       storage_base::storage() = [&]<std::size_t... I>(std::index_sequence<I...>)
         {
           constexpr auto K = sizeof...(Ss);
-          return kumi::map([]<typename W>(auto const& n, W const&) { return W{n}; },
-                                 kumi::make_tuple(v0, vs..., kumi::element_t<K+I,Type>{}...),
-                                 *this
-                                );
+          return kumi::map([]<typename N, typename W>(N const& n, W const&)
+                            {
+                              if constexpr(scalar_value<N>) return W( typename W::value_type(n) );
+                              else                          return W(n);
+                            }
+                          , kumi::make_tuple(v0, vs..., kumi::element_t<K+I,Type>{}...)
+                          , *this
+                          );
         }(std::make_index_sequence<kumi::size_v<Type> - (1+sizeof...(Ss))>{});
     }
 

@@ -96,7 +96,7 @@ shuffle_v2_common_l0_l1(pattern_t<I...>, fixed<G>, kumi::tuple<T, Ts...> xs)
   {
     using N1 = eve::fixed<pattern_t<I...>::size() * G>;
     using T1 = typename T::template rescale<N1>;
-    return kumi::tuple {T1 {0}, eve::index<1>};
+    return kumi::tuple {T1{ typename T1::value_type(0) }, eve::index<1>};
   }
   else return kumi::tuple {no_matching_shuffle_t {}, eve::index<-1>};
 }

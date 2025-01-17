@@ -385,11 +385,12 @@ namespace eve
                                                          , as_wide_as<type, T>
                                                          >::type;
 
-        out_t that(constant_value);
+        using e_t = eve::element_type_t<out_t>;
+        out_t that(static_cast<e_t>(constant_value));
 
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
         if constexpr(match_option<condition_key, O, ignore_none_>) return that;
-        else return detail::mask_op(opts[condition_key], detail::return_2nd, out_t{0}, that);
+        else return detail::mask_op(opts[condition_key], detail::return_2nd, out_t{e_t(0)}, that);
       }
     }
   };

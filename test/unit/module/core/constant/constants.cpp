@@ -16,8 +16,8 @@ TTS_CASE_TPL("Check basic constants behavior", eve::test::simd::all_types)
 {
   using eve::as;
   TTS_IEEE_EQUAL(eve::allbits(as<T>()), eve::bit_not(T(0)));
-  TTS_EQUAL(eve::true_(as<T>()), eve::as_logical_t<T>(1));
-  TTS_EQUAL(eve::false_(as<T>()), eve::as_logical_t<T>(0));
+  TTS_EQUAL(eve::true_(as<T>()), eve::as_logical_t<T>(true));
+  TTS_EQUAL(eve::false_(as<T>()), eve::as_logical_t<T>(false));
   TTS_EQUAL(eve::one(as<T>()), T(1));
   TTS_EQUAL(eve::mone(as<T>()), T(-1));
   TTS_EQUAL(eve::zero(as<T>()), T(0));
@@ -98,8 +98,8 @@ TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types
   T p{[](auto i, auto){return i; }};
   auto test = [p](auto a){return eve::if_else(p > 1, a, eve::zero); };
   TTS_IEEE_EQUAL(eve::allbits[p > 1](as<T>()), test(eve::bit_not(T(0))));
-  TTS_EQUAL(eve::true_[p > 1](as<T>()), test(eve::as_logical_t<T>(1)));
-  TTS_EQUAL(eve::false_[p > 1](as<T>()), test(eve::as_logical_t<T>(0)));
+  TTS_EQUAL(eve::true_[p > 1](as<T>()), test(eve::as_logical_t<T>(true)));
+  TTS_EQUAL(eve::false_[p > 1](as<T>()), test(eve::as_logical_t<T>(false)));
   TTS_EQUAL(eve::one[p > 1](as<T>()), test(T(1)));
   TTS_EQUAL(eve::mone[p > 1](as<T>()), test(T(-1)));
   TTS_EQUAL(eve::zero[p > 1](as<T>()), test(T(0)));
