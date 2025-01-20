@@ -87,61 +87,28 @@ namespace eve::detail
           if      constexpr (use_avx2 && c == category::int64x4)   return _mm256_cmpgt_epi64(b, a);
           else if constexpr (use_avx2 && c == category::uint64x4)  return unsigned_cmp(a, b);
           else if constexpr (use_avx2 && c == category::int32x8)   return _mm256_cmpgt_epi32(b, a);
-          else if constexpr (use_avx2 && c == category::uint32x8)
-          {
-            return _mm256_xor_si256(_mm256_cmpeq_epi32(_mm256_min_epu32(a, b), b), _mm256_cmpeq_epi32(b, b));
-          }
+          else if constexpr (use_avx2 && c == category::uint32x8)  return eve::min(a, b) != b;
           else if constexpr (use_avx2 && c == category::int16x16)  return _mm256_cmpgt_epi16(b, a);
-          else if constexpr (use_avx2 && c == category::uint16x16)
-          {
-            return _mm256_xor_si256(_mm256_cmpeq_epi16(_mm256_min_epu16(a, b), b), _mm256_cmpeq_epi16(b, b));
-          }
+          else if constexpr (use_avx2 && c == category::uint16x16) return eve::min(a, b) != b;
           else if constexpr (use_avx2 && c == category::int8x32)   return _mm256_cmpgt_epi8(b, a);
-          else if constexpr (use_avx2 && c == category::uint8x32)
-          {
-            return _mm256_xor_si256(_mm256_cmpeq_epi8(_mm256_min_epu8(a, b), b), _mm256_cmpeq_epi8(b, b));
-          }
+          else if constexpr (use_avx2 && c == category::uint8x32)  return eve::min(a, b) != b;
           else if constexpr (c == category::int32x4)               return _mm_cmplt_epi32(a, b);
           else if constexpr (c == category::int16x8)               return _mm_cmplt_epi16(a, b);
           else if constexpr (c == category::int8x16)               return _mm_cmplt_epi8(a, b);
           else if constexpr (c == category::uint32x4)
           {
-            if constexpr (use_sse4_1)
-            {
-              // offers better codegen on GCC and for subvectors on clang
-              // force generation of the v/pxor mask without needing a memory load
-              return _mm_xor_si128(_mm_cmpeq_epi32(_mm_min_epu32(a, b), b), _mm_cmpeq_epi32(b, b));
-            }
-            else
-            {
-              return unsigned_cmp(a, b);
-            }
+            if constexpr (use_sse4_1) return eve::min(a, b) != b;
+            else                      return unsigned_cmp(a, b);
           }
           else if constexpr (c == category::uint16x8)
           {
-            if constexpr (use_sse4_1)
-            {
-              // offers better codegen on GCC and for subvectors on clang
-              // force generation of the v/pxor mask without needing a memory load
-              return _mm_xor_si128(_mm_cmpeq_epi16(_mm_min_epu16(a, b), b), _mm_cmpeq_epi16(b, b));
-            }
-            else
-            {
-              return unsigned_cmp(a, b);
-            }
+            if constexpr (use_sse4_1) return eve::min(a, b) != b;
+            else                      return unsigned_cmp(a, b);
           }
           else if constexpr (c == category::uint8x16)
           {
-            if constexpr (use_sse4_1)
-            {
-              // offers better codegen on GCC and for subvectors on clang
-              // force generation of the v/pxor mask without needing a memory load
-              return _mm_xor_si128(_mm_cmpeq_epi8(_mm_min_epu8(a, b), b), _mm_cmpeq_epi8(b, b));
-            }
-            else
-            {
-              return unsigned_cmp(a, b);
-            }
+            if constexpr (use_sse4_1) return eve::min(a, b) != b;
+            else                      return unsigned_cmp(a, b);
           }
           else return map(lt, a, b);
         }
