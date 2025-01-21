@@ -10,6 +10,9 @@
 file(WRITE "${PROJECT_BINARY_DIR}/doc_pch.cpp" "int main() {}\n" )
 file(TOUCH "${PROJECT_BINARY_DIR}/test_pch.cpp" )
 
+## Let warnings come out even when PCH is setup
+set(CMAKE_PCH_PROLOGUE "")
+
 add_executable(bench_pch  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/doc_pch.cpp> )
 add_executable(test_pch   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/test_pch.cpp> )
 add_executable(doc_pch    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/doc_pch.cpp> )
