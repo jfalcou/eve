@@ -10,6 +10,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/traits/translation.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/detail/logical_tie_breaker.hpp>
 
 namespace eve
 {
@@ -31,13 +32,12 @@ namespace eve
     using type = logical<T>;
   };
 
-
-  template<kumi::product_type T>
-  struct as_logical<T> : as_logical< kumi::element_t<0,T> >
-  {};
-
   template<has_plain_translation T>
   struct as_logical<T> : as_logical< translate_t<T> >
+  {};
+
+  template<kumi::product_type T>
+  struct as_logical<T> : as_logical<kumi::apply_traits_t<detail::logical_tie_breaker, T>>
   {};
 
   template<typename T>

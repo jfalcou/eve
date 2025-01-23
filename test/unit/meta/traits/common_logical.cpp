@@ -124,6 +124,6 @@ TTS_CASE("eve::common_logical on tuples")
   using t1 = kumi::tuple<float, unsigned char>;
   using t2 = kumi::tuple<long long, double>;
 
-  TTS_TYPE_IS((eve::common_logical_t<t1, t2>), eve::logical<float>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::wide<t1>, eve::wide<t2>>), eve::logical<eve::wide<float>>);
+  TTS_TYPE_IS((eve::common_logical_t<t1, t2>), eve::logical<unsigned char>);
+  TTS_TYPE_IS((eve::common_logical_t<eve::wide<t1, eve::fixed<2>>, eve::wide<t2, eve::fixed<2>>>), (eve::logical<eve::wide<unsigned char, eve::fixed<2>>>));
 };

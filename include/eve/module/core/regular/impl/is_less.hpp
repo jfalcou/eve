@@ -14,7 +14,7 @@ namespace eve::detail
   {
     if constexpr (product_type<T> && product_type<U>)
     {
-      return convert(kumi::to_tuple(a) < kumi::to_tuple(b), as_element<common_logical_t<T, U>>());
+      return kumi::to_tuple(a) < kumi::to_tuple(b);
     }
     else if constexpr (O::contains(definitely))
     {

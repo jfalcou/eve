@@ -39,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(v.storage() == w.storage(), as_element<as_logical_t<Wide>>());
+      return v.storage() == w.storage();
     }
   }
 
@@ -77,7 +77,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(v.storage() != w.storage(), as_element<as_logical_t<Wide>>());
+      return v.storage() != w.storage();
     }
   }
 
@@ -132,7 +132,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return convert(kumi::to_tuple(v) >= kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
+      return kumi::to_tuple(v) >= kumi::to_tuple(w);
     }
     else
     {
