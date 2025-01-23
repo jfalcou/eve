@@ -58,8 +58,11 @@ namespace eve::detail
     }
   }
 
+  template<typename... Ts>
+  struct logical_tie_breaker;
+
   template<typename A, typename B, typename... Ts>
-  struct logical_tie_breaker
+  struct logical_tie_breaker<A, B, Ts...>
   {
     using type = typename logical_tie_breaker<typename logical_tie_breaker<A, B>::type, Ts...>::type;
   };
@@ -68,6 +71,12 @@ namespace eve::detail
   struct logical_tie_breaker<A, B>
   {
     using type = decltype(logical_tie_breaker_impl<typename as_logical<A>::type, typename as_logical<B>::type>());
+  };
+
+  template <typename T>
+  struct logical_tie_breaker<T>
+  {
+    using type = typename as_logical<T>::type;
   };
 
   template<typename A, typename B>
