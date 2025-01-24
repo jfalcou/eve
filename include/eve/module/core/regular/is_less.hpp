@@ -29,6 +29,10 @@ namespace eve
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
       requires (compatible_arithmetic_values<T, U>)
     {
+      if constexpr (Options::contains(definitely))
+      {
+        static_assert(floating_value<T>, "[eve::is_less] The definitely option is only supported for floating types.");
+      }
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
     }

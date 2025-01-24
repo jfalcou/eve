@@ -14,8 +14,6 @@ namespace eve::detail
   {
     if constexpr (O::contains(definitely))
     {
-      static_assert(floating_value<T>, "[eve::is_less] The definitely option is only supported for floating types.");
-
       auto tol = o[definitely].value(T{});
 
       if constexpr (integral_value<decltype(tol)>) return a < eve::prev(b, tol);
