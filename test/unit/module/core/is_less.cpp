@@ -9,26 +9,42 @@
 
 #include <eve/module/core.hpp>
 
+template<typename T, typename U, typename Expected, typename F>
+void test_with_types(F f)
+{
+  TTS_TYPE_IS(decltype(f(T{}, U{})), Expected);
+  TTS_TYPE_IS(decltype(f(U{}, T{})), Expected);
+}
+
 //==================================================================================================
 //== Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::is_less(simd)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using eve::logical;
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::is_less(T(), T()), logical<T>);
-  TTS_EXPR_IS(eve::is_less(v_t(), v_t()), logical<v_t>);
-  TTS_EXPR_IS(eve::is_less(T(), v_t()), logical<T>);
-  TTS_EXPR_IS(eve::is_less(v_t(), T()), logical<T>);
 
-  if constexpr( eve::floating_value<T> )
+  TTS_EXPR_IS(eve::is_less(T(), T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_less(v_t(), v_t()), eve::logical<v_t>);
+
+  test_with_types<T, v_t, eve::logical<T>>(eve::is_less);
+
+  if constexpr (eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::is_less[eve::definitely](T(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_less[eve::definitely](v_t(), v_t()), logical<v_t>);
-    TTS_EXPR_IS(eve::is_less[eve::definitely](T(), v_t()), logical<T>);
-    TTS_EXPR_IS(eve::is_less[eve::definitely](v_t(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_less[eve::definitely](T(), T()), eve::logical<T>);
+    TTS_EXPR_IS(eve::is_less[eve::definitely](v_t(), v_t()), eve::logical<v_t>);
+
+    test_with_types<T, v_t, eve::logical<T>>(eve::is_less[eve::definitely]);
   }
+};
+
+TTS_CASE_TPL("Check return types of eve::is_less(simd) with mixed types", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using D = eve::downgrade_t<T>;
+  using vd_t = eve::element_type_t<D>;
+
+  test_with_types<T, vd_t, eve::logical<T>>(eve::is_less);
 };
 
 //==================================================================================================
@@ -54,7 +70,7 @@ TTS_CASE_WITH("Check behavior of eve::is_less(simd)",
 //==================================================================================================
 //== Tests for eve::is_less corner cases for floating
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of eve::is_less(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of eve::is_less(simd) corner cases", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T> const&)
 {
   using eve::as;

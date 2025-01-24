@@ -13,6 +13,10 @@
 
 namespace eve
 {
+  // forward declare common_logical
+  template<typename... Ts>
+  struct common_logical;
+
   template<typename T>
   struct as_logical
   {
@@ -31,13 +35,12 @@ namespace eve
     using type = logical<T>;
   };
 
-
-  template<kumi::product_type T>
-  struct as_logical<T> : as_logical< kumi::element_t<0,T> >
-  {};
-
   template<has_plain_translation T>
   struct as_logical<T> : as_logical< translate_t<T> >
+  {};
+
+  template<kumi::product_type T>
+  struct as_logical<T>: kumi::apply_traits<common_logical, T>
   {};
 
   template<typename T>

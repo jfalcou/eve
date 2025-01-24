@@ -861,32 +861,32 @@ namespace eve
     friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept { return w != v; }
 
     //! @brief Element-wise less-than comparison between eve::wide
-    friend EVE_FORCEINLINE auto operator<(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return detail::self_less(v, w);
+      return is_less(a, b);
     }
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return v < wide {w};
+      return is_less(w, s);
     }
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(S s, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return wide {v} < w;
+      return is_less(s, w);
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide

@@ -39,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(v.storage() == w.storage(), as_element<as_logical_t<Wide>>());
+      return v.storage() == w.storage();
     }
   }
 
@@ -77,7 +77,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(v.storage() != w.storage(), as_element<as_logical_t<Wide>>());
+      return v.storage() != w.storage();
     }
   }
 
@@ -99,20 +99,6 @@ namespace eve::detail
 
   //================================================================================================
   // Ordering operators
-  template<simd_value Wide>
-  EVE_FORCEINLINE auto self_less(Wide const& v,Wide const& w) noexcept
-  {
-    if constexpr( product_type<Wide> )
-    {
-      return convert(kumi::to_tuple(v) < kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
-    }
-    else
-    {
-      constexpr auto lt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e < f); };
-      return apply_over(lt, v, w);
-    }
-  }
-
   template<simd_value Wide>
   EVE_FORCEINLINE auto self_leq(Wide const& v,Wide const& w) noexcept
   {
@@ -146,7 +132,7 @@ namespace eve::detail
   {
     if constexpr( product_type<Wide> )
     {
-      return convert(kumi::to_tuple(v) >= kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
+      return kumi::to_tuple(v) >= kumi::to_tuple(w);
     }
     else
     {
