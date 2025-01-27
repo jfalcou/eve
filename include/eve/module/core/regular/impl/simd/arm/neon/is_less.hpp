@@ -49,7 +49,7 @@ namespace eve::detail
         else if constexpr (cat == category::int64x2)   return vcltq_s64(a, b);
         else if constexpr (cat == category::uint64x2)  return vcltq_u64(a, b);
       }
-      else                                             return map(is_less, a, b);
+      else return map([](auto e, auto f){ return e < f; }, a, b);
     }
   }
 }

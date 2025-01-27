@@ -94,37 +94,4 @@ namespace eve::detail
     else  if constexpr( sizeof(T) == 8 )
         return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
   }
-
-  template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T,N>> self_leq(wide<T, N> v,wide<T, N> w) noexcept
-      requires arm_abi<abi_t<T, N>>
-  {
-    constexpr auto cat = categorize<wide<T, N>>();
-
-          if constexpr( cat == category::int32x4  ) return vcleq_s32(v, w);
-    else  if constexpr( cat == category::int16x8  ) return vcleq_s16(v, w);
-    else  if constexpr( cat == category::int8x16  ) return vcleq_s8(v, w);
-    else  if constexpr( cat == category::uint32x4 ) return vcleq_u32(v, w);
-    else  if constexpr( cat == category::uint16x8 ) return vcleq_u16(v, w);
-    else  if constexpr( cat == category::uint8x16 ) return vcleq_u8(v, w);
-    else  if constexpr( cat == category::float32x4) return vcleq_f32(v, w);
-    else  if constexpr( cat == category::int32x2  ) return vcle_s32(v, w);
-    else  if constexpr( cat == category::int16x4  ) return vcle_s16(v, w);
-    else  if constexpr( cat == category::int8x8   ) return vcle_s8(v, w);
-    else  if constexpr( cat == category::uint32x2 ) return vcle_u32(v, w);
-    else  if constexpr( cat == category::uint16x4 ) return vcle_u16(v, w);
-    else  if constexpr( cat == category::uint8x8  ) return vcle_u8(v, w);
-    else  if constexpr( cat == category::float32x2) return vcle_f32(v, w);
-    else if constexpr( current_api >= asimd)
-    {
-      if constexpr( cat == category::float64x1) return vcle_f64(v, w);
-      else  if constexpr( cat == category::int64x1)   return vcle_s64(v, w);
-      else  if constexpr( cat == category::uint64x1)  return vcle_u64(v, w);
-      else  if constexpr( cat == category::float64x2) return vcleq_f64(v, w);
-      else  if constexpr( cat == category::int64x2)   return vcleq_s64(v, w);
-      else  if constexpr( cat == category::uint64x2)  return vcleq_u64(v, w);
-    }
-    else  if constexpr( sizeof(T) == 8 )
-        return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
-  }
 }
