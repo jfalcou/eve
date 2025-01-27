@@ -29,13 +29,6 @@ namespace eve::detail
   }
 
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_greater(wide<T, N> const &v, wide<T, N> const &w) noexcept
-    requires ppc_abi<abi_t<T, N>>
-  {
-    return logical<wide<T,N>>(vec_cmpgt(v.storage(), w.storage()));
-  }
-
-  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_geq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

@@ -114,20 +114,6 @@ namespace eve::detail
   }
 
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_greater(Wide const& v,Wide const& w) noexcept
-  {
-    if constexpr( product_type<Wide> )
-    {
-      return convert(kumi::to_tuple(v) > kumi::to_tuple(w), as_element<as_logical_t<Wide>>());
-    }
-    else
-    {
-      constexpr auto gt = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e > f); };
-      return apply_over(gt, v, w);
-    }
-  }
-
-  template<simd_value Wide>
   EVE_FORCEINLINE auto self_geq(Wide const& v,Wide const& w) noexcept
   {
     if constexpr( product_type<Wide> )

@@ -11,18 +11,24 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct is_greater_t : strict_elementwise_callable<is_greater_t, Options, definitely_option>
+  struct is_greater_t : elementwise_callable<is_greater_t, Options, definitely_option>
   {
-    template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    template<arithmetic_value T, arithmetic_value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (compatible_arithmetic_values<T, U>)
     {
-//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
-    return EVE_DISPATCH_CALL(a, b);
+      if constexpr (Options::contains(definitely))
+      {
+        static_assert(floating_value<T>, "[eve::is_less] The definitely option is only supported for floating types.");
+        // static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
+      }
+
+      return EVE_DISPATCH_CALL(a, b);
     }
 
 
@@ -89,48 +95,25 @@ namespace eve
 // Required for if_else optimisation detections
   using callable_is_greater_ = tag_t<is_greater>;
 }
-//These include are there because max must see is_greater
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/fam.hpp>
-#include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve::detail
-{
-  template<value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr common_logical_t<T,U>
-  is_greater_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
-  {
-    if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a > b);
-    else                                              return a >  b;
-  }
-
-  template<value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr common_logical_t<T,U>
-  is_greater_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
-  {
-    if constexpr(O::contains(definitely))
-    {
-      using w_t = common_value_t<T, U>;
-      auto a = w_t(aa);
-      auto b = w_t(bb);
-
-      auto tol = o[definitely].value(w_t{});
-      if constexpr(integral_value<decltype(tol)>) return a >  eve::next(b, tol);
-      else              return a > fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
-    }
-    else
-    {
-      if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa > bb);
-      else                                              return aa > bb;
-    }
-  }
-}
-
+#include <eve/module/core/regular/impl/is_greater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_greater.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/is_greater.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_greater.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/is_greater.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/is_greater.hpp>
 #endif
