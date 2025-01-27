@@ -19,7 +19,7 @@ namespace eve::detail
     requires ppc_abi<abi_t<T, N>>
   {
     if      constexpr (O::contains(almost))        return is_less_equal.behavior(cpu_{}, opts, a, b);
-    else if constexpr(std::is_floating_point_v<T>) return logical<wide<T, N>>(vec_cmple(v.storage(), w.storage()));
-    else                                           return !(v > w);
+    else if constexpr(std::is_floating_point_v<T>) return logical<wide<T, N>>(vec_cmple(a.storage(), b.storage()));
+    else                                           return !(a > b);
   }
 }
