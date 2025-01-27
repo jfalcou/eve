@@ -19,8 +19,8 @@
 
 namespace eve::detail
 {
-  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_equal_(EVE_REQUIRES(sse2_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_equal_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(almost))

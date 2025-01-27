@@ -30,7 +30,7 @@ namespace eve::detail
     else
     {
       if constexpr (scalar_value<T>) return as_logical_t<T>(a <= b);
-      else                           return map([](auto e, auto f) { return e <= f; }, a, b);
+      else                           return map([]<typename E>(E e, E f){ return as_logical_t<E>(e <= f); }, a, b);
     }
   }
 }
