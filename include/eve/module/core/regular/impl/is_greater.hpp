@@ -12,6 +12,7 @@
 #include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_less.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
@@ -26,14 +27,9 @@ namespace eve::detail
       if constexpr(integral_value<decltype(tol)>) return a > eve::next(b, tol);
       else                                        return a > fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
     }
-    else if constexpr (product_type<T>)
-    {
-      return kumi::to_tuple(a) > kumi::to_tuple(b);
-    }
     else
     {
-      if constexpr (scalar_value<T>) return as_logical_t<T>(a > b);
-      else                           return map([]<typename E>(E e, E f){ return as_logical_t<E>(e > f); }, a, b);
+      return is_less(b, a);
     }
   }
 }

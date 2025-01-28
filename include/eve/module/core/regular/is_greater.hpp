@@ -97,23 +97,3 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/is_greater.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_greater.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/is_greater.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/is_greater.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/is_greater.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_RISCV_HEADER)
-#  include <eve/module/core/regular/impl/simd/riscv/is_greater.hpp>
-#endif
