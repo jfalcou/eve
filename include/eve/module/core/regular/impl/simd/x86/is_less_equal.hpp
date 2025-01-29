@@ -67,11 +67,18 @@ namespace eve::detail
       }
       else
       {
-        if      constexpr (c == category::float32x8) return _mm256_cmp_ps(a, b, f);
-        else if constexpr (c == category::float64x4) return _mm256_cmp_pd(a, b, f);
-        else if constexpr (c == category::float32x4) return _mm_cmple_ps(a, b);
-        else if constexpr (c == category::float64x2) return _mm_cmple_pd(a, b);
-        else return !(a > b);
+        constexpr auto use_avx2    = current_api >= avx2;
+        constexpr auto use_avx     = current_api >= avx;
+        constexpr auto use_sse4_1  = current_api >= sse4_1;
+
+        if      constexpr (c == category::float32x8)                  return _mm256_cmp_ps(a, b, f);
+        else if constexpr (c == category::float64x4)                  return _mm256_cmp_pd(a, b, f);
+        else if constexpr (c == category::float32x4)                  return _mm_cmple_ps(a, b);
+        else if constexpr (c == category::float64x2)                  return _mm_cmple_pd(a, b);
+        else if constexpr (use_avx2)                                  return eve::min(a, b) == a;
+        else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return aggregate(is_less_equal, a, b);
+        else if constexpr (use_sse4_1)                                return eve::min(a, b) == a;
+        else                                                          return !is_less(b, a);
       }
     }
   }
