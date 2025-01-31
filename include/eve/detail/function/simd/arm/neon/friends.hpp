@@ -63,41 +63,6 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> self_greater( wide<T, N> v
-                                                      , wide<T, N> w
-                                                      ) noexcept
-      requires arm_abi<abi_t<T, N>>
-  {
-    constexpr auto cat = categorize<wide<T, N>>();
-
-          if constexpr( cat == category::int32x4  ) return vcgtq_s32(v, w);
-    else  if constexpr( cat == category::int16x8  ) return vcgtq_s16(v, w);
-    else  if constexpr( cat == category::int8x16  ) return vcgtq_s8(v, w);
-    else  if constexpr( cat == category::uint32x4 ) return vcgtq_u32(v, w);
-    else  if constexpr( cat == category::uint16x8 ) return vcgtq_u16(v, w);
-    else  if constexpr( cat == category::uint8x16 ) return vcgtq_u8(v, w);
-    else  if constexpr( cat == category::float32x4) return vcgtq_f32(v, w);
-    else  if constexpr( cat == category::int32x2  ) return vcgt_s32(v, w);
-    else  if constexpr( cat == category::int16x4  ) return vcgt_s16(v, w);
-    else  if constexpr( cat == category::int8x8   ) return vcgt_s8(v, w);
-    else  if constexpr( cat == category::uint32x2 ) return vcgt_u32(v, w);
-    else  if constexpr( cat == category::uint16x4 ) return vcgt_u16(v, w);
-    else  if constexpr( cat == category::uint8x8  ) return vcgt_u8(v, w);
-    else  if constexpr( cat == category::float32x2) return vcgt_f32(v, w);
-    else if constexpr( current_api >= asimd)
-    {
-      if constexpr( cat == category::float64x1) return vcgt_f64(v, w);
-      else  if constexpr( cat == category::int64x1)   return vcgt_s64(v, w);
-      else  if constexpr( cat == category::uint64x1)  return vcgt_u64(v, w);
-      else  if constexpr( cat == category::float64x2) return vcgtq_f64(v, w);
-      else  if constexpr( cat == category::int64x2)   return vcgtq_s64(v, w);
-      else  if constexpr( cat == category::uint64x2)  return vcgtq_u64(v, w);
-    }
-    else  if constexpr( sizeof(T) == 8 )
-      return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
-  }
-
-  template<typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> self_geq(wide<T, N> v, wide<T, N> w) noexcept
       requires arm_abi<abi_t<T, N>>
   {
