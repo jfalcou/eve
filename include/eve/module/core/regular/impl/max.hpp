@@ -12,7 +12,6 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_ordered.hpp>
@@ -98,8 +97,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   max_(EVE_REQUIRES(cpu_), O const &, Callable const & f) noexcept
   {
-    if      constexpr( std::same_as<Callable, eve::callable_is_less_>    ) return eve::max;
-    else if constexpr( std::same_as<Callable, eve::callable_is_greater_> ) return eve::min;
+    if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::max;
+    else if constexpr( std::same_as<Callable, eve::is_greater_t<eve::options<>>>  ) return eve::min;
     else
     {
       return [f](auto x, auto y){ return eve::if_else(f(y, x), x, y); };

@@ -13,7 +13,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/zip.hpp>
@@ -161,8 +160,8 @@ namespace eve
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
     {
-      if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
-      else if constexpr( std::same_as<Callable, callable_is_greater_> )
+      if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::minmax;
+      else if constexpr( std::same_as<Callable, eve::is_greater_t<eve::options<>>>  )
       {
         return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
       }

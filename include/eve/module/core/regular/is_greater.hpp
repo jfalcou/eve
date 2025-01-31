@@ -12,6 +12,7 @@
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/regular/is_less.hpp>
 
 namespace eve
 {
@@ -24,13 +25,12 @@ namespace eve
     {
       if constexpr (Options::contains(definitely))
       {
-        static_assert(floating_value<T>, "[eve::is_less] The definitely option is only supported for floating types.");
+        static_assert(floating_value<T>, "[eve::is_greater] The definitely option is only supported for floating types.");
         // static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
       }
 
-      return EVE_DISPATCH_CALL(a, b);
+      return is_less[this->options()](b, a);
     }
-
 
     EVE_CALLABLE_OBJECT(is_greater_t, is_greater_);
   };
@@ -91,9 +91,4 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-// Required for if_else optimisation detections
-  using callable_is_greater_ = tag_t<is_greater>;
 }
-
-#include <eve/module/core/regular/impl/is_greater.hpp>

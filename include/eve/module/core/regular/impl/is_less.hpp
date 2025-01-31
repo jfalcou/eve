@@ -7,6 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/max.hpp>
+
 namespace eve::detail
 {
   template<callable_options O, typename T>

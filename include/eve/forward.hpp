@@ -24,6 +24,10 @@ struct ignore_first;
 struct ignore_last;
 struct keep_between;
 struct ignore_extrema;
+
+template<typename O> struct is_greater_t;
+template<typename O> struct is_less_t;
+
 }
 
 namespace eve::detail
