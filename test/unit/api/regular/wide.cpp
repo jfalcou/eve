@@ -63,12 +63,9 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
 
   TTS_EQUAL(eve::logical<T>(l_t{true}) , all_true );
   TTS_EQUAL(eve::logical<T>(true)      , all_true );
-  TTS_EQUAL(eve::logical<T>(42)        , all_true );
 
   TTS_EQUAL(eve::logical<T>(l_t{false}) , all_false );
   TTS_EQUAL(eve::logical<T>(false)      , all_false );
-  TTS_EQUAL(eve::logical<T>(0)          , all_false );
-
 
   // Test smaller size wide for non-garbage
   using v_t = typename T::value_type;

@@ -75,7 +75,7 @@ struct zero_swizzle
     {
       return w_t(kumi::map([]<typename T>(T) { return as_wide_t<T, Cardinal> {0}; }, w));
     }
-    else { return w_t {0}; }
+    else { return w_t{ typename w_t::value_type{0} }; }
   }
 };
 

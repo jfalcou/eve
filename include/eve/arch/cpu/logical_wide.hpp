@@ -142,13 +142,13 @@ namespace eve
     {
     }
 
-    //! Constructs a eve::logical by splatting a scalar value in all lanes
-    template<scalar_value S>
-    EVE_FORCEINLINE explicit logical(S v) noexcept
+    //! Construct from a scalar logical
+    template<scalar_value U>
+    EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
                   : storage_base(detail::make(eve::as<logical>{}, v)) {}
 
     //! Construct from a `bool`
-    EVE_FORCEINLINE explicit logical(bool v) noexcept
+    EVE_FORCEINLINE explicit logical(std::same_as<bool> auto v) noexcept
                   : storage_base(detail::make(eve::as<logical>{}, v)) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size

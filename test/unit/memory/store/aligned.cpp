@@ -75,11 +75,12 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
       if(::tts::arguments()[{"-v","--verbose"}])
         std::cout << "With alignment: " << A << std::endl;
 
-      eve::aligned_ptr<eve::element_type_t<D>, eve::fixed<A>> ptr{f};
+      using d_t = eve::element_type_t<D>;
+      eve::aligned_ptr<d_t, eve::fixed<A>> ptr{f};
       eve::store(d, ptr);
       TTS_EQUAL(D{f}, d);
-      eve::store(D{0}, ptr);
-      TTS_EQUAL(D{f}, D{0});
+      eve::store(D{d_t{0}}, ptr);
+      TTS_EQUAL(D{f}, D{d_t{0}});
       eve::store[eve::ignore_none](d, ptr);
       TTS_EQUAL(D{f}, d);
     }

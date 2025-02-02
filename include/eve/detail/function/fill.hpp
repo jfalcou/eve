@@ -28,7 +28,8 @@ namespace eve::detail
     }
     else
     {
-      return Pack( g(0,1) );
+      if constexpr(logical_value<Pack>) return Pack( static_cast<bool>(g(0,1)) );
+      else                              return Pack( g(0,1) );
     }
   }
 }
