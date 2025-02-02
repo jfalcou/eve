@@ -236,15 +236,15 @@ template&lt;simd_compatible_ptr&lt; logical &gt; Ptr&gt; </td></tr>
 <tr class="memitem:ab463edf2bbe092c328f8dc599e49ce8f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (Ptr ptr) noexcept</td></tr>
 <tr class="memdesc:ab463edf2bbe092c328f8dc599e49ce8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a SIMD compatible pointer. <br /></td></tr>
 <tr class="separator:ab463edf2bbe092c328f8dc599e49ce8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cfcd335f2f3a8d4ffa60ea0f137de44" id="r_a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="memTemplParams" colspan="2"><a id="a0cfcd335f2f3a8d4ffa60ea0f137de44" name="a0cfcd335f2f3a8d4ffa60ea0f137de44"></a>
-template&lt;scalar_value S&gt; </td></tr>
-<tr class="memitem:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (S v) noexcept</td></tr>
-<tr class="memdesc:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical by splatting a scalar value in all lanes. <br /></td></tr>
-<tr class="separator:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d65e72f65bf73b5a2da593a6e3874c0" id="r_a0d65e72f65bf73b5a2da593a6e3874c0"><td class="memItemLeft" align="right" valign="top"><a id="a0d65e72f65bf73b5a2da593a6e3874c0" name="a0d65e72f65bf73b5a2da593a6e3874c0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (bool v) noexcept</td></tr>
-<tr class="memdesc:a0d65e72f65bf73b5a2da593a6e3874c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a <code>bool</code> <br /></td></tr>
-<tr class="separator:a0d65e72f65bf73b5a2da593a6e3874c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae122bd7fa34698be443c7b6e4482f984" id="r_ae122bd7fa34698be443c7b6e4482f984"><td class="memTemplParams" colspan="2"><a id="ae122bd7fa34698be443c7b6e4482f984" name="ae122bd7fa34698be443c7b6e4482f984"></a>
+template&lt;scalar_value U&gt; </td></tr>
+<tr class="memitem:ae122bd7fa34698be443c7b6e4482f984"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (logical&lt; U &gt; v) noexcept</td></tr>
+<tr class="memdesc:ae122bd7fa34698be443c7b6e4482f984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a scalar logical. <br /></td></tr>
+<tr class="separator:ae122bd7fa34698be443c7b6e4482f984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b6d03c03af2e64979367f6d68d7016" id="r_a32b6d03c03af2e64979367f6d68d7016"><td class="memItemLeft" align="right" valign="top"><a id="a32b6d03c03af2e64979367f6d68d7016" name="a32b6d03c03af2e64979367f6d68d7016"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (std::same_as&lt; bool &gt; auto v) noexcept</td></tr>
+<tr class="memdesc:a32b6d03c03af2e64979367f6d68d7016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a <code>bool</code> <br /></td></tr>
+<tr class="separator:a32b6d03c03af2e64979367f6d68d7016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2326a61c106e43359af2b8661d506ef" id="r_aa2326a61c106e43359af2b8661d506ef"><td class="memTemplParams" colspan="2"><a id="aa2326a61c106e43359af2b8661d506ef" name="aa2326a61c106e43359af2b8661d506ef"></a>
 template&lt;typename T0 , typename T1 , typename... Ts&gt; <br />
 requires ( std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; (... &amp;&amp; std::convertible_to&lt;Ts,logical&lt;Type&gt;&gt;) &amp;&amp; (Cardinal::value == 2 + sizeof...(Ts)) )</td></tr>
