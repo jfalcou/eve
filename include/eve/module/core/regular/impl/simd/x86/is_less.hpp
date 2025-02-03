@@ -74,6 +74,7 @@ namespace eve::detail
         else
         {
           constexpr auto use_avx2   = current_api >= avx2;
+          constexpr auto use_avx    = current_api >= avx;
           constexpr auto use_sse4_1 = current_api >= sse4_1;
           constexpr auto use_sse4_2 = current_api >= sse4_2;
           constexpr auto lt         = []<typename E>(E ev, E fv) { return as_logical_t<E>(ev < fv); };
@@ -85,18 +86,19 @@ namespace eve::detail
             return bit_cast((bit_cast(lhs, as(sm)) - sm) < (bit_cast(rhs, as(sm)) - sm), as<l_t>{});
           };
 
-          if      constexpr (use_avx2 && c == category::int64x4)   return _mm256_cmpgt_epi64(b, a);
-          else if constexpr (use_avx2 && c == category::uint64x4)  return unsigned_cmp(a, b);
-          else if constexpr (use_avx2 && c == category::int32x8)   return _mm256_cmpgt_epi32(b, a);
-          else if constexpr (use_avx2 && c == category::uint32x8)  return eve::min(a, b) != b;
-          else if constexpr (use_avx2 && c == category::int16x16)  return _mm256_cmpgt_epi16(b, a);
-          else if constexpr (use_avx2 && c == category::uint16x16) return eve::min(a, b) != b;
-          else if constexpr (use_avx2 && c == category::int8x32)   return _mm256_cmpgt_epi8(b, a);
-          else if constexpr (use_avx2 && c == category::uint8x32)  return eve::min(a, b) != b;
-          else if constexpr (use_sse4_2 && c == category::int64x2) return _mm_cmpgt_epi64(b, a);
-          else if constexpr (c == category::int32x4)               return _mm_cmplt_epi32(a, b);
-          else if constexpr (c == category::int16x8)               return _mm_cmplt_epi16(a, b);
-          else if constexpr (c == category::int8x16)               return _mm_cmplt_epi8(a, b);
+          if      constexpr (use_avx2 && c == category::int64x4)        return _mm256_cmpgt_epi64(b, a);
+          else if constexpr (use_avx2 && c == category::uint64x4)       return unsigned_cmp(a, b);
+          else if constexpr (use_avx2 && c == category::int32x8)        return _mm256_cmpgt_epi32(b, a);
+          else if constexpr (use_avx2 && c == category::uint32x8)       return eve::min(a, b) != b;
+          else if constexpr (use_avx2 && c == category::int16x16)       return _mm256_cmpgt_epi16(b, a);
+          else if constexpr (use_avx2 && c == category::uint16x16)      return eve::min(a, b) != b;
+          else if constexpr (use_avx2 && c == category::int8x32)        return _mm256_cmpgt_epi8(b, a);
+          else if constexpr (use_avx2 && c == category::uint8x32)       return eve::min(a, b) != b;
+          else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return aggregate(is_less, a, b);
+          else if constexpr (use_sse4_2 && c == category::int64x2)      return _mm_cmpgt_epi64(b, a);
+          else if constexpr (c == category::int32x4)                    return _mm_cmplt_epi32(a, b);
+          else if constexpr (c == category::int16x8)                    return _mm_cmplt_epi16(a, b);
+          else if constexpr (c == category::int8x16)                    return _mm_cmplt_epi8(a, b);
           else if constexpr (c == category::uint32x4)
           {
             if constexpr (use_sse4_1) return eve::min(a, b) != b;

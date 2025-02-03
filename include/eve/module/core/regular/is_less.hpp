@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>

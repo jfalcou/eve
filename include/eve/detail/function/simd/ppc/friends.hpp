@@ -37,14 +37,4 @@ namespace eve::detail
     else
       return !(v < w);
   }
-
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_leq(wide<T, N> const &v, wide<T, N> const &w) noexcept
-    requires ppc_abi<abi_t<T, N>>
-  {
-    if constexpr(std::is_floating_point_v<T>)
-      return logical<wide<T, N>>(vec_cmple(v.storage(), w.storage()));
-    else
-      return !(v > w);
-  }
 }

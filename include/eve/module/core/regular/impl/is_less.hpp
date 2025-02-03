@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +31,7 @@ namespace eve::detail
     else
     {
       if constexpr (scalar_value<T>) return as_logical_t<T>(a < b);
-      else                           return map([](auto e, auto f) { return e < f; }, a, b);
+      else                           return map([]<typename E>(E e, E f){ return as_logical_t<E>(e < f); }, a, b);
     }
   }
 }

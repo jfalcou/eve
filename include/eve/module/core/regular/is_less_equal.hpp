@@ -9,21 +9,25 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
+
 
 namespace eve
 {
   template<typename Options>
-  struct is_less_equal_t : strict_elementwise_callable<is_less_equal_t, Options, almost_option>
+  struct is_less_equal_t : elementwise_callable<is_less_equal_t, Options, almost_option>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    template<arithmetic_value T, arithmetic_value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (compatible_arithmetic_values<T, U>)
     {
-      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less_equal] simd tolerance requires at least one simd parameter." );
+      if constexpr (Options::contains(almost))
+      {
+        static_assert(floating_value<T>, "[eve::is_less_equal] The definitely option is only supported for floating types.");
+      }
+
+      // static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
     }
 
@@ -86,40 +90,26 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-  namespace detail
-  {
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_less_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
-    {
-      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a <= b);
-      else                                              return a <= b;
-    }
-
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_less_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
-    {
-      if constexpr(O::contains(almost))
-      {
-        using w_t = common_value_t<T, U>;
-        auto a = w_t(aa);
-        auto b = w_t(bb);
-
-        auto tol = o[almost].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>) return a <=  eve::next(b, tol);
-        else                                        return a <= fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
-      }
-      else
-      {
-        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa <= bb);
-        else                                              return aa <= bb;
-      }
-    }
-  }
 }
+
+#include <eve/module/core/regular/impl/is_less_equal.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_less_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/is_less_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_less_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/is_less_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/is_less_equal.hpp>
 #endif
