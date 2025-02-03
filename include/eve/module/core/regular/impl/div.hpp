@@ -7,34 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <cfenv>
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/common_value.hpp>
-#include <type_traits>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/inc.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
-#include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/is_odd.hpp>
-#include <eve/module/core/regular/logical_andnot.hpp>
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/round.hpp>
-#include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/regular/trunc.hpp>
+
+#include <cfenv>
+#include <type_traits>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)

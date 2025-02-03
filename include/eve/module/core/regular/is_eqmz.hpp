@@ -9,8 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/logical_not.hpp>
+#include <eve/module/core/regular/logical_andnot.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_eqpz.hpp>
 

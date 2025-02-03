@@ -13,22 +13,16 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/core/regular/all.hpp>
+
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
-#include <eve/module/core/regular/nearest.hpp>
-#include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/regular/trunc.hpp>
 
 namespace eve::detail
 {
-
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
@@ -68,7 +62,6 @@ namespace eve::detail
       }
     }
   }
-
 
   template<conditional_expr C, typename T, callable_options O>
   EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const & o, T t, T f) noexcept
