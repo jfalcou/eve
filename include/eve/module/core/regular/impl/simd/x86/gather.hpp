@@ -15,7 +15,14 @@
 namespace eve::detail
 {
   template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const&, U const* p, wide<T, N> v) noexcept
+  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
+  {
+    if constexpr (match_option<condition_key, O, ignore_none_>) return gather_impl(p, v);
+    else                                                        return gather_impl(opts[condition_key], p, v);
+  }
+
+  template<typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(U const* p, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     // Aggregation cases
@@ -55,8 +62,8 @@ namespace eve::detail
     else                                                      return gather[ignore_none](p, v);
   }
 
-  template<callable_options O, typename U, conditional_expr C, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), C const& cx, O const&, U const* p, wide<T, N> v) noexcepts
+  template<typename U, conditional_expr C, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, U const* p, wide<T, N> v) noexcepts
     requires x86_abi<abi_t<T, N>>
   {
     using out_t = wide<U, N>;

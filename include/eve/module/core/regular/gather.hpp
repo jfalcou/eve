@@ -12,7 +12,7 @@
 namespace eve
 {
   template<typename Options>
-  struct gather_t : strict_elementwise_callable<gather_t, Options>
+  struct gather_t : callable<gather_t, Options, conditional_option>
   {
     template<integral_value T, typename U>
     constexpr EVE_FORCEINLINE auto operator()(U const* ptr, T v) const noexcept
