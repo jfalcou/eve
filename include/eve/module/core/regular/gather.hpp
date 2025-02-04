@@ -10,42 +10,62 @@
 
 namespace eve
 {
-// TODO DOC
-//================================================================================================
-//! @addtogroup core_simd
-//! @{
-//!   @var gather
-//!   @brief Computes the TODO
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      TODO
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
-//!
-//!    **Return value**
-//!
-//!      * TODO
-//!
-//!  @groupheader{Example}
-//!
-//!  TODO
-//! @}
-//================================================================================================
-EVE_MAKE_CALLABLE(gather_, gather);
+  template<typename Options>
+  struct gather_t : strict_elementwise_callable<gather_t, Options>
+  {
+    template<integral_value T, typename U>
+    constexpr EVE_FORCEINLINE auto operator()(U const* ptr, T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ptr, v);
+    }
+
+    template<integral_value T, typename U, typename S>
+    constexpr EVE_FORCEINLINE auto operator()(aligned_ptr<U, S> ptr, T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ptr, v);
+    }
+
+    EVE_CALLABLE_OBJECT(gather_t, gather_);
+  };
+
+  // TODO DOC
+  //================================================================================================
+  //! @addtogroup core_simd
+  //! @{
+  //!   @var gather
+  //!   @brief Computes the TODO
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      TODO
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
+  //!
+  //!    **Return value**
+  //!
+  //!      * TODO
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  TODO
+  //================================================================================================
+  inline constexpr auto gather = functor<gather_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/gather.hpp>
