@@ -63,7 +63,7 @@ namespace eve::detail
   }
 
   template<typename U, conditional_expr C, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, U const* p, wide<T, N> v) noexcepts
+  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, U const* p, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     using out_t = wide<U, N>;
