@@ -584,11 +584,10 @@ TTS_CASE("Check rotate get optimized")
   using eve::index_t;
   using eve::detail::find_optimized_shuffle_pattern;
   using eve::detail::bound;
-  using eve::callable_rotate_;
   using eve::callable_basic_shuffle_;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,1,2,3,0>())
-              , (bound<callable_rotate_,index_t<1>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<1>>)
               );
 
   // Checking that this is not selected as rotate
@@ -599,28 +598,28 @@ TTS_CASE("Check rotate get optimized")
   // swag
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,3,0,1,2>())
-              , (bound<callable_rotate_,index_t<3>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<3>>)
               );
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,1,2,3,4,5,6,7,0>())
-              , (bound<callable_rotate_,index_t<1>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<1>>)
               );
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,2,3,4,5,6,7,0,1>())
-              , (bound<callable_rotate_,index_t<2>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<2>>)
               );
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,3,4,5,6,7,0,1,2>())
-              , (bound<callable_rotate_,index_t<3>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<3>>)
               );
 
   // swag
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,5,6,7,0,1,2,3,4>())
-              , (bound<callable_rotate_,index_t<5>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<5>>)
               );
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,6,7,0,1,2,3,4,5>())
-              , (bound<callable_rotate_,index_t<6>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<6>>)
               );
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,7,0,1,2,3,4,5,6>())
-              , (bound<callable_rotate_,index_t<7>>)
+              , (bound<eve::rotate_t<eve::options<>>,index_t<7>>)
               );
 };

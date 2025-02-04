@@ -1,11 +1,11 @@
 #include <iostream>
 #include <eve/module/core.hpp>
 
-using wide_it = eve::wide<std::uint64_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::uint64_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_it x = {1, 2, 3, 4};
+  wide_it x = {1, 2, 3, 4, 5, 6, 7, 8};
 
   std::cout << "---- simd" << '\n'
             << "<- x                        = " << x << '\n'
