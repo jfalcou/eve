@@ -17,13 +17,12 @@
 namespace eve
 {
   template<typename Options>
-  struct as_value_t : constant_callable<as_value_t, Options>
+  struct as_value_t : callable<as_value_t, Options>
   {
     template<typename From, value T>
     EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
     {
       if      constexpr (requires { typename From::constant_callable_tag; }) return from(t);
-      else if constexpr (scalar_value<T>)                                    return static_cast<T>(from);
       else                                                                   return T{from};
     }
   };
