@@ -14,9 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct combine_t : strict_elementwise_callable<combine_t, Options>
+  struct combine_t : callable<combine_t, Options>
   {
-    template<value T>
+    template<simd_value T>
     constexpr EVE_FORCEINLINE typename T::combined_type operator()(T a, T b) const noexcept
     {
       return typename T::combined_type{a, b};
