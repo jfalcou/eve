@@ -34,6 +34,7 @@
 #include <eve/module/core/regular/shl.hpp>
 #include <eve/module/core/regular/shr.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/memory/soa_ptr.hpp>
@@ -926,32 +927,32 @@ namespace eve
     }
 
     //! @brief Element-wise greater-or-equal comparison between eve::wide
-    friend EVE_FORCEINLINE auto operator>=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return detail::self_geq(v, w);
+      return is_greater_equal(a, b);
     }
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>=(wide v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return v >= wide {w};
+      return is_greater_equal(w, s);
     }
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>=(S v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(S s, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
     {
-      return wide {v} >= w;
+      return is_greater_equal(s, w);
     }
 
     //! @brief Element-wise less-or-equal comparison between eve::wide

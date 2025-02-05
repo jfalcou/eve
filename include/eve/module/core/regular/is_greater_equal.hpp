@@ -9,25 +9,27 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
-#include <eve/module/core/regular/prev.hpp>
-
+#include <eve/module/core/regular/is_less_equal.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct is_greater_equal_t : strict_elementwise_callable<is_greater_equal_t, Options, almost_option>
+  struct is_greater_equal_t : elementwise_callable<is_greater_equal_t, Options, almost_option>
   {
-  template<value T,  value U>
-  requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    template<arithmetic_value T, arithmetic_value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (compatible_arithmetic_values<T, U>)
     {
-      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater_equal] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL(a, b);
+      if constexpr (Options::contains(almost))
+      {
+        static_assert(floating_value<T>, "[eve::is_greater_equal] The definitely option is only supported for floating types.");
+        // static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less_equal] simd tolerance requires at least one simd parameter." );
+      }
+
+      
+      return is_less_equal[this->options()](b, a);
     }
 
     EVE_CALLABLE_OBJECT(is_greater_equal_t, is_greater_equal_);
@@ -89,40 +91,4 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-  namespace detail
-  {
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_greater_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
-    {
-      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a >= b);
-      else                                              return a >= b;
-    }
-
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_greater_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
-    {
-      if constexpr(O::contains(almost))
-      {
-        using w_t = common_value_t<T, U>;
-        auto a = w_t(aa);
-        auto b = w_t(bb);
-
-        auto tol = o[almost].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>) return a >= eve::prev(b, tol);
-        else              return a >= fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
-      }
-      else
-      {
-        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa >= bb);
-        else                                              return aa >= bb;
-      }
-    }
-  }
 }
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_greater_equal.hpp>
-#endif

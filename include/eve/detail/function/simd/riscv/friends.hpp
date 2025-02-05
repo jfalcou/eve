@@ -15,37 +15,6 @@ namespace eve::detail
 
 template<plain_scalar_value T, typename N, value U>
 EVE_FORCEINLINE auto
-self_geq_impl(wide<T, N> lhs, U rhs) noexcept -> logical<wide<T, N>>
-requires rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>)
-{
-  if constexpr( scalar_value<U> && !std::same_as<T, U> ) return self_geq(lhs, static_cast<T>(rhs));
-  else
-  {
-    constexpr auto c = categorize<wide<T, N>>();
-    if constexpr( match(c, category::int_) ) return __riscv_vmsge(lhs, rhs, N::value);
-    else if constexpr( match(c, category::uint_) ) return __riscv_vmsgeu(lhs, rhs, N::value);
-    else if constexpr( match(c, category::float_) ) return __riscv_vmfge(lhs, rhs, N::value);
-  }
-}
-
-template<plain_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-self_geq(wide<T, N> lhs, wide<T, N> rhs) noexcept -> logical<wide<T, N>>
-requires rvv_abi<abi_t<T, N>>
-{
-  return self_geq_impl(lhs, rhs);
-}
-
-template<plain_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-self_geq(wide<T, N> lhs, std::convertible_to<T> auto rhs) noexcept -> logical<wide<T, N>>
-requires rvv_abi<abi_t<T, N>>
-{
-  return self_geq_impl(lhs, rhs);
-}
-
-template<plain_scalar_value T, typename N, value U>
-EVE_FORCEINLINE auto
 self_eq_impl(wide<T, N> lhs, U rhs) noexcept -> logical<wide<T, N>>
 requires rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>)
 {

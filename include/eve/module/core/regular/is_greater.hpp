@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 #include <eve/module/core/regular/is_less.hpp>
