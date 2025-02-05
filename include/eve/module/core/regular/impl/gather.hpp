@@ -49,28 +49,29 @@ namespace eve::detail
   //================================================================================================
   // Unaligned pointer
   template<callable_options O, typename U, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, U const* ptr, T v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
-    return *(ptr + v);
-  }
+    auto cx = opts[condition_key];
+    using C = decltype(cx);
 
-  template<callable_options O, typename U, value X, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, logical<X> cond, U const *ptr, T v) noexcept
-  {
-    return cond ? *(ptr + v) : zero(as<U>());
+    if constexpr (C::is_complete && !C::is_inverted)
+    {
+      return *(ptr + v);
+    }
+    else
+    {
+      auto src = alternative(cx, U{}, as<U>{});
+      auto m   = expand_mask(cx, as<U>{});
+
+      return m ? *(ptr + v) : src;
+    }
   }
 
   //================================================================================================
   // Aligned pointer
   template<callable_options O, typename U, typename S, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<U, S> ptr, T v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
   {
-    return *(ptr + v);
-  }
-
-  template<callable_options O, typename U, typename S, value X, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, logical<X> cond, aligned_ptr<U, S> ptr, T v) noexcept
-  {
-    return cond ? *(ptr + v) : zero(as<U>());
+    gather.behavior(current_api, opts, ptr.get(), v);
   }
 }
