@@ -17,12 +17,14 @@ namespace eve
     template<integral_value T, typename U>
     constexpr EVE_FORCEINLINE auto operator()(U const* ptr, T v) const noexcept
     {
+      static_assert(simd_value<T> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
       return EVE_DISPATCH_CALL(ptr, v);
     }
 
     template<integral_value T, typename U, typename S>
     constexpr EVE_FORCEINLINE auto operator()(aligned_ptr<U, S> ptr, T v) const noexcept
     {
+      static_assert(simd_value<T> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
       return EVE_DISPATCH_CALL(ptr, v);
     }
 

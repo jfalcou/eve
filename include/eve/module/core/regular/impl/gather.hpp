@@ -23,7 +23,7 @@ namespace eve::detail
     auto cx = opts[condition_key];
     using C = decltype(cx);
 
-    if constexpr (C::is_complete && !C::is_inverted)
+    if constexpr (C::is_complete && C::is_inverted)
     {
       return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
     }
@@ -51,20 +51,7 @@ namespace eve::detail
   template<callable_options O, typename U, integral_scalar_value T>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
-    auto cx = opts[condition_key];
-    using C = decltype(cx);
-
-    if constexpr (C::is_complete && !C::is_inverted)
-    {
-      return *(ptr + v);
-    }
-    else
-    {
-      auto src = alternative(cx, U{}, as<U>{});
-      auto m   = expand_mask(cx, as<U>{});
-
-      return m ? *(ptr + v) : src;
-    }
+    return *(ptr + v);
   }
 
   //================================================================================================
@@ -72,6 +59,6 @@ namespace eve::detail
   template<callable_options O, typename U, typename S, integral_scalar_value T>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
   {
-    gather.behavior(current_api, opts, ptr.get(), v);
+    return gather.behavior(current_api, opts, ptr.get(), v);
   }
 }
