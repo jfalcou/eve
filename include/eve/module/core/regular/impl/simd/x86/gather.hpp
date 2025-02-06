@@ -62,7 +62,7 @@ namespace eve::detail
     else                                                      return gather[ignore_none](p, v);
   }
 
-  template<callable_options O, typename U, integral_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<U, N> gather_impl_masked(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
   {
     using out_t = wide<U, N>;
