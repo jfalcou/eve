@@ -25,7 +25,6 @@ namespace eve
     }
   };
 
-  // TODO DOC is it to be in user interface ?
   //================================================================================================
   //! @addtogroup core_logical
   //! @{
@@ -44,9 +43,8 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::value T, eve::conditional_expr Ignore, eve::value Other >
-  //!      auto replace_ignored(T x, Ignore ignore, Other with )
-  //!        -> decltype(eve::if_else(ignore, x, with))
+  //!      template<eve::value T, eve::conditional_expr Ignore, eve::value Other>
+  //!      T replace_ignored(T x, Ignore ignore, Other with)
   //!   }
   //!   @endcode
   //!
