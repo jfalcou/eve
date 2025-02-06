@@ -16,9 +16,9 @@ namespace eve
   struct scan_t : callable<scan_t, Options>
   {
     template<simd_value Wide, typename Op, typename Zero>
-    constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero zero) const noexcept
+    constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero z) const noexcept
     {
-      return EVE_DISPATCH_CALL(w, op, zero);
+      return EVE_DISPATCH_CALL(w, op, z);
     }
 
     template<simd_value Wide>
