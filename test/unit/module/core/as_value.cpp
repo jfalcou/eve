@@ -27,6 +27,14 @@ TTS_CASE_TPL("Check behavior of arithmetic as_value", eve::test::simd::all_types
   }
 
   {
+    e_t expected {max_value};
+    e_t actual = eve::as_value(eve::valmax, eve::as<e_t> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(max_value, eve::as<e_t> {});
+    TTS_EQUAL(expected, actual);
+  }
+
+  {
     T expected {0};
     T actual = eve::as_value(eve::zero, eve::as<T> {});
     TTS_EQUAL(expected, actual);
@@ -35,16 +43,37 @@ TTS_CASE_TPL("Check behavior of arithmetic as_value", eve::test::simd::all_types
     actual = eve::as_value(expected, eve::as<T> {});
     TTS_EQUAL(expected, actual);
   }
+
+  {
+    e_t expected {0};
+    e_t actual = eve::as_value(eve::zero, eve::as<e_t> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(expected, eve::as<e_t> {});
+    TTS_EQUAL(expected, actual);
+  }
 };
 
 TTS_CASE_TPL("Check behavior of logical as_value", eve::test::simd::all_types)
 <typename T>(tts::type<T>) {
-  using U = eve::logical<T>;
-  U expected {true};
-  U actual = eve::as_value(eve::true_, eve::as<U> {});
-  TTS_EQUAL(expected, actual);
-  actual = eve::as_value(true, eve::as<U> {});
-  TTS_EQUAL(expected, actual);
-  actual = eve::as_value(expected, eve::as<U> {});
-  TTS_EQUAL(expected, actual);
+  {
+    using U = eve::logical<T>;
+    U expected {true};
+    U actual = eve::as_value(eve::true_, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(true, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(expected, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+  }
+
+  {
+    using U = eve::logical<eve::element_type_t<T>>;
+    U expected {true};
+    U actual = eve::as_value(eve::true_, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(true, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+    actual = eve::as_value(expected, eve::as<U> {});
+    TTS_EQUAL(expected, actual);
+  }
 };

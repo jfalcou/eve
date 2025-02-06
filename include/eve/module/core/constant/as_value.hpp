@@ -22,8 +22,8 @@ namespace eve
     template<typename From, value T>
     EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
     {
-      if      constexpr (requires { typename From::constant_callable_tag; }) return from(t);
-      else                                                                   return T{from};
+      if constexpr (requires { typename From::constant_callable_tag; }) return from(t);
+      else                                                              return T{from};
     }
   };
 
