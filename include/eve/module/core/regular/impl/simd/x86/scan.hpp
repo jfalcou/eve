@@ -79,18 +79,20 @@ use_scan_in_lanes(Wide)
   else return std::false_type {};
 }
 
-template<simd_value Wide, typename Op, typename Zero>
-EVE_FORCEINLINE auto
-scan_(EVE_SUPPORTS(avx2_), Wide v, Op op, Zero z_) requires(current_api == avx2)
+template<callable_options O, typename T, typename N, typename Op, typename Zero>
+EVE_FORCEINLINE auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op op, Zero z_)
+  requires x86_abi<abi_t<T, N>>
 {
   if constexpr( decltype(use_scan_in_lanes(v))::value )
   {
-    Wide z = as_value(z_, eve::as<Wide> {});
+    constexpr auto size = wide<T, N>::size();
 
-    v             = scan_in_lanes<Wide::size() / 2>(v, op, z);
-    Wide left_sum = broadcast(v, index<Wide::size() / 2 - 1>);
-    return op(v, slide_right(z, left_sum, index<Wide::size() / 2>));
+    Wide z = as_value(z_, eve::as<wide<T, N>> {});
+
+    v             = scan_in_lanes<size / 2>(v, op, z);
+    Wide left_sum = broadcast(v, index<size / 2 - 1>);
+    return op(v, slide_right(z, left_sum, index<size / 2>));
   }
-  else return scan_(EVE_RETARGET(cpu_), v, op, z_);
+  else return scan.behavior(cpu_{}, opts, v, op, z_);
 }
 }
