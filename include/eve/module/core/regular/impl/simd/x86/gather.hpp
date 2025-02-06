@@ -18,12 +18,12 @@ namespace eve::detail
   EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (match_option<condition_key, O, ignore_none_>) return gather_impl(p, v);
-    else                                                        return gather_impl(opts[condition_key], p, v);
+    if constexpr (match_option<condition_key, O, ignore_none_>) return gather_impl(opts, p, v);
+    else                                                        return gather_impl(opts[condition_key], opts, p, v);
   }
 
-  template<typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(U const* p, wide<T, N> v) noexcept
+  template<callable_options O, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(O const& opts, U const* p, wide<T, N> v) noexcept
   {
     // Aggregation cases
     if      constexpr(has_aggregated_abi_v<wide<U, N>>)
@@ -32,7 +32,7 @@ namespace eve::detail
       return wide<U,N>(gather(p,l),gather(p,h));
     }
     // Smaller data goes through the generic cases
-    else if constexpr (sizeof(U) <= 2)           return gather.behavior(cpu_{}, p, v);
+    else if constexpr (sizeof(U) <= 2)           return gather.behavior(cpu_{}, opts, p, v);
     // Small index get converted then we recall gather
     else if constexpr (sizeof(T) <  4)           return gather(p, convert(v, as<std::int32_t>{}));
     // AVX2 code is exactly similar to masked one + ignore_none
@@ -62,8 +62,8 @@ namespace eve::detail
     else                                                      return gather[ignore_none](p, v);
   }
 
-  template<typename U, conditional_expr C, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, U const* p, wide<T, N> v) noexcept
+  template<callable_options O, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl_masked(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
   {
     using out_t = wide<U, N>;
     constexpr auto i = categorize<wide<T, N>>();
@@ -82,9 +82,9 @@ namespace eve::detail
     // Ignore All case : just return the alternative if any
     if      constexpr(C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
     // Aggregation cases
-    else if constexpr(has_aggregated_abi_v<out_t>)        return gather.behavior(cpu_{}, cx, p, v);
+    else if constexpr(has_aggregated_abi_v<out_t>)        return gather.behavior(cpu_{}, opts, p, v);
     // Smaller data goes through the generic cases
-    else if constexpr(sizeof(U) <= 2)                     return gather.behavior(cpu_{}, cx, p, v);
+    else if constexpr(sizeof(U) <= 2)                     return gather.behavior(cpu_{}, opts, p, v);
     // Small index get converted then we recall gather
     else if constexpr(sizeof(T) <  4)           return gather[cx](p, convert(v, as<std::int32_t>{}));
     else if constexpr (current_api >= avx512)
