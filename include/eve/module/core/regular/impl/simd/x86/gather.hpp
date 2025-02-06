@@ -57,9 +57,9 @@ namespace eve::detail
       else if constexpr(i_64x8  && c == category::float64x8 ) return _mm512_i64gather_pd   (v, p, 8);
       else if constexpr(i_32x16 && c == category::float32x16) return _mm512_i32gather_ps   (v, p, 4);
       else if constexpr(i_64x8  && c == category::float32x8 ) return _mm512_i64gather_ps   (v, p, 4);
-      else                                                    return gather[ignore_none](p, v);
+      else                                                    return gather_impl_masked(ignore_none, opts, p, v);
     }
-    else                                                      return gather[ignore_none](p, v);
+    else                                                      return gather_impl_masked(ignore_none, opts, p, v);
   }
 
   template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
