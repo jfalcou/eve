@@ -87,10 +87,10 @@ EVE_FORCEINLINE auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op 
   {
     constexpr auto size = wide<T, N>::size();
 
-    Wide z = as_value(z_, eve::as<wide<T, N>> {});
+    wide<T, N> z = as_value(z_, eve::as<wide<T, N>> {});
 
-    v             = scan_in_lanes<size / 2>(v, op, z);
-    Wide left_sum = broadcast(v, index<size / 2 - 1>);
+    v = scan_in_lanes<size / 2>(v, op, z);
+    wide<T, N> left_sum = broadcast(v, index<size / 2 - 1>);
     return op(v, slide_right(z, left_sum, index<size / 2>));
   }
   else return scan.behavior(cpu_{}, opts, v, op, z_);
