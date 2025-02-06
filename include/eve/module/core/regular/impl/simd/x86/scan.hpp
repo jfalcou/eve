@@ -28,7 +28,7 @@ template<std::ptrdiff_t Shift> struct slide_right_in_lanes_lambda
 
 template<typename T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N>
-slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>) requires(current_api == avx2)
+slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
   if constexpr( is_bundle_v<abi_t<T, N>> )
     return wide<T, N> {kumi::map(slide_right_in_lanes_lambda<Shift> {}, x, y)};
