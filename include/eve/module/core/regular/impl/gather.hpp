@@ -57,7 +57,7 @@ namespace eve::detail
   //================================================================================================
   // Aligned pointer
   template<callable_options O, typename U, typename S, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<U, S> ptr, T v) noexcept
   {
     return *(ptr.get() + v);
   }
