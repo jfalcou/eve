@@ -10,6 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/invocable.hpp>
+#include <eve/concept/generator.hpp>
 #include <eve/detail/implementation.hpp>
 
 #include <concepts>
@@ -19,11 +20,16 @@ namespace eve
   template<typename Options>
   struct as_value_t : callable<as_value_t, Options>
   {
-    template<typename From, value T>
+    template<generator From, value T>
     EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
     {
-      if constexpr (requires { typename From::constant_callable_tag; }) return from(t);
-      else                                                              return T{from};
+      return from(t);
+    }
+
+    template<value From, value T>
+    EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
+    {
+      return T{from};
     }
   };
 
@@ -44,8 +50,11 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::value From, eve::value T >
+  //!      template<eve::value From, eve::value T>
   //!      T as_value(From x, eve::as<T> t) noexcept;
+  //!
+  //!      template<eve::generator From, eve::value T>
+  //!      T as_value(From from, eve::as<T> t) noexcept;
   //!   }
   //!   @endcode
   //!
