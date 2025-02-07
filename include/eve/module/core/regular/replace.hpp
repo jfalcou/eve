@@ -18,8 +18,14 @@ namespace eve
   template<typename Options>
   struct replace_ignored_t : callable<replace_ignored_t, Options>
   {
-    template<simd_value Wide, conditional_expr Ignore, typename Other>
-    constexpr EVE_FORCEINLINE Wide operator()(Wide x, Ignore ignore, Other with) const noexcept
+    template<simd_value T, relative_conditional_expr Ignore, value Other>
+    constexpr EVE_FORCEINLINE T operator()(T x, Ignore ignore, Other with) const noexcept
+    {
+      return eve::if_else(ignore, x, with);
+    }
+
+    template<simd_value T, relative_conditional_expr Ignore, generator Other>
+    constexpr EVE_FORCEINLINE T operator()(T x, Ignore ignore, Other with) const noexcept
     {
       return eve::if_else(ignore, x, with);
     }
@@ -43,8 +49,11 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template<eve::value T, eve::conditional_expr Ignore, eve::value Other>
-  //!      T replace_ignored(T x, Ignore ignore, Other with)
+  //!      template<simd_value T, relative_conditional_expr Ignore, value Other>
+  //!      T replace_ignored(T x, Ignore ignore, Other with);
+  //!
+  //!      template<simd_value T, relative_conditional_expr Ignore, generator Other>
+  //!      T replace_ignored(T x, Ignore ignore, Other with);
   //!   }
   //!   @endcode
   //!
