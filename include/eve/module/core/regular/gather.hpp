@@ -14,29 +14,28 @@ namespace eve
   template<typename Options>
   struct gather_t : callable<gather_t, Options, conditional_option>
   {
-    template<integral_value T, typename U>
-    constexpr EVE_FORCEINLINE auto operator()(U const* ptr, T v) const noexcept
+    template<arithmetic_value T, integral_value U>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(T const* ptr, U idx) const noexcept
     {
-      static_assert(simd_value<T> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
-      return EVE_DISPATCH_CALL(ptr, v);
+      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
+      return EVE_DISPATCH_CALL(ptr, idx);
     }
 
-    template<integral_value T, typename U, typename S>
-    constexpr EVE_FORCEINLINE auto operator()(aligned_ptr<U, S> ptr, T v) const noexcept
+    template<arithmetic_value T, integral_value U, typename N>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(aligned_ptr<T, N> ptr, U idx) const noexcept
     {
-      static_assert(simd_value<T> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
-      return EVE_DISPATCH_CALL(ptr, v);
+      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
+      return EVE_DISPATCH_CALL(ptr, idx);
     }
 
     EVE_CALLABLE_OBJECT(gather_t, gather_);
   };
 
-  // TODO DOC
   //================================================================================================
   //! @addtogroup core_simd
   //! @{
   //!   @var gather
-  //!   @brief Computes the TODO
+  //!   @brief Load a SIMD value with values selected from a memory region at the given offsets.
   //!
   //!   @groupheader{Header file}
   //!
@@ -49,21 +48,26 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      TODO
+  //!     template<arithmetic_value T, integral_value U>
+  //!     as_wide_as_t<T, U> gather(T const* ptr, U idx);
+  //!
+  //!     template<arithmetic_value T, integral_value U, typename N>
+  //!     auto gather(aligned_ptr<T, N> ptr, U idx);
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
+  //!      * `idx`: An instance of an [integral value](@ref eve::integral_value).
+  //!      * `ptr`: A pointer to the memory region to load from.
   //!
   //!    **Return value**
   //!
-  //!      * TODO
+  //!      * A [value](@ref eve::value) with the same type as the elements of the memory region
+  //!        pointed by `ptr` and the same cardinal as `idx`.
   //!
   //!  @groupheader{Example}
-  //!
-  //!  TODO
+  //!  @godbolt{doc/core/gather.cpp}
   //================================================================================================
   inline constexpr auto gather = functor<gather_t>;
   //================================================================================================

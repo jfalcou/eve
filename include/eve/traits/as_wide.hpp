@@ -67,5 +67,5 @@ namespace eve
   };
 
   template<typename T, typename U>
-  using as_wide_as_t = typename as_wide_as<T,U>::type;
+  using as_wide_as_t = typename as_wide_as<std::remove_cvref_t<T>, U>::type;
 }
