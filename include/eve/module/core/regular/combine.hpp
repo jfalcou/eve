@@ -39,7 +39,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template<simd_value W>
-  //!      constexpr W combine(W a, W b) noexcept;
+  //!      typename W::combined_type combine(W a, W b) noexcept;
   //!   }
   //!   @endcode
   //!
