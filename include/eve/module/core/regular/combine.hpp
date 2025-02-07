@@ -8,8 +8,6 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
 
 namespace eve
 {
@@ -27,7 +25,7 @@ namespace eve
   //! @addtogroup core_simd
   //! @{
   //!   @var combine
-  //!   @brief Computes the TODO
+  //!   @brief Combines two SIMD values in a larger one
   //!
   //!   **Defined in Header**
   //!
@@ -40,19 +38,19 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      constexpr auto combine(simd_value a, simd_value b)   noexcept;
+  //!      template<simd_value W>
+  //!      constexpr W combine(W a, W b) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!      * `a`:  An instance of a [SIMD value](@ref eve::simd_value)
-  //!      * `b`:  An instance of a [SIMD value](@ref eve::simd_value) of the same type and cardinal
+  //!      * `a`, `b`: two SIMD values of the same type and cardinal
   //!
   //!    **Return value**
   //!
-  //!      * A [SIMD value](@ref eve::simd_value) of the same type and twice the cardinal of that of
-  //!        the parameters
+  //!      * A [SIMD value](@ref eve::simd_value) contains the parameters concatenation, thus
+  //!        producing a register of twice as many elements.
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/combine.cpp}
