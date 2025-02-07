@@ -27,13 +27,13 @@ namespace eve
     }
 
     template<arithmetic_value From, value T>
-    EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
+    EVE_FORCEINLINE constexpr T operator()(From from, as<T>) const noexcept
     {
       return T{from};
     }
 
     template<relaxed_logical_value From, value T>
-    EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
+    EVE_FORCEINLINE constexpr T operator()(From from, as<T>) const noexcept
     {
       return T{from};
     }
