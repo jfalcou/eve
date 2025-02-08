@@ -6,7 +6,7 @@ var searchData=
   ['ceil_3',['ceil',['../group__core__arithmetic_gaf450959dd53738dda62b4f4551cd7c11.html#gaf450959dd53738dda62b4f4551cd7c11',1,'eve']]],
   ['chi_4',['chi',['../group__core__arithmetic_ga57f7296a0ce7eb3ef1ef0575aee93063.html#ga57f7296a0ce7eb3ef1ef0575aee93063',1,'eve']]],
   ['clamp_5',['clamp',['../group__core__arithmetic_ga615259a38bc942276fe618e6621d536b.html#ga615259a38bc942276fe618e6621d536b',1,'eve']]],
-  ['combine_6',['combine',['../group__core__simd_ga55ab0493bffbbea26ed9a1fdbe2c66f8.html#ga55ab0493bffbbea26ed9a1fdbe2c66f8',1,'eve']]],
+  ['combine_6',['combine',['../group__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a',1,'eve']]],
   ['common_5ftype_7',['common_type',['../group__algo__traits_ga3ea818c89fdbcd6eac686126f73631f2.html#ga3ea818c89fdbcd6eac686126f73631f2',1,'eve::algo']]],
   ['common_5fwith_5ftypes_8',['common_with_types',['../group__algo__traits_ga6fe08218254b894a318ab2fd1b4b49b7.html#ga6fe08218254b894a318ab2fd1b4b49b7',1,'eve::algo']]],
   ['compare_5fabsolute_9',['compare_absolute',['../group__core__predicates_ga583d31b3efe53ae6fb8bf505254fe9a6.html#ga583d31b3efe53ae6fb8bf505254fe9a6',1,'eve']]],
