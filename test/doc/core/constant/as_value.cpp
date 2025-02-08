@@ -12,11 +12,8 @@ int main()
             << "<- as_value(valmax, as<wide_it>())  = " << eve::as_value(eve::valmax, eve::as<wide_it>()) << '\n'
     ;
 
-  double        xf = -62768.0f;
-
   std::cout << "---- scalar" << '\n'
-            << "<- as_value(xf, as<float>())        = " << eve::as_value(xf, eve::as<float>()) << '\n'
-            << "<- as_value(xf, as<int16_t>())      = " << eve::as_value(xf, eve::as<int16_t>()) << '\n';
+            << "<- as_value(valmax, as<float>())    = " << eve::as_value(eve::valmax, eve::as<float>()) << '\n';
 
   return 0;
 }
