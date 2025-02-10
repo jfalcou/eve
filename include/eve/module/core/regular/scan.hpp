@@ -30,12 +30,11 @@ namespace eve
     EVE_CALLABLE_OBJECT(scan_t, scan_);
   };
 
-  //TODO DOC
   //================================================================================================
   //! @addtogroup core_simd
   //! @{
   //!   @var scan
-  //!   @brief TODO
+  //!   @brief Computes the generalized prefix sum over a [simd value](@ref eve::simd_value).
   //!
   //!   @groupheader{Header file}
   //!
@@ -56,16 +55,21 @@ namespace eve
   //!   **Parameters**
   //!
   //!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
+  //!      * `op`: The binary operation to apply.
+  //!      * `zero`: The identity/neutral element used by the operation.
   //!
   //!    **Return value**
   //!
-  //!      1. TODO
-  //!      2. TODO
+  //!      1. Returns the generalized prefix sum over `x` using the binary operation `op` and the
+  //!         identity element `zero`.
+  //!      2. Equivalent to `eve::scan(x, eve::add, eve::zero)`.
+  //!
+  //!    @note
+  //!      Given a binary operation `op`, a call to `eve::scan` is defined only if `op` is
+  //!      associative, commutative, and pure.
   //!
   //!  @groupheader{Example}
-  //!
   //!  @godbolt{doc/core/scan.cpp}
-  //!
   //================================================================================================
   inline constexpr auto scan = functor<scan_t>;
   //================================================================================================
