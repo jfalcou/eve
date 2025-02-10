@@ -10,9 +10,28 @@
 #include <eve/arch.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct has_equal_in_t : callable<has_equal_in_t, Options>
+  {
+    template<simd_value T, simd_value U, typename Op>
+    constexpr EVE_FORCEINLINE auto operator()(T x, U match_against, Op op) const noexcept
+    {
+      return EVE_DISPATCH_CALL(x, match_against, op);
+    }
+
+    template<simd_value T, simd_value U>
+    constexpr EVE_FORCEINLINE auto operator()(T x, U match_against) const noexcept
+    {
+      return EVE_DISPATCH_CALL(x, match_against, is_equal);
+    }
+
+    EVE_CALLABLE_OBJECT(has_equal_in_t, has_equal_in_);
+  };
+
   // TODO DOC
   //================================================================================================
   //! @addtogroup core_simd
@@ -42,7 +61,10 @@ namespace eve
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/has_equal_in.cpp}
   //================================================================================================
-  EVE_MAKE_CALLABLE(has_equal_in_, has_equal_in);
+  inline constexpr auto has_equal_in = functor<has_equal_in_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/has_equal_in.hpp>
