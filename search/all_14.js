@@ -35,7 +35,7 @@ var searchData=
   ['remove_32',['remove',['../group__algos_ga58eb0d9f9c8dce6526767527a11c1df9.html#ga58eb0d9f9c8dce6526767527a11c1df9',1,'eve::algo']]],
   ['remove_5fif_33',['remove_if',['../group__algos_gadd433852d81668a52c92e3778111e5ac.html#gadd433852d81668a52c92e3778111e5ac',1,'eve::algo']]],
   ['rempio2_34',['rempio2',['../group__math__trig_gaf499e87cc47529c27dd16d88ed57cd08.html#gaf499e87cc47529c27dd16d88ed57cd08',1,'eve']]],
-  ['replace_5fignored_35',['replace_ignored',['../group__core__logical_gaa8ea1d675bd4026228bcfd34dd41c3f2.html#gaa8ea1d675bd4026228bcfd34dd41c3f2',1,'eve']]],
+  ['replace_5fignored_35',['replace_ignored',['../group__core__logical_ga427432fa10542d6737316973309004e4.html#ga427432fa10542d6737316973309004e4',1,'eve']]],
   ['requisites_36',['Pre-requisites',['../setup.html#autotoc_md80',1,'']]],
   ['rescale_37',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a0a505c7c261060febd032a868d28af92',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::rescale'],['../structeve_1_1wide.html#a279755384913a23181f151ece5a4658f',1,'eve::wide::rescale']]],
   ['reserve_38',['reserve',['../structeve_1_1algo_1_1soa__vector_a23a8b5cff720fd36c88f8bcda9cc3cf0.html#a23a8b5cff720fd36c88f8bcda9cc3cf0',1,'eve::algo::soa_vector']]],
