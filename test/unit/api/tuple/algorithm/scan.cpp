@@ -9,6 +9,22 @@
 #include <eve/module/core.hpp>
 #include "test.hpp"
 
+TTS_CASE_TPL("Check return type of scan", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using w_t = eve::wide<T>;
+  TTS_EXPR_IS((eve::scan(std::declval<w_t>(), eve::add, eve::zero)), w_t);
+};
+
+TTS_CASE("Check return type of scan on tuples")
+{
+  using w_t = eve::wide<kumi::tuple<char, int, double>>;
+  auto plus = [](auto a, auto b) {
+    return w_t{ kumi::map(eve::add, a, b) };
+  };
+
+  TTS_EXPR_IS((eve::scan(std::declval<w_t>(), plus, eve::zero)), w_t);
+};
 
 TTS_CASE_TPL( "Check behavior of scan", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
@@ -25,7 +41,7 @@ TTS_CASE_TPL( "Check behavior of scan", eve::test::scalar::all_types)
   w_t expected = kumi::map(eve::scan, x);
 
   auto plus = [](auto a, auto b) {
-    return kumi::map(eve::add, a, b);
+    return w_t{ kumi::map(eve::add, a, b) };
   };
 
   w_t actual_1 = eve::scan(x, plus, eve::zero);
@@ -54,7 +70,7 @@ TTS_CASE_TPL( "Check behavior of scan, same type", eve::test::scalar::all_types)
   w_t expected = kumi::map(eve::scan, x);
 
   auto plus = [](auto a, auto b) {
-    return kumi::map(eve::add, a, b);
+    return w_t{ kumi::map(eve::add, a, b) };
   };
 
   w_t actual_1 = eve::scan(x, plus, eve::zero);
