@@ -10,13 +10,14 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/concept/invocable.hpp>
+#include <eve/concept/substitute.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct scan_t : callable<scan_t, Options>
   {
-    template<simd_value Wide, eve::monoid<Wide> Op, typename Zero>
+    template<simd_value Wide, eve::monoid<Wide> Op, eve::substitute_for<Wide> Zero>
     constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero z) const noexcept
       requires (requires { as_value(z, as<Wide>{}); })
     {
