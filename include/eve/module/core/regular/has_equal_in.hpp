@@ -10,21 +10,25 @@
 #include <eve/arch.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
+#include <eve/module/core/regular/try_each_group_position.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
+#include <eve/concept/invocable.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct has_equal_in_t : callable<has_equal_in_t, Options>
   {
-    template<simd_value T, simd_value U, typename Op>
-    constexpr EVE_FORCEINLINE auto operator()(T x, U match_against, Op op) const noexcept
+    template<simd_value T, simd_value U, logical_predicate<T, U> Op>
+    constexpr EVE_FORCEINLINE auto operator()(T x, U match_against, Op op) const noexcept -> decltype(op(x, match_against))
     {
       return EVE_DISPATCH_CALL(x, match_against, op);
     }
 
-    template<simd_value T, simd_value U>
-    constexpr EVE_FORCEINLINE auto operator()(T x, U match_against) const noexcept
+    template<simd_value T>
+    constexpr EVE_FORCEINLINE as_logical_t<T> operator()(T x, T match_against) const noexcept
     {
       return EVE_DISPATCH_CALL(x, match_against, is_equal);
     }
@@ -32,7 +36,6 @@ namespace eve
     EVE_CALLABLE_OBJECT(has_equal_in_t, has_equal_in_);
   };
 
-  // TODO DOC
   //================================================================================================
   //! @addtogroup core_simd
   //! @{
@@ -49,14 +52,33 @@ namespace eve
   //!    by Guillermo Diez-Canas.
   //!    Link: https://arxiv.org/abs/2112.06342
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template<simd_value T, typename Op>
+  //!      constexpr auto has_equal_in(T x, T match_against, Op op) noexcept;    //1
+  //!     
+  //!      template<simd_value T>
+  //!      constexpr auto has_equal_in(T x, T match_against) noexcept;           //2
+  //!   }
+  //!   @endcode
+  //!
   //!   **Parameters**
   //!     * `x` : [argument](@ref eve::simd_value).
   //!     * `match_against` [argument](@ref eve::simd_value).
-  //!     * `predicate` (default `eve::is_equal_to`)
+  //!     * `op` : The binary predicate to use for the comparison.
   //!
   //!   **Return value**
   //!
-  //!   logical built as described previously
+  //!   A [logical SIMD value](@ref eve::logical_simd_value) built as described previously
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/has_equal_in.cpp}
@@ -65,6 +87,25 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
-}
 
-#include <eve/module/core/regular/impl/has_equal_in.hpp>
+  namespace detail
+  {
+    template<typename T, typename Op> struct has_equal_lambda
+    {
+      Op op;
+      T  v;
+
+      has_equal_lambda(Op o, T p) : op(o), v(p) {}
+      EVE_FORCEINLINE auto operator()(auto x) const { return op(v, x); }
+    };
+
+    template<callable_options O, simd_value T, simd_value U>
+    EVE_FORCEINLINE auto has_equal_in_(EVE_REQUIRES(cpu_), O const&, T x, U match_against, auto pred)
+    {
+      // For now assuming that the compiler can interleave these operations
+      auto all_pos = try_each_group_position(match_against, eve::lane<1>);
+      auto tests   = kumi::map(has_equal_lambda { pred, x }, all_pos);
+      return kumi::fold_left(eve::logical_or, tests);
+    }
+  }
+}
