@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__core__simd_gacd8956ad1daf07ac479efc00b3a92bbf.html',''); initResizable(true); });
+$(function(){initNavTree('group__core__simd_ga3cbe6596b8e7ca4d4d0611ac642fcf39.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -126,8 +126,8 @@ $(function(){initNavTree('group__core__simd_gacd8956ad1daf07ac479efc00b3a92bbf.h
 </div>
 
 <div class="contents">
-<a id="gacd8956ad1daf07ac479efc00b3a92bbf" name="gacd8956ad1daf07ac479efc00b3a92bbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacd8956ad1daf07ac479efc00b3a92bbf">&#9670;&#160;</a></span>gather</h2>
+<a id="ga3cbe6596b8e7ca4d4d0611ac642fcf39" name="ga3cbe6596b8e7ca4d4d0611ac642fcf39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">&#9670;&#160;</a></span>gather</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,7 +136,7 @@ $(function(){initNavTree('group__core__simd_gacd8956ad1daf07ac479efc00b3a92bbf.h
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">callable_gather_ eve::gather = {}</td>
+          <td class="memname">auto eve::gather = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gather_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -150,20 +150,40 @@ $(function(){initNavTree('group__core__simd_gacd8956ad1daf07ac479efc00b3a92bbf.h
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   TODO</div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_value T, <span class="keywordtype">int</span>egral_value U&gt;</div>
+<div class="line">  as_wide_as_t&lt;T, U&gt; <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">gather</a>(T <span class="keyword">const</span>* ptr, U idx);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_value T, <span class="keywordtype">int</span>egral_value U, <span class="keyword">typename</span> N&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">gather</a>(<a class="code hl_struct" href="structeve_1_1aligned__ptr.html">aligned_ptr&lt;T, N&gt;</a> ptr, U idx);</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__simd_ga3cbe6596b8e7ca4d4d0611ac642fcf39_html_ga3cbe6596b8e7ca4d4d0611ac642fcf39"><div class="ttname"><a href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a></div><div class="ttdeci">constexpr auto gather</div><div class="ttdoc">Load a SIMD value with values selected from a memory region at the given offsets.</div><div class="ttdef"><b>Definition</b> gather.hpp:74</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1aligned__ptr_html"><div class="ttname"><a href="structeve_1_1aligned__ptr.html">eve::aligned_ptr</a></div><div class="ttdoc">Wrapper for non-owning aligned pointers.</div><div class="ttdef"><b>Definition</b> aligned_ptr.hpp:50</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: An instance of an <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a></li>
+<li><code>idx</code>: An instance of an <a class="el" href="concepteve_1_1integral__value.html">integral value</a>.</li>
+<li><code>ptr</code>: A pointer to the memory region to load from.</li>
 </ul>
 <p><b>Return value</b></p>
 <ul>
-<li>TODO</li>
+<li>A <a class="el" href="concepteve_1_1value.html">value</a> equivalent to: <div class="fragment"><div class="line">as_wide_as_t&lt;T, U&gt; res = { ptr[idx[0]], ptr[idx[1]], ..., ptr[idx[N-1]] };</div>
+</div><!-- fragment --></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<p>TODO </p>
-
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;int&gt; v{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; res = <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a>(v.data(), <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a>&lt;<span class="keywordtype">char</span>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;{0, 2, 2, 11});</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;res -&gt; &quot;</span> &lt;&lt; res &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinal.hpp:15</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
