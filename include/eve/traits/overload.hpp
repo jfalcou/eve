@@ -10,4 +10,4 @@
 #include <eve/traits/overload/protocol.hpp>
 #include <eve/traits/overload/supports.hpp>
 #include <eve/traits/overload/default_behaviors.hpp>
-#include <eve/traits/same_lanes.hpp>
+#include <eve/concept/same_lanes.hpp>

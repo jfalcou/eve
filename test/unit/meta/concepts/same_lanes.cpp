@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/traits/same_lanes.hpp>
+#include <eve/concept/same_lanes.hpp>
 #include <eve/wide.hpp>
 
 TTS_CASE( "Check same_lanes on simd types" )
