@@ -247,8 +247,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc, arch: sve256, opts: -Wno-psabi}
-        - { comp: gcc, arch: sve512, opts: -Wno-psabi}
+        - { comp: gcc, arch: sve   , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve2  , opts: -Wno-psabi}
         - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
