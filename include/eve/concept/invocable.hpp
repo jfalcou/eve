@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/same_lanes.hpp>
+
 #include <concepts>
 #include <type_traits>
 
@@ -126,7 +128,7 @@ concept invocable = requires(F&& f, Args&&...args)
   //! @tparam Args The arguments passed to the predicate
   //================================================================================================
   template <typename Op, typename... Args>
-  concept logical_predicate = requires (Op op, Args&& ... args) {
+  concept simd_predicate = (simd_value<Args> && ...) && requires (Op op, Args&& ... args) {
     { op(std::forward<Args>(args)...) } -> logical_value;
   };
   //================================================================================================

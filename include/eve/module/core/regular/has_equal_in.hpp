@@ -21,8 +21,9 @@ namespace eve
   template<typename Options>
   struct has_equal_in_t : callable<has_equal_in_t, Options>
   {
-    template<simd_value T, simd_value U, logical_predicate<T, U> Op>
+    template<simd_value T, simd_value U, simd_predicate<T, U> Op>
     constexpr EVE_FORCEINLINE auto operator()(T x, U match_against, Op op) const noexcept -> decltype(op(x, match_against))
+      requires (same_lanes<T, U>)
     {
       return EVE_DISPATCH_CALL(x, match_against, op);
     }
@@ -87,25 +88,10 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
-
-  namespace detail
-  {
-    template<typename T, typename Op> struct has_equal_lambda
-    {
-      Op op;
-      T  v;
-
-      has_equal_lambda(Op o, T p) : op(o), v(p) {}
-      EVE_FORCEINLINE auto operator()(auto x) const { return op(v, x); }
-    };
-
-    template<callable_options O, simd_value T, simd_value U>
-    EVE_FORCEINLINE auto has_equal_in_(EVE_REQUIRES(cpu_), O const&, T x, U match_against, auto pred)
-    {
-      // For now assuming that the compiler can interleave these operations
-      auto all_pos = try_each_group_position(match_against, eve::lane<1>);
-      auto tests   = kumi::map(has_equal_lambda { pred, x }, all_pos);
-      return kumi::fold_left(eve::logical_or, tests);
-    }
-  }
 }
+
+#include <eve/module/core/regular/impl/has_equal_in.hpp>
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/has_equal_in.hpp>
+#endif
