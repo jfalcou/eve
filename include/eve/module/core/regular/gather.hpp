@@ -63,8 +63,10 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      * A [value](@ref eve::value) with the same type as the elements of the memory region
-  //!        pointed by `ptr` and the same cardinal as `idx`.
+  //!      * A [value](@ref eve::value) equivalent to: 
+  //!        @code
+  //!        as_wide_as_t<T, U> res = { ptr[idx[0]], ptr[idx[1]], ..., ptr[idx[N-1]] };
+  //!        @endcode
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/gather.cpp}
