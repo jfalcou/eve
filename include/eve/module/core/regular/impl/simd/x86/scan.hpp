@@ -81,7 +81,7 @@ use_scan_in_lanes(Wide)
 
 template<callable_options O, typename T, typename N, typename Op, typename Zero>
 EVE_FORCEINLINE auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op op, Zero z_)
-  requires x86_abi<abi_t<T, N>>
+  requires (x86_abi<abi_t<T, N>> && (current_api == avx2))
 {
   if constexpr( decltype(use_scan_in_lanes(v))::value )
   {

@@ -8,7 +8,8 @@
 #pragma once
 
 #include <concepts>
-#include <eve/module/core/constant/as_value.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/concept/generator.hpp>
 
 namespace eve
 {
@@ -19,8 +20,8 @@ namespace eve
   //! @brief Specify that a type can be used as a substitute for another type after calling
   //!        `eve::as_value` on a value of the first type.
   //================================================================================================
-  template<typename T, typename U>
-  concept substitute_for = requires { as_value(T{}, as<U>{}); };
+  template<typename T, typename Target>
+  concept substitute_for = ((arithmetic_value<T> || relaxed_logical_value<T>) && requires { Target{std::declval<T>()}; }) || generator<T>;
   //================================================================================================
   //! @}
   //================================================================================================
