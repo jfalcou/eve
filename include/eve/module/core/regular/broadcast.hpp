@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/traits/same_lanes.hpp>
+#include <eve/concept/same_lanes.hpp>
 
 namespace eve
 {

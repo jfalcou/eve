@@ -60,7 +60,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename... Ts>
-  inline constexpr bool same_lanes_or_scalar  = detail::lanes_check<Ts...>();
+  concept same_lanes_or_scalar  = detail::lanes_check<Ts...>();
 
   //================================================================================================
   //! @addtogroup traits
@@ -75,7 +75,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename T>
-  inline constexpr bool same_lanes_or_scalar_tuple  = detail::tuple_lanes_check<T>();
+  concept same_lanes_or_scalar_tuple  = detail::tuple_lanes_check<T>();
 
   //================================================================================================
   //! @addtogroup traits
@@ -90,6 +90,6 @@ namespace eve
   //!  **Required header:** `#include <eve/traits.hpp>`
   //! @}
   //================================================================================================
-  template<simd_value T0, simd_value... Ts>
-  inline constexpr bool same_lanes = ((cardinal_v<T0> == cardinal_v<Ts>) && ... && true);
+  template<typename T0, typename... Ts>
+  concept same_lanes = (simd_value<T0> && ... && simd_value<Ts>) && ((cardinal_v<T0> == cardinal_v<Ts>) && ... && true);
 }
