@@ -19,7 +19,6 @@ namespace eve
   {
     template<simd_value Wide, eve::monoid<Wide> Op, eve::substitute_for<Wide> Zero>
     constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero z) const noexcept
-      requires (requires { as_value(z, as<Wide>{}); })
     {
       return EVE_DISPATCH_CALL(w, op, z);
     }
@@ -50,15 +49,18 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     constexpr simd_value scan(simd_value auto x, auto op, auto zero) noexcept; // 1
-  //!     constexpr simd_value scan(simd_value auto x) noexcept;                     // 2
+  //!     template<simd_value Wide, eve::monoid<Wide> Op, eve::substitute_for<Wide> Zero>
+  //!     constexpr Wide scan(Wide auto x, Op op, Zero zero) noexcept;                       // 1
+  //!
+  //!     template<simd_value Wide>
+  //!     constexpr Wide scan(Wide x) noexcept;                                              // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
   //!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
-  //!      * `op`: The binary operation to apply.
+  //!      * `op`: The commutative and associative binary operation to apply.
   //!      * `zero`: The identity/neutral element used by the operation.
   //!
   //!    **Return value**
