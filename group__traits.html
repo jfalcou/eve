@@ -184,18 +184,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga6e8aacb30e0e7798a5cf8e30f9ace681.html#ga6e8aacb30e0e7798a5cf8e30f9ace681">eve::max_scalar_size_v</a></td></tr>
 <tr class="memdesc:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <br /></td></tr>
 <tr class="separator:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae662f6f2e0430f37c721fd73229ca834" id="r_gae662f6f2e0430f37c721fd73229ca834"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:gae662f6f2e0430f37c721fd73229ca834"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_gae662f6f2e0430f37c721fd73229ca834.html#gae662f6f2e0430f37c721fd73229ca834">eve::same_lanes_or_scalar</a> = detail::lanes_check&lt;Ts...&gt;()</td></tr>
-<tr class="memdesc:gae662f6f2e0430f37c721fd73229ca834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that all types <code>Ts</code> are either scalar or share a common number of lanes.  <br /></td></tr>
-<tr class="separator:gae662f6f2e0430f37c721fd73229ca834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7e7c757a72a75b5898b23dd235f0dd0" id="r_gae7e7c757a72a75b5898b23dd235f0dd0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:gae7e7c757a72a75b5898b23dd235f0dd0"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_gae7e7c757a72a75b5898b23dd235f0dd0.html#gae7e7c757a72a75b5898b23dd235f0dd0">eve::same_lanes_or_scalar_tuple</a> = detail::tuple_lanes_check&lt;T&gt;()</td></tr>
-<tr class="memdesc:gae7e7c757a72a75b5898b23dd235f0dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that all types within a product type are either scalar or share a common number of lanes.  <br /></td></tr>
-<tr class="separator:gae7e7c757a72a75b5898b23dd235f0dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f566bec1efa79fece9ea5dbcec1748d" id="r_ga6f566bec1efa79fece9ea5dbcec1748d"><td class="memTemplParams" colspan="2">template&lt;simd_value T0, simd_value... Ts&gt; </td></tr>
-<tr class="memitem:ga6f566bec1efa79fece9ea5dbcec1748d"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga6f566bec1efa79fece9ea5dbcec1748d.html#ga6f566bec1efa79fece9ea5dbcec1748d">eve::same_lanes</a> = ((cardinal_v&lt;T0&gt; == cardinal_v&lt;Ts&gt;) &amp;&amp; ... &amp;&amp; true)</td></tr>
-<tr class="memdesc:ga6f566bec1efa79fece9ea5dbcec1748d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that all SIMD types <code>Ts</code> share a common number of lanes.  <br /></td></tr>
-<tr class="separator:ga6f566bec1efa79fece9ea5dbcec1748d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
