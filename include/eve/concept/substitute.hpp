@@ -19,9 +19,12 @@ namespace eve
   //! @concept substitute_for
   //! @brief Specify that a type can be used as a substitute for another type after calling
   //!        `eve::as_value` on a value of the first type.
+  //!
+  //! @tparam Substitute Type of the substitute value.
+  //! @tparam Target     Type of the target value that will result from the `eve::as_value` call.
   //================================================================================================
-  template<typename S, typename Target>
-  concept substitute_for = generator_for<S, Target> || ((arithmetic_value<S> || relaxed_logical_value<S>) && requires(S s) { Target{s}; });
+  template<typename Substitute, typename Target>
+  concept substitute_for = generator_for<Substitute, Target> || std::constructible_from<Target, Substitute>;
   //================================================================================================
   //! @}
   //================================================================================================

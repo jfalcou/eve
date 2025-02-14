@@ -24,7 +24,7 @@ namespace eve
   //! @tparam G Type of the generator to check.
   //!
   //! @groupheader{Examples}
-  //!   - `eve::one_t`
+  //!   - The type of `eve::one` 
   //====================================================================================================================
   template<typename Constant>
   concept generator = requires { typename Constant::constant_callable_tag; };
@@ -43,8 +43,8 @@ namespace eve
   //! @tparam T Type of the argument to pass to the generator.
   //!
   //! @groupheader{Examples}
-  //!   - `eve::one_t` satisfies `generator_for<int>`
-  //!   - `eve::nbmantissabits_t` satisfies `generator_for<float>` but not `generator_for<int>`
+  //!   - The type of `eve::one` satisfies `generator_for<int>`
+  //!   - The type of `eve::nbmantissabits` satisfies `generator_for<float>` but not `generator_for<int>`
   //====================================================================================================================
   template<typename G, typename T>
   concept generator_for = generator<G> && requires(G g, as<T> t) { g(t); };
