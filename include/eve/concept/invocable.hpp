@@ -99,4 +99,36 @@ concept invocable = requires(F&& f, Args&&...args)
   //! @}
   //================================================================================================
 
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @{
+  //! @brief Specifies that the function `Op`, when called with arguments of types `Args...`,
+  //!        returns a value convertible to `R`.
+  //!
+  //! @tparam Op The function type
+  //! @tparam R The expected return type
+  //! @tparam Args The arguments types
+  //================================================================================================
+  template <typename Op, typename R, typename... Args>
+  concept invocable_returning = requires (Op op, Args&& ... args) {
+    { op(std::forward<Args>(args)...) } -> std::convertible_to<R>;
+  };
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @{
+  //! @brief Specifies that `Op` is a monoid function operating on values of type `T`.
+  //!
+  //! @tparam Op 
+  //! @tparam T
+  //================================================================================================
+  template <typename Op, typename T>
+  concept monoid = invocable_returning<Op, T, T, T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
