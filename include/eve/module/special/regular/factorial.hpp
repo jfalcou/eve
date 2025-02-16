@@ -101,7 +101,7 @@ namespace eve
         if constexpr(!O::contains(raw))
           EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
         if  constexpr(O::contains(pedantic))
-          return tgamma(inc(convert(n, double_from<T>())));
+          return tgamma(inc(convert(n, as<double>())));
         else
           return factorial(convert(n, uint_from<T>()));
       }
