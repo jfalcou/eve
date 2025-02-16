@@ -11,11 +11,12 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
+#include <eve/module/special/regular/log_gamma.hpp>
 
 namespace eve
 {
  template<typename Options>
-  struct lfactorial_t : elementwise_callable<lfactorial_t, Options>
+  struct lfactorial_t : elementwise_callable<lfactorial_t, Options, raw_option, pedantic_option>
   {
     template<eve::integral_value T>
     EVE_FORCEINLINE constexpr
@@ -88,22 +89,34 @@ namespace eve
     constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
       lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
-      EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
-      EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
-      constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
-      auto           r   = eve::log(factorial(n));
-
-      if( eve::all(n < max) ) return r;
+      if constexpr(!O::contains(raw))
+      {
+        EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
+        EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
+      }
+      if constexpr(O::contains(pedantic))
+      {
+        using elt_t = element_type_t<T>;
+        auto r = eve::log_gamma(eve::convert(n, as<double>()));
+        if constexpr( std::same_as<elt_t, double> ) return r;
+        else return convert(r, as<float>());
+      }
       else
       {
-        auto np = [](auto x)
-          {
-            if constexpr(integral_value<T>) return convert(inc(x), as<double>());
-            else                            return inc(x);
-          }(n);
+        constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
+        auto           r   = eve::log(factorial(n));
 
-        return if_else(n < max, r, log_abs_gamma(np));
+        if( eve::all(n < max) ) return r;
+        else
+        {
+          auto np = [](auto x)
+            {
+              if constexpr(integral_value<T>) return convert(inc(x), as<double>());
+              else                            return inc(x);
+            }(n);
 
+          return if_else(n < max, r, log_abs_gamma(np));
+        }
       }
     }
   }

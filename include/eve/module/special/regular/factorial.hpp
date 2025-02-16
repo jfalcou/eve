@@ -9,11 +9,11 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-
+#include <eve/module/special/regular/tgamma.hpp>
 namespace eve
 {
   template<typename Options>
-  struct factorial_t : elementwise_callable<factorial_t, Options>
+  struct factorial_t : elementwise_callable<factorial_t, Options, raw_option,  pedantic_option>
   {
     template<eve::integral_value T>
     EVE_FORCEINLINE constexpr
@@ -45,25 +45,33 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x) noexcept; // 1
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x)      noexcept; // 1
+//!
+//!      // Semantic option
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial[raw](T x) noexcept; // 2
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial[pedantic](T x) noexcept; // 3
 //!
 //!      // Lanes masking
-//!      constexpr auto factorial[conditional_expr auto c](value auto n)    noexcept; // 2
-//!      constexpr auto factorial[logical_value auto m](value auto n)       noexcept; // 2
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)         noexcept; // 4
+//!      constexpr auto factorial[logical_value auto m](value auto n)            noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n`: must be integral or flint.
+//!     * `n`: input value.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
 //!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
-//!        is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!        is returned. The call can assert if any entry is not a flint or not positive.
+//!     2  With the raw option the call never assert even for non flint or negative entries. The result is garbage for
+//!        such values but not undefined behaviour.
+//!     3. With the pedantic option \f$\Gamma(x+1)\f$ is returned. (more expansive)
+//!     4. [The operation is performed conditionnaly](@ref conditional)
+//!
 //!
 //!  @warning
 //!    This function will overflow as soon as the input is greater than 171 for integral or double
@@ -90,8 +98,12 @@ namespace eve
     {
       if constexpr(signed_integral_value<T>)
       {
-        EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-        return factorial(convert(n, uint_from<T>()));
+        if constexpr(!O::contains(raw))
+          EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
+        if  constexpr(O::contains(pedantic))
+          return tgamma(inc(convert(n, double_from<T>())));
+        else
+          return factorial(convert(n, uint_from<T>()));
       }
       else
       {
@@ -281,11 +293,24 @@ namespace eve
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
-      EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
-      EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-      auto r = factorial(convert(n, uint_from<T>()));
-      if constexpr( std::same_as<elt_t, double> ) return r;
-      else return convert(r, as<float>());
+      if constexpr(!O::contains(raw))
+      {
+        EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
+        EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
+      }
+      if  constexpr(O::contains(pedantic))
+      {
+        auto r =  tgamma(inc(convert(n, as<double>())));
+        r = if_else(is_flint(n) && is_ltz(n), eve::nan(as(r)), r);
+        if constexpr( std::same_as<elt_t, double> ) return r;
+        else return convert(r, as<float>());
+      }
+      else
+      {
+        auto r = factorial(convert(n, uint_from<T>()));
+        if constexpr( std::same_as<elt_t, double> ) return r;
+        else return convert(r, as<float>());
+      }
     }
   }
 }
