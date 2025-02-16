@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::scan</title>
+<title>E.V.E: eve::monoid Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__core__simd_ga43f2cdb2905195a056caad82efd0a557.html',''); initResizable(true); });
+$(function(){initNavTree('concepteve_1_1monoid.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -125,54 +125,35 @@ $(function(){initNavTree('group__core__simd_ga43f2cdb2905195a056caad82efd0a557.h
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">eve::monoid Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
+</div><!--header-->
 <div class="contents">
-<a id="ga43f2cdb2905195a056caad82efd0a557" name="ga43f2cdb2905195a056caad82efd0a557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga43f2cdb2905195a056caad82efd0a557">&#9670;&#160;</a></span>scan</h2>
 
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">callable_scan_ eve::scan = {}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<h2 class="groupheader">Header file </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   TODO</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<ul>
-<li><code>x</code>: An instance of an <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a></li>
-</ul>
-<p><b>Return value</b></p>
-<ul>
-<li>TODO</li>
-</ul>
-<h2 class="groupheader">Example </h2>
-<p>TODO </p>
+<p>Specifies that <code>Op</code> is a monoid function operating on values of type <code>T</code>.  
+<a href="#details">More...</a></p>
 
-</div>
-</div>
-</div><!-- contents -->
+<p><code>#include &lt;eve/concept/invocable.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Op</td><td></td></tr>
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Op, <span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1monoid.html">eve::monoid</a> =  <a class="code hl_concept" href="concepteve_1_1invocable__returning.html">invocable_returning&lt;Op, T, T, T&gt;</a></div>
+<div class="ttc" id="aconcepteve_1_1invocable__returning_html"><div class="ttname"><a href="concepteve_1_1invocable__returning.html">eve::invocable_returning</a></div><div class="ttdoc">Specifies that the function Op, when called with arguments of types Args..., returns a value converti...</div><div class="ttdef"><b>Definition</b> invocable.hpp:113</div></div>
+<div class="ttc" id="aconcepteve_1_1monoid_html"><div class="ttname"><a href="concepteve_1_1monoid.html">eve::monoid</a></div><div class="ttdoc">Specifies that Op is a monoid function operating on values of type T.</div><div class="ttdef"><b>Definition</b> invocable.hpp:130</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1monoid.html">monoid</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

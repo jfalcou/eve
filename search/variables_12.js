@@ -1,7 +1,7 @@
 var searchData=
 [
   ['saturate_0',['saturate',['../group__core__arithmetic_ga0a217828149774983e6eb60664ed1330.html#ga0a217828149774983e6eb60664ed1330',1,'eve']]],
-  ['scan_1',['scan',['../group__core__simd_ga43f2cdb2905195a056caad82efd0a557.html#ga43f2cdb2905195a056caad82efd0a557',1,'eve']]],
+  ['scan_1',['scan',['../group__core__simd_gaabc7c256adcf53420136da7f6de66fb7.html#gaabc7c256adcf53420136da7f6de66fb7',1,'eve']]],
   ['scatter_2',['scatter',['../group__core__simd_gaa6b4303cb1ae3c602c51414ba1963161.html#gaa6b4303cb1ae3c602c51414ba1963161',1,'eve']]],
   ['search_3',['search',['../group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html#ga854a1b4a431c6ddfde21e97c4188ab73',1,'eve::algo']]],
   ['sec_4',['sec',['../group__math__trig_ga5fa51e730488c41abb8402a3d1635877.html#ga5fa51e730488c41abb8402a3d1635877',1,'eve']]],

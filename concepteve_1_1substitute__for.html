@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::wide::wide</title>
+<title>E.V.E: eve::substitute_for Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html',''); initResizable(true); });
+$(function(){initNavTree('concepteve_1_1substitute__for.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -125,67 +125,34 @@ $(function(){initNavTree('structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.ht
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">eve::substitute_for Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
+</div><!--header-->
 <div class="contents">
-<a id="a007581d779fcbfc70bfcee970ee95451" name="a007581d779fcbfc70bfcee970ee95451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a007581d779fcbfc70bfcee970ee95451">&#9670;&#160;</a></span>wide()</h2>
 
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
-<div class="memtemplate">
-template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>, <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a> &gt; Generator&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; Type, Cardinal &gt;::wide </td>
-          <td>(</td>
-          <td class="paramtype">Generator &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>g</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
-<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1cardinal.html">cardinal</a>);</div>
-<div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition</b> generator.hpp:30</div></div>
-<div class="ttc" id="astructeve_1_1cardinal_html"><div class="ttname"><a href="structeve_1_1cardinal.html">eve::cardinal</a></div><div class="ttdoc">Computes the cardinal of a given type.</div><div class="ttdef"><b>Definition</b> cardinal.hpp:54</div></div>
-</div><!-- fragment --><p> <br  />
-</p>
-<p>and is supposed to return the value computed from the current index and the cardinal to store at said index.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">g</td><td>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> to use as a value generator</td></tr>
+<p>Specify that a type can be used as a substitute for another type after calling <code><a class="el" href="group__core__conversions_gae0215a0e7a791f53d8026ed30cd5c818.html#gae0215a0e7a791f53d8026ed30cd5c818" title="converts eve constant or just a value to a type.">eve::as_value</a></code> on a value of the first type.  
+<a href="#details">More...</a></p>
+
+<p><code>#include &lt;eve/concept/substitute.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Substitute</td><td>Type of the substitute value. </td></tr>
+    <tr><td class="paramname">Target</td><td>Type of the target value that will result from the <code><a class="el" href="group__core__conversions_gae0215a0e7a791f53d8026ed30cd5c818.html#gae0215a0e7a791f53d8026ed30cd5c818" title="converts eve constant or just a value to a type.">eve::as_value</a></code> call. </td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example:</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="comment">// Generates the wide [N-1 ... 0]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> c - i - 1;};</div>
-<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
-</div><!-- fragment --> 
-</div>
-</div>
-</div><!-- contents -->
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Substitute, <span class="keyword">typename</span> Target&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1substitute__for.html">eve::substitute_for</a> =  generator_for&lt;Substitute, Target&gt; || std::constructible_from&lt;Target, Substitute&gt;</div>
+<div class="ttc" id="aconcepteve_1_1substitute__for_html"><div class="ttname"><a href="concepteve_1_1substitute__for.html">eve::substitute_for</a></div><div class="ttdoc">Specify that a type can be used as a substitute for another type after calling eve::as_value on a val...</div><div class="ttdef"><b>Definition</b> substitute.hpp:27</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1wide.html">wide</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1substitute__for.html">substitute_for</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

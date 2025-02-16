@@ -9,6 +9,8 @@ var concepts =
       [ "relative_conditional_expr", "concepteve_1_1relative__conditional__expr.html", null ],
       [ "generator", "concepteve_1_1generator.html", null ],
       [ "irregular_predicate", "concepteve_1_1irregular__predicate.html", null ],
+      [ "invocable_returning", "concepteve_1_1invocable__returning.html", null ],
+      [ "monoid", "concepteve_1_1monoid.html", null ],
       [ "match_option", "concepteve_1_1match__option.html", null ],
       [ "only_if", "concepteve_1_1only__if.html", null ],
       [ "plain_scalar_value", "concepteve_1_1plain__scalar__value.html", null ],
@@ -18,6 +20,7 @@ var concepts =
       [ "scalar_value", "concepteve_1_1scalar__value.html", null ],
       [ "relaxed_logical_scalar_value", "concepteve_1_1relaxed__logical__scalar__value.html", null ],
       [ "logical_simd_value", "concepteve_1_1logical__simd__value.html", null ],
+      [ "substitute_for", "concepteve_1_1substitute__for.html", null ],
       [ "has_plain_translation", "concepteve_1_1has__plain__translation.html", null ],
       [ "value", "concepteve_1_1value.html", null ],
       [ "integral_value", "concepteve_1_1integral__value.html", null ],
@@ -43,6 +46,7 @@ var concepts =
       [ "has_store_equivalent", "concepteve_1_1has__store__equivalent.html", null ],
       [ "pattern_formula", "concepteve_1_1pattern__formula.html", null ],
       [ "callable_object", "concepteve_1_1callable__object.html", null ],
-      [ "like", "concepteve_1_1like.html", null ]
+      [ "like", "concepteve_1_1like.html", null ],
+      [ "generator_from", "concepteve_1_1generator__from.html", null ]
     ] ]
 ];

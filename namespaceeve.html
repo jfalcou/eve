@@ -285,6 +285,12 @@ Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1irregular__predicate.html">irregular_predicate</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">std::predicate but doesn't require regularity <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1invocable__returning.html">invocable_returning</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that the function <code>Op</code>, when called with arguments of types <code>Args...</code>, returns a value convertible to <code>R</code>. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1monoid.html">monoid</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that <code>Op</code> is a monoid function operating on values of type <code>T</code>. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1match__option.html">match_option</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the type associated to a given Keyword in an Option pack is equal to Type. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -311,6 +317,9 @@ Concepts</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a logical SIMD value. The concept <code>logical_simd_value&lt;T&gt;</code> is satisfied if and only if T is an instance of eve::logical and its contents satisfy eve::plain_simd_value. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1substitute__for.html">substitute_for</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type can be used as a substitute for another type after calling <code><a class="el" href="group__core__conversions_gae0215a0e7a791f53d8026ed30cd5c818.html#gae0215a0e7a791f53d8026ed30cd5c818" title="converts eve constant or just a value to a type.">eve::as_value</a></code> on a value of the first type. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1has__plain__translation.html">has_plain_translation</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type can be translated to a plain scalar value. The concept <code>has_plain_translation&lt;T&gt;</code> is satisfied if and only if calling <code>translate_t&lt;T&gt;</code> returns a type that is different from <code>T</code>. <br /></td></tr>
@@ -389,6 +398,8 @@ Concepts</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1like.html">like</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies semantic compatibility between wrapper/wrapped types. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1generator__from.html">generator_from</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -1297,9 +1308,9 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:ga0a217828149774983e6eb60664ed1330" id="r_ga0a217828149774983e6eb60664ed1330"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga0a217828149774983e6eb60664ed1330.html#ga0a217828149774983e6eb60664ed1330">saturate</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;saturate_t&gt;</td></tr>
 <tr class="memdesc:ga0a217828149774983e6eb60664ed1330"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>strict_elementwise_callable</code> computing the saturation of a value in a type.  <br /></td></tr>
 <tr class="separator:ga0a217828149774983e6eb60664ed1330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43f2cdb2905195a056caad82efd0a557" id="r_ga43f2cdb2905195a056caad82efd0a557"><td class="memItemLeft" align="right" valign="top">constexpr callable_scan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_ga43f2cdb2905195a056caad82efd0a557.html#ga43f2cdb2905195a056caad82efd0a557">scan</a> = {}</td></tr>
-<tr class="memdesc:ga43f2cdb2905195a056caad82efd0a557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the TODO.  <br /></td></tr>
-<tr class="separator:ga43f2cdb2905195a056caad82efd0a557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabc7c256adcf53420136da7f6de66fb7" id="r_gaabc7c256adcf53420136da7f6de66fb7"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_gaabc7c256adcf53420136da7f6de66fb7.html#gaabc7c256adcf53420136da7f6de66fb7">scan</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scan_t&gt;</td></tr>
+<tr class="memdesc:gaabc7c256adcf53420136da7f6de66fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the generalized prefix sum over a <a class="el" href="concepteve_1_1simd__value.html">simd value</a>.  <br /></td></tr>
+<tr class="separator:gaabc7c256adcf53420136da7f6de66fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6b4303cb1ae3c602c51414ba1963161" id="r_gaa6b4303cb1ae3c602c51414ba1963161"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_gaa6b4303cb1ae3c602c51414ba1963161.html#gaa6b4303cb1ae3c602c51414ba1963161">scatter</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scatter_t&gt;</td></tr>
 <tr class="memdesc:gaa6b4303cb1ae3c602c51414ba1963161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a SIMD register to memory using scattered indexes.  <br /></td></tr>
 <tr class="separator:gaa6b4303cb1ae3c602c51414ba1963161"><td class="memSeparator" colspan="2">&#160;</td></tr>

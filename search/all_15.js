@@ -5,7 +5,7 @@ var searchData=
   ['scalar_20to_20simd_20using_20eve_3a_3awide_2',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md103',1,'']]],
   ['scalar_5ftype_3',['scalar_type',['../structeve_1_1top__bits.html#a46b500a7f5599d078b9c1069f400aa56',1,'eve::top_bits']]],
   ['scaling_4',['Frequency Scaling.',['../freqscale.html',1,'']]],
-  ['scan_5',['scan',['../group__core__simd_ga43f2cdb2905195a056caad82efd0a557.html#ga43f2cdb2905195a056caad82efd0a557',1,'eve']]],
+  ['scan_5',['scan',['../group__core__simd_gaabc7c256adcf53420136da7f6de66fb7.html#gaabc7c256adcf53420136da7f6de66fb7',1,'eve']]],
   ['scatter_6',['scatter',['../group__core__simd_gaa6b4303cb1ae3c602c51414ba1963161.html#gaa6b4303cb1ae3c602c51414ba1963161',1,'eve']]],
   ['search_7',['search',['../group__algos_ga854a1b4a431c6ddfde21e97c4188ab73.html#ga854a1b4a431c6ddfde21e97c4188ab73',1,'eve::algo']]],
   ['sec_8',['sec',['../group__math__trig_ga5fa51e730488c41abb8402a3d1635877.html#ga5fa51e730488c41abb8402a3d1635877',1,'eve']]],
