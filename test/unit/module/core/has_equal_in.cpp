@@ -29,16 +29,15 @@ TTS_CASE_TPL("Check has_equal_in", eve::test::simd::all_types)
   {
     T    m        = iota + i;
     auto expected = x >= i;
-    TTS_EQUAL(expected, eve::has_equal_in(x, m)) << "x: " << x << "\nm: " << m;
+    TTS_EQUAL(eve::has_equal_in(x, m), expected) << "x: " << x << "\nm: " << m;
     m = eve::reverse(m);
-    TTS_EQUAL(expected, eve::has_equal_in(x, m)) << "x: " << x << "\nm: " << m;
+    TTS_EQUAL(eve::has_equal_in(x, m), expected) << "x: " << x << "\nm: " << m;
 
     if constexpr( std::signed_integral<eve::element_type_t<T>> )
     {
       m = -m;
 
-      TTS_EQUAL(expected,
-                eve::has_equal_in(x, m, [](auto a, auto b) { return eve::abs(a) == eve::abs(b); }))
+      TTS_EQUAL(eve::has_equal_in(x, m, [](auto a, auto b) { return eve::abs(a) == eve::abs(b); }), expected)
           << "x: " << x << "\nm: " << m;
     }
   }
@@ -65,7 +64,7 @@ TTS_CASE_TPL("Check has_equal_in, different type", eve::test::simd::all_types)
     L m {false};
     m.set(0, true);
     L actual = eve::has_equal_in(x, m, p);
-    TTS_EQUAL(expected, actual);
+    TTS_EQUAL(actual, expected);
   }
 };
 
@@ -79,7 +78,7 @@ TTS_CASE_TPL("Check has_equal_in, logical", eve::test::simd::all_types)
   y.set(0, false);
   TTS_EXPECT(eve::all(eve::has_equal_in(x, y)));
 
-  TTS_EQUAL(y, eve::has_equal_in(y, x, eve::logical_xor));
+  TTS_EQUAL(eve::has_equal_in(y, x, eve::logical_xor), y);
 };
 
 }
