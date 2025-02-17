@@ -94,7 +94,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
-      lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+      lfactorial_(EVE_REQUIRES(cpu_), O const& o, T n) noexcept
     {
       if constexpr(!O::contains(raw) && !O::contains(pedantic))
       {
@@ -111,7 +111,7 @@ namespace eve
       else
       {
         constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
-        auto           r   = eve::log(factorial(n));
+        auto           r   = eve::log(factorial[o](n));
 
         if( eve::all(n < max) ) return r;
         else
