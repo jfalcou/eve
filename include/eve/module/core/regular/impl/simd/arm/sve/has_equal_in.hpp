@@ -16,15 +16,6 @@
 
 namespace eve::detail
 {
-  template<typename T>
-  constexpr EVE_FORCEINLINE svbool_t sve_true_until(unsigned long idx) noexcept
-  {
-    if      constexpr (sizeof(T) == 1) return svwhilelt_b8(0ul, idx);
-    else if constexpr (sizeof(T) == 2) return svwhilelt_b16(0ul, idx);
-    else if constexpr (sizeof(T) == 4) return svwhilelt_b32(0ul, idx);
-    else if constexpr (sizeof(T) == 8) return svwhilelt_b64(0ul, idx);
-  }
-
   template<callable_options O, typename T, typename N, typename Pred>
   constexpr EVE_FORCEINLINE logical<wide<T, N>> has_equal_in_(EVE_REQUIRES(sve2_), O const& opts, wide<T, N> x, wide<T, N> match_against, Pred op) noexcept
     requires sve_abi<abi_t<T, N>>
