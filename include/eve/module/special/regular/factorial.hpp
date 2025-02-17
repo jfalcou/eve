@@ -47,7 +47,7 @@ namespace eve
 //!      // Regular overload
 //!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x)      noexcept; // 1
 //!
-//!      // Semantic option
+//!      // Semantic options
 //!      template <value T> constexpr as_wide_as_t<double,T> factorial[raw](T x) noexcept; // 2
 //!      template <value T> constexpr as_wide_as_t<double,T> factorial[pedantic](T x) noexcept; // 3
 //!
@@ -98,7 +98,7 @@ namespace eve
     {
       if constexpr(signed_integral_value<T>)
       {
-        if constexpr(!O::contains(raw))
+        if constexpr(!O::contains(raw) && !O::contains(pedantic))
           EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
         if  constexpr(O::contains(pedantic))
           return tgamma(inc(convert(n, as<double>())));
@@ -293,7 +293,7 @@ namespace eve
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
-      if constexpr(!O::contains(raw))
+      if constexpr(!O::contains(raw) && !O::contains(pedantic))
       {
         EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
         EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");

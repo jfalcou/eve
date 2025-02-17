@@ -51,9 +51,13 @@ namespace eve
 //!      // Regular overload
 //!      template <value T> constexpr as_wide_as_t<double,T> lfactorial(T x) noexcept; // 1
 //!
+//!      // Semantic options
+//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial[raw](T x) noexcept; // 2
+//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial[pedantic](T x) noexcept; // 3
+//!
 //!      // Lanes masking
-//!      constexpr auto factorial[conditional_expr auto c](value auto n)     noexcept; // 2
-//!      constexpr auto factorial[logical_value auto m](value auto n)        noexcept; // 2
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)     noexcept; // 4
+//!      constexpr auto factorial[logical_value auto m](value auto n)        noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -69,7 +73,10 @@ namespace eve
 //!        * If the entry is a floating point value which must be a flint,
 //!          the result is of the same type as the entry.
 //!        * If `n` elements are nor integer nor flint the result is undefined.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2  With the raw option the call never assert even for non flint or negative entries. The result is garbage for
+//!        such values, but not undefined behaviour.
+//!     3. With the pedantic option \f$\log(\Gamma(x+1))\f$ is returned. (more expansive using [log_gamma](@ref eve::log_gamma))
+//!     4. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
@@ -89,7 +96,7 @@ namespace eve
     constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
       lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
-      if constexpr(!O::contains(raw))
+      if constexpr(!O::contains(raw) && !O::contains(pedantic))
       {
         EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
         EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
