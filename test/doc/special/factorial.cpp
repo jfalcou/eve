@@ -17,7 +17,7 @@ int main()
   std::cout << "-> factorial(wf) = " << eve::factorial(wf) << "\n";
   std::cout << "-> factorial(wi) = " << eve::factorial(wi) << "\n";
   std::cout << "-> factorial(wu) = " << eve::factorial(wu) << "\n";
-  std::cout << "-> factorial|ra](wf1) = " << eve::factorial[eve::raw](wf1) << "\n";
+  std::cout << "-> factorial(wf1) = " << eve::factorial(wf1) << "\n";
   std::cout << "-> factorial[pedantic](wf1) = " << eve::factorial[eve::pedantic](wf1) << "\n";
 
 }

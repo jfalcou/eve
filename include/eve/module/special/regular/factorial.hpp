@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct factorial_t : elementwise_callable<factorial_t, Options, raw_option,  pedantic_option>
+  struct factorial_t : elementwise_callable<factorial_t, Options, pedantic_option>
   {
     template<eve::integral_value T>
     EVE_FORCEINLINE constexpr
@@ -45,15 +45,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x)      noexcept; // 1
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x)           noexcept; // 1
 //!
 //!      // Semantic options
-//!      template <value T> constexpr as_wide_as_t<double,T> factorial[raw](T x) noexcept; // 2
-//!      template <value T> constexpr as_wide_as_t<double,T> factorial[pedantic](T x) noexcept; // 3
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial[pedantic](T x) noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto factorial[conditional_expr auto c](value auto n)         noexcept; // 4
-//!      constexpr auto factorial[logical_value auto m](value auto n)            noexcept; // 4
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)              noexcept; // 3
+//!      constexpr auto factorial[logical_value auto m](value auto n)                 noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -66,9 +65,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
-//!        is returned. The call can assert if any entry is not a flint or not positive.
-//!     2  With the raw option the call never assert even for non flint or negative entries. The result is garbage for
-//!        such values but not undefined behaviour.
+//!        is returned. The call return a Nan for any entry which is not a flint or not positive.
 //!     3. With the pedantic option \f$\Gamma(x+1)\f$ is returned. (more expansive)
 //!     4. [The operation is performed conditionnaly](@ref conditional)
 //!
@@ -98,12 +95,14 @@ namespace eve
     {
       if constexpr(signed_integral_value<T>)
       {
-        if constexpr(!O::contains(raw) && !O::contains(pedantic))
-          EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
         if  constexpr(O::contains(pedantic))
           return tgamma(inc(convert(n, as<double>())));
         else
-          return factorial(convert(n, uint_from<T>()));
+        {
+          auto ltzn = is_ltz(n);
+          auto nn = if_else(ltzn,  zero, convert(eve::abs(n), uint_from<T>()));
+          return if_else(ltzn, allbits, factorial(nn));
+        }
       }
       else
       {
@@ -293,21 +292,17 @@ namespace eve
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
-      if constexpr(!O::contains(raw) && !O::contains(pedantic))
-      {
-        EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
-        EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-      }
       if  constexpr(O::contains(pedantic))
       {
         auto r =  tgamma(inc(convert(n, as<double>())));
-        r = if_else(is_flint(n) && is_ltz(n), eve::nan(as(r)), r);
         if constexpr( std::same_as<elt_t, double> ) return r;
         else return convert(r, as<float>());
       }
       else
       {
-        auto r = factorial(convert(n, uint_from<T>()));
+        auto bad = is_not_flint(n) || is_ltz(n) || n > 171;
+        auto nn = if_else(bad,  172, convert(eve::min(eve::abs(n), 172), uint_from<T>()));
+        auto r = if_else(bad, allbits, factorial(nn));
         if constexpr( std::same_as<elt_t, double> ) return r;
         else return convert(r, as<float>());
       }

@@ -16,7 +16,7 @@
 namespace eve
 {
  template<typename Options>
-  struct lfactorial_t : elementwise_callable<lfactorial_t, Options, raw_option, pedantic_option>
+  struct lfactorial_t : elementwise_callable<lfactorial_t, Options, pedantic_option>
   {
     template<eve::integral_value T>
     EVE_FORCEINLINE constexpr
@@ -52,12 +52,11 @@ namespace eve
 //!      template <value T> constexpr as_wide_as_t<double,T> lfactorial(T x) noexcept; // 1
 //!
 //!      // Semantic options
-//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial[raw](T x) noexcept; // 2
-//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial[pedantic](T x) noexcept; // 3
+//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial[pedantic](T x) noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto factorial[conditional_expr auto c](value auto n)     noexcept; // 4
-//!      constexpr auto factorial[logical_value auto m](value auto n)        noexcept; // 4
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)     noexcept; // 3
+//!      constexpr auto factorial[logical_value auto m](value auto n)        noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -72,11 +71,9 @@ namespace eve
 //!          element type is always double to try to avoid overflow as possible.
 //!        * If the entry is a floating point value which must be a flint,
 //!          the result is of the same type as the entry.
-//!        * If `n` elements are nor integer nor flint the result is undefined.
-//!     2  With the raw option the call never assert even for non flint or negative entries. The result is garbage for
-//!        such values, but not undefined behaviour.
-//!     3. With the pedantic option \f$\log(\Gamma(x+1))\f$ is returned. (more expansive using [log_gamma](@ref eve::log_gamma))
-//!     4. [The operation is performed conditionnaly](@ref conditional)
+//!        * If `n` elements are nor integer nor flint the result is NaN.
+//!     2. With the pedantic option \f$\log(\Gamma(x+1))\f$ is returned.
+//!     3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
@@ -94,13 +91,8 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
-      lfactorial_(EVE_REQUIRES(cpu_), O const& o, T n) noexcept
+      lfactorial_(EVE_REQUIRES(cpu_), O const& , T n) noexcept
     {
-      if constexpr(!O::contains(raw) && !O::contains(pedantic))
-      {
-        EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
-        EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
-      }
       if constexpr(O::contains(pedantic))
       {
         using elt_t = element_type_t<T>;
@@ -110,20 +102,25 @@ namespace eve
       }
       else
       {
-        constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
-        auto           r   = eve::log(factorial[o](n));
+        auto bad = is_not_flint(n) || is_ltz(n);
+        auto np = [](auto x) {
+          if constexpr(integral_value<T>) return convert(inc(x), as<double>());
+          else                            return inc(x);
+        }(n);
+        return if_else(bad, allbits, log_abs_gamma(np));
+//         constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
+//         auto           r   = eve::log(factorial(n));
 
-        if( eve::all(n < max) ) return r;
-        else
-        {
-          auto np = [](auto x)
-            {
-              if constexpr(integral_value<T>) return convert(inc(x), as<double>());
-              else                            return inc(x);
-            }(n);
+//         if( eve::all(n < max) ) return if_else(bad, allbits, r);
+//         else
+//         {
+//           auto np = [](auto x)
+//             {
+//               if constexpr(integral_value<T>) return convert(inc(x), as<double>());
+//               else                            return inc(x);
+//             }(n);
 
-          return if_else(n < max, r, log_abs_gamma(np));
-        }
+//           return if_else(bad, allbits, if_else(n < max, r, log_abs_gamma(np)));
       }
     }
   }

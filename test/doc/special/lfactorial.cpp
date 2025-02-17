@@ -10,12 +10,13 @@ int main()
   eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
 
   std::cout << "<- wf             = " << wf << "\n";
+  std::cout << "<- wf1            = " << wf1 << "\n";
   std::cout << "<- wi             = " << wi << "\n";
   std::cout << "<- wu             = " << wu << "\n";
 
   std::cout << "-> lfactorial(wf) = " << eve::lfactorial(wf) << "\n";
   std::cout << "-> lfactorial(wi) = " << eve::lfactorial(wi) << "\n";
   std::cout << "-> lfactorial(wu) = " << eve::lfactorial(wu) << "\n";
-  std::cout << "-> lfactorial[raw](wf1) = " << eve::lfactorial[eve::raw](wf1) << "\n";
+  std::cout << "-> lfactorial(wf1) = " << eve::lfactorial(wf1) << "\n";
   std::cout << "-> lfactorial[pedantic](wf1) = " << eve::lfactorial[eve::pedantic](wf1) << "\n";
 }
