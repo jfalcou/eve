@@ -73,7 +73,7 @@ namespace eve::detail
 
         for (size_t i = 16; i < byte_size; i += 16)
         {
-          needle = rotate(needle, eve::index<16 / sizeof(T)>);
+          needle = svext(needle, needle, 16 / sizeof(T));
           res = logical_or(res, logical<fw_t>{ svmatch(sve_true<T>(), haystack, needle) });
           // std::cout << "rotation by " << i << " " << std::endl;
           // std::cout << "match_against: " << match_against << std::endl;
