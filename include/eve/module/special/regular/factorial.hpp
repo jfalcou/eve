@@ -301,7 +301,7 @@ namespace eve
       else
       {
         auto bad = is_not_flint(n) || is_ltz(n) || n > 171;
-        auto nn = if_else(bad,  172, convert(eve::min(eve::abs(n), 172), uint_from<T>()));
+        auto nn = if_else(bad,  zero, convert(eve::min(eve::abs(n), T(172)), uint_from<T>())); //never ub
         auto r = if_else(bad, allbits, factorial(nn));
         if constexpr( std::same_as<elt_t, double> ) return r;
         else return convert(r, as<float>());
