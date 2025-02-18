@@ -108,19 +108,6 @@ namespace eve
           else                            return inc(x);
         }(n);
         return if_else(bad, allbits, log_abs_gamma(np));
-//         constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
-//         auto           r   = eve::log(factorial(n));
-
-//         if( eve::all(n < max) ) return if_else(bad, allbits, r);
-//         else
-//         {
-//           auto np = [](auto x)
-//             {
-//               if constexpr(integral_value<T>) return convert(inc(x), as<double>());
-//               else                            return inc(x);
-//             }(n);
-
-//           return if_else(bad, allbits, if_else(n < max, r, log_abs_gamma(np)));
       }
     }
   }
