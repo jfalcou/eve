@@ -51,60 +51,43 @@ namespace eve::detail
         fw_t haystack{x};
         fw_t needle{match_against};
 
-        // std::cout << "\n\nbyte_size: " << byte_size << std::endl;
-        // std::cout << "x: " << x << std::endl;
-        // std::cout << "base_needle: " << match_against << std::endl;
-
-
-        // rotate the needle by half
+        // Because of the way we perform the match, we want to broadcast the needle to at least twice its initial size.
+        // Say the needle occupies the first N lanes of the vector.
+        // We can use a first svext to rotate the needle around, resulting in a vector with only the last N lanes active.
+        // We can then use a second svext to select these lanes and append the first N lanes of the original needle to it.
+        // This will result in a vector with the needle occupying the first 2N lanes.
+        //
+        // Example for SVE2-1024 with 512 bits worth of input data:
+        // Haystack: [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ]  Needle: [ N0 | N1 | N2 | N3 | UD | UD | UD | UD ]
+        //
+        // Step 1: Rotate the needle: [ UD | UD | UD | UD | N0 | N1 | N2 | N3 ]
         fw_t rotated_needle = svext(needle, needle, fundamental_cardinal_v<T> - N::value);
 
-        // std::cout << "rotated_needle: " << rotated_needle << std::endl;
 
-        // concat the high part of the needle with the low part of the rotated needle
+        // Step 2: Select from the needle and the rotated needle:
+        // [ UD | UD | UD | UD | N0 | N1 | N2 | N3 ] [ N0 | N1 | N2 | N3 | UD | UD | UD | UD ]
+        //                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        //                     [ N0 | N1 | N2 | N3  |  N0 | N1 | N2 | N3 ]
         needle = svext(rotated_needle, needle, fundamental_cardinal_v<T> - N::value);
 
-        // std::cout << "broadcast_needle: " << needle << std::endl;
-
-
-        // shuffle_v2(needle, eve::as_pattern([](auto i, auto) { return (i + N::value); }));
-
+        // Step 3: Match the needle against the haystack.
+        // [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ]
+        // [ N0 | N1 | N2 | N3 | N0 | N1 | N2 | N3 ]
         logical<fw_t> res = svmatch(sve_true<T>(), haystack, needle);
 
+        // Step 4: rotate the needle by 128 bits and perform the match again until we have matched all the lanes.
+        // GCC is capable of unrolling and breaking the dependency chain in this loop.
+        //
+        // [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ] => [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ] => ...
+        // [ N1 | N2 | N3 | N0 | N1 | N2 | N3 | N0 ]    [ N2 | N3 | N0 | N1 | N2 | N3 | N0 | N1 ]
         for (size_t i = 16; i < byte_size; i += 16)
         {
           needle = svext(needle, needle, 16 / sizeof(T));
           res = logical_or(res, logical<fw_t>{ svmatch(sve_true<T>(), haystack, needle) });
-          // std::cout << "rotation by " << i << " " << std::endl;
-          // std::cout << "match_against: " << match_against << std::endl;
-          // std::cout << "res: " << res << std::endl;
-
         }
 
-        // std::cout << std::endl;
-
+        // Cast back the result to the expected wide size.
         return simd_cast(res, as<logical<wide<T, N>>>());
-
-        // logical<wide<T, N>> res = svmatch(mask, x, match_against);
-
-        // // std::cout << "\n\nbyte_size: " << byte_size << std::endl;
-        // // std::cout << "x: " << x << std::endl;
-        // // std::cout << "match_against: " << match_against << std::endl;
-
-        // for (size_t i = 16; i < byte_size; i += 16)
-        // {
-        //   match_against = rotate(match_against, eve::index<16 / sizeof(T)>);
-        //   // match_against = shuffle(match_against, eve::as_pattern([](auto j, auto) { return (j + (16 / sizeof(T))) % N::value; }));
-        //   res = logical_or(res, logical<wide<T, N>>{ svmatch(mask, x, match_against) });
-        //   // std::cout << "rotation by " << i << " " << std::endl;
-        //   // std::cout << "match_against: " << match_against << std::endl;
-        //   // std::cout << "res: " << res << std::endl;
-
-        // }
-
-        // // std::cout << std::endl;
-
-        // return res;
       }
     }
     else
