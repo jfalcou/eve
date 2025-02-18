@@ -39,7 +39,8 @@ TTS_CASE_WITH("Check behavior of log_gamma on wide",
                                             eve::nan(eve::as(e)) : x; }, a0), 5e-2);
 
   TTS_ULP_EQUAL(log_gamma(T(0.5)), T(std::lgamma(v_t(0.5))), 1.);
-  TTS_ULP_EQUAL(log_gamma(T(-35)), T(std::lgamma(v_t(-35))), 0.5);
+  TTS_ULP_EQUAL(log_gamma(T(-35)), eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(log_gamma(T(-2.5)), eve::nan(eve::as<T>()), 0.5);
   TTS_ULP_EQUAL(log_gamma(T(-75.3)), T(std::lgamma(v_t(-75.3))), 1);
 
   if constexpr( eve::platform::supports_invalids )
