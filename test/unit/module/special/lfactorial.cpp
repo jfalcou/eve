@@ -45,18 +45,18 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::lfactorial on wide", eve::test
   if constexpr( eve::integral_value<T> )
   {
     using v_t = eve::element_type_t<T>;
-    TTS_EQUAL(eve::lfactorial(T(10)), eve::log(d_t(3628800)));
-    TTS_EQUAL(eve::lfactorial(T(5)), eve::log(d_t(120)));
-    TTS_EQUAL(eve::lfactorial(T(0)), eve::log(d_t(1)));
-    TTS_EQUAL(eve::lfactorial(T(1)), eve::log(d_t(1)));
-    if constexpr( sizeof(v_t) > 1 ) TTS_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(d_t(201)));
+    TTS_ULP_EQUAL(eve::lfactorial(T(10)), eve::log(d_t(3628800)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(5)), eve::log(d_t(120)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(0)), eve::log(d_t(1)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(1)), eve::log(d_t(1)), 1.0);
+    if constexpr( sizeof(v_t) > 1 ) TTS_ULP_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(d_t(201)), 1.0);
   }
   else
   {
-    TTS_EQUAL(eve::lfactorial(T(10)), eve::log(T(3628800)));
-    TTS_EQUAL(eve::lfactorial(T(5)), eve::log(T(120)));
-    TTS_EQUAL(eve::lfactorial(T(0)), eve::log(T(1)));
-    TTS_EQUAL(eve::lfactorial(T(1)), eve::log(T(1)));
-    TTS_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(T(201)));
+    TTS_ULP_EQUAL(eve::lfactorial(T(10)), eve::log(T(3628800)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(5)), eve::log(T(120)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(0)), eve::log(T(1)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(1)), eve::log(T(1)), 1.0);
+    TTS_ULP_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(T(201)), 1.0);
   }
 };
