@@ -32,6 +32,6 @@ namespace eve::detail
     auto alt = alternative(cond, v, as(v));
 
     if      constexpr(C::is_complete && !C::is_inverted) return alt;
-    else   return svrintn_m(alt, cond.mask(as(v)), v);
+    else   return svrintn_m(alt, expand_mask(cond, as(v)), v);
   }
 }
