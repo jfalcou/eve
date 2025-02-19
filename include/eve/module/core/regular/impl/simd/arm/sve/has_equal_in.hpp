@@ -42,7 +42,7 @@ namespace eve::detail
         fw_t haystack{x};
         fw_t needle = shuffle(fw_t{match_against}, eve::as_pattern([](auto i, auto) { return i % N::value; }));
 
-        return svmatch(sve_true_until<T>(N::value), haystack, needle);
+        return svmatch(keep_first(N::value).mask(as<fw_t>{}), haystack, needle);
       }
       else
       {

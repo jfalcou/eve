@@ -11,7 +11,6 @@
 
 namespace
 {
-
 TTS_CASE_TPL("Check has_equal_in", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -80,5 +79,4 @@ TTS_CASE_TPL("Check has_equal_in, logical", eve::test::simd::all_types)
 
   TTS_EQUAL(eve::has_equal_in(y, x, eve::logical_xor), y);
 };
-
 }

@@ -49,13 +49,4 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
     return cond.mask(tgt);
   }
 }
-
-  template<typename T>
-  EVE_FORCEINLINE svbool_t sve_true_until(int idx) noexcept
-  {
-    if      constexpr (sizeof(T) == 1) return svwhilelt_b8(0, idx);
-    else if constexpr (sizeof(T) == 2) return svwhilelt_b16(0, idx);
-    else if constexpr (sizeof(T) == 4) return svwhilelt_b32(0, idx);
-    else if constexpr (sizeof(T) == 8) return svwhilelt_b64(0, idx);
-  }
 }
