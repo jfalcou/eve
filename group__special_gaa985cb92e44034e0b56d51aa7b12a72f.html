@@ -151,26 +151,30 @@ $(function(){initNavTree('group__special_gaa985cb92e44034e0b56d51aa7b12a72f.html
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
-<div class="line">   <span class="keyword">template</span> &lt;value T&gt; <span class="keyword">constexpr</span> as_wide_as_t&lt;double,T&gt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>(T x) <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;value T&gt; <span class="keyword">constexpr</span> as_wide_as_t&lt;double,T&gt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>(T x)           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;value T&gt; <span class="keyword">constexpr</span> as_wide_as_t&lt;double,T&gt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>[pedantic](T x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)              <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">factorial</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)                 <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
-<div class="ttc" id="agroup__special_gaa985cb92e44034e0b56d51aa7b12a72f_html_gaa985cb92e44034e0b56d51aa7b12a72f"><div class="ttname"><a href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a></div><div class="ttdeci">constexpr auto factorial</div><div class="ttdoc">elementwise_callable computing .</div><div class="ttdef"><b>Definition</b> factorial.hpp:79</div></div>
+<div class="ttc" id="agroup__special_gaa985cb92e44034e0b56d51aa7b12a72f_html_gaa985cb92e44034e0b56d51aa7b12a72f"><div class="ttname"><a href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a></div><div class="ttdeci">constexpr auto factorial</div><div class="ttdoc">elementwise_callable computing .</div><div class="ttdef"><b>Definition</b> factorial.hpp:84</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code>: must be integral or flint.</li>
+<li><code>n</code>: input value.</li>
 <li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
 <li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>The value of \( n!\) is returned. If the entry is of integral type a double based <a class="el" href="concepteve_1_1floating__value.html" title="The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...">floating_value</a> is returned.</li>
+<li>The value of \( n!\) is returned. If the entry is of integral type a double based <a class="el" href="concepteve_1_1floating__value.html" title="The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...">floating_value</a> is returned. The call return a Nan for any entry which is not a flint or not positive.</li>
+<li>With the pedantic option \(\Gamma(x+1)\) is returned. (more expansive)</li>
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
 </ol>
 <dl class="section warning"><dt>Warning</dt><dd>This function will overflow as soon as the input is greater than 171 for integral or double entries and if the entry is greater than 34 for float.</dd></dl>
@@ -187,16 +191,21 @@ $(function(){initNavTree('group__special_gaa985cb92e44034e0b56d51aa7b12a72f.html
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> 2*(i+c/2);});</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{-3.0, 0.5, 3.0, 4.0};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi = {93, 25, 32, 180, 1, 2, 3, 4};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf            = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1           = &quot;</span> &lt;&lt; wf1&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi            = &quot;</span> &lt;&lt; wi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu            = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; factorial(wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; factorial(wi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a>(wi) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; factorial(wu) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a>(wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; factorial(wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a>(wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; factorial[pedantic](wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa985cb92e44034e0b56d51aa7b12a72f">eve::factorial</a>[eve::pedantic](wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
 </div><!-- fragment --> 
