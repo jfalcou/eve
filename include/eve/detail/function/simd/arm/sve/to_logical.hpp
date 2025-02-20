@@ -24,6 +24,7 @@ namespace eve::detail
 
   template<relative_conditional_expr C, typename T, typename N>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> to_logical_incomplete([[maybe_unused]] sve_ tag, C c, eve::as<wide<T, N>> tgt) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     if constexpr (std::same_as<C, keep_first> || std::same_as<C, ignore_last>)
     {
@@ -47,7 +48,7 @@ namespace eve::detail
       }
       else
       {
-        return svnot_z(sve_true<T>(), to_logical_incomplete(tag, reverse_conditional(c, tgt), tgt));
+        return svnot_z(sve_true<T>(), to_logical_incomplete(tag, keep_first(c.offset(tgt)), tgt));
       }
     }
     else if constexpr (std::same_as<C, keep_between> || std::same_as<C, ignore_extrema>)
