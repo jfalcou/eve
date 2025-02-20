@@ -38,10 +38,17 @@ namespace eve::detail
     {
       int count = c.count(tgt);
 
-      if      constexpr (sizeof(T) == 1) return svwhilegt_b8(count, 0);
-      else if constexpr (sizeof(T) == 2) return svwhilegt_b16(count, 0);
-      else if constexpr (sizeof(T) == 4) return svwhilegt_b32(count, 0);
-      else if constexpr (sizeof(T) == 8) return svwhilegt_b64(count, 0);
+      if constexpr (current_api >= sve2)
+      {
+        if      constexpr (sizeof(T) == 1) return svwhilegt_b8(count, 0);
+        else if constexpr (sizeof(T) == 2) return svwhilegt_b16(count, 0);
+        else if constexpr (sizeof(T) == 4) return svwhilegt_b32(count, 0);
+        else if constexpr (sizeof(T) == 8) return svwhilegt_b64(count, 0);
+      }
+      else
+      {
+        return svnot_z(sve_true<T>(), to_logical_incomplete(tag, reverse_conditional(c, tgt), tgt));
+      }
     }
     else if constexpr (std::same_as<C, keep_between> || std::same_as<C, ignore_extrema>)
     {
