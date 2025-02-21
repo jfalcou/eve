@@ -16,11 +16,9 @@ namespace eve
   template<typename Options>
   struct significants_t : strict_elementwise_callable<significants_t, Options>
   {
-    template<floating_value T0, value T1>
+    template<floating_value T0, unsigned_value T1>
     EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
     {
-      EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
-      EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
       return EVE_DISPATCH_CALL(t0, n);
     }
 
@@ -44,14 +42,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto significants(auto floating_value x, auto value n) noexcept;
+//!      constexpr auto significants(auto floating_value x, auto unsigned_value n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!      * `x`: [floating argument](@ref eve::floating_value).
-//!      * `n` : [value argument](@ref eve::integral_value). Must be positive and integral or flint.
+//!      * `n` : [value argument](@ref eve::unsigned_integral_value).
 //!
 //!    **Return value**
 //!
@@ -70,22 +68,14 @@ namespace eve
 //! @}
 //================================================================================================
 
-namespace detail
-{
-  template<floating_value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
+  namespace detail
   {
-    using r_t = as_wide_as_t<T, U>;
-    if constexpr(integral_value<U>)
+    template<floating_value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
     {
-      return significants(r_t(a), convert(n, as_element<T>()));
-    }
-    else
-    {
-      EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
-      EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
-      auto e      = floor(inc(log10(eve::abs(a)) - n));
+      using r_t = as_wide_as_t<T, U>;
+      auto e      = floor(inc(log10(eve::abs(a)) - convert(n, as_element<T>())));
       auto factor = exp10(abs(e));
       auto rfactor = rec[pedantic](factor);
       auto tmp    = if_else(is_gez(e), nearest(a*rfactor)*factor, nearest(a*factor)*rfactor);
@@ -93,5 +83,4 @@ namespace detail
       return if_else(is_nez(n), tmp, allbits);
     }
   }
-}
 }
