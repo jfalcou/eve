@@ -18,6 +18,9 @@ namespace eve
     template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
     {
+      using e_t =  element_type_t<T>;
+      constexpr auto S = sizeof(e_t);
+      static_assert(I0 < S && I1 < S, "[eve::byte_swap_pairs]: some index(es) are out or range");
       return EVE_DISPATCH_CALL(a, i0, i1);
     }
 
