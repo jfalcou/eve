@@ -76,6 +76,8 @@ namespace eve
 //!        * If the element is a `NaN`, `NaN` is returned
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!   @note For integral negative entry, the result is zero.
+//!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp2)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
