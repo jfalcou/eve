@@ -54,7 +54,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral positive arguments](@ref eve::value) of flint
+//!     * `n` :  [integral positive arguments](@ref eve::value) of flint (nothing
+//!              is done to prevent the use with `n` not satisfying these conditions).
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!     * `a` :  [real floating argument](@ref eve::floating_value).
 //!
@@ -82,8 +83,6 @@ namespace eve
     abel_(EVE_REQUIRES(cpu_),  O const&, I n, T x, T a)
     {
       using r_t = as_wide_as_t<T, I>;
-      EVE_ASSERT(eve::all(is_gez(n)), "n  not positive");
-      EVE_ASSERT(eve::all(is_flint(n)), "n  not flint");
       auto nn = convert(n, as_element<r_t>());
       return if_else( is_eqz(n), one,
                       if_else(n == one(as(n)), x,
