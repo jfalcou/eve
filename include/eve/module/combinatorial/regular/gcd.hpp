@@ -12,6 +12,7 @@
 #include <eve/as_element.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
+#include <numeric>
 
 namespace eve
 {
@@ -67,7 +68,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!
 //!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
 //!      integral the greatest common divisor is defined only if `p` and `n` elements are
-//!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
+//!      [flint](@ref eve::is_flint). If any of the arguments is not flint, the result is undefined.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Least common multiple](https://en.wikipedia.org/wiki/Greatest_common_divisor)
@@ -88,102 +89,57 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
     {
       a = eve::abs(a);
       b = eve::abs(b);
-      if constexpr(O::contains(raw))
+      auto internal_gcd = []( auto a,  auto b)
       {
-        if constexpr( scalar_value<T> )
+        using r_t =  decltype(a);
+        auto test = is_nez(b);
+        r_t r(0);
+        while( eve::any(test) )
         {
-          while( b )
+          if constexpr(integral_value<r_t>)
           {
-            auto r = rem(a, b);
-            a      = b;
-            b      = r;
+            b  = if_else(test, b, allbits);
           }
-          return a;
-        }
-        else
-        {
-          auto test = is_nez(b);
-          T    r(0);
-          while( eve::any(test) )
+          r = rem(a, b);
+          if constexpr(scalar_value<r_t>)
           {
-            r    = rem(a, b);
-            a    = if_else(test, b, a);
+            a = b;
+            test = is_nez(r);
+          }
+          else
+          {
+            a = if_else(test, b, a);
             test = is_nez(r) && test;
-            b    = r;
           }
-          return a;
+          b = r;
         }
+        return a;
+      };
+
+      if constexpr(integral_scalar_value<T>)
+      {
+        return std::gcd(a, b);
       }
       else
       {
-        if constexpr(integral_scalar_value<T>)
+        using elt_t = element_type_t<T>;
+        if constexpr(  floating_value<T> || (sizeof(elt_t) == 8))
         {
-          while( b )
-          {
-            auto r = a % b;
-            a      = b;
-            b      = r;
-          }
-          return a;
+          return internal_gcd(a, b);
         }
-        else if constexpr(integral_simd_value<T>)
+        else
         {
-          using elt_t = element_type_t<T>;
-          if constexpr( sizeof(elt_t) == 8 )
+          if constexpr( sizeof(elt_t) == 4 )
           {
-            auto test = is_nez(b);
-            T    r(0);
-            while( eve::any(test) )
-            {
-              b    = if_else(test, b, allbits);
-              r    = a % b;
-              a    = if_else(test, b, a);
-              test = test && is_nez(r);
-              b    = r;
-            }
-            return a;
+            auto r = internal_gcd(convert(a, as<double>()), convert(b, as<double>()));
+            if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+            else                                    return convert(r, uint_from<T>());
           }
-          else
+          else if constexpr( sizeof(elt_t) <= 2 )
           {
-            if constexpr( sizeof(elt_t) == 4 )
-            {
-              auto r = gcd[raw](convert(a, as<double>()), convert(b, as<double>()));
-              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
-              else                                    return convert(r, uint_from<T>());
-            }
-            else if constexpr( sizeof(elt_t) <= 2 )
-            {
-              auto r = gcd[raw](convert(a, as<float>()), convert(b, as<float>()));
-              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
-              else                                    return convert(r, uint_from<T>());
-            }
-          }
-        }
-        else if constexpr(floating_value<T>)
-        {
-          EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
-          if constexpr( scalar_value<T> )
-          {
-            while( b )
-            {
-              auto r = rem(a, b);
-              a      = b;
-              b      = r;
-            }
-            return a;
-          }
-          else
-          {
-            auto test = is_nez(b);
-            T    r(0);
-            while( eve::any(test) )
-            {
-              r    = rem(a, b);
-              a    = if_else(test, b, a);
-              test = is_nez(r) && test;
-              b    = r;
-            }
-            return a;
+            auto r = internal_gcd(convert(a, as<float>()), convert(b, as<float>()));
+            if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+            else                                    return convert(r, uint_from<T>());
           }
         }
       }

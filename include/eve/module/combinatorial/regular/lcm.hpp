@@ -14,6 +14,7 @@
 #include <eve/module/core.hpp>
 #include <eve/traits/common_value.hpp>
 #include <eve/as_element.hpp>
+#include <numeric>
 
 namespace eve
 {
@@ -68,7 +69,7 @@ namespace eve
 //!
 //!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
 //!      integral the least common multiple is defined only if `p` and `n` elements are
-//!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
+//!      [flint](@ref eve::is_flint). If any of the arguments is not flint, the result is undefined.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor)
@@ -87,15 +88,21 @@ namespace eve
     template<typename T, callable_options O>
     constexpr T lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "eve::lcm: some entries are not flint");
       a = eve::abs(a);
       b = eve::abs(b);
-      if constexpr( scalar_value<T> )
+      if constexpr( integral_scalar_value<T>)
+      {
+        return std::lcm(a, b);
+      }
+      else if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
         else return b / gcd(a, b) * a;
       }
-      else return a * (b / gcd(a, if_else(b, b, eve::one)));
+      else
+      {
+        return a * (b / gcd(a, if_else(is_nez(b), b, eve::one)));
+      }
     }
   }
 }
