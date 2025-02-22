@@ -30,7 +30,8 @@ namespace eve
 //! @addtogroup polynomial
 //! @{
 //!   @var abel
-//!   @brief Computes the value of the Abel polynomial of order `n` at `x`: \f$x(x-an)^{n-1}\f$
+//!   @brief Computes the value of the Abel function of order `n` at `x`: \f$x(x-an)^{n-1}\f$.
+//!          for positive integer `n` it is Abel polynomial.
 //!
 //!   @groupheader{Header file}
 //!
@@ -54,8 +55,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral positive arguments](@ref eve::value) of flint (nothing
-//!              is done to prevent the use with `n` not fullfilling these conditions).
+//!     * `n` :  [value](@ref eve::value)
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!     * `a` :  [real floating argument](@ref eve::floating_value).
 //!
