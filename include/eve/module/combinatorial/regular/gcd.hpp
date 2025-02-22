@@ -17,7 +17,7 @@
 namespace eve
 {
 template<typename Options>
-struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
+struct gcd_t : elementwise_callable<gcd_t, Options>
 {
   template<eve::value T, value U>
   requires (same_lanes_or_scalar<T, U>)
