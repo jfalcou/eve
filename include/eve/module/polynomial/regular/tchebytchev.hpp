@@ -74,6 +74,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n` :  [integral positive arguments](@ref eve::integral_value).
+//!              (note that negative values return a NaN)
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!    **Return value**
