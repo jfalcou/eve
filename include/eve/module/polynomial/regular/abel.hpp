@@ -55,7 +55,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n` :  [integral positive arguments](@ref eve::value) of flint (nothing
-//!              is done to prevent the use with `n` not satisfying these conditions).
+//!              is done to prevent the use with `n` not fullfilling these conditions).
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!     * `a` :  [real floating argument](@ref eve::floating_value).
 //!
