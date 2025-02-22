@@ -6,6 +6,7 @@ int main()
 {
   eve::wide xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};
   eve::wide n{0, 1, 2, 3, 4, 5, 6, 7};
+  eve::wide n1{0.5, -3.0, 2.0, 3.0};
   eve::wide aa{-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0};
   double    x(0.5);
   double    a(-3/8.0);
@@ -13,6 +14,7 @@ int main()
 
   std::cout << "<- xd                                 = " << xd << '\n';
   std::cout << "<- n                                  = " << n  << '\n';
+  std::cout << "<- n1                                 = " << n1  << '\n';
   std::cout << "<- x                                  = " << x  << '\n';
   std::cout << "<- aa                                 = " << aa << '\n';
   std::cout << "<- a                                  = " << a  << '\n';
@@ -26,4 +28,6 @@ int main()
   std::cout << "-> jacobi(n, a, b 0.5)                = " << eve::jacobi(n, a, b, 0.5) << '\n';
   std::cout << "-> jacobi(n, a, b, x)                 = " << eve::jacobi(n, a, b, x)   << '\n';
   std::cout << "-> jacobi(n, aa, b, x)                = " << eve::jacobi(n, aa, b, x)   << '\n';
+  std::cout << "-> jacobi(n1, a, b, x)                = " << eve::jacobi(n1, a, b, x)   << '\n';
+  std::cout << "-> jacobi(-3.0, a, b, x)              = " << eve::jacobi(-3.0, a, b, x)  << '\n';
 }
