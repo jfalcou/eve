@@ -48,17 +48,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template <value T0, value T1> constexpr common_value_t<T0, T1> lcm(T0 p, T1 n) noexcept; // 1
+//!      template <integral_value T0, integral_value T1> constexpr common_value_t<T0, T1> lcm(T0 p, T1 n) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto lcm[conditional_expr auto c](value auto p, value auto n)        noexcept; // 2
-//!      constexpr auto lcm[logical_value auto m](value auto p, value auto n)           noexcept; // 2
+//!      constexpr auto lcm[conditional_expr auto c](integral_value auto p, integral_value auto n)        noexcept; // 2
+//!      constexpr auto lcm[logical_value auto m](integral_value auto p, integral_value auto n)           noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `p`, `n`: [values](@ref eve::value).
+//!     * `p`, `n`: [integral values](@ref eve::integral_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -66,10 +66,6 @@ namespace eve
 //!
 //!      1. Returns the least common multiple of |p| and |n|.
 //!      2. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
-//!      integral the least common multiple is defined only if `p` and `n` elements are
-//!      [flint](@ref eve::is_flint). If any of the arguments is not flint, the result is undefined.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor)

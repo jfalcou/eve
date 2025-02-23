@@ -74,7 +74,6 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
     {
-      using r_t = as_wide_as_t<T, U>;
       auto e      = floor(inc(log10(eve::abs(a)) - convert(n, as_element<T>())));
       auto factor = exp10(abs(e));
       auto rfactor = rec[pedantic](factor);

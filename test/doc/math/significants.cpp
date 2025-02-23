@@ -5,7 +5,7 @@
 
 int main()
 {
-  eve::wide qi = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide<std::uint32_t, eve::fixed<8>> qi = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
   float pf = 1.2345678901f;
 
    std::cout << std::setprecision(10);

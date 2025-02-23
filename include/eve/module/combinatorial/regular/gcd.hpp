@@ -46,17 +46,17 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template <value T0, value T1> constexpr common_value_t<T0, T1> gcd(T0 p, T1 n) noexcept; // 1
+//!      template <integral_value T0, integral_value T1> constexpr common_value_t<T0, T1> gcd(T0 p, T1 n) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto gcd[conditional_expr auto c](value auto p, value auto n)        noexcept; // 2
-//!      constexpr auto gcd[logical_value auto m](value auto p, value auto n)           noexcept; // 2
+//!      constexpr auto gcd[conditional_expr auto c](integral_value auto p, integral_value auto n)        noexcept; // 2
+//!      constexpr auto gcd[logical_value auto m](integral_value auto p, integral_value auto n)           noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `p`, `n`: [values](@ref eve::value).
+//!     * `p`, `n`: [integral values](@ref eve::integral_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -65,10 +65,6 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 //!      1. If both p and n are zero, returns zero. Otherwise, returns the greatest common divisor of |p|
 //!         and |n|.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
-//!      integral the greatest common divisor is defined only if `p` and `n` elements are
-//!      [flint](@ref eve::is_flint). If any of the arguments is not flint, the result is undefined.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Least common multiple](https://en.wikipedia.org/wiki/Greatest_common_divisor)
@@ -89,31 +85,31 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
     {
       a = eve::abs(a);
       b = eve::abs(b);
-      auto internal_gcd = []( auto a,  auto b)
+      auto internal_gcd = []( auto aa,  auto bb)
       {
-        using r_t =  decltype(a);
-        auto test = is_nez(b);
+        using r_t =  decltype(aa);
+        auto test = is_nez(bb);
         r_t r(0);
         while( eve::any(test) )
         {
           if constexpr(integral_value<r_t>)
           {
-            b  = if_else(test, b, allbits);
+            bb  = if_else(test, bb, allbits);
           }
-          r = rem(a, b);
+          r = rem(aa, bb);
           if constexpr(scalar_value<r_t>)
           {
-            a = b;
+            aa = bb;
             test = is_nez(r);
           }
           else
           {
-            a = if_else(test, b, a);
+            aa = if_else(test, bb, aa);
             test = is_nez(r) && test;
           }
-          b = r;
+          bb = r;
         }
-        return a;
+        return aa;
       };
 
       if constexpr(integral_scalar_value<T>)

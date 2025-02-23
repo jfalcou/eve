@@ -18,10 +18,6 @@ namespace eve
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
     {
-      if constexpr(eve::integral_value<T>)
-      {
-        using vt_t = eve::element_type_t<T>;
-      }
       return EVE_DISPATCH_CALL(s);
     }
 
