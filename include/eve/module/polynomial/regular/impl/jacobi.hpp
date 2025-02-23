@@ -17,8 +17,8 @@ namespace eve::detail
   {
     if constexpr(scalar_value<I>)
     {
-      EVE_ASSERT(is_flint(n), "n is not flint");
       using r_t = common_value_t<T, U, V>;
+      if(!is_flint(n) || is_ltz(n)) return eve::nan(eve::as(x));
       if( n == 0 ) return r_t(1);
       r_t  y0(1);
       auto ap1   = inc(alpha);
@@ -48,7 +48,7 @@ namespace eve::detail
     {
       if constexpr( std::same_as<T, I> && std::same_as<T, U> && std::same_as<T, V>)
       {
-        EVE_ASSERT(eve::all(is_flint(n)), "some elements of n are not flint");
+        x =  if_else(is_flint(n)&& is_gez(n), x,  eve::allbits);
         T    y0(1);
         auto ap1   = inc(alpha);
         auto apb   = alpha + beta;
@@ -85,6 +85,7 @@ namespace eve::detail
         r_t aalpha(convert(alpha, as<elt_t>()));
         r_t bbeta(convert(beta, as<elt_t>()));
         r_t xx(convert(x, as<elt_t>()));
+        xx =  if_else(is_flint(n)&&is_gez(n), x,  eve::allbits);
         return jacobi(nn, aalpha, bbeta, xx);
       }
     }

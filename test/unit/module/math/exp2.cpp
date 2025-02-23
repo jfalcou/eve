@@ -152,3 +152,12 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
   TTS_IEEE_EQUAL(eve::exp2[mask](a0),
             eve::if_else(mask, eve::exp2(a0), a0));
 };
+
+
+TTS_CASE_TPL("Check conversion behavior", eve::test::simd::signed_integers)
+<typename T>(tts::type<T>)
+{
+   using v_t  = eve::element_type_t<T>;
+   TTS_IEEE_EQUAL(eve::exp2(v_t(-1)), v_t(0));
+   TTS_IEEE_EQUAL(eve::exp2(T(-1)), T(0));
+};

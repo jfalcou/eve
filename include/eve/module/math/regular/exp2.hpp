@@ -18,12 +18,6 @@ namespace eve
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
     {
-      if constexpr(eve::integral_value<T>)
-      {
-        using vt_t = eve::element_type_t<T>;
-        EVE_ASSERT(eve::all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
-        EVE_ASSERT(eve::all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
-      }
       return EVE_DISPATCH_CALL(s);
     }
 
@@ -77,6 +71,8 @@ namespace eve
 //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!        * If the element is a `NaN`, `NaN` is returned
 //!   2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!   @note For integral negative entry, the result is zero.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp2)
