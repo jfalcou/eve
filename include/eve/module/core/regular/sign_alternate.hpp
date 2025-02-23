@@ -23,7 +23,6 @@ namespace eve
     template<eve::signed_value T>
     constexpr EVE_FORCEINLINE T operator()(T n) const noexcept
     {
-//      EVE_ASSERT(eve::all(is_flint(n)), "sign_alternate : some entries are not flint");
       return EVE_DISPATCH_CALL(n);
     }
 
