@@ -137,7 +137,7 @@ namespace eve
             {
               // If the conditional call is supported, call it
               // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
-              return func_t::deferred_call(arch, cond, rmv_cond, x0, xs...);
+              return func_t::deferred_call(arch, cond, opts, x0, xs...);
             }
             else
             {
