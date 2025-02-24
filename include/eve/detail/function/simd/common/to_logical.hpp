@@ -54,6 +54,37 @@ to_logical(T v) noexcept
 }
 
 template<relative_conditional_expr C, simd_value T>
+EVE_FORCEINLINE auto to_logical_incomplete(cpu_, C c, eve::as<T>) noexcept
+{
+  using l_t = typename as_logical<T>::type;
+
+  // When dealing with large vector of small integer, the size can't be
+  // represented. We then use an unsigned version of the index type.
+  // We don't just use unsigned indexes all the time cause on most cases,
+  // signed comparisons are faster and this will lead to pessimisation.
+  using i_t = std::conditional_t<(T::size() >= 128 && sizeof(element_type_t<l_t>) == 1),
+                                 typename l_t::bits_type,
+                                 as_integer_t<typename l_t::bits_type, signed>>;
+
+  auto           i     = eve::iota(eve::as<i_t>());
+  std::ptrdiff_t count = c.count(as<i_t> {});
+
+  if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
+  {
+    return bit_cast(i < i_t(count), as<l_t> {});
+  }
+  else if constexpr( std::same_as<C, keep_last> || std::same_as<C, ignore_first> )
+  {
+    return bit_cast(i >= i_t(l_t::size() - count), as<l_t> {});
+  }
+  else
+  {
+    std::ptrdiff_t offset = c.offset(as<i_t> {});
+    return bit_cast((i >= i_t {offset}) && (i < i_t {offset + count}), as<l_t> {});
+  }
+}
+
+template<relative_conditional_expr C, simd_value T>
 EVE_FORCEINLINE auto
 to_logical(C c, eve::as<T>) noexcept
 {
@@ -90,22 +121,7 @@ to_logical(C c, eve::as<T>) noexcept
   }
   else
   {
-    auto           i     = eve::iota(eve::as<i_t>());
-    std::ptrdiff_t count = c.count(as<i_t> {});
-
-    if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
-    {
-      return bit_cast(i < i_t(count), as<l_t> {});
-    }
-    else if constexpr( std::same_as<C, keep_last> || std::same_as<C, ignore_first> )
-    {
-      return bit_cast(i >= i_t(l_t::size() - count), as<l_t> {});
-    }
-    else
-    {
-      std::ptrdiff_t offset = c.offset(as<i_t> {});
-      return bit_cast((i >= i_t {offset}) && (i < i_t {offset + count}), as<l_t> {});
-    }
+    return to_logical_incomplete(current_api, c, as<T> {});
   }
 }
 }
