@@ -9,6 +9,7 @@
 
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/callable.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
@@ -22,7 +23,7 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr (std::same_as<Pred, is_equal_t<eve::options<>>> && match(c, category::int8, category::uint8, category::int16, category::uint16))
+    if constexpr (same_callable<Pred, eve::is_equal> && match(c, category::int8, category::uint8, category::int16, category::uint16))
     {
       using fw_t = wide<T, fundamental_cardinal_t<T>>;
       constexpr auto byte_size = sizeof(T) * N::value;
@@ -39,8 +40,8 @@ namespace eve::detail
         // operation used to build the second operand to be compiled down to a single "broadcast move" instruction.
         // There is no need to broadcast the values inside the first operand because we will just adjust the mask to only
         // consider the active lanes.
-        fw_t haystack{x};
-        fw_t needle = shuffle(fw_t{match_against}, eve::as_pattern([](auto i, auto) { return i % N::value; }));
+        const fw_t haystack{x};
+        const fw_t needle = shuffle(fw_t{match_against}, eve::as_pattern([](auto i, auto) { return i % N::value; }));
 
         return svmatch(keep_first(N::value).mask(as<fw_t>{}), haystack, needle);
       }
@@ -48,7 +49,7 @@ namespace eve::detail
       {
         // If we got here, we can assume that the size of the input is a multiple of 128 bits.
         // We can use svmatch and rotate the needle to ensure that we match every 128-bits lanes with eatch other.
-        fw_t haystack{x};
+        const fw_t haystack{x};
         fw_t needle{match_against};
 
         // Because of the way we perform the match, we want to broadcast the needle to at least twice its initial size.
@@ -56,37 +57,18 @@ namespace eve::detail
         // We can use a first svext to rotate the needle around, resulting in a vector with only the last N lanes active.
         // We can then use a second svext to select these lanes and append the first N lanes of the original needle to it.
         // This will result in a vector with the needle occupying the first 2N lanes.
-        //
-        // Example for SVE2-1024 with 512 bits worth of input data:
-        // Haystack: [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ]  Needle: [ N0 | N1 | N2 | N3 | UD | UD | UD | UD ]
-        //
-        // Step 1: Rotate the needle: [ UD | UD | UD | UD | N0 | N1 | N2 | N3 ]
         fw_t rotated_needle = svext(needle, needle, fundamental_cardinal_v<T> - N::value);
-
-
-        // Step 2: Select from the needle and the rotated needle:
-        // [ UD | UD | UD | UD | N0 | N1 | N2 | N3 ] [ N0 | N1 | N2 | N3 | UD | UD | UD | UD ]
-        //                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        //                     [ N0 | N1 | N2 | N3  |  N0 | N1 | N2 | N3 ]
         needle = svext(rotated_needle, needle, fundamental_cardinal_v<T> - N::value);
 
-        // Step 3: Match the needle against the haystack.
-        // [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ]
-        // [ N0 | N1 | N2 | N3 | N0 | N1 | N2 | N3 ]
         logical<fw_t> res = svmatch(sve_true<T>(), haystack, needle);
 
-        // Step 4: rotate the needle by 128 bits and perform the match again until we have matched all the lanes.
-        // GCC is capable of unrolling and breaking the dependency chain in this loop.
-        //
-        // [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ] => [ H0 | H1 | H2 | H3 | UD | UD | UD | UD ] => ...
-        // [ N1 | N2 | N3 | N0 | N1 | N2 | N3 | N0 ]    [ N2 | N3 | N0 | N1 | N2 | N3 | N0 | N1 ]
-        for (size_t i = 16; i < byte_size; i += 16)
-        {
+        // Rotate the needle by 128 bits and perform the match again until we have matched all the active lanes.
+        // Note: GCC is capable of breaking the dependency chain in this loop.
+        detail::for_<1, 1, byte_size / 16>([&](auto) {
           needle = svext(needle, needle, 16 / sizeof(T));
           res = logical_or(res, logical<fw_t>{ svmatch(sve_true<T>(), haystack, needle) });
-        }
+        });
 
-        // Cast back the result to the expected wide size.
         return simd_cast(res, as<logical<wide<T, N>>>());
       }
     }
