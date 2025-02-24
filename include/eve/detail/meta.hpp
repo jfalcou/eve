@@ -237,7 +237,7 @@ namespace eve::detail
     [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
     {
       ( body( std::integral_constant<type,Iter>{} ), ...);
-    }( std::make_integer_sequence<type,End - Begin>{});
+    }( std::make_integer_sequence<type, (End - Begin) / Step>{});
   }
 
   // Can't use a lambda because need to force inline

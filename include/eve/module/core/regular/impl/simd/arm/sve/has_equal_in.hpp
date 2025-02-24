@@ -64,7 +64,7 @@ namespace eve::detail
 
         // Rotate the needle by 128 bits and perform the match again until we have matched all the active lanes.
         // Note: GCC is capable of breaking the dependency chain in this loop.
-        detail::for_<1, 1, byte_size / 16>([&](auto) {
+        detail::for_<16, 16, byte_size>([&](auto) {
           needle = svext(needle, needle, 16 / sizeof(T));
           res = logical_or(res, logical<fw_t>{ svmatch(sve_true<T>(), haystack, needle) });
         });
