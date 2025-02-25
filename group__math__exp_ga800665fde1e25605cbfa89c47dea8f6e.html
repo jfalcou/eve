@@ -150,16 +150,16 @@ $(function(){initNavTree('group__math__exp_ga800665fde1e25605cbfa89c47dea8f6e.ht
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga800665fde1e25605cbfa89c47dea8f6e">significants</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1value.html">value</a> n) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga800665fde1e25605cbfa89c47dea8f6e">significants</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> n) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
-<div class="ttc" id="agroup__math__exp_ga800665fde1e25605cbfa89c47dea8f6e_html_ga800665fde1e25605cbfa89c47dea8f6e"><div class="ttname"><a href="#ga800665fde1e25605cbfa89c47dea8f6e">eve::significants</a></div><div class="ttdeci">constexpr auto significants</div><div class="ttdoc">Computes the rounding to n significants digits of the first input.</div><div class="ttdef"><b>Definition</b> significants.hpp:68</div></div>
+<div class="ttc" id="aconcepteve_1_1unsigned__value_html"><div class="ttname"><a href="concepteve_1_1unsigned__value.html">eve::unsigned_value</a></div><div class="ttdoc">The concept unsigned_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:84</div></div>
+<div class="ttc" id="agroup__math__exp_ga800665fde1e25605cbfa89c47dea8f6e_html_ga800665fde1e25605cbfa89c47dea8f6e"><div class="ttname"><a href="#ga800665fde1e25605cbfa89c47dea8f6e">eve::significants</a></div><div class="ttdeci">constexpr auto significants</div><div class="ttdoc">Computes the rounding to n significants digits of the first input.</div><div class="ttdef"><b>Definition</b> significants.hpp:66</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating argument</a>.</li>
-<li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">value argument</a>. Must be positive and integral or flint.</li>
+<li><code>n</code> : value argument.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the rounding to n significants digits of <code>x</code>. With null n the result is a NaN.</p>
@@ -172,13 +172,13 @@ $(function(){initNavTree('group__math__exp_ga800665fde1e25605cbfa89c47dea8f6e.ht
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qi = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt; qi = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
 <div class="line">  <span class="keywordtype">float</span> pf = 1.2345678901f;</div>
 <div class="line"> </div>
 <div class="line">   std::cout &lt;&lt; std::setprecision(10);</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qi = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; std::setprecision(8);</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; significants(pf, qi)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga800665fde1e25605cbfa89c47dea8f6e">eve::significants</a>(pf, qi) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
