@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -21,14 +20,22 @@ namespace eve
     requires(eve::same_lanes_or_scalar<X, CsNs...>)
     EVE_FORCEINLINE constexpr common_value_t<X, CsNs...>
     operator()(X x, CsNs... csns) const noexcept
-    { return EVE_DISPATCH_CALL(x, csns...); }
+    {
+      constexpr auto s = sizeof...(CsNs);
+      static_assert((s == 0) || s&1, "[eve::newton]: nodes and coefs have incompatible sizes");
+      return EVE_DISPATCH_CALL(x, csns...);
+    }
 
     template<floating_value X, value... Cs, value... Ns>
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, Cs...,  Ns...>
     operator()(X x, kumi::tuple<Cs...> const & t1, kumi::tuple<Ns...> const & t2) const noexcept
-    { return EVE_DISPATCH_CALL(x, t1, t2); }
+    {
+      static_assert((sizeof...(Cs) == 0 && sizeof...(Ns) == 0)||
+                 (sizeof...(Cs) ==  sizeof...(Ns)+1), "[eve::newton]: nodes and coefs have incompatible sizes");
+      return EVE_DISPATCH_CALL(x, t1, t2);
+    }
 
     EVE_CALLABLE_OBJECT(newton_t, newton_);
   };
@@ -110,8 +117,6 @@ namespace eve
     newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  kumi::tuple<Coefs...> const& cs
            , kumi::tuple<Nodes...> const& ns)
     {
-      EVE_ASSERT((kumi::size_v<decltype(cs)> == 0 && kumi::size_v<decltype(ns)> == 0)||
-                 (kumi::size_v<decltype(cs)> ==  kumi::size_v<decltype(ns)>+1), "nodes and coefs have incompatible sizes");
 
       using r1_t  =  common_value_t<X, Coefs...>;
       using r2_t  =  common_value_t<X, Nodes...>;
@@ -151,8 +156,7 @@ namespace eve
         return zero(as(xx));
       else
       {
-        EVE_ASSERT(s&1, "nodes and coefs have incompatible sizes");
-        kumi::result::generate_t<s, r_t> tcn{r_t{cns}...};
+         kumi::result::generate_t<s, r_t> tcn{r_t{cns}...};
         auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
         return newton[o](x,tc,tn);
       }

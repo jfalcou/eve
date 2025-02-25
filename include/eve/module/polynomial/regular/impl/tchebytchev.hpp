@@ -27,13 +27,12 @@ namespace eve::detail
   constexpr as_wide_as_t<T, I>
   tchebytchev_(EVE_REQUIRES(cpu_),  O const& o, I n, T x)
   {
-    EVE_ASSERT(eve::all(is_gez(n)), "n  not positive");
-    EVE_ASSERT(eve::all(is_flint(n)), "n  not flint");
     using r_t = as_wide_as_t<T, I>;
     if constexpr(O::contains(kind_1))
     {
       if constexpr(scalar_value<I>)
       {
+        if(is_ltz(n)) return eve::nan(eve::as<r_t>());
         if constexpr(scalar_value<T>)
         {
           switch( int(n) )
@@ -90,6 +89,7 @@ namespace eve::detail
         }
         else
         {
+          x = if_else(is_ltz(n), allbits, x);
           auto nn   = convert(n, as<eve::element_type_t<T>>());
           auto z    = eve::abs(x);
           auto r    = cos(nn * acos(x));
@@ -105,7 +105,8 @@ namespace eve::detail
     }
     else if constexpr(O::contains(kind_2))
     {
-      auto nn  = inc(convert(n, as_element(x)));
+      x = if_else(is_ltz(n), allbits, x);
+      auto nn  = eve::abs(inc(convert(n, as_element(x))));
       auto z   = eve::abs(x);
       auto acx = acos(x);
 

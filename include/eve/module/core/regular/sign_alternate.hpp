@@ -17,12 +17,12 @@
 namespace eve
 {
   template<typename Options>
-  struct sign_alternate_t : elementwise_callable<sign_alternate_t, Options>
+  struct sign_alternate_t : elementwise_callable<sign_alternate_t, Options, upward_option, downward_option,
+                                        to_nearest_option, toward_zero_option>
   {
     template<eve::signed_value T>
     constexpr EVE_FORCEINLINE T operator()(T n) const noexcept
     {
-      EVE_ASSERT(eve::all(is_flint(n)), "sign_alternate : some entries are not flint");
       return EVE_DISPATCH_CALL(n);
     }
 
@@ -49,22 +49,29 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto sign_alternate(signed_value auto n)                          noexcept; // 1
 //!
+//!      // Semantic options
+//!      constexpr auto sign_alternate[downward](signed_value auto n)                noexcept; // 2
+//!      constexpr auto sign_alternate[upward](signed_value auto n)                  noexcept; // 2
+//!      constexpr auto sign_alternate[to_nearest](signed_value auto n)              noexcept; // 2
+//!      constexpr auto sign_alternate[toward_zero](signed_value auto n)             noexcept; // 2
+//!
 //!      // Lanes masking
-//!      constexpr auto sign_alternate[conditional_expr auto c](signed_value auto n) noexcept; // 2
-//!      constexpr auto sign_alternate[logical_value auto m](signed_value auto n)    noexcept; // 2
+//!      constexpr auto sign_alternate[conditional_expr auto c](signed_value auto n) noexcept; // 3
+//!      constexpr auto sign_alternate[logical_value auto m](signed_value auto n)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [argument](@ref eve::value). Must be signed integral or flint.
+//!     * `n` :  [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      1.  [elementwise](@ref glossary_elementwise) \f$(-1)^n\f$ is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. [elementwise](@ref glossary_elementwise) \f$(-1)^\tilde n\f$ is returned,  where \f$\tilde n\f$ is the truncation of `n`.
+//!      2. The chosen rounding option is applyied to `n` before computation, instead of truncation.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sign_alternate.cpp}
@@ -78,9 +85,14 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    sign_alternate_(EVE_REQUIRES(cpu_), O const &, T const& n) noexcept
+    sign_alternate_(EVE_REQUIRES(cpu_), O const & o, T const& n) noexcept
     {
-      return if_else(is_odd(n), mone, one(as(n)));
+      if constexpr(integral_value<T>)
+        return if_else(is_odd(n), mone, one(as(n)));
+      else if constexpr(O::contains_any(upward, downward, to_nearest, toward_zero))
+        return if_else(is_odd(round[o](n)), mone, one(as(n)));
+      else
+        return if_else(is_odd(trunc(n)), mone, one(as(n)));
     }
   }
 }
