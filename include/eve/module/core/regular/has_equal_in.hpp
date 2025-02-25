@@ -64,11 +64,11 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template<simd_value T, typename Op>
-  //!      constexpr auto has_equal_in(T x, T match_against, Op op) noexcept;    //1
-  //!     
   //!      template<simd_value T>
-  //!      constexpr auto has_equal_in(T x, T match_against) noexcept;           //2
+  //!      constexpr auto has_equal_in(T x, T match_against) noexcept;           // 1
+  //!
+  //!      template<simd_value T, typename Op>
+  //!      constexpr auto has_equal_in(T x, T match_against, Op op) noexcept;    // 2
   //!   }
   //!   @endcode
   //!
@@ -79,7 +79,8 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!   A [logical SIMD value](@ref eve::logical_simd_value) built as described previously
+  //!   1. A [logical SIMD value](@ref eve::logical_simd_value) built as described previously.
+  //!   2. Same as 1. but uses a custom predicate instead of `eve::is_equal`.
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/has_equal_in.cpp}
