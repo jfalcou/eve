@@ -93,18 +93,106 @@ namespace eve
     friend constexpr bool operator==(callable const&, callable const&)                { return true;  }
   };
 
+  namespace detail
+  {
+    template< template<typename> class Func
+    , typename OptionsValues
+    , typename... Options
+    >
+    struct conditional_callable_impl : callable<Func, OptionsValues, Options...>
+    {
+      using base_t = callable<Func, OptionsValues, Options...>;
+      using func_t =  Func<OptionsValues>;
+
+      struct ignore { template<typename T> operator T() { return T{}; } };
+
+      template<callable_options O, typename T, typename... Ts>
+      constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+      {
+        if constexpr (match_option<condition_key, O, ignore_none_>)
+        {
+          return base_t::behavior(arch, opts, x0, xs...);
+        }
+        else
+        {
+          // Grab the condition and drop it from the callable
+          auto[cond, rmv_cond] = opts.extract(condition_key);
+          using cond_t =  decltype(cond);
+          [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
+
+          // Check that the mask and the value are of same kind if simd
+          constexpr bool compatible_mask = !(simd_value<decltype(cond.mask(as(x0)))> && scalar_value<decltype(f(x0, xs...))>);
+          static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
+
+          // Shush any other cascading errors
+          if constexpr(!compatible_mask) return ignore{};
+          // Handle masking SIMD with scalar with ?: to prevent issues in masking optimizations
+          else
+          // Or proceed to find the proper way to handle this masked call
+          {
+            // Check if func_(arch, cond, opts, ...) exists
+            constexpr bool supports_mask  = requires(cond_t c){ func_t::deferred_call(arch, c, opts, x0, xs...); };
+
+            if constexpr (supports_mask)
+            {
+              // If the conditional call is supported, call it
+              // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
+              return func_t::deferred_call(arch, cond, opts, x0, xs...);
+            }
+            else
+            {
+              // if not, call the non-masked version then mask piecewise
+              return detail::mask_op(cond, detail::return_2nd, x0, f(x0, xs...));
+            }
+          }
+        }
+      }
+    };
+  }
+
+  template< template<typename> class Func
+  , typename OptionsValues
+  , typename... Options
+  >
+  struct relative_conditional_callable : detail::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>
+  {
+    using base_t = detail::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>;
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    {
+      return base_t::behavior(arch, opts, x0, xs...);
+    }
+  };
+
+  template< template<typename> class Func
+  , typename OptionsValues
+  , typename... Options
+  >
+  struct conditional_callable : detail::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>
+  {
+    using base_t = detail::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>;
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    {
+      return base_t::behavior(arch, opts, x0, xs...);
+    }
+  };
+
   template< template<typename> class Func
           , typename OptionsValues
           , typename... Options
           >
-  struct strict_elementwise_callable : callable<Func, OptionsValues, conditional_option, Options...>
+  struct strict_elementwise_callable : conditional_callable<Func, OptionsValues, Options...>
   {
+    using base_t = conditional_callable<Func, OptionsValues, Options...>;
     using func_t =  Func<OptionsValues>;
 
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x, Ts... xs) const
     {
       constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
       constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
@@ -118,46 +206,17 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-    requires(match_option<condition_key,O,ignore_none_>)
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
-      constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
-      return adapt_call(arch,opts,x0,xs...);
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-    requires(!match_option<condition_key,O,ignore_none_>)
-    {
-      // Grab the condition and drop it from the callable
-      auto[cond, rmv_cond] = opts.extract(condition_key);
-      using cond_t =  decltype(cond);
-      [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
-
-      // Check that the mask and the value are of same kind if simd
-      constexpr bool compatible_mask = !(   simd_value<decltype(cond.mask(as(x0)))>
-                                        &&  scalar_value<decltype(f(x0,xs...))>
-                                        );
-      static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
-
-      // Shush any other cascading errors
-      if      constexpr(!compatible_mask) return ignore{};
-      // Handle masking SIMD with scalar with ?: to prevent issues in masking optimizations
-      else
-      // Or proceed to find the proper way to handle this masked call
+      if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        // Check if func_(arch, cond, opts, ...) exists
-        constexpr bool supports_mask  = requires(cond_t c){ func_t::deferred_call(arch, c, opts, x0, xs...); };
-
-        // If the conditional call is supported, call it
-        // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
-        if      constexpr( supports_mask ) return func_t::deferred_call(arch, cond, opts, x0, xs...);
-        else
-        {
-          // if not, call the non-masked version then mask piecewise
-          return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
-        }
+        constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch, opts, x0, xs...))>;
+        static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
+        return adapt_call(arch, opts, x0, xs...);
+      }
+      else
+      {
+        return base_t::behavior(arch, opts, x0, xs...);
       }
     }
   };
@@ -209,7 +268,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x, Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x, Ts... xs) const
     {
       // we test for no logicals first to prevent mishandling bools
       constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
@@ -265,7 +324,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
@@ -291,15 +350,15 @@ namespace eve
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
 
     template<callable_options O, kumi::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
     {
-      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch,opts,a...); }, x);
+      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
-      return base_t::behavior(arch,opts,x0,xs...);
+      return base_t::behavior(arch, opts, x0, xs...);
     }
   };
 
@@ -314,15 +373,15 @@ namespace eve
     using base_t = elementwise_callable<Func, OptionsValues, Options...>;
 
     template<callable_options O, kumi::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
     {
-      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch,opts,a...); }, x);
+      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0,  Ts... xs) const
     {
-      return base_t::behavior(arch,opts,x0,xs...);
+      return base_t::behavior(arch, opts, x0, xs...);
     }
   };
 
@@ -364,8 +423,9 @@ namespace eve
   struct constant_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
     using constant_callable_tag = void;
+
     template<typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )
