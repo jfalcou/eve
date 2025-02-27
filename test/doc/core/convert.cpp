@@ -11,6 +11,6 @@ int main()
   std::cout << "<- wu0                      = " << wu0 << "\n";
 
   std::cout << "-> convert(wf0, as<int>())              = " << eve::convert(wf0, eve::as<int>()) << "\n";
-  std::cout << "-> convert(wu0, as<char>())             = " << eve::convert(wu0, eve::as<char>()) << "\n";
-  std::cout << "-> convert[saturated](wu0, as<char>())  = " << eve::convert[eve::saturated](wu0, eve::as<char>()) << "\n";
+  std::cout << "-> convert(wu0, as<signed char>())             = " << eve::convert(wu0, eve::as<signed char>()) << "\n";
+  std::cout << "-> convert[saturated](wu0, as<signed char>())  = " << eve::convert[eve::saturated](wu0, eve::as<signed char>()) << "\n";
 }
