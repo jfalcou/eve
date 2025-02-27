@@ -67,8 +67,8 @@ namespace eve
   //!      template<simd_value T>
   //!      constexpr auto has_equal_in(T x, T match_against) noexcept;           // 1
   //!
-  //!      template<simd_value T, typename Op>
-  //!      constexpr auto has_equal_in(T x, T match_against, Op op) noexcept;    // 2
+  //!      template<simd_value T, simd_value U, simd_predicate<T, U> Op>
+  //!      constexpr auto has_equal_in(T x, U match_against, Op op) noexcept;    // 2
   //!   }
   //!   @endcode
   //!
