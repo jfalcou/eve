@@ -41,7 +41,7 @@ namespace eve::detail
         // There is no need to broadcast the values inside the first operand because we will just adjust the mask to only
         // consider the active lanes.
         const fw_t haystack{x};
-        const fw_t needle = shuffle(fw_t{match_against}, eve::as_pattern([](auto i, auto) { return i % N::value; }));
+        const fw_t needle = broadcast_lane(fw_t{match_against}, N{}, index<0>);
 
         return svmatch(keep_first(N::value).mask(as<fw_t>{}), haystack, needle);
       }
