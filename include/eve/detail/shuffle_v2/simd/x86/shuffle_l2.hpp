@@ -8,9 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/detail/pragmas.hpp>
 
-EVE_ALLOW_SHADOW_PRAGMA
 namespace eve::detail
 {
 
@@ -616,5 +614,3 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle;
 }
 }
-
-EVE_RESTORE_ALLOW_SHADOW_PRAGMA

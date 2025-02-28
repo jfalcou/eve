@@ -10,10 +10,6 @@
 
 #  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA _Pragma("GCC diagnostic pop")
 
-#  define EVE_ALLOW_SHADOW_PRAGMA _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wshadow\"")
-
-#  define EVE_RESTORE_ALLOW_SHADOW_PRAGMA _Pragma("GCC diagnostic pop")
-
 #elif defined(SPY_COMPILER_IS_CLANG)
 
 #  define EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA                                                 \
@@ -21,18 +17,10 @@
 
 #  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA _Pragma("clang diagnostic pop")
 
-#  define EVE_ALLOW_SHADOW_PRAGMA                                                 \
-    _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wshadow\"")
-
-#  define EVE_RESTORE_ALLOW_SHADOW_PRAGMA _Pragma("clang diagnostic pop")
-
 #else
 
 #  define EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 #  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
-
-#  define EVE_ALLOW_SHADOW_PRAGMA
-#  define EVE_RESTORE_ALLOW_SHADOW_PRAGMA
 
 #endif
 
