@@ -8,12 +8,9 @@
 #pragma once
 
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/detail/spy.hpp>
-#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wshadow"
-#endif
+#include <eve/detail/pragmas.hpp>
 
+EVE_ALLOW_SHADOW_PRAGMA
 namespace eve::detail
 {
 
@@ -620,6 +617,4 @@ requires(P::out_reg_size == P::reg_size)
 }
 }
 
-#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
-#pragma GCC diagnostic pop
-#endif
+EVE_RESTORE_ALLOW_SHADOW_PRAGMA

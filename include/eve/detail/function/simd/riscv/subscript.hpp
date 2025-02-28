@@ -31,7 +31,7 @@ insert_(EVE_REQUIRES(rvv_),
 requires rvv_abi<abi_t<T, N>>
 {
   // get mask with 1 on i'th element.
-  logical<wide<T, N>> mask {[i](int j, int) { return j == i; }};
+  logical<wide<T, N>> mask {[i](std::size_t j, int) { return j == i; }};
   v = if_else(mask, static_cast<T>(x), v);
 }
 
