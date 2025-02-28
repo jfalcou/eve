@@ -97,9 +97,9 @@ struct top_bits<Logical>
     else
     {
       // if static_bit_size < 8, we have some dirty bits in resulted unsigned,
-      // so cleanning them.
+      // so cleaning them.
       u_type mask = detail::set_lower_n_bits<u_type>(static_bits_size);
-      return raw_value & mask;
+      return u_type(raw_value & mask);
     }
   }
 
