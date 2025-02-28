@@ -39,13 +39,13 @@ EVE_FORCEINLINE auto shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
     // G == 1, because otherwise it'd be simplified
     static_assert(sizeof(T) < 8 && G == 1, "verifying assumptions");
 
-    if constexpr( constexpr auto slide = idxm::is_slide_left(P::most_repeated) )
+    if constexpr( constexpr auto slidel = idxm::is_slide_left(P::most_repeated) )
     {
-      return up_element_size_to(x, size_to_shift) >> eve::index<8 * sizeof(T) * *slide>;
+      return up_element_size_to(x, size_to_shift) >> eve::index<8 * sizeof(T) * *slidel>;
     }
-    else if constexpr( constexpr auto slide = idxm::is_slide_right(P::most_repeated) )
+    else if constexpr( constexpr auto slider = idxm::is_slide_right(P::most_repeated) )
     {
-      return up_element_size_to(x, size_to_shift) << eve::index<8 * sizeof(T) * *slide>;
+      return up_element_size_to(x, size_to_shift) << eve::index<8 * sizeof(T) * *slider>;
     }
     else return no_matching_shuffle;
   }

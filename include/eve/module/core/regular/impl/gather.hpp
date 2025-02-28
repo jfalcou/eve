@@ -25,14 +25,14 @@ namespace eve::detail
 
     if constexpr (C::is_complete && C::is_inverted)
     {
-      return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
+      return wide<U, N>{ [=](auto i, auto) { return ptr[static_cast<int>(v.get(i))]; } };
     }
     else
     {
       auto src = alternative(cx, wide<U, N>{}, as<wide<U, N>>{});
       auto m   = expand_mask(cx, as<wide<U, N>>{});
 
-      return wide<U, N>{ [=](auto i, auto) { return m.get(i) ? ptr[v.get(i)] : src.get(i); } };
+      return wide<U, N>{ [=](auto i, auto) { return m.get(i) ? ptr[static_cast<int>(v.get(i))] : src.get(i); } };
     }
   }
 

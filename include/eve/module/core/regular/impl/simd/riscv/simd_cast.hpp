@@ -95,7 +95,6 @@ EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_trunc(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires rvv_abi<abi_t<std::int8_t, N>>
 {
-  using out_wide_t        = wide<std::int8_t, M>;
   constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
   if constexpr( out_lmul == -8 ) return __riscv_vlmul_trunc_i8mf8(a);
   else if constexpr( out_lmul == -4 ) return __riscv_vlmul_trunc_i8mf4(a);
@@ -110,7 +109,6 @@ EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_extend(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires(rvv_abi<abi_t<std::int8_t, N>> && rvv_abi<abi_t<std::int8_t, M>>)
 {
-  using out_wide_t        = wide<std::int8_t, M>;
   constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
   if constexpr( out_lmul == -4 ) return __riscv_vlmul_ext_i8mf4(a);
   else if constexpr( out_lmul == -2 ) return __riscv_vlmul_ext_i8mf2(a);

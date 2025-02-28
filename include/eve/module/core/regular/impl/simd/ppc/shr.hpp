@@ -18,8 +18,6 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(vmx_), O const&, wide<T,N> v, wide<U,N> s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    using i_t = wide<as_integer_t<T, unsigned>, N>;
-
     auto s_c = convert(s, as<as_integer_t<T, unsigned>>{});
 
     if constexpr(std::is_signed_v<T>) return vec_sra(v.storage(), s_c.storage());

@@ -85,8 +85,6 @@ namespace eve::detail
       }
       else if constexpr (std::same_as<wide<T, N>, U>)
       {
-        constexpr auto c = categorize<wide<T, N>>();
-
         if constexpr( c == category::int32x2    ) return vmul_s32 (a, b);
         else  if constexpr( c == category::int32x4    ) return vmulq_s32(a, b);
         else  if constexpr( c == category::uint32x2   ) return vmul_u32 (a, b);
