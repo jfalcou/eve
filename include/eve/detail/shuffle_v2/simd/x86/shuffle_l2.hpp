@@ -8,6 +8,11 @@
 #pragma once
 
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/detail/spy.hpp>
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
 
 namespace eve::detail
 {
@@ -21,16 +26,16 @@ shuffle_l2_x86_repeated_128_shifts_and_slides(P p, fixed<G> g, wide<T, N> x)
   {
     return r;
   }
-  else if constexpr( constexpr auto slide = idxm::is_slide_left(*P::repeated_16); slide )
+  else if constexpr( constexpr auto slidel = idxm::is_slide_left(*P::repeated_16); slidel )
   {
-    constexpr int m = *slide * sizeof(T) * G;
+    constexpr int m = *slidel * sizeof(T) * G;
     if constexpr( P::reg_size == 16 ) return _mm_bsrli_si128(x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_bsrli_epi128(x, m);
     else if constexpr( P::reg_size == 64 ) return _mm512_bsrli_epi128(x, m);
   }
-  else if constexpr( constexpr auto slide = idxm::is_slide_right(*P::repeated_16); slide )
+  else if constexpr( constexpr auto slider = idxm::is_slide_right(*P::repeated_16); slider )
   {
-    constexpr int m = *slide * sizeof(T) * G;
+    constexpr int m = *slider * sizeof(T) * G;
     if constexpr( P::reg_size == 16 ) return _mm_bslli_si128(x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_bslli_epi128(x, m);
     else if constexpr( P::reg_size == 64 ) return _mm512_bslli_epi128(x, m);
@@ -614,3 +619,7 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle;
 }
 }
+
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic pop
+#endif

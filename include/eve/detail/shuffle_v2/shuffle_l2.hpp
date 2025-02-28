@@ -7,6 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/spy.hpp>
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
+
 #include <eve/detail/shuffle_v2/native_shuffle_helpers.hpp>
 
 namespace eve
@@ -39,4 +45,8 @@ EVE_CALLABLE_API(shuffle_l2_, shuffle_l2)
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/shuffle_v2/simd/ppc/shuffle_l2.hpp>
+#endif
+
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic pop
 #endif

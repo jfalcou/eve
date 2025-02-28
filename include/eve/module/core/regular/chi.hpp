@@ -21,10 +21,10 @@ namespace eve
     template<value T, value U, value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V>
-    operator()(T a, U lo, V hi) const noexcept
+    operator()(T a, U low, V high) const noexcept
     {
-      EVE_ASSERT(eve::all(lo <= hi), "[eve::chi] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL(a, lo, hi);
+      EVE_ASSERT(eve::all(low <= high), "[eve::chi] bounds are not correctly ordered");
+      return EVE_DISPATCH_CALL(a, low, high);
     }
 
     template<value T,  typename  B>

@@ -23,10 +23,10 @@ namespace eve
     template<value T, value U, value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V>
-    operator()(T a, U lo, V hi) const noexcept
+    operator()(T a, U low, V high) const noexcept
     {
-      EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL(a, lo, hi);
+      EVE_ASSERT(eve::all(low <= high), "[eve::clamp] bounds are not correctly ordered");
+      return EVE_DISPATCH_CALL(a, low, high);
     }
 
     EVE_CALLABLE_OBJECT(clamp_t, clamp_);
