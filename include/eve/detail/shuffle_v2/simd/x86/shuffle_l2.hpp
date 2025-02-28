@@ -21,16 +21,16 @@ shuffle_l2_x86_repeated_128_shifts_and_slides(P p, fixed<G> g, wide<T, N> x)
   {
     return r;
   }
-  else if constexpr( constexpr auto slide = idxm::is_slide_left(*P::repeated_16); slide )
+  else if constexpr( constexpr auto slidel = idxm::is_slide_left(*P::repeated_16); slidel )
   {
-    constexpr int m = *slide * sizeof(T) * G;
+    constexpr int m = *slidel * sizeof(T) * G;
     if constexpr( P::reg_size == 16 ) return _mm_bsrli_si128(x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_bsrli_epi128(x, m);
     else if constexpr( P::reg_size == 64 ) return _mm512_bsrli_epi128(x, m);
   }
-  else if constexpr( constexpr auto slide = idxm::is_slide_right(*P::repeated_16); slide )
+  else if constexpr( constexpr auto slider = idxm::is_slide_right(*P::repeated_16); slider )
   {
-    constexpr int m = *slide * sizeof(T) * G;
+    constexpr int m = *slider * sizeof(T) * G;
     if constexpr( P::reg_size == 16 ) return _mm_bslli_si128(x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_bslli_epi128(x, m);
     else if constexpr( P::reg_size == 64 ) return _mm512_bslli_epi128(x, m);
@@ -137,25 +137,25 @@ EVE_FORCEINLINE auto
 shuffle_l2_x86_repeated_128(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( !P::repeated_16 ) return no_matching_shuffle;
-  else if constexpr( auto r = shuffle_l2_x86_repeated_128_shifts_and_slides(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r0 = shuffle_l2_x86_repeated_128_shifts_and_slides(p, g, x);
+                     matched_shuffle<decltype(r0)> )
   {
-    return r;
+    return r0;
   }
-  else if constexpr( auto r = shuffle_l2_x86_repeated_128_4x32(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r1 = shuffle_l2_x86_repeated_128_4x32(p, g, x);
+                     matched_shuffle<decltype(r1)> )
   {
-    return r;
+    return r1;
   }
-  else if constexpr( auto r = shuffle_l2_x86_repeated_128_4_shorts(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r2 = shuffle_l2_x86_repeated_128_4_shorts(p, g, x);
+                     matched_shuffle<decltype(r2)> )
   {
-    return r;
+    return r2;
   }
-  else if constexpr( auto r = shuffle_l2_x86_repeated_128_alignr(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r3 = shuffle_l2_x86_repeated_128_alignr(p, g, x);
+                     matched_shuffle<decltype(r3)> )
   {
-    return r;
+    return r3;
   }
   else return no_matching_shuffle;
 }
@@ -323,26 +323,26 @@ EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
-  if constexpr( auto r = shuffle_l2_x86_repeated_128(p, g, x); matched_shuffle<decltype(r)> )
+  if constexpr( auto r0 = shuffle_l2_x86_repeated_128(p, g, x); matched_shuffle<decltype(r0)> )
   {
-    return r;
+    return r0;
   }
-  else if constexpr( auto r = shuffle_l2_x86_128_insert_one_zero(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r1 = shuffle_l2_x86_128_insert_one_zero(p, g, x);
+                     matched_shuffle<decltype(r1)> )
   {
-    return r;
+    return r1;
   }
-  else if constexpr( auto r = shuffle_l2_x86_repeated_256(p, g, x); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r2 = shuffle_l2_x86_repeated_256(p, g, x); matched_shuffle<decltype(r2)> )
   {
-    return r;
+    return r2;
   }
-  else if constexpr( auto r = shuffle_l2_x86_u64x2(p, g, x); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r3 = shuffle_l2_x86_u64x2(p, g, x); matched_shuffle<decltype(r3)> )
   {
-    return r;
+    return r3;
   }
-  else if constexpr( auto r = shuffle_l2_alignr_epi32_self(p, g, x); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r4 = shuffle_l2_alignr_epi32_self(p, g, x); matched_shuffle<decltype(r4)> )
   {
-    return r;
+    return r4;
   }
   else return no_matching_shuffle;
 }

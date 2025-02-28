@@ -94,10 +94,10 @@ namespace eve::detail
               un_t aa  = eve::abs(a);
               un_t bb  = eve::abs(b);
 
-              auto aux = [sgn](const T& mini, const T& maxi, const un_t& amini, const un_t& amaxi)
+              auto aux = [sgn](const T& mni, const T& mxi, const un_t& amini, const un_t& amaxi)
               {
                 un_t z = valmax(as<T>{}) / amaxi;
-                return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
+                return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mni * mxi;
               };
 
               if( bb >= aa ) return aux(a, b, aa, bb);
@@ -140,10 +140,10 @@ namespace eve::detail
             }
             else
             {
-              auto aux = [](const T& mini, const T& maxi)
+              auto aux = [](const T& mni, const T& mxi)
               {
-                T z = valmax(as<T>{}) / maxi;
-                return (z < mini) ? valmax(as<T>{}) : mini * maxi;
+                T z = valmax(as<T>{}) / mxi;
+                return (z < mni) ? valmax(as<T>{}) : mni * mxi;
               };
 
               if( b == 0 || a == 0 ) return zero(as<T>{});
