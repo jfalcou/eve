@@ -47,29 +47,13 @@ namespace eve::detail
       }
       else
       {
-        // If we got here, we can assume that the size of the input is a multiple of 128 bits.
-        // We can use svmatch and rotate the needle to ensure that we match every 128-bits lanes with eatch other.
-        const fw_t haystack{x};
-        fw_t needle{match_against};
+        auto all_rotations = try_each_group_position(match_against, eve::lane<16 / sizeof(T)>);
+        
+        auto all_tests = kumi::map([&](auto needle) -> eve::logical<wide<T, N>> {
+            return svmatch(sve_true<T>(), x, needle);
+        }, all_rotations);
 
-        // Because of the way we perform the match, we want to broadcast the needle to at least twice its initial size.
-        // Say the needle occupies the first N lanes of the vector.
-        // We can use a first svext to rotate the needle around, resulting in a vector with only the last N lanes active.
-        // We can then use a second svext to select these lanes and append the first N lanes of the original needle to it.
-        // This will result in a vector with the needle occupying the first 2N lanes.
-        fw_t rotated_needle = svext(needle, needle, fundamental_cardinal_v<T> - N::value);
-        needle = svext(rotated_needle, needle, fundamental_cardinal_v<T> - N::value);
-
-        logical<fw_t> res = svmatch(sve_true<T>(), haystack, needle);
-
-        // Rotate the needle by 128 bits and perform the match again until we have matched all the active lanes.
-        // Note: GCC is capable of breaking the dependency chain in this loop.
-        detail::for_<16, 16, byte_size>([&](auto) {
-          needle = svext(needle, needle, 16 / sizeof(T));
-          res = logical_or(res, logical<fw_t>{ svmatch(sve_true<T>(), haystack, needle) });
-        });
-
-        return simd_cast(res, as<logical<wide<T, N>>>());
+        return kumi::fold_left(eve::logical_or, all_tests);
       }
     }
     else
