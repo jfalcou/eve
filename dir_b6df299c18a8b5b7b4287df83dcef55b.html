@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::elementwise_callable&lt; Func, OptionsValues, Options &gt; Struct Template Reference</title>
+<title>E.V.E: eve/traits/overload/impl Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('structeve_1_1elementwise__callable.html',''); initResizable(true); });
+$(function(){initNavTree('dir_b6df299c18a8b5b7b4287df83dcef55b.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -126,50 +126,16 @@ $(function(){initNavTree('structeve_1_1elementwise__callable.html',''); initResi
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="structeve_1_1elementwise__callable-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::elementwise_callable&lt; Func, OptionsValues, Options &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__extensions.html">Extensions points</a></div></div></div>
+  <div class="headertitle"><div class="title">impl Directory Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>CRTP base class giving an EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> the elementwise function semantic.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/overload/impl/elementwise.hpp&gt;</code></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;template&lt; typename &gt; class Func, typename OptionsValues, typename... Options&gt;<br />
-struct eve::elementwise_callable&lt; Func, OptionsValues, Options &gt;</div><p><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/traits/overload.hpp&gt;</span></div>
-</div><!-- fragment --><p>Elementwise functions in EVE are built using a very common pattern. Inheriting from <a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">eve::elementwise_callable</a> simplifies the implementation of such <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> by just requiring the definition of the architecture specific implementations functions.</p>
-<p>Elementwise functions in EVE automatically supports masking, aggregated and emulated cases. Elementwise <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> are also able to handle mixed SIMD/Scalar calls by performing all the required conversions, letting the implementation of the deferred overload named in the EVE_CALLABLE_OBJECT to only handle common type cases.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Func</td><td>Type of current <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> being implemented. </td></tr>
-    <tr><td class="paramname">OptionsValues</td><td>Type of stored options. </td></tr>
-    <tr><td class="paramname">Options</td><td>List of supported option specifications.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd>strict_elementwise_callable </dd></dl>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:af3a21e9dd9b24936ba6cce9aae413f5c" id="r_af3a21e9dd9b24936ba6cce9aae413f5c"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1decorated__with_af3a21e9dd9b24936ba6cce9aae413f5c.html#af3a21e9dd9b24936ba6cce9aae413f5c">operator[]</a> (O o) const</td></tr>
-<tr class="memdesc:af3a21e9dd9b24936ba6cce9aae413f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an option to current callable.  <br /></td></tr>
-<tr class="separator:af3a21e9dd9b24936ba6cce9aae413f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac221db6bdb072c16cc54863e8f901bb2" id="r_ac221db6bdb072c16cc54863e8f901bb2"><td class="memItemLeft" align="right" valign="top"><a id="ac221db6bdb072c16cc54863e8f901bb2" name="ac221db6bdb072c16cc54863e8f901bb2"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>options</b> () const</td></tr>
-<tr class="memdesc:ac221db6bdb072c16cc54863e8f901bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current options' state, including processed default. <br /></td></tr>
-<tr class="separator:ac221db6bdb072c16cc54863e8f901bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1elementwise__callable.html">elementwise_callable</a></li>
+    <li class="navelem"><a class="el" href="dir_37aeed337be603fe9d2e51217e93bd20.html">eve</a></li><li class="navelem"><a class="el" href="dir_cb0de163ebfece1c7efff98228d0edb7.html">traits</a></li><li class="navelem"><a class="el" href="dir_24391fbba174bf2704c0f561cc85b332.html">overload</a></li><li class="navelem"><a class="el" href="dir_b6df299c18a8b5b7b4287df83dcef55b.html">impl</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->
