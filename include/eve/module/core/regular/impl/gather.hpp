@@ -18,13 +18,13 @@ namespace eve::detail
   //================================================================================================
   // Unaligned pointer
   template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const *ptr, wide<T, N> v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, U const *ptr, wide<T, N> v) noexcept
   {
     return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
   }
 
   template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), C const& cx, O const& opts, U const *ptr, wide<T, N> v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), C const& cx, O const&, U const *ptr, wide<T, N> v) noexcept
   {
     auto src = alternative(cx, wide<U, N>{}, as<wide<U, N>>{});
     auto m   = expand_mask(cx, as<wide<U, N>>{});
