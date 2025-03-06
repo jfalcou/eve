@@ -22,9 +22,6 @@ namespace eve::detail
     using out_t = wide<U, N>;
     using u_t   = make_integer_t<sizeof(U)>;
 
-    auto cx = opts[condition_key];
-    using C = decltype(cx);
-
     // Ignore All case : just return the alternative if any
     if      constexpr (C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
     // Aggregation cases
