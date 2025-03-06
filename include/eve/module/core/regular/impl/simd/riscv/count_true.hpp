@@ -13,36 +13,46 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, relative_conditional_expr C>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), C cond, logical<wide<T, N>> v) noexcept
-requires rvv_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete )
+  template<relative_conditional_expr C, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_impl(C cond, logical<wide<T, N>> v) noexcept
   {
-    if constexpr( !C::is_inverted ) return 0;
-    else return __riscv_vcpop(v, N::value);
+    if constexpr (C::is_complete)
+    {
+      if constexpr (!C::is_inverted) return 0;
+      else return __riscv_vcpop(v, N::value);
+    }
+    else
+    {
+      auto const m = cond.mask(as<wide<T, N>> {});
+      return __riscv_vcpop(m, v, N::value);
+    }
   }
-  else
+  
+  template<callable_options O, conditional_expr C, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const&, logical<wide<T, N>> v) noexcept
+    requires rvv_abi<abi_t<T, N>>
   {
-    auto const m = cond.mask(as<wide<T, N>> {});
-    return __riscv_vcpop(m, v, N::value);
+    return count_true_impl(cx, v);
   }
-}
 
-template<scalar_value T, typename N>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(rvv_), logical<wide<T, N>> v) noexcept
-requires rvv_abi<abi_t<T, N>>
-{
-  return count_true[ignore_none](v);
-}
+  template<callable_options O, conditional_expr C, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const&, top_bits<logical<wide<T, N>>> v) noexcept
+    requires rvv_abi<abi_t<T, N>>
+  {
+    return count_true_impl(cx, v.storage);
+  }
 
-template<scalar_value T, typename N>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(rvv_), top_bits<logical<wide<T, N>>> v) noexcept
-requires rvv_abi<abi_t<T, N>>
-{
-  return count_true[ignore_none](v.storage);
-}
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), logical<wide<T, N>> v) noexcept
+    requires rvv_abi<abi_t<T, N>>
+  {
+    return count_true_impl(ignore_none, v);
+  }
+
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), top_bits<logical<wide<T, N>>> v) noexcept
+    requires rvv_abi<abi_t<T, N>>
+  {
+    return count_true_impl(ignore_none, v.storage);
+  }
 }

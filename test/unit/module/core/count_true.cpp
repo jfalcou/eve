@@ -12,6 +12,16 @@
 TTS_CASE_TPL("Check eve::count_true return type", eve::test::simd::all_types)
 <typename T>(tts::type<T>) { TTS_EXPR_IS((eve::count_true(eve::logical<T>())), std::ptrdiff_t); };
 
+TTS_CASE("Check eve::count_true special cases")
+{
+  TTS_EQUAL(eve::count_true(true), 1);
+  TTS_EQUAL(eve::count_true(false), 0);
+  TTS_EQUAL(eve::count_true[true](true), 1);
+  TTS_EQUAL(eve::count_true[true](false), 0);
+  TTS_EQUAL(eve::count_true[false](true), 0);
+  TTS_EQUAL(eve::count_true[false](false), 0);
+};
+
 TTS_CASE_TPL("Check eve::count_true behavior", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {

@@ -13,23 +13,27 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, relative_conditional_expr C>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), C cond, logical<wide<T,N>> v) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  auto const m = cond.mask(as<wide<T,N>>{});
-        if constexpr(sizeof(T) == 1) return svcntp_b8(m,v);
-  else  if constexpr(sizeof(T) == 2) return svcntp_b16(m,v);
-  else  if constexpr(sizeof(T) == 4) return svcntp_b32(m,v);
-  else  if constexpr(sizeof(T) == 8) return svcntp_b64(m,v);
-}
+  template<conditional_expr C, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_impl(EVE_REQUIRES(sve_), C const& cond, logical<wide<T,N>> v) noexcept
+  {
+    auto const m = cond.mask(as<wide<T,N>>{});
+    if      constexpr (sizeof(T) == 1) return svcntp_b8(m,v);
+    else if constexpr (sizeof(T) == 2) return svcntp_b16(m,v);
+    else if constexpr (sizeof(T) == 4) return svcntp_b32(m,v);
+    else if constexpr (sizeof(T) == 8) return svcntp_b64(m,v);
+  }
 
-template<scalar_value T, typename N>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(sve_), logical<wide<T,N>> v) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  return count_true[ignore_none](v);
-}
+  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), C const& cond, O const&, logical<wide<T,N>> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    return count_true_impl(cond, v);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), O const&, logical<wide<T,N>> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    return count_true_impl(ignore_none, v);
+  }
 }
