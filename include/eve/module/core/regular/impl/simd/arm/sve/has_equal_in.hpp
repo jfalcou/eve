@@ -20,7 +20,7 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename N, typename Pred>
   constexpr EVE_FORCEINLINE logical<wide<T, N>> has_equal_in_(EVE_REQUIRES(sve2_), O const& opts, wide<T, N> x, wide<T, N> match_against, Pred op) noexcept
-    requires sve_abi<abi_t<T, N>>
+    requires (sve_abi<abi_t<T, N>> && (sizeof(T) <= 2))
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr (same_callable<Pred, eve::is_equal> && match(c, category::int8, category::uint8, category::int16, category::uint16))
