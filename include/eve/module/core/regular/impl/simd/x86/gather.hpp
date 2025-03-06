@@ -14,16 +14,8 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
-    requires x86_abi<abi_t<T, N>>
-  {
-    if constexpr (match_option<condition_key, O, ignore_none_>) return gather_impl(opts, p, v);
-    else                                                        return gather_impl(opts[condition_key], opts, p, v);
-  }
-
-    template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_masked_impl(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
   {
     using out_t = wide<U, N>;
     constexpr auto i = categorize<wide<T, N>>();
@@ -114,11 +106,19 @@ namespace eve::detail
     }
   }
 
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
+    requires x86_abi<abi_t<T, N>>
+  {
+    return gather_masked_impl(cx, opts, p, v);
+  }
+
   template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(O const& opts, U const* p, wide<T, N> v) noexcept
+  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     // Aggregation cases
-    if      constexpr(has_aggregated_abi_v<wide<U, N>>)
+    if constexpr(has_aggregated_abi_v<wide<U, N>>)
     {
       auto[l,h] = v.slice();
       return wide<U,N>(gather(p,l),gather(p,h));
@@ -149,8 +149,8 @@ namespace eve::detail
       else if constexpr(i_64x8  && c == category::float64x8 ) return _mm512_i64gather_pd   (v, p, 8);
       else if constexpr(i_32x16 && c == category::float32x16) return _mm512_i32gather_ps   (v, p, 4);
       else if constexpr(i_64x8  && c == category::float32x8 ) return _mm512_i64gather_ps   (v, p, 4);
-      else                                                    return gather_impl(ignore_none, opts, p, v);
+      else                                                    return gather_masked_impl(ignore_none, opts, p, v);
     }
-    else                                                      return gather_impl(ignore_none, opts, p, v);
+    else                                                      return gather_masked_impl(ignore_none, opts, p, v);
   }
 }
