@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/same_lanes.hpp>
+
 #include <concepts>
 #include <type_traits>
 
@@ -117,6 +119,25 @@ concept invocable = requires(F&& f, Args&&...args)
   //! @}
   //================================================================================================
 
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @{
+  //! @brief Specifies a predicate that returns a logical value
+  //! @brief Specifies a predicate that accepts [simd values](@ref eve::simd_value) of the same
+  //!        cardinal and returns a [logical simd value](@ref eve::logical_simd_value) of the same
+  //!        cardinal.
+  //!
+  //! @tparam Op The predicate to check
+  //! @tparam Args The arguments passed to the predicate
+  //================================================================================================
+  template <typename Op, typename... Args>
+  concept simd_predicate = (simd_value<Args> && ...) && requires (Op op, Args&& ... args) {
+    { op(std::forward<Args>(args)...) } -> logical_simd_value;
+    { op(std::forward<Args>(args)...) } -> same_lanes<Args...>;
+  };
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts

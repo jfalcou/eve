@@ -237,7 +237,7 @@ namespace eve::detail
     [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
     {
       ( body( std::integral_constant<type,Iter>{} ), ...);
-    }( std::make_integer_sequence<type,End - Begin>{});
+    }( std::make_integer_sequence<type, (End - Begin + Step - 1) / Step>{});
   }
 
   // Can't use a lambda because need to force inline
@@ -251,7 +251,7 @@ namespace eve::detail
   template<auto Begin, auto Step, auto End, typename Func>
   EVE_FORCEINLINE constexpr bool for_until_(Func f)
   {
-    return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin),(End - Begin) / Step>{}, f);
+    return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}, f);
   }
 
   // instance concept
