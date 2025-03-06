@@ -10,6 +10,7 @@ var concepts =
       [ "generator", "concepteve_1_1generator.html", null ],
       [ "irregular_predicate", "concepteve_1_1irregular__predicate.html", null ],
       [ "invocable_returning", "concepteve_1_1invocable__returning.html", null ],
+      [ "simd_predicate", "concepteve_1_1simd__predicate.html", null ],
       [ "monoid", "concepteve_1_1monoid.html", null ],
       [ "match_option", "concepteve_1_1match__option.html", null ],
       [ "only_if", "concepteve_1_1only__if.html", null ],

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::has_equal_in</title>
+<title>E.V.E: eve::simd_predicate Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__core__simd_gab527bfc7a280480154bf1ad490bcee50.html',''); initResizable(true); });
+$(function(){initNavTree('concepteve_1_1simd__predicate.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -125,64 +125,40 @@ $(function(){initNavTree('group__core__simd_gab527bfc7a280480154bf1ad490bcee50.h
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">eve::simd_predicate Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
+</div><!--header-->
 <div class="contents">
-<a id="gab527bfc7a280480154bf1ad490bcee50" name="gab527bfc7a280480154bf1ad490bcee50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab527bfc7a280480154bf1ad490bcee50">&#9670;&#160;</a></span>has_equal_in</h2>
 
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">callable_has_equal_in_ eve::has_equal_in = {}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Optional last parameter allows to ovewrite the equality from <code><a class="el" href="group__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code> to an arbitrary simd binary predicate.</p>
-<p>We took the idea for the operation from: "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
-<p><b>Parameters</b></p><ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1simd__value.html">argument</a>.</li>
-<li><code>match_against</code> <a class="el" href="concepteve_1_1simd__value.html">argument</a>.</li>
-<li><code>predicate</code> (default <code>eve::is_equal_to</code>)</li>
-</ul>
-<p><b>Return value</b></p>
-<p>logical built as described previously</p>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_it x = {2, 1, 2, 4};</div>
-<div class="line">  wide_it y = {0, 2, 3, 1};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                  = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- y                  = &quot;</span> &lt;&lt; y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(x, y) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab527bfc7a280480154bf1ad490bcee50">eve::has_equal_in</a>(x, y) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(y, x) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab527bfc7a280480154bf1ad490bcee50">eve::has_equal_in</a>(y, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__simd_gab527bfc7a280480154bf1ad490bcee50_html_gab527bfc7a280480154bf1ad490bcee50"><div class="ttname"><a href="#gab527bfc7a280480154bf1ad490bcee50">eve::has_equal_in</a></div><div class="ttdeci">constexpr callable_has_equal_in_ has_equal_in</div><div class="ttdoc">Given two simd_values: x, match_against returns a logical mask. The res[i] == eve::any(x[i] == match_...</div><div class="ttdef"><b>Definition</b> has_equal_in.hpp:45</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
-</div><!-- fragment --> 
-</div>
-</div>
-</div><!-- contents -->
+<p>Specifies a predicate that returns a logical value.  
+<a href="#details">More...</a></p>
+
+<p><code>#include &lt;eve/concept/invocable.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Specifies a predicate that accepts <a class="el" href="concepteve_1_1simd__value.html">simd values</a> of the same cardinal and returns a <a class="el" href="concepteve_1_1logical__simd__value.html">logical simd value</a> of the same cardinal.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Op</td><td>The predicate to check </td></tr>
+    <tr><td class="paramname">Args</td><td>The arguments passed to the predicate </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Op, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1simd__predicate.html">eve::simd_predicate</a> =  (<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value&lt;Args&gt;</a> &amp;&amp; ...) &amp;&amp; <span class="keyword">requires</span> (Op op, Args&amp;&amp; ... args) {</div>
+<div class="line">    { op(std::forward&lt;Args&gt;(args)...) } -&gt; <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a>;</div>
+<div class="line">    { op(std::forward&lt;Args&gt;(args)...) } -&gt; same_lanes&lt;Args...&gt;;</div>
+<div class="line">  }</div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__predicate_html"><div class="ttname"><a href="concepteve_1_1simd__predicate.html">eve::simd_predicate</a></div><div class="ttdoc">Specifies a predicate that returns a logical value.</div><div class="ttdef"><b>Definition</b> invocable.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition</b> vectorized.hpp:34</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1simd__predicate.html">simd_predicate</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

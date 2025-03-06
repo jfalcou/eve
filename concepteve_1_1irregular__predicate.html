@@ -144,9 +144,9 @@ $(function(){initNavTree('concepteve_1_1irregular__predicate.html',''); initResi
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> ... Args&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a> =  <span class="keyword">requires</span> (T&amp;&amp; f, Args&amp;&amp;... args) {</div>
-<div class="line">    { !f(EVE_FWD(args)...) } -&gt; std::convertible_to&lt;bool&gt;;</div>
+<div class="line">    { !f( <span class="keyword">static_cast&lt;</span>decltype(args) &amp;&amp;<span class="keyword">&gt;</span>(args) ...) } -&gt; std::convertible_to&lt;bool&gt;;</div>
 <div class="line">  }</div>
-<div class="ttc" id="aconcepteve_1_1irregular__predicate_html"><div class="ttname"><a href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></div><div class="ttdoc">std::predicate but doesn't require regularity</div><div class="ttdef"><b>Definition</b> invocable.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1irregular__predicate_html"><div class="ttname"><a href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></div><div class="ttdoc">std::predicate but doesn't require regularity</div><div class="ttdef"><b>Definition</b> invocable.hpp:97</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
