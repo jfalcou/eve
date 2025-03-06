@@ -16,9 +16,8 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept
-    requires sve_abi<abi_t<T, N>>
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
   {
     using out_t = wide<U, N>;
     using u_t   = make_integer_t<sizeof(U)>;
@@ -48,5 +47,19 @@ namespace eve::detail
       if constexpr(C::has_alternative)  return eve::replace_ignored(res, cx, s);
       else                              return res;
     }
+  }
+
+  template<callable_options O, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    return gather_impl(ignore_none, opts, p, v);
+  }
+
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    return gather_impl(cx, opts, p, v);
   }
 }

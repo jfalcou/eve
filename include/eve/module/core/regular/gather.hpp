@@ -12,19 +12,17 @@
 namespace eve
 {
   template<typename Options>
-  struct gather_t : callable<gather_t, Options, conditional_option>
+  struct gather_t : conditional_callable<gather_t, Options>
   {
     template<arithmetic_value T, integral_value U>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(T const* ptr, U idx) const noexcept
     {
-      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
       return EVE_DISPATCH_CALL(ptr, idx);
     }
 
     template<arithmetic_value T, integral_value U, typename N>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(aligned_ptr<T, N> ptr, U idx) const noexcept
     {
-      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
       return EVE_DISPATCH_CALL(ptr, idx);
     }
 
