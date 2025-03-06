@@ -13,14 +13,14 @@
 
 namespace eve::detail
 {
-  template<conditional_expr C, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_impl(EVE_REQUIRES(sve_), C const& cond, logical<wide<T,N>> v) noexcept
+  template<conditional_expr C, logical_simd_value T>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_impl(C const& cond, T v) noexcept
   {
-    auto const m = cond.mask(as<wide<T,N>>{});
-    if      constexpr (sizeof(T) == 1) return svcntp_b8(m,v);
-    else if constexpr (sizeof(T) == 2) return svcntp_b16(m,v);
-    else if constexpr (sizeof(T) == 4) return svcntp_b32(m,v);
-    else if constexpr (sizeof(T) == 8) return svcntp_b64(m,v);
+    auto const m = cond.mask(as(t));
+    if      constexpr (sizeof(T) == 1) return svcntp_b8(m, v);
+    else if constexpr (sizeof(T) == 2) return svcntp_b16(m, v);
+    else if constexpr (sizeof(T) == 4) return svcntp_b32(m, v);
+    else if constexpr (sizeof(T) == 8) return svcntp_b64(m, v);
   }
 
   template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
