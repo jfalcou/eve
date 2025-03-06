@@ -23,7 +23,12 @@ namespace eve::detail
     requires (sve_abi<abi_t<T, N>> && (sizeof(T) <= 2))
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr (same_callable<Pred, eve::is_equal> && match(c, category::int8, category::uint8, category::int16, category::uint16))
+    
+    if constexpr (!same_callable<Pred, eve::is_equal> || !match(c, category::int8, category::uint8, category::int16, category::uint16))
+    {
+      return has_equal_in.behavior(cpu_{}, opts, x, match_against, op);
+    }
+    else
     {
       using fw_t = wide<T, fundamental_cardinal_t<T>>;
       constexpr auto byte_size = sizeof(T) * N::value;
@@ -55,10 +60,6 @@ namespace eve::detail
 
         return kumi::fold_left(eve::logical_or, all_tests);
       }
-    }
-    else
-    {
-      return has_equal_in.behavior(cpu_{}, opts, x, match_against, op);
     }
   }
 }
