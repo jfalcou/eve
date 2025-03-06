@@ -40,11 +40,6 @@ namespace eve::detail
       }
       else if constexpr (byte_size < 16)
       {
-        // We have less than 128 bits, we need broadcast the input values to at least 128 bits worth of space.
-        // We could just build a wide of 128 bits here, but using the native size is important as it will allow the shuffle
-        // operation used to build the second operand to be compiled down to a single "broadcast move" instruction.
-        // There is no need to broadcast the values inside the first operand because we will just adjust the mask to only
-        // consider the active lanes.
         const fw_t haystack{x};
         const fw_t needle = broadcast_lane(fw_t{match_against}, N{}, index<0>);
 
