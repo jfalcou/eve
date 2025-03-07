@@ -33,20 +33,20 @@ namespace eve::detail
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_(EVE_TARGETS(rvv_), cx, opts, v.storage);
+    return count_true_(EVE_TARGETS(current_api_type), cx, opts, v.storage);
   }
 
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_(EVE_TARGETS(rvv_), ignore_none, opts, v);
+    return count_true_(EVE_TARGETS(current_api_type), ignore_none, opts, v);
   }
 
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_(EVE_TARGETS(rvv_), ignore_none, opts, v.storage);
+    return count_true_(EVE_TARGETS(current_api_type), ignore_none, opts, v.storage);
   }
 }

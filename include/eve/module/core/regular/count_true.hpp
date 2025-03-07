@@ -47,12 +47,12 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overloads
-  //!      constexpr auto count_true(relaxed_logical_value auto x)                              noexcept; // 1
-  //!      constexpr auto count_true(top_bits auto t)                                           noexcept; // 1
+  //!      constexpr std::ptrdiff_t count_true(relaxed_logical_value auto x)                              noexcept; // 1
+  //!      constexpr std::ptrdiff_t count_true(top_bits auto t)                                           noexcept; // 1
   //!
   //!      // Lanes masking
-  //!      constexpr auto count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-  //!      constexpr auto count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!      constexpr std::ptrdiff_t count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+  //!      constexpr std::ptrdiff_t count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
   //!   }
   //!   @endcode
   //!

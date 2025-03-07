@@ -29,6 +29,6 @@ namespace eve::detail
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    return count_true_(EVE_TARGETS(sve_), ignore_none, opts, v);
+    return count_true_(EVE_TARGETS(current_api_type), ignore_none, opts, v);
   }
 }
