@@ -47,7 +47,7 @@ namespace eve::detail
   template<callable_options O, logical_simd_value L>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, L m) noexcept
   {
-    return first_true_(EVE_TARGETS(current_api_type), cx, opts, m);
+    return first_true_(EVE_TARGETS(current_api_type), ignore_none, opts, m);
   }
 
   template<callable_options O, conditional_expr C, logical_simd_value L>
