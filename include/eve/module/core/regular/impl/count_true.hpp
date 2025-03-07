@@ -36,10 +36,11 @@ namespace eve::detail
   }
 
   template<callable_options O, conditional_expr C, value T>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_),  C const& cx, O const&, logical<T> v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), C const& cx, O const&, logical<T> v) noexcept
   {
-    if constexpr (scalar_value<T>) return count_true[cx](v.value());
-    else                           return count_true(top_bits{v, cx});
+    if      constexpr (scalar_value<T>)              return count_true[cx](v.value());
+    else if constexpr (relative_conditional_expr<C>) return count_true(top_bits{v, cx});
+    else                                             return count_true[cx](top_bits{v});
   }
 
   template<callable_options O, logical_simd_value Logical>
@@ -60,12 +61,14 @@ namespace eve::detail
   {
     if constexpr (!top_bits<Logical>::is_aggregated)
     {
-      constexpr auto bitmask = mmask.as_int();
-      return std::popcount(bitmask & cx.mask(as(bitmask))) / top_bits<Logical>::bits_per_element;
+      auto vm = mmask.as_int();
+      vm &= top_bits{cx.mask(as<Logical>{})}.as_int();
+      return std::popcount(vm) / top_bits<Logical>::bits_per_element;
     }
     else
     {
-      return count_true[cx](mmask.storage[0]) + count_true[cx](mmask.storage[1]);
+      auto [cx_l, cx_h] = cx.mask(as<Logical>()).slice();
+      return count_true[cx_l](mmask.storage[0]) + count_true[cx_h](mmask.storage[1]);
     }
   }
 }
