@@ -13,8 +13,9 @@
 
 namespace eve::detail
 {
-  template<relative_conditional_expr C, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_impl(C cond, logical<wide<T, N>> v) noexcept
+  template<callable_options O, conditional_expr C, scalar_value T, typename N>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const&, logical<wide<T, N>> v) noexcept
+    requires rvv_abi<abi_t<T, N>>
   {
     if constexpr (C::is_complete)
     {
@@ -27,32 +28,25 @@ namespace eve::detail
       return __riscv_vcpop(m, v, N::value);
     }
   }
-  
-  template<callable_options O, conditional_expr C, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const&, logical<wide<T, N>> v) noexcept
-    requires rvv_abi<abi_t<T, N>>
-  {
-    return count_true_impl(cx, v);
-  }
 
   template<callable_options O, conditional_expr C, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const&, top_bits<logical<wide<T, N>>> v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), C const& cx, O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_impl(cx, v.storage);
+    return count_true_(EVE_TARGETS(rvv_), cx, opts, v.storage);
   }
 
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_impl(ignore_none, v);
+    return count_true_(EVE_TARGETS(rvv_), ignore_none, opts, v);
   }
 
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const&, top_bits<logical<wide<T, N>>> v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
-    return count_true_impl(ignore_none, v.storage);
+    return count_true_(EVE_TARGETS(rvv_), ignore_none, opts, v.storage);
   }
 }
