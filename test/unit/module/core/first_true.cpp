@@ -21,6 +21,10 @@ TTS_CASE("Check eve::first_true bool")
   TTS_EXPR_IS((eve::first_true(bool {})), std::optional<std::ptrdiff_t>);
   TTS_EQUAL((eve::first_true(true)), 0);
   TTS_EQUAL((eve::first_true(false)), std::nullopt);
+  TTS_EQUAL((eve::first_true[true](true)), 0);
+  TTS_EQUAL((eve::first_true[false](true)), std::nullopt);
+  TTS_EQUAL((eve::first_true[true](false)), std::nullopt);
+  TTS_EQUAL((eve::first_true[false](false)), std::nullopt);
 };
 
 TTS_CASE_TPL("Check eve::first_true behavior on logical", eve::test::simd::all_types)
