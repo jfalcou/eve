@@ -47,10 +47,10 @@ namespace eve
   //!   namespace eve
   //!   {
   //!     template<arithmetic_value T, integral_value U>
-  //!     as_wide_as_t<T, U> gather(T const* ptr, U idx);
+  //!     as_wide_as_t<T, U> gather(T const* ptr, U idx) noexcept;
   //!
   //!     template<arithmetic_value T, integral_value U, typename N>
-  //!     auto gather(aligned_ptr<T, N> ptr, U idx);
+  //!     auto gather(aligned_ptr<T, N> ptr, U idx) noexcept;
   //!   }
   //!   @endcode
   //!
