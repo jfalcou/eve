@@ -67,7 +67,7 @@ namespace eve::detail
  }
 
  template<callable_options O, conditional_expr C, logical_simd_value Logical>
- EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), C const& cx, O const& opts, top_bits<Logical> mmask) noexcept
+ EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), C const& cx, O const&, top_bits<Logical> mmask) noexcept
  {
     mmask &= top_bits{cx.mask(as<Logical>{})};
     return any(mmask) ? std::make_optional(first_true_guaranteed(mmask)) : std::nullopt;
