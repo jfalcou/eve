@@ -15,7 +15,8 @@
 namespace eve::detail
 {
   template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_masked_impl(C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
+  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     using out_t = wide<U, N>;
     constexpr auto i = categorize<wide<T, N>>();
@@ -38,7 +39,7 @@ namespace eve::detail
     // Smaller data goes through the generic cases
     else if constexpr(sizeof(U) <= 2)                     return gather[opts][cx].retarget(cpu_{}, p, v);
     // Small index get converted then we recall gather
-    else if constexpr(sizeof(T) <  4)           return gather[cx](p, convert(v, as<std::int32_t>{}));
+    else if constexpr(sizeof(T) <  4)                     return gather[cx](p, convert(v, as<std::int32_t>{}));
     else if constexpr (current_api >= avx512)
     {
       // Complete exact AVX512 type just call gather back
@@ -106,13 +107,6 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
-    requires x86_abi<abi_t<T, N>>
-  {
-    return gather_masked_impl(cx, opts, p, v);
-  }
-
   template<callable_options O, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
@@ -149,8 +143,8 @@ namespace eve::detail
       else if constexpr(i_64x8  && c == category::float64x8 ) return _mm512_i64gather_pd   (v, p, 8);
       else if constexpr(i_32x16 && c == category::float32x16) return _mm512_i32gather_ps   (v, p, 4);
       else if constexpr(i_64x8  && c == category::float32x8 ) return _mm512_i64gather_ps   (v, p, 4);
-      else                                                    return gather_masked_impl(ignore_none, opts, p, v);
+      else                                                    return gather_(EVE_TARGETS(current_api_type), ignore_none, opts, p, v);
     }
-    else                                                      return gather_masked_impl(ignore_none, opts, p, v);
+    else                                                      return gather_(EVE_TARGETS(current_api_type), ignore_none, opts, p, v);
   }
 }
