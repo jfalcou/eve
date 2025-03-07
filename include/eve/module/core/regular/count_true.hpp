@@ -47,7 +47,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overloads
-  //!      constexpr auto count_true(logical_value auto x)                                      noexcept; // 1
+  //!      constexpr auto count_true(relaxed_logical_value auto x)                              noexcept; // 1
   //!      constexpr auto count_true(top_bits auto t)                                           noexcept; // 1
   //!
   //!      // Lanes masking
@@ -65,27 +65,13 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!      1. The value in the element type of `x`  of the number of non 0 elements.
-  //!      2. A masked version  which return the number of true retained elements.
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x` :  [argument](@ref eve::value).
-  //!
-  //!    **Return value**
-  //!
-  //!    The value of the number of non 0 elements
-  //!    is returned.
+  //!      1. The number of non-zero elements in `x`. If `x` is a scalar, then it is treated as one element.
+  //!      2. The masked version which return the number of non-masked non-zero elements.
   //!
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core/count_true.cpp}
   //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve::$name$[mask](x, ...)` provides a masked
-  //!     version of `count_true which count the non masked non zero element
   //!
   //================================================================================================
   inline constexpr auto count_true = functor<count_true_t>;

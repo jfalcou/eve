@@ -31,14 +31,15 @@ namespace eve::detail
   template<callable_options O, value T>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const&, logical<T> v) noexcept
   {
-    if constexpr (scalar_value<T>) return v.value() ? 1 : 0;
-    else                           return count_true(eve::top_bits {v});
+    if constexpr (scalar_value<T>) return count_true(v.value());
+    else                           return count_true(eve::top_bits{v});
   }
 
-  template<callable_options O, conditional_expr C, simd_value T>
+  template<callable_options O, conditional_expr C, value T>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_),  C const& cx, O const&, logical<T> v) noexcept
   {
-    return count_true(top_bits {v, cx});
+    if constexpr (scalar_value<T>) return count_true[cx](v.value());
+    else                           return count_true(top_bits{v, cx});
   }
 
   template<callable_options O, logical_simd_value Logical>
