@@ -24,7 +24,7 @@ namespace eve::detail
     }
     else
     {
-      auto const m = cond.mask(as<wide<T, N>> {});
+      auto const m = cx.mask(as<wide<T, N>> {});
       return __riscv_vcpop(m, v, N::value);
     }
   }
