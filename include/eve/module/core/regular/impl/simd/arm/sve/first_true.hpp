@@ -13,7 +13,7 @@ namespace eve::detail
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/
   // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const&, C c, logical<wide<T, N>> m) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), C const& cx, O const&, logical<wide<T, N>> m) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     using L = logical<wide<T, N>>;
@@ -21,7 +21,7 @@ namespace eve::detail
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_aggregated_abi_v<L>)
     {
-      if constexpr (!C::is_complete) m = m && sve_true(c, as(m));
+      if constexpr (!C::is_complete) m = m && sve_true(cx, as(m));
 
       auto [lo, hi] = m.slice();
       auto lo_res   = first_true(lo);
@@ -34,13 +34,13 @@ namespace eve::detail
     }
     else
     {
-      auto c_m = L {sve_true(c, eve::as(m))};
+      auto cx_m = L {sve_true(cx, eve::as(m))};
 
       // We don't need this much but it makes the `no matches` case faster
-      if (!svptest_any(c_m, m)) return std::nullopt;
+      if (!svptest_any(cx_m, m)) return std::nullopt;
 
       // we need to ignore as false
-      if constexpr (!C::is_complete) m = m && c_m;
+      if constexpr (!C::is_complete) m = m && cx_m;
 
       as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
       return count_true(first_true_mask);
