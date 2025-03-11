@@ -12,9 +12,12 @@ namespace eve::detail
   // There are some explanations
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/
   // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf
-  template<callable_options O, conditional_expr C, logical_simd_value L>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const&, C c, L m) noexcept
+  template<callable_options O, conditional_expr C, typename T, typename N>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const&, C c, logical<wide<T, N>> m) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
+    using L = logical<wide<T, N>>;
+
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_aggregated_abi_v<L>)
     {
@@ -39,25 +42,28 @@ namespace eve::detail
       // we need to ignore as false
       if constexpr (!C::is_complete) m = m && c_m;
 
-      eve::as_wide_t<eve::element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
+      as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
       return count_true(first_true_mask);
     }
   }
 
-  template<callable_options O, logical_simd_value L>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, L m) noexcept
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     return first_true_(EVE_TARGETS(current_api_type), ignore_none, opts, m);
   }
 
-  template<callable_options O, conditional_expr C, logical_simd_value L>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), C const& cx, O const& opts, top_bits<L> m) noexcept
+  template<callable_options O, conditional_expr C, typename T, typename N>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), C const& cx, O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     return first_true_(EVE_TARGETS(current_api_type), cx, opts, to_logical(m));
   }
 
-  template<callable_options O, logical_simd_value L>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<L> m) noexcept
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     return first_true_(EVE_TARGETS(current_api_type), ignore_none, opts, to_logical(m));
   }
