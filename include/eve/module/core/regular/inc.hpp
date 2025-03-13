@@ -110,7 +110,7 @@ namespace eve
         constexpr bool  iwl = T::abi_type::is_wide_logical;
         using           m_t = as_logical_t<T>;
 
-        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmax(eve::as(a)))](a);
         else if constexpr(integral_value<T> && iwl)
         {
           auto m = cond.mask(as<m_t>{});

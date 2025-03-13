@@ -76,7 +76,7 @@ TTS_CASE_WITH("Check behavior of inc[saturated](wide) on integral types",
   bool z = (a0.get(0) > 64);
   TTS_EQUAL(
       eve::inc[eve::saturated][z](a0),
-      tts::map([&](auto e) -> v_t { return v_t((z && e != eve::valmin(eve::as(e)) ? e + 1 : e)); }, a0));
+      tts::map([&](auto e) -> v_t { return v_t((z && e != eve::valmax(eve::as(e)) ? e + 1 : e)); }, a0));
 };
 
 TTS_CASE_WITH("Check behavior of inc[saturated](wide) on integral types",
