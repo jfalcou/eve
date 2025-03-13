@@ -67,7 +67,7 @@ namespace eve
 //!      1. The value of `x - 1` is returned.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated decrementation of `x`. More specifically, for signed
-//!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
+//!         integral, `dec[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
 //!      4. The decrement is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
 //!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
