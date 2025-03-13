@@ -35,24 +35,24 @@ namespace eve::detail
     {
       if constexpr (O::contains(strict) || (current_api < avx512))
       {
-        return sub.behavior(cpu_{}, opts, v, w);
+        return sub.behavior(cpu_{}, opts, a, b);
       }
       else
       {
         auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
-        if      constexpr ( c == category::float64x8  ) return _mm512_sub_round_pd (v, w, dir);
-        else if constexpr ( c == category::float32x16 ) return _mm512_sub_round_pd (v, w, dir);
+        if      constexpr ( c == category::float64x8  ) return _mm512_sub_round_pd(a, b, dir);
+        else if constexpr ( c == category::float32x16 ) return _mm512_sub_round_ps(a, b, dir);
         else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
                             c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
         {
-          auto vv = eve::combine(v, v);
-          auto ww = eve::combine(w, w);
-          auto vvpww = sub[opts](vv, ww);
-          return slice(vvpww, eve::upper_);
+          auto aa = eve::combine(a, b);
+          auto bb = eve::combine(a, b);
+          auto aapbb = sub[opts](vv, ww);
+          return slice(aapbb, eve::upper_);
         }
         else
         {
-          return sub.behavior(cpu_{}, opts, v, w);
+          return sub.behavior(cpu_{}, opts, a, b);
         }
       }
     }
@@ -144,7 +144,7 @@ namespace eve::detail
         {
           auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
           if      constexpr ( c == category::float64x8  ) return _mm512_mask_sub_round_pd(src, m, v, w, dir);
-          else if constexpr ( c == category::float32x16 ) return _mm512_mask_sub_round_pd(src, m, v, w, dir);
+          else if constexpr ( c == category::float32x16 ) return _mm512_mask_sub_round_ps(src, m, v, w, dir);
           else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
                                c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
           {

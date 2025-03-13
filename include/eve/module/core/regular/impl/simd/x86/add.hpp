@@ -36,8 +36,8 @@ namespace eve::detail
       else
       {
         auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
-        if      constexpr ( c == category::float64x8  ) return _mm512_add_round_pd (v, w, dir);
-        else if constexpr ( c == category::float32x16 ) return _mm512_add_round_ps (v, w, dir);
+        if      constexpr ( c == category::float64x8  ) return _mm512_add_round_pd(v, w, dir);
+        else if constexpr ( c == category::float32x16 ) return _mm512_add_round_ps(v, w, dir);
         else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
                             c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
         {
