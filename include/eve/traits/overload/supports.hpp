@@ -7,7 +7,6 @@
 //======================================================================================================================
 #pragma once
 
-#include "eve/detail/raberu.hpp"
 #include <eve/logical.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
@@ -218,7 +217,7 @@ namespace eve
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
-      auto new_opts = rbr::merge(options{condition_key = opt}, base);
+      auto new_opts = rbr::merge(options{condition_key = opt},base);
       return options<decltype(new_opts)>{new_opts};
     }
 
@@ -254,7 +253,7 @@ namespace eve
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
-      auto new_opts = rbr::merge(base, rbr::settings{opt});
+      auto new_opts = rbr::merge(options{opt},base);
       return options<decltype(new_opts)>{new_opts};
     }
 
@@ -290,7 +289,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto process(auto const& base, Opt opt) const
     requires( !Opt::has_alternative )
     {
-      auto new_opts = rbr::merge(options{condition_key = opt}, base);
+      auto new_opts = rbr::merge(options{condition_key = opt},base);
       return options<decltype(new_opts)>{new_opts};
     }
 
@@ -309,7 +308,7 @@ namespace eve::detail
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
     {
-      auto news = rbr::merge(options{opts}, base);
+      auto news = rbr::merge(options{opts},base);
       return options<decltype(news)>{news};
     }
 
