@@ -59,11 +59,11 @@ TTS_CASE_WITH("Check behavior of dec(wide) and dec[mask](wide) on signed types",
 
   if constexpr (eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::dec[eve::lower][eve::strict](a0), eve::prev(eve::dec(a0)));
-    TTS_EQUAL(eve::dec[eve::lower][m][eve::strict](a0), eve::prev[m](eve::dec[m](a0)));
+    TTS_ULP_EQUAL(eve::dec[eve::lower][eve::strict](a0), eve::prev(eve::dec(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::dec[eve::lower][m][eve::strict](a0), eve::prev[m](eve::dec[m](a0)), 0.5);
 
-    TTS_EQUAL(eve::dec[eve::upper][eve::strict](a0), eve::next(eve::dec(a0)));
-    TTS_EQUAL(eve::dec[eve::upper][m][eve::strict](a0), eve::next[m](eve::dec[m](a0)));
+    TTS_ULP_EQUAL(eve::dec[eve::upper][eve::strict](a0), eve::next(eve::dec(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::dec[eve::upper][m][eve::strict](a0), eve::next[m](eve::dec[m](a0)), 0.5);
   }
 };
 

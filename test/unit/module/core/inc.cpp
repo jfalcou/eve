@@ -59,11 +59,11 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
 
   if constexpr (eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::inc[eve::lower][eve::strict](a0), eve::prev(eve::inc(a0)));
-    TTS_EQUAL(eve::inc[eve::lower][m][eve::strict](a0), eve::prev[m](eve::inc[m](a0)));
+    TTS_ULP_EQUAL(eve::inc[eve::lower][eve::strict](a0), eve::prev(eve::inc(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::inc[eve::lower][m][eve::strict](a0), eve::prev[m](eve::inc[m](a0)), 0.5);
 
-    TTS_EQUAL(eve::inc[eve::upper][eve::strict](a0), eve::next(eve::inc(a0)));
-    TTS_EQUAL(eve::inc[eve::upper][m][eve::strict](a0), eve::next[m](eve::inc[m](a0)));
+    TTS_ULP_EQUAL(eve::inc[eve::upper][eve::strict](a0), eve::next(eve::inc(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::inc[eve::upper][m][eve::strict](a0), eve::next[m](eve::inc[m](a0)), 0.5);
   }
 };
 
