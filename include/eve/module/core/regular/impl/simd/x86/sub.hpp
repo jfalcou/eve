@@ -47,7 +47,7 @@ namespace eve::detail
         {
           auto aa = eve::combine(a, b);
           auto bb = eve::combine(a, b);
-          auto aapbb = sub[opts](vv, ww);
+          auto aapbb = sub[opts](aa, bb);
           return slice(aapbb, eve::upper_);
         }
         else
