@@ -179,7 +179,7 @@ $(function(){initNavTree('group__core__arithmetic_ga286feea728eff1a17edeb307b2ae
 <ol type="1">
 <li>The value of <code>x + 1</code> is returned.</li>
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
-<li>The saturated incrementation of <code>x</code>. More specifically, for signed integral, <code>abs[saturated](valmin(as&lt;T&gt;{}))</code> returns <code>eve:valmin(as&lt;T&gt;{}))</code></li>
+<li>The saturated incrementation of <code>x</code>. More specifically, for signed integral, <code>inc[saturated](valmax(as&lt;T&gt;{}))</code> returns <code>eve:valmax(as&lt;T&gt;{}))</code></li>
 <li>The increment is computed in a 'round toward \(-\infty\) mode. The result is guaranted to be less or equal to the exact one (except for Nans). Combined with <code>strict</code> the option ensures generally faster computation, but strict inequality.</li>
 <li>The increment is computed in a 'round toward \(\infty\) mode. The result is guaranted to be greater or equal to the exact one (except for Nans). Combined with <code>strict</code> the option ensures generally faster computation, but strict inequality.</li>
 </ol>
