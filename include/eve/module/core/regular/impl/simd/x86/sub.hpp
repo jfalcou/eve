@@ -45,8 +45,8 @@ namespace eve::detail
         else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
                             c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
         {
-          auto aa = eve::combine(a, b);
-          auto bb = eve::combine(a, b);
+          auto aa = eve::combine(a, a);
+          auto bb = eve::combine(b, b);
           auto aapbb = sub[opts](aa, bb);
           return slice(aapbb, eve::upper_);
         }
@@ -146,13 +146,13 @@ namespace eve::detail
           if      constexpr ( c == category::float64x8  ) return _mm512_mask_sub_round_pd(src, m, v, w, dir);
           else if constexpr ( c == category::float32x16 ) return _mm512_mask_sub_round_ps(src, m, v, w, dir);
           else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
-                               c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
+                              c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
           {
             auto vv = eve::combine(v, w);
             auto ww = eve::combine(w, v);
             auto vvpww = sub[opts.drop(condition_key)](vv, ww);
             auto s = slice(vvpww, eve::upper_);
-            return if_else(cx,s,src);
+            return if_else(cx, s, src);
           }
           else
           {
