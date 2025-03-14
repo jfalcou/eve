@@ -69,7 +69,7 @@ namespace eve
 //!      1. The value of `x + 1` is returned.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated incrementation of `x`. More specifically, for signed
-//!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
+//!         integral, `inc[saturated](valmax(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!      4. The increment is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
 //!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
@@ -110,7 +110,7 @@ namespace eve
         constexpr bool  iwl = T::abi_type::is_wide_logical;
         using           m_t = as_logical_t<T>;
 
-        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmax(eve::as(a)))](a);
         else if constexpr(integral_value<T> && iwl)
         {
           auto m = cond.mask(as<m_t>{});

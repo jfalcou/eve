@@ -36,73 +36,87 @@ TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::inc[bool()][eve::saturated](v_t()), v_t);
 };
 
+
 //==================================================================================================
 // inc(simd)  tests
 //==================================================================================================
-auto valminp1 = tts::constant([](auto tgt) { return eve::valmin(eve::as(tgt))+1; });
-
-TTS_CASE_WITH("Check behavior of inc(wide) and inc[cond](wide)",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(valminp1, eve::valmax)))
+TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
+              eve::test::simd::signed_types,
+              tts::generate(tts::randoms(-100, 100)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL( eve::inc(a0), tts::map([](auto e) ->v_t{ return v_t(e+1); }, a0));
-  TTS_EQUAL( eve::inc[a0 > 64](a0), tts::map([](auto e) ->v_t{ return v_t((e > 64) ?e+1 : e); }, a0));
-  bool z = (a0.get(0) > 64);
-  TTS_EQUAL(eve::inc[z](a0), tts::map([&](auto e) -> v_t { return v_t((z) ? e + 1 : e); }, a0));
-  if constexpr(eve::floating_value<T>)
+  TTS_EQUAL(eve::inc(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(e + 1); }, a0));
+  TTS_EQUAL(eve::inc[eve::saturated](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(e + 1); }, a0));
+
+  using l_t = eve::as_logical_t<T>;
+  l_t m = [](auto i, auto) { return i % 2 == 0; };
+
+  TTS_EQUAL(eve::inc[m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+  TTS_EQUAL(eve::inc[m][eve::saturated](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+  TTS_EQUAL(eve::inc[eve::saturated][m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+
+  if constexpr (eve::floating_value<T>)
   {
-    TTS_EXPECT(eve::all(eve::dec[eve::lower](a0) <= eve::inc(a0)));
-    TTS_EXPECT(eve::all(eve::inc[eve::upper](a0) >= eve::inc(a0)));
-    TTS_EXPECT(eve::all(eve::inc[eve::lower][eve::strict](a0) < eve::inc(a0)));
-    TTS_EXPECT(eve::all(eve::inc[eve::upper][eve::strict](a0) > eve::inc(a0)));
+    TTS_ULP_EQUAL(eve::inc[eve::lower][eve::strict](a0), eve::prev(eve::inc(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::inc[eve::lower][m][eve::strict](a0), eve::prev[m](eve::inc[m](a0)), 0.5);
+
+    TTS_ULP_EQUAL(eve::inc[eve::upper][eve::strict](a0), eve::next(eve::inc(a0)), 0.5);
+    TTS_ULP_EQUAL(eve::inc[eve::upper][m][eve::strict](a0), eve::next[m](eve::inc[m](a0)), 0.5);
   }
 };
 
-TTS_CASE_WITH("Check behavior of inc[saturated](wide) on integral types",
-              eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, valminp1)))
+TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(0, 100)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::inc[eve::saturated](a0),
-            tts::map([](auto e) -> v_t { return v_t(e == eve::valmax(eve::as(e)) ? e : e + 1); }, a0));
-  TTS_EQUAL(eve::inc[eve::saturated][a0 > 64](a0),
-            tts::map([](auto e) -> v_t
-                { return v_t((e > 64 && e != eve::valmin(eve::as(e)) ? e + 1 : e)); },
-                a0));
-  bool z = (a0.get(0) > 64);
-  TTS_EQUAL(
-      eve::inc[eve::saturated][z](a0),
-      tts::map([&](auto e) -> v_t { return v_t((z && e != eve::valmin(eve::as(e)) ? e + 1 : e)); }, a0));
+
+  TTS_EQUAL(eve::inc(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(e + 1); }, a0));
+  TTS_EQUAL(eve::inc[eve::saturated](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(e + 1); }, a0));
+
+  using l_t = eve::as_logical_t<T>;
+  l_t m = [](auto i, auto) { return i % 2 == 0; };
+
+  TTS_EQUAL(eve::inc[m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+  TTS_EQUAL(eve::inc[m][eve::saturated](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+  TTS_EQUAL(eve::inc[eve::saturated][m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
 };
 
-TTS_CASE_WITH("Check behavior of inc[saturated](wide) on integral types",
-              eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, valminp1)))
-<typename T>(T const& a0)
+TTS_CASE_TPL("Check corner-cases behavior of inc(wide) and inc[mask](wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T> tgt)
 {
-  using v_t = typename T::value_type;
-  for( int i = 0; i != T::size(); ++i )
+  auto cases = tts::limits(tgt);
+
+  using l_t = eve::as_logical_t<T>;
+  l_t m = [](auto i, auto) { return i % 2 == 0; };
+
+  if constexpr (eve::floating_value<T>)
   {
-    auto a = a0.get(i);
-    TTS_EQUAL(eve::inc[eve::saturated](a), v_t(a == eve::valmax(eve::as(a)) ? a : a + 1));
+    TTS_EQUAL(eve::inc(cases.valmax), cases.valmax);
+    TTS_EQUAL(eve::inc[eve::upper](cases.valmax), cases.inf);
+    TTS_EQUAL(eve::inc[eve::saturated](cases.valmax), cases.valmax);
+
+    TTS_EQUAL(eve::inc[m](cases.valmax), cases.valmax);
+
+    TTS_EQUAL(eve::inc[m][eve::upper](cases.valmax), eve::if_else(m, cases.inf, cases.valmax));
+    TTS_EQUAL(eve::inc[eve::upper][m](cases.valmax), eve::if_else(m, cases.inf, cases.valmax));
+
+    TTS_EQUAL(eve::inc[eve::saturated][m](cases.valmax), cases.valmax);
+    TTS_EQUAL(eve::inc[m][eve::saturated](cases.valmax), cases.valmax);
+
+    TTS_IEEE_EQUAL(eve::inc(cases.inf), cases.inf);
+    TTS_IEEE_EQUAL(eve::inc(cases.minf), cases.minf);
+    TTS_IEEE_EQUAL(eve::inc(cases.nan), cases.nan);
   }
-};
+  else
+  {
+    TTS_EQUAL(eve::inc(cases.valmax), cases.valmin);
 
-
-//==================================================================================================
-// Tests for masked inc
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::inc)(eve::wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
-{
-  TTS_IEEE_EQUAL(eve::inc[mask](a0),
-            eve::if_else(mask, eve::inc(a0), a0));
+    TTS_EQUAL(eve::inc[eve::saturated](cases.valmax), cases.valmax);
+    TTS_EQUAL(eve::inc[eve::saturated][m](cases.valmax), cases.valmax);
+    TTS_EQUAL(eve::inc[m][eve::saturated](cases.valmax), cases.valmax);
+  }
 };
