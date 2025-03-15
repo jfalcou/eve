@@ -36,26 +36,28 @@ namespace eve::detail
 
       if constexpr(O::contains(upper) || O::contains(lower))
       {
-        if constexpr(!O::contains(strict))
+        if constexpr(O::contains(strict) || (current_api < avx512))
         {
-          if constexpr(current_api >= avx512)
-          {
-            auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-            if      constexpr  ( c == category::float64x8  ) return  _mm512_div_round_pd (a, b, dir);
-            else if constexpr  ( c == category::float32x16 ) return  _mm512_div_round_ps (a, b, dir);
-            else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                                 c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-            {
-              auto aa = eve::combine(a, a);
-              auto bb = eve::combine(b, b);
-              auto aapbb = div[opts](aa, bb);
-              return  slice(aapbb, eve::upper_);
-            }
-            else                                             return div.behavior(cpu_{}, opts, a, b);
-          }
-          else                                               return div.behavior(cpu_{}, opts, a, b);
+          return div.behavior(cpu_{}, opts, a, b);
         }
-        else                                                 return div.behavior(cpu_{}, opts, a, b);
+        else
+        {
+          auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
+          if      constexpr ( c == category::float64x8  ) return _mm512_div_round_pd(a, b, dir);
+          else if constexpr ( c == category::float32x16 ) return _mm512_div_round_ps(a, b, dir);
+          else if constexpr ( c == category::float64x4 ||  c == category::float64x2 ||
+                              c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          {
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto aapbb = div[opts](aa, bb);
+            return slice(aapbb, eve::upper_);
+          }
+          else
+          {
+            return div.behavior(cpu_{}, opts, a, b);
+          }
+        }
       }
       else  if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_div_pd(a, b);
@@ -94,20 +96,31 @@ namespace eve::detail
     {
       return div.behavior(cpu_{}, o, v, w);
     }
-    else if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
+    else if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
-      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-      
-      if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
-      else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
-      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+      if constexpr (O::contains(strict))
       {
-        auto vv = combine(v, v);
-        auto ww = combine(w, w);
-        auto vvpww = div[o](vv, ww);
-        auto s =  slice(vvpww, eve::upper_);
-        return if_else(cx,s,src);
+        return div.behavior(cpu_{}, o, v, w);
+      }
+      else
+      {
+        auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
+
+        if      constexpr ( c == category::float64x8  ) return _mm512_add_round_pd(v, w, dir);
+        else if constexpr ( c == category::float32x16 ) return _mm512_add_round_ps(v, w, dir);
+        else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
+                            c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
+        {
+          auto vv = combine(v, v);
+          auto ww = combine(w, w);
+          auto vvpww = div[o](vv, ww);
+          auto s = slice(vvpww, eve::upper_);
+          return if_else(cx, s, src);
+        }
+        else
+        {
+          return div.behavior(cpu_{}, o, v, w);
+        }
       }
     }
     else if constexpr (O::contains(toward_zero) || O::contains(upward) ||

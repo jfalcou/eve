@@ -107,7 +107,7 @@ TTS_CASE_WITH("Check behavior of sub on wide",
     TTS_EXPECT(eve::all(sub[upper](a0, a1, a2) >=  sub[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
-    TTS_EXPECT(eve::all(sub[upper](w0, w1)  >=  sub(w0, w1)));
+    TTS_EXPECT(eve::all(sub[upper](w0, w1)  >= sub(w0, w1)));
     TTS_EXPECT(eve::all(sub[lower](w0, -w1) <= sub(w0, -w1)));
     TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >  sub(w0, w1)));
     TTS_EXPECT(eve::all(sub[strict][lower](w0, -w1) <  sub(w0, -w1)));
@@ -141,41 +141,49 @@ TTS_CASE_WITH("Check behavior of sub widen on wide",
 auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
-TTS_CASE_WITH("Check behavior of sub on signed types",
-              eve::test::simd::signed_types,
+TTS_CASE_WITH("Check behavior of sub[mask]",
+              eve::test::simd::all_types,
               tts::generate(tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::saturated;
   using eve::sub;
 
-  auto e0 = a2.get(0);
+  using l_t = eve::as_logical_t<T>;
+  l_t m = [](auto i, auto) { return i % 2 == 0; };
 
-  TTS_EQUAL(sub[e0 > T(64)](a0, a1),
-            tts::map([e0](auto e, auto f) { return e0 > 64 ? sub(e, f) : e; }, a0, a1));
-  TTS_EQUAL(sub[a2 > T(64)](a0, a1),
-            tts::map([](auto e, auto f, auto g) { return g > 64 ? sub(e, f) : e; }, a0, a1, a2));
-  TTS_EQUAL(sub[saturated][a2 > T(64)](a0, a1)
-           , tts::map([](auto e, auto f, auto g) { return g > 64 ? sub[saturated](e, f) : e; }, a0, a1, a2));
-};
+  if constexpr (eve::floating_value<T>)
+  {
+    TTS_IEEE_EQUAL(sub[m](a0, a1), tts::map([](auto e, auto f, auto me) { return me ? sub(e, f) : e; }, a0, a1, m));
 
-/// TODO waiting for interface simplifications to sub scalar tests
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::upper][m](a0, a1) >= sub(a0, a1),
+              sub[eve::upper][m](a0, a1) == a0)));
 
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::lower][m](a0, -a1) <= sub(a0, -a1),
+              sub[eve::lower][m](a0, -a1) == a0)));
 
-//==================================================================================================
-// Tests for masked sub
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::sub)(eve::wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         T const& a1,
-                         M const& mask)
-{
-  TTS_IEEE_EQUAL(eve::sub[mask](a0, a1),
-            eve::if_else(mask, eve::sub(a0, a1), a0));
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::strict][m][eve::upper](a0, a1) > sub(a0, a1),
+              sub[eve::strict][m][eve::upper](a0, a1) == a0)));
+
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::strict][m][eve::lower](a0, -a1) < sub(a0, -a1),
+              sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
+
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::strict][m][eve::upper](a0, a1) >= sub[eve::upper](a0, a1),
+              sub[eve::strict][m][eve::upper](a0, a1) == a0)));
+
+    TTS_EXPECT(eve::all(eve::if_else(m, 
+              sub[eve::strict][m][eve::lower](a0, -a1) <= sub[eve::lower](a0, -a1),
+              sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
+  }
+  else
+  {
+    TTS_EQUAL(sub[m](a0, a1), tts::map([](auto e, auto f, auto me) { return me ? sub(e, f) : e; }, a0, a1, m));
+    TTS_EQUAL(sub[eve::saturated][m](a0, a1), tts::map([](auto e, auto f, auto me) { return me ? sub[eve::saturated](e, f) : e; }, a0, a1, m));
+  }
 };
