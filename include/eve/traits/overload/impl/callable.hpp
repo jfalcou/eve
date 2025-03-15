@@ -51,7 +51,9 @@ namespace eve
 
     template<callable_options O> EVE_FORCEINLINE constexpr auto operator[](O const& opts) const
     {
-      return  Func<O>{opts};
+      auto merged_opts = rbr::merge(opts, this->options());
+      options<decltype(merged_opts)> new_opts{merged_opts};
+      return  Func<decltype(new_opts)>{new_opts};
     }
 
     template<typename T>
