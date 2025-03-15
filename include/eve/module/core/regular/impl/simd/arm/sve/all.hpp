@@ -23,6 +23,6 @@ requires sve_abi<abi_t<T, N>>
     if constexpr( C::is_inverted )  return count_true(v) == N::value;
     else                            return true;
   }
-  else  return count_true(cond, v) == cond.count(as<wide<T,N>>());
+  else  return count_true[cond](v) == cond.count(as<wide<T,N>>());
 }
 }
