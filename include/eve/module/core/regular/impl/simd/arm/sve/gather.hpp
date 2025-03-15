@@ -17,14 +17,18 @@
 namespace eve::detail
 {
   template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept
+  EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    return gather_(EVE_TARGETS(current_api_type), ignore_none, opts, p, v);
+  }
+
+  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     using out_t = wide<U, N>;
     using u_t   = make_integer_t<sizeof(U)>;
-
-    auto cx = opts[condition_key];
-    using C = decltype(cx);
 
     // Ignore All case : just return the alternative if any
     if      constexpr (C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
