@@ -70,6 +70,6 @@ namespace eve::detail
       else return if_else(cx, v, src);
     }
     else
-      return trunc.behavior(cpu_{}, cx, o, v);
+      return trunc.behavior(cpu_{}, o && cx, v);
   }
 }

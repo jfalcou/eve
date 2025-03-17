@@ -60,9 +60,9 @@ namespace eve::detail
       else if constexpr( match(c, category::integer_) ) return if_else(cx, v, src);
       else if constexpr( c == category::float32x16 )    return _mm512_mask_floor_ps(src, m, v);
       else if constexpr( c == category::float64x8 )     return _mm512_mask_floor_pd(src, m, v);
-      else if constexpr( match(c, category::float_) )   return floor.behavior(cpu_{}, o, v);
+      else if constexpr( match(c, category::float_) )   return floor.behavior(cpu_{}, o && cx, v);
     }
     else
-      return floor.behavior(cpu_{}, o, v);
+      return floor.behavior(cpu_{}, o && cx, v);
   }
 }

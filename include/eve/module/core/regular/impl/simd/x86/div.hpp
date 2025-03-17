@@ -92,7 +92,7 @@ namespace eve::detail
     
     if constexpr(O::contains(left))
     {
-      return div.behavior(cpu_{}, o, v, w);
+      return div.behavior(cpu_{}, o && cx, v, w);
     }
     else if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
@@ -124,7 +124,7 @@ namespace eve::detail
     else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
                        O::contains(downward) || O::contains(to_nearest))
     {
-      return round[o](div[cx](v, w));
+      return round[o][cx](div[cx](v, w));
     }
     else
     {
@@ -137,7 +137,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_div_pd(src, m, v, w);
       else if constexpr( c == category::float32x4 ) return _mm_mask_div_ps(src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_div_pd(src, m, v, w);
-      else return div.behavior(cpu_{}, o, v, w);
+      else return div.behavior(cpu_{}, o && cx, v, w);
     }
   }
 }

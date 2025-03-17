@@ -26,22 +26,15 @@ namespace eve
       template<callable_options O, typename T, typename... Ts>
       constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
       {
-        if constexpr (match_option<condition_key, O, ignore_none_>)
-        {
-          return func_t::deferred_call(arch, opts, x0, xs...);
-        }
+        // Check that the mask and the value are of same kind if simd
+        constexpr bool compatible_mask = !(simd_value<decltype(opts[condition_key].mask(as(x0)))> && (scalar_value<T> && ... && scalar_value<Ts>));
+        static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
+
+        // Shush any other cascading errors
+        if constexpr(!compatible_mask) return ignore{};
         else
         {
-          // Check that the mask and the value are of same kind if simd
-          constexpr bool compatible_mask = !(simd_value<decltype(opts[condition_key].mask(as(x0)))> && (scalar_value<T> && ... && scalar_value<Ts>));
-          static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
-
-          // Shush any other cascading errors
-          if constexpr(!compatible_mask) return ignore{};
-          else
-          {
-            return func_t::deferred_call(arch, opts, x0, xs...);
-          }
+          return func_t::deferred_call(arch, opts, x0, xs...);
         }
       }
     };

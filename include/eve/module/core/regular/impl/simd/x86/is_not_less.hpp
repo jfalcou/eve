@@ -67,7 +67,7 @@ namespace eve::detail
   {
     if constexpr( C::has_alternative || O::contains(almost))
     {
-      return is_not_less.behavior(cpu_{}, o, v, w);
+      return is_not_less.behavior(cpu_{}, o && mask, v, w);
     }
     else
     {

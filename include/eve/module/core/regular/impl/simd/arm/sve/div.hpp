@@ -43,16 +43,16 @@ namespace eve::detail
   {
     if (O::contains(left))
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(cpu_{}, opts && cx, a, b);
     }
     else if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(cpu_{}, opts && cx, a, b);
     }
     else if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
-      if (floating_value<T>) return round[opts](div[cx](a, b));
-      else                   return div.behavior(cpu_{}, opts, a, b);
+      if (floating_value<T>) return round[opts][cx](div[cx](a, b));
+      else                   return div.behavior(cpu_{}, opts && cx, a, b);
     }
     else
     {
@@ -67,12 +67,12 @@ namespace eve::detail
             auto m = expand_mask(cx, as<wide<T, N>> {});
             return svdiv_m(m, a, b);
           }
-          else return div.behavior(cpu_{}, opts, a, b);
+          else return div.behavior(cpu_{}, opts && cx, a, b);
         }
       }
       else
       {
-        return div.behavior(cpu_{}, opts, a, b);
+        return div.behavior(cpu_{}, opts && cx, a, b);
       }
     }
   }

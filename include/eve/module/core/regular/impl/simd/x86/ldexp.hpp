@@ -37,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N>
   ldexp_(EVE_REQUIRES(avx512_), C const& mask, O const& opts, wide<T, N> a0, wide<U, N> a1) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(std::integral<U>)  return ldexp[opts](a0, convert(a1,as<T>{}));
+    if constexpr(std::integral<U>)  return ldexp[opts][mask](a0, convert(a1,as<T>{}));
     else
     {
       auto src = alternative(mask, a0, as<wide<T, N>> {});

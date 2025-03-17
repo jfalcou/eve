@@ -49,7 +49,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated))
-      return maxmag.behavior(cpu_{}, opts, v, w);
+      return maxmag.behavior(cpu_{}, opts && cx, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -63,7 +63,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_range_pd(src, m, v, w, ctrl);
       else if constexpr( c == category::float32x4 ) return _mm_mask_range_ps(src, m, v, w, ctrl);
       else if constexpr( c == category::float64x2 ) return _mm_mask_range_pd(src, m, v, w, ctrl);
-      else return maxmag.behavior(cpu_{}, opts, v, w);
+      else return maxmag.behavior(cpu_{}, opts && cx, v, w);
     }
   }
 }

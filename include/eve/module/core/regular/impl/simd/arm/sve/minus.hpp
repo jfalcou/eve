@@ -33,7 +33,7 @@ namespace eve::detail
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
-      if constexpr(O::contains(saturated) && std::integral<T>) return minus.behavior(cpu_{},o,v);
+      if constexpr(O::contains(saturated) && std::integral<T>) return minus.behavior(cpu_{},o && mask,v);
       else                                                      return svneg_m(alt,expand_mask(mask, as(v)),v);
     }
   }

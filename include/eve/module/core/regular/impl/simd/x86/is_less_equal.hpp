@@ -91,7 +91,7 @@ namespace eve::detail
   {
     if constexpr (C::has_alternative || O::contains(almost))
     {
-      return is_less_equal.behavior(cpu_{}, opts, a, b);
+      return is_less_equal.behavior(cpu_{}, opts && mask, a, b);
     }
     else
     {

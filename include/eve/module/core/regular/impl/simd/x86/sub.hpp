@@ -120,12 +120,12 @@ namespace eve::detail
 
   template<conditional_expr C, typename T, typename N, callable_options O>
   EVE_FORCEINLINE
-  wide<T, N> sub_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  wide<T, N> sub_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if (O::contains(left))
     {
-      return sub.behavior(cpu_{}, opts, v, w);
+      return sub.behavior(cpu_{}, opts && cx, v, w);
     }
     else
     {
@@ -175,7 +175,7 @@ namespace eve::detail
         else if constexpr( c == category::uint16x8  ) return _mm_mask_subs_epu16(src, m, v, w);
         else if constexpr( c == category::int8x16   ) return _mm_mask_subs_epi8(src, m, v, w);
         else if constexpr( c == category::uint8x16  ) return _mm_mask_subs_epu8(src, m, v, w);
-        else                                          return sub.behavior(cpu_{}, opts, v, w);
+        else                                          return sub.behavior(cpu_{}, opts && cx, v, w);
       }
       else
       {
@@ -198,7 +198,7 @@ namespace eve::detail
         else if constexpr( match(c,category::int8x64 , category::uint8x64 ) ) return _mm512_mask_sub_epi8 (src, m, v, w);
         else if constexpr( match(c,category::int8x32 , category::uint8x32 ) ) return _mm256_mask_sub_epi8 (src, m, v, w);
         else if constexpr( match(c,category::int8x16 , category::uint8x16 ) ) return _mm_mask_sub_epi8    (src, m, v, w);
-        else                                                                  return sub.behavior(cpu_{}, opts, v, w);
+        else                                                                  return sub.behavior(cpu_{}, opts && cx, v, w);
       }
     }
   }

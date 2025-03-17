@@ -43,7 +43,7 @@ namespace eve::detail
     constexpr auto        c = categorize<wide<T, N>>();
 
     if constexpr( C::is_complete ) return src;
-    else if  constexpr(O::contains(raw)) return ilogb[o](v);
-    else return exponent.behavior(cpu_{}, o, v);
+    else if  constexpr(O::contains(raw)) return ilogb[o][mask](v);
+    else return exponent.behavior(cpu_{}, o && mask, v);
   }
 }

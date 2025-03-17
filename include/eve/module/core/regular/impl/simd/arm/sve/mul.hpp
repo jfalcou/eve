@@ -31,7 +31,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(cpu_{}, opts && mask, a, b);
     }
     else
     {
@@ -42,13 +42,13 @@ namespace eve::detail
       if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                    (O::contains(saturated) && std::integral<T>) || O::contains(widen))
       {
-        return mul.behavior(cpu_{}, opts, a, b);
+        return mul.behavior(cpu_{}, opts && mask, a, b);
       }
       else
       {
         //  if saturated on integer, we don't have masked op so we delegate
         if        constexpr (O::contains(saturated) && std::integral<T>)
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul.behavior(cpu_{}, opts && mask, a, b);
         //  If not, we can mask if there is no alterative value
         else  if  constexpr (!C::has_alternative && (sizeof(T) > 1))
         {
@@ -58,7 +58,7 @@ namespace eve::detail
         // If not, we delegate to the automasking
         else
         {
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul.behavior(cpu_{}, opts && mask, a, b);
         }
 
       }

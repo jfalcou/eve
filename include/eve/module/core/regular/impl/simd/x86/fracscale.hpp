@@ -47,7 +47,7 @@ namespace eve::detail
   {
     auto const alt = alternative(mask, a0, as(a0));
     if constexpr( C::is_complete)  return alt;
-    else if constexpr(S > 15)      return fracscale.behavior(o, a0, S);
+    else if constexpr(S > 15)      return fracscale.behavior(cpu_{}, o && mask, a0, S);
     else
     {
       auto          src = alternative(mask, a0, as<wide<T, N>> {});

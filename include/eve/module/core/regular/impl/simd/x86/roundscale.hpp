@@ -24,7 +24,7 @@ namespace eve::detail
     constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest) & 3);
 
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(S > 15)                          return roundscale.behavior(o, a0, S);
+    if constexpr(S > 15)                          return roundscale.behavior(cpu_{}, o, a0, S);
     else if constexpr( c == category::float32x16) return _mm512_roundscale_ps(a0, spv);
     else if constexpr( c == category::float64x8 ) return _mm512_roundscale_pd(a0, spv);
     else if constexpr( c == category::float32x8 ) return _mm256_roundscale_ps(a0, spv);
@@ -41,13 +41,13 @@ namespace eve::detail
                                         C          const &mask,
                                         O          const &o,
                                         wide<T, N> const &a0,
-                                        eve::index_t<S> const & ) noexcept
+                                        [[maybe_unused]] eve::index_t<S> const& idx) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     auto const alt = alternative(mask, a0, as(a0));
 
     if constexpr( C::is_complete)  return alt;
-    else if constexpr(S > 15)      return roundscale.behavior(o, a0, S);
+    else if constexpr(S > 15)      return roundscale.behavior(cpu_{}, o && mask, a0, idx);
     else
     {
       auto          src = alternative(mask, a0, as<wide<T, N>> {});

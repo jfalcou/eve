@@ -32,7 +32,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || O::contains(definitely))
     {
-      return is_not_equal.behavior(cpu_{}, opts, v, w);
+      return is_not_equal.behavior(cpu_{}, opts && mask, v, w);
     }
     else
     {

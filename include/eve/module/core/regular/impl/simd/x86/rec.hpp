@@ -112,7 +112,7 @@ namespace eve::detail
     auto src = alternative(mask, a0, as(a0));
 
     if constexpr( C::is_complete )                              return src;
-    else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, opts, a0);
+    else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, opts && mask, a0);
     else
     {
       auto l   = expand_mask(mask, as(a0));
