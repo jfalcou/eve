@@ -15,7 +15,6 @@ concurrency:
 
 jobs:
   main:
-    needs: other-arch
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
