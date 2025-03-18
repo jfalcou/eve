@@ -35,7 +35,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Debug -DEVE_ENABLE_COVERAGE=ON -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 10
+        run:  cd build && ninja unit.exe -j 1
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
       - name: Compile code coverage report
