@@ -44,6 +44,6 @@ namespace eve::detail
 
     if constexpr( C::is_complete ) return src;
     else if  constexpr(O::contains(raw)) return ilogb[o][mask](v);
-    else return exponent.behavior(cpu_{}, o && mask, v);
+    else return exponent[o][mask].retarget(cpu_{}, v);
   }
 }

@@ -49,7 +49,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return of_class.behavior(cpu_{}, o && cx, cls, v);
+      return of_class[o][cx].retarget(cpu_{}, cls, v);
     }
     else
     {

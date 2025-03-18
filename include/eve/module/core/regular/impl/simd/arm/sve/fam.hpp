@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> fam_(EVE_REQUIRES(sve_), C cond, O const& opts, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     if constexpr(O::contains(lower) || O::contains(upper))
-      return fam.behavior(cpu_{}, opts && cond, a, b, c);
+      return fam[opts][cond].retarget(cpu_{}, a, b, c);
     else
     {
       // We don't care about PEDANTIC as this is a proper FMA.

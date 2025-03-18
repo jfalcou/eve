@@ -101,7 +101,7 @@ namespace eve::detail
 
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts && mask, v, w, x);
+      if constexpr( std::integral<T> ) return fms[opts][mask].retarget(cpu_{}, v, w, x);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -120,9 +120,9 @@ namespace eve::detail
             auto s =  slice(aabbcc, eve::upper_);
             return if_else(mask,s,src);
           }
-          else                                             return fms.behavior(cpu_{}, opts && mask, v, w, x);
+          else                                             return fms[opts][mask].retarget(cpu_{}, v, w, x);
         }
-        else                                                 return fms.behavior(cpu_{}, opts && mask, v, w, x);
+        else                                                 return fms[opts][mask].retarget(cpu_{}, v, w, x);
       }
       else if constexpr( cx == category::float32x16) return _mm512_mask_fmsub_ps(v, m, w, x);
       else if constexpr( cx == category::float64x8 ) return _mm512_mask_fmsub_pd(v, m, w, x);

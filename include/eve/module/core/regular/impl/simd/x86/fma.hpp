@@ -97,7 +97,7 @@ namespace eve::detail
       [[maybe_unused]] auto const m  = expand_mask(mask, as(a)).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts && mask, a, b, c);
+      if constexpr( std::integral<T> ) return fma[opts][mask].retarget(cpu_{}, a, b, c);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -116,9 +116,9 @@ namespace eve::detail
             auto s =  slice(aabbcc, eve::upper_);
             return if_else(mask,s,src);
           }
-          else                                             return fma.behavior(cpu_{}, opts && mask, a, b, c);
+          else                                             return fma[opts][mask].retarget(cpu_{}, a, b, c);
         }
-        else                                               return fma.behavior(cpu_{}, opts && mask, a, b, c);
+        else                                               return fma[opts][mask].retarget(cpu_{}, a, b, c);
       }
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fmadd_pd(a, m, b, c);

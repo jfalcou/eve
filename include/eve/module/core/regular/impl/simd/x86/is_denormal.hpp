@@ -48,7 +48,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return is_denormal.behavior(cpu_{}, o && cx, v, v);
+      return is_denormal[o][cx].retarget(cpu_{}, v, v);
     }
     else
     {

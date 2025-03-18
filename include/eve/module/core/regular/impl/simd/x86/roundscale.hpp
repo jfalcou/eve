@@ -47,7 +47,7 @@ namespace eve::detail
     auto const alt = alternative(mask, a0, as(a0));
 
     if constexpr( C::is_complete)  return alt;
-    else if constexpr(S > 15)      return roundscale.behavior(cpu_{}, o && mask, a0, idx);
+    else if constexpr(S > 15)      return roundscale[o][mask].retarget(cpu_{}, a0, idx);
     else
     {
       auto          src = alternative(mask, a0, as<wide<T, N>> {});

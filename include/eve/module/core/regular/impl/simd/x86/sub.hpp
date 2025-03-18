@@ -125,7 +125,7 @@ namespace eve::detail
   {
     if (O::contains(left))
     {
-      return sub.behavior(cpu_{}, opts && cx, v, w);
+      return sub[opts][cx].retarget(cpu_{}, v, w);
     }
     else
     {
@@ -175,7 +175,7 @@ namespace eve::detail
         else if constexpr( c == category::uint16x8  ) return _mm_mask_subs_epu16(src, m, v, w);
         else if constexpr( c == category::int8x16   ) return _mm_mask_subs_epi8(src, m, v, w);
         else if constexpr( c == category::uint8x16  ) return _mm_mask_subs_epu8(src, m, v, w);
-        else                                          return sub.behavior(cpu_{}, opts && cx, v, w);
+        else                                          return sub[opts][cx].retarget(cpu_{}, v, w);
       }
       else
       {

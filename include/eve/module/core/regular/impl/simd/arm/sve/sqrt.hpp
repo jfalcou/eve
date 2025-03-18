@@ -30,7 +30,7 @@ namespace eve::detail
     }
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts && mask, v);
+      return sqrt[opts][mask].retarget(cpu_{}, v);
     }
     else
     {

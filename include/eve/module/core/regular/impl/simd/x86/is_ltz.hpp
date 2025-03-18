@@ -59,7 +59,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return is_ltz.behavior(cpu_{}, o && cx, v);
+      return is_ltz[o][cx].retarget(cpu_{}, v);
     }
     else
     {

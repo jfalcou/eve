@@ -48,7 +48,7 @@ namespace eve::detail
                                         wide<T, N> const                &w) noexcept requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
-      return negminabs.behavior(cpu_{}, opts && cx, v, w);
+      return negminabs[opts][cx].retarget(cpu_{}, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -62,7 +62,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_range_pd(src, m, v, w, ctrl);
       else if constexpr( c == category::float32x4 ) return _mm_mask_range_ps(src, m, v, w, ctrl);
       else if constexpr( c == category::float64x2 ) return _mm_mask_range_pd(src, m, v, w, ctrl);
-      else return negminabs.behavior(cpu_{}, opts && cx, v, w);
+      else return negminabs[opts][cx].retarget(cpu_{}, v, w);
     }
   }
 }

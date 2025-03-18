@@ -32,7 +32,7 @@ namespace eve::detail
     // If not, we delegate to the automasking
     else
     {
-      return is_unordered.behavior(cpu_{}, opts && mask, v, w);
+      return is_unordered[opts][mask].retarget(cpu_{}, v, w);
     }
   }
 

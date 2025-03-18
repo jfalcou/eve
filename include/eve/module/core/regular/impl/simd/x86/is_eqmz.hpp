@@ -48,7 +48,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return is_eqmz.behavior(cpu_{}, o && cx, v);
+      return is_eqmz[o][cx].retarget(cpu_{}, v);
     }
     else
     {

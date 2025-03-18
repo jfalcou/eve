@@ -167,7 +167,7 @@ namespace eve::detail
     }
     else if constexpr(O::contains(saturated))
     {
-      return mul.behavior(cpu_{}, opts && cx, a, b);
+      return mul[opts][cx].retarget(cpu_{}, a, b);
     }
     else
     {
@@ -177,7 +177,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
-      else                                          return mul.behavior(cpu_{}, opts && cx, a, b);
+      else                                          return mul[opts][cx].retarget(cpu_{}, a, b);
     }
   }
 }
