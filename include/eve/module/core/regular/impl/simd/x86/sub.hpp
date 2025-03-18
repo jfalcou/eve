@@ -148,8 +148,8 @@ namespace eve::detail
           else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
                               c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
           {
-            auto vv = eve::combine(v, w);
-            auto ww = eve::combine(w, v);
+            auto vv = eve::combine(v, v);
+            auto ww = eve::combine(w, w);
             auto vvpww = sub[opts.drop(condition_key)](vv, ww);
             auto s = slice(vvpww, eve::upper_);
             return if_else(cx, s, src);
