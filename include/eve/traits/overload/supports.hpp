@@ -70,12 +70,6 @@ namespace eve
       auto new_opts = rbr::merge(opt, *this);
       return options<decltype(new_opts)>{new_opts};
     }
-
-    template <rbr::concepts::option Option>
-    constexpr EVE_FORCEINLINE auto operator&&(Option const& opt) const noexcept
-    {
-      return *this && options<Option>{opt};
-    }
   };
 
   template <rbr::concepts::option ... Options>
