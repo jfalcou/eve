@@ -14,7 +14,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  main:
+  # main:
+  #   runs-on: [self-hosted, avx512]
+  #   container:
+  #     image: ghcr.io/jfalcou/compilers:v7
+  #     options: -u root
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cfg:
+  #       - { comp: gcc , arch: x86, opts: -msse4.2  }
+  #       - { comp: gcc , arch: x86, opts: -mavx2    }
+  #       - { comp: gcc , arch: x86, opts: -march=skylake-avx512  }
+
+  #   steps:
+  #     - name: Fetch current branch
+  #       uses: actions/checkout@v4.1.1
+  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+  #       run: |
+  #         mkdir build && cd build
+  #         cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Debug -DEVE_ENABLE_COVERAGE=ON -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+  #     - name: Compiling Unit Tests
+  #       run:  cd build && ninja unit.exe -j 1
+  #     - name: Running Unit Tests
+  #       run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+  #     - name: Compile code coverage report
+  #       run: lcov --directory . --capture --output-file coverage.info
+  #     - name: Filter out system dependencies
+  #       run: lcov --remove coverage.info '/usr/*' --output-file coverage.info
+  #     - name: Upload coverage reports to Codecov
+  #       uses: codecov/codecov-action@v5
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  main_clang:
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -23,10 +55,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc , arch: x86, opts: -msse4.2  }
-        - { comp: gcc , arch: x86, opts: -mavx2    }
-        - { comp: gcc , arch: x86, opts: -march=skylake-avx512  }
-
+        - { comp: clang , arch: x86, opts: -msse4.2  }
+        # - { comp: clang , arch: x86, opts: -mavx2    }
+        # - { comp: clang , arch: x86, opts: -march=skylake-avx512  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -35,15 +66,11 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Debug -DEVE_ENABLE_COVERAGE=ON -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 1
+        run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 10 -E "^doc.*.exe"
       - name: Compile code coverage report
-        run: lcov --directory . --capture --output-file coverage.info
-      - name: Filter out system dependencies
-        run: lcov --remove coverage.info '/usr/*' --output-file coverage.info
-      - name: Filter out tests files
-        run: lcov --remove coverage.info '*.cpp' --output-file coverage.info
+        run: tools/clang_coverage_gather.sh
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
