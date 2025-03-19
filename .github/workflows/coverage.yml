@@ -55,9 +55,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86, opts: -msse4.2  }
+        # - { comp: clang , arch: x86, opts: -msse4.2  }
         # - { comp: clang , arch: x86, opts: -mavx2    }
-        # - { comp: clang , arch: x86, opts: -march=skylake-avx512  }
+        - { comp: clang , arch: x86, opts: -march=skylake-avx512  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
