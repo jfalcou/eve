@@ -138,7 +138,7 @@ namespace eve::detail
       {
         if constexpr (O::contains(strict))
         {
-          return sub.behavior(cpu_{}, opts, v, w);
+          return sub[opts][cx].retarget(cpu_{}, v, w);
         }
         else
         {
@@ -150,13 +150,13 @@ namespace eve::detail
           {
             auto vv = eve::combine(v, v);
             auto ww = eve::combine(w, w);
-            auto vvpww = sub[opts.drop(condition_key)](vv, ww);
+            auto vvpww = sub[opts](vv, ww);
             auto s = slice(vvpww, eve::upper_);
             return if_else(cx, s, src);
           }
           else
           {
-            return sub.behavior(cpu_{}, opts, v, w);
+            return sub[opts][cx].retarget(cpu_{}, v, w);
           }
         }
       }

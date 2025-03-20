@@ -143,7 +143,7 @@ namespace eve::detail
     {
       if constexpr (O::contains(strict))
       {
-        return mul.behavior(cpu_{}, opts, a, b);
+        return mul[opts][cx].retarget(cpu_{}, a, b);
       }
       else
       {
@@ -155,13 +155,13 @@ namespace eve::detail
         {
           auto aa = eve::combine(a, a);
           auto bb = eve::combine(b, b);
-          auto aapbb = mul[opts.drop(condition_key)](aa, bb);
+          auto aapbb = mul[opts](aa, bb);
           auto s = slice(aapbb, eve::upper_);
           return if_else(cx, s, src);
         }
         else
         {
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul[opts][cx].retarget(cpu_{}, a, b);
         }
       }
     }
