@@ -161,7 +161,7 @@ namespace eve
     /// Retrieves the current options' state, including processed default
     EVE_FORCEINLINE constexpr auto options() const
     {
-      return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
+      return kumi::fold_left( [&](auto acc, auto const& cur) { return cur.default_to(acc); }
                             , kumi::tuple<Options...>{}
                             , static_cast<OptionsValues const&>(*this)
                             );

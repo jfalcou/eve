@@ -136,7 +136,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
     lpnorm_(EVE_REQUIRES(cpu_), O const & o, P p, Tup tup) noexcept
     {
-      return kumi::apply( [&](auto... m) { return lpnorm[o](p, m...); }, tup);
+      return kumi::apply( [&](auto... cur) { return lpnorm[o](p, cur...); }, tup);
     }
   }
 }

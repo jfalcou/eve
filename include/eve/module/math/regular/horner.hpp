@@ -131,7 +131,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const & o, X x, Tuple const& tup) noexcept
     {
-      return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
+      return kumi::apply( [&](auto... cur) { return horner[o](x, cur...); }, tup);
     }
   }
 }

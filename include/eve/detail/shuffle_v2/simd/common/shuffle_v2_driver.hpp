@@ -371,7 +371,7 @@ struct shuffle_v2_driver_bundle
   template<typename NativeSelector, typename Pattern, typename G> struct recurse
   {
     NativeSelector selector;
-    recurse(NativeSelector selector, Pattern, G) : selector(selector) {}
+    recurse(NativeSelector s, Pattern, G) : selector(s) {}
 
     EVE_FORCEINLINE
     auto operator()(auto xs) const noexcept
