@@ -1,0 +1,423 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::algo::set_intersection</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="contents">
+<a id="ga00f15ead142e6f1c1f39bf00afdb60ba" name="ga00f15ead142e6f1c1f39bf00afdb60ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00f15ead142e6f1c1f39bf00afdb60ba">&#9670;&#160;</a></span>set_intersection</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::algo::set_intersection = function_with_traits&lt;set_intersection_&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;eve/module/algo/algo/set_intersection.hpp&gt;</code></p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+</div><!-- fragment --><p>The main idea for the algorithm comes from "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
+<p>Differences:</p><ul>
+<li>duplicate handling, <code><a class="el" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba" title="SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.">eve::algo::set_intersection</a></code> does not guarantee how many copies of a duplicated element will be in the output. Example: [a, a] intersect with [a, a, a] might produce [a], [a, a] and [a, a, a].</li>
+<li>we require both "Less" and "Equal" predicates, unlike <code>std</code> getting equal from less will be expensive.</li>
+<li>eve requires an output range instead of an output iterator. eve will do checks that there is enough output space and if there isn't, it will stop. If the algorithm stopped because of insufficient output space, the return value will contain where it stopped - (in1, in2) will point past the last written duplicate. TODO(#1630): provide support for output overallocation.</li>
+</ul>
+<p>Other:</p><ul>
+<li>Less and Equal have to be semantically compatible</li>
+<li>Eve always writes from the first range in case of equivalent elements. If <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less</a>/is_greater</code> and <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code> are passed in, elements are considered to be equal and eve can write from either range.</li>
+</ul>
+<p>Tuning:</p><ul>
+<li>Has <code>expect_smaller_range&lt;0&gt;</code>, <code>expect_smaller_range&lt;1&gt;</code> variations. These use combined simd/scalar approach. Since the problem is very data dependent, you want to measure for your usecase.</li>
+<li>Version <code>expect_smaller_range&lt;0&gt;</code> can be slightly faster, <code>eve</code> can't always use that due to a stability requirement but you might want to swap your inputs.</li>
+<li>The provided solution is minimal, eve won't search for beginning of intersection in any way. eve also won't do any dispatch based on size. If this is something that can be beneficial for your case - consider it.</li>
+<li>sparse_output/dense_output - controls which eve::algo::compress_copy is used, default is dense.</li>
+<li>Basic version does not support aligning/unrolling. <code>expect_smaller_range</code> do.</li>
+</ul>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> R1, <a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> R2, <a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> RO, <span class="keyword">typename</span> Less, <span class="keyword">typename</span></div>
+<div class="line">  Equal&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">set_intersection</a>(R1&amp;&amp; r1, R2&amp;&amp; r2, RO&amp;&amp; ro, Less less, Equal <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">equal</a>)  <span class="comment">// (1)</span></div>
+<div class="line">    -&gt; set_intersection_result&lt;unaligned_iterator_t&lt;R1&gt;,</div>
+<div class="line">                               <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;R2&gt;</a>,</div>
+<div class="line">                               <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;RO&gt;</a>&gt;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;relaxed_range R1, relaxed_range R2, relaxed_range RO&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">set_intersection</a>(R1&amp;&amp; r1, R2&amp;&amp; r2, RO&amp;&amp; ro)                          <span class="comment">// (2)</span></div>
+<div class="line">    -&gt; set_intersection_result&lt;unaligned_iterator_t&lt;R1&gt;,</div>
+<div class="line">                               <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;R2&gt;</a>,</div>
+<div class="line">                               <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;RO&gt;</a>&gt;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition:</b> ranges_types.hpp:68</div></div>
+<div class="ttc" id="agroup__algos_ga00f15ead142e6f1c1f39bf00afdb60ba_html_ga00f15ead142e6f1c1f39bf00afdb60ba"><div class="ttname"><a href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a></div><div class="ttdeci">constexpr auto set_intersection</div><div class="ttdoc">SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.</div><div class="ttdef"><b>Definition:</b> set_intersection.hpp:438</div></div>
+<div class="ttc" id="agroup__algos_ga2115b0f84f22d092050976f6f845a0b6_html_ga2115b0f84f22d092050976f6f845a0b6"><div class="ttname"><a href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">eve::algo::equal</a></div><div class="ttdeci">constexpr auto equal</div><div class="ttdoc">a SIMD version of std::equal</div><div class="ttdef"><b>Definition:</b> equal.hpp:111</div></div>
+<div class="ttc" id="astructrelaxed__range_html"><div class="ttname"><a href="structrelaxed__range.html">relaxed_range</a></div><div class="ttdoc">Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...</div></div>
+</div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less</a></code>, <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code> and converting to common type.</p>
+<p><b>Parameters (1)</b></p><ul>
+<li>r1, r2 - relaxed ranges to intersect</li>
+<li>ro - output relaxed range</li>
+<li>less - simd strict weak ordering for elements from r1 and r2</li>
+<li>equal - simd predicate for equivalence, compatible with less.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>set_intersection{ .in1, .in2, .out }.</p><ul>
+<li>if ro had enough space for all common elements - .in1 == r1.end(), .in2 == r2.end(), .out is an iterator in ro past the last written elements (same as std::set_intersection)</li>
+<li>if we ran out of space in ro before finishing the algorithm, .in1 and .in2 will point to positions past the last common element. .out == ro.end()</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;numeric&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">basic_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;basic =================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; v1 {1, 3, 5, 7};</div>
+<div class="line">  std::vector&lt;int&gt; v2 {2, 3, 4, 5, 6};</div>
+<div class="line">  std::vector&lt;int&gt; r;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/*</span></div>
+<div class="line"><span class="comment">   * The basic case, where output has guaranteed enough space</span></div>
+<div class="line"><span class="comment">   * for the intersected elements.</span></div>
+<div class="line"><span class="comment">   *</span></div>
+<div class="line"><span class="comment">   * We will see all of the common elements in the output.</span></div>
+<div class="line"><span class="comment">   * in1, in2 equal to the v1.end(), v2.end()</span></div>
+<div class="line"><span class="comment">   */</span></div>
+<div class="line">  r.resize(v1.size());</div>
+<div class="line">  r.erase(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(v1, v2, r).out, r.end());</div>
+<div class="line">  TTS_EQUAL(r, (std::vector{3, 5}));</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v1:&quot;</span> &lt;&lt; tts::as_string(v1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v2:&quot;</span> &lt;&lt; tts::as_string(v2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r: &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> not_enough_space_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;not enough space ====================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; v1 {1, 3, 5, 7};</div>
+<div class="line">  std::vector&lt;int&gt; v2 {2, 3, 4, 5, 6};</div>
+<div class="line">  std::vector&lt;int&gt; r;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/*</span></div>
+<div class="line"><span class="comment">   * The not enough space case - we will stop whe the output</span></div>
+<div class="line"><span class="comment">   * runs out.</span></div>
+<div class="line"><span class="comment">   *</span></div>
+<div class="line"><span class="comment">   * in1 and in2 will be after the last common element.</span></div>
+<div class="line"><span class="comment">   */</span></div>
+<div class="line">  r.resize(1);</div>
+<div class="line">  <span class="keyword">auto</span> [in1, in2, out] = <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(v1, v2, r);</div>
+<div class="line"> </div>
+<div class="line">  TTS_EQUAL(r, std::vector{3});</div>
+<div class="line">  TTS_EQUAL(*in1, 5);</div>
+<div class="line">  TTS_EQUAL(*in2, 4);</div>
+<div class="line">  TTS_EQUAL(out, r.end());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;r:             &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;*in1:          &quot;</span> &lt;&lt; *in1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;*in2:          &quot;</span> &lt;&lt; *in2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;out == r.end() &quot;</span> &lt;&lt; tts::as_string(out == r.end()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">pairs_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;mixing types, custom predicate =================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/*</span></div>
+<div class="line"><span class="comment">   * Example that does set_union for tuples and integers.</span></div>
+<div class="line"><span class="comment">   */</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>pair_t = kumi::tuple&lt;int, double&gt;;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> pairs {{0, 1.1f}, {2, 2.2f}, {3, 3.3f}, {4, 4.4f}};</div>
+<div class="line">  std::vector&lt;int&gt;              scalars {2, 4};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> r;</div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a>(pairs.size());</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> project = []&lt;<span class="keyword">typename</span> T&gt;(T a) {</div>
+<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;T, pair_t&gt;</a>) <span class="keywordflow">return</span> get&lt;0&gt;(a);</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">return</span> a;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/*</span></div>
+<div class="line"><span class="comment">   * Unfortunately, unlike std::set_intersect, we for now require that</span></div>
+<div class="line"><span class="comment">   * the callback applies both ways.</span></div>
+<div class="line"><span class="comment">   * FIX-1631</span></div>
+<div class="line"><span class="comment">   */</span></div>
+<div class="line">  <span class="keyword">auto</span> lt = [&amp;](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) {</div>
+<div class="line">    <span class="keywordflow">return</span> project(a) &lt; project(b);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> eq = [&amp;](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) {</div>
+<div class="line">    <span class="keywordflow">return</span> project(a) == project(b);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">erase</a>(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(pairs, scalars, r, lt, eq).out, r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector.html#a7db16dc990e0a9f719cad868584894c3">end</a>());</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> r_expected {{2, 2.2f}, {4, 4.4f}};</div>
+<div class="line">  TTS_EQUAL(r, r_expected);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; pairs:   &quot;</span> &lt;&lt; tts::as_string(pairs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sclaras: &quot;</span> &lt;&lt; tts::as_string(scalars) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r:       &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">different_scalar_types_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;different_scalar_types =================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;double&gt; f64 {10.1, 20, 30.3, 40.4};</div>
+<div class="line">  std::vector&lt;int&gt;    i32 {20, 40};</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// We will convert from the intersection to the output type</span></div>
+<div class="line">  std::vector&lt;float&gt; r0(5u, 0.0);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// We will use eve::common_type for comparisons between different types</span></div>
+<div class="line">  <span class="comment">// if predicates are defaulted.</span></div>
+<div class="line">  r0.erase(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(f64, i32, r0).out, r0.end());</div>
+<div class="line">  TTS_EQUAL(r0, std::vector&lt;float&gt;{20});</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> project = [](<span class="keyword">auto</span> a) {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">eve::convert</a>(a, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;std::int64_t&gt;</a>{}) / 10;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> lt = [&amp;](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) {</div>
+<div class="line">    <span class="keywordflow">return</span> project(a) &lt; project(b);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> eq = [&amp;](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) {</div>
+<div class="line">    <span class="keywordflow">return</span> project(a) == project(b);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// The output is always copied from the first range, so r1, r2 will give</span></div>
+<div class="line">  <span class="comment">// different results.</span></div>
+<div class="line">  std::vector&lt;float&gt; r1(5u, 0.0);</div>
+<div class="line">  r1.erase(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(f64, i32, r1, lt, eq).out, r1.end());</div>
+<div class="line">  TTS_EQUAL(r1, (std::vector&lt;float&gt;{20, 40.4}));</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;float&gt; r2(5u, 0.0);</div>
+<div class="line">  r2.erase(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(i32, f64, r2, lt, eq).out, r2.end());</div>
+<div class="line">  TTS_EQUAL(r2, (std::vector&lt;float&gt;{20, 40}));</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; f64: &quot;</span> &lt;&lt; tts::as_string(f64) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; i32: &quot;</span> &lt;&lt; tts::as_string(i32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_string(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_string(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r2:  &quot;</span> &lt;&lt; tts::as_string(r2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">biase_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;smaller range hint =================\n&quot;</span>;</div>
+<div class="line">  std::vector&lt;int&gt; v1(1000u, 0), v2{531, 917};</div>
+<div class="line">  std::iota(v1.begin(), v1.end(), 0);</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; r0{0, 1}, r1{0, 1};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>[eve::algo::expect_smaller_range&lt;0&gt;](v1, v2, r0);</div>
+<div class="line">  <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>[eve::algo::expect_smaller_range&lt;1&gt;](v2, v1, r1);</div>
+<div class="line"> </div>
+<div class="line">  TTS_EQUAL(r0, v2);</div>
+<div class="line">  TTS_EQUAL(r1, v2);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_string(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_string(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">sparse_output_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;sparse_output hint =================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; v1(20u, 0), v2(20u, 0);</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; <span class="keyword">auto</span>&amp; x : v1) x = i++ * 3;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; <span class="keyword">auto</span>&amp; x : v2) x = i++ * 5;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; r;</div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a>(20);</div>
+<div class="line"> </div>
+<div class="line">  r.erase(</div>
+<div class="line">    <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>[<a class="code hl_variable" href="group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c">eve::algo::sparse_output</a>](v1, v2, r).out,</div>
+<div class="line">    r.end());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; r: &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; std::endl;</div>
+<div class="line">  TTS_EQUAL(r, std::vector({0, 15, 30, 45}));</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  basic_example();</div>
+<div class="line">  not_enough_space_example();</div>
+<div class="line">  pairs_example();</div>
+<div class="line">  different_scalar_types_example();</div>
+<div class="line">  biase_example();</div>
+<div class="line">  sparse_output_example();</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:107</div></div>
+<div class="ttc" id="agroup__algo__traits_ga287988654952e8715cf1fa674d7b9b3c_html_ga287988654952e8715cf1fa674d7b9b3c"><div class="ttname"><a href="group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c">eve::algo::sparse_output</a></div><div class="ttdeci">constexpr auto sparse_output</div><div class="ttdoc">for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...</div><div class="ttdef"><b>Definition:</b> traits.hpp:419</div></div>
+<div class="ttc" id="agroup__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867_html_gaa19dcccbb0ef0ef464e95ffd7a588867"><div class="ttname"><a href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">eve::convert</a></div><div class="ttdeci">constexpr auto convert</div><div class="ttdoc">Converts a value to another type.</div><div class="ttdef"><b>Definition:</b> convert.hpp:83</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91_html_a00d09efb7c037e5a1b2393e091e94c91"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">eve::algo::soa_vector::resize</a></div><div class="ttdeci">void resize(size_type n, value_type value)</div><div class="ttdoc">Resizes the container to contain count elements.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:233</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28_html_a9d1fa950c126da0ea504f3cad11ddd28"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">eve::algo::soa_vector::erase</a></div><div class="ttdeci">iterator erase(const_iterator pos)</div><div class="ttdoc">Removes an element from the container.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:191</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_html"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a></div><div class="ttdoc">SIMD-aware container for product types.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:50</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_html_a7db16dc990e0a9f719cad868584894c3"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector.html#a7db16dc990e0a9f719cad868584894c3">eve::algo::soa_vector::end</a></div><div class="ttdeci">auto end() -&gt; iterator</div><div class="ttdoc">Returns an iterator to the end.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:341</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['handling_20multiple_20architecture_20targets_0',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]]
+  ['installation_20_26_20quick_20start_0',['Installation &amp; Quick Start',['../setup.html',1,'']]],
+  ['interaction_20with_20native_20code_2e_1',['Interaction with native code.',['../inter-with-native.html',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['for_20testing_0',['Building for Testing',['../dev_cmake.html',1,'']]],
-  ['frequency_20scaling_1',['Frequency Scaling.',['../freqscale.html',1,'']]]
+  ['handling_20multiple_20architecture_20targets_0',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]]
 ];

@@ -1,0 +1,312 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::iota</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__core__constants_ga201aa31a6833222e1640130387cbba48.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="contents">
+<a id="ga201aa31a6833222e1640130387cbba48" name="ga201aa31a6833222e1640130387cbba48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga201aa31a6833222e1640130387cbba48">&#9670;&#160;</a></span>iota</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::iota = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;iota_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>eve::views::iota if you want a view.</dd></dl>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span> &lt; <a class="code hl_concept" href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a> C</div>
+<div class="line">            , eve::arithmetic_simd_value T</div>
+<div class="line">            &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">iota</a>[C cond](<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> tgt);</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:28</div></div>
+<div class="ttc" id="agroup__core__constants_ga201aa31a6833222e1640130387cbba48_html_ga201aa31a6833222e1640130387cbba48"><div class="ttname"><a href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">all numbers from 0 to size() - 1. equivalent to T{ [](int i, int) {return i; } }</div><div class="ttdef"><b>Definition:</b> iota.hpp:69</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>tgt</code> : <a class="el" href="structeve_1_1as.html">Type wrapper</a> - type of the resulting</li>
+<li><code>cond</code> : (optional) - a way to replace undesired elements If no <code>alternative</code> is provided - returns <a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero(tgt)</a> for disabled elements.</li>
+</ul>
+<p><b>Return value</b></p>
+<ul>
+<li>T{0, 1, ...}</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>n    = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>i32s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, n&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>f64s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, n&gt;</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span>iota_supports = std::invocable&lt;<span class="keyword">decltype</span>(<a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>), <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// See below - maybe this is what you are looking for?</span></div>
+<div class="line"><span class="keywordtype">void</span> how_to_keep_track_of_index();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  how_to_keep_track_of_index();</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// basic ints</span></div>
+<div class="line">  {</div>
+<div class="line">    i32s expected {0, 1, 2, 3};</div>
+<div class="line">    i32s actual = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;i32s&gt;</a> {});</div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(expected == actual));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// floats</span></div>
+<div class="line">  {</div>
+<div class="line">    f64s expected {0.0, 1.0, 2.0, 3.0};</div>
+<div class="line">    f64s actual = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;f64s&gt;</a> {});</div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(expected == actual));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// doesn&#39;t work for</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">static_assert</span>(!iota_supports&lt;eve::logical&lt;i32s&gt;&gt;);</div>
+<div class="line">    <span class="keyword">static_assert</span>(!iota_supports&lt;eve::logical&lt;int&gt;&gt;);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// conditional</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span>       tgt     = <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;i32s&gt;</a> {};</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> actual0 = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](tgt);</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> actual1 = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2).<a class="code hl_function" href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">else_</a>(5)](tgt);</div>
+<div class="line"> </div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(actual0 == i32s {0, 1, 0, 0}));</div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(actual1 == i32s {0, 1, 5, 5}));</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> m       = eve::logical&lt;i32s&gt; {<span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>};</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> actual2 = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>[m](tgt);</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> actual3 = <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a>[<a class="code hl_struct" href="structeve_1_1if__.html">eve::if_</a>(m).<a class="code hl_function" href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">else_</a>(5)](tgt);</div>
+<div class="line"> </div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(actual2 == i32s {0, 1, 0, 0}));</div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(actual3 == i32s {0, 1, 5, 5}));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">how_to_keep_track_of_index()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// There is a good chance you found this doc because</span></div>
+<div class="line">  <span class="comment">// you wanted to enumerate all elements in a sequence.</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// It is harder then you might think in a general case.</span></div>
+<div class="line">  <span class="comment">// If you need to do it for small types (such as vector of chars or shorts)</span></div>
+<div class="line">  <span class="comment">// look at `eve::algo::for_each_iteration_fixed_overflow`.</span></div>
+<div class="line">  <span class="comment">// There is no docs for that at this point, because it is very clumsy.</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// If you don&#39;t care about overflow, just zip with iota view.</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Example: for (int i = 0; auto&amp; x : v) x = (i++) * 2;</span></div>
+<div class="line">  {</div>
+<div class="line">    std::vector&lt;int&gt; v;</div>
+<div class="line">    v.resize(10);</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_variable" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a>(</div>
+<div class="line">        eve::views::iota(0), v, [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> idx) { <span class="keywordflow">return</span> idx + idx; });</div>
+<div class="line"> </div>
+<div class="line">    TTS_EQUAL(v, std::vector&lt;int&gt;({0, 2, 4, 6, 8, 10, 12, 14, 16, 18}));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Example: imperfect for (int i = 0; auto&amp; x : v) x = x &lt;&lt; i;</span></div>
+<div class="line">  {</div>
+<div class="line">    std::vector&lt;int&gt; v(5u, 1);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Here, because we pass v twice, it will not be as perfect as it can but</span></div>
+<div class="line">    <span class="comment">// it has advantage of being very simple.</span></div>
+<div class="line">    <a class="code hl_variable" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a>(eve::views::zip(v, eve::views::iota(0)),</div>
+<div class="line">                            v,</div>
+<div class="line">                            [](<span class="keyword">auto</span> input_idx)</div>
+<div class="line">                            {</div>
+<div class="line">                              <span class="keyword">auto</span> [input, idx] = input_idx;</div>
+<div class="line">                              <span class="keywordflow">return</span> input &lt;&lt; idx;</div>
+<div class="line">                            });</div>
+<div class="line"> </div>
+<div class="line">    TTS_EQUAL(v, std::vector&lt;int&gt;({1, 2, 4, 8, 16}));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Example: handwriting for (int i = 0; auto&amp; x : v) x = x &lt;&lt; i;</span></div>
+<div class="line">  {</div>
+<div class="line">    std::vector&lt;int&gt; v(5u, 1);</div>
+<div class="line">    <a class="code hl_variable" href="group__algos_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0">eve::algo::for_each</a>(eve::views::zip(v, eve::views::iota(0)),</div>
+<div class="line">                        [](eve::algo::iterator <span class="keyword">auto</span> it, <a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> <span class="keyword">auto</span> ignore)</div>
+<div class="line">                        {</div>
+<div class="line">                          <span class="keyword">auto</span> [elements_it, index_it] = it;</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> elements = eve::load[ignore](elements_it);</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> idxs     = eve::load[ignore](index_it);</div>
+<div class="line"> </div>
+<div class="line">                          elements &lt;&lt;= idxs;</div>
+<div class="line">                          <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>[ignore](elements, elements_it);</div>
+<div class="line">                        });</div>
+<div class="line">    TTS_EQUAL(v, std::vector&lt;int&gt;({1, 2, 4, 8, 16}));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:52</div></div>
+<div class="ttc" id="agroup__algos_ga023d457444697194cbb8dcf21bcb236e_html_ga023d457444697194cbb8dcf21bcb236e"><div class="ttname"><a href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a></div><div class="ttdeci">constexpr auto transform_to</div><div class="ttdoc">SIMD version of std::transform.</div><div class="ttdef"><b>Definition:</b> transform.hpp:112</div></div>
+<div class="ttc" id="agroup__algos_gabc4fab3473dac382f3ad4edc9531aec0_html_gabc4fab3473dac382f3ad4edc9531aec0"><div class="ttname"><a href="group__algos_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0">eve::algo::for_each</a></div><div class="ttdeci">constexpr auto for_each</div><div class="ttdoc">a basic for_each algorithm.</div><div class="ttdef"><b>Definition:</b> for_each.hpp:73</div></div>
+<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:58</div></div>
+<div class="ttc" id="agroup__memory_ga92b6c322f7422825155c2a590be84f09_html_ga92b6c322f7422825155c2a590be84f09"><div class="ttname"><a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a></div><div class="ttdeci">constexpr callable_store_ store</div><div class="ttdoc">Callable object computing //! description NOT FOUND.</div><div class="ttdef"><b>Definition:</b> store.hpp:73</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1if___a3c412a82b915cb199e4e120c916fb32c_html_a3c412a82b915cb199e4e120c916fb32c"><div class="ttname"><a href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">eve::if_::else_</a></div><div class="ttdeci">auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:111</div></div>
+<div class="ttc" id="astructeve_1_1if___html"><div class="ttname"><a href="structeve_1_1if__.html">eve::if_</a></div><div class="ttdoc">Extensible wrapper for SIMD conditional.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:99</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320_html_a7c4efa5e5f45c87fbeb7d847aff52320"><div class="ttname"><a href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">eve::ignore_last::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:317</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:93</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

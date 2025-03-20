@@ -1,0 +1,315 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::compress</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f2983814787c42567f541.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="contents">
+<a id="ga653bcb136e1f2983814787c42567f541" name="ga653bcb136e1f2983814787c42567f541"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga653bcb136e1f2983814787c42567f541">&#9670;&#160;</a></span>compress</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::compress = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>this is very low level function, most likely you are looking for <a class="el" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e" title="A function that copies selected elements from source to destination, while compressing them to the le...">eve::compress_copy</a> or <a class="el" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e" title="A function that stores selected elements from an eve::simd_value to an eve::simd_compatible_ptr,...">eve::compress_store</a>.</dd>
+<dd>
+<ul>
+<li>FIX-1647: <a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a> doesn't support <code>wide&lt;tuple&gt;</code> yet.</li>
+<li>the mask type can be any logical with the same cardinal.</li>
+</ul>
+</dd></dl>
+<p>Compression in simd is moving selected elements to the front of the simd_value. Unfortunately, not for all <code>simd_value</code>, not for all plaftorms that can be done efficiently. So the operation splits the input into chunks for which it's possible.</p>
+<p>The function perfoms the following steps: 1) splits the simd_value and mask into chunks, that can be processed in one go. This depends on what instructions are availiable. 2) Each chunk, gets shuffled in a way that moves selected elements (mask == true) to the front. The tail of the resulting value is unspecified. [a, b, c, d], (false, true, false, true) -&gt; [b, d, _, _] 3) For each chunk we also compute how many elements are selected. (in the example - 2). 4) Both shuffled chunk and a number are put in a <code>kumi::tuple&lt;simd_value, std::ptrdiff_t&gt;</code> TODO: there is a bug where sometimes it's an <code>int</code> and not <code>std::ptrdiff_t</code>. 5) Those chunks are combined together in another tuple.</p>
+<p>List of people who's work was instrumental for building this:</p><ul>
+<li><code>@aqrit</code> user on Stack Overflow</li>
+<li>Peter Cordes</li>
+</ul>
+<p>Throughout the code of compress there are references to what was taken from where as well as explanations.</p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span> &lt;simd_value T, logical_simd_value L&gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>(T x, L m);                       <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L&gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>[C ignore](T x, L m)              <span class="comment">// (2)</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition:</b> simd.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:52</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:34</div></div>
+<div class="ttc" id="agroup__core__compress_ga653bcb136e1f2983814787c42567f541_html_ga653bcb136e1f2983814787c42567f541"><div class="ttname"><a href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a></div><div class="ttdeci">constexpr callable_compress_ compress</div><div class="ttdoc">A low level function to compress one simd value based on a mask.</div><div class="ttdef"><b>Definition:</b> compress.hpp:89</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - simd_value to compress</li>
+<li>m - mask which markes selected elements as true</li>
+<li>ignore - optional <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>, passed in <code>[]</code>. Ignored elements are treated as not selected.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li><code>kumi::tuple&lt;kumi::tuple&lt;simd_value, std::ptrdiff_t&gt;, ...&gt;</code> - tuple of compressed chunks, constructed as described earlier.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// template to make if constexpr not activate</span></div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keywordtype">void</span> show_return_type(T)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::same_as&lt;T, std::int8_t&gt; &amp;&amp; eve::current_api == eve::sse4_2)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// On sse4_2 the default wide&lt;std::int8_t&gt;::size() == 16</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// We cannot compress 16 bytes in one step,</span></div>
+<div class="line">    <span class="comment">// We need to split it into 2 chunks of 8.</span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">// So the result will be 2 chunks of 8.</span></div>
+<div class="line">    <span class="comment">// We will also return how many are in each chunk</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// clang-format off</span></div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;T&gt;</a> in {</div>
+<div class="line">       1,  2,  0,  4, <span class="comment">//</span></div>
+<div class="line">       5,  0,  6,  7, <span class="comment">//</span></div>
+<div class="line">       8,  9, 10, 11, <span class="comment">//</span></div>
+<div class="line">      12,  0, 14, 15, <span class="comment">//</span></div>
+<div class="line">    };</div>
+<div class="line">    <span class="comment">// clang-format on</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">using </span>i8x8 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">using </span>chunk = kumi::tuple&lt;i8x8, int&gt;;  <span class="comment">// int should be ptrdiff_t - this is a bug</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// ignore will be interpreted as false in the mask</span></div>
+<div class="line">    kumi::tuple&lt;chunk, chunk&gt; compressed = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1)](in, in != 0);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span> [<a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>, <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>] = compressed;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span> [lo_compressed, lo_count] = <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>;</div>
+<div class="line">    <span class="keyword">auto</span> [hi_compressed, hi_count] = <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>;</div>
+<div class="line"> </div>
+<div class="line">    TTS_EQUAL(5, lo_count); <span class="comment">// 2 zeroes in the first 8 elements + ignore_first</span></div>
+<div class="line">    TTS_EQUAL(7, hi_count); <span class="comment">// 1 zero in the second 8 elements</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// The &#39;tail&#39; after removed elements is unspecified</span></div>
+<div class="line">    <span class="comment">// so looking at them is not helpful.</span></div>
+<div class="line">    lo_compressed.set(5, -1);</div>
+<div class="line">    lo_compressed.set(6, -1);</div>
+<div class="line">    lo_compressed.set(7, -1);</div>
+<div class="line">    hi_compressed.set(7, -1);</div>
+<div class="line"> </div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(lo_compressed == i8x8{2, 4, 5, 6, 7, -1, -1, -1}));</div>
+<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(hi_compressed == i8x8{8, 9, 10, 11, 12, 14, 15, -1}));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Here is how one can use `eve::compress` directly.</span></div>
+<div class="line"><span class="comment">// This how for some platforms we can implement `compress_copy_unsafe_dense`.</span></div>
+<div class="line"><span class="keywordtype">int</span>* compress_copy_using_compress_directly(<span class="keyword">const</span> <span class="keywordtype">int</span>* in, <span class="keywordtype">int</span>* out)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> loaded = eve::load(in);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// a tuple or compressed wides.</span></div>
+<div class="line">  <span class="comment">// each part is not just a wide but is a tuple&lt;wide, count&gt;</span></div>
+<div class="line">  <span class="comment">// so that you know how to compact values after</span></div>
+<div class="line">  <span class="comment">//</span></div>
+<div class="line">  <span class="comment">// So using chunk = kumi::tuple&lt;wide&lt;int, N1&gt;&gt;;</span></div>
+<div class="line">  <span class="comment">// So kumi::tuple&lt;chunk, ...&gt;</span></div>
+<div class="line">  kumi::tuple compressed_whole = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>(loaded, loaded != 0);</div>
+<div class="line"> </div>
+<div class="line">  kumi::for_each([&amp;](<span class="keyword">auto</span> compressed_lengh) {</div>
+<div class="line">    <span class="keyword">auto</span> [compressed, length] = compressed_lengh;</div>
+<div class="line">    <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(compressed, out);</div>
+<div class="line">    out += length;</div>
+<div class="line">  }, compressed_whole);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> out;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> validate_compress_copy(<span class="keyword">auto</span> f)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">constexpr</span> std::size_t N = <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;int&gt;::size</a>();</div>
+<div class="line">  std::array&lt;int, N&gt; in = {};</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">for</span> (std::size_t i = 0; i != N; ++i) {</div>
+<div class="line">    <span class="keywordflow">if</span> (i % 4 == 0) in[i] = 0;</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">      in[i] = i;</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  std::array&lt;int, N&gt; expected = {};</div>
+<div class="line">  std::copy_if(in.begin(), in.end(), expected.begin(), [](<span class="keywordtype">int</span> x) { return x != 0; });</div>
+<div class="line"> </div>
+<div class="line">  std::array&lt;int, N&gt; out = {};</div>
+<div class="line">  <span class="keyword">auto</span>* o = f(in.data(), out.data());</div>
+<div class="line">  std::fill(o, out.data() + out.size(), 0);</div>
+<div class="line"> </div>
+<div class="line">  TTS_EQUAL(expected, out);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  show_return_type(std::int8_t{0});</div>
+<div class="line">  validate_compress_copy(compress_copy_using_compress_directly);</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr auto hi</div><div class="ttdoc">elementwise_callable computing the most significant half of each lane.</div><div class="ttdef"><b>Definition:</b> hi.hpp:71</div></div>
+<div class="ttc" id="agroup__core__bitops_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr auto lo</div><div class="ttdoc">Computes the least significant half of each lane.</div><div class="ttdef"><b>Definition:</b> lo.hpp:73</div></div>
+<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:58</div></div>
+<div class="ttc" id="agroup__memory_ga92b6c322f7422825155c2a590be84f09_html_ga92b6c322f7422825155c2a590be84f09"><div class="ttname"><a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a></div><div class="ttdeci">constexpr callable_store_ store</div><div class="ttdoc">Callable object computing //! description NOT FOUND.</div><div class="ttdef"><b>Definition:</b> store.hpp:73</div></div>
+<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:417</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:93</div></div>
+<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition:</b> wide.hpp:405</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

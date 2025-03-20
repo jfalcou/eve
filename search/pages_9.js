@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['multiple_20architecture_20targets_0',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]]
+  ['the_20expressive_20vector_20engine_0',['The Expressive Vector Engine',['../index.html',1,'']]],
+  ['tuples_1',['Tuples',['../intro-03.html',1,'']]]
 ];

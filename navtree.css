@@ -42,6 +42,7 @@
   text-decoration:none;
   padding:0px;
   margin:0px;
+  outline:none;
 }
 
 #nav-tree .label {
