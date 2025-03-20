@@ -81,6 +81,12 @@ namespace eve
         }
       }
     }
+
+    template<typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto retarget(auto arch, T x0, Ts... xs) const
+    {
+      return this->behavior(arch, this->options(), x0, xs...);
+    }
   };
 
 }
