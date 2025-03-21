@@ -12,8 +12,8 @@ import multiprocessing as mp
 project_root = Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).strip().decode('utf-8'))
 
 abis = { 'arm_abi': 'arm/neon', 'sve_abi': 'arm/sve', 'x86abi': 'x86', 'ppc_abi': 'ppc' }
-callable_def_regex = re.compile(r'\bstruct\s+(\w+_)t\s*:\s*(callable|strict_elementwise_callable|elementwise_callable|strict_tuple_callable|tuple_callable|constant_callable)')
-include_regex = re.compile(r'^\s*#\s*include\s*<(.*?)>', re.MULTILINE)
+callable_def_regex = re.compile(r'\bstruct\s+(\w+?)_t\s*?:\s*?(callable|strict_elementwise_callable|elementwise_callable|strict_tuple_callable|tuple_callable|constant_callable)')
+include_regex = re.compile(r'^\s*?#\s*?include\s*?<(.*?)>', re.MULTILINE)
 
 file_cache = { }
 
@@ -47,6 +47,22 @@ def check_arch_tags():
       continue
 
 # checks that no file contains multiple different callables implementations
+callable_behavior_call = re.compile(r'(\w+?)\.(?:behavior|retarget)\(')
+
+def check_callables_defs__check_file(file, content, regex):
+  callable_multidef_ignorelist = [ "extract", "insert", "lentz_a", "lentz_b" ]
+  callable_chainuse_ignorelist = [ ("rshl", "shl"), ("rshl", "shr"), ("rshr", "shl"), ("rshr", "shr"), ("shr", "shl") ]
+  found = set(regex.findall(content))
+  if len(found) > 1 and not all(cname in callable_multidef_ignorelist for cname in found):
+    print(f"Multiple callable impl defined in {file}:\n\t{found}")
+
+  if len(found) > 0:
+    callable_name = found.pop()
+    for match in callable_behavior_call.findall(content):
+      if match != callable_name and (callable_name, match) not in callable_chainuse_ignorelist:
+        print(f"Callable {callable_name} defined in {file} but {match} is used")
+
+
 def check_callables_defs():
   files_searched = { }
   callables = { }
@@ -54,27 +70,20 @@ def check_callables_defs():
   # get all callables
   for file, (content, _) in file_cache.items():
     files_searched[file] = content
-    matchs = callable_def_regex.findall(content)
 
-    for cname, ctype in matchs:
+    for cname, ctype in callable_def_regex.findall(content):
       if cname in callables:
         print(f"Callable {cname} already defined in {callables[cname]['file']}")
       else:
         callables[cname] = { 'file': file, 'type': ctype }
 
-  combined_regex = re.compile(r'\s+(' + '|'.join(cname for cname in callables) + r')\s*\(\s*EVE_REQUIRES')
+  combined_regex = re.compile(r'(' + '|'.join(cname for cname in callables) + r')_\s*?\(\s*?EVE_REQUIRES')
 
   with mp.Pool() as pool:
     pool.starmap(
       check_callables_defs__check_file,
       [(file, content, combined_regex) for file, content in files_searched.items()]
     )
-
-def check_callables_defs__check_file(file, content, regex):
-  callable_ignorelist = [ "extract_", "insert_", "lentz_a_", "lentz_b_" ]
-  found = set(regex.findall(content))
-  if len(found) > 1 and not all(cname in callable_ignorelist for cname in found):
-    print(f"Multiple callable impl defined in {file}:\n\t{found}")
 
 # check for duplicate include directives
 def check_dup_includes():
