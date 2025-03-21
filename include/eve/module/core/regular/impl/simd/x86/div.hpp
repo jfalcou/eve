@@ -139,8 +139,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_div_pd(src, m, v, w);
       else if constexpr( c == category::float32x4 ) return _mm_mask_div_ps(src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_div_pd(src, m, v, w);
-      else return abs.behavior(cpu_{}, o, v, w);
+      else return div.behavior(cpu_{}, o, v, w);
     }
   }
-
 }
