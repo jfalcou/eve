@@ -65,7 +65,7 @@ namespace eve
     }
 
     template <rbr::concepts::settings S>
-    constexpr EVE_FORCEINLINE auto operator&&(options<S> const& opt) const noexcept
+    constexpr EVE_FORCEINLINE auto merge_prefer_first(options<S> const& opt) const noexcept
     {
       auto new_opts = rbr::merge(opt, *this);
       return options<decltype(new_opts)>{new_opts};
@@ -224,13 +224,13 @@ namespace eve
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
-      return base && options{condition_key = opt};
+      return base.merge_prefer_first(options{condition_key = opt});
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
     {
-      return options{condition_key = ignore_none} && base;
+      return options{condition_key = ignore_none}.merge_prefer_first(base);
     }
   };
 
@@ -258,7 +258,7 @@ namespace eve
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
-      return base && options{opt};
+      return base.merge_prefer_first(options{opt});
     }
 
     template<std::same_as<bool> O>
@@ -282,7 +282,7 @@ namespace eve
     /// Default settings of eve::conditional is eve::ignore_none
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
     {
-      return options{condition_key = ignore_none} && base;
+      return options{condition_key = ignore_none}.merge_prefer_first(base);
     }
   };
 
@@ -292,12 +292,12 @@ namespace eve
     EVE_FORCEINLINE constexpr auto process(auto const& base, Opt opt) const
     requires( !Opt::has_alternative )
     {
-      return base && options{condition_key = opt};
+      return base.merge_prefer_first(options{condition_key = opt});
     }
 
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
     {
-      return options{condition_key = ignore_none} && base;
+      return options{condition_key = ignore_none}.merge_prefer_first(base);
     }
   };
 }
@@ -309,7 +309,7 @@ namespace eve::detail
   {
     EVE_FORCEINLINE constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
     {
-      return base && options{opts};
+      return base.merge_prefer_first(options{opts});
     }
 
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
