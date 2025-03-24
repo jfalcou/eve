@@ -21,25 +21,33 @@ namespace eve
   template<typename Options>
   struct func_t : callable<func_t, Options, conditional_option>
   {
-    bool operator()(tests v) const { return EVE_DISPATCH_CALL(v); }
+    bool operator()(tests test_id) const { return EVE_DISPATCH_CALL(test_id); }
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 
   template<typename Options>
   struct chained_func_t : callable<chained_func_t, Options, conditional_option>
   {
-    auto operator()(tests v) const { return EVE_DISPATCH_CALL(v); }
+    auto operator()(tests test_id) const { return EVE_DISPATCH_CALL(test_id); }
     EVE_CALLABLE_OBJECT(chained_func_t, chained_func_);
+  };
+
+  template<typename Options>
+  struct ew_drop_func_t : strict_elementwise_callable<ew_drop_func_t, Options>
+  {
+    auto operator()() const { return EVE_DISPATCH_CALL(eve::wide<int>{}); }
+    EVE_CALLABLE_OBJECT(ew_drop_func_t, ew_drop_func_);
   };
 
   inline constexpr auto         func = functor<func_t>;
   inline constexpr auto chained_func = functor<chained_func_t>;
+  inline constexpr auto ew_drop_func = functor<ew_drop_func_t>;
 };
 
 namespace eve::detail
 {
   template<eve::callable_options O>
-  bool func_(EVE_REQUIRES(cpu_), O const&,  tests test_id)
+  bool func_(EVE_REQUIRES(cpu_), O const&, tests test_id)
   {
     if(test_id == tests::has_condition_key) return O::contains(condition_key);
     if(test_id == tests::has_ignore_none)   return match_option<condition_key,O,ignore_none_>;
@@ -49,13 +57,19 @@ namespace eve::detail
   }
 
   template<eve::callable_options O>
-  auto chained_func_(EVE_REQUIRES(cpu_), O const& o,  tests)
+  auto chained_func_(EVE_REQUIRES(cpu_), O const& o, tests)
   {
     return func[o][keep_first(4)].options()[condition_key];
   }
+
+  template<eve::callable_options O, eve::conditional_expr C>
+  auto ew_drop_func_(EVE_REQUIRES(cpu_), C const&, O const&, eve::wide<int>)
+  {
+    return !O::contains(condition_key);
+  }
 }
 
-TTS_CASE("Check callable always have conditional_key")
+TTS_CASE("Check callable always have conditional_key by default")
 {
   TTS_EXPECT(eve::func(tests::has_condition_key)                  );
   TTS_EXPECT(eve::func[true](tests::has_condition_key)            );
@@ -93,4 +107,10 @@ TTS_CASE("Check callable always have conditional_key when chained")
   TTS_EXPR_IS(eve::chained_func[true](tests::has_condition_key), eve::keep_first);
   TTS_EXPR_IS(eve::chained_func[eve::ignore_none](tests::has_condition_key), eve::keep_first);
   TTS_EXPR_IS(eve::chained_func[eve::ignore_all](tests::has_condition_key), eve::keep_first);
+};
+
+TTS_CASE("Check elementwise callable condition_key drop")
+{
+  TTS_EXPECT(eve::ew_drop_func[true]()            );
+  TTS_EXPECT(eve::ew_drop_func[eve::ignore_all]() );
 };
