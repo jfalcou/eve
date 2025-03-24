@@ -81,6 +81,6 @@ namespace eve::detail
     else if constexpr( c == category::uint32x8 ) return r_t(_mm256_mask_lzcnt_epi32(src, m, a0));
     else if constexpr( c == category::uint64x2 ) return r_t(_mm_mask_lzcnt_epi64(src, m, a0));
     else if constexpr( c == category::uint32x4 ) return r_t(_mm_mask_lzcnt_epi32(src, m, a0));
-    else return countl_zero.behavior(cpu_{}, opts, a0);
+    else return countl_zero[opts][cx].retarget(cpu_{}, a0);
   }
 }

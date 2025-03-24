@@ -99,7 +99,7 @@ namespace eve::detail
       [[maybe_unused]] auto const m  = expand_mask(mask, as(a)).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fnms.behavior(cpu_{}, opts, a, b, c);
+      if constexpr( std::integral<T> ) return fnms[opts][mask].retarget(cpu_{}, a, b, c);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -114,15 +114,15 @@ namespace eve::detail
             auto aa = eve::combine(a, a);
             auto bb = eve::combine(b, b);
             auto cc = eve::combine(c, c);
-            auto aabbcc = fnms[opts.drop(condition_key)](aa, bb, cc);
+            auto aabbcc = fnms[opts](aa, bb, cc);
             auto s =  slice(aabbcc, eve::upper_);
             return if_else(mask,s,src);
           }
-          else                                             return fnms.behavior(cpu_{}, opts, a, b, c);
+          else                                             return fnms[opts][mask].retarget(cpu_{}, a, b, c);
         }
-        else                                                return fnms.behavior(cpu_{}, opts, a, b, c);
+        else                                                return fnms[opts][mask].retarget(cpu_{}, a, b, c);
       }
-      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnms[opts.drop(condition_key)](a, b, c), a);
+      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnms[opts](a, b, c), a);
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fnmsub_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fnmsub_pd(a, m, b, c);
       else if constexpr( cx == category::float32x8  ) return _mm256_mask_fnmsub_ps(a, m, b, c);
@@ -132,6 +132,6 @@ namespace eve::detail
       // No rounding issue with integers, so we just mask over regular FMA
       else                                            return if_else(mask, eve::fnms(a, b, c), a);
     }
-    else                                              return if_else(mask, eve::fnms[opts.drop(condition_key)](a, b, c), alternative(mask, a, as(a)));
+    else                                              return if_else(mask, eve::fnms[opts](a, b, c), alternative(mask, a, as(a)));
   }
 }

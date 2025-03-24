@@ -130,7 +130,7 @@ namespace eve::detail
     {
       if constexpr (O::contains(strict))
       {
-        return add.behavior(cpu_{}, opts, v, w);
+        return add[opts][cx].retarget(cpu_{}, v, w);
       }
       else
       {
@@ -142,13 +142,13 @@ namespace eve::detail
         {
           auto vv = eve::combine(v, v);
           auto ww = eve::combine(w, w);
-          auto vvpww = add[opts.drop(condition_key)](vv, ww);
+          auto vvpww = add[opts](vv, ww);
           auto s = slice(vvpww, eve::upper_);
           return if_else(cx, s, src);
         }
         else
         {
-          return add.behavior(cpu_{}, opts, v, w);
+          return add[opts][cx].retarget(cpu_{}, v, w);
         }
       }
     }
@@ -167,7 +167,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x8  ) return _mm_mask_adds_epu16(src, m, v, w);
       else if constexpr( c == category::int8x16   ) return _mm_mask_adds_epi8(src, m, v, w);
       else if constexpr( c == category::uint8x16  ) return _mm_mask_adds_epu8(src, m, v, w);
-      else                                          return add.behavior(cpu_{}, opts, v, w);
+      else                                          return add[opts][cx].retarget(cpu_{}, v, w);
     }
     else
     {
@@ -190,7 +190,7 @@ namespace eve::detail
       else if constexpr( match(c,category::int8x64 , category::uint8x64 ) ) return _mm512_mask_add_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x32 , category::uint8x32 ) ) return _mm256_mask_add_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x16 , category::uint8x16 ) ) return _mm_mask_add_epi8    (src, m, v, w);
-      else                                                                  return add.behavior(cpu_{}, opts, v, w);
+      else                                                                  return add[opts][cx].retarget(cpu_{}, v, w);
     }
   }
 }

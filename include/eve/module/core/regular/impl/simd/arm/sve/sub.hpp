@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if constexpr(O::contains_any(widen, left))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub[opts][mask].retarget(cpu_{}, a, b);
     }
     else
     {
@@ -31,7 +31,7 @@ namespace eve::detail
       if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                    (O::contains(saturated) && std::integral<T>))
       {
-        return sub.behavior(cpu_{}, opts, a, b);
+        return sub[opts][mask].retarget(cpu_{}, a, b);
       }
       //  If not, we can mask if there is no alterative value
       else  if  constexpr( !C::has_alternative )
@@ -42,7 +42,7 @@ namespace eve::detail
       // If not, we delegate to the automasking
       else
       {
-        return sub.behavior(cpu_{}, opts, a, b);
+        return sub[opts][mask].retarget(cpu_{}, a, b);
       }
     }
   }

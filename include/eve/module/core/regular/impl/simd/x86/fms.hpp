@@ -101,7 +101,7 @@ namespace eve::detail
 
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts, v, w, x);
+      if constexpr( std::integral<T> ) return fms[opts][mask].retarget(cpu_{}, v, w, x);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -116,13 +116,13 @@ namespace eve::detail
             auto aa = eve::combine(v, v);
             auto bb = eve::combine(w, w);
             auto cc = eve::combine(x, x);
-            auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
+            auto aabbcc = fms[opts](aa, bb, cc);
             auto s =  slice(aabbcc, eve::upper_);
             return if_else(mask,s,src);
           }
-          else                                             return fms.behavior(cpu_{}, opts, v, w, x);
+          else                                             return fms[opts][mask].retarget(cpu_{}, v, w, x);
         }
-        else                                                 return fms.behavior(cpu_{}, opts, v, w, x);
+        else                                                 return fms[opts][mask].retarget(cpu_{}, v, w, x);
       }
       else if constexpr( cx == category::float32x16) return _mm512_mask_fmsub_ps(v, m, w, x);
       else if constexpr( cx == category::float64x8 ) return _mm512_mask_fmsub_pd(v, m, w, x);
@@ -133,6 +133,6 @@ namespace eve::detail
       // No rounding issue with integers, so we just mask over regular FMS
       else                                          return if_else(mask, eve::fms(v, w, x), v);
     }
-    else                                            return if_else(mask, eve::fms[opts.drop(condition_key)](v, w, x), alternative(mask, v, as(v)));
+    else                                            return if_else(mask, eve::fms[opts](v, w, x), alternative(mask, v, as(v)));
   }
 }

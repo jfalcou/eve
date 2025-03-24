@@ -61,7 +61,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
-      else                                          return ilogb.behavior(cpu_{}, o, v);
+      else                                          return ilogb[o][mask].retarget(cpu_{}, v);
     }
   }
 }

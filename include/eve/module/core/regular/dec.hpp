@@ -114,11 +114,11 @@ namespace eve
           if constexpr (simd_value<decltype(m)>) return a + convert(m.bits(), as_element<T>{});
           else                                   return a + bit_cast(m.mask(), int_from<decltype(m.mask())>{});
         }
-        else                                     return add[o](a,mone(eve::as(a)));
+        else                                     return add[o][cond](a,mone(eve::as(a)));
       }
       else
       {
-        return add[o](a,mone(eve::as(a)));
+        return add[o][cond](a,mone(eve::as(a)));
       }
     }
   }

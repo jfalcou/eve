@@ -75,6 +75,6 @@ namespace eve::detail
       }
     }
     else
-      return mantissa.behavior(cpu_{}, o, v);
+      return mantissa[o][cx].retarget(cpu_{}, v);
   }
 }

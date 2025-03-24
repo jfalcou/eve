@@ -61,6 +61,6 @@ requires x86_abi<abi_t<T, N>>
       else if constexpr( match(c, category::float_))   return if_else(cx, eve::ceil(v), src);
     }
     else
-      return ceil.behavior(cpu_{}, cx, o, v);
+      return ceil[o][cx].retarget(cpu_{}, v);
   }
 }

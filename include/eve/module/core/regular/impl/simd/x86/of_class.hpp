@@ -41,7 +41,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto of_class_(EVE_REQUIRES(avx512_),
                                    C const& cx,
                                    O const& o,
-                                   fp_class<I>,
+                                   fp_class<I> cls,
                                    wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -49,7 +49,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return of_class.behavior(cpu_{}, o, v, v);
+      return of_class[o][cx].retarget(cpu_{}, cls, v);
     }
     else
     {

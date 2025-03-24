@@ -49,7 +49,7 @@ namespace eve::detail
   // No special provision is made for PEDANTIC as it is handled in the second pass without issues.
   template<typename T, typename U, typename V, conditional_expr C, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  fms_(EVE_REQUIRES(cpu_), C const& mask, O const& o, T const& a, U const& b, V const& c)
+  fms_(EVE_REQUIRES(cpu_), C const& cx, O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
     if constexpr(O::contains(promote))
@@ -57,15 +57,14 @@ namespace eve::detail
       using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
       constexpr auto tgt = as(eve::as<er_t>());
 
-      return fms[o.drop(promote)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
+      return fms[o][cx](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
     // OTHERS ---------------------
     else
     {
       using r_t = common_value_t<T, U, V>;
       // Drop the mask key to prevent circular calls
-      auto opt = o.drop(condition_key);
-      return detail::mask_op(mask, detail::return_2nd, r_t(a), fms[opt](r_t(a), r_t(b), r_t(c)));
+      return detail::mask_op(cx, detail::return_2nd, r_t(a), fms[o](r_t(a), r_t(b), r_t(c)));
     }
   }
 

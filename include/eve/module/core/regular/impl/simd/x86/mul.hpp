@@ -131,7 +131,7 @@ namespace eve::detail
   }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -143,7 +143,7 @@ namespace eve::detail
     {
       if constexpr (O::contains(strict))
       {
-        return mul.behavior(cpu_{}, opts, a, b);
+        return mul[opts][cx].retarget(cpu_{}, a, b);
       }
       else
       {
@@ -155,19 +155,19 @@ namespace eve::detail
         {
           auto aa = eve::combine(a, a);
           auto bb = eve::combine(b, b);
-          auto aapbb = mul[opts.drop(condition_key)](aa, bb);
+          auto aapbb = mul[opts](aa, bb);
           auto s = slice(aapbb, eve::upper_);
           return if_else(cx, s, src);
         }
         else
         {
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul[opts][cx].retarget(cpu_{}, a, b);
         }
       }
     }
     else if constexpr(O::contains(saturated))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul[opts][cx].retarget(cpu_{}, a, b);
     }
     else
     {
@@ -177,7 +177,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
-      else                                          return mul.behavior(cpu_{}, opts, a, b);
+      else                                          return mul[opts][cx].retarget(cpu_{}, a, b);
     }
   }
 }

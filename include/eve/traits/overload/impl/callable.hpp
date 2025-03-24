@@ -79,6 +79,12 @@ namespace eve
       return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
     }
 
+    template<typename... Args>
+    EVE_FORCEINLINE constexpr auto retarget(auto arch, Args&&... args) const
+    {
+      return Func<OptionsValues>::deferred_call(arch, this->options(), EVE_FWD(args)...);
+    }
+
     protected:
     EVE_FORCEINLINE constexpr
     Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }

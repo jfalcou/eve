@@ -55,7 +55,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative )
     {
-      return is_lessgreater.behavior(cpu_{}, o, v, w);
+      return is_lessgreater[o][cx].retarget(cpu_{}, v, w);
     }
     else
     {

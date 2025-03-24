@@ -117,7 +117,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
     {
-      return max.behavior(cpu_{}, opts, v, w);
+      return max[opts][cx].retarget(cpu_{}, v, w);
     }
     else
     {
@@ -165,7 +165,7 @@ namespace eve::detail
       else if constexpr( c == category::uint64x4  ) return _mm256_mask_max_epu64 (src, m, v, w);
       else if constexpr( c == category::uint64x2  ) return _mm_mask_max_epu64    (src, m, v, w);
 
-      else return max.behavior(cpu_{}, opts, v, w);
+      else return max[opts][cx].retarget(cpu_{}, v, w);
     }
   }
 }

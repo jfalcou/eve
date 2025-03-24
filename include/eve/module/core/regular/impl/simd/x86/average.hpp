@@ -61,7 +61,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr( O::contains(upper))
-      return average.behavior(cpu_{}, cx, opts, v, w);
+      return average[opts][cx].retarget(cpu_{}, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -74,7 +74,7 @@ namespace eve::detail
       else if constexpr( c == category::uint8x64 ) return _mm512_mask_avg_epu8(src, m, v, w);
       else if constexpr( c == category::uint8x32 ) return _mm256_mask_avg_epu8(src, m, v, w);
       else if constexpr( c == category::uint8x16 ) return _mm_mask_avg_epu8(src, m, v, w);
-      else if constexpr( match(c, category::uint_) ) return average.behavior(cpu_{}, opts, v, w);
+      else if constexpr( match(c, category::uint_) ) return average[opts][cx].retarget(cpu_{}, v, w);
     }
   }
 }

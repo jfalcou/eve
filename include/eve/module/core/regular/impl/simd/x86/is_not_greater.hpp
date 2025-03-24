@@ -66,7 +66,7 @@ namespace eve::detail
   {
     if constexpr( C::has_alternative || O::contains(almost))
     {
-      return is_not_greater.behavior(cpu_{}, opts, v, w);
+      return is_not_greater[opts][mask].retarget(cpu_{}, v, w);
     }
     else
     {
