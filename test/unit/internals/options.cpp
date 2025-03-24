@@ -16,6 +16,12 @@ enum class tests
 , has_ignore_all
 };
 
+enum class OverloadType
+{
+  regular = 1
+, masked
+};
+
 namespace eve
 {
   template<typename Options>
@@ -65,13 +71,15 @@ namespace eve::detail
   template<eve::callable_options O, eve::conditional_expr C>
   auto ew_drop_func_(EVE_REQUIRES(cpu_), C const&, O const&, eve::wide<int>)
   {
-    return !O::contains(condition_key);
+    TTS_EXPECT(!O::contains(condition_key));
+    return OverloadType::masked;
   }
 
   template<eve::callable_options O>
   auto ew_drop_func_(EVE_REQUIRES(cpu_), O const&, eve::wide<int>)
   {
-    return !O::contains(condition_key);
+    TTS_EXPECT(!O::contains(condition_key));
+    return OverloadType::regular;
   }
 }
 
@@ -117,7 +125,8 @@ TTS_CASE("Check callable always have conditional_key when chained")
 
 TTS_CASE("Check elementwise callable condition_key drop")
 {
-  TTS_EXPECT(eve::ew_drop_func()                  );
-  TTS_EXPECT(eve::ew_drop_func[true]()            );
-  TTS_EXPECT(eve::ew_drop_func[eve::ignore_all]() );
+  TTS_EQUAL(eve::ew_drop_func(), OverloadType::regular);
+  TTS_EQUAL(eve::ew_drop_func[eve::ignore_none](), OverloadType::regular);
+  TTS_EQUAL(eve::ew_drop_func[true](), OverloadType::masked);
+  TTS_EQUAL(eve::ew_drop_func[eve::ignore_all](), OverloadType::masked);
 };
