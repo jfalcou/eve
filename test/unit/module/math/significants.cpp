@@ -20,8 +20,8 @@ TTS_CASE_TPL("Check return types of significants", eve::test::simd::ieee_reals)
 {
   using v_t = eve::element_type_t<T>;
 //  using muint =  unsigned int;
-  TTS_EXPR_IS(eve::significants(T(), uint()), T);
-  TTS_EXPR_IS(eve::significants(v_t(), uint()), v_t);
+  TTS_EXPR_IS(eve::significants(T(), uint32_t{}), T);
+  TTS_EXPR_IS(eve::significants(v_t(), uint32_t{}), v_t);
 };
 
 TTS_CASE_TPL("Check significants", eve::test::simd::ieee_reals)

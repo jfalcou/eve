@@ -112,7 +112,7 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
 
     TTS_EQUAL(eve::floor(a0, eve::as<int>()),
               wi_t([&](auto i, auto) { return i_t(std::floor(a0.get(i))); }));
-    TTS_EQUAL(eve::floor(eve::abs(a0), eve::as<uint>()),
+    TTS_EQUAL(eve::floor(eve::abs(a0), eve::as<uint32_t>()),
               uwi_t([&](auto i, auto) { return ui_t(std::floor(std::abs(a0.get(i)))); }));
   }
   else { TTS_EQUAL(eve::floor(a0), a0); }

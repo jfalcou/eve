@@ -20,6 +20,23 @@ else()
                         )
 endif()
 
+if(EVE_ENABLE_COVERAGE)
+  if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
+    message(FATAL_ERROR "EVE coverage profiling is only supported in Debug mode")
+  endif()
+  
+  if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    message(FATAL_ERROR "EVE coverage profiling is not yet supported on MSVC")
+  elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options( eve_test INTERFACE -fprofile-instr-generate -fcoverage-mapping -fprofile-update=atomic -fno-inline -fno-inline-functions -femit-all-decls )
+    target_link_options( eve_test INTERFACE -fprofile-instr-generate -fcoverage-mapping )
+    set(CMAKE_CROSSCOMPILING_CMD ${PROJECT_SOURCE_DIR}/cmake/toolchain/run_clang_coverage.sh )
+  else()
+    target_compile_options( eve_test INTERFACE --coverage -fprofile-update=atomic -fno-inline -fno-inline-small-functions -fno-default-inline )
+    target_link_options( eve_test INTERFACE --coverage )
+  endif()
+endif()
+
 target_include_directories( eve_test INTERFACE
                             ${PROJECT_SOURCE_DIR}/test
                             ${PROJECT_SOURCE_DIR}/examples

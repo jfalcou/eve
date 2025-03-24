@@ -44,8 +44,8 @@ TTS_CASE_WITH("Check behavior of beta on wide",
   TTS_ULP_EQUAL(beta(T(-0.0), T(-0.0)), T(std::beta(elt_t(-0.0), elt_t(-0.0))), 0);
   TTS_ULP_EQUAL(beta(T(0.0), T(0.0)), T(std::beta(elt_t(0.0), elt_t(0.0))), 0);
   TTS_ULP_EQUAL(beta(T(1.0), T(1.0)), T(std::beta(elt_t(1.0), elt_t(1.0))), 0);
-  TTS_ULP_EQUAL(beta(T(2.0), T(3.0)), T(std::beta(elt_t(2.0), elt_t(3.0))), 0);
-  TTS_ULP_EQUAL(beta(T(2.5), T(3.7)), T(std::beta(elt_t(2.5), elt_t(3.7))), 0);
+  TTS_ULP_EQUAL(beta(T(2.0), T(3.0)), T(std::beta(elt_t(2.0), elt_t(3.0))), 1.5);
+  TTS_ULP_EQUAL(beta(T(2.5), T(3.7)), T(std::beta(elt_t(2.5), elt_t(3.7))), 1.5);
 #endif // __cpp_lib_math_special_functions
 
   if constexpr( eve::platform::supports_invalids )
