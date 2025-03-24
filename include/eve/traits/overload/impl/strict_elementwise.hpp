@@ -41,11 +41,11 @@ namespace eve
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
-      if constexpr (match_option<condition_key, O, ignore_none_>)
+      if constexpr (!O::contains(condition_key) || match_option<condition_key, O, ignore_none_>)
       {
         constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch, opts, x0, xs...))>;
         static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
-        return adapt_call(arch, opts, x0, xs...);
+        return adapt_call(arch, opts.drop(condition_key), x0, xs...);
       }
       else
       {

@@ -67,6 +67,12 @@ namespace eve::detail
   {
     return !O::contains(condition_key);
   }
+
+  template<eve::callable_options O>
+  auto ew_drop_func_(EVE_REQUIRES(cpu_), O const&, eve::wide<int>)
+  {
+    return !O::contains(condition_key);
+  }
 }
 
 TTS_CASE("Check callable always have conditional_key by default")
@@ -111,6 +117,7 @@ TTS_CASE("Check callable always have conditional_key when chained")
 
 TTS_CASE("Check elementwise callable condition_key drop")
 {
+  TTS_EXPECT(eve::ew_drop_func()                  );
   TTS_EXPECT(eve::ew_drop_func[true]()            );
   TTS_EXPECT(eve::ew_drop_func[eve::ignore_all]() );
 };
