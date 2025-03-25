@@ -263,9 +263,9 @@ namespace detail
     {
       if constexpr ( !is_aggregated )
       {
-        storage_type bit_mask = detail::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
-        if ( x ) storage |= bit_mask;
-        else     storage &= ~bit_mask;
+        storage_type msk = detail::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
+        if ( x ) storage |= msk;
+        else     storage &= ~msk;
       }
       else
       {

@@ -94,15 +94,9 @@ EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
-  if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
-  else if constexpr( auto r = shuffle_l3_x86_pshuvb(p, g, x); matched_shuffle<decltype(r)> )
-  {
-    return r;
-  }
-  else if constexpr( auto r = shuffle_l3_x86_permutex(p, g, x); matched_shuffle<decltype(r)> )
-  {
-    return r;
-  }
+  if      constexpr( auto r0 = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r0)>         ) return r0;
+  else if constexpr( auto r1 = shuffle_l3_x86_pshuvb(p, g, x); matched_shuffle<decltype(r1)>    ) return r1;
+  else if constexpr( auto r2 = shuffle_l3_x86_permutex(p, g, x); matched_shuffle<decltype(r2)>  ) return r2;
   else return no_matching_shuffle;
 }
 
@@ -184,11 +178,8 @@ EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
-  if constexpr( auto r = shuffle_l3_x86_blendv(p, g, x, y); matched_shuffle<decltype(r)> ) return r;
-  else if constexpr( auto r = shuffle_l3_x86_permutex2(p, g, x, y); matched_shuffle<decltype(r)> )
-  {
-    return r;
-  }
+  if      constexpr( auto r0 = shuffle_l3_x86_blendv(p, g, x, y);     matched_shuffle<decltype(r0)> ) return r0;
+  else if constexpr( auto r1 = shuffle_l3_x86_permutex2(p, g, x, y);  matched_shuffle<decltype(r1)> ) return r1;
   else return no_matching_shuffle;
 }
 

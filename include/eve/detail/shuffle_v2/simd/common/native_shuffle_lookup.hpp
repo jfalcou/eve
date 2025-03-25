@@ -24,29 +24,29 @@ native_shuffle_lookup_(EVE_SUPPORTS(cpu_), pattern_t<I...>, fixed<G> g, T x, aut
   constexpr auto p = expanded_pattern<T, G, I...>;
 
   // l0 and l1 are handled by the driver
-  if constexpr( auto r = invoke_shuffle(shuffle_l2, p, g, x, xs...); matched_shuffle<decltype(r)> )
+  if constexpr( auto r0 = invoke_shuffle(shuffle_l2, p, g, x, xs...); matched_shuffle<decltype(r0)> )
   {
-    return kumi::tuple {r, eve::index<2>};
+    return kumi::tuple {r0, eve::index<2>};
   }
-  else if constexpr( auto r = invoke_shuffle(shuffle_l3, p, g, x, xs...);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r1 = invoke_shuffle(shuffle_l3, p, g, x, xs...);
+                     matched_shuffle<decltype(r1)> )
   {
-    return kumi::tuple {r, eve::index<3>};
+    return kumi::tuple {r1, eve::index<3>};
   }
-  else if constexpr( auto r = invoke_shuffle_multilevel(shuffle_l4_l5, p, g, x, xs...);
-                     matched_shuffle<decltype(get<0>(r))> )
+  else if constexpr( auto r2 = invoke_shuffle_multilevel(shuffle_l4_l5, p, g, x, xs...);
+                     matched_shuffle<decltype(get<0>(r2))> )
   {
-    return r;
+    return r2;
   }
-  else if constexpr( auto r = invoke_shuffle_multilevel(shuffle_l6_l7, p, g, x, xs...);
-                     matched_shuffle<decltype(get<0>(r))> )
+  else if constexpr( auto r3 = invoke_shuffle_multilevel(shuffle_l6_l7, p, g, x, xs...);
+                     matched_shuffle<decltype(get<0>(r3))> )
   {
-    return r;
+    return r3;
   }
-  else if constexpr( auto r = invoke_shuffle_multilevel(shuffle_l_fallback, p, g, x, xs...);
-                     matched_shuffle<decltype(get<0>(r))> )
+  else if constexpr( auto r4 = invoke_shuffle_multilevel(shuffle_l_fallback, p, g, x, xs...);
+                     matched_shuffle<decltype(get<0>(r4))> )
   {
-    return r;
+    return r4;
   }
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }

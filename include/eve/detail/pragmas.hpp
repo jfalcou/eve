@@ -8,8 +8,7 @@
     _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wuninitialized\"")           \
         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 
-#  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
-_Pragma("GCC diagnostic pop")
+#  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA _Pragma("GCC diagnostic pop")
 
 #elif defined(SPY_COMPILER_IS_CLANG)
 

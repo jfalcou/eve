@@ -125,6 +125,6 @@ namespace eve::detail
     using half_result_t = decltype(f(get<0>(slicer(ts))...));
     using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
 
-    return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+    return kumi::apply([&f](auto... cur) { return wide_t { f(get<0>(cur)...), f(get<1>(cur)...)}; }, parts);
   }
 }
