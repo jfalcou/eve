@@ -57,8 +57,15 @@ namespace eve::detail
   template<callable_options O, typename U, integral_scalar_value T>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
-    auto cx = opts[condition_key];
-    return cx ? *(ptr + v) : alternative(cx, as(v));
+    using C = rbr::result::fetch_t<condition_key, O>;
+
+    if constexpr (std::same_as<C, ignore_none_>) return ptr[v];
+    else
+    {
+      const auto cx = opts[condition_key];
+      const auto src = alternative(cx, T{}, as<T>{});
+      return expand_mask(cx, as(v)) ? ptr[v] : src;
+    }
   }
 
   //================================================================================================

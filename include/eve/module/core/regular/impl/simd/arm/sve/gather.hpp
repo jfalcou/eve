@@ -20,13 +20,9 @@ namespace eve::detail
   EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    return gather_(EVE_TARGETS(current_api_type), ignore_none, opts, p, v);
-  }
+    using C = rbr::result::fetch_t<condition_key, O>;
+    const auto cx = opts[condition_key];
 
-  template<callable_options O, conditional_expr C, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), C const& cx, O const& opts, U const* p, wide<T, N> v) noexcept
-    requires sve_abi<abi_t<T, N>>
-  {
     using out_t = wide<U, N>;
     using u_t   = make_integer_t<sizeof(U)>;
 

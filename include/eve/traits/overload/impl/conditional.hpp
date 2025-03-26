@@ -13,18 +13,26 @@ namespace eve
 {
   namespace detail
   {
-    template<callable_options O, typename T>
+    template<typename C, typename T>
     constexpr EVE_FORCEINLINE bool validate_mask_for() noexcept
     {
-      if constexpr (O::contains(condition_key))
+      if constexpr (scalar_value<T>)
       {
-        using C = rbr::result::fetch_t<condition_key, O>;
-        return std::same_as<C, ignore_none_> || std::same_as<C, ignore_all_> || !((relative_conditional_expr<C> || simd_value<C>) && scalar_value<T>);
+        if constexpr (std::same_as<C, ignore_none_>) return true;
+        else if constexpr (C::has_alternative)       return validate_mask_for<typename C::conditional_type, T>();
+        else                                         return !(relative_conditional_expr<C> || simd_value<C>);
       }
       else
       {
         return true;
       }
+    }
+
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE bool validate_mask_for() noexcept
+    {
+      if constexpr (O::contains(condition_key)) return validate_mask_for<rbr::result::fetch_t<condition_key, O>, T>();
+      else                                      return true;
     }
 
     template< template<typename> class Func
