@@ -63,8 +63,8 @@ namespace eve::detail
     else
     {
       const auto cx = opts[condition_key];
-      const auto src = alternative(cx, T{}, as<T>{});
-      return expand_mask(cx, as(v)) ? ptr[v] : src;
+      const auto src = alternative(cx, U{}, as<U>{});
+      return expand_mask(cx, as<U>{}) ? ptr[v] : src;
     }
   }
 
