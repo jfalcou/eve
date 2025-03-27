@@ -172,7 +172,7 @@ var searchData=
   ['callable_3c_20func_2c_20optionsvalues_2c_20options_2e_2e_2e_20_3e_169',['callable&lt; Func, OptionsValues, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20gamma_5fp_5finv_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_170',['callable&lt; gamma_p_inv_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20gamma_5fp_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_171',['callable&lt; gamma_p_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
-  ['callable_3c_20gather_5ft_2c_20options_2c_20conditional_5foption_20_3e_172',['callable&lt; gather_t, Options, conditional_option &gt;',['../structeve_1_1callable.html',1,'eve']]],
+  ['callable_3c_20gather_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_172',['callable&lt; gather_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20gcd_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_173',['callable&lt; gcd_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20gd_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_174',['callable&lt; gd_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20gegenbauer_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_175',['callable&lt; gegenbauer_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
