@@ -20,17 +20,16 @@ namespace eve::detail
   template<callable_options O, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const *ptr, wide<T, N> v) noexcept
   {
-    auto cx = opts[condition_key];
-
-    if constexpr (std::same_as<decltype(cx), ignore_none_>)
+    if constexpr (match_option<condition_key, O, ignore_none_>)
     {
       return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
     }
     else
     {
+      auto cx = opts[condition_key];
       auto src = alternative(cx, wide<U, N>{}, as<wide<U, N>>{});
 
-      if constexpr (std::same_as<decltype(cx), ignore_all_>)
+      if constexpr (match_option<condition_key, O, ignore_all_>)
       {
         return src;
       }
@@ -57,9 +56,7 @@ namespace eve::detail
   template<callable_options O, typename U, integral_scalar_value T>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
-    using C = rbr::result::fetch_t<condition_key, O>;
-
-    if constexpr (std::same_as<C, ignore_none_>) return ptr[v];
+    if constexpr (match_option<condition_key, O, ignore_none_>) return ptr[v];
     else
     {
       const auto cx = opts[condition_key];
