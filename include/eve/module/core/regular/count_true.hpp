@@ -17,12 +17,18 @@ namespace eve
     template<relaxed_logical_value T>
     constexpr EVE_FORCEINLINE std::ptrdiff_t operator()(T v) const noexcept
     {
+      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+        "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
       return EVE_DISPATCH_CALL(v);
     }
 
     template<logical_simd_value T>
     constexpr EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<T> v) const noexcept
     {
+      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+        "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
       return EVE_DISPATCH_CALL(v);
     }
 
@@ -33,7 +39,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var count_true
-  //!   @brief Computes the number of non 0 elements
+  //!   @brief Computes the number of non-zero elements
   //!
   //!   @groupheader{Header file}
   //!

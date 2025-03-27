@@ -25,7 +25,7 @@ namespace eve::detail
     }
     else
     {
-      opts[condition_key].mask(as(v)) && v ? 1 : 0;
+      return opts[condition_key].mask(as(v)) && v ? 1 : 0;
     }
   }
 
