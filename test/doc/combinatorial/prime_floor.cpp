@@ -1,11 +1,11 @@
-// revision 1
+#include <eve/eve.hpp>
 #include <eve/module/combinatorial.hpp>
 #include <iostream>
 
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
-eve::wide n{2u, 6u, 6542u, 15u, 1u, 200000u, 10000u, 1000u};
+int main() {
+   eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+   eve::wide n{2u, 6u, 6542u, 15u, 1u, 200000u, 10000u, 1000u};
 
-int main(){
    std::cout << "<- wu = " << wu << "\n";
    std::cout << "<- n  = " << n << "\n";
 
