@@ -13,12 +13,12 @@ namespace eve::detail
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/
   // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> m) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     using L = logical<wide<T, N>>;
     using C = rbr::result::fetch_t<condition_key, O>;
-    auto cx = O[condition_key];
+    auto cx = opts[condition_key];
 
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_aggregated_abi_v<L>)
