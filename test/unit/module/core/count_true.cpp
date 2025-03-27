@@ -74,9 +74,9 @@ TTS_CASE_TPL("Check eve::count_true behavior with ignore", eve::test::simd::all_
   {
     TTS_EQUAL(eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), cardinal - 2);
 
-    auto x = eve::iota(eve::as<T>());
-    TTS_EQUAL(eve::count_true[x > 1](data), cardinal - 2);
-    TTS_EQUAL(eve::count_true[x > 1](data_false), 0);
+    auto iota = eve::iota(eve::as<T>());
+    TTS_EQUAL(eve::count_true[iota > 1](data), cardinal - 2);
+    TTS_EQUAL(eve::count_true[iota > 1](data_false), 0);
   }
 };
 
@@ -102,7 +102,7 @@ TTS_CASE_TPL("Check eve::count_true top_bits", eve::test::simd::all_types)
     {
       std::ptrdiff_t expected_cr = 0;
       for (int i = x.size() - 1; i > x.size() - 3; --i) expected_cr += x.get(i);
-  
+
       TTS_EQUAL(eve::count_true[eve::keep_last(2)](mmask), expected_cr);
     }
   };

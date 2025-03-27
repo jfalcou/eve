@@ -17,58 +17,59 @@
 namespace eve::detail
 {
   template<callable_options O>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const&, bool v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
   {
-    return v ? 1 : 0;
-  }
-
-  template<callable_options O, conditional_expr C>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), C const& cx, O const&, bool v) noexcept
-  {
-    return cx.mask(as(v)) && v ? 1 : 0;
+    if constexpr (match_option<condition_key, O, ignore_none_>)
+    {
+      return v ? 1 : 0;
+    }
+    else
+    {
+      opts[condition_key].mask(as(v)) && v ? 1 : 0;
+    }
   }
 
   template<callable_options O, value T>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const&, logical<T> v) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, logical<T> v) noexcept
   {
-    if constexpr (scalar_value<T>) return count_true(v.value());
-    else                           return count_true(eve::top_bits{v});
-  }
+    using C = rbr::result::fetch_t<condition_key, O>;
 
-  template<callable_options O, conditional_expr C, value T>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), C const& cx, O const&, logical<T> v) noexcept
-  {
-    if      constexpr (scalar_value<T>)              return count_true[cx](v.value());
-    else if constexpr (relative_conditional_expr<C>) return count_true(top_bits{v, cx});
-    else                                             return count_true[cx](top_bits{v});
+    constexpr bool relative_nonignore = relative_conditional_expr<C> && !std::same_as<C, ignore_none_>;
+
+    if      constexpr (scalar_value<T>)    return count_true[opts](v.value());
+    else if constexpr (relative_nonignore) return count_true(top_bits{v, opts[condition_key]});
+    else                                   return count_true[opts](eve::top_bits{v});
   }
 
   template<callable_options O, logical_simd_value Logical>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const&, top_bits<Logical> mmask) noexcept
+  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
   {
-    if constexpr (!top_bits<Logical>::is_aggregated)
+    if constexpr (match_option<condition_key, O, ignore_none_>)
     {
-      return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+      if constexpr (top_bits<Logical>::is_aggregated)
+      {
+        return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
+      }
+      else
+      {
+        return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+      }
     }
     else
     {
-      return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
-    }
-  }
+      auto cx = opts[condition_key];
 
-  template<callable_options O, conditional_expr C, logical_simd_value Logical>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), C const& cx, O const&, top_bits<Logical> mmask) noexcept
-  {
-    if constexpr (!top_bits<Logical>::is_aggregated)
-    {
-      auto vm = mmask.as_int();
-      vm &= top_bits{cx.mask(as<Logical>{})}.as_int();
-      return std::popcount(vm) / top_bits<Logical>::bits_per_element;
-    }
-    else
-    {
-      auto [cx_l, cx_h] = cx.mask(as<Logical>()).slice();
-      return count_true[cx_l](mmask.storage[0]) + count_true[cx_h](mmask.storage[1]);
+      if constexpr (top_bits<Logical>::is_aggregated)
+      {
+        auto [cx_l, cx_h] = cx.mask(as<Logical>()).slice();
+        return count_true[cx_l](mmask.storage[0]) + count_true[cx_h](mmask.storage[1]);
+      }
+      else
+      {
+        auto vm = mmask.as_int();
+        vm &= top_bits{cx.mask(as<Logical>{})}.as_int();
+        return std::popcount(vm) / top_bits<Logical>::bits_per_element;
+      }
     }
   }
 }
