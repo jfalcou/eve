@@ -12,19 +12,23 @@
 namespace eve
 {
   template<typename Options>
-  struct gather_t : callable<gather_t, Options, conditional_option>
+  struct gather_t : conditional_callable<gather_t, Options>
   {
     template<arithmetic_value T, integral_value U>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(T const* ptr, U idx) const noexcept
     {
-      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
+      static_assert(detail::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
+        "[Gather] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
       return EVE_DISPATCH_CALL(ptr, idx);
     }
 
     template<arithmetic_value T, integral_value U, typename N>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(aligned_ptr<T, N> ptr, U idx) const noexcept
     {
-      static_assert(simd_value<U> || !Options::contains(condition_key), "[eve::gather] Scalar values can't be masked by SIMD logicals");
+      static_assert(detail::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
+        "[Gather] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
       return EVE_DISPATCH_CALL(ptr, idx);
     }
 
@@ -49,10 +53,10 @@ namespace eve
   //!   namespace eve
   //!   {
   //!     template<arithmetic_value T, integral_value U>
-  //!     as_wide_as_t<T, U> gather(T const* ptr, U idx);
+  //!     as_wide_as_t<T, U> gather(T const* ptr, U idx) noexcept;
   //!
   //!     template<arithmetic_value T, integral_value U, typename N>
-  //!     auto gather(aligned_ptr<T, N> ptr, U idx);
+  //!     as_wide_as_t<T, U> gather(aligned_ptr<T, N> ptr, U idx) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -63,7 +67,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      * A [value](@ref eve::value) equivalent to: 
+  //!      * A [value](@ref eve::value) equivalent to:
   //!        @code
   //!        as_wide_as_t<T, U> res = { ptr[idx[0]], ptr[idx[1]], ..., ptr[idx[N-1]] };
   //!        @endcode

@@ -53,6 +53,9 @@ namespace eve
     //! The type of the alternative value.
     using alternative_type = V;
 
+    //! The type of the wrapped conditional expression.
+    using conditional_type = C;
+
     //! Wraps a eve::conditional_expr with an alternative value
     constexpr or_(C const& c, V const& v) : C(c), alternative(v) {}
 

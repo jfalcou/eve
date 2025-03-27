@@ -20,19 +20,24 @@ namespace eve::detail
   template<callable_options O, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const *ptr, wide<T, N> v) noexcept
   {
-    auto cx = opts[condition_key];
-    using C = decltype(cx);
-
-    if constexpr (C::is_complete && C::is_inverted)
+    if constexpr (match_option<condition_key, O, ignore_none_>)
     {
       return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
     }
     else
     {
+      auto cx = opts[condition_key];
       auto src = alternative(cx, wide<U, N>{}, as<wide<U, N>>{});
-      auto m   = expand_mask(cx, as<wide<U, N>>{});
 
-      return wide<U, N>{ [=](auto i, auto) { return m.get(i) ? ptr[v.get(i)] : src.get(i); } };
+      if constexpr (match_option<condition_key, O, ignore_all_>)
+      {
+        return src;
+      }
+      else
+      {
+        auto m = expand_mask(cx, as<wide<U, N>>{});
+        return wide<U, N>{ [=](auto i, auto) { return m.get(i) ? ptr[v.get(i)] : src.get(i); } };
+      }
     }
   }
 
@@ -49,16 +54,22 @@ namespace eve::detail
   //================================================================================================
   // Unaligned pointer
   template<callable_options O, typename U, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, U const* ptr, T v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
-    return *(ptr + v);
+    if constexpr (match_option<condition_key, O, ignore_none_>) return ptr[v];
+    else
+    {
+      const auto cx = opts[condition_key];
+      const auto src = alternative(cx, U{}, as<U>{});
+      return expand_mask(cx, as<U>{}) ? ptr[v] : src;
+    }
   }
 
   //================================================================================================
   // Aligned pointer
   template<callable_options O, typename U, typename S, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<U, S> ptr, T v) noexcept
+  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
   {
-    return *(ptr.get() + v);
+    return gather.behavior(current_api, opts, ptr.get(), v);
   }
 }

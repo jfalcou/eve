@@ -9,6 +9,18 @@
 
 #include <eve/module/core.hpp>
 
+TTS_CASE_TPL("Check eve::gather on scalars", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  const T data[4]{T(1), T(2), T(3), T(4)};
+
+  for (int i = 0; i < 4; ++i) TTS_EQUAL(eve::gather(data, i), data[i]);
+  for (int i = 0; i < 4; ++i) TTS_EQUAL(eve::gather[true](data, i), data[i]);
+  for (int i = 0; i < 4; ++i) TTS_EQUAL(eve::gather[false](data, i), T{});
+  for (int i = 0; i < 4; ++i) TTS_EQUAL(eve::gather[eve::if_(false).else_(T(99))](data, i), T(99));
+  for (int i = 0; i < 4; ++i) TTS_EQUAL(eve::gather[eve::ignore_none](data, i), data[i]);
+};
+
 TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
