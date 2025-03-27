@@ -172,14 +172,14 @@ $(document).ready(function(){initNavTree('group__combinatorial_gab810f120aa46b31
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Prime_number">Wikipedia: Prime number</a></li>
 </ul>
-<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<p><b>Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{52u, 53u, 6541u, 6542u, 0u, 1u, 999u, 10000u};</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{52u, 53u, 6541u, 6542u, 0u, 1u, 999u, 10000u};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(){</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n  = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>

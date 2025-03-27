@@ -181,17 +181,17 @@ $(document).ready(function(){initNavTree('group__functions_gae12b2dc4456414ba139
 <li><a href="https://dlmf.nist.gov/10.2">DLMF: Bessel functions</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wdf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i-c/2);});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint64_t{ <span class="keywordflow">return</span> 2*i;});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wd{0.5, 1.5, 0.1, 1.0, 19.0, 0.0, 0.0, 10000.0};</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> m{0.5, -1.0, 1.5, -2.0, 2.5, -2.6, 3.2, -12.0};</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wdf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i-c/2);});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint64_t{ <span class="keywordflow">return</span> 2*i;});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wd{0.5, 1.5, 0.1, 1.0, 19.0, 0.0, 0.0, 10000.0};</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> m{0.5, -1.0, 1.5, -2.0, 2.5, -2.6, 3.2, -12.0};</div>
+<div class="line"> </div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wdf = &quot;</span> &lt;&lt; wdf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- m  = &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>

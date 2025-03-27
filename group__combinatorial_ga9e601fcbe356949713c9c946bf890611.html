@@ -174,16 +174,16 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
 <li><a href="https://en.cppreference.com/w/cpp/numeric/gcd">C++ standard reference: gcd</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf0([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> (i-c/2);});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf1([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> 10*i; });</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{93, 25, 32, 368,  216,  43, 18, 25};</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> p{42, 30, 27, 1024, 36, 12, 51, 44};</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf0([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> (i-c/2);});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf1([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> 10*i; });</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{93, 25, 32, 368,  216,  43, 18, 25};</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> p{42, 30, 27, 1024, 36, 12, 51, 44};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(){</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n   = &quot;</span> &lt;&lt; n   &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
