@@ -61,6 +61,7 @@ namespace eve::detail
 
       if constexpr (top_bits<Logical>::is_aggregated)
       {
+        void* ptr = Logical{};
         auto [cx_l, cx_h] = cx.mask(as<Logical>()).slice();
         return count_true[cx_l](mmask.storage[0]) + count_true[cx_h](mmask.storage[1]);
       }
