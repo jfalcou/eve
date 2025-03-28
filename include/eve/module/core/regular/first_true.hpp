@@ -39,7 +39,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var first_true
-  //!   @brief A function to find a first true value, if there is one.
+  //!   @brief Returns the index of the first true element in a logical value if there is one.
   //!
   //!   @code
   //!   #include <eve/module/core.hpp>
