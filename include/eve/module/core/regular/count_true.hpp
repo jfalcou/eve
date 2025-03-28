@@ -39,7 +39,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var count_true
-  //!   @brief Computes the number of non-zero elements
+  //!   @brief Computes the number of true elements
   //!
   //!   @groupheader{Header file}
   //!
@@ -71,8 +71,8 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!      1. The number of non-zero elements in `x`. If `x` is a scalar, then it is treated as one element.
-  //!      2. The masked version which return the number of non-masked non-zero elements.
+  //!      1. The number of true elements in `x`. Scalar values are treated as one element.
+  //!      2. The masked version which return the number of non-masked true elements.
   //!
   //!  @groupheader{Example}
   //!

@@ -61,14 +61,13 @@ namespace eve::detail
 
       if constexpr (top_bits<Logical>::is_aggregated)
       {
-        void* ptr = Logical{};
-        auto [cx_l, cx_h] = cx.mask(as<Logical>()).slice();
+        auto [cx_l, cx_h] = expand_mask(cx, as<Logical>()).slice();
         return count_true[cx_l](mmask.storage[0]) + count_true[cx_h](mmask.storage[1]);
       }
       else
       {
         auto vm = mmask.as_int();
-        vm &= top_bits{cx.mask(as<Logical>{})}.as_int();
+        vm &= top_bits{expand_mask(cx, as<Logical>())}.as_int();
         return std::popcount(vm) / top_bits<Logical>::bits_per_element;
       }
     }
