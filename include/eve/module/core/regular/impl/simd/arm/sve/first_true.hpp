@@ -36,7 +36,16 @@ namespace eve::detail
     }
     else
     {
-      auto cx_m = L {sve_true(cx, eve::as(m))};
+      L cx_m;
+
+      if constexpr (relative_conditional_expr<C>)
+      {
+        cx_m = L {sve_true(cx, eve::as(m))};
+      }
+      else
+      {
+        cx_m = expand_mask(cx, as<L>{});
+      }
 
       // We don't need this much but it makes the `no matches` case faster
       if (!svptest_any(cx_m, m)) return std::nullopt;

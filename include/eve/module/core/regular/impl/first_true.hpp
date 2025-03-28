@@ -87,8 +87,13 @@ namespace eve::detail
     {
       for (std::ptrdiff_t i = 0; i < v.size(); ++i)
       {
-        if (v.get(i)) return std::make_optional(i);
+        if (v.get(i))
+        {
+          return std::make_optional(i);
+        }
       }
+
+      return std::nullopt;
     }
     // This is pretty good for aggreagted as well.
     else if constexpr (!top_bits<T>::is_cheap)
