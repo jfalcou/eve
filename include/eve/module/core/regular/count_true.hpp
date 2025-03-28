@@ -39,7 +39,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var count_true
-  //!   @brief Computes the number of true elements
+  //!   @brief Computes the number of elements of the input which evaluates to `true`.
   //!
   //!   @groupheader{Header file}
   //!
@@ -71,7 +71,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!      1. The number of true elements in `x`. Scalar values are treated as one element.
+  //!      1. The number of elements in `x` which evaluates to `true`. Scalar values are treated as one element.
   //!      2. The masked version which return the number of non-masked true elements.
   //!
   //!  @groupheader{Example}
