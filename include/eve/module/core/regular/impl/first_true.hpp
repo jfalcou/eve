@@ -85,16 +85,10 @@ namespace eve::detail
     else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_emulated_abi_v<T>)
     {
-      std::ptrdiff_t first = cx.offset(eve::as<T> {});
-      std::ptrdiff_t last  = first + cx.count(eve::as<T> {});
-
-      while (first != last)
+      for (std::ptrdiff_t i = 0; i < v.size(); ++i)
       {
-        if (v.get(first)) return first;
-        ++first;
+        if (v.get(i)) return std::make_optional(i);
       }
-
-      return std::nullopt;
     }
     // This is pretty good for aggreagted as well.
     else if constexpr (!top_bits<T>::is_cheap)
