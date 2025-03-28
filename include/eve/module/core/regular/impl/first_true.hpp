@@ -66,7 +66,7 @@ namespace eve::detail
   {
     if constexpr (!match_option<condition_key, O, ignore_none_>)
     {
-      mmask &= top_bits{opts[condition_key].mask(as<Logical>{})};
+      mmask &= top_bits{expand_mask(opts[condition_key], as<Logical>{})};
     }
 
     return any(mmask) ? std::make_optional(first_true_guaranteed(mmask)) : std::nullopt;
@@ -81,8 +81,8 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
 
-    if constexpr (scalar_value<T>)                   return count_true[cx](v.value());
-    if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
+    if constexpr (scalar_value<T>)                        return first_true[cx](v.value());
+    else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_emulated_abi_v<T>)
     {
       std::ptrdiff_t first = cx.offset(eve::as<T> {});
