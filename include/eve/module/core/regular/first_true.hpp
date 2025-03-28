@@ -39,7 +39,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var first_true
-  //!   @brief Returns the index of the first true element in a logical value if there is one.
+  //!   @brief Returns the index of the first element in the input which evaluates to `true`, if there is one.
   //!
   //!   @code
   //!   #include <eve/module/core.hpp>
@@ -76,8 +76,9 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!    1. An `std::optional` containing the index of the first non-zero element, `std::nullopt` if there are none.
-  //!    2. Same as 1. but lanes masked by the condition are ignored during the search.
+  //!    1. An `std::optional` containing the index of the first element which evaluates to `true`, 
+  //!       `std::nullopt` if there are none.
+  //!    2. Same as 1. but masked elements are ignored during the search.
   //!
   //!  @groupheader{Example}
   //!
