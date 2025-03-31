@@ -26,7 +26,15 @@ namespace eve::detail
     {
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
       auto halved    = eve::convert(v, as<logical<half_e_t>> {});
-      return first_true[cx](halved);
+
+      if constexpr(relative_conditional_expr<C>)  return first_true[cx](halved);
+      else
+      {
+        // When calling first_true with a non-relative mask, we need to expand the mask, convert it
+        // then call first_true again with a full logical mask.
+        auto m = convert(expand_mask(cx, as(v)), as<logical<half_e_t>> {});
+        return first_true[m](halved);
+      }
     }
     else return first_true.behavior(cpu_{}, opts, v);
   }
