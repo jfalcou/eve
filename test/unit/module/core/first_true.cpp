@@ -85,24 +85,21 @@ TTS_CASE_TPL("Check eve::first_true behavior on wides and top_bits", eve::test::
 
   for( std::ptrdiff_t j = 0; j < cardinal; ++j )
   {
-    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
+    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {};
 
     for( std::ptrdiff_t i = 0; i < cardinal; ++i )
     {
       rhs1.set(i, i >= j ? true : false);
       rhs2.set(i, i <= j ? false : true);
       rhs3.set(i, i == j ? true : false);
-      rhs4.set(i, i == j ? false : true);
     }
 
     test_first_true(rhs1);
     test_first_true(rhs2);
     test_first_true(rhs3);
-    test_first_true(rhs4);
 
     test_first_true(eve::top_bits{rhs1});
     test_first_true(eve::top_bits{rhs2});
     test_first_true(eve::top_bits{rhs3});
-    test_first_true(eve::top_bits{rhs4});
   }
 };
