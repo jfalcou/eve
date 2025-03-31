@@ -76,7 +76,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!    1. An `std::optional` containing the index of the first element which evaluates to `true`, 
+  //!    1. An `std::optional` containing the index of the first element which evaluates to `true`,
   //!       `std::nullopt` if there are none.
   //!    2. Same as 1. but masked elements are ignored during the search.
   //!
