@@ -87,7 +87,9 @@ namespace eve::detail
     {
       for (std::ptrdiff_t i = 0; i < v.size(); ++i)
       {
-        if (v.get(i))
+        auto mask = expand_mask(cx, as(v));
+
+        if (v.get(i) && mask.get(i))
         {
           return std::make_optional(i);
         }
@@ -95,18 +97,23 @@ namespace eve::detail
 
       return std::nullopt;
     }
-    // This is pretty good for aggreagted as well.
-    else if constexpr (!top_bits<T>::is_cheap)
-    {
-      // No ignore, we might luck out even if some elements should not be counted.
-      if (!eve::any(v)) return std::nullopt;
-
-      if      constexpr (C::is_complete)               return first_true_guaranteed(top_bits{v, cx});
-      else if constexpr (relative_conditional_expr<C>) return first_true(top_bits{v, cx});
-      else                                             return first_true[cx](top_bits{v});
-    }
     else
     {
+      // No ignore, we might luck out even if some elements should not be counted.
+      if constexpr (!top_bits<T>::is_cheap)
+      {
+        if (!eve::any(v))
+        {
+          return std::nullopt;
+        }
+
+        // any + ignore_none
+        if constexpr (C::is_complete)
+        {
+          return first_true_guaranteed(top_bits{v, cx});
+        }
+      }
+
       if constexpr (relative_conditional_expr<C>) return first_true(top_bits{v, cx});
       else                                        return first_true[cx](top_bits{v});
     }
