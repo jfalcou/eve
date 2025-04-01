@@ -27,7 +27,10 @@ namespace eve::detail
     }
     else
     {
-      return count_true[cx](v) == cx.count(as<wide<T, N>>{});
+      const auto masked_count = count_true[cx](v);
+
+      if constexpr (relative_conditional_expr<C>) return masked_count == cx.count(as<wide<T, N>>{});
+      else                                        return masked_count == count_true(expand_mask(cx, as(v)));
     }
   }
 }

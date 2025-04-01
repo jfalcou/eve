@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cpu/wide.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/conditional.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +25,9 @@ namespace eve::detail
     }
     else
     {
-      auto dwords = bit_cast(v.bits(), as<wide<uint32_t, fixed<2>>>{});
+      using u32x2 = typename wide<T, N>::template rebind<uint32_t, fixed<2>>;
+
+      auto dwords = bit_cast(v.bits(), as<u32x2>{});
       dwords      = vpmin_u32(dwords, dwords);
 
       std::uint32_t combined = vget_lane_u32(dwords, 0);
@@ -39,8 +41,8 @@ namespace eve::detail
   EVE_FORCEINLINE bool all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T, N>> v) noexcept
     requires std::same_as<abi_t<T, N>, arm_128_>
   {
-    using u32x4 = wide<uint32_t, fixed<4>>;
-    using u64x2 = wide<uint64_t, fixed<2>>;
+    using u32x4 = typename wide<T, N>::template rebind<uint32_t, fixed<4>>;
+    using u64x2 = typename wide<T, N>::template rebind<uint64_t, fixed<2>>;
 
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];

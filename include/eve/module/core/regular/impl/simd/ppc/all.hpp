@@ -29,7 +29,7 @@ namespace eve::detail
 
       if constexpr (N::value != expected_cardinal_v<T, ppc_>)
       {
-        const auto of_mask = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
+        const auto of_mask = apply<N::value>([](auto... I) { return logical<wide<T, N>> {(I < N::value)...}; });
         mask &= of_mask.bits();
       }
 
