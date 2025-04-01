@@ -13,25 +13,27 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE bool
-all_(EVE_SUPPORTS(vmx_), logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  auto m = v0.bits();
-
-  if constexpr( N::value == 1 ) { return static_cast<bool>(m.get(0)); }
-  else if constexpr( N::value == expected_cardinal_v<T, ppc_> )
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE bool all_(EVE_REQUIRES(vmx_), O const& otps, logical<wide<T, N>> const& v) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    return vec_all_eq(m.storage(), true_(eve::as(v0)).storage());
-  }
-  else
-  {
-    using type = logical<wide<T, N>>;
+    auto iv = v.bits();
 
-    auto mm = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
-    m &= mm.bits();
+    if constexpr (N::value == 1)
+    {
+      return static_cast<bool>(iv.get(0));
+    }
+    else
+    {
+      auto mask = expand_mask(otps[condition_key], as<wide<T, expected_cardinal_t<T, ppc_>>>{}).bits();
 
-    return vec_all_eq(m.storage(), mm.storage());
+      if constexpr (N::value != expected_cardinal_v<T, ppc_>)
+      {
+        const auto of_mask = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
+        mask &= of_mask.bits();
+      }
+
+      return vec_all_eq((iv & mask).storage(), mask.storage());
+    }
   }
-}
 }
