@@ -15,7 +15,7 @@ namespace eve
   struct count_true_t : conditional_callable<count_true_t, Options>
   {
     template<relaxed_logical_value T>
-    constexpr EVE_FORCEINLINE std::ptrdiff_t operator()(T v) const noexcept
+    EVE_FORCEINLINE std::ptrdiff_t operator()(T v) const noexcept
     {
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
         "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -24,11 +24,8 @@ namespace eve
     }
 
     template<logical_simd_value T>
-    constexpr EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<T> v) const noexcept
+    EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<T> v) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
-        "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
-
       return EVE_DISPATCH_CALL(v);
     }
 
@@ -53,12 +50,15 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overloads
-  //!      constexpr std::ptrdiff_t count_true(relaxed_logical_value auto x)                              noexcept; // 1
-  //!      constexpr std::ptrdiff_t count_true(top_bits auto t)                                           noexcept; // 1
+  //!      template<relaxed_logical_value T>
+  //!      std::ptrdiff_t count_true(T x)                                                       noexcept; // 1
+  //!
+  //!      template<relaxed_logical_value T>
+  //!      std::ptrdiff_t count_true(top_bits<T> t)                                             noexcept; // 1
   //!
   //!      // Lanes masking
-  //!      constexpr std::ptrdiff_t count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-  //!      constexpr std::ptrdiff_t count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!      std::ptrdiff_t count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+  //!      std::ptrdiff_t count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
   //!   }
   //!   @endcode
   //!

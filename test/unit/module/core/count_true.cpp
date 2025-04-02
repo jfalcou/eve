@@ -42,16 +42,17 @@ bool mask_at(T mask, int idx)
   else                                 return mask.get(idx);
 }
 
-template<typename T, typename U>
-std::ptrdiff_t manual_count_true(T v, U mask)
+template<typename T, typename C>
+std::ptrdiff_t manual_count_true(T v, C mask)
 {
-  if constexpr (eve::conditional_expr<U>)
+  if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
+  {
+    if constexpr (std::same_as<C, eve::ignore_none_>) return std::ptrdiff_t{v};
+    else                                              return std::ptrdiff_t{v && mask};
+  }
+  else if constexpr (eve::conditional_expr<C>)
   {
     return manual_count_true(v, expand_mask(mask, eve::as(v)));
-  }
-  else if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
-  {
-    return std::ptrdiff_t{v && mask};
   }
   else
   {
@@ -65,24 +66,48 @@ std::ptrdiff_t manual_count_true(T v, U mask)
   }
 }
 
+template<typename T, typename C>
+void test_count_true(T v, C cx)
+{
+  const auto count = manual_count_true(v, cx);
+
+  TTS_EQUAL(eve::count_true[cx](v), count);
+
+  if constexpr (eve::simd_value<T>)
+  {
+    TTS_EQUAL(eve::count_true[cx](eve::top_bits{v}), count);
+  }
+}
+
 template<typename T>
 void test_count_true(T v)
 {
   TTS_EQUAL(eve::count_true(v), manual_count_true(v, true));
-  TTS_EQUAL(eve::count_true[true](v), manual_count_true(v, true));
-  TTS_EQUAL(eve::count_true[false](v), 0);
-  TTS_EQUAL(eve::count_true[eve::ignore_none](v), manual_count_true(v, true));
+  test_count_true(v, true);
+  test_count_true(v, false);
+  test_count_true(v, eve::ignore_none);
 
   if constexpr (eve::simd_value<T>)
   {
-    T m = [](auto i, auto) { return i % 2 == 0; };
-    TTS_EQUAL(eve::count_true[m](v), manual_count_true(v, m));
+    constexpr auto cardinal = eve::cardinal_v<T>;
+    TTS_EQUAL(eve::count_true(eve::top_bits{v}), manual_count_true(eve::top_bits{v}, true));
 
-    TTS_EQUAL(eve::count_true[eve::ignore_all](v), 0);
-    TTS_EQUAL(eve::count_true[eve::keep_first(1)](v), manual_count_true(v, eve::keep_first(1)));
-    TTS_EQUAL(eve::count_true[eve::ignore_first(1)](v), manual_count_true(v, eve::ignore_first(1)));
-    TTS_EQUAL(eve::count_true[eve::keep_last(1)](v), manual_count_true(v, eve::keep_last(1)));
-    TTS_EQUAL(eve::count_true[eve::ignore_last(1)](v), manual_count_true(v, eve::ignore_last(1)));
+    T m = [](auto i, auto) { return i % 2 == 0; };
+    test_count_true(v, m);
+
+    test_count_true(v, eve::ignore_all);
+
+    for (std::ptrdiff_t n = 0; n < v.size(); ++n)
+    {
+      test_count_true(v, eve::keep_first(n));
+      test_count_true(v, eve::ignore_first(n));
+    }
+
+    for (std::ptrdiff_t n = 0; n < v.size() / 2; ++n)
+    {
+      test_count_true(v, eve::keep_between(n, cardinal - n));
+      test_count_true(v, eve::ignore_extrema(n, cardinal - n));
+    }
   }
 }
 
@@ -107,11 +132,11 @@ TTS_CASE_TPL("Check eve::count_true behavior on wides and top_bits", eve::test::
   TTS_EQUAL(eve::count_true(eve::true_(eve::as<T>())), cardinal);
   TTS_EQUAL(eve::count_true(eve::false_(eve::as<T>())), 0);
 
-  for( std::ptrdiff_t j = 0; j < cardinal; ++j )
+  for (std::ptrdiff_t j = 0; j < cardinal; ++j)
   {
     eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
 
-    for( std::ptrdiff_t i = 0; i < cardinal; ++i )
+    for (std::ptrdiff_t i = 0; i < cardinal; ++i)
     {
       rhs1.set(i, i >= j ? true : false);
       rhs2.set(i, i <= j ? false : true);
@@ -123,10 +148,5 @@ TTS_CASE_TPL("Check eve::count_true behavior on wides and top_bits", eve::test::
     test_count_true(rhs2);
     test_count_true(rhs3);
     test_count_true(rhs4);
-
-    test_count_true(eve::top_bits{rhs1});
-    test_count_true(eve::top_bits{rhs2});
-    test_count_true(eve::top_bits{rhs3});
-    test_count_true(eve::top_bits{rhs4});
   }
 };
