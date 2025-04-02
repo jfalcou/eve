@@ -21,15 +21,20 @@ namespace eve::detail
 
     if constexpr (N::value == 1)
     {
-      return static_cast<bool>(iv.get(0));
+      return static_cast<bool>(iv.get(0)) || !static_cast<bool>(expand_mask(cx, as<wide<T, N>>{}).get(0));
     }
     else
     {
-      auto mask = expand_mask(otps[condition_key], as<wide<T, expected_cardinal_t<T, ppc_>>>{}).bits();
+      using ec_t = expected_cardinal_t<T, ppc_>;
+      using ew_t = wide<T, ec_t>;
 
+      auto civ  = simd_cast(iv, as<ew_t>{});
+      auto mask = simd_cast(expand_mask(otps[condition_key], as<wide<T, N>>{}).bits(), as<ew_t>{});
+
+      // mask the inactive lanes
       if constexpr (N::value != expected_cardinal_v<T, ppc_>)
       {
-        const auto of_mask = apply<N::value>([](auto... I) { return logical<wide<T, N>> {(I < N::value)...}; });
+        const auto of_mask = apply<ec_t::Value>([](auto... I) { return logical<ew_t> {(I < N::value)...}; });
         mask &= of_mask.bits();
       }
 
