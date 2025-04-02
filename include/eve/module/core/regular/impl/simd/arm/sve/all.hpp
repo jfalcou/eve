@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE bool all_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
+  EVE_FORCEINLINE bool all_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     using C = rbr::result::fetch_t<condition_key, O>;
@@ -30,7 +30,7 @@ namespace eve::detail
       const auto masked_count = count_true[cx](v);
 
       if constexpr (relative_conditional_expr<C>) return masked_count == cx.count(as<wide<T, N>>{});
-      else                                        return masked_count == count_true(expand_mask(cx, as(v)));
+      else                                        return masked_count == count_true(expand_mask(cx, as<wide<T, N>>{}));
     }
   }
 }
