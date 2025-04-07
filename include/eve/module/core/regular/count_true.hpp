@@ -14,17 +14,17 @@ namespace eve
   template<typename Options>
   struct count_true_t : conditional_callable<count_true_t, Options>
   {
-    template<relaxed_logical_value T>
-    EVE_FORCEINLINE std::ptrdiff_t operator()(T v) const noexcept
+    template<relaxed_logical_value L>
+    EVE_FORCEINLINE std::ptrdiff_t operator()(L v) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(detail::validate_mask_for<decltype(this->options()), L>(),
         "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v);
     }
 
-    template<logical_simd_value T>
-    EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<T> v) const noexcept
+    template<logical_simd_value L>
+    EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<L> v) const noexcept
     {
       return EVE_DISPATCH_CALL(v);
     }
@@ -50,11 +50,11 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overloads
-  //!      template<relaxed_logical_value T>
-  //!      std::ptrdiff_t count_true(T x)                                                       noexcept; // 1
+  //!      template<relaxed_logical_value L>
+  //!      std::ptrdiff_t count_true(L x)                                                       noexcept; // 1
   //!
-  //!      template<relaxed_logical_value T>
-  //!      std::ptrdiff_t count_true(top_bits<T> t)                                             noexcept; // 1
+  //!      template<relaxed_logical_value L>
+  //!      std::ptrdiff_t count_true(top_bits<L> t)                                             noexcept; // 1
   //!
   //!      // Lanes masking
   //!      std::ptrdiff_t count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
