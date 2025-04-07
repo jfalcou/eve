@@ -87,6 +87,7 @@ namespace eve::detail
     }
     else
     {
+      using C = rbr::result::fetch_t<condition_key, O>;
       auto cx = opts[condition_key];
 
       if constexpr (top_bits<Logical>::is_aggregated)
@@ -97,7 +98,10 @@ namespace eve::detail
       else
       {
         auto vm = mmask.as_int();
-        vm &= top_bits{expand_mask(cx, as<Logical>())}.as_int();
+
+        if constexpr (relative_conditional_expr<C>) vm &= top_bits<Logical>{cx}.as_int();
+        else                                        vm &= top_bits{expand_mask(cx, as<Logical>())}.as_int();
+
         return std::popcount(vm) / top_bits<Logical>::bits_per_element;
       }
     }

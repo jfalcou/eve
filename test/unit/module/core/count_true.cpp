@@ -96,11 +96,14 @@ void test_count_true(T v)
     test_count_true(v, m);
 
     test_count_true(v, eve::ignore_all);
-    
     test_count_true(v, eve::keep_first(0));
-    test_count_true(v, eve::ignore_extrema(1, 1));
-    test_count_true(v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-    test_count_true(v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+
+    if constexpr (cardinal >= 2)
+    {
+      test_count_true(v, eve::ignore_extrema(1, 1));
+      test_count_true(v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+      test_count_true(v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    }
   }
 }
 
