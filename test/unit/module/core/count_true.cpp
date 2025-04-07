@@ -97,11 +97,10 @@ void test_count_true(T v)
 
     test_count_true(v, eve::ignore_all);
     
-    for (std::ptrdiff_t i = 0; i < cardinal / 4; ++i)
-    {
-      test_count_true(v, eve::keep_between(i, i + cardinal / 4));
-      test_count_true(v, eve::ignore_extrema(i, i + cardinal / 4));
-    }
+    test_count_true(v, eve::keep_first(0));
+    test_count_true(v, eve::ignore_extrema(1, 1));
+    test_count_true(v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+    test_count_true(v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
   }
 }
 
