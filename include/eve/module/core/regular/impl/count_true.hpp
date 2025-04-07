@@ -33,12 +33,42 @@ namespace eve::detail
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, logical<T> v) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
+    const auto cx = opts[condition_key];
 
     constexpr bool relative_nonignore = relative_conditional_expr<C> && !std::same_as<C, ignore_none_>;
 
-    if      constexpr (scalar_value<T>)    return count_true[opts](v.value());
-    else if constexpr (relative_nonignore) return count_true(top_bits{v, opts[condition_key]});
-    else                                   return count_true[opts](eve::top_bits{v});
+    if      constexpr (scalar_value<T>)                   return count_true[cx](v.value());
+    else if constexpr (C::is_complete && !C::is_inverted) return 0;
+    else if constexpr (has_emulated_abi_v<T>)
+    {
+      std::ptrdiff_t count = 0;
+
+      if constexpr (relative_conditional_expr<C>)
+      {
+        const std::ptrdiff_t begin    = cx.offset(as(v));
+        const std::ptrdiff_t end      = begin + cx.count(as(v));
+        constexpr std::ptrdiff_t size = T::size();
+
+        EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
+        
+        for (std::ptrdiff_t i = begin; i < end; ++i)
+        {
+          count += v.get(i);
+        }
+      }
+      else
+      {
+        auto mask = expand_mask(cx, as(v));
+        for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+        {
+          count += (v.get(i) && mask.get(i));
+        }
+      }
+
+      return count;
+    }
+    else if constexpr (relative_nonignore) return count_true(top_bits{v, cx});
+    else                                   return count_true[cx](eve::top_bits{v});
   }
 
   template<callable_options O, logical_simd_value Logical>

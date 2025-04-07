@@ -33,6 +33,25 @@
 #  endif
 #endif
 
+// Assume an expression to be true at compile time
+#if defined(EVE_NO_ASSUME)
+#  define EVE_ASSUME(...)
+#else
+#  if defined(__clang__)
+#    define EVE_ASSUME(...) do { __builtin_assume(__VA_ARGS__); } while(0)
+#  elif defined(__GNUC__)
+#    if __GNUC__ >= 13
+#      define EVE_ASSUME(...) do { __attribute__((__assume__(__VA_ARGS__))); } while(0)
+#    else
+#      define EVE_ASSUME(...) do { if (!bool{__VA_ARGS__}) __builtin_unreachable(); } while(0)
+#    endif
+#  elif defined(_MSC_VER)
+#    define EVE_ASSUME(...) do { __assume(__VA_ARGS__); } while(0)
+#  else
+#    define EVE_ASSUME(...)
+#  endif
+#endif
+
 // Captures math related options and translate to proper setup
 #if defined(__FAST_MATH__) && !defined(EVE_FAST_MATH)
 #  define EVE_FAST_MATH
