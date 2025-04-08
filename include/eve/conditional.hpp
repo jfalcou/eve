@@ -253,7 +253,16 @@ namespace eve
     static constexpr bool is_complete     = false;
 
     //! Construct an eve::relative_conditional_expr that will keep the *n* first lanes
-    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n)
+    {
+      EVE_ASSERT(n >= 0, "[eve::keep_first] Invalid count");
+    }
+
+    template<typename T>
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(count_ <= T::size(), "[eve::keep_first] Invalid count");
+    }
 
     //==============================================================================================
     //! @brief Extends a conditional expression with an alternative value
@@ -265,7 +274,27 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return T::size() - count_;
+    }
+
+    //! Number of lanes to be left unmasked
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return count_;
     }
 
     //! Checks equality between two eve::keep_first instances
@@ -275,22 +304,6 @@ namespace eve
     friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
     {
       return os << "keep_first( " << c.count_ << " )";
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
-    {
-      return 0;
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
-    {
-      return T::size() - count_;
-    }
-
-    //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
-    {
-      return count_;
     }
 
     std::ptrdiff_t count_;
@@ -310,7 +323,16 @@ namespace eve
     static constexpr bool is_complete     = false;
 
     //! Construct an eve::relative_conditional_expr that will ignore the *n* last lanes
-    constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n)
+    {
+      EVE_ASSERT(n >= 0, "[eve::ignore_last] Invalid count");
+    }
+
+    template<typename T>
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(count_ <= T::size(), "[eve::ignore_last] Invalid count");
+    }
 
     //==============================================================================================
     //! @brief Extends a conditional expression with an alternative value
@@ -322,7 +344,27 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return 0;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return count_;
+    }
+
+    //! Number of lanes to be left unmasked
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return T::size() - count_;
     }
 
     //! Checks equality between two eve::ignore_last instances
@@ -332,22 +374,6 @@ namespace eve
     friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
     {
       return os << "ignore_last( " << c.count_ << " )";
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
-    {
-      return 0;
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
-    {
-      return count_;
-    }
-
-    //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
-    {
-      return T::size() - count_;
     }
 
     std::ptrdiff_t count_;
@@ -366,7 +392,16 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n)
+    {
+      EVE_ASSERT(n >= 0, "[eve::keep_last] Invalid count");
+    }
+
+    template<typename T>
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(count_ <= T::size(), "[eve::keep_last] Invalid count");
+    }
 
     //==============================================================================================
     //! @brief Extends a conditional expression with an alternative value
@@ -378,7 +413,27 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return T::size() - count_;
+    }
+
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return 0;
+    }
+
+    //! Number of lanes to be left unmasked
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    {
+      check_mask(tgt);
+      return count_;
     }
 
     //! Checks equality between two eve::keep_last instances
@@ -388,22 +443,6 @@ namespace eve
     friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
-    {
-      return T::size() - count_;
-    }
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
-    {
-      return 0;
-    }
-
-    //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
-    {
-      return count_;
     }
 
     std::ptrdiff_t count_;
@@ -422,7 +461,16 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
+    constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n)
+    {
+      EVE_ASSERT(n >= 0, "[eve::ignore_first] Invalid count");
+    }
+
+    template<typename T> 
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(count_ <= T::size(), "[eve::ignore_first] Invalid count");
+    }
 
     //==============================================================================================
     //! @brief Extends a conditional expression with an alternative value
@@ -434,23 +482,26 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
     }
 
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return 0;
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return T::size() - count_;
     }
 
@@ -481,7 +532,13 @@ namespace eve
 
     constexpr EVE_FORCEINLINE keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
     {
-      EVE_ASSERT(b<=e, "[eve::keep_between] Index mismatch for begin/end");
+      EVE_ASSERT((b >= 0) && (b <= e), "[eve::keep_between] Invalid begin/end indices");
+    }
+
+    template<typename T> 
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(end_ <= T::size(), "[eve::keep_between] Invalid begin/end indices");
     }
 
     //==============================================================================================
@@ -494,23 +551,26 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
     }
 
-
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return begin_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return T::size() - end_;
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return end_ - begin_;
     }
 
@@ -541,7 +601,9 @@ namespace eve
 
     constexpr EVE_FORCEINLINE ignore_extrema(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
             : first_count_(b), last_count_(e)
-    {}
+    {
+      EVE_ASSERT((b >= 0) && (e >= 0), "[eve::ignore_extrema] Invalid first/last indices");
+    }
 
     //==============================================================================================
     //! @brief Extends a conditional expression with an alternative value
@@ -550,25 +612,35 @@ namespace eve
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
+    template<typename T> 
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(first_count_ + last_count_ <= T::size(), "[eve::ignore_extrema] Invalid first/last indices");
+    }
+
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return detail::to_logical(*this, tgt);
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return first_count_;
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return last_count_;
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
     {
+      check_mask(tgt);
       return T::size() - last_count_ - first_count_;
     }
 
