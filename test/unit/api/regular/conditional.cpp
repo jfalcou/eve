@@ -391,17 +391,18 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL( "ignore_first/last behavior", eve::test::simd::all_types)
+TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_types)
 <typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
   using eve::ignore_first;
   using eve::ignore_last;
+  using eve::ignore_extrema;
   using eve::if_else;
   using eve::as;
 
-  TTS_EXPECT( relative_conditional_expr<eve::ignore_extrema>  );
+  TTS_EXPECT( relative_conditional_expr<ignore_extrema>  );
 
   type value = [](auto i, auto) { return 1+i; };
 
@@ -418,7 +419,9 @@ TTS_CASE_TPL( "ignore_first/last behavior", eve::test::simd::all_types)
       if(fi+li <= type::size())
       {
         TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as<type>()).bits(), mref.bits() );
+        TTS_EQUAL( (ignore_extrema(fi, li)).mask(as<type>()).bits(), mref.bits() );
         TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
+        TTS_EQUAL( (if_else(ignore_extrema(fi, li), value, type(69))), ref);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
   if constexpr( !eve::has_aggregated_abi_v<type> )
@@ -428,12 +431,14 @@ TTS_CASE_TPL( "ignore_first/last behavior", eve::test::simd::all_types)
 
     auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as<type>()).storage().value;
     TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
+
+    auto ignore_mask_combined = (ignore_extrema(fi, li)).mask(eve::as<type>()).storage().value;
+    TTS_EQUAL( m_t(ignore_mask_combined & bits_mask), m_t(0) );
   }
 #endif
       }
     }
   }
-
 
   // For half_c wide, checks we don't have spurious true in the outside values
   if constexpr( type::abi_type::is_wide_logical && !eve::use_complete_storage<type> )
@@ -451,9 +456,13 @@ TTS_CASE_TPL( "ignore_first/last behavior", eve::test::simd::all_types)
           eve::logical<w_t> values = eve::bit_cast( (ignore_first(i) && ignore_last(j)).mask(as<type>())
                                                   , eve::as<eve::logical<w_t>>()
                                                   );
+
+          eve::logical<w_t> values_combined = eve::bit_cast(ignore_extrema(i, j).mask(as<type>()), eve::as<eve::logical<w_t>>());
+
           eve::logical<w_t> mask_ref = [=](auto n, auto) { return n >= i && n < (type::size()-j); };
 
           TTS_EQUAL(values, mask_ref);
+          TTS_EQUAL(values_combined, mask_ref);
         }
       }
     }
