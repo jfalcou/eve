@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaa1db4fb3b5606
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::count_true = {}</td>
+          <td class="memname">eve::count_true = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;count_true_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,16 +145,19 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaa1db4fb3b5606
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overloads</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>(<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> x)                                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits</a> <span class="keyword">auto</span> t)                                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;relaxed_logical_value L&gt;</div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>(L x)                                                       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;relaxed_logical_value L&gt;</div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> t)                                             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:132</div></div>
-<div class="ttc" id="agroup__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1_html_gaa1db4fb3b560614916f4a5c33bedd5f1"><div class="ttname"><a href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">eve::count_true</a></div><div class="ttdeci">constexpr callable_count_true_ count_true</div><div class="ttdoc">Computes the number of non 0 elements.</div><div class="ttdef"><b>Definition:</b> count_true.hpp:73</div></div>
+<div class="ttc" id="agroup__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1_html_gaa1db4fb3b560614916f4a5c33bedd5f1"><div class="ttname"><a href="group__core__reduction_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">eve::count_true</a></div><div class="ttdeci">constexpr auto count_true</div><div class="ttdoc">Computes the number of elements of the input which evaluates to true.</div><div class="ttdef"><b>Definition:</b> count_true.hpp:83</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition:</b> top_bits.hpp:80</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -166,15 +169,9 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaa1db4fb3b5606
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>The value in the element type of <code>x</code> of the number of non 0 elements.</li>
-<li>A masked version which return the number of true retained elements.</li>
+<li>The number of elements in <code>x</code> which evaluates to <code>true</code>. Scalar values are treated as one element.</li>
+<li>The masked version which return the number of non-masked true elements.</li>
 </ol>
-<p><b>Parameters</b></p>
-<ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
-</ul>
-<p><b>Return value</b></p>
-<p>The value of the number of non 0 elements is returned.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -193,11 +190,6 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaa1db4fb3b5606
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:307</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:93</div></div>
 </div><!-- fragment --> <h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve::$name$[mask](x, ...)</code> provides a masked version of `count_true which count the non masked non zero element </p>
-</li>
-</ul>
 
 </div>
 </div>
