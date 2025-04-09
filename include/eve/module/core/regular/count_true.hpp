@@ -11,69 +11,79 @@
 
 namespace eve
 {
-//================================================================================================
-//! @addtogroup core_reduction
-//! @{
-//!   @var count_true
-//!   @brief Computes the number of non 0 elements
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto count_true(logical_value auto x)                                      noexcept; // 1
-//!      constexpr auto count_true(top_bits auto t)                                           noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-//!      constexpr auto count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [argument](@ref eve::logical_value).
-//!     * `t`: [top bits](@ref top_bits).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
-//!
-//!   **Return value**
-//!
-//!      1. The value in the element type of `x`  of the number of non 0 elements.
-//!      2. A masked version  which return the number of true retained elements.
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [argument](@ref eve::value).
-//!
-//!    **Return value**
-//!
-//!    The value of the number of non 0 elements
-//!    is returned.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/count_true.cpp}
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::$name$[mask](x, ...)` provides a masked
-//!     version of `count_true which count the non masked non zero element
-//!
-//================================================================================================
-EVE_MAKE_CALLABLE(count_true_, count_true);
-//================================================================================================
-//! @}
-//================================================================================================
+  template<typename Options>
+  struct count_true_t : conditional_callable<count_true_t, Options>
+  {
+    template<relaxed_logical_value L>
+    EVE_FORCEINLINE std::ptrdiff_t operator()(L v) const noexcept
+    {
+      static_assert(detail::validate_mask_for<decltype(this->options()), L>(),
+        "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    template<logical_simd_value L>
+    EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<L> v) const noexcept
+    {
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    EVE_CALLABLE_OBJECT(count_true_t, count_true_);
+  };
+
+  //================================================================================================
+  //! @addtogroup core_reduction
+  //! @{
+  //!   @var count_true
+  //!   @brief Computes the number of elements of the input which evaluates to `true`.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      template<relaxed_logical_value L>
+  //!      std::ptrdiff_t count_true(L x)                                                       noexcept; // 1
+  //!
+  //!      template<relaxed_logical_value L>
+  //!      std::ptrdiff_t count_true(top_bits<L> t)                                             noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      std::ptrdiff_t count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+  //!      std::ptrdiff_t count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [argument](@ref eve::logical_value).
+  //!     * `t`: [top bits](@ref top_bits).
+  //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!      1. The number of elements in `x` which evaluates to `true`. Scalar values are treated as one element.
+  //!      2. The masked version which return the number of non-masked true elements.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/count_true.cpp}
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //================================================================================================
+  inline constexpr auto count_true = functor<count_true_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/count_true.hpp>
