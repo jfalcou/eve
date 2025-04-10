@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE bool all_(EVE_REQUIRES(vmx_), O const& otps, logical<wide<T, N>> const& v) noexcept
+  EVE_FORCEINLINE bool all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     auto iv = v.bits();
@@ -29,7 +29,7 @@ namespace eve::detail
       using ew_t = wide<T, ec_t>;
 
       const auto civ  = simd_cast(iv, as<ew_t>{});
-      const auto mask = simd_cast(expand_mask(otps[condition_key], as<wide<T, N>>{}).bits(), as<ew_t>{});
+      const auto mask = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}).bits(), as<ew_t>{});
 
       // mask the inactive lanes
       if constexpr (N::value != expected_cardinal_v<T, ppc_>)
