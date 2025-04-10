@@ -259,7 +259,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(count_ <= T::size(), "[eve::keep_first] Invalid count");
     }
@@ -329,7 +329,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(count_ <= T::size(), "[eve::ignore_last] Invalid count");
     }
@@ -398,7 +398,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(count_ <= T::size(), "[eve::keep_last] Invalid count");
     }
@@ -467,7 +467,7 @@ namespace eve
     }
 
     template<typename T> 
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(count_ <= T::size(), "[eve::ignore_first] Invalid count");
     }
@@ -536,7 +536,7 @@ namespace eve
     }
 
     template<typename T> 
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(end_ <= T::size(), "[eve::keep_between] Invalid begin/end indices");
     }
@@ -613,7 +613,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     template<typename T> 
-    EVE_FORCEINLINE constexpr void check_mask(eve::as<T> tgt) const
+    EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(first_count_ + last_count_ <= T::size(), "[eve::ignore_extrema] Invalid first/last indices");
     }
