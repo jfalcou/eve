@@ -78,7 +78,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
 
-    if constexpr (relative_conditional_expr<C>) return v == top_bits<T>{ cx };
+    if constexpr (relative_conditional_expr<C>)
+    {
+      const auto mask = top_bits<T>{ cx };
+      return (v & mask) == mask;
+    }
     else
     {
       // if top_bits is not cheap, try to check if all elements are true (without masking) first
@@ -87,7 +91,7 @@ namespace eve::detail
         if (v == top_bits<T>{ ignore_none }) return true;
       }
 
-      auto mask = top_bits<T> { expand_mask(cx, as<T>{}) };
+      const auto mask = top_bits<T> { expand_mask(cx, as<T>{}) };
       return (v & mask) == mask;
     }
   }
