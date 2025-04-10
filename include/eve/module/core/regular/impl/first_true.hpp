@@ -85,14 +85,24 @@ namespace eve::detail
     else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else if constexpr (has_emulated_abi_v<T>)
     {
-      for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+      if constexpr (relative_conditional_expr<C>)
+      {
+        const std::ptrdiff_t begin    = cx.offset(as(v));
+        const std::ptrdiff_t end      = begin + cx.count(as(v));
+        constexpr std::ptrdiff_t size = T::size();
+
+        EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
+
+        for (std::ptrdiff_t i = begin; i < end; ++i)
+          if (v.get(i))
+            return i;
+      }
+      else
       {
         auto mask = expand_mask(cx, as(v));
-
-        if (v.get(i) && mask.get(i))
-        {
-          return std::make_optional(i);
-        }
+        for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+          if (v.get(i) && mask.get(i))
+            return i;
       }
 
       return std::nullopt;
