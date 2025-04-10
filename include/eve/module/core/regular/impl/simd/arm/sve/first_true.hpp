@@ -40,7 +40,7 @@ namespace eve::detail
 
       if constexpr (relative_conditional_expr<C>)
       {
-        cx_m = L {sve_true(cx, eve::as(m))};
+        cx_m = sve_true(cx, eve::as(m));
       }
       else
       {
