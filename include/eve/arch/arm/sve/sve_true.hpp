@@ -41,8 +41,8 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
       half_t half = sve_true(cond, eve::as<half_t>{});
       return T{half, half};
     }
-    else if constexpr(T::size() == fc_t::value )      return sve_true<v_t>();
-    else return bit_cast(keep_first(T::size()).mask(as<as_wide_t<v_t, fc_t>>{}), tgt);
+    else if constexpr (T::size() == fc_t::value) return sve_true<v_t>();
+    else                                         return keep_first(T::size()).mask(tgt);
   }
   else
   {
