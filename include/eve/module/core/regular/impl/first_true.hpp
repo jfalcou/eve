@@ -127,4 +127,4 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), O 
   if( !any(mmask) ) return {};
   return first_true_guaranteed(mmask);
 }
-} // namespace eve
+}
