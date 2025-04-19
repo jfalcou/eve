@@ -5,7 +5,9 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
+
 #include "test.hpp"
+#include "unit/module/core/scan_test.hpp"
 
 #include <eve/module/core.hpp>
 
@@ -35,89 +37,39 @@ TTS_CASE("Check eve::count_true return type (edge cases)")
   TTS_EXPR_IS((eve::count_true[true](bool{})), std::ptrdiff_t);
 };
 
-template<typename T>
-bool mask_at(T mask, int idx)
+struct ManualCountTrue
 {
-  if constexpr (std::same_as<T, bool>) return mask;
-  else                                 return mask.get(idx);
-}
-
-template<typename T, typename C>
-std::ptrdiff_t manual_count_true(T v, C mask)
-{
-  if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
+  template<typename T, typename C>
+  std::ptrdiff_t operator()(T v, C mask) const
   {
-    if constexpr (std::same_as<C, eve::ignore_none_>) return std::ptrdiff_t{v};
-    else                                              return std::ptrdiff_t{v && mask};
-  }
-  else if constexpr (eve::conditional_expr<C>)
-  {
-    return manual_count_true(v, expand_mask(mask, eve::as(v)));
-  }
-  else
-  {
-    std::ptrdiff_t expected = 0;
-
-    for (int i = 0; i < v.size(); ++i)
-        if (v.get(i) && mask_at(mask, i))
-          ++expected;
-
-    return expected;
-  }
-}
-
-template<typename T, typename C>
-void test_count_true(T v, C cx)
-{
-  const auto count = manual_count_true(v, cx);
-
-  TTS_EQUAL(eve::count_true[cx](v), count);
-
-  if constexpr (eve::simd_value<T>)
-  {
-    TTS_EQUAL(eve::count_true[cx](eve::top_bits{v}), count);
-  }
-}
-
-template<typename T>
-void test_count_true(T v)
-{
-  TTS_EQUAL(eve::count_true(v), manual_count_true(v, true));
-  test_count_true(v, true);
-  test_count_true(v, false);
-  test_count_true(v, eve::ignore_none);
-
-  if constexpr (eve::simd_value<T>)
-  {
-    constexpr auto cardinal = eve::cardinal_v<T>;
-    TTS_EQUAL(eve::count_true(eve::top_bits{v}), manual_count_true(eve::top_bits{v}, true));
-
-    T m = [](auto i, auto) { return i % 2 == 0; };
-    test_count_true(v, m);
-
-    test_count_true(v, eve::ignore_all);
-    test_count_true(v, eve::keep_first(0));
-
-    if constexpr (cardinal >= 2)
+    if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
     {
-      test_count_true(v, eve::ignore_extrema(1, 1));
-      test_count_true(v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-      test_count_true(v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+      return std::ptrdiff_t{v && mask};
+    }
+    else
+    {
+      std::ptrdiff_t expected = 0;
+
+      for (int i = 0; i < v.size(); ++i)
+          if (v.get(i) && mask_at(mask, i))
+            ++expected;
+
+      return expected;
     }
   }
-}
+};
 
 TTS_CASE("Check eve::count_true booleans")
 {
-  test_count_true(true);
-  test_count_true(false);
+  test_case<ManualCountTrue>(eve::count_true, true);
+  test_case<ManualCountTrue>(eve::count_true, false);
 };
 
 TTS_CASE_TPL("Check eve::count_true behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  test_count_true(eve::logical<T>{true});
-  test_count_true(eve::logical<T>{false});
+  test_case<ManualCountTrue>(eve::count_true, eve::logical<T>{true});
+  test_case<ManualCountTrue>(eve::count_true, eve::logical<T>{false});
 };
 
 TTS_CASE_TPL("Check eve::count_true behavior on wides and top_bits", eve::test::simd::all_types)
@@ -140,9 +92,9 @@ TTS_CASE_TPL("Check eve::count_true behavior on wides and top_bits", eve::test::
       rhs4.set(i, i == j ? false : true);
     }
 
-    test_count_true(rhs1);
-    test_count_true(rhs2);
-    test_count_true(rhs3);
-    test_count_true(rhs4);
+    test_case<ManualCountTrue>(eve::count_true, rhs1);
+    test_case<ManualCountTrue>(eve::count_true, rhs2);
+    test_case<ManualCountTrue>(eve::count_true, rhs3);
+    test_case<ManualCountTrue>(eve::count_true, rhs4);
   }
 };
