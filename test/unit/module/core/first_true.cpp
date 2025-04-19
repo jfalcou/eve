@@ -10,117 +10,133 @@
 
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL("Check eve::first_true return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::first_true return type (wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  const T val{};
+
+  TTS_EXPR_IS((eve::first_true(eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[eve::ignore_none](eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[val > 0](eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[true](eve::logical<T>())), std::optional<std::ptrdiff_t>);
+};
+
+TTS_CASE_TPL("Check eve::first_true return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   TTS_EXPR_IS((eve::first_true(eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[eve::ignore_none](eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[true](eve::logical<T>())), std::optional<std::ptrdiff_t>);
 };
 
-TTS_CASE("Check eve::first_true bool")
+TTS_CASE("Check eve::first_true return type (edge cases)")
 {
-  TTS_EXPR_IS((eve::first_true(bool {})), std::optional<std::ptrdiff_t>);
-  TTS_EQUAL((eve::first_true(true)), 0);
-  TTS_EQUAL((eve::first_true(false)), std::nullopt);
+  TTS_EXPR_IS((eve::first_true(bool{})), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[eve::ignore_none](bool{})), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::first_true[true](bool{})), std::optional<std::ptrdiff_t>);
 };
 
-TTS_CASE_TPL("Check eve::first_true behavior on logical", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
+template<typename T>
+bool mask_at(T mask, int idx)
 {
-  TTS_EQUAL(eve::first_true(eve::true_(eve::as<T>())), 0);
-  TTS_EQUAL(eve::first_true(eve::false_(eve::as<T>())), std::nullopt);
-};
+  if constexpr (std::same_as<T, bool>) return mask;
+  else                                 return mask.get(idx);
+}
 
-TTS_CASE_TPL("Check eve::first_true", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
+template<typename T, typename C>
+std::optional<std::ptrdiff_t> manual_first_true(T v, C mask)
 {
-  using l_t = eve::logical<T>;
-
-  // false
+  if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
   {
-    l_t x(false);
-    TTS_EQUAL(eve::first_true(x), std::nullopt);
-    TTS_EQUAL(eve::first_true[eve::ignore_none](x), std::nullopt);
+    if constexpr (std::same_as<C, eve::ignore_none_>) return v ? std::make_optional(0): std::nullopt;
+    else                                              return (v && mask) ? std::make_optional(0) : std::nullopt;
   }
-
-  // ignore_all
+  else if constexpr (eve::conditional_expr<C>)
   {
-    l_t x(true);
-    TTS_EQUAL(eve::first_true[eve::ignore_all](x), std::nullopt);
+    return manual_first_true(v, expand_mask(mask, eve::as(v)));
   }
-
-  // no ignore/ignore none
+  else
   {
-    l_t x(true);
+    for (int i = 0; i < v.size(); ++i)
+        if (v.get(i) && mask_at(mask, i))
+          return i;
 
-    for( int i = 0; i != T::size(); ++i )
+    return std::nullopt;
+  }
+}
+
+template<typename T, typename C>
+void test_first_true(T v, C cx)
+{
+  const auto first = manual_first_true(v, cx);
+
+  TTS_EQUAL(eve::first_true[cx](v), first);
+
+  if constexpr (eve::simd_value<T>)
+  {
+    TTS_EQUAL(eve::first_true[cx](eve::top_bits{v}), first);
+  }
+}
+
+template<typename T>
+void test_first_true(T v)
+{
+  TTS_EQUAL(eve::first_true(v), manual_first_true(v, true));
+  test_first_true(v, true);
+  test_first_true(v, false);
+  test_first_true(v, eve::ignore_none);
+
+  if constexpr (eve::simd_value<T>)
+  {
+    constexpr auto cardinal = eve::cardinal_v<T>;
+    TTS_EQUAL(eve::first_true(eve::top_bits{v}), manual_first_true(eve::top_bits{v}, true));
+
+    T m = [](auto i, auto) { return i % 2 == 0; };
+    test_first_true(v, m);
+
+    test_first_true(v, eve::ignore_all);
+    test_first_true(v, eve::keep_first(0));
+
+    if constexpr (cardinal >= 2)
     {
-      TTS_EQUAL(eve::first_true(x), i);
-      TTS_EQUAL(eve::first_true[eve::ignore_none](x), i);
-      x.set(i, false);
+      test_first_true(v, eve::ignore_extrema(1, 1));
+      test_first_true(v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+      test_first_true(v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
     }
   }
+}
 
-  // ignore first
-  {
-    l_t x(true);
-
-    for( int i = 0; i != T::size(); ++i )
-    {
-      auto ifirst = eve::ignore_first(i);
-      TTS_EQUAL(eve::first_true[ifirst](x), i);
-
-      auto iextrema = ifirst && eve::ignore_last(T::size() - i - 1);
-      TTS_EQUAL(eve::first_true[iextrema](x), i);
-    }
-    TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
-  }
-
-  // ignore last
-  {
-    l_t x(false);
-
-    for( int i = 0; i != T::size(); ++i )
-    {
-      x.set(i, true);
-
-      auto ilast        = eve::ignore_last(T::size() - i - 1);
-      auto ilast_bigger = eve::ignore_last(T::size() - i);
-
-      TTS_EQUAL(eve::first_true[ilast](x), i);
-      TTS_EQUAL(eve::first_true[ilast_bigger](x), std::nullopt);
-
-      if( i > 0 )
-      {
-        auto iextrema = ilast && eve::ignore_first(i - 1);
-        TTS_EQUAL(eve::first_true[iextrema](x), i);
-
-        iextrema = ilast_bigger && eve::ignore_first(i - 1);
-        TTS_EQUAL(eve::first_true[iextrema](x), std::nullopt);
-      }
-
-      x.set(i, false);
-    }
-
-    x = true;
-    TTS_EQUAL(eve::first_true[eve::ignore_last(T::size())](x), std::nullopt);
-  }
+TTS_CASE("Check eve::first_true on booleans")
+{
+  test_first_true(true);
+  test_first_true(false);
 };
 
-TTS_CASE_TPL("Check first_true(top_bits)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::first_true behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using logical = eve::logical<T>;
-  TTS_EQUAL(0, eve::first_true(eve::top_bits(logical(true))));
+  test_first_true(eve::logical<T>{true});
+  test_first_true(eve::logical<T>{false});
+};
 
-  for( int i = 0; i != T::size() - 1; ++i )
+TTS_CASE_TPL("Check eve::first_true behavior on wides and top_bits", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  constexpr auto cardinal = eve::cardinal_v<T>;
+
+  for( std::ptrdiff_t j = 0; j < cardinal; ++j )
   {
-    logical       v([=](auto e, auto) { return e > i; });
-    std::optional res = eve::first_true(eve::top_bits(v));
-    TTS_EXPECT(res);
+    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {};
 
-    int expected = i + 1;
-    TTS_EQUAL(expected, *res);
+    for( std::ptrdiff_t i = 0; i < cardinal; ++i )
+    {
+      rhs1.set(i, i >= j ? true : false);
+      rhs2.set(i, i <= j ? false : true);
+      rhs3.set(i, i == j ? true : false);
+    }
+
+    test_first_true(rhs1);
+    test_first_true(rhs2);
+    test_first_true(rhs3);
   }
-
-  TTS_EXPECT_NOT(eve::first_true(eve::top_bits(logical(false))));
 };
