@@ -19,112 +19,107 @@
 
 namespace eve::detail
 {
-// Internal helper
-template<logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t
-                first_true_guaranteed(top_bits<Logical> mmask)
-{
-  if constexpr( !top_bits<Logical>::is_aggregated )
+  // Internal helper
+  template<logical_simd_value Logical>
+  EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
   {
-    return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
-  }
-  else
-  {
-    auto half_mmask = mmask.storage[1];
-    int  offset     = Logical::size() / 2;
-
-    // trying to make a cmove (otherwise does not cmove, I think I tested)
-    if( mmask.storage[0] )
+    if constexpr (!top_bits<Logical>::is_aggregated)
     {
-      offset     = 0;
-      half_mmask = mmask.storage[0];
-    }
-
-    return first_true_guaranteed(half_mmask) + offset;
-  }
-}
-
-template<callable_options O, logical_value T>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
-                first_true_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
-{
-  using C = rbr::result::fetch_t<condition_key, O>;
-  auto cond = opts[condition_key];
-
-  if constexpr (scalar_value<T>)                         return first_true[cond](v.value());
-  else
-  if constexpr( C::is_complete && !C::is_inverted ) return {};
-  else if constexpr( has_emulated_abi_v<T> )
-  {
-    if constexpr (relative_conditional_expr<C>)
-    {
-      std::ptrdiff_t first = cond.offset(eve::as<T> {});
-      std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
-      constexpr std::ptrdiff_t size = T::size();
-      EVE_ASSUME((first >= 0) && (first <= last) && (last <= size));
-
-      while( first != last )
-      {
-        if( v.get(first) ) return first;
-        ++first;
-      }
-
-      return {};
+      return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
     }
     else
     {
-      auto mask = expand_mask(cond, as(v));
+      auto half_mmask = mmask.storage[1];
+      int  offset     = Logical::size() / 2;
 
-      for (std::ptrdiff_t i = 0; i < v.size(); ++i)
-        if (v.get(i) && mask.get(i))
-          return i;
+      // trying to make a cmove (otherwise does not cmove, I think I tested)
+      if (mmask.storage[0])
+      {
+        offset     = 0;
+        half_mmask = mmask.storage[0];
+      }
 
-      return std::nullopt;
+      return first_true_guaranteed(half_mmask) + offset;
     }
   }
-  else
-  {
-    // This is pretty good for aggreagted as well.
-    if constexpr( !top_bits<T>::is_cheap )
-    {
-      // No ignore, we might luck out even if some elements should not be counted.
-      if( !eve::any(v) ) return {};
 
-      // any + ignore_none
-      if constexpr (C::is_complete)
+  template<callable_options O, logical_value T>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+                  first_true_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
+  {
+    using C = rbr::result::fetch_t<condition_key, O>;
+    auto cond = opts[condition_key];
+
+    if      constexpr (scalar_value<T>)                   return first_true[cond](v.value());
+    else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
+    else if constexpr (has_emulated_abi_v<T>)
+    {
+      if constexpr (relative_conditional_expr<C>)
       {
-        return first_true_guaranteed(top_bits{v, cond});
+        std::ptrdiff_t begin = cond.offset(as<T>{});
+        std::ptrdiff_t end   = begin + cond.count(as<T>{});
+        constexpr std::ptrdiff_t size = T::size();
+
+        EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
+
+        for (std::ptrdiff_t i = begin; i < end; ++i)
+            if (v.get(i))
+              return i;
+
+        return std::nullopt;
+      }
+      else
+      {
+        auto mask = expand_mask(cond, as(v));
+
+        for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+          if (v.get(i) && mask.get(i))
+            return i;
+
+        return std::nullopt;
       }
     }
+    else
+    {
+      // This is pretty good for aggreagted as well.
+      if constexpr (!top_bits<T>::is_cheap)
+      {
+        // No ignore, we might luck out even if some elements should not be counted.
+        if (!any(v)) return std::nullopt;
 
-    if constexpr (relative_conditional_expr<C>) return first_true(top_bits{v, cond});
-    else                                        return first_true[cond](top_bits{v});
-  }
-}
+        // any + ignore_none
+        if constexpr (C::is_complete)
+        {
+          return first_true_guaranteed(top_bits{v, cond});
+        }
+      }
 
-template<callable_options O>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
-                first_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
-{
-  if constexpr (match_option<condition_key, O, ignore_none_>)
-  {
-    if( !v ) return std::nullopt;
-    return 0;
+      if constexpr (relative_conditional_expr<C>) return first_true(top_bits{v, cond});
+      else                                        return first_true[cond](top_bits{v});
+    }
   }
-  else
-  {
-    return opts[condition_key].mask(as(v)) && v ? std::make_optional(0) : std::nullopt;
-  }
-}
 
-template<callable_options O, logical_simd_value Logical>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
-{
-  if constexpr (!match_option<condition_key, O, ignore_none_>)
+  template<callable_options O>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
   {
-    mmask &= top_bits{expand_mask(opts[condition_key], as<Logical>{})};
+    if constexpr (match_option<condition_key, O, ignore_none_>)
+    {
+      return v ? std::make_optional(0) : std::nullopt;
+    }
+    else
+    {
+      return opts[condition_key].mask(as(v)) && v ? std::make_optional(0) : std::nullopt;
+    }
   }
-  if( !any(mmask) ) return {};
-  return first_true_guaranteed(mmask);
-}
+
+  template<callable_options O, logical_simd_value Logical>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
+  {
+    if constexpr (!match_option<condition_key, O, ignore_none_>)
+    {
+      mmask &= top_bits{expand_mask(opts[condition_key], as<Logical>{})};
+    }
+
+    return any(mmask) ? std::make_optional(first_true_guaranteed(mmask)) : std::nullopt;
+  }
 }
