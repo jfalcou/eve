@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_gafe526beb78cfe
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::first_true = {}</td>
+          <td class="memname">eve::first_true = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;first_true_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -140,32 +140,35 @@ $(document).ready(function(){initNavTree('group__core__reduction_gafe526beb78cfe
 </table>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md20"></a>
-Should you check for any?</h2>
-<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if any elements of x is not zero.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do it otherwise.</p>
-<h2><a class="anchor" id="autotoc_md21"></a>
-What if I know there is a match?</h2>
-<p>We would recommend <code>*eve<a class="el" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597" title="A function to find a first true value, if there is one.">first_true(m)</a></code> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
-<h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
-<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>(L m);  <span class="comment">// (1)</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>(L m) <span class="keyword">noexcept</span>;                                               <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
-<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> m);    <span class="comment">// (2)</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> m) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">template</span> &lt;relative_conditional_expr C, logical_simd_value L&gt;</div>
-<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>[C ignore](L m);    <span class="comment">// (3)</span></div>
-<div class="line"> </div>
-<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>(<span class="keywordtype">bool</span> m);  <span class="comment">// (4)</span></div>
-<div class="ttc" id="agroup__core__reduction_gafe526beb78cfe17529587bbfff4bb597_html_gafe526beb78cfe17529587bbfff4bb597"><div class="ttname"><a href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">eve::first_true</a></div><div class="ttdeci">constexpr callable_first_true_ first_true</div><div class="ttdoc">A function to find a first true value, if there is one.</div><div class="ttdef"><b>Definition:</b> first_true.hpp:65</div></div>
+<div class="line"><span class="comment">// lane masking</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;   <span class="comment">// 2</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">first_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;      <span class="comment">// 2</span></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:132</div></div>
+<div class="ttc" id="agroup__core__reduction_gafe526beb78cfe17529587bbfff4bb597_html_gafe526beb78cfe17529587bbfff4bb597"><div class="ttname"><a href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597">eve::first_true</a></div><div class="ttdeci">constexpr auto first_true</div><div class="ttdoc">Returns the index of the first element in the input which evaluates to true, if there is one.</div><div class="ttdef"><b>Definition:</b> first_true.hpp:83</div></div>
 <div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition:</b> top_bits.hpp:80</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li>m - logical_value or <a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">top_bits</a> where to find first true value</li>
-<li>ignore - ignored elements are considered false. Only supported for <code>logical_simd_value</code></li>
 </ul>
 <p><b>Return value</b></p>
-<p>Returns <code>std::nullopt</code> if <a class="el" href="group__core__reduction_ga6bac192090779b76bc7ffe5425fcabc8.html#ga6bac192090779b76bc7ffe5425fcabc8" title="Computes a bool value which is true if and only if all elements of x are 0.">eve::none(m)</a>. Otherwise returns 0 based index.</p>
+<ol type="1">
+<li>An <code>std::optional</code> containing the index of the first element which evaluates to <code>true</code>, <code>std::nullopt</code> if there are none.</li>
+<li>Same as 1. but masked elements are ignored during the search.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md20"></a>
+Should you check for any?</h2>
+<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if any elements of x is not zero.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do it otherwise.</p>
+<h2><a class="anchor" id="autotoc_md21"></a>
+What if I know there is a match?</h2>
+<p>We would recommend <code>*eve<a class="el" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597" title="Returns the index of the first element in the input which evaluates to true, if there is one.">first_true(m)</a></code> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
