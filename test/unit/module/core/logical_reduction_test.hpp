@@ -84,3 +84,30 @@ void test_case(Callable callable, T v)
     }
   }
 }
+
+template<typename TruthFn, typename Callable, typename T>
+void simd_test_cases(Callable callable, eve::as<T> typ)
+{
+  constexpr auto cardinal = eve::cardinal_v<T>;
+
+  test_case<TruthFn>(callable, eve::true_(typ));
+  test_case<TruthFn>(callable, eve::false_(typ));
+
+  for (std::ptrdiff_t j = 0; j < cardinal; ++j)
+  {
+    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
+
+    for (std::ptrdiff_t i = 0; i < cardinal; ++i)
+    {
+      rhs1.set(i, i >= j ? true : false);
+      rhs2.set(i, i <= j ? false : true);
+      rhs3.set(i, i == j ? true : false);
+      rhs4.set(i, i == j ? false : true);
+    }
+
+    test_case<TruthFn>(callable, rhs1);
+    test_case<TruthFn>(callable, rhs2);
+    test_case<TruthFn>(callable, rhs3);
+    test_case<TruthFn>(callable, rhs4);
+  }
+}

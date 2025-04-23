@@ -74,21 +74,5 @@ TTS_CASE_TPL("Check eve::first_true behavior on scalars", eve::test::scalar::all
 TTS_CASE_TPL("Check eve::first_true behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  constexpr auto cardinal = eve::cardinal_v<T>;
-
-  for( std::ptrdiff_t j = 0; j < cardinal; ++j )
-  {
-    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {};
-
-    for( std::ptrdiff_t i = 0; i < cardinal; ++i )
-    {
-      rhs1.set(i, i >= j ? true : false);
-      rhs2.set(i, i <= j ? false : true);
-      rhs3.set(i, i == j ? true : false);
-    }
-
-    test_case<ManualFirstTrue>(eve::first_true, rhs1);
-    test_case<ManualFirstTrue>(eve::first_true, rhs2);
-    test_case<ManualFirstTrue>(eve::first_true, rhs3);
-  }
+  simd_test_cases<ManualFirstTrue>(eve::first_true, eve::as<T>{});
 };

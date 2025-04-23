@@ -75,26 +75,5 @@ TTS_CASE_TPL("Check eve::count_true behavior on scalars", eve::test::scalar::all
 TTS_CASE_TPL("Check eve::count_true behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  constexpr auto cardinal = eve::cardinal_v<T>;
-
-  TTS_EQUAL(eve::count_true(eve::true_(eve::as<T>())), cardinal);
-  TTS_EQUAL(eve::count_true(eve::false_(eve::as<T>())), 0);
-
-  for (std::ptrdiff_t j = 0; j < cardinal; ++j)
-  {
-    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
-
-    for (std::ptrdiff_t i = 0; i < cardinal; ++i)
-    {
-      rhs1.set(i, i >= j ? true : false);
-      rhs2.set(i, i <= j ? false : true);
-      rhs3.set(i, i == j ? true : false);
-      rhs4.set(i, i == j ? false : true);
-    }
-
-    test_case<ManualCountTrue>(eve::count_true, rhs1);
-    test_case<ManualCountTrue>(eve::count_true, rhs2);
-    test_case<ManualCountTrue>(eve::count_true, rhs3);
-    test_case<ManualCountTrue>(eve::count_true, rhs4);
-  }
+  simd_test_cases<ManualCountTrue>(eve::count_true, eve::as<T>{});
 };
