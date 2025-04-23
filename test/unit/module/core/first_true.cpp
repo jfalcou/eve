@@ -7,7 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "unit/module/core/scan_test.hpp"
+#include "unit/module/core/logical_reduction_test.hpp"
 
 #include <eve/module/core.hpp>
 
