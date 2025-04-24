@@ -27,9 +27,6 @@ namespace eve
     template<logical_simd_value T>
     constexpr EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
-        "[eve::all] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
-
       return EVE_DISPATCH_CALL(v);
     }
 
@@ -40,7 +37,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var all
-  //!   @brief Computes a bool value which is true if and only if all elements of `x` evaluates to true.
+  //!   @brief Computes a bool value which is true if and only if every elements of `x` evaluates to true.
   //!
   //!   @groupheader{Header file}
   //!
@@ -75,7 +72,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!      1. A bool value which is true if and only if all elements of `x` evaluates to true.
+  //!      1. A bool value which is true if and only if every elements of `x` evaluates to true.
   //!      2. A masked version which ignores the masked elements during the search.
   //!
   //!  @groupheader{Example}
