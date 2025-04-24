@@ -21,11 +21,19 @@ namespace eve::detail
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else
     {
-      if constexpr (relative_conditional_expr<C>) m = m && sve_true(cx, as(m));
-      else                                        m = m && expand_mask(cx, as(m));
+      L c_m = m;
+
+      // Compute the condition mask only if necessary, this gives slightly better codegen.
+      if constexpr (!C::is_complete)
+      {
+        if constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
+        else                                        c_m = expand_mask(cx, as<L>{});
+      }
 
       if constexpr (has_aggregated_abi_v<L>)
       {
+        if constexpr (!C::is_complete) m = m && c_m;
+        
         auto [lo, hi] = m.slice();
         auto hi_res   = last_true(hi);
         auto lo_res   = last_true(lo);
@@ -35,7 +43,10 @@ namespace eve::detail
       }
       else
       {
-        if (!svptest_any(m, m)) return std::nullopt;
+        // Merging the two masks after the ptest makes this branch appear earlier in the
+        // resulting assembly. 
+        if (!svptest_any(c_m, m)) return std::nullopt;
+        if constexpr (!C::is_complete) m = m && c_m;
 
         using it = make_integer_t<sizeof(T), unsigned>;
         return svmaxv(m, eve::iota(as<wide<it, N>>{}));
