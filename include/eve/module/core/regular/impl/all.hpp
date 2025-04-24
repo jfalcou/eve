@@ -49,6 +49,8 @@ namespace eve::detail
         for (std::ptrdiff_t i = begin; i < end; ++i)
           if (!v.get(i))
             return false;
+
+        return true;
       }
       else
       {
@@ -56,9 +58,9 @@ namespace eve::detail
         for (std::ptrdiff_t i = 0; i < v.size(); ++i)
           if (mask.get(i) && !v.get(i))
             return false;
-      }
 
-      return true;
+        return true;
+      }
     }
     else if constexpr (has_aggregated_abi_v<T> && C::is_complete)
     {
