@@ -101,11 +101,11 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O c
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
   {
-    return v ? std::make_optional(0) : std::nullopt;
+    return v ? std::optional{0} : std::nullopt;
   }
   else
   {
-    return opts[condition_key].mask(as(v)) && v ? std::make_optional(0) : std::nullopt;
+    return opts[condition_key].mask(as(v)) && v ? std::optional{0} : std::nullopt;
   }
 }
 
@@ -117,6 +117,6 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O c
     mmask &= top_bits{expand_mask(opts[condition_key], as<Logical>{})};
   }
 
-  return any(mmask) ? std::make_optional(last_true_guaranteed(mmask)) : std::nullopt;
+  return any(mmask) ? std::optional{last_true_guaranteed(mmask)} : std::nullopt;
 }
 }
