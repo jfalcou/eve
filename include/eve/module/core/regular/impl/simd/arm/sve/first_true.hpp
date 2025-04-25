@@ -25,7 +25,8 @@ namespace eve::detail
       L c_m = m;
 
       // Compute the condition mask only if necessary, this gives slightly better codegen.
-      if constexpr (!C::is_complete)
+      // This also masks the inactive lanes of the input.
+      if constexpr (!C::is_complete || !std::same_as<N, expected_cardinal_t<T>>)
       {
         if constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
         else                                        c_m = expand_mask(cx, as<L>{});
@@ -46,10 +47,11 @@ namespace eve::detail
       }
       else
       {
-        // Merging the two masks after the ptest makes this branch appear earlier in the
-        // resulting assembly.
+        // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
         if (!svptest_any(c_m, m)) return std::nullopt;
-        if constexpr (!C::is_complete) m = m && c_m;
+
+        // Unconditional mask merge because we need to mask the inactive lanes of there are any.
+        m = m && c_m;
 
         // Implicit cast to the underlying vector size required.
         as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
