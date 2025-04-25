@@ -49,6 +49,8 @@ template<typename TruthFn, typename Callable, typename T, typename C>
 void test_case_cx(Callable callable, T v, C cx)
 {
   const auto manual_res = invoke_truth_fn<TruthFn>(v, cx);
+  
+  if constexpr (eve::simd_value<T>) v = tts::poison(v);
 
   TTS_EQUAL(callable[cx](v), manual_res);
 
