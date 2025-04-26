@@ -20,11 +20,10 @@ namespace eve::detail
     requires std::same_as<abi_t<T, N>, arm_64_>
   {
     using C = rbr::result::fetch_t<condition_key, O>;
-    auto cx = opts[condition_key];
 
     if constexpr (!match_option<condition_key, O, ignore_none_> || (current_api >= asimd) || ((sizeof(T) * N()) <= 4u))
     {
-      return any.behavior(cpu_{}, cx, v);
+      return any.behavior(cpu_{}, opts, v);
     }
     else
     {
