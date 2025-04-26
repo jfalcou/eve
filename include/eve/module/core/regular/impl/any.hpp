@@ -25,7 +25,7 @@ namespace eve::detail
     }
     else
     {
-      return v && !opts[condition_key].mask(as(v));
+      return v && opts[condition_key].mask(as(v));
     }
   }
 
@@ -55,8 +55,9 @@ namespace eve::detail
       }
       else
       {
+        const auto mask = expand_mask(cx, as(v));
         for (std::ptrdiff_t i = 0; i < v.size(); ++i)
-          if (v.get(i) && cx.get(i))
+          if (v.get(i) && mask.get(i))
             return true;
 
         return false;
@@ -87,8 +88,8 @@ namespace eve::detail
       using C = rbr::result::fetch_t<condition_key, O>;
       auto cx = opts[condition_key];
 
-      if constexpr (relative_conditional_expr<C>) mmask |= ~top_bits<T>{ cx };
-      else                                        mmask |= ~top_bits<T>{ expand_mask(cx, as<T>{}) };
+      if constexpr (relative_conditional_expr<C>) mmask &= top_bits<T>{ cx };
+      else                                        mmask &= top_bits<T>{ expand_mask(cx, as<T>{}) };
     }
 
     return bool{mmask};

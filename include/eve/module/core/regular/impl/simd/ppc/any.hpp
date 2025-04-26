@@ -43,7 +43,7 @@ namespace eve::detail
 
       if constexpr (!match_option<condition_key, O, ignore_none_>)
       {
-        const auto cm = expand_mask(opts[condition_key], as<wide<T>>{});
+        const auto cm = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<logical<wide<T>>>{});
         m &= cm.bits();
       }
 
