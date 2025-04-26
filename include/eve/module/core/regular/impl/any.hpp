@@ -29,8 +29,8 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, value T>
-  EVE_FORCEINLINE bool any_(EVE_REQUIRES(cpu_), O const& opts, logical<T> v) noexcept
+  template<callable_options O, logical_value T>
+  EVE_FORCEINLINE bool any_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
