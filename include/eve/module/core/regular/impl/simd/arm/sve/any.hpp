@@ -21,6 +21,6 @@ namespace eve::detail
     auto cx = opts[condition_key];
 
     if constexpr (C::is_complete && !C::is_inverted) return false;
-    else                                             return svptest_any(sve_true(cx, as(v)) , v);
+    else                                             return svptest_any(expand_mask(cx, as(v)) , v);
   }
 }

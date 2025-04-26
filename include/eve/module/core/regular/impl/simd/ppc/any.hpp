@@ -47,7 +47,7 @@ namespace eve::detail
         m &= cm.bits();
       }
 
-      return vec_any_eq(m.storage(), true_(as<logical<wide<T>>).storage());
+      return vec_any_eq(m.storage(), true_(as<logical<wide<T>>>).storage());
     }
   }
 }
