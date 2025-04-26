@@ -20,24 +20,30 @@ namespace eve::detail
   {
     if constexpr (N::value == 1)
     {
-      const auto iv = v.bits();
-      return static_cast<bool>(iv.get(0)) || !static_cast<bool>(expand_mask(opts[condition_key], as<wide<T, N>>{}).get(0));
+      const auto m = v.bits();
+
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        return static_cast<bool>(m.get(0));
+      }
+      else
+      {
+        const auto cm = expand_mask(opts[condition_key], as<wide<T, N>>{});
+        return static_cast<bool>(v.get(0)) || !static_cast<bool>(cm.get(0));
+      }
     }
     else
     {
-      using ec_t = expected_cardinal_t<T, ppc_>;
-      using ew_t = logical<wide<T, ec_t>>;
+      const auto m = simd_cast(v, as<logical<wide<T>>>{});
+      auto mask = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<logical<wide<T>>>{});
 
-      const auto vv  = simd_cast(v, as<ew_t>{});
-      auto mask = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<ew_t>{});
-
-      // mask the inactive lanes
       if constexpr (N::value != expected_cardinal_v<T, ppc_>)
       {
-        mask = mask && apply<ec_t::value>([](auto... I) { return ew_t {(I < N::value)...}; });
+        logical<wide<T>> mm = [](auto i, auto) { return i < N::value; };
+        mask = mask && mm;
       }
 
-      return vec_all_eq((vv && mask).bits().storage(), mask.bits().storage());
+      return vec_all_eq((m && mask).bits().storage(), mask.bits().storage());
     }
   }
 }
