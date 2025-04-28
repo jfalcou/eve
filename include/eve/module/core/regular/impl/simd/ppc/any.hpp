@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
 
 namespace eve::detail
 {
@@ -47,7 +48,7 @@ namespace eve::detail
         m &= cm.bits();
       }
 
-      return vec_any_eq(m.storage(), true_(as<logical<wide<T>>>).storage());
+      return vec_any_eq(m.storage(), true_(as(m)).storage());
     }
   }
 }
