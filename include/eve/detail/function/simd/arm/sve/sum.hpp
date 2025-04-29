@@ -23,14 +23,14 @@ namespace eve::detail
     // s/uaddv is constly, for small lanes count the "scalar" approach is faster
     if constexpr (std::same_as<C, ignore_none_> && (N::value <= 2))
     {
-      T sum = v.get(0);
+      T r = v.get(0);
 
       for_<1, 1, N::value>([&](auto i)
       {
-        sum += v.get(i);
+        r += v.get(i);
       });
 
-      return sum;
+      return r;
     }
     else
     {

@@ -35,13 +35,13 @@ namespace eve::detail
         if      constexpr (N::value == 1) return v.get(0);
         else if constexpr (is_emulated_v<abi_t<r_t, N>>)
         {
-          r_t sum = v.get(0);
+          r_t r = v.get(0);
 
           for_<1, 1, N::value>([&](auto i) {
-            sum += v.get(i);
+            r += v.get(i);
           });
 
-          return sum;        
+          return r;        
         }
         else if constexpr (is_aggregated_v<abi_t<r_t, N>>)
         {
