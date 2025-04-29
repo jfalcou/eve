@@ -66,7 +66,7 @@ reduce_(EVE_SUPPORTS(cpu_), wide<T, N> v, Callable f) noexcept
 
 template<scalar_value T, typename N>
 EVE_FORCEINLINE auto
-reduce_(EVE_SUPPORTS(cpu_), splat_type const& s, wide<T, N> v) noexcept
+reduce_(EVE_SUPPORTS(cpu_), splat_type const&, wide<T, N> v) noexcept
 {
   return eve::detail::sum[splat2](v);
 }
