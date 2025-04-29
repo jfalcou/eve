@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE T sum_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v) noexcept
+  EVE_FORCEINLINE T sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
     requires (x86_abi<abi_t<T, N>> && !O::contains(splat2) && match_option<condition_key, O, ignore_none_>)
   {
     constexpr auto c = categorize<wide<T, N>>();
