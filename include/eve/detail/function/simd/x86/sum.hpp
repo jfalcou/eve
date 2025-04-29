@@ -13,9 +13,9 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE T sum_( EVE_SUPPORTS(sse2_), wide<T,N> v) noexcept
-  requires x86_abi<abi_t<T, N>>
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE T sum_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v) noexcept
+    requires (x86_abi<abi_t<T, N>> && !O::contains(splat2) && match_option<condition_key, O, ignore_none_>)
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -92,7 +92,7 @@ namespace eve::detail
     // else other types use common cases
     else
     {
-      return sum_(EVE_RETARGET(cpu_), v);
+      return sum.behavior(cpu_{}, opts, v);
     }
   }
 }
