@@ -49,7 +49,7 @@ template<typename TruthFn, typename Callable, typename T, typename C>
 void test_case_cx(Callable callable, T v, C cx)
 {
   const auto manual_res = invoke_truth_fn<TruthFn>(v, cx);
-  
+
   if constexpr (eve::simd_value<T>) v = tts::poison(v);
 
   TTS_EQUAL(callable[cx](v), manual_res);
@@ -72,7 +72,7 @@ void test_case(Callable callable, T v)
   {
     constexpr auto cardinal = eve::cardinal_v<T>;
 
-    T m = [](auto i, auto) { return i % 2 == 0; };
+    T m = tts::poison(T{ [](auto i, auto) { return i % 2 == 0; } });
     test_case_cx<TruthFn>(callable, v, m);
 
     test_case_cx<TruthFn>(callable, v, eve::ignore_all);
