@@ -42,14 +42,16 @@ EVE_FORCEINLINE std::ptrdiff_t
 }
 
 template<callable_options O, logical_simd_value T>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+                last_true_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 {
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];
 
   if      constexpr (scalar_value<T>)                   return last_true[cond](v.value());
-  else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
-  else if constexpr (has_emulated_abi_v<T>)
+  else
+  if constexpr( C::is_complete && !C::is_inverted ) return {};
+  else if constexpr( has_emulated_abi_v<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
@@ -82,7 +84,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O c
     if constexpr (!top_bits<T>::is_cheap)
     {
       // No ignore, we might luck out even if some elements should not be counted.
-      if (!any(v)) return std::nullopt;
+    if( !eve::any(v) ) return {};
 
       // any + ignore_none
       if constexpr (C::is_complete)
@@ -97,11 +99,13 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O c
 }
 
 template<callable_options O>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
+EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+                last_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
   {
-    return v ? std::optional{0} : std::nullopt;
+  if( !v ) return std::nullopt;
+  return 0;
   }
   else
   {
@@ -110,13 +114,15 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O c
 }
 
 template<callable_options O, logical_simd_value Logical>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
+EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+                last_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
 {
   if constexpr (!match_option<condition_key, O, ignore_none_>)
   {
     mmask &= top_bits{expand_mask(opts[condition_key], as<Logical>{})};
   }
 
-  return any(mmask) ? std::optional{last_true_guaranteed(mmask)} : std::nullopt;
+  if( !any(mmask) ) return {};
+  return last_true_guaranteed(mmask);
 }
 }
