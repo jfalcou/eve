@@ -111,12 +111,21 @@ namespace kumi::_
   template<typename F, typename Indices, typename Tuple> struct supports_apply_t;
   template<typename F, size_t... Is, typename Tuple>
   struct supports_apply_t<F, std::index_sequence<Is...>, Tuple>
-      : std::is_invocable<F, member_t<Is,Tuple>...>
+      : std::is_invocable<F, decltype(get<Is>(std::declval<Tuple &&>()))...>
   {
   };
   template<typename F, typename Tuple>
   concept supports_apply = _::
       supports_apply_t<F, std::make_index_sequence<size<Tuple>::value>, Tuple>::value;
+  template<typename F, typename Indices, typename Tuple> struct supports_nothrow_apply_t;
+  template<typename F, size_t... Is, typename Tuple>
+  struct supports_nothrow_apply_t<F, std::index_sequence<Is...>, Tuple>
+      : std::is_nothrow_invocable<F, decltype(get<Is>(std::declval<Tuple &&>()))...>
+  {
+  };
+  template<typename F, typename Tuple>
+  concept supports_nothrow_apply = _::
+      supports_nothrow_apply_t<F, std::make_index_sequence<size<Tuple>::value>, Tuple>::value;
   template<typename F, typename... Tuples>
   concept supports_call = _::
       supports_call_t<F, std::make_index_sequence<(size<Tuples>::value, ...)>, Tuples...>::value;
@@ -475,7 +484,7 @@ namespace kumi
       ((value = value * 10 + (c - '0')), ...);
       return value;
     }
-    template<char... c> constexpr auto operator"" _c() noexcept { return index<b10<c...>()>; }
+    template<char... c> constexpr auto operator""_c() noexcept { return index<b10<c...>()>; }
   }
   template<template<class> class Pred> [[nodiscard]] constexpr auto predicate() noexcept
   {
@@ -516,19 +525,55 @@ namespace kumi
 }
 namespace kumi
 {
+  namespace _{
+    template<typename T>
+    inline constexpr bool is_reference_wrapper_v =
+      !std::is_same_v<std::decay_t<typename std::unwrap_reference<T &&>::type>,
+                      typename std::unwrap_ref_decay<T &&>::type>;
+    template<typename T>
+    struct apply_object_unwrap{
+      using type = T &&;
+    };
+    template<typename T>
+    requires is_reference_wrapper_v<T>
+    struct apply_object_unwrap<T>{
+      using type = typename std::remove_cvref_t<T>::type &;
+    };
+    template<typename T>
+    requires std::is_pointer_v<std::remove_cvref_t<T>>
+    struct apply_object_unwrap<T>{
+      using type = std::remove_pointer_t<std::remove_cvref_t<T>> &;
+    };
+    template<typename T>
+    using apply_object_unwrap_t = typename apply_object_unwrap<T>::type;
+  }
   template<typename Function, product_type Tuple>
-  constexpr decltype(auto) apply(Function &&f, Tuple &&t)
+  constexpr decltype(auto) apply(Function &&f, Tuple &&t) noexcept(_::supports_nothrow_apply<Function &&, Tuple &&>)
   requires _::supports_apply<Function&&, Tuple&&>
   {
-    if constexpr(sized_product_type<Tuple,0>) return  KUMI_FWD(f)();
+    if constexpr(sized_product_type<Tuple,0>) return KUMI_FWD(f)();
+    else if constexpr (std::is_member_pointer_v<std::decay_t<Function>>)
+      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto){
+        auto &&w = [](auto &&y) -> decltype(auto){
+          if constexpr(_::is_reference_wrapper_v<decltype(y)>)
+            return y.get();
+          else if constexpr(std::is_pointer_v<std::remove_cvref_t<decltype(y)>>)
+            return *y;
+          else
+            return KUMI_FWD(y);
+        }(get<0>(KUMI_FWD(t)));
+        if constexpr(std::is_member_object_pointer_v<std::remove_cvref_t<decltype(f)>>)
+          return KUMI_FWD(w).*f;
+        else
+          return (KUMI_FWD(w).*f)(get<I + 1>(KUMI_FWD(t))...);
+      }
+      (std::make_index_sequence<size<Tuple>::value - 1>());
     else
-    {
       return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto)
       {
         return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
       }
       (std::make_index_sequence<size<Tuple>::value>());
-    }
   }
   namespace result
   {
@@ -615,12 +660,10 @@ struct std::basic_common_reference<kumi::tuple<Ts...>, kumi::tuple<Us...>, TQual
   using type = kumi::tuple<std::common_reference_t<TQual<Ts>, UQual<Us>>...>;
 };
 #endif
-
 #if !defined(KUMI_NO_STD_ADAPTORS)
 template< typename T, std::size_t N >
 struct kumi::is_product_type<std::array<T , N>> : std::true_type {};
 #endif
-
 #endif
 #include <iosfwd>
 #include <type_traits>
@@ -707,14 +750,12 @@ namespace kumi
     requires(sizeof...(Ts) == sizeof...(Us) && _::piecewise_ordered<tuple, tuple<Us...>>)
     {
       auto res = get<0>(lhs) < get<0>(rhs);
-
       auto const order = [&]<typename Index>(Index i)
       {
         auto y_less_x_prev  = rhs[i]  < lhs[i];
         auto x_less_y       = lhs[index_t<Index::value+1>{}] < rhs[index_t<Index::value+1>{}];
-        return (x_less_y && !y_less_x_prev);
+        return x_less_y && !y_less_x_prev;
       };
-
       return [&]<std::size_t... I>(std::index_sequence<I...>)
       {
         return (res || ... || order(index_t<I>{}));
@@ -818,27 +859,6 @@ namespace kumi
 }
 namespace kumi
 {
-  template< template<typename...> typename Traits
-          , product_type Tuple
-          , typename Seq = std::make_index_sequence<size<Tuple>::value>
-          >
-  struct apply_traits;
-  template< template<typename...> typename Traits
-          , product_type Tuple
-          , std::size_t... Is
-          >
-  requires( requires {typename Traits<element_t<Is,Tuple>...>::type;})
-  struct  apply_traits<Traits, Tuple, std::index_sequence<Is...>>
-  {
-    using type = typename Traits<element_t<Is,Tuple>...>::type;
-  };
-  template< template<typename...> typename Traits
-          , product_type Tuple
-          >
-  using apply_traits_t = typename apply_traits<Traits, Tuple>::type;
-}
-namespace kumi
-{
 }
 namespace kumi
 {
@@ -864,18 +884,21 @@ namespace kumi
 {
   namespace _
   {
-    template<std::size_t N, std::size_t... S> constexpr auto digits(std::size_t v) noexcept
+    template<std::size_t N, std::size_t... S> struct digits
     {
-      struct { std::size_t data[N]; } digits = {};
-      std::size_t shp[] = {S...};
-      std::size_t i = 0;
-      while(v != 0)
+      constexpr auto operator()(std::size_t v) noexcept
       {
-        digits.data[i] = v % shp[i];
-        v /= shp[i++];
+        struct { std::size_t data[N]; } values = {};
+        std::size_t shp[N] = {S...};
+        std::size_t i = 0;
+        while(v != 0)
+        {
+          values.data[i] = v % shp[i];
+          v /= shp[i++];
+        }
+        return values;
       }
-      return digits;
-    }
+    };
   }
 #if !defined(KUMI_DOXYGEN_INVOKED)
   KUMI_TRIVIAL_NODISCARD constexpr auto cartesian_product() { return kumi::tuple<>{}; }
@@ -883,15 +906,26 @@ namespace kumi
   template<product_type... Ts>
   [[nodiscard]] constexpr auto cartesian_product(Ts&&... ts)
   {
+    constexpr auto idx = [&]<std::size_t... I>(std::index_sequence<I...>)
+    {
+      kumi::_::digits<sizeof...(Ts),kumi::size_v<Ts>...> dgt{};
+      using t_t = decltype(dgt(0));
+      struct { t_t data[sizeof...(I)]; } that = {dgt(I)...};
+      return that;
+    }(std::make_index_sequence<(kumi::size_v<Ts> * ...)>{});
     auto maps = [&]<std::size_t... I>(auto k, std::index_sequence<I...>)
     {
-      constexpr auto dg = _::digits<sizeof...(Ts),kumi::size_v<Ts>...>(k);
-      using tuple_t = kumi::tuple<std::tuple_element_t<dg.data[I],std::remove_cvref_t<Ts>>...>;
-      return tuple_t{kumi::get<dg.data[I]>(std::forward<Ts>(ts))...};
+      auto tps = kumi::forward_as_tuple(ts...);
+      using tuple_t = kumi::tuple < std::tuple_element_t< idx.data[k].data[I]
+                                                        , std::remove_cvref_t<std::tuple_element_t<I,decltype(tps)>>
+                                                        >...
+                                  >;
+      return tuple_t{kumi::get<idx.data[k].data[I]>(kumi::get<I>(tps))...};
     };
     return [&]<std::size_t... N>(std::index_sequence<N...>)
     {
-      return kumi::make_tuple(maps( kumi::index<N>, std::make_index_sequence<sizeof...(ts)>{})...);
+      std::make_index_sequence<sizeof...(ts)> ids;
+      return kumi::make_tuple( maps(kumi::index<N>, ids)...);
     }(std::make_index_sequence<(kumi::size_v<Ts> * ...)>{});
   }
   namespace result
@@ -927,10 +961,10 @@ namespace kumi
       }();
       return [&]<std::size_t... N>(auto&& tuples, std::index_sequence<N...>)
       {
-        using ts_t = std::remove_cvref_t<decltype(tuples)>;
+        using rts  = std::remove_cvref_t<decltype(tuples)>;
         using type =  kumi::tuple
                       < std::tuple_element_t< pos.e[N]
-                                            , std::remove_cvref_t<std::tuple_element_t<pos.t[N],ts_t>>
+                                            , std::remove_cvref_t<std::tuple_element_t<pos.t[N],rts>>
                                             >...
                       >;
         return type{get<pos.e[N]>(get<pos.t[N]>(KUMI_FWD(tuples)))...};
@@ -1167,16 +1201,19 @@ namespace kumi
 }
 namespace kumi
 {
-  namespace _
-  {
-    template<std::size_t N, typename T>
-    constexpr auto const& eval(T const& v) noexcept { return v; }
-  }
-  template<std::size_t N, typename T> [[nodiscard]] constexpr auto generate(T const& v) noexcept
+  template<std::size_t N, typename T> [[nodiscard]] constexpr auto fill(T const& v) noexcept
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return kumi::tuple{_::eval<I>(v)...};
+      auto eval = [](auto, auto const& vv) { return vv; };
+      return kumi::tuple{eval(index<I>, v)...};
+    }(std::make_index_sequence<N>{});
+  }
+  template<std::size_t N, typename Function> [[nodiscard]] constexpr auto generate(Function const& f) noexcept
+  {
+    return [&]<std::size_t... I>(std::index_sequence<I...>)
+    {
+      return kumi::tuple{f(index<I>)...};
     }(std::make_index_sequence<N>{});
   }
   template<std::size_t N, typename T> [[nodiscard]] constexpr auto iota(T v) noexcept
@@ -1188,16 +1225,22 @@ namespace kumi
   }
   namespace result
   {
-    template<std::size_t N, typename T> struct generate
+    template<std::size_t N, typename T> struct fill
     {
-      using type = decltype( kumi::generate<N>( std::declval<T>() ) );
+      using type = decltype( kumi::fill<N>( std::declval<T>() ) );
+    };
+    template<std::size_t N, typename Function> struct generate
+    {
+      using type = decltype( kumi::generate<N>( std::declval<Function>() ) );
     };
     template<std::size_t N, typename T> struct iota
     {
       using type = decltype( kumi::iota<N>( std::declval<T>() ) );
     };
     template<std::size_t N, typename T>
-    using generate_t = typename generate<N,T>::type;
+    using fill_t = typename fill<N,T>::type;
+    template<std::size_t N, typename Function>
+    using generate_t = typename generate<N,Function>::type;
     template<std::size_t N, typename T>
     using iota_t = typename iota<N,T>::type;
   }
@@ -1897,6 +1940,45 @@ namespace kumi
     template<product_type Tuple>
     using transpose_t = typename transpose<Tuple>::type;
   }
+}
+namespace kumi
+{
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , typename Seq = std::make_index_sequence<size<Tuple>::value>
+          >
+  struct apply_traits;
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , std::size_t... Is
+          >
+  requires( requires {typename Traits<element_t<Is,Tuple>...>::type;})
+  struct  apply_traits<Traits, Tuple, std::index_sequence<Is...>>
+  {
+    using type = typename Traits<element_t<Is,Tuple>...>::type;
+  };
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          >
+  using apply_traits_t = typename apply_traits<Traits, Tuple>::type;
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , typename Seq = std::make_index_sequence<size<Tuple>::value>
+          >
+  struct map_traits;
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , std::size_t... Is
+          >
+  requires( requires {typename Traits<element_t<Is,Tuple>>::type;} && ...)
+  struct  map_traits<Traits, Tuple, std::index_sequence<Is...>>
+  {
+    using type = tuple <typename Traits<element_t<Is, Tuple>>::type...>;
+  };
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          >
+  using map_traits_t = typename map_traits<Traits, Tuple>::type;
 }
 namespace kumi
 {

@@ -83,7 +83,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto lambert_serie_utility(T r)
     {
       using elt_t = element_type_t<T>;
-      using A3    = kumi::result::generate_t<3, elt_t>;
+      using A3    = kumi::result::fill_t<3, elt_t>;
       if constexpr( sizeof(elt_t) == 8 )
       {
         constexpr A3 P = { 0.000000000000000000000e+00, 2.331643981597117584689e+00, 1.931973535237478945863e+00 };

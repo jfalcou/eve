@@ -156,7 +156,7 @@ namespace eve
         return zero(as(xx));
       else
       {
-         kumi::result::generate_t<s, r_t> tcn{r_t{cns}...};
+         kumi::result::fill_t<s, r_t> tcn{r_t{cns}...};
         auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
         return newton[o](x,tc,tn);
       }

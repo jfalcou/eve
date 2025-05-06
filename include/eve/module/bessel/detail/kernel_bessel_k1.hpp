@@ -23,7 +23,7 @@ namespace eve::detail
         if constexpr( std::same_as<elt_t, float> )
         {
           T                              y(8.695471287e-02f);
-          using A3 = kumi::result::generate_t<3, elt_t>;
+          using A3 = kumi::result::fill_t<3, elt_t>;
           constexpr A3 P = {
             -3.621379531e-03f
             , 7.131781976e-03f
@@ -36,7 +36,7 @@ namespace eve::detail
           };
           T                              a = sqr(x / 2);
           a = ((reverse_horner(a, P)/reverse_horner(a, Q) + y) * sqr(a) + a / 2 + 1) * x / 2;
-          using A4 = kumi::result::generate_t<4, elt_t>;
+          using A4 = kumi::result::fill_t<4, elt_t>;
           constexpr A4 P2 = {
             -3.079657469e-01f
             , -8.537108913e-02f
@@ -48,7 +48,7 @@ namespace eve::detail
         else
         {
           T                              y(8.69547128677368164e-02);
-          using A4 = kumi::result::generate_t<4, elt_t>;
+          using A4 = kumi::result::fill_t<4, elt_t>;
           constexpr A4 P = {
             -3.62137953440350228e-03,
             7.11842087490330300e-03,
@@ -84,7 +84,7 @@ namespace eve::detail
         if constexpr( std::same_as<elt_t, float> )
         {
           auto                           y(1.450342178f);
-          using A4 = kumi::result::generate_t<4, elt_t>;
+          using A4 = kumi::result::fill_t<4, elt_t>;
           constexpr A4 P = {
             -1.970280088e-01f
             , 2.188747807e-02f
@@ -109,7 +109,7 @@ namespace eve::detail
         else
         {
           auto                           y(1.45034217834472656);
-          using A9 = kumi::result::generate_t<9, elt_t>;
+          using A9 = kumi::result::fill_t<9, elt_t>;
           constexpr A9 P = {-1.97028041029226295e-01,
                             -2.32408961548087617e+00,
                             -7.98269784507699938e+00,

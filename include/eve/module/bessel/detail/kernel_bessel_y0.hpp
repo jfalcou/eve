@@ -45,7 +45,7 @@ namespace eve::detail
     auto br_3 = [evaluate](auto xx)
       {
         xx                               = if_else(xx <= T(3), xx, zero);
-        using A6 = kumi::result::generate_t<6, elt_t>;
+        using A6 = kumi::result::fill_t<6, elt_t>;
         constexpr A6 P1 = {1.0723538782003176831e+11,
                            -8.3716255451260504098e+09,
                            2.0422274357376619816e+08,
@@ -65,7 +65,7 @@ namespace eve::detail
     auto br_5 = [evaluate](auto xx)
       {
         constexpr v_t x2 = 3.9576784193148578684e+00, x21 = 1.0130e+03, x22 = 6.4716931485786837568e-04;
-        using A7 = kumi::result::generate_t<7, elt_t>;
+        using A7 = kumi::result::fill_t<7, elt_t>;
         constexpr A7 P2 = {-2.2213976967566192242e+13,
                            -5.5107435206722644429e+11,
                            4.3600098638603061642e+10,
@@ -86,7 +86,7 @@ namespace eve::detail
     auto br_8 = [evaluate](auto xx)
       {
         constexpr v_t x3 = 7.0860510603017726976e+00, x31 = 1.8140e+03, x32 = 1.1356030177269762362e-04;
-        using A8 = kumi::result::generate_t<8, elt_t>;
+        using A8 = kumi::result::fill_t<8, elt_t>;
         constexpr A8 P3 = {-8.0728726905150210443e+15,
                            6.7016641869173237784e+14,
                            -1.2829912364088687306e+11,
@@ -108,7 +108,7 @@ namespace eve::detail
 
     auto br_large = [Pi](auto xx)
       {
-        using A6 = kumi::result::generate_t<6, elt_t>;
+        using A6 = kumi::result::fill_t<6, elt_t>;
         constexpr A6 PC     = {
           2.2779090197304684302e+04,
           4.1345386639580765797e+04,

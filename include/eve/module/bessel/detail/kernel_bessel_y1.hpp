@@ -44,7 +44,7 @@ namespace eve::detail
 
     auto br_4 = [evaluate](auto xx)
       {
-        using A7 = kumi::result::generate_t<7, elt_t>;
+        using A7 = kumi::result::fill_t<7, elt_t>;
         constexpr A7 P1 = {4.0535726612579544093e+13,
                            5.4708611716525426053e+12,
                            -3.7595974497819597599e+11,
@@ -67,7 +67,7 @@ namespace eve::detail
       {
         constexpr v_t x2 = 5.4296810407941351328e+00, x21 = 1.3900e+03,
         x22               = -6.4592058648672279948e-06;
-        using A9 = kumi::result::generate_t<9, elt_t>;
+        using A9 = kumi::result::fill_t<9, elt_t>;
         constexpr A9 P2 = {1.1514276357909013326e+19,
                            -5.6808094574724204577e+18,
                            -2.3638408497043134724e+16,
@@ -91,7 +91,7 @@ namespace eve::detail
 
     auto br_large = [Pi](auto xx)
       {
-        using A7 = kumi::result::generate_t<7, elt_t>;
+        using A7 = kumi::result::fill_t<7, elt_t>;
         constexpr A7 PC = {
           -4.4357578167941278571e+06,
           -9.9422465050776411957e+06,
