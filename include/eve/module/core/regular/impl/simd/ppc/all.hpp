@@ -10,28 +10,40 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
+template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE bool
-all_(EVE_SUPPORTS(vmx_), logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
+all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v) noexcept requires ppc_abi<abi_t<T, N>>
 {
-  auto m = v0.bits();
-
-  if constexpr( N::value == 1 ) { return static_cast<bool>(m.get(0)); }
-  else if constexpr( N::value == expected_cardinal_v<T, ppc_> )
+  if constexpr (N::value == 1)
   {
-    return vec_all_eq(m.storage(), true_(eve::as(v0)).storage());
+    const auto m = v.bits();
+
+    if constexpr (match_option<condition_key, O, ignore_none_>)
+    {
+      return static_cast<bool>(m.get(0));
+    }
+    else
+    {
+      const auto cm = expand_mask(opts[condition_key], as<wide<T, N>>{});
+      return static_cast<bool>(v.get(0)) || !static_cast<bool>(cm.get(0));
+    }
   }
   else
   {
-    using type = logical<wide<T, N>>;
+    const auto m = simd_cast(v, as<logical<wide<T>>>{});
+    auto mask = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<logical<wide<T>>>{});
 
-    auto mm = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
-    m &= mm.bits();
+    if constexpr (N::value != expected_cardinal_v<T, ppc_>)
+    {
+      logical<wide<T>> mm = [](auto i, auto) { return i < N::value; };
+      mask = mask && mm;
+    }
 
-    return vec_all_eq(m.storage(), mm.storage());
+    return vec_all_eq((m && mask).bits().storage(), mask.bits().storage());
   }
 }
 }
