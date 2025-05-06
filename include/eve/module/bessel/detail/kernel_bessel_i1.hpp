@@ -21,7 +21,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, float> )
         {
-          using A8= kumi::result::generate_t<8, elt_t>;
+          using A8= kumi::result::fill_t<8, elt_t>;
           constexpr A8 P    = {8.333333221e-02f,
                                 6.944453712e-03f,
                                 3.472097211e-04f,
@@ -38,7 +38,7 @@ namespace eve::detail
         }
         else
         {
-          using A13= kumi::result::generate_t<13, elt_t>;
+          using A13= kumi::result::fill_t<13, elt_t>;
           constexpr A13 P    = {8.333333333333333803e-02,
                                 6.944444444444341983e-03,
                                 3.472222222225921045e-04,
@@ -64,7 +64,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, float> )
         {
-          using A5 = kumi::result::generate_t<5, elt_t>;
+          using A5 = kumi::result::fill_t<5, elt_t>;
           constexpr A5 P  = {3.98942115977513013e-01f,
                               -1.49581264836620262e-01f,
                               -4.76475741878486795e-02f,
@@ -75,7 +75,7 @@ namespace eve::detail
         }
         else
         {
-          using A22= kumi::result::generate_t<22, elt_t>;
+          using A22= kumi::result::fill_t<22, elt_t>;
           constexpr A22 P = {
             3.989422804014406054e-01,  -1.496033551613111533e-01, -4.675104253598537322e-02,
             -4.090895951581637791e-02, -5.719036414430205390e-02, -1.528189554374492735e-01,
@@ -93,7 +93,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, double> )
         {
-          using A5= kumi::result::generate_t<5, elt_t>;
+          using A5= kumi::result::fill_t<5, elt_t>;
           constexpr A5 P  = {3.989422804014314820e-01,
                               -1.496033551467584157e-01,
                               -4.675105322571775911e-02,

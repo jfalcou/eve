@@ -21,7 +21,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, float> )
         {
-          using A9 = kumi::result::generate_t<9, elt_t>;
+          using A9 = kumi::result::fill_t<9, elt_t>;
           constexpr A9 P = {1.00000003928615375e+00f,
                             2.49999576572179639e-01f,
                             2.77785268558399407e-02f,
@@ -36,7 +36,7 @@ namespace eve::detail
         }
         else
         {
-          using A15 = kumi::result::generate_t<15, elt_t>;
+          using A15 = kumi::result::fill_t<15, elt_t>;
           constexpr A15 P = {1.00000000000000000e+00,
                               2.49999999999999909e-01,
                               2.77777777777782257e-02,
@@ -61,7 +61,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, float> )
         {
-          using A5 = kumi::result::generate_t<5, elt_t>;
+          using A5 = kumi::result::fill_t<5, elt_t>;
           constexpr A5 P = {3.98942651588301770e-01f,
                             4.98327234176892844e-02f,
                             2.91866904423115499e-02f,
@@ -71,7 +71,7 @@ namespace eve::detail
         }
         else
         {
-          using A22 = kumi::result::generate_t<22, elt_t>;
+          using A22 = kumi::result::fill_t<22, elt_t>;
           constexpr A22 P = {
             3.98942280401425088e-01,  4.98677850604961985e-02,  2.80506233928312623e-02,
             2.92211225166047873e-02,  4.44207299493659561e-02,  1.30970574605856719e-01,
@@ -89,7 +89,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<elt_t, float> )
         {
-          using A3 = kumi::result::generate_t<3, elt_t>;
+          using A3 = kumi::result::fill_t<3, elt_t>;
           constexpr A3 P = {
             3.98942391532752700e-01f
             , 4.98455950638200020e-02f
@@ -100,7 +100,7 @@ namespace eve::detail
         }
         else
         {
-          using A5 = kumi::result::generate_t<5, elt_t>;
+          using A5 = kumi::result::fill_t<5, elt_t>;
           constexpr A5 P  = {3.98942280401432905e-01,
                               4.98677850491434560e-02,
                               2.80506308916506102e-02,

@@ -26,7 +26,7 @@ namespace eve::detail
     auto x        = eve::abs(a0);
     auto br_large = [](auto px) // TODO a speedier float version
       {
-        using A6 = kumi::result::generate_t<6, elt_t>;
+        using A6 = kumi::result::fill_t<6, elt_t>;
         constexpr A6 PC     = {2.2779090197304684302e+04,
                                4.1345386639580765797e+04,
                                2.1170523380864944322e+04,
@@ -125,14 +125,14 @@ namespace eve::detail
         double DR1 = 5.78318596294678452118E0;
         double DR2 = 3.04712623436620863991E1;
 
-        using A4 = kumi::result::generate_t<4, elt_t>;
+        using A4 = kumi::result::fill_t<4, elt_t>;
         constexpr A4 RP = {
           -4.79443220978201773821E9,
           1.95617491946556577543E12,
           -2.49248344360967716204E14,
           9.70862251047306323952E15,
         };
-        using A9 = kumi::result::generate_t<9, elt_t>;
+        using A9 = kumi::result::fill_t<9, elt_t>;
         constexpr A9 RQ = {
           1.00000000000000000000E0,
           4.99563147152651017219E2,
@@ -150,7 +150,7 @@ namespace eve::detail
       };
 
       auto br_8 = [](auto xx){
-        using A7 = kumi::result::generate_t<7, elt_t>;
+        using A7 = kumi::result::fill_t<7, elt_t>;
         constexpr A7 PP = {
           7.96936729297347051624E-4,
           8.28352392107440799803E-2,
@@ -168,7 +168,7 @@ namespace eve::detail
           5.30605288235394617618E0,
           1.00000000000000000218E0,
         };
-        using A8 = kumi::result::generate_t<8, elt_t>;
+        using A8 = kumi::result::fill_t<8, elt_t>;
         constexpr A8 QP = {
           -1.13663838898469149931E-2,
           -1.28252718670509318512E0,

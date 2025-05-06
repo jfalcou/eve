@@ -112,7 +112,7 @@ namespace eve
       if constexpr((... && scalar_value<Cs>))
       {
         using e_t =  element_type_t<X>;
-        using t_t = kumi::result::generate_t<sizeof...(cs)+1, e_t>;
+        using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
         t_t c{e_t(c0), e_t(cs)...};
         return reverse_horner[o](xx, c);
       }
@@ -120,7 +120,7 @@ namespace eve
       {
         using r_t = common_value_t<X, Cs...>;
         auto x = r_t(xx);
-        using t_t = kumi::result::generate_t<sizeof...(cs)+1, r_t>;
+        using t_t = kumi::result::fill_t<sizeof...(cs)+1, r_t>;
         t_t c {r_t{c0}, r_t{cs}...};
         return reverse_horner[o](x, c);
       }

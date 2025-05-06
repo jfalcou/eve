@@ -18,15 +18,15 @@
 /////////////////////////////////////////////////////////////////////////////////
 namespace eve::detail
 {
-  
+
   template <typename T > constexpr T cb_j1(T x) noexcept
   {
     using elt_t   = element_type_t<T>;
-    
+
     // TODO specialize for float
     auto br_large = [](auto px)
       {
-        using A7 = kumi::result::generate_t<7, elt_t>;
+        using A7 = kumi::result::fill_t<7, elt_t>;
         constexpr A7 PC     = {-4.4357578167941278571e+06,
                                -9.9422465050776411957e+06,
                                -6.6033732483649391093e+06,
@@ -64,27 +64,27 @@ namespace eve::detail
         auto value                            = factor * fma(y, rs * (sx + cx), rc * (sx - cx));
         return value;
       };
-    
+
     if constexpr( std::is_same_v<elt_t, float> )
     {
       auto br_2 = [](auto px)
         {
           const T              z  = sqr(px);
-          using A5 = kumi::result::generate_t<5, elt_t>;
+          using A5 = kumi::result::fill_t<5, elt_t>;
           constexpr A5 JP = {-4.878788132172128E-009f,
                              6.009061827883699E-007f,
                              -4.541343896997497E-005f,
                              1.937383947804541E-003f,
                              -3.405537384615824E-002f};
-          
+
           return (z - 1.46819706421238932572E1f) * px * horner(z, JP);
         };
-      
+
       auto br_8 = [](auto px)
         {
           auto                 q       = rec[pedantic](px);
           auto                 w       = sqrt(q);
-          using A8 = kumi::result::generate_t<8, elt_t>;
+          using A8 = kumi::result::fill_t<8, elt_t>;
           constexpr A8 MO1     = {6.913942741265801E-002f,
                                   -2.284801500053359E-001f,
                                   3.138238455499697E-001f,
@@ -107,7 +107,7 @@ namespace eve::detail
           auto xn                      = q * horner(w, PH1) - thpio4f;
           return p * cos(xn + px);
         };
-      
+
       if constexpr( scalar_value<T> )
       {
         auto s = x < 0 ? -1 : 1;
@@ -143,14 +143,14 @@ namespace eve::detail
     {
       auto br_5 = [](auto xx)
         {
-          using A4 = kumi::result::generate_t<4, elt_t>;
+          using A4 = kumi::result::fill_t<4, elt_t>;
           constexpr A4 RP = {
             -8.99971225705559398224E8,
             4.52228297998194034323E11,
             -7.27494245221818276015E13,
             3.68295732863852883286E15,
           };
-          using A9 = kumi::result::generate_t<9, elt_t>;
+          using A9 = kumi::result::fill_t<9, elt_t>;
           constexpr A9 RQ = {
             1.00000000000000000000E0,
             6.20836478118054335476E2,
@@ -168,10 +168,10 @@ namespace eve::detail
           elt_t Z2 = 4.92184563216946036703E1;
           return w * xx * (z - Z1) * (z - Z2);
         };
-      
+
       auto br_8 = [](auto xx)
         {
-          using A7 = kumi::result::generate_t<7, elt_t>;
+          using A7 = kumi::result::fill_t<7, elt_t>;
           constexpr A7 PP = {
             7.62125616208173112003E-4,
             7.31397056940917570436E-2,
@@ -190,7 +190,7 @@ namespace eve::detail
             5.20982848682361821619E0,
             9.99999999999999997461E-1,
           };
-          using A8 = kumi::result::generate_t<8, elt_t>;
+          using A8 = kumi::result::fill_t<8, elt_t>;
           constexpr A8 QP = {
             5.10862594750176621635E-2,
             4.98213872951233449420E0,
@@ -211,7 +211,7 @@ namespace eve::detail
             2.82619278517639096600E3,
             3.36093607810698293419E2,
           };
-          
+
           auto           w      = 5.0 * rec[pedantic](xx);
           auto           z      = sqr(w);
           auto           p      = horner(z, PP) / horner(z, PQ);
@@ -223,7 +223,7 @@ namespace eve::detail
           auto sq2opi           = T(.79788456080286535588);
           return if_else(xx == inf(as(xx)), zero, p * sq2opi * rsqrt(xx));
         };
-      
+
       if constexpr( scalar_value<T> )
       {
         auto s = x < 0 ? -1 : 1;
