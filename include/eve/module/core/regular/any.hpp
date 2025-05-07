@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-   struct any_t : conditional_callable<any_t, Options>
+   struct any_t : relative_conditional_callable<any_t, Options>
    {
      template<relaxed_logical_value T>
     EVE_FORCEINLINE bool operator()(T v) const noexcept
