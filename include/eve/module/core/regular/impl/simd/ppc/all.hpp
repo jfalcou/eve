@@ -16,11 +16,11 @@ namespace eve::detail
 {
 template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE bool
-all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v) noexcept requires ppc_abi<abi_t<T, N>>
+all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
 {
   if constexpr (N::value == 1)
   {
-    const auto m = v.bits();
+    const auto m = v0.bits();
 
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {
@@ -29,12 +29,12 @@ all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v) noexcept r
     else
     {
       const auto cm = expand_mask(opts[condition_key], as<wide<T, N>>{});
-      return static_cast<bool>(v.get(0)) || !static_cast<bool>(cm.get(0));
+      return static_cast<bool>(v0.get(0)) || !static_cast<bool>(cm.get(0));
     }
   }
   else
   {
-    const auto m = simd_cast(v, as<logical<wide<T>>>{});
+    const auto m = simd_cast(v0, as<logical<wide<T>>>{});
     auto mask = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<logical<wide<T>>>{});
 
     if constexpr (N::value != expected_cardinal_v<T, ppc_>)
