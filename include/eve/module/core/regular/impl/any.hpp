@@ -23,6 +23,7 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];
   if constexpr( C::is_complete && !C::is_inverted ) return false;
+  else if (C::is_complete) return eve::any(eve::top_bits { v });
   else if constexpr( has_emulated_abi_v<T> )
   {
     bool res = false;
@@ -52,23 +53,13 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
 template<callable_options O, relaxed_logical_scalar_value T>
 EVE_FORCEINLINE bool
 any_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
-requires match_option<condition_key, O, ignore_none_>
 {
   return bool(v);
-}
-
-template<callable_options O, logical_simd_value T>
-EVE_FORCEINLINE bool
-any_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
-requires match_option<condition_key, O, ignore_none_>
-{
-  return eve::any(eve::top_bits { v });
 }
 
 template<callable_options O, logical_simd_value Logical>
 EVE_FORCEINLINE bool
 any_(EVE_REQUIRES(cpu_), O const&, top_bits<Logical> mmask) noexcept
-requires match_option<condition_key, O, ignore_none_>
 {
   return (bool)mmask;
 }
