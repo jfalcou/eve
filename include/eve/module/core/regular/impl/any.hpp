@@ -49,21 +49,20 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
   }
 }
 
-template<callable_options O>
+template<callable_options O, relaxed_logical_scalar_value T>
 EVE_FORCEINLINE bool
-any_(EVE_REQUIRES(cpu_), O const&, bool v) noexcept
+any_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
 requires match_option<condition_key, O, ignore_none_>
 {
-  return v;
+  return bool(v);
 }
 
-template<callable_options O, value T>
+template<callable_options O, logical_simd_value T>
 EVE_FORCEINLINE bool
-any_(EVE_REQUIRES(cpu_), O const&, logical<T> const& v) noexcept
+any_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
 requires match_option<condition_key, O, ignore_none_>
 {
-  if constexpr( scalar_value<T> ) return bool(v);
-  else return eve::any(eve::top_bits { v });
+  return eve::any(eve::top_bits { v });
 }
 
 template<callable_options O, logical_simd_value Logical>
