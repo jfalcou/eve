@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_gafe526beb78cfe
 </ol>
 <h2><a class="anchor" id="autotoc_md20"></a>
 Should you check for any?</h2>
-<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if any elements of x is not zero.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do it otherwise.</p>
+<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do it otherwise.</p>
 <h2><a class="anchor" id="autotoc_md21"></a>
 What if I know there is a match?</h2>
 <p>We would recommend <code>*eve<a class="el" href="group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597" title="Returns the index of the first element in the input which evaluates to true, if there is one.">first_true(m)</a></code> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
