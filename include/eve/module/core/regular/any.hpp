@@ -13,27 +13,20 @@
 namespace eve
 {
   template<typename Options>
-   struct any_t : relative_conditional_callable<any_t, Options>
+   struct any_t : conditional_callable<any_t, Options>
    {
-      template<relaxed_logical_scalar_value T>
-      EVE_FORCEINLINE bool operator()(T v) const noexcept
-      {
-        static_assert(match_option<condition_key, decltype(this->options()), ignore_none_>,
-          "[eve::any] Scalar logical or boolean masking is not supported");
-        return EVE_DISPATCH_CALL(v);
-      }
-
-     template<logical_simd_value T>
-      EVE_FORCEINLINE bool operator()(T v) const noexcept
+     template<relaxed_logical_value T>
+    EVE_FORCEINLINE bool operator()(T v) const noexcept
      {
+       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+         "[eve::any] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
        return EVE_DISPATCH_CALL(v);
      }
 
      template<logical_simd_value T>
     EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
      {
-      static_assert(match_option<condition_key, decltype(this->options()), ignore_none_>,
-        "[eve::any] top_bits masking is not supported");
        return EVE_DISPATCH_CALL(v);
      }
 

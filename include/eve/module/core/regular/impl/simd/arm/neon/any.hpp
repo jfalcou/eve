@@ -55,7 +55,13 @@ any_(EVE_REQUIRES(neon128_),
   {
     using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
     auto halved    = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
-    return eve::any[cond](halved);
+
+    if constexpr (relative_conditional_expr<C>) return any[cond](halved);
+    else
+    {
+      auto m = convert(expand_mask(cond, as(v0)), as<logical<half_e_t>>{});
+      return any[m](halved);
+    }
   }
   else if constexpr( !C::is_complete ) return any.behavior(cpu_{}, opts, v0);
   else if constexpr( eve::current_api >= eve::asimd )
