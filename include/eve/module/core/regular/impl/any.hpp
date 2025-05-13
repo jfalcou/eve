@@ -28,17 +28,18 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
   {
     if constexpr (relative_conditional_expr<C>)
     {
-      std::ptrdiff_t begin = cond.offset(as<T>{});
-      std::ptrdiff_t end   = begin + cond.count(as<T> {});
+      std::ptrdiff_t first = cond.offset(as<T>{});
+      std::ptrdiff_t last   = first + cond.count(as<T> {});
       constexpr auto size = T::size();
 
-      EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
+      EVE_ASSUME((first >= 0) && (first <= last) && (last <= size));
 
-      for (std::ptrdiff_t i = begin; i < end; ++i)
-        if (v.get(i))
-          return true;
+      bool r = false;
 
-      return false;
+      for (std::ptrdiff_t i = first; i < last; ++i)
+        r = r || v.get(i);
+      
+      return r;
     }
     else
     {
