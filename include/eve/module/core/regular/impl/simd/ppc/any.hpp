@@ -13,10 +13,11 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
+template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(vmx_), logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
+any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
 {
+  if constexpr (!match_option<condition_key, O, ignore_none_>) return any.behavior(cpu_{}, opts, v0);
   auto m = v0.bits();
 
   if constexpr( N::value == 1 ) { return static_cast<bool>(m.get(0)); }

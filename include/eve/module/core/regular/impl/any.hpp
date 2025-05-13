@@ -16,11 +16,14 @@
 
 namespace eve::detail
 {
-template<logical_simd_value T, relative_conditional_expr C>
+template<callable_options O, logical_simd_value T>
 EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(cpu_), C const& cond, T const& v) noexcept
+any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
 {
+  using C = rbr::result::fetch_t<condition_key, O>;
+  auto cond = opts[condition_key];
   if constexpr( C::is_complete && !C::is_inverted ) return false;
+  else if (C::is_complete) return eve::any(eve::top_bits { v });
   else if constexpr( has_emulated_abi_v<T> )
   {
     bool res = false;
@@ -47,23 +50,16 @@ any_(EVE_SUPPORTS(cpu_), C const& cond, T const& v) noexcept
   }
 }
 
+template<callable_options O, relaxed_logical_scalar_value T>
 EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(cpu_), bool v) noexcept
+any_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
 {
-  return v;
+  return bool(v);
 }
 
-template<value T>
+template<callable_options O, logical_simd_value Logical>
 EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(cpu_), logical<T> const& v) noexcept
-{
-  if constexpr( scalar_value<T> ) return bool(v);
-  else return eve::any[ignore_none](v);
-}
-
-template<logical_simd_value Logical>
-EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
+any_(EVE_REQUIRES(cpu_), O const&, top_bits<Logical> mmask) noexcept
 {
   return (bool)mmask;
 }
