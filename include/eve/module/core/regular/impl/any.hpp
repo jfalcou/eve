@@ -64,7 +64,7 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
     }
 
     if constexpr (relative_conditional_expr<C>) return eve::any(eve::top_bits {v, cond});
-    else                                        return eve::any[opts](top_bits{ v });
+    else                                        return eve::any(top_bits{ v && expand_mask(cond, as(v)) });
   }
 }
 
