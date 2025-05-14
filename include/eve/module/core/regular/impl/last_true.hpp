@@ -48,24 +48,22 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];
 
-  if      constexpr (scalar_value<T>)                   return last_true[cond](v.value());
-  else
   if constexpr( C::is_complete && !C::is_inverted ) return {};
   else if constexpr( has_emulated_abi_v<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
-      std::ptrdiff_t begin = T::size() - cond.roffset(as<T>{});
-      std::ptrdiff_t end   = begin - cond.count(as<T>{});
-      constexpr std::ptrdiff_t size = T::size();
+    std::ptrdiff_t first = cond.offset(eve::as<T> {});
+    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+    constexpr std::ptrdiff_t size = T::size();
+    EVE_ASSUME((first >= 0) && (last <= size) && (first <= last));
 
-      EVE_ASSUME((end >= 0) && (begin <= size) && (end <= begin));
+    while( first != last )
+    {
+      if( v.get(--last) ) return last;
+    }
 
-      for (std::ptrdiff_t i = begin; i > end; --i)
-          if (v.get(i - 1))
-            return i - 1;
-
-      return std::nullopt;
+    return {};
     }
     else
     {
@@ -78,29 +76,40 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
       return std::nullopt;
     }
   }
-  else
+  // This is pretty good for aggreagted as well.
+  else if constexpr( !top_bits<T>::is_cheap )
   {
-    // This is pretty good for aggreagted as well.
-    if constexpr (!top_bits<T>::is_cheap)
-    {
-      // No ignore, we might luck out even if some elements should not be counted.
+    // No ignore, we might luck out even if some elements should not be counted.
     if( !eve::any(v) ) return {};
 
-      // any + ignore_none
-      if constexpr (C::is_complete)
-      {
-        return last_true_guaranteed(top_bits{v, cond});
-      }
+    if constexpr (relative_conditional_expr<C>)
+    {
+    top_bits mmask {v, cond};
+    if constexpr( C::is_complete ) return last_true_guaranteed(mmask);
+    else return last_true(mmask);
     }
-
-    if constexpr (relative_conditional_expr<C>) return last_true(top_bits{v, cond});
-    else                                        return last_true[cond](top_bits{v});
+    else
+    {
+      return last_true(top_bits{v && expand_mask(cond, as(v))});
+    }
+  }
+  else
+  {
+    if constexpr (relative_conditional_expr<C>)
+    {
+    top_bits mmask {v, cond};
+    return last_true(mmask);
+    }
+    else
+    {
+      return last_true(top_bits{v && expand_mask(cond, as(v))});
+    }
   }
 }
 
-template<callable_options O>
+template<callable_options O, relaxed_logical_scalar_value T>
 EVE_FORCEINLINE std::optional<std::ptrdiff_t>
-                last_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
+                last_true_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
   {
