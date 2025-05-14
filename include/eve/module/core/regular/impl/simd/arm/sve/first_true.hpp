@@ -22,24 +22,18 @@ namespace eve::detail
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
     else
     {
-      L c_m = m;
-
-      // Compute the condition mask only if necessary, this gives slightly better codegen.
-      // This also masks the inactive lanes of the input.
-      if constexpr (!C::is_complete || !std::same_as<N, expected_cardinal_t<T>>)
-      {
-        if constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
-        else                                        c_m = expand_mask(cx, as<L>{});
-      }
-
       if constexpr (has_aggregated_abi_v<L>)
       {
-        if constexpr (!C::is_complete) m = m && c_m;
+        if constexpr (!C::is_complete)
+        {
+          if constexpr (relative_conditional_expr<C>) m = m && sve_true(cx, as(m));
+          else                                        m = m && expand_mask(cx, as<L>{});
+        }
 
         auto [lo, hi] = m.slice();
         auto lo_res   = first_true(lo);
         auto hi_res   = first_true(hi);
-        
+
         if (lo_res) return lo_res;
         if (hi_res) *hi_res += lo.size();
 
@@ -47,10 +41,25 @@ namespace eve::detail
       }
       else
       {
+        L c_m = m;
+
+        const auto is_ec = std::same_as<N, expected_cardinal_t<T>>;
+
+        // Compute the condition mask only if necessary, this gives slightly better codegen.
+        // This also masks the inactive lanes of the input.
+        if constexpr (!C::is_complete || !is_ec)
+        {
+          if      constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
+          else if constexpr (is_ec)                        c_m = expand_mask(cx, as<L>{});
+          // merge everything right away in this case to eliminate one and instruction
+          else                                             c_m = m && remove_garbage(expand_mask(cx, as<L>{}));
+        }
+
         // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
         if (!svptest_any(c_m, m)) return std::nullopt;
 
         // Unconditional mask merge because we need to mask the inactive lanes of there are any.
+        // no-op in the !is_ec case.
         m = m && c_m;
 
         // Implicit cast to the underlying vector size required.
@@ -67,4 +76,3 @@ namespace eve::detail
     return first_true.behavior(current_api, opts, to_logical(m));
   }
 }
-
