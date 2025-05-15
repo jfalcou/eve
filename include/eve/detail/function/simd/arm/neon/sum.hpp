@@ -27,9 +27,9 @@ namespace eve::detail
     else  if constexpr( c== category::int8x8    ) return vpadd_s8(v,v);
   }
 
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N> sum_( EVE_SUPPORTS(neon128_), splat_type const&, wide<T,N> v) noexcept
-  requires arm_abi<abi_t<T, N>>
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE wide<T,N> sum_(EVE_REQUIRES(neon128_), O const&, wide<T,N> v) noexcept
+    requires (arm_abi<abi_t<T, N>> && O::contains(splat2) && match_option<condition_key, O, ignore_none_>)
   {
           if constexpr(N::value == 1)  return v;
     else  if constexpr(current_api >= asimd)
@@ -52,16 +52,16 @@ namespace eve::detail
         else
         {
           auto [l, h] = v.slice();
-          l = splat(sum)(l+h);
+          l = sum[splat2](l + h);
           return wide<T,N>{l, l};
         }
       }
     }
   }
 
-  template<typename T, typename N>
-  EVE_FORCEINLINE T sum_( EVE_SUPPORTS(neon128_), wide<T,N> v) noexcept
-  requires arm_abi<abi_t<T, N>>
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE T sum_(EVE_REQUIRES(neon128_), O const&, wide<T, N> v) noexcept
+    requires (arm_abi<abi_t<T, N>> && !O::contains(splat2) && match_option<condition_key, O, ignore_none_>)
   {
     if constexpr(N::value == 1)  return v.get(0);
     else
@@ -91,12 +91,12 @@ namespace eve::detail
       }
       else
       {
-              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return splat(sum)(v).get(0);
+             if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return sum[splat2](v).get(0);
         else  if constexpr(sizeof(T) == 8)                      return v.get(0)+v.get(1);
         else
         {
           auto [l,h] = v.slice();
-          return splat(eve::detail::sum)(l+h).get(0);
+          return sum[splat2](l + h).get(0);
         }
       }
     }
