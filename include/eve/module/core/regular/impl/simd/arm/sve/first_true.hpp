@@ -11,7 +11,7 @@ namespace eve::detail
 {
   // There are some explanations
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/
-  // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf
+  // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf‡
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
   {
@@ -43,23 +43,23 @@ namespace eve::detail
       {
         L c_m = m;
 
-        const auto is_ec = std::same_as<N, expected_cardinal_t<T>>;
+        constexpr auto has_inactive_lanes = N::value < fundamental_cardinal_v<T>;
 
         // Compute the condition mask only if necessary, this gives slightly better codegen.
         // This also masks the inactive lanes of the input.
-        if constexpr (!C::is_complete || !is_ec)
+        if constexpr (!C::is_complete || has_inactive_lanes)
         {
           if      constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
-          else if constexpr (is_ec)                        c_m = expand_mask(cx, as<L>{});
           // merge everything right away in this case to eliminate one and instruction
-          else                                             c_m = m && remove_garbage(expand_mask(cx, as<L>{}));
+          else if constexpr (has_inactive_lanes)           c_m = m && remove_garbage(expand_mask(cx, as<L>{}));
+          else                                             c_m = expand_mask(cx, as<L>{});
         }
 
         // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
         if (!svptest_any(c_m, m)) return std::nullopt;
 
         // Unconditional mask merge because we need to mask the inactive lanes of there are any.
-        // no-op in the !is_ec case.
+        // no-op in the has_inactive_lanes case.
         m = m && c_m;
 
         // Implicit cast to the underlying vector size required.
