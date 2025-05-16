@@ -20,44 +20,50 @@ namespace eve::detail
     auto cx = opts[condition_key];
 
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
+    else if constexpr (has_aggregated_abi_v<L>)
+    {
+      if constexpr (!C::is_complete)
+      {
+        if constexpr (relative_conditional_expr<C>) m = m && sve_true(cx, as(m));
+        else                                        m = m && expand_mask(cx, as<L>{});
+      }
+
+      auto [lo, hi] = m.slice();
+      auto lo_res   = first_true(lo);
+      auto hi_res   = first_true(hi);
+
+      if (lo_res) return lo_res;
+      if (hi_res) *hi_res += lo.size();
+
+      return hi_res;
+    }
     else
     {
       L c_m = m;
 
+      constexpr auto has_inactive_lanes = N::value < fundamental_cardinal_v<T>;
+
       // Compute the condition mask only if necessary, this gives slightly better codegen.
       // This also masks the inactive lanes of the input.
-      if constexpr (!C::is_complete || !std::same_as<N, expected_cardinal_t<T>>)
+      if constexpr (!C::is_complete || has_inactive_lanes)
       {
-        if constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
-        else                                        c_m = expand_mask(cx, as<L>{});
+        if      constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
+        // merge everything right away in this case to eliminate one and instruction
+        else if constexpr (has_inactive_lanes)           c_m = m && remove_garbage(expand_mask(cx, as<L>{}));
+        else                                             c_m = expand_mask(cx, as<L>{});
       }
 
-      if constexpr (has_aggregated_abi_v<L>)
-      {
-        if constexpr (!C::is_complete) m = m && c_m;
+      // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
+      if (!svptest_any(c_m, m)) return std::nullopt;
 
-        auto [lo, hi] = m.slice();
-        auto lo_res   = first_true(lo);
-        auto hi_res   = first_true(hi);
-        
-        if (lo_res) return lo_res;
-        if (hi_res) *hi_res += lo.size();
+      // Unconditional mask merge because we need to mask the inactive lanes of there are any.
+      // no-op in the has_inactive_lanes case.
+      m = m && c_m;
 
-        return hi_res;
-      }
-      else
-      {
-        // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
-        if (!svptest_any(c_m, m)) return std::nullopt;
+      // Implicit cast to the underlying vector size required.
+      as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
 
-        // Unconditional mask merge because we need to mask the inactive lanes of there are any.
-        m = m && c_m;
-
-        // Implicit cast to the underlying vector size required.
-        as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
-
-        return count_true(first_true_mask);
-      }
+      return count_true(first_true_mask);
     }
   }
 
@@ -67,4 +73,3 @@ namespace eve::detail
     return first_true.behavior(current_api, opts, to_logical(m));
   }
 }
-

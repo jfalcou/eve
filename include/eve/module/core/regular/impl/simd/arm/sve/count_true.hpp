@@ -17,7 +17,12 @@ namespace eve::detail
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto const m = expand_mask(opts[condition_key], as<wide<T, N>>{});
+    using C = rbr::result::fetch_t<condition_key, O>;
+    const auto cx = opts[condition_key];
+
+    logical<wide<T, N>> m;
+    if constexpr (relative_conditional_expr<C>) m = sve_true(cx, as(m));
+    else                                        m = remove_garbage(expand_mask(cx, as(m)));
 
     if      constexpr (sizeof(T) == 1) return svcntp_b8(m, v);
     else if constexpr (sizeof(T) == 2) return svcntp_b16(m, v);
