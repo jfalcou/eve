@@ -20,30 +20,27 @@ EVE_FORCEINLINE bool
 all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 {
   using C = rbr::result::fetch_t<condition_key, O>;
-  auto cx = opts[condition_key];
+  auto cond = opts[condition_key];
 
-  if constexpr (scalar_value<T>) return eve::all[cx](v.value());
+  if constexpr (scalar_value<T>) return eve::all[cond](v.value());
   else
   if constexpr( C::is_complete && !C::is_inverted ) return true;
   else if constexpr( has_emulated_abi_v<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
-      const std::ptrdiff_t begin    = cx.offset(as(v));
-      const std::ptrdiff_t end      = begin + cx.count(as(v));
-      constexpr std::ptrdiff_t size = T::size();
+    bool res = true;
 
-      EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
+    std::ptrdiff_t first = cond.offset(eve::as<T> {});
+    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+    EVE_ASSUME((first >= 0) && (first <= last) && (last <= T::size()));
+    while( first != last ) res = res && v.get(first++);
 
-      for (std::ptrdiff_t i = begin; i < end; ++i)
-        if (!v.get(i))
-          return false;
-
-      return true;
+    return res;
     }
     else
     {
-      const auto mask = expand_mask(cx, as(v));
+      const auto mask = expand_mask(cond, as(v));
       for (std::ptrdiff_t i = 0; i < v.size(); ++i)
         if (mask.get(i) && !v.get(i))
           return false;
@@ -65,8 +62,8 @@ all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 
     top_bits    mmask {v};
 
-    if constexpr (relative_conditional_expr<C>) mmask |= ~top_bits<T>{ cx };
-    else                                        mmask |= ~top_bits<T>{ expand_mask(cx, as(v)) };
+    if constexpr (relative_conditional_expr<C>) mmask |= ~top_bits<T>{ cond };
+    else                                        mmask |= ~top_bits<T>{ expand_mask(cond, as(v)) };
 
     return all(mmask);
   }
@@ -91,11 +88,11 @@ EVE_FORCEINLINE bool
 all_(EVE_REQUIRES(cpu_), O const& opts, top_bits<T> v) noexcept
 {
   using C = rbr::result::fetch_t<condition_key, O>;
-  auto cx = opts[condition_key];
+  auto cond = opts[condition_key];
 
   if constexpr (relative_conditional_expr<C>)
   {
-    const auto mask = top_bits<T>{ cx };
+    const auto mask = top_bits<T>{ cond };
     return (v & mask) == mask;
   }
   else
@@ -105,7 +102,7 @@ all_(EVE_REQUIRES(cpu_), O const& opts, top_bits<T> v) noexcept
       if (v == top_bits<T>{ ignore_none }) return true;
     }
 
-    const auto mask = top_bits<T> { expand_mask(cx, as<T>{}) };
+    const auto mask = top_bits<T> { expand_mask(cond, as<T>{}) };
     return (v & mask) == mask;
   }
 }
