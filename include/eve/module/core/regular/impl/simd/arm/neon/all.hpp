@@ -64,8 +64,6 @@ all_(EVE_REQUIRES(neon128_),
     if constexpr (relative_conditional_expr<C>) return all[cond](halved);
     else
     {
-      // When calling first_true with a non-relative mask, we need to expand the mask, convert it
-      // then call first_true again with a full logical mask.
       auto m = convert(expand_mask(cond, as(v0)), as<logical<half_e_t>>{});
       return eve::all[m](halved);
     }
