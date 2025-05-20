@@ -24,8 +24,7 @@ namespace eve::detail
     {
       if constexpr (!C::is_complete)
       {
-        if constexpr (relative_conditional_expr<C>) m = m && sve_true(cx, as(m));
-        else                                        m = m && expand_mask(cx, as<L>{});
+        m = m && expand_mask(cx, as<L>{});
       }
 
       auto [lo, hi] = m.slice();

@@ -22,10 +22,12 @@ namespace eve::detail
     return v != 0;
   }
 
-  template<relative_conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> to_logical_incomplete([[maybe_unused]] sve_ tag, C c, eve::as<wide<T, N>> tgt) noexcept
-    requires sve_abi<abi_t<T, N>>
+  template<relative_conditional_expr C, simd_value S>
+  EVE_FORCEINLINE as_logical_t<S> to_logical_incomplete([[maybe_unused]] sve_ tag, C c, eve::as<S> tgt) noexcept
+    requires sve_abi<typename S::abi_type>
   {
+    using T = element_type_t<as_arithmetic_t<S>>;
+
     if constexpr (std::same_as<C, keep_first> || std::same_as<C, ignore_last>)
     {
       int count = c.count(tgt);
