@@ -28,7 +28,9 @@ namespace eve::detail
   {
     using T = element_type_t<as_arithmetic_t<S>>;
 
-    if constexpr (std::same_as<C, keep_first> || std::same_as<C, ignore_last>)
+    if constexpr (std::same_as<C, ignore_none_>) return sve_true<T>();
+    else if constexpr (std::same_as<C, ignore_all_>) return svpfalse();
+    else if constexpr (std::same_as<C, keep_first> || std::same_as<C, ignore_last>)
     {
       int count = c.count(tgt);
 
