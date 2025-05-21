@@ -97,8 +97,10 @@ namespace eve
     //! The type stored in the register.
     using value_type = Type;
 
+    using translated_type = translate_t<Type>;
+
     //! The ABI tag for this register.
-    using abi_type = abi_t<translate_t<Type>, Cardinal>;
+    using abi_type = abi_t<translated_type, Cardinal>;
 
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
@@ -171,7 +173,7 @@ namespace eve
     template<typename S>
     requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
+        : storage_base(detail::make(eve::as<wide>{}, translated_type{translate(v)}))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -182,9 +184,9 @@ namespace eve
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
         : storage_base(detail::make(eve::as<wide> {},
-                                    static_cast<Type>(v0),
-                                    static_cast<Type>(v1),
-                                    static_cast<Type>(vs)...))
+                                    translated_type{translate(v0)},
+                                    translated_type{translate(v1)},
+                                    translated_type{translate(vs)}...))
     {}
 
     //! Constructs a eve::wide from a sequence of values
@@ -288,13 +290,13 @@ namespace eve
     }
 
     //! Retrieve the value from a given lane
-    EVE_FORCEINLINE auto get(std::size_t i) const noexcept { return detail::extract(*this, i); }
+    EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return detail::extract(*this, i); }
 
     //! Retrieve the value from the last lane
-    EVE_FORCEINLINE auto back() const noexcept { return get(Cardinal::value - 1); }
+    EVE_FORCEINLINE Type back() const noexcept { return get(Cardinal::value - 1); }
 
     //! Retrieve the value from the first lane
-    EVE_FORCEINLINE auto front() const noexcept { return get(0); }
+    EVE_FORCEINLINE Type front() const noexcept { return get(0); }
 
     //==============================================================================================
     //! @brief Slice a eve::wide into two eve::wide of half cardinal.
