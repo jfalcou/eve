@@ -65,8 +65,7 @@ namespace eve::detail
         c_m = sve_true<element_type_t<L>>();
       }
       
-      // Implicit cast to the underlying vector size required.
-      as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(c_m, m);
+      L first_true_mask = svbrkb_z(c_m, m);
 
       return count_true(first_true_mask);
     }
