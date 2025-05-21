@@ -54,13 +54,19 @@ namespace eve::detail
 
       // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
       if (!svptest_any(c_m, m)) return std::nullopt;
-
-      // Unconditional mask merge because we need to mask the inactive lanes of there are any.
-      // no-op in the has_inactive_lanes case.
-      m = m && c_m;
-
+      
+      // svbrkb_ need the first lanes to be active for it to work with count_true. In the case of keep_first / ignore_last
+      // we can use c_m as the predicate directly but in the other cases we need to provide a fully-active predicate.
+      if constexpr (!std::same_as<C, keep_first> && !std::same_as<C, ignore_last>)
+      {
+        // Unconditional mask merge because we need to mask the inactive lanes of there are any.
+        // no-op in the has_inactive_lanes case.
+        m = m && c_m;
+        c_m = sve_true<element_type_t<L>>();
+      }
+      
       // Implicit cast to the underlying vector size required.
-      as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(sve_true<element_type_t<L>>(), m);
+      as_wide_t<element_type_t<L>> first_true_mask = svbrkb_z(c_m, m);
 
       return count_true(first_true_mask);
     }
