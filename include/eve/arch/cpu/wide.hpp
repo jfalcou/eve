@@ -39,6 +39,7 @@
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
+#include <eve/traits/as_translation.hpp>
 
 #include <concepts>
 #include <ostream>
@@ -88,16 +89,16 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>,
+      : detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
         detail::wide_split_type_helper<Type, Cardinal>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base = detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
 
     //! The type stored in the register.
     using value_type = Type;
 
     //! The ABI tag for this register.
-    using abi_type = abi_t<Type, Cardinal>;
+    using abi_type = abi_t<translate_t<Type>, Cardinal>;
 
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
@@ -1013,8 +1014,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +that[0];
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +that[i];
+        os << '(' << +translate(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +translate(that[i]);
         return os << ')';
       }
     }
