@@ -71,7 +71,7 @@ namespace eve
   //!
   //!   The function is considering the case when nothing is set to be likely,
   //!   checking for eve::any before hand is not going to be helpful.
-  //!   At the moment there isn't a function that would do it otherwise.
+  //!   At the moment there isn't a function that would do otherwise.
   //!
   //!   ## What if I know there is a match?
   //!   We would recommend `*eve::last_true(m)` - this is likely to trigger

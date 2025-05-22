@@ -53,17 +53,17 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   {
     if constexpr (relative_conditional_expr<C>)
     {
-    std::ptrdiff_t first = cond.offset(eve::as<T> {});
-    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
-    constexpr std::ptrdiff_t size = T::size();
-    EVE_ASSUME((first >= 0) && (last <= size) && (first <= last));
+      std::ptrdiff_t first = cond.offset(eve::as<T> {});
+      std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+      constexpr std::ptrdiff_t size = T::size();
+      EVE_ASSUME((0 <= first) && (first <= last) && (last <= size));
 
-    while( first != last )
-    {
-      if( v.get(--last) ) return last;
-    }
+      while( first != last )
+      {
+        if( v.get(--last) ) return last;
+      }
 
-    return {};
+      return {};
     }
     else
     {
@@ -84,9 +84,9 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
 
     if constexpr (relative_conditional_expr<C>)
     {
-    top_bits mmask {v, cond};
-    if constexpr( C::is_complete ) return last_true_guaranteed(mmask);
-    else return last_true(mmask);
+      top_bits mmask {v, cond};
+      if constexpr( C::is_complete ) return last_true_guaranteed(mmask);
+      else return last_true(mmask);
     }
     else
     {
@@ -97,8 +97,8 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   {
     if constexpr (relative_conditional_expr<C>)
     {
-    top_bits mmask {v, cond};
-    return last_true(mmask);
+      top_bits mmask {v, cond};
+      return last_true(mmask);
     }
     else
     {
@@ -113,8 +113,8 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
   {
-  if( !v ) return std::nullopt;
-  return 0;
+    if( !v ) return std::nullopt;
+    return 0;
   }
   else
   {

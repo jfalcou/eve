@@ -28,8 +28,8 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
     using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
     if constexpr(relative_conditional_expr<C>)
     {
-    auto halved    = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
-    return eve::last_true[cond](halved);
+      auto halved = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
+      return eve::last_true[cond](halved);
     }
     else
     {
