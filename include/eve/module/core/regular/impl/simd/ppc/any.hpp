@@ -14,40 +14,36 @@
 
 namespace eve::detail
 {
-template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE bool
-any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  if constexpr( N::value == 1 ) {
-    auto m = v0.bits();
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE bool any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> v) noexcept
+    requires ppc_abi<abi_t<T, N>>
+  {
+    auto m = v.bits();
 
-    if constexpr (match_option<condition_key, O, ignore_none_>)
+    if constexpr (N::value == 1)
     {
-      return static_cast<bool>(m.get(0));
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        return static_cast<bool>(m.get(0));
+      }
+      else
+      {
+        const auto cm = expand_mask(opts[condition_key], as(v));
+        return static_cast<bool>(m.get(0)) && static_cast<bool>(cm.get(0));
+      }
     }
     else
     {
-      const auto cm = expand_mask(opts[condition_key], as<wide<T, N>>{});
-      return static_cast<bool>(m.get(0)) && static_cast<bool>(cm.get(0));
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        m = remove_garbage(m);
+      }
+      else 
+      {
+        m &= expand_mask_remove_garbage(opts[condition_key], as(v)).bits();
+      }
+
+      return vec_any_eq(m.storage(), true_(as(m)).storage());
     }
   }
-  else
-  {
-    auto m = simd_cast(v0, as<logical<wide<T>>>{}).bits();
-
-    if constexpr (N::value != expected_cardinal_v<T, ppc_>)
-    {
-      logical<wide<T>> mm = [](auto i, auto) { return i < N::value; };
-      m &= mm.bits();
-    }
-
-    if constexpr (!match_option<condition_key, O, ignore_none_>)
-    {
-      const auto cm = simd_cast(expand_mask(opts[condition_key], as<wide<T, N>>{}), as<logical<wide<T>>>{});
-      m &= cm.bits();
-    }
-
-    return vec_any_eq(m.storage(), true_(as(m)).storage());
-  }
-}
 }
