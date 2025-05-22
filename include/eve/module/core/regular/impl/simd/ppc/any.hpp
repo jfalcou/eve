@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
+#include <eve/detail/remove_garbage.hpp>
 
 namespace eve::detail
 {
