@@ -40,7 +40,7 @@ namespace eve::detail
       }
       else 
       {
-        m &= expand_mask_remove_garbage(opts[condition_key], as(v)).bits();
+        m &= expand_mask_no_garbage(opts[condition_key], as(v)).bits();
       }
 
       return vec_any_eq(m.storage(), true_(as(m)).storage());
