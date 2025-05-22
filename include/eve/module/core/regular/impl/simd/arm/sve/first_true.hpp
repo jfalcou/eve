@@ -47,12 +47,11 @@ namespace eve::detail
       if constexpr (!C::is_complete || has_inactive_lanes)
       {
         if      constexpr (relative_conditional_expr<C>) c_m = sve_true(cx, as(m));
-        // merge everything right away in this case to eliminate one and instruction
+        // merging everything right away is faster in this case
         else if constexpr (has_inactive_lanes)           c_m = m && remove_garbage(expand_mask(cx, as<L>{}));
         else                                             c_m = expand_mask(cx, as<L>{});
       }
 
-      // Merging the two masks after the ptest makes this branch appear earlier in the resulting assembly.
       if (!svptest_any(c_m, m)) return std::nullopt;
       
       // svbrkb_ need the first lanes to be active for it to work with count_true. In the case of keep_first / ignore_last
