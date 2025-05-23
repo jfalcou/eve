@@ -37,6 +37,8 @@ void test_case_nocx(Callable callable, T v)
 {
   const auto manual_res = invoke_truth_fn<TruthFn>(v, true);
 
+  if constexpr (eve::simd_value<T>) v = tts::poison(v);
+
   TTS_EQUAL(callable(v), manual_res);
 
   if constexpr (eve::simd_value<T>)

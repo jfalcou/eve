@@ -53,4 +53,15 @@ namespace eve::detail
 
     return v;
   }
+
+  //================================================================================================
+  // Turn a conditional into a mask, ensure that all inactive lanes are set to false
+  //================================================================================================
+  template<conditional_expr C, typename Target>
+  EVE_FORCEINLINE auto expand_mask_no_garbage(C const& c, as<Target> const&)
+  {
+    auto msk = c.mask(as<Target>{});
+    if constexpr (relative_conditional_expr<C>) return as_logical_t<Target>(msk);
+    else                                        return remove_garbage(as_logical_t<Target>(msk));
+  }
 }
