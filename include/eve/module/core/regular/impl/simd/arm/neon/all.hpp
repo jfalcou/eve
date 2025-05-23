@@ -59,13 +59,14 @@ all_(EVE_REQUIRES(neon128_),
   else if constexpr( eve::current_api < eve::asimd && sizeof(T) >= 2 )
   {
     using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-    auto halved    = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
-
-    if constexpr (relative_conditional_expr<C>) return all[cond](halved);
+    if constexpr (relative_conditional_expr<C>) 
+    {
+      return all[cond](eve::convert(v0, eve::as<eve::logical<half_e_t>> {}));
+    }
     else
     {
-      auto m = convert(expand_mask(cond, as(v0)), as<logical<half_e_t>>{});
-      return eve::all[m](halved);
+      auto m = expand_mask(cond, as(v0));
+      return all(convert(logical_ornot(v0, m), as<logical<half_e_t>>{}));
     }
   }
   else if constexpr( !C::is_complete ) return all.behavior(cpu_{}, opts, v0);
@@ -89,3 +90,4 @@ all_(EVE_REQUIRES(neon128_),
   }
 }
 }
+
