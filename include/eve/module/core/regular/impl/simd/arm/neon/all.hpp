@@ -12,6 +12,7 @@
 #include <eve/conditional.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/logical_ornot.hpp>
 
 namespace eve::detail
 {
