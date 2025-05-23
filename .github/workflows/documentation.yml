@@ -25,11 +25,11 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        # - { comp: clang, arch: x86    , opts: -msse2    , pch: ON}
-        # - { comp: clang, arch: x86    , opts: -mavx2    , pch: ON}
-        # - { comp: clang, arch: aarch64, opts: -Wno-psabi, pch: ON}
-        # - { comp: clang, arch: x86    , opts: -msse2    , pch: OFF}
-        # - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
+        - { comp: clang, arch: x86    , opts: -msse2    , pch: ON}
+        - { comp: clang, arch: x86    , opts: -mavx2    , pch: ON}
+        - { comp: clang, arch: aarch64, opts: -Wno-psabi, pch: ON}
+        - { comp: clang, arch: x86    , opts: -msse2    , pch: OFF}
+        - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
         - { comp: gcc  , arch: sve128 , opts: -Wno-psabi, pch: OFF}
     steps:
       - name: Fetch current branch

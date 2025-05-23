@@ -18,162 +18,162 @@ jobs:
   ##################################################################################################
   ## Check no PCH mode
   ##################################################################################################
-  # no_pch:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang, arch: x86    , opts: -msse2    }
-  #       - { comp: gcc  , arch: x86    , opts: -msse2    }
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run:  |
-  #         mkdir build
-  #         cd build
-  #         cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
-  #                   -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compile Unit Tests
-  #       run:  |
-  #         cd build
-  #         ninja unit.exe -j 4
-  #     - name: Running Unit Tests
-  #       run:  |
-  #         cd build
-  #         ctest --output-on-failure -j 4 -E ^doc.*.exe
+  no_pch:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: gcc  , arch: x86    , opts: -msse2    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 4
+      - name: Running Unit Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 -E ^doc.*.exe
 
-  # ##################################################################################################
-  # ## Check External dependencies
-  # ##################################################################################################
-  # externals:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang, arch: x86    , opts: -msse2    }
-  #       - { comp: gcc  , arch: x86    , opts: -msse2    }
-  #   steps:
-  #     - name: Install KUMI
-  #       run: |
-  #         mkdir 3rdparty
-  #         cd 3rdparty
-  #         git clone https://github.com/jfalcou/kumi.git
-  #         cd kumi
-  #         mkdir build
-  #         cd build
-  #         cmake .. -G Ninja
-  #         cmake --install . --prefix /usr
-  #     - name: Install RABERU
-  #       run: |
-  #         cd 3rdparty
-  #         git clone https://github.com/jfalcou/raberu.git
-  #         cd raberu
-  #         mkdir build
-  #         cd build
-  #         cmake .. -G Ninja
-  #         cmake --install . --prefix /usr
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run:  |
-  #         mkdir build
-  #         cd build
-  #         cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
-  #                   -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compile Unit Tests
-  #       run:  |
-  #         cd build
-  #         ninja unit.exe -j 4
-  #     - name: Running Unit Tests
-  #       run:  |
-  #         cd build
-  #         ctest --output-on-failure -j 4 -E ^doc.*.exe
+  ##################################################################################################
+  ## Check External dependencies
+  ##################################################################################################
+  externals:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: gcc  , arch: x86    , opts: -msse2    }
+    steps:
+      - name: Install KUMI
+        run: |
+          mkdir 3rdparty
+          cd 3rdparty
+          git clone https://github.com/jfalcou/kumi.git
+          cd kumi
+          mkdir build
+          cd build
+          cmake .. -G Ninja
+          cmake --install . --prefix /usr
+      - name: Install RABERU
+        run: |
+          cd 3rdparty
+          git clone https://github.com/jfalcou/raberu.git
+          cd raberu
+          mkdir build
+          cd build
+          cmake .. -G Ninja
+          cmake --install . --prefix /usr
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 4
+      - name: Running Unit Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 -E ^doc.*.exe
 
   ##################################################################################################
   ## Full emulation tests
   ##################################################################################################
-  # nosimd:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
-  #       - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
+  nosimd:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
+        - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.exe -j 5
-  #     - name: Running Unit Tests
-  #       run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
 
   ##################################################################################################
   ## RISC-V Targets
   ##################################################################################################
-  # riscv:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v8
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128" }
+  riscv:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v8
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128" }
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.meta.exe unit.arch.exe  unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 5
-  #     - name: Compiling Big Unit Tests
-  #       run:  cd build && ninja unit.api.compress.exe -j 2
-  #     - name: Running Unit Tests
-  #       run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.meta.exe unit.arch.exe  unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 5
+      - name: Compiling Big Unit Tests
+        run:  cd build && ninja unit.api.compress.exe -j 2
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
 
   ##################################################################################################
   ## Mac OS X Targets
   ##################################################################################################
-  # macosx:
-  #   runs-on: [macos-13]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang , arch: x86_osx, opts: -mavx }
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && make unit.exe -j 2
-  #     - name: Running Unit Tests
-  #       run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
+  macosx:
+    runs-on: [macos-13]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86_osx, opts: -mavx }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && make unit.exe -j 2
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
 
   ##################################################################################################
   ## Windows Targets - Deactivated for now
@@ -209,36 +209,7 @@ jobs:
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
-  # x86-clang:
-  #   runs-on: [self-hosted, generic-x86]
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang , arch: x86, opts: -msse4.2 }
-  #       - { comp: clang , arch: x86, opts: -mavx    }
-  #       - { comp: clang , arch: x86, opts: -mavx2   }
-
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.exe -j 10
-  #     - name: Running Unit Tests
-  #       run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
-
-  ##################################################################################################
-  ## Host 1 - PPC & ARM SVE256/512 Tests
-  ##################################################################################################
-  other-arch:
-    # needs: x86-clang
+  x86-clang:
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -247,8 +218,37 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        # - { comp: gcc, arch: sve   , opts: -Wno-psabi}
-        # - { comp: gcc, arch: sve2  , opts: -Wno-psabi}
+        - { comp: clang , arch: x86, opts: -msse4.2 }
+        - { comp: clang , arch: x86, opts: -mavx    }
+        - { comp: clang , arch: x86, opts: -mavx2   }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 10
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 1 - PPC & ARM SVE256/512 Tests
+  ##################################################################################################
+  other-arch:
+    needs: x86-clang
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc, arch: sve   , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve2  , opts: -Wno-psabi}
         - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
@@ -267,119 +267,119 @@ jobs:
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
-  # x86-gcc:
-  #   needs: other-arch
-  #   runs-on: [self-hosted, generic-x86]
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: gcc , arch: x86, opts: -msse4.2  }
-  #       - { comp: gcc , arch: x86, opts: -mavx     }
-  #       - { comp: gcc , arch: x86, opts: -mavx2    }
+  x86-gcc:
+    needs: other-arch
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc , arch: x86, opts: -msse4.2  }
+        - { comp: gcc , arch: x86, opts: -mavx     }
+        - { comp: gcc , arch: x86, opts: -mavx2    }
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.exe -j 10
-  #     - name: Running Unit Tests
-  #       run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 10
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Non-X86 - Requires clang and qemu
   ##################################################################################################
-  # arm:
-  #   runs-on: [self-hosted, avx512]
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
-  #       - { comp: clang, arch: arm     , opts: -Wno-psabi}
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run:  |
-  #         mkdir build
-  #         cd build
-  #         cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
-  #                   -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compile Unit Tests
-  #       run:  |
-  #         cd build
-  #         ninja unit.exe -j 5
-  #     - name: Running Unit Tests
-  #       run:  |
-  #         cd build
-  #         ctest --output-on-failure -j 4 -E ^doc.*.exe
+  arm:
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
+        - { comp: clang, arch: arm     , opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Post-Skylake SIMD ISA
   ##################################################################################################
-  # avx512:
-  #   needs: arm
-  #   runs-on: [self-hosted, avx512]
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
-  #       - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
+  avx512:
+    needs: arm
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
+        - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.exe -j 5
-  #     - name: Running Unit Tests
-  #       run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Pre-Skylake SIMD ISA - Special cases
   ##################################################################################################
-  # other-cases:
-  #   needs: avx512
-  #   runs-on: [self-hosted, avx512]
-  #   container:
-  #     image: ghcr.io/jfalcou/compilers:v7
-  #     options: -u root
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
-  #     # Linux kernel need a fix on our CI machine
-  #     # - { comp: clang       , arch: x86_asan, opts: -msse2                                }
-  #       - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
-  #       - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+  other-cases:
+    needs: avx512
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
+      # Linux kernel need a fix on our CI machine
+      # - { comp: clang       , arch: x86_asan, opts: -msse2                                }
+        - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit.exe -j 5
-  #     - name: Running Unit Tests
-  #       run: cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe

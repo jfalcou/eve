@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
 namespace eve::detail
@@ -44,7 +43,7 @@ namespace eve::detail
         m &= expand_mask_no_garbage(opts[condition_key], as(v)).bits();
       }
 
-      return vec_any_eq(m.storage(), true_(as(m)).storage());
+      return vec_any_eq(m.storage(), true_(as<logical<wide<T>>>{}).storage());
     }
   }
 }

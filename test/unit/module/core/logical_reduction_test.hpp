@@ -38,7 +38,7 @@ void test_case_nocx(Callable callable, T v)
   const auto manual_res = invoke_truth_fn<TruthFn>(v, true);
 
   if constexpr (eve::simd_value<T>) v = tts::poison(v);
-  
+
   TTS_EQUAL(callable(v), manual_res);
 
   if constexpr (eve::simd_value<T>)
@@ -66,27 +66,27 @@ template<typename TruthFn, typename Callable, typename T>
 void test_case(Callable callable, T v)
 {
   test_case_nocx<TruthFn>(callable, v);
-  // test_case_cx<TruthFn>(callable, v, true);
-  // test_case_cx<TruthFn>(callable, v, false);
-  // test_case_cx<TruthFn>(callable, v, eve::ignore_none);
+  test_case_cx<TruthFn>(callable, v, true);
+  test_case_cx<TruthFn>(callable, v, false);
+  test_case_cx<TruthFn>(callable, v, eve::ignore_none);
 
-  // if constexpr (eve::simd_value<T>)
-  // {
-  //   constexpr auto cardinal = eve::cardinal_v<T>;
+  if constexpr (eve::simd_value<T>)
+  {
+    constexpr auto cardinal = eve::cardinal_v<T>;
 
-  //   T m = tts::poison(T{ [](auto i, auto) { return i % 2 == 0; } });
-  //   test_case_cx<TruthFn>(callable, v, m);
+    T m = tts::poison(T{ [](auto i, auto) { return i % 2 == 0; } });
+    test_case_cx<TruthFn>(callable, v, m);
 
-  //   test_case_cx<TruthFn>(callable, v, eve::ignore_all);
-  //   test_case_cx<TruthFn>(callable, v, eve::keep_first(0));
+    test_case_cx<TruthFn>(callable, v, eve::ignore_all);
+    test_case_cx<TruthFn>(callable, v, eve::keep_first(0));
 
-  //   if constexpr (cardinal >= 2)
-  //   {
-  //     test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(1, 1));
-  //     test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-  //     test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
-  //   }
-  // }
+    if constexpr (cardinal >= 2)
+    {
+      test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(1, 1));
+      test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+      test_case_cx<TruthFn>(callable, v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    }
+  }
 }
 
 template<typename TruthFn, typename Callable, typename T>
