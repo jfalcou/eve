@@ -12,7 +12,6 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/interleave.hpp>
