@@ -43,10 +43,11 @@ glob_unit("unit" ${unit_root} "internals/*.cpp")
 ##==================================================================================================
 add_custom_target(unit.memory.exe         )
 add_dependencies(unit.exe unit.memory.exe )
-glob_unit("unit" ${unit_root} "memory/*.cpp"               )
-glob_unit("unit" ${unit_root} "memory/load/*.cpp"          )
-glob_unit("unit" ${unit_root} "memory/store/*.cpp"         )
-glob_unit("unit" ${unit_root} "memory/compress_store/*.cpp")
+glob_unit("unit" ${unit_root} "memory/*.cpp"                )
+glob_unit("unit" ${unit_root} "memory/load/*.cpp"           )
+glob_unit("unit" ${unit_root} "memory/load/aligned/*.cpp"   )
+glob_unit("unit" ${unit_root} "memory/load/unaligned/*.cpp" )
+glob_unit("unit" ${unit_root} "memory/store/*.cpp"          )
 
 ##==================================================================================================
 ## GLOB and process meta unit tests
