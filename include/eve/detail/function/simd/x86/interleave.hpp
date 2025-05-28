@@ -8,7 +8,9 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/function/slice.hpp>
 #include <eve/traits/product_type.hpp>
 
 namespace eve::detail
