@@ -53,61 +53,74 @@ EVE_FORCEINLINE wide<T, N>
   else if constexpr( match(c, category::size64_) ) return __riscv_vle64(mask, p, N::value);
 }
 
-template<relative_conditional_expr C,
+template<callable_options O,
          arithmetic_scalar_value   T,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE wide<T, N>
-load_(EVE_SUPPORTS(rvv_), C const& cond, safe_type const&, eve::as<wide<T, N>> const& tgt, Ptr p)
+EVE_FORCEINLINE wide<T, N> load_(EVE_REQUIRES(rvv_), O const& opts, Ptr p, as<wide<T, N>> tgt) noexcept
 requires(rvv_abi<abi_t<T, N>>)
 {
-  auto ptr = unalign(p);
+  if constexpr (O::contains(unsafe2))
+  {
+    return load.behavior(cpu_{}, opts, p, tgt);
+  }
+  else
+  {
+    auto ptr = unalign(p);
 
-  if constexpr( C::has_alternative )
-  {
-    // as later we replace ignored, we can use unsafe load.
-    auto load_cond = drop_alternative(cond);
-    auto res       = perform_load(load_cond.mask(tgt), tgt, ptr);
-    return eve::replace_ignored(res, cond, cond.alternative);
+    if constexpr( C::has_alternative )
+    {
+      // as later we replace ignored, we can use unsafe load.
+      auto load_cond = drop_alternative(cond);
+      auto res       = perform_load(load_cond.mask(tgt), tgt, ptr);
+      return eve::replace_ignored(res, cond, cond.alternative);
+    }
+    else if constexpr( C::is_complete && !C::is_inverted ) return wide<T, N>(0);
+    else if constexpr( C::is_complete && C::is_inverted )
+    {
+      return perform_alternative_load(rvv_true<T, N>(), tgt, ptr);
+    }
+    else return perform_alternative_load(cond.mask(tgt), tgt, ptr);
   }
-  else if constexpr( C::is_complete && !C::is_inverted ) return wide<T, N>(0);
-  else if constexpr( C::is_complete && C::is_inverted )
-  {
-    return perform_alternative_load(rvv_true<T, N>(), tgt, ptr);
-  }
-  else return perform_alternative_load(cond.mask(tgt), tgt, ptr);
 }
 
-template<relative_conditional_expr C,
+template<callable_options O,
          typename T,
          typename N,
          simd_compatible_ptr<logical<wide<T, N>>> Pointer>
 EVE_FORCEINLINE logical<wide<T, N>>
-                load_(EVE_SUPPORTS(rvv_),
-                      C const                &cond,
-                      safe_type const&,
-                      eve::as<logical<wide<T, N>>> const&,
-                      Pointer ptr) noexcept
+                load_(EVE_REQUIRES(rvv_), O const& opts, Pointer ptr, as<logical<wide<T, N>>> tgt) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
-  auto const block = load(c1, safe, eve::as<wide<T, N>> {}, ptr_cast<T const>(ptr));
-  return to_logical(block);
+  if constexpr (O::contains(unsafe2))
+  {
+    return load.behavior(cpu_{}, opts, ptr, tgt);
+  }
+  else
+  {
+    auto cond = opts[condition_key];
+    auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
+    auto const block = load[c1](ptr_cast<T const>(ptr), as<wide<T, N>>{});
+    return to_logical(block);
+  }
 }
 
-template<relative_conditional_expr C, typename Iterator, typename T, typename N>
+template<callable_options O, typename Iterator, typename T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
-                load_(EVE_SUPPORTS(rvv_),
-                      C const                &cond,
-                      safe_type const&,
-                      eve::as<logical<wide<T, N>>> const&,
-                      Iterator b,
-                      Iterator e) noexcept
+                load_(EVE_REQUIRES(rvv_), O const& opts, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
-  auto const block = load(c1, safe, eve::as<wide<T, N>> {}, b, e);
-  return to_logical(block);
+  if constexpr (O::contains(unsafe2))
+  {
+    return load.behavior(cpu_{}, opts, b, e, tgt);
+  }
+  else
+  {
+    auto cond = opts[condition_key];
+    auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
+    auto const block = load[c1](b, e, as<wide<T, N>>{});
+    return to_logical(block);
+  }
 }
 
 }

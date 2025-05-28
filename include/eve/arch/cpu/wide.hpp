@@ -145,7 +145,7 @@ namespace eve
     //! @brief Constructs a eve::wide from a pair of @iterator.
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator It>
-    EVE_FORCEINLINE explicit wide(It b, It e) noexcept : storage_base(load(as<wide> {}, b, e))
+    EVE_FORCEINLINE explicit wide(It b, It e) noexcept : storage_base(load(b, e, as<wide>{}))
     {}
 
     //! @brief Constructs a eve::wide from a @container.
