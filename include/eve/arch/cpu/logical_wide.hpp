@@ -125,7 +125,7 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : storage_base(load(as<logical>{}, b, e))
+                  : storage_base(load(b, e, as<logical>{}))
     {}
 
     //! @brief Constructs a eve::logical from a @container.

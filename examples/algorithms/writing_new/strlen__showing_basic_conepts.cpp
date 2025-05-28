@@ -46,10 +46,10 @@ std::size_t strlen_(const char* s_) {
   //  instructions for aligned reads. (NOTE: it's a template, we just use CTAD).
   eve::aligned_ptr aligned_s = eve::previous_aligned_address(s);
 
-  // `eve::unsafe(eve::load)` is the same as `eve::load` but it disables sanitizers for it.
+  // `eve::load[eve::unsafe]` is the same as `eve::load` but it disables sanitizers for it.
   // The machine/OS etc are OK with us reading from an address before `s` but sanitizers consider
   // it to be out of bounds. This an intended usage of the sanitizer disablement.
-  wide cur = eve::unsafe(eve::load)(aligned_s);
+  wide cur = eve::load[eve::unsafe](aligned_s);
 
   // `cur == zeroes` - returns an `eve::logical<wide>`, a register of boolean like values.
   // `first_true`    - given `eve::logical`, returns a position of a first one set (nullopt if none are).
@@ -62,7 +62,7 @@ std::size_t strlen_(const char* s_) {
 
   while (!match) {
     aligned_s += wide::size();               // Go to the next position.
-    cur = eve::unsafe(eve::load)(aligned_s);
+    cur = eve::load[eve::unsafe](aligned_s);
     match = eve::first_true(cur == zeroes);  // No ignore here, since the first value is what we want.
   }
 
