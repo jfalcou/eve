@@ -97,8 +97,7 @@ namespace eve::detail
   {
     auto block = [&]() -> wide<T, N>
     {
-      using wtg = eve::as<wide<T, N>>;
-      return load(ignore_none, safe, wtg{}, ptr_cast<T const>(p));
+      return load(ptr_cast<T const>(p), as<wide<T, N>>{});
     }();
 
     if constexpr( current_api >= avx512 ) return to_logical(block);
@@ -112,8 +111,7 @@ namespace eve::detail
   {
     auto block = [&]() -> wide<T, N>
     {
-      using tgt = eve::as<wide<T, N>>;
-      return load(ignore_none, safe, tgt(), b, e);
+      return load(b, e, as<wide<T, N>>{});
     }();
 
     return to_logical(block);
@@ -150,9 +148,9 @@ namespace eve::detail
         if constexpr( !std::is_pointer_v<Ptr> )
         {
           using ptr_t = typename Ptr::template rebind<a_t const>;
-          return load(local_cond, s, as<as_arithmetic_t<Wide>> {}, ptr_t((a_t const *)(p.get())));
+          return load[local_cond](ptr_t((a_t const *)(p.get())), as<as_arithmetic_t<Wide>> {});
         }
-        else { return load(local_cond, s, as<as_arithmetic_t<Wide>> {}, (a_t const *)(p)); }
+        else { return load[local_cond]((a_t const *)(p), as<as_arithmetic_t<Wide>> {}); }
       }(alt());
 
       if constexpr( current_api >= avx512 ) return to_logical(block);
