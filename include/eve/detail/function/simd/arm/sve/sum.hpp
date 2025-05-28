@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE T sum_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v) noexcept
+  EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(splat2))
