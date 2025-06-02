@@ -228,14 +228,14 @@ namespace eve::algo::views
 
     template<callable_options O>
     requires iterator<I>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<converting_iterator>> tgt) const
+    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<converting_iterator>>) const
     {
       auto new_c = map_alternative(
         opts[condition_key],
         [](auto alt) { return eve::convert(alt, as<value_type_t<I>>{}); }
       );
 
-      return eve::convert(eve::load[opts][new_c](base, tgt), as<T>{});
+      return eve::convert(eve::load[opts][new_c](base, as<wide_value_type_t<I>>{}), as<T>{});
     }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,

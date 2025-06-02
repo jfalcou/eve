@@ -89,69 +89,55 @@ namespace eve::detail
   //================================================================================================
   // logical loads require some specific setup
   //================================================================================================
-  // template<relative_conditional_expr C, typename T, typename N, typename Ptr>
-  // EVE_FORCEINLINE logical<wide<T, N>> load_(sse2_, C const& cx, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
-  //   requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
-  // {
-  //   auto block = [&]() -> wide<T, N>
-  //   {
-  //     return load(ptr_cast<T const>(p), as<wide<T, N>>{});
-  //   }();
+  template<relative_conditional_expr C, typename T, typename N, typename Ptr>
+  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sse2_, C const& cx, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
+    requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>>)
+  {
+    auto const mcx   = map_alternative(cx, [](auto alt) { return alt.mask(); });
 
-  //   if constexpr( current_api >= avx512 ) return to_logical(block);
-  //   else                                  return bit_cast(block, tgt);
-  // }
+    auto const block = [&](auto local_cond)
+    {
+      if constexpr (!std::is_pointer_v<Ptr>)
+      {
+        return load[local_cond](ptr_cast<T const>(p.get()), as<wide<T, N>>{});
+      }
+      else
+      {
+        return load[local_cond](ptr_cast<T const>(p), as<wide<T, N>>{});
+      }
+    }(mcx);
 
-  // template<callable_options O, typename Iterator, typename T, typename N>
-  // EVE_FORCEINLINE logical<wide<T, N>>
-  // load_(EVE_REQUIRES(cpu_), O const& opts, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
-  //   requires (x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
-  // {
-  //   auto block = [&]() -> wide<T, N>
-  //   {
-  //     return load(b, e, as<wide<T, N>>{});
-  //   }();
+    if constexpr (current_api >= avx512) return to_logical(block);
+    else                                 return bit_cast(block, as<logical<wide<T, N>>>{});
+  }
 
-  //   return to_logical(block);
-  // }
+  template<relative_conditional_expr C, typename Iterator, typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sse2_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
+  {
+    auto const mcx = map_alternative(cx, [](auto alt) { return alt.mask(); });
+    auto block = return load[mcx](b, e, as<wide<T, N>>{});
+    if constexpr (current_api >= avx512) return to_logical(block);
+    else                                 return bit_cast(block, as<logical<wide<T, N>>>{});
+  }
 
   //================================================================================================
   // Conditional loads
   //================================================================================================
-  template<relative_conditional_expr C, typename Ptr, typename Wide>
-  EVE_FORCEINLINE Wide load_impl(sse2_, C const& cond, Ptr p, as<Wide> tgt) noexcept
-    requires (x86_abi<typename Wide::abi_type> && simd_compatible_ptr<Ptr, Wide> && std::is_pointer_v<Ptr>)
+  template<relative_conditional_expr C, typename Ptr, typename T, typename N>
+  EVE_FORCEINLINE wide<T, N> load_impl(sse2_, C const& cond, Ptr p, as<wide<T, N>> tgt) noexcept
+    requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
   {
     using b_t = std::remove_cvref_t<decltype(*p)>;
-    using r_t = Wide;
+    using r_t = wide<T, N>;
 
-    if constexpr( is_logical_v<b_t> )
+    if constexpr (C::is_complete)
     {
-      auto const alt = [&]()
-      {
-        if constexpr( C::has_alternative ) return cond.rebase(cond.alternative.mask());
-        else return cond;
-      };
-
-      using a_t        = as_arithmetic_t<b_t>;
-      auto const block = [&](auto local_cond)
-      {
-        if constexpr( !std::is_pointer_v<Ptr> )
-        {
-          using ptr_t = typename Ptr::template rebind<a_t const>;
-          return load[local_cond](ptr_t((a_t const *)(p.get())), as<as_arithmetic_t<Wide>> {});
-        }
-        else { return load[local_cond]((a_t const *)(p), as<as_arithmetic_t<Wide>> {}); }
-      }(alt());
-
-      if constexpr( current_api >= avx512 ) return to_logical(block);
-      else return bit_cast(block, as<r_t> {});
+      if      constexpr (C::is_inverted)     return load_impl(current_api, p, tgt);
+      else if constexpr (C::has_alternative) return r_t { cond.alternative };
+      else                                   return r_t { };
     }
-    // Aligned addressed don't need a masked load.
-    else if constexpr( !std::is_pointer_v<Ptr> ) return load.behavior(cpu_{}, opts, p, tgt);
-    else if constexpr( C::is_complete ) return load.behavior(cpu_{}, opts, p, tgt);
     else if constexpr( current_api >= avx512 )
-      {
+    {
       r_t  that;
       auto src = [&](auto const& vs)
       {
@@ -223,9 +209,9 @@ namespace eve::detail
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
         else if constexpr( c == category::uint32x4 )
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-        else return load.behavior(cpu_{}, opts, p, tgt);
+        else return load_impl(cpu_{}, p, tgt);
       }
-      else return load.behavior(cpu_{}, opts, p, tgt);
+      else return load_impl(cpu_{}, p, tgt);
 
       if constexpr( C::has_alternative )
       {
@@ -246,6 +232,6 @@ namespace eve::detail
 
       return that;
     }
-    else return load.behavior(cpu_{}, opts, p, tgt);
+    else return load_impl(cpu_{}, p, tgt);
   }
 }
