@@ -104,17 +104,16 @@ namespace eve::algo::views
       };
     }
 
-    template<relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend wv_type tagged_dispatch(eve::tag::load_,
-                                                   C const & c,
-                                                   S const &,
-                                                   eve::as<wv_type> const &,
-                                                   iota_with_step_iterator self)
+    template <callable_options O>
+    EVE_FORCEINLINE wv_type load(O const& opts, as<wv_type>) const
     {
-      if constexpr ( !C::has_alternative ) return self.wide_cur;
+      using C = rbr::result::fetch_t<condition_key, O>;
+
+      if constexpr ( !C::has_alternative ) return wide_cur;
       else
       {
-        return eve::replace_ignored(self.wide_cur, c, c.alternative);
+        auto c = opts[condition_key];
+        return eve::replace_ignored(wide_cur, c, c.alternative);
       }
     }
   };
