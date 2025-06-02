@@ -21,7 +21,7 @@ inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) 
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of broadcast_groups swizzle"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(-50, 50)
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
                               , tts::logicals(1, 2)
                               )
         )

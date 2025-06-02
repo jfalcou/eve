@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::bit_ternary return type" , eve::test::simd::all_types)
 
 TTS_CASE_WITH("Check behavior of bit_ternary",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(-1000, +1000),
-                            tts::randoms(-1000, +1000),
-                            tts::randoms(-1000, +1000)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;

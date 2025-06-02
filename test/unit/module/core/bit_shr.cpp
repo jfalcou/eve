@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check return types of bit_shr", eve::test::simd::unsigned_integers
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of shr(wide, wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-50, 50), tts::random_bits(), tts::logicals(0, 3)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::random_bits(), tts::logicals(0, 3)))
 <typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shr;
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of shr(wide, wide)",
 
 TTS_CASE_WITH("Check behavior of bit_shr(wide, integral constant)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename L>(T a0, L test)
 {
   using eve::bit_shr;
@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of bit_shr(wide, integral constant)",
 
 TTS_CASE_WITH("Check behavior of shift(wide, scalar)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-50, 50), tts::random_bits(), tts::logicals(0, 3)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::random_bits(), tts::logicals(0, 3)))
 <typename T, typename I, typename L>(T a0, I s, L test)
 {
   using eve::bit_shr;
@@ -78,13 +78,13 @@ TTS_CASE_WITH("Check behavior of shift(wide, scalar)",
 //==================================================================================================
 // Tests for masked bit_shr
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_shr)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::bit_shr[mask](a0),
-//             eve::if_else(mask, eve::bit_shr(a0), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::bit_shr[cx](eve::wide)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_shr[mask](a0, 2),
+            eve::if_else(mask, eve::bit_shr(a0, 2), a0));
+};

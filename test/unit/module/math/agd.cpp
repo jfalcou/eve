@@ -45,7 +45,7 @@ TTS_CASE_WITH("Check behavior of agd on wide",
 //==================================================================================================
 // Tests for masked agd
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::agd)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::agd[cx](eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))

@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of shl on integral types",
 
 TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename L>(T a0, L test)
 {
   using eve::shl;
@@ -76,7 +76,7 @@ TTS_CASE_WITH("Check behavior of shl with scalar shift on integral types",
 //==================================================================================================
 // Tests for masked shl
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::shl)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::shl[cx](eve::wide)",
               eve::test::simd::integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))

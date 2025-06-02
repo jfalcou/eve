@@ -28,7 +28,7 @@ std_scan(T simd, Op op)
 
 TTS_CASE_WITH("Check behavior of default scan",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(-50, 50)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T simd)
 {
   T expected = std_scan(simd, eve::add);
@@ -39,7 +39,7 @@ TTS_CASE_WITH("Check behavior of default scan",
 
 TTS_CASE_WITH("Check behavior of scan with min",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(-50, 50)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T simd)
 {
   T expected = std_scan(simd, eve::min);

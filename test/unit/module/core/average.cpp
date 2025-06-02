@@ -65,8 +65,8 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-10, +10)
-                           , tts::randoms(-10, +10)))
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)
+                           , tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::average;
