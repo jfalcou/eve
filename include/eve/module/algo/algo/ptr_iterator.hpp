@@ -110,12 +110,10 @@ namespace eve::algo
     template <typename OtherPtr>
     auto operator<=>(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr <=> x.ptr; }
 
-    template< relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                                , eve::as<wv_type> const&, ptr_iterator self
-                                                )
+    template<callable_options O>
+    EVE_FORCEINLINE auto load(O const& opts, as<wv_type>) const
     {
-      return eve::load(c, s, self.ptr, Cardinal{});
+      return eve::load[opts](ptr, Cardinal{});
     }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_, relative_conditional_expr auto c, wv_type v, ptr_iterator self)

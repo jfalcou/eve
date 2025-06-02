@@ -375,26 +375,28 @@ namespace eve::algo::views
       };
     }
 
-    template< relative_conditional_expr C, decorator S>
-    EVE_FORCEINLINE friend auto tagged_dispatch (
-        eve::tag::load_, C const& c, S const& s
-      , eve::as<wide_value_type_t<zip_iterator>> const&
-      , zip_iterator self
-    )
+    template<callable_options O>
+    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<zip_iterator>>) const
     {
       wide_value_type_t<zip_iterator> res;
+
+      using C = rbr::result::fetch_t<condition_key, O>;
+      auto c = opts[condition_key];
+
       if constexpr ( C::has_alternative )
       {
         kumi::for_each([&](auto part_alt, auto i, auto& r) {
             auto new_c = c.map_alternative([&](auto) { return part_alt; });
-            r = eve::load(new_c, s, as(r), i); }
-          , c.alternative, self.storage, res);
+
+            r = eve::load[opts][new_c](i, as(r)); }
+          , c.alternative, this->storage, res);
       }
       else
       {
-        kumi::for_each([&](auto i, auto& r) { r = eve::load(c, s, as(r), i); }
-                      , self.storage, res);
+        kumi::for_each([&](auto i, auto& r) { r = eve::load[opts](i, as(r)); }
+                      , this->storage, res);
       }
+
       return res;
     }
   };
