@@ -22,7 +22,7 @@ namespace eve::detail
   // Regular loads
   //================================================================================================
   template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE wide<T, N> load_impl(sse2_, Ptr p, as<wide<T, N>> tgt) noexcept
+  EVE_FORCEINLINE wide<T, N> load_impl(sse2_, Ptr p, as<wide<T, N>>) noexcept
     requires (dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>)
   {
     constexpr auto cat = categorize<wide<T, N>>();
@@ -108,16 +108,16 @@ namespace eve::detail
     }(mcx);
 
     if constexpr (current_api >= avx512) return to_logical(block);
-    else                                 return bit_cast(block, as<logical<wide<T, N>>>{});
+    else                                 return bit_cast(block, tgt);
   }
 
   template<relative_conditional_expr C, typename Iterator, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(sse2_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
   {
     auto const mcx = map_alternative(cx, [](auto alt) { return alt.mask(); });
-    auto block = return load[mcx](b, e, as<wide<T, N>>{});
+    auto block = load[mcx](b, e, as<wide<T, N>>{});
     if constexpr (current_api >= avx512) return to_logical(block);
-    else                                 return bit_cast(block, as<logical<wide<T, N>>>{});
+    else                                 return bit_cast(block, tgt);
   }
 
   //================================================================================================
@@ -127,7 +127,6 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> load_impl(sse2_, C const& cond, Ptr p, as<wide<T, N>> tgt) noexcept
     requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
   {
-    using b_t = std::remove_cvref_t<decltype(*p)>;
     using r_t = wide<T, N>;
 
     if constexpr (C::is_complete)
@@ -209,9 +208,9 @@ namespace eve::detail
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
         else if constexpr( c == category::uint32x4 )
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-        else return load_impl(cpu_{}, p, tgt);
+        else return load_impl(current_api, p, tgt); //TODO cx
       }
-      else return load_impl(cpu_{}, p, tgt);
+      else return load_impl(current_api, p, tgt); //TODO cx
 
       if constexpr( C::has_alternative )
       {
@@ -232,6 +231,6 @@ namespace eve::detail
 
       return that;
     }
-    else return load_impl(cpu_{}, p, tgt);
+    else return load_impl(current_api, p, tgt); //TODO cx
   }
 }
