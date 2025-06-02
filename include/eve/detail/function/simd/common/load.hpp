@@ -71,6 +71,13 @@ namespace eve::detail
   // Load impl
   //================================================================================================
 
+  template<detail::data_source DS, typename T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
+  {
+    if constexpr (std::same_as<abi_t<T, N>, aggregated_>) return aggregate_load(src, tgt);
+    else return bit_cast(load(ptr_cast<T>(src), as<wide<T, N>>{}), tgt);
+  }
+
   template<callable_options O, detail::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
   {
@@ -122,11 +129,11 @@ namespace eve::detail
 
       return res;
     }
-    else if constexpr (requires { load_impl(cx, src, tgt); })
+    else if constexpr (requires { load_impl(current_api, cx, src, tgt); })
     {
       // If there's a backend that can handle the load along with the condition,
       // we use it directly.
-      return load_impl(cx, src, tgt);
+      return load_impl(current_api, cx, src, tgt);
     }
     else if constexpr (std::same_as<C, ignore_none_>)
     {
@@ -140,7 +147,7 @@ namespace eve::detail
       }
       else
       {
-        return load_impl(src, tgt);
+        return load_impl(current_api, src, tgt);
       }
     }
     else // manual conditional load
@@ -202,16 +209,8 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, detail::data_source DS, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<logical<wide<T, N>>> tgt) noexcept
-  {
-    if constexpr (std::same_as<abi_t<T, N>, aggregated_>) return aggregate_load(src, tgt); //TODO AGG + CX
-    else return bit_cast(load(ptr_cast<T>(src), as<wide<T, N>>{}), tgt);
-  }
-
   template<callable_options O, std::input_iterator It, typename Wide>
-  EVE_FORCEINLINE as_wide_t<typename std::iterator_traits<It>::value_type>
-  load_(EVE_REQUIRES(cpu_), O const& opts, It src, as<Wide> tgt) noexcept
+  EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const&, It src, It, as<Wide> tgt) noexcept
   {
     return piecewise_load(src, tgt);
   }

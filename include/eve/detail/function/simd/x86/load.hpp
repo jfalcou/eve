@@ -22,7 +22,7 @@ namespace eve::detail
   // Regular loads
   //================================================================================================
   template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE wide<T, N> load_impl(Ptr p, as<wide<T, N>> tgt) noexcept
+  EVE_FORCEINLINE wide<T, N> load_impl(sse2_, Ptr p, as<wide<T, N>> tgt) noexcept
     requires (dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>)
   {
     constexpr auto cat = categorize<wide<T, N>>();
@@ -89,9 +89,8 @@ namespace eve::detail
   //================================================================================================
   // logical loads require some specific setup
   //================================================================================================
-  // template<callable_options O, typename T, typename N, typename Ptr>
-  // EVE_FORCEINLINE logical<wide<T, N>>
-  // load_( EVE_REQUIRES(cpu_), O const& opts, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
+  // template<relative_conditional_expr C, typename T, typename N, typename Ptr>
+  // EVE_FORCEINLINE logical<wide<T, N>> load_(sse2_, C const& cx, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
   //   requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
   // {
   //   auto block = [&]() -> wide<T, N>
@@ -120,7 +119,7 @@ namespace eve::detail
   // Conditional loads
   //================================================================================================
   template<relative_conditional_expr C, typename Ptr, typename Wide>
-  EVE_FORCEINLINE Wide load_impl(C const& cond, Ptr p, as<Wide> tgt) noexcept
+  EVE_FORCEINLINE Wide load_impl(sse2_, C const& cond, Ptr p, as<Wide> tgt) noexcept
     requires (x86_abi<typename Wide::abi_type> && simd_compatible_ptr<Ptr, Wide> && std::is_pointer_v<Ptr>)
   {
     using b_t = std::remove_cvref_t<decltype(*p)>;

@@ -16,15 +16,11 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE wide<T, N> load_(EVE_REQUIRES(vmx_), O const& opts, Ptr ptr, as<wide<T, N>> tgt) noexcept
+  template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_impl(vmx_, Ptr ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(unsafe2) || !match_option<condition_key, O, ignore_none_>)
-    {
-      return load.behavior(cpu_{}, opts, ptr, tgt);
-    }
-    else if constexpr( N::value * sizeof(T) >= ppc_::bytes )
+    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api >= eve::vsx )
       {
@@ -46,7 +42,7 @@ namespace eve::detail
         }
         else
         {
-          return load.behavior(cpu_{}, opts, ptr, tgt);
+          return load_impl(cpu_{}, ptr, tgt);
         }
       }
     }
@@ -58,15 +54,11 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, typename T, typename U, typename N, typename Lanes>
-  EVE_FORCEINLINE wide<T, N> load_(EVE_REQUIRES(vmx_), O const& opts, aligned_ptr<U, Lanes> ptr, as<wide<T, N>> tgt) noexcept
+  template<typename T, typename U, typename N, typename Lanes>
+  EVE_FORCEINLINE wide<T, N> load_impl(vmx_, aligned_ptr<U, Lanes> ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>>
   {
-    if (O::contains(unsafe2) || !match_option<condition_key, O, ignore_none_>)
-    {
-      return load.behavior(cpu_{}, opts, ptr, tgt);
-    }
-    else if constexpr( N::value * sizeof(T) >= ppc_::bytes )
+    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api >= eve::vsx )
       {
@@ -85,7 +77,7 @@ namespace eve::detail
         if constexpr( sizeof(T) <= 8 )
         {
           if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 ) return vec_ld(0, ptr.get());
-          else                                                     return load.behavior(current_api, opts, ptr.get(), tgt);
+          else                                                     return load_impl(current_api, ptr.get(), tgt);
         }
       }
     }
