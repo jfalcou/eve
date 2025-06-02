@@ -226,22 +226,16 @@ namespace eve::algo::views
       return convert(base.cardinal_cast(N), eve::as<T>{});
     }
 
-    template<relative_conditional_expr C, decorator S>
-      requires iterator<I>
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
-                                                C c,
-                                                S s,
-                                                eve::as<wide_value_type_t<converting_iterator>>,
-                                                converting_iterator self)
+    template<callable_options O>
+    requires iterator<I>
+    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<converting_iterator>> tgt) const
     {
-      auto c1 = map_alternative(
-        c,
-        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
+      auto new_c = map_alternative(
+        opts[condition_key],
+        [](auto alt) { return eve::convert(alt, as<value_type_t<I>>{}); }
       );
 
-      return eve::convert ( eve::load(c1, s, eve::as<wide_value_type_t<I>>{}, self.base)
-                          , eve::as<T>{}
-                          );
+      return eve::convert(eve::load[opts][new_c](base, tgt), as<T>{});
     }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,

@@ -21,10 +21,9 @@ namespace eve::detail
   //================================================================================================
   // Regular loads
   //================================================================================================
-  template<callable_options O, typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE wide<T, N>
-  load_(EVE_REQUIRES(sse2_), O const& opts, Ptr p, as<wide<T, N>> tgt) noexcept
-    requires (dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
+  template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_impl(Ptr p, as<wide<T, N>> tgt) noexcept
+    requires (dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>)
   {
     constexpr auto cat = categorize<wide<T, N>>();
     constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
@@ -90,51 +89,44 @@ namespace eve::detail
   //================================================================================================
   // logical loads require some specific setup
   //================================================================================================
-  template<callable_options O, typename T, typename N, typename Ptr>
-  EVE_FORCEINLINE logical<wide<T, N>>
-  load_( EVE_REQUIRES(cpu_), O const& opts, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
-    requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
-  {
-    auto block = [&]() -> wide<T, N>
-    {
-      return load(ptr_cast<T const>(p), as<wide<T, N>>{});
-    }();
+  // template<callable_options O, typename T, typename N, typename Ptr>
+  // EVE_FORCEINLINE logical<wide<T, N>>
+  // load_( EVE_REQUIRES(cpu_), O const& opts, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
+  //   requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
+  // {
+  //   auto block = [&]() -> wide<T, N>
+  //   {
+  //     return load(ptr_cast<T const>(p), as<wide<T, N>>{});
+  //   }();
 
-    if constexpr( current_api >= avx512 ) return to_logical(block);
-    else                                  return bit_cast(block, tgt);
-  }
+  //   if constexpr( current_api >= avx512 ) return to_logical(block);
+  //   else                                  return bit_cast(block, tgt);
+  // }
 
-  template<callable_options O, typename Iterator, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>>
-  load_(EVE_REQUIRES(cpu_), O const& opts, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
-    requires (x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
-  {
-    auto block = [&]() -> wide<T, N>
-    {
-      return load(b, e, as<wide<T, N>>{});
-    }();
+  // template<callable_options O, typename Iterator, typename T, typename N>
+  // EVE_FORCEINLINE logical<wide<T, N>>
+  // load_(EVE_REQUIRES(cpu_), O const& opts, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
+  //   requires (x86_abi<abi_t<T, N>> && load_safe_no_cx<O>)
+  // {
+  //   auto block = [&]() -> wide<T, N>
+  //   {
+  //     return load(b, e, as<wide<T, N>>{});
+  //   }();
 
-    return to_logical(block);
-  }
+  //   return to_logical(block);
+  // }
 
   //================================================================================================
   // Conditional loads
   //================================================================================================
-  template<callable_options O, typename Ptr, typename Wide>
-  EVE_FORCEINLINE Wide
-  load_(EVE_REQUIRES(sse2_), O const& opts, Ptr p, as<Wide> tgt) noexcept
-    requires (simd_compatible_ptr<Ptr, Wide> && !has_bundle_abi_v<Wide>)
+  template<relative_conditional_expr C, typename Ptr, typename Wide>
+  EVE_FORCEINLINE Wide load_impl(C const& cond, Ptr p, as<Wide> tgt) noexcept
+    requires (x86_abi<typename Wide::abi_type> && simd_compatible_ptr<Ptr, Wide> && std::is_pointer_v<Ptr>)
   {
     using b_t = std::remove_cvref_t<decltype(*p)>;
     using r_t = Wide;
-    using C = rbr::result::fetch_t<condition_key, O>;
-    auto cond = opts[condition_key];
 
-    if constexpr (O::contains(unsafe2))
-    {
-      return load.behavior(cpu_{}, opts, p, tgt);
-    }
-    else if constexpr( is_logical_v<b_t> )
+    if constexpr( is_logical_v<b_t> )
     {
       auto const alt = [&]()
       {
@@ -156,8 +148,6 @@ namespace eve::detail
       if constexpr( current_api >= avx512 ) return to_logical(block);
       else return bit_cast(block, as<r_t> {});
     }
-    // Hack until a proper FIX-#572
-    else if constexpr( has_aggregated_abi_v<r_t> ) return load.behavior(cpu_{}, opts, p, tgt);
     // Aligned addressed don't need a masked load.
     else if constexpr( !std::is_pointer_v<Ptr> ) return load.behavior(cpu_{}, opts, p, tgt);
     else if constexpr( C::is_complete ) return load.behavior(cpu_{}, opts, p, tgt);

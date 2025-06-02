@@ -181,17 +181,12 @@ namespace eve::algo::views
       return reverse(base.cardinal_cast(N));
     }
 
-    template<relative_conditional_expr C, decorator S>
+    template <callable_options O>
+    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<I>> tgt) const
       requires iterator<I>
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
-                                                C                             c,
-                                                S                             s,
-                                                eve::as<wide_value_type_t<I>> tgt,
-                                                reverse_iterator              self)
     {
-      return eve::reverse(
-        eve::load( eve::reverse_conditional(c, tgt), s, tgt, self.base - iterator_cardinal_v<I>)
-      );
+      auto new_c = eve::reverse_conditional(opts[condition_key], tgt);
+      return eve::reverse(eve::load[opts][new_c](base - iterator_cardinal_v<I>, tgt));
     }
 
     template<relative_conditional_expr C>
