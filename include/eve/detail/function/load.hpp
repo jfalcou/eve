@@ -40,14 +40,14 @@ namespace eve
       requires (!Options::contains(condition_key) && !Options::contains(unsafe2))
     {
       using base = typename std::iterator_traits<Iterator>::value_type;
-      return EVE_DISPATCH_CALL(b, as<as_wide_t<base>>{});
+      return EVE_DISPATCH_CALL(b, e, as<as_wide_t<base>>{});
     }
 
     template<std::input_iterator Iterator, simd_value Wide>
     EVE_FORCEINLINE Wide operator()(Iterator b, Iterator e, as<Wide> tgt) const noexcept
       requires (!Options::contains(condition_key) && !Options::contains(unsafe2))
     {
-      return EVE_DISPATCH_CALL(b, tgt);
+      return EVE_DISPATCH_CALL(b, e, tgt);
     }
 
     EVE_CALLABLE_OBJECT(load_t, load_);
@@ -62,18 +62,18 @@ namespace eve
 #  include <eve/detail/function/simd/x86/load.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/detail/function/simd/ppc/load.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/detail/function/simd/ppc/load.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_NEON_HEADER)
-// #  include <eve/detail/function/simd/arm/neon/load.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/detail/function/simd/arm/neon/load.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-// #  include <eve/detail/function/simd/arm/sve/load.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/detail/function/simd/arm/sve/load.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_RISCV_HEADER)
-// #  include <eve/detail/function/simd/riscv/load.hpp>
-// #endif
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/detail/function/simd/riscv/load.hpp>
+#endif
