@@ -53,74 +53,41 @@ EVE_FORCEINLINE wide<T, N>
   else if constexpr( match(c, category::size64_) ) return __riscv_vle64(mask, p, N::value);
 }
 
-template<callable_options O,
-         arithmetic_scalar_value   T,
-         typename N,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE wide<T, N> load_(EVE_REQUIRES(rvv_), O const& opts, Ptr p, as<wide<T, N>> tgt) noexcept
-requires(rvv_abi<abi_t<T, N>>)
+template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+EVE_FORCEINLINE wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
+  requires rvv_abi<abi_t<T, N>>
 {
-  if constexpr (O::contains(unsafe2))
-  {
-    return load.behavior(cpu_{}, opts, p, tgt);
-  }
-  else
-  {
-    auto ptr = unalign(p);
+  auto ptr = unalign(p);
 
-    if constexpr( C::has_alternative )
-    {
-      // as later we replace ignored, we can use unsafe load.
-      auto load_cond = drop_alternative(cond);
-      auto res       = perform_load(load_cond.mask(tgt), tgt, ptr);
-      return eve::replace_ignored(res, cond, cond.alternative);
-    }
-    else if constexpr( C::is_complete && !C::is_inverted ) return wide<T, N>(0);
-    else if constexpr( C::is_complete && C::is_inverted )
-    {
-      return perform_alternative_load(rvv_true<T, N>(), tgt, ptr);
-    }
-    else return perform_alternative_load(cond.mask(tgt), tgt, ptr);
+  if constexpr( C::has_alternative )
+  {
+    // as later we replace ignored, we can use unsafe load.
+    auto load_cond = drop_alternative(cx);
+    auto res       = perform_load(load_cond.mask(tgt), tgt, ptr);
+    return eve::replace_ignored(res, cx, cx.alternative);
   }
+  else if constexpr( C::is_complete && !C::is_inverted ) return wide<T, N>{};
+  else if constexpr( C::is_complete && C::is_inverted )
+  {
+    return perform_alternative_load(rvv_true<T, N>(), tgt, ptr);
+  }
+  else return perform_alternative_load(expand_mask(cx, tgt), tgt, ptr);
 }
 
-template<callable_options O,
-         typename T,
-         typename N,
-         simd_compatible_ptr<logical<wide<T, N>>> Pointer>
-EVE_FORCEINLINE logical<wide<T, N>>
-                load_(EVE_REQUIRES(rvv_), O const& opts, Pointer ptr, as<logical<wide<T, N>>> tgt) noexcept
-requires rvv_abi<abi_t<T, N>>
+template<relative_conditional_expr C, typename T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
+EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<logical<wide<T, N>>>) noexcept
 {
-  if constexpr (O::contains(unsafe2))
-  {
-    return load.behavior(cpu_{}, opts, ptr, tgt);
-  }
-  else
-  {
-    auto cond = opts[condition_key];
-    auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
-    auto const block = load[c1](ptr_cast<T const>(ptr), as<wide<T, N>>{});
-    return to_logical(block);
-  }
+  auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });
+  auto const block = load[c1](ptr_cast<T const>(ptr), as<wide<T, N>>{});
+  return to_logical(block);
 }
 
-template<callable_options O, typename Iterator, typename T, typename N>
-EVE_FORCEINLINE logical<wide<T, N>>
-                load_(EVE_REQUIRES(rvv_), O const& opts, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
-requires rvv_abi<abi_t<T, N>>
+template<relative_conditional_expr C, typename Iterator, typename T, typename N>
+EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>>) noexcept
 {
-  if constexpr (O::contains(unsafe2))
-  {
-    return load.behavior(cpu_{}, opts, b, e, tgt);
-  }
-  else
-  {
-    auto cond = opts[condition_key];
-    auto const c1    = map_alternative(cond, [](auto alt) { return alt.mask(); });
-    auto const block = load[c1](b, e, as<wide<T, N>>{});
-    return to_logical(block);
-  }
+  auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });
+  auto const block = load[c1](b, e, as<wide<T, N>>{});
+  return to_logical(block);
 }
 
 }
