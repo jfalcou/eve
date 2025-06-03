@@ -24,7 +24,7 @@ auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of slide_left swizzle"
               , eve::test::simd::all_types
-              , tts::generate (tts::randoms(-50, 50), tts::logicals(0, 1))
+              , tts::generate (tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 1))
               )
 <typename T, typename L>(T simd, L logicals)
 {

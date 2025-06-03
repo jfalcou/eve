@@ -223,7 +223,7 @@ TTS_CASE("is_repeating_pattern")
   {
     auto full = to_idxs(_full);
     auto res  = eve::detail::idxm::is_repeating_pattern(full);
-    TTS_EXPECT_NOT(res) << tts::as_string(full) << " res: " << tts::as_string(*res);
+    TTS_EXPECT_NOT(res) << tts::as_string(full) << " res: " << tts::as_string(res);
   };
 
   // 1 register
@@ -504,7 +504,7 @@ TTS_CASE("is_rotate")
 
     if( expected == -1 )
     {
-      TTS_EXPECT_NOT(actual) << tts::as_string(in) << " actual: " << *actual;
+      TTS_EXPECT_NOT(actual) << tts::as_string(in) << " actual: " << tts::as_string(actual);
       return;
     }
 

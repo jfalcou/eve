@@ -21,7 +21,7 @@ T scalar_rotate(T x, std::ptrdiff_t m) {
 
 TTS_CASE_WITH( "Check behavior of rotate swizzle"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(-50, 50)
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
                         , tts::logicals(0, 1)
                         )
         )
