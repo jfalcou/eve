@@ -74,8 +74,106 @@ namespace eve::detail
   template<detail::data_source DS, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
-    if constexpr (std::same_as<abi_t<T, N>, aggregated_>) return aggregate_load(src, tgt);
-    else return bit_cast(load(ptr_cast<T>(src), as<wide<T, N>>{}), tgt);
+    return bit_cast(load(ptr_cast<T>(src), as<wide<T, N>>{}), tgt);
+  }
+
+  template<relative_conditional_expr C, detail::data_source DS, typename Wide>
+  EVE_FORCEINLINE Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
+  {
+    using e_t = typename pointer_traits<Wide>::value_type;
+    using c_t = cardinal_t<Wide>;
+
+    if constexpr (!std::is_pointer_v<DS>)
+    {
+      constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= DS::alignment();
+
+      if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
+      {
+        const auto res = eve::load[unsafe2](src, tgt);
+
+        if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
+        else                              return res;
+      }
+      else
+      {
+        return eve::load[cx](src.get(), tgt);
+      }
+    }
+    else
+    {
+      // If the ignore/keep is complete we can jump over if_else
+      if constexpr (C::is_complete)
+      {
+        if constexpr (C::is_inverted)
+        {
+          return eve::load(src, tgt);
+        }
+        else
+        {
+          if constexpr (C::has_alternative) return Wide {cx.alternative};
+          else                              return Wide {};
+        }
+      }
+      else
+      {
+        auto offset = cx.offset(tgt);
+
+        if constexpr (C::has_alternative)
+        {
+          [[maybe_unused]] Wide that(cx.alternative);
+          auto                *dst = (e_t *)(&that.storage());
+          std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
+          return that;
+        }
+        else
+        {
+          [[maybe_unused]] Wide that = {};
+          auto                *dst = (e_t *)(&that.storage());
+          std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
+          return that;
+        }
+      }
+    }
+  }
+
+  template<relative_conditional_expr C, detail::data_source DS, typename Wide>
+  EVE_FORCEINLINE Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
+  {
+    constexpr auto aggregated = has_aggregated_abi_v<Wide>;
+    constexpr auto emulated = has_emulated_abi_v<Wide>;
+
+    if constexpr (aggregated || emulated)
+    {
+      if constexpr (std::same_as<C, ignore_none_>)
+      {
+        if constexpr (aggregated)
+        {
+          return aggregate_load(src, tgt);
+        }
+        else if constexpr (emulated)
+        {
+          return piecewise_load(unalign(src), tgt);
+        }
+      }
+      else
+      {
+        return load_cx_(cx, src, tgt);
+      }
+    }
+    else if constexpr (requires { load_impl(api, cx, src, tgt); })
+    {
+      // If there's a backend that can handle the load along with the condition,
+      // we use it directly.
+      return load_impl(api, cx, src, tgt);
+    }
+    else if constexpr (std::same_as<C, ignore_none_>)
+    {
+      return load_impl(api, src, tgt);
+    }
+    else
+    {
+      return load_cx_(cx, src, tgt);
+    }
   }
 
   template<callable_options O, detail::data_source DS, typename Wide>
@@ -129,85 +227,12 @@ namespace eve::detail
 
       return res;
     }
-    else if constexpr (requires { load_impl(current_api, cx, src, tgt); })
+    else
     {
-      // If there's a backend that can handle the load along with the condition,
-      // we use it directly.
-      return load_impl(current_api, cx, src, tgt);
-    }
-    else if constexpr (std::same_as<C, ignore_none_>)
-    {
-      if constexpr (has_aggregated_abi_v<Wide>)
-      {
-        return aggregate_load(src, tgt);
-      }
-      else if constexpr (has_emulated_abi_v<Wide>)
-      {
-        return piecewise_load(unalign(src), tgt);
-      }
-      else
-      {
-        return load_impl(current_api, src, tgt);
-      }
-    }
-    else // manual conditional load
-    {
-      using e_t = typename pointer_traits<Wide>::value_type;
-      using c_t = cardinal_t<Wide>;
-
-      if constexpr (!std::is_pointer_v<DS>)
-      {
-        constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= DS::alignment();
-
-        if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
-        {
-          const auto res = eve::load[unsafe2](src, tgt);
-
-          if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
-          else                              return res;
-        }
-        else
-        {
-          return eve::load[cx](src.get(), tgt);
-        }
-      }
-      else
-      {
-        // If the ignore/keep is complete we can jump over if_else
-        if constexpr (C::is_complete)
-        {
-          if constexpr (C::is_inverted)
-          {
-            return eve::load(src, tgt);
-          }
-          else
-          {
-            if constexpr (C::has_alternative) return Wide {cx.alternative};
-            else                              return Wide {};
-          }
-        }
-        else
-        {
-          auto offset = cx.offset(tgt);
-
-          if constexpr (C::has_alternative)
-          {
-            [[maybe_unused]] Wide that(cx.alternative);
-            auto                *dst = (e_t *)(&that.storage());
-            std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
-            return that;
-          }
-          else
-          {
-            [[maybe_unused]] Wide that = {};
-            auto                *dst = (e_t *)(&that.storage());
-            std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
-            return that;
-          }
-        }
-      }
+      return load_common(current_api, opts[condition_key], src, tgt);
     }
   }
+
 
   template<callable_options O, std::input_iterator It, typename Wide>
   EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const&, It src, It, as<Wide> tgt) noexcept
