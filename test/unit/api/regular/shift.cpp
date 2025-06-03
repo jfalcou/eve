@@ -38,7 +38,7 @@ TTS_CASE_TPL( "Check behavior of shift operators on eve::wide", eve::test::simd:
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of shift operators on eve::wide"
               , eve::test::simd::integers
-              , tts::generate(tts::randoms(-50,50), tts::random_bits())
+              , tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::random_bits())
               )
 <typename T, typename I>(T a0, I s)
 {
@@ -59,7 +59,7 @@ TTS_CASE_WITH ( "Check behavior of shift operators on eve::wide"
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of shift operators on eve::wide and integral constant"
               , eve::test::simd::integers
-              , tts::generate(tts::randoms(-50,50))
+              , tts::generate(tts::randoms(eve::valmin, eve::valmax))
               )
 <typename T>(T a0)
 {
