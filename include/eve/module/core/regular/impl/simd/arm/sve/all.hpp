@@ -13,16 +13,25 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, relative_conditional_expr C>
+template<callable_options O, scalar_value T, typename N>
 EVE_FORCEINLINE bool
-all_(EVE_SUPPORTS(sve_), C const& cond, logical<wide<T,N>> const& v) noexcept
+all_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
+  using C = rbr::result::fetch_t<condition_key, O>;
+  auto cx = opts[condition_key];
+
   if constexpr( C::is_complete )
   {
     if constexpr( C::is_inverted )  return count_true(v) == N::value;
     else                            return true;
   }
-  else  return count_true[cond](v) == cond.count(as<wide<T,N>>());
+  else
+  {
+    const auto masked_count = count_true[cx](v);
+
+    if constexpr (relative_conditional_expr<C>) return masked_count == cx.count(as(v));
+    else                                        return masked_count == count_true(expand_mask(cx, as(v)));
+  }
 }
 }
