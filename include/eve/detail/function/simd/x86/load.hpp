@@ -87,40 +87,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // logical loads require some specific setup
-  //================================================================================================
-  template<relative_conditional_expr C, typename T, typename N, typename Ptr>
-  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sse2_, C const& cx, Ptr p, as<logical<wide<T, N>>> tgt) noexcept
-    requires (dereference_as<logical<T>, Ptr>::value && x86_abi<abi_t<T, N>>)
-  {
-    auto const mcx   = map_alternative(cx, [](auto alt) { return alt.mask(); });
-
-    auto const block = [&](auto local_cond)
-    {
-      if constexpr (!std::is_pointer_v<Ptr>)
-      {
-        return load[local_cond](ptr_cast<T const>(p.get()), as<wide<T, N>>{});
-      }
-      else
-      {
-        return load[local_cond](ptr_cast<T const>(p), as<wide<T, N>>{});
-      }
-    }(mcx);
-
-    if constexpr (current_api >= avx512) return to_logical(block);
-    else                                 return bit_cast(block, tgt);
-  }
-
-  template<relative_conditional_expr C, typename Iterator, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sse2_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>> tgt) noexcept
-  {
-    auto const mcx = map_alternative(cx, [](auto alt) { return alt.mask(); });
-    auto block = load[mcx](b, e, as<wide<T, N>>{});
-    if constexpr (current_api >= avx512) return to_logical(block);
-    else                                 return bit_cast(block, tgt);
-  }
-
-  //================================================================================================
   // Conditional loads
   //================================================================================================
   template<relative_conditional_expr C, typename Ptr, typename T, typename N>
