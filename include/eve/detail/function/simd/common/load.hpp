@@ -71,10 +71,30 @@ namespace eve::detail
   // Load impl
   //================================================================================================
 
+  template<callable_options O, std::input_iterator It, typename Wide>
+  EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const&, It src, [[maybe_unused]] It end, as<Wide> tgt) noexcept
+  {
+    if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
+    {
+      return to_logical(load(src, end, as<as_arithmetic_t<Wide>>{}));
+    }
+    else
+    {
+      return piecewise_load(src, tgt);
+    }
+  }
+
   template<detail::data_source DS, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
-    return bit_cast(load(ptr_cast<T>(src), as<wide<T, N>>{}), tgt);
+    if constexpr (logical<wide<T, N>>::abi_type::is_wide_logical)
+    {
+      return bit_cast(load(ptr_cast<T const>(src), as<wide<T, N>>{}), tgt);
+    }
+    else
+    {
+      return to_logical(load(ptr_cast<T const>(src), as<wide<T, N>>{}));
+    }
   }
 
   template<relative_conditional_expr C, detail::data_source DS, typename Wide>
@@ -104,15 +124,16 @@ namespace eve::detail
       // If the ignore/keep is complete we can jump over if_else
       if constexpr (C::is_complete)
       {
-        if constexpr (C::is_inverted)
-        {
-          return eve::load(src, tgt);
-        }
-        else
-        {
-          if constexpr (C::has_alternative) return Wide {cx.alternative};
-          else                              return Wide {};
-        }
+        if constexpr (C::has_alternative) return Wide {cx.alternative};
+        else                              return Wide {};
+      }
+      else if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
+      {
+        using W = as_arithmetic_t<Wide>;
+        using T = element_type_t<W>;
+
+        auto const mcx = map_alternative(cx, [](auto alt) { return alt.mask(); });
+        return to_logical(load[mcx](ptr_cast<T const>(src), as<W>{}));
       }
       else
       {
@@ -231,12 +252,5 @@ namespace eve::detail
     {
       return load_common(current_api, opts[condition_key], src, tgt);
     }
-  }
-
-
-  template<callable_options O, std::input_iterator It, typename Wide>
-  EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const&, It src, It, as<Wide> tgt) noexcept
-  {
-    return piecewise_load(src, tgt);
   }
 }
