@@ -109,7 +109,7 @@ namespace eve::detail
 
       if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {
-        const auto res = eve::load[unsafe2](src, tgt);
+        const auto res = eve::load[unsafe](src, tgt);
 
         if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
         else                              return res;
