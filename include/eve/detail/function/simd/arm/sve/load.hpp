@@ -33,23 +33,4 @@ namespace eve::detail
     }
     else return svld1(expand_mask(cx, tgt), ptr);
   }
-
-  //================================================================================================
-  // Logical support
-  //================================================================================================
-  template<relative_conditional_expr C, typename T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
-  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sve_, C const& cx, Ptr ptr, as<logical<wide<T, N>>>) noexcept
-  {
-      auto const c1     = map_alternative(cx, [](auto alt) { return alt.mask(); });
-      auto const block  = load[c1](ptr_cast<T const>(ptr), as<wide<T, N>>{});
-      return to_logical(block);
-  }
-
-  template<relative_conditional_expr C, typename Iterator, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> load_impl(sve_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>>) noexcept
-  {
-      auto const c1     = map_alternative(cx, [](auto alt) { return alt.mask(); });
-      auto const block  = load[c1](b, e, as<wide<T, N>>{});
-      return to_logical(block);
-  }
 }
