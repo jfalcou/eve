@@ -174,9 +174,9 @@ namespace eve::detail
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
         else if constexpr( c == category::uint32x4 )
           that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-        else return load_common(cpu_{}, cond, p, tgt); //TODO cx
+        else return load_common(cpu_{}, cond, p, tgt);
       }
-      else return load_common(cpu_{}, cond, p, tgt); //TODO cx
+      else return load_common(cpu_{}, cond, p, tgt);
 
       if constexpr( C::has_alternative )
       {
@@ -197,6 +197,6 @@ namespace eve::detail
 
       return that;
     }
-    else return load_common(cpu_{}, cond, p, tgt); //TODO cx
+    else return load_common(cpu_{}, cond, p, tgt);
   }
 }
