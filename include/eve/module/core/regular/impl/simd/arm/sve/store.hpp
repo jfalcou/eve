@@ -25,7 +25,7 @@ namespace eve::detail
     else if constexpr (C::is_complete && !C::is_inverted) return;
     else if constexpr (N::value != expected_cardinal_v<T>)
     {
-      auto tgt = as<wide<T, N>>{};
+      auto tgt = as<wide<T>>{};
       
       if constexpr (std::same_as<C, ignore_none_>)
       {
@@ -33,7 +33,8 @@ namespace eve::detail
       }
       else
       {
-        svst1(expand_mask(cx, tgt) && expand_mask(keep_first(N::value), tgt), unalign(p), bit_cast(v, tgt));
+        auto cxm = bit_cast(expand_mask(cx, as<wide<T, N>>{}), as<logical<wide<T>>>());
+        svst1(cxm && expand_mask(keep_first(N::value), tgt), unalign(p), bit_cast(v, tgt));
       }
     }
     else
