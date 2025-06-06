@@ -235,29 +235,22 @@ namespace eve::algo::views
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
-      template <relative_conditional_expr C, typename N>
-      EVE_FORCEINLINE friend void tagged_dispatch(
-        eve::tag::store_, C c, wide<value_type, N> v, zip_iterator<Is...> self )
+      template <callable_options O, typename N>
+      EVE_FORCEINLINE auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
+        using C = rbr::result::fetch_t<condition_key, O>;
+        auto cx = opts[condition_key];
+
         if constexpr (C::has_alternative)
         {
-          v = eve::replace_ignored(v, c, c.alternative);
-          eve::store(v, self);
+          v = eve::replace_ignored(v, cx, cx.alternative);
+          eve::store(v, *this);
         }
         else
         {
-          kumi::for_each([&](auto what, auto i) { return  eve::store[c](what, i); },
-                         v, self.storage);
+          kumi::for_each([&](auto what, auto i) { return eve::store[opts](what, i); },
+                         v, storage);
         }
-      }
-
-      template <typename N>
-      EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_,
-                                                   wide<value_type, N> v,
-                                                   zip_iterator<Is...> self )
-      {
-        kumi::for_each([&](auto what, auto i) { return  eve::store(what, i); },
-                       v, self.storage);
       }
 
       template <relative_conditional_expr C, typename N>

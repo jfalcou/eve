@@ -42,13 +42,26 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
+  //!     // Regular overload
+  //!     template<simd_value T, simd_compatible_ptr<T> Ptr>
+  //!     void store(T value, Ptr ptr) noexcept;                                         // 1
   //!
+  //!     // Lanes masking
+  //!     auto mul[conditional_expr auto c](/* any of the above overloads */) noexcept;  // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   **Return value**
+  //!    * `value` : The [SIMD value](@ref eve::simd_value) to store.
+  //!    * `ptr`   : A pointer to the memory location where the elements of `value` will be stored.
+  //!    * `c`     : A [relative conditional expression](@ref eve::relativeconditional_expr) masking
+  //!                the operation.
+  //!
+  //!   **Overloads**
+  //!
+  //!    1. Stores the elements of `value` into the memory location pointed to by `ptr`.
+  //!    2. Same as 1. but lanes masked by the condition `c` will not be stored.
   //!
   //================================================================================================
   inline constexpr auto store = functor<store_t>;
@@ -63,17 +76,17 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/store.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/core/regular/impl/simd/ppc/store.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/store.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_NEON_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/neon/store.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/store.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/store.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/store.hpp>
+#endif
 
 // #if defined(EVE_INCLUDE_RISCV_HEADER)
 // #  include <eve/module/core/regular/impl/simd/riscv/store.hpp>
