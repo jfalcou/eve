@@ -51,7 +51,7 @@ namespace eve::detail
     }
     else if constexpr (std::same_as<C, ignore_first> || std::same_as<C, keep_last>)
     {
-      int count = c.count(tgt);
+      int count = c.count(tgt) + (fundamental_cardinal_v<T> - cardinal_v<S>);
 
       if constexpr (current_api >= sve2)
       {
