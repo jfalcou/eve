@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('intro-02.html',''); initResizable(); }
 <div class="contents">
 <div class="textblock"><p><a class="el" href="intro-01.html">In the previous tutorial</a>, we managed to convert a sequential function into a function using SIMD types and functions. In general, such function is meant to be applied to a large set of data instead of a single register.</p>
 <p>As for usual sequential computation, we want to lift ourselves from raw loops and think using algorithms. <b>EVE</b> provides such ready-to-use SIMD aware algorithms and this tutorial will take a look at how to handle them.</p>
-<h1><a class="anchor" id="autotoc_md110"></a>
+<h1><a class="anchor" id="autotoc_md112"></a>
 Initial problem</h1>
 <p>Let's try to apply our sequential conversion function over data stored in <code>std::vector</code> using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
@@ -162,7 +162,7 @@ Initial problem</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Very similar code, except for the fact the input data are passed directly without using iterators.</p>
-<h1><a class="anchor" id="autotoc_md111"></a>
+<h1><a class="anchor" id="autotoc_md113"></a>
 Toward SIMD Algorithms</h1>
 <p>We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in eve::algo. All algorithms in <b>EVE</b> are range-based thus simplifying the transition from code using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
@@ -192,7 +192,7 @@ Toward SIMD Algorithms</h1>
 <li><a class="el" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e" title="SIMD version of std::transform.">eve::algo::transform_to</a> takes a single input range. To pass multiple parallel ranges, we use eve::views::zip that constructs a view over them.</li>
 <li>as we consume a zipped range, the data passed to the lambda function behaves like a tuple. We will dive into details of this tuple later but for now just remember you can retrieve the data member exactly like with a regular tuple (using <code>get</code> or structured bindings).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md112"></a>
+<h1><a class="anchor" id="autotoc_md114"></a>
 Tuning algorithms</h1>
 <p>In SIMD algorithms we by default assume that the provided operation is simple (a few instructions), since this is the common case. This means we use aligned reads and do unrolling, which is an important optimisation. However, for a complex case, like here, it is beneficial to opt out.</p>
 <p><b>EVE</b> provides various traits to customize algorithms behavior. The traits we're interested in are:</p><ul>
@@ -223,7 +223,7 @@ Tuning algorithms</h1>
 <div class="ttc" id="agroup__algo__traits_ga244da44511b03c597243683208a3b731_html_ga244da44511b03c597243683208a3b731"><div class="ttname"><a href="group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdoc">NOTE: equivalent to no_aligning + no_unrolling + single_pass By default eve algorithms will assume th...</div><div class="ttdef"><b>Definition:</b> traits.hpp:267</div></div>
 </div><!-- fragment --><p>Best strategy is always to benchmark your code and tune algorithms accordingly.</p>
 <p>Note that this kind of tuning is not reserved to algorithms. The callable <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="tuple_callable computing the  norm of its inputs.">eve::hypot</a></code> can also be tuned (here as <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="tuple_callable computing the  norm of its inputs.">eve::hypot</a>[eve::pedantic]</code>) to enforce some behaviors regarding accuracy or standard compliance).</p>
-<h1><a class="anchor" id="autotoc_md113"></a>
+<h1><a class="anchor" id="autotoc_md115"></a>
 Conclusion</h1>
 <p>In this tutorial, we managed to:</p><ul>
 <li>use a simple algorithm from <b>EVE</b> algorithms set</li>

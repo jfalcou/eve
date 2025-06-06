@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::store</title>
+<title>E.V.E: eve::last_true</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a590be84f09.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -120,8 +120,8 @@ $(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a
 </div>
 
 <div class="contents">
-<a id="ga92b6c322f7422825155c2a590be84f09" name="ga92b6c322f7422825155c2a590be84f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga92b6c322f7422825155c2a590be84f09">&#9670;&#160;</a></span>store</h2>
+<a id="ga2d2fb7dc69f1ce7f4660b5bbc452dfac" name="ga2d2fb7dc69f1ce7f4660b5bbc452dfac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">&#9670;&#160;</a></span>last_true</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::store = {}</td>
+          <td class="memname">eve::last_true = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;last_true_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -139,38 +139,38 @@ $(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md32"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">//! description NOT FOUND    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;value T, <span class="keyword">typename</span> Dest&gt;</div>
-<div class="line"><span class="keywordtype">void</span> operator()(T <span class="keyword">const</span>&amp; <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Dest* ptr) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
-<div class="line">                                           <span class="keyword">requires</span>( std::is_same_v&lt;Dest, element_type_t&lt;T&gt;);</div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:34</div></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">last_true</a>(L m) <span class="keyword">noexcept</span>;                                               <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">last_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> m) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// lane masking</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">last_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;   <span class="comment">// 2</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">last_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;      <span class="comment">// 2</span></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:132</div></div>
+<div class="ttc" id="agroup__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac_html_ga2d2fb7dc69f1ce7f4660b5bbc452dfac"><div class="ttname"><a href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac">eve::last_true</a></div><div class="ttdeci">constexpr auto last_true</div><div class="ttdoc">Returns the index of the last element in the input which evaluates to true, if there is one.</div><div class="ttdef"><b>Definition:</b> last_true.hpp:83</div></div>
+<div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition:</b> top_bits.hpp:80</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
-<p>parameters NOT FOUND</p>
+<ul>
+<li>m - logical_value or <a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">top_bits</a> where to find last true value</li>
+</ul>
 <p><b>Return value</b></p>
-<p>return values NOT FOUND</p>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p>Higher-order function generating a masked version of <a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09" title="Callable object computing //! description NOT FOUND.">eve::store</a></p>
-<p><b>Parameters</b></p>
-<p><code>cond</code> : conditional expression</p>
-<p><b>Return value</b></p>
-<p>A Callable object so that the expression <code>store[cond](x, ...)</code> is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Select value based on conditional mask or values.">if_else(cond,store(x, ...),x)</a></code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md36"></a>
-Supported decorators</h4>
-<p>no decorators are supported </p>
-
+<ol type="1">
+<li>An <code>std::optional</code> containing the index of the last element which evaluates to <code>true</code>, <code>std::nullopt</code> if there are none.</li>
+<li>Same as 1. but masked elements are ignored during the search.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md22"></a>
+Should you check for any?</h2>
+<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do otherwise.</p>
+<h2><a class="anchor" id="autotoc_md23"></a>
+What if I know there is a match?</h2>
+<p>We would recommend <code>*eve<a class="el" href="group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#ga2d2fb7dc69f1ce7f4660b5bbc452dfac" title="Returns the index of the last element in the input which evaluates to true, if there is one.">last_true(m)</a></code> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
