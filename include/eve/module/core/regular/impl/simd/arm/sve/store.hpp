@@ -23,23 +23,6 @@ namespace eve::detail
 
     if constexpr (C::has_alternative) store.behavior(cpu_{}, opts, v, p);
     else if constexpr (C::is_complete && !C::is_inverted) return;
-    else if constexpr (N::value != expected_cardinal_v<T>)
-    {
-      auto tgt = as<wide<T>>{};
-      
-      if constexpr (std::same_as<C, ignore_none_>)
-      {
-        svst1(expand_mask(keep_first(N::value), tgt), unalign(p), bit_cast(v, tgt));
-      }
-      else
-      {
-        auto cxm = bit_cast(expand_mask(cx, as<wide<T, N>>{}), as<logical<wide<T>>>());
-        svst1(cxm && expand_mask(keep_first(N::value), tgt), unalign(p), bit_cast(v, tgt));
-      }
-    }
-    else
-    {
-      svst1(expand_mask(cx, as<wide<T, N>>{}), unalign(p), v);
-    }
+    else svst1(expand_mask(cx, as<wide<T, N>>{}), unalign(p), v);
   }
 }
