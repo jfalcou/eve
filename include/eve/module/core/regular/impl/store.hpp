@@ -19,169 +19,104 @@
 
 namespace eve::detail
 {
-// -----------------------------------------------------------------------------------------------
-// simd Tuple case
-template<kumi::product_type T, typename S, typename... Ptrs>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_),
-       wide<T, S> const& value,
-       soa_ptr<Ptrs...>  ptrs) noexcept requires std::same_as<abi_t<T, S>, bundle_>
-{
-  kumi::for_each([](auto v, auto p) { store(v, p); }, value, ptrs);
-}
-
-template<kumi::product_type T, typename S, relative_conditional_expr C, typename... Ptrs>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_), C const& c, wide<T, S> const& value, soa_ptr<Ptrs...> ptrs) noexcept
-{
-  if constexpr( C::has_alternative )
+  template<callable_options O, simd_value T, typename Dst>
+  EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, T value, Dst dst) noexcept
   {
-    auto alt = [&]
-    {
-      if constexpr( kumi::product_type<typename C::alternative_type> ) return c.alternative;
-      else return c.alternative.storage();
-    }();
+    using C = rbr::result::fetch_t<condition_key, O>;
+    auto cx = opts[condition_key];
 
-    kumi::for_each(
-        [&](auto v, auto part_alt, auto p)
+    if constexpr (has_store_equivalent<T, Dst>)
+    {
+      auto [n_cx, n_value, n_dst] = store_equivalent(cx, value, dst);
+      store[n_cx](n_value, n_dst);
+    }
+    else if constexpr (!std::is_pointer_v<Dst>)
+    {
+      store[opts](value, dst.get());
+    }
+    else if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr (kumi::product_type<T>)
+      {
+        kumi::for_each([](auto v, auto p) { store(v, p); }, value, dst);
+      }
+      else if constexpr (has_emulated_abi_v<typename T::abi_type>)
+      {
+        apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
+      }
+      else if constexpr (has_aggregated_abi_v<typename T::abi_type>)
+      {
+        value.storage().apply(
+          [&]<typename... Sub>(Sub&...v)
+          {
+            int k = 0;
+            ((store(v, dst + k), k += Sub::size()), ...);
+          });
+      }
+    }
+    else if constexpr (C::is_complete) return;
+    else if constexpr (kumi::product_type<T>)
+    {
+      if constexpr (C::has_alternative)
+      {
+        auto alt = [&]
         {
-          auto new_c = c.map_alternative([&](auto) { return part_alt; });
-          store[new_c](v, p);
-        },
-        value.storage(),
-        alt,
-        ptrs);
-  }
-  else
-  {
-    kumi::for_each([&](auto v, auto p) { store[c](v, p); }, value.storage(), ptrs);
-  }
-}
+          if constexpr (kumi::product_type<typename C::alternative_type>) return cx.alternative;
+          else return cx.alternative.storage();
+        }();
 
-// -----------------------------------------------------------------------------------------------
-// simd Regular case
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_),
-       wide<T, N> value,
-       T         *ptr) noexcept requires std::same_as<abi_t<T, N>, emulated_>
-{
-  apply<N::value>([&](auto... I) { ((*ptr++ = value.get(I)), ...); });
-}
-
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_),
-       wide<T, N> value,
-       T         *ptr) noexcept requires std::same_as<abi_t<T, N>, aggregated_>
-{
-  value.storage().apply(
-      [&]<typename... Sub>(Sub&...v)
+        kumi::for_each(
+            [&](auto v, auto part_alt, auto p)
+            {
+              auto new_c = cx.map_alternative([&](auto) { return part_alt; });
+              store[new_c](v, p);
+            },
+            value.storage(),
+            alt,
+            dst);
+      }
+      else
       {
-        int k = 0;
-        ((store(v, ptr + k), k += Sub::size()), ...);
-      });
-}
-
-// -----------------------------------------------------------------------------------------------
-// simd Aligned case
-template<arithmetic_scalar_value T, typename S, typename Lanes>
-    EVE_FORCEINLINE void
-    store_(EVE_SUPPORTS(cpu_), wide<T, S> const& value, aligned_ptr<T, Lanes> ptr) noexcept
-    requires(S::value <= Lanes::value)
-    && std::same_as<abi_t<T, S>, emulated_>
-{
-  store(value, ptr.get());
-}
-
-template<arithmetic_scalar_value T, typename S, typename Lanes>
-    EVE_FORCEINLINE void
-    store_(EVE_SUPPORTS(cpu_), wide<T, S> const& value, aligned_ptr<T, Lanes> ptr) noexcept
-    requires(S::value <= Lanes::value)
-    && std::same_as<abi_t<T, S>, aggregated_>
-{
-  auto cast = []<typename Ptr, typename Sub>(Ptr p, as<Sub>)
-  { return eve::aligned_ptr<T, typename Sub::cardinal_type> {p.get()}; };
-
-  value.storage().apply(
-      [&]<typename... Sub>(Sub&...v)
-      {
-        int k = 0;
-        ((store(v, cast(ptr, as<Sub> {}) + k), k += Sub::size()), ...);
-      });
-}
-
-template<simd_value T, relative_conditional_expr C, simd_compatible_ptr<T> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_), C const& cond, T const& value, Ptr ptr) noexcept
-{
-  if constexpr( C::is_complete && C::is_inverted ) store(value, ptr);
-  else if constexpr( C::has_alternative )
-    store(replace_ignored(value, cond, cond.alternative), ptr);
-  else if constexpr( C::is_complete ) return;
-  else if constexpr( logical_simd_value<T> )
-  {
-    using mask_type_t = typename element_type_t<T>::mask_type;
-    if constexpr( std::is_pointer_v<Ptr> ) store[cond](value.mask(), (mask_type_t *)ptr);
-    else
+        kumi::for_each([&](auto v, auto p) { store[cx](v, p); }, value.storage(), dst);
+      }
+    }
+    else if constexpr (has_emulated_abi_v<typename T::abi_type>)
     {
-      store[cond](value.mask(),
-                  typename Ptr::template rebind<mask_type_t> {(mask_type_t *)ptr.get()});
+      auto offset = cx.offset(as<T> {});
+      auto count  = cx.count(as<T> {});
+      using e_t   = element_type_t<T>;
+      auto *src   = (e_t *)(&value.storage());
+      std::memcpy((void *)(dst + offset), (void *)(src + offset), sizeof(e_t) * count);
+    }
+    else if constexpr (has_aggregated_abi_v<typename T::abi_type>)
+    {
+      using e_t = element_type_t<T>;
+
+      alignas(sizeof(T)) std::array<e_t, T::size()> storage;
+      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
+
+      auto offset = cx.offset(as<T> {});
+      auto count  = cx.count(as<T> {});
+      std::memcpy((void *)(dst + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
+    }
+    else if constexpr (logical_simd_value<T>)
+    {
+      using mask_type_t = typename element_type_t<T>::mask_type;
+      store[cx](value.mask(), (mask_type_t *) dst);
     }
   }
-  else if constexpr( !std::is_pointer_v<Ptr> ) store[cond](value, ptr.get());
-  else if constexpr( has_emulated_abi_v<T> )
+
+  template<callable_options O, typename T, typename N, typename Dst>
+  EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
-    auto offset = cond.offset(as<T> {});
-    auto count  = cond.count(as<T> {});
-    using e_t   = element_type_t<T>;
-    auto *src   = (e_t *)(&value.storage());
-    std::memcpy((void *)(ptr + offset), (void *)(src + offset), sizeof(e_t) * count);
+    if constexpr (std::is_pointer_v<Dst>)
+    {
+      store(value.mask(), reinterpret_cast<typename logical<T>::mask_type*>(dst));
+    }
+    else
+    {
+      using mask_type_t = typename logical<T>::mask_type;
+      store(value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
+    }
   }
-  else
-  {
-    using e_t = element_type_t<T>;
-
-    alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-    store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
-
-    auto offset = cond.offset(as<T> {});
-    auto count  = cond.count(as<T> {});
-    std::memcpy((void *)(ptr + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
-  }
-}
-
-template<arithmetic_scalar_value T, typename S>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_), logical<wide<T, S>> const& value, logical<T> *ptr) noexcept
-{
-  store(value.mask(), (typename logical<T>::mask_type *)ptr);
-}
-
-template<arithmetic_scalar_value T, typename S, typename Lanes>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_),
-       logical<wide<T, S>> const    & value,
-       aligned_ptr<logical<T>, Lanes> ptr) noexcept requires(requires {
-  store(value.mask(), aligned_ptr<typename logical<T>::mask_type, Lanes> {});
-})
-{
-  using mask_type_t = typename logical<T>::mask_type;
-  store(value.mask(), aligned_ptr<mask_type_t, Lanes> {(mask_type_t *)ptr.get()});
-}
-
-template<simd_value T, relative_conditional_expr C, simd_compatible_ptr<T> Ptr>
-requires has_store_equivalent<T, Ptr> EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_), C const& c, T const& v, Ptr ptr) noexcept
-{
-  auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
-  return store[c1](v1, ptr1);
-}
-
-template<simd_value T, simd_compatible_ptr<T> Ptr>
-requires has_store_equivalent<T, Ptr> EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(cpu_), T const& v, Ptr ptr) noexcept
-{
-  return store[ignore_none](v, ptr);
-}
 }
