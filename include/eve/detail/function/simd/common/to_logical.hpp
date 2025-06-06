@@ -13,6 +13,7 @@
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
 
 #include <bitset>
 
@@ -54,39 +55,7 @@ to_logical(T v) noexcept
 }
 
 template<relative_conditional_expr C, simd_value T>
-EVE_FORCEINLINE auto to_logical_incomplete(cpu_, C c, eve::as<T>) noexcept
-{
-  using l_t = typename as_logical<T>::type;
-
-  // When dealing with large vector of small integer, the size can't be
-  // represented. We then use an unsigned version of the index type.
-  // We don't just use unsigned indexes all the time cause on most cases,
-  // signed comparisons are faster and this will lead to pessimisation.
-  using i_t = std::conditional_t<(T::size() >= 128 && sizeof(element_type_t<l_t>) == 1),
-                                 typename l_t::bits_type,
-                                 as_integer_t<typename l_t::bits_type, signed>>;
-
-  auto           i     = eve::iota(eve::as<i_t>());
-  std::ptrdiff_t count = c.count(as<i_t> {});
-
-  if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
-  {
-    return bit_cast(i < i_t(count), as<l_t> {});
-  }
-  else if constexpr( std::same_as<C, keep_last> || std::same_as<C, ignore_first> )
-  {
-    return bit_cast(i >= i_t(l_t::size() - count), as<l_t> {});
-  }
-  else
-  {
-    std::ptrdiff_t offset = c.offset(as<i_t> {});
-    return bit_cast((i >= i_t {offset}) && (i < i_t {offset + count}), as<l_t> {});
-  }
-}
-
-template<relative_conditional_expr C, simd_value T>
-EVE_FORCEINLINE auto
-to_logical(C c, eve::as<T>) noexcept
+EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
 {
   using l_t = typename as_logical<T>::type;
 
@@ -99,8 +68,18 @@ to_logical(C c, eve::as<T>) noexcept
                                  as_integer_t<typename l_t::bits_type, signed>>;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
-  else if constexpr( std::same_as<C, ignore_none_> ) return l_t {true};
-  else if constexpr( !eve::use_complete_storage<l_t> )
+  else if constexpr( std::same_as<C, ignore_none_> )
+  {
+    if constexpr (T::size() < fundamental_cardinal_v<element_type_t<as_arithmetic_t<T>>>)
+    {
+      return l_t {true};
+    }
+    else
+    {
+      return to_logical(keep_first(cardinal_v<T>), tgt);
+    }
+  }
+  else if constexpr( !eve::use_complete_storage<l_t>)
   {
     // Use the most full type to be sure to fill outside values of small wide with false
     using e_t   = eve::element_type_t<i_t>;
@@ -121,7 +100,29 @@ to_logical(C c, eve::as<T>) noexcept
   }
   else
   {
-    return to_logical_incomplete(current_api, c, as<T> {});
+    auto           i     = eve::iota(eve::as<i_t>());
+    std::ptrdiff_t count = c.count(as<i_t> {});
+
+    if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
+    {
+      return bit_cast(i < i_t(count), as<l_t> {});
+    }
+    else if constexpr( std::same_as<C, keep_last> || std::same_as<C, ignore_first> )
+    {
+      return bit_cast(i >= i_t(l_t::size() - count), as<l_t> {});
+    }
+    else
+    {
+      std::ptrdiff_t offset = c.offset(as<i_t> {});
+      return bit_cast((i >= i_t {offset}) && (i < i_t {offset + count}), as<l_t> {});
+    }
   }
+}
+
+template<relative_conditional_expr C, simd_value T>
+EVE_FORCEINLINE auto
+to_logical(C c, eve::as<T> tgt) noexcept
+{
+  return to_logical_impl(current_api, c, tgt);
 }
 }
