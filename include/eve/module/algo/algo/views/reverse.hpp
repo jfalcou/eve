@@ -189,22 +189,20 @@ namespace eve::algo::views
       return eve::reverse(eve::load[opts][new_c](base - iterator_cardinal_v<I>, tgt));
     }
 
-    template<relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                C                    c,
-                                                wide_value_type_t<I> v,
-                                                reverse_iterator     self)
+    template<callable_options O>
+    EVE_FORCEINLINE void store(O const& opts, wide_value_type_t<I> v) const noexcept
       requires iterator<I>
     {
-      eve::store[eve::reverse_conditional(c, eve::as(v))](eve::reverse(v), self.base - iterator_cardinal_v<I>);
-    }
+      auto c = opts[condition_key];
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                wide_value_type_t<reverse_iterator> v,
-                                                reverse_iterator                    self)
-      requires iterator<I>
-    {
-      eve::store(eve::reverse(v), self.base - iterator_cardinal_v<I>);
+      if constexpr (std::same_as<decltype(c), ignore_none_>)
+      {
+        eve::store(eve::reverse(v), base - iterator_cardinal_v<I>);
+      }
+      else
+      {
+        eve::store[eve::reverse_conditional(c, eve::as(v))](eve::reverse(v), base - iterator_cardinal_v<I>);
+      }
     }
   };
 

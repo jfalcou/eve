@@ -25,10 +25,46 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
 
-    if constexpr (has_store_equivalent<T, Dst>)
+    if constexpr (requires { dst.store(opts, value); })
+    {
+      dst.store(opts, value);
+    }
+    else if constexpr (has_store_equivalent<T, Dst>)
     {
       auto [n_cx, n_value, n_dst] = store_equivalent(cx, value, dst);
       store[n_cx](n_value, n_dst);
+    }
+    else if constexpr (kumi::product_type<T>)
+    {
+      if constexpr (std::same_as<C, ignore_none_>)
+      {
+        kumi::for_each([](auto v, auto p) { store(v, p); }, value, dst);
+      }
+      else
+      {
+        if constexpr (C::has_alternative)
+        {
+          auto alt = [&]
+          {
+            if constexpr (kumi::product_type<typename C::alternative_type>) return cx.alternative;
+            else return cx.alternative.storage();
+          }();
+
+          kumi::for_each(
+              [&](auto v, auto part_alt, auto p)
+              {
+                auto new_c = cx.map_alternative([&](auto) { return part_alt; });
+                store[new_c](v, p);
+              },
+              value.storage(),
+              alt,
+              dst);
+        }
+        else
+        {
+          kumi::for_each([&](auto v, auto p) { store[cx](v, p); }, value.storage(), dst);
+        }
+      }
     }
     else if constexpr (!std::is_pointer_v<Dst>)
     {
@@ -36,15 +72,11 @@ namespace eve::detail
     }
     else if constexpr (std::same_as<C, ignore_none_>)
     {
-      if constexpr (kumi::product_type<T>)
-      {
-        kumi::for_each([](auto v, auto p) { store(v, p); }, value, dst);
-      }
-      else if constexpr (has_emulated_abi_v<typename T::abi_type>)
+      if constexpr (has_emulated_abi_v<T>)
       {
         apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
       }
-      else if constexpr (has_aggregated_abi_v<typename T::abi_type>)
+      else if constexpr (has_aggregated_abi_v<T>)
       {
         value.storage().apply(
           [&]<typename... Sub>(Sub&...v)
@@ -54,33 +86,9 @@ namespace eve::detail
           });
       }
     }
+    else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);
     else if constexpr (C::is_complete) return;
-    else if constexpr (kumi::product_type<T>)
-    {
-      if constexpr (C::has_alternative)
-      {
-        auto alt = [&]
-        {
-          if constexpr (kumi::product_type<typename C::alternative_type>) return cx.alternative;
-          else return cx.alternative.storage();
-        }();
-
-        kumi::for_each(
-            [&](auto v, auto part_alt, auto p)
-            {
-              auto new_c = cx.map_alternative([&](auto) { return part_alt; });
-              store[new_c](v, p);
-            },
-            value.storage(),
-            alt,
-            dst);
-      }
-      else
-      {
-        kumi::for_each([&](auto v, auto p) { store[cx](v, p); }, value.storage(), dst);
-      }
-    }
-    else if constexpr (has_emulated_abi_v<typename T::abi_type>)
+    else if constexpr (has_emulated_abi_v<T>)
     {
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});
@@ -88,7 +96,7 @@ namespace eve::detail
       auto *src   = (e_t *)(&value.storage());
       std::memcpy((void *)(dst + offset), (void *)(src + offset), sizeof(e_t) * count);
     }
-    else if constexpr (has_aggregated_abi_v<typename T::abi_type>)
+    else
     {
       using e_t = element_type_t<T>;
 
@@ -99,11 +107,6 @@ namespace eve::detail
       auto count  = cx.count(as<T> {});
       std::memcpy((void *)(dst + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
     }
-    else if constexpr (logical_simd_value<T>)
-    {
-      using mask_type_t = typename element_type_t<T>::mask_type;
-      store[cx](value.mask(), (mask_type_t *) dst);
-    }
   }
 
   template<callable_options O, typename T, typename N, typename Dst>
@@ -111,12 +114,12 @@ namespace eve::detail
   {
     if constexpr (std::is_pointer_v<Dst>)
     {
-      store(value.mask(), reinterpret_cast<typename logical<T>::mask_type*>(dst));
+      store[opts](value.mask(), reinterpret_cast<typename logical<T>::mask_type*>(dst));
     }
     else
     {
       using mask_type_t = typename logical<T>::mask_type;
-      store(value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
+      store[opts](value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
     }
   }
 }

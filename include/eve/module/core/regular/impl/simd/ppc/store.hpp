@@ -12,13 +12,17 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<callable_options O, scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(vmx_),
+store_(EVE_REQUIRES(vmx_), O const& opts,
        wide<T, N> const& value,
        Ptr ptr) noexcept requires ppc_abi<abi_t<T, N>> &&(!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr( !std::is_pointer_v<Ptr> )
+  if constexpr (!match_option<condition_key, O, ignore_none_>)
+  {
+    store.behavior(cpu_{}, opts, value, ptr);
+  }
+  else if constexpr( !std::is_pointer_v<Ptr> )
   {
     if constexpr( current_api >= eve::vsx ) store(value, ptr.get());
     else                                    vec_st(value.storage(), 0, ptr.get());
