@@ -12,65 +12,62 @@
 
 namespace eve
 {
-// DOC TODO
-//================================================================================================
-//! @addtogroup memory
-//! @{
-//! @var store
-//!
-//! @brief Callable object computing   //!  description NOT FOUND.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` |   //!  description NOT FOUND   |
-//! | `operator[]` | Construct a conditional version of current function object |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<value T, typename Dest>
-//!  void operator()(T const& value, Dest* ptr) const noexcept
-//!                                             requires( std::is_same_v<Dest, element_type_t<T>);
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!  parameters NOT FOUND
-//!
-//! **Return value**
-//!
-//!  return values NOT FOUND
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::store
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `store[cond](x, ...)` is equivalent to
-//!  `if_else(cond,store(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//!  @}
-//================================================================================================
-EVE_MAKE_CALLABLE(store_, store);
+  template<typename Options>
+  struct store_t : relative_conditional_callable<store_t, Options>
+  {
+    template<simd_value T, simd_compatible_ptr<T> Ptr>
+    EVE_FORCEINLINE void operator()(T value, Ptr ptr) const noexcept
+    {
+      return EVE_DISPATCH_CALL(value, ptr);
+    }
+
+    EVE_CALLABLE_OBJECT(store_t, store_);
+  };
+
+  //================================================================================================
+  //! @addtogroup memory
+  //! @{
+  //!   @var store
+  //!   @brief Store the elements of a [SIMD value](@ref eve::simd_value) into the given memory
+  //!          location.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     // Regular overload
+  //!     template<simd_value T, simd_compatible_ptr<T> Ptr>
+  //!     void store(T value, Ptr ptr) noexcept;                                         // 1
+  //!
+  //!     // Lanes masking
+  //!     auto mul[conditional_expr auto c](/* any of the above overloads */) noexcept;  // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!    * `value` : The [SIMD value](@ref eve::simd_value) to store.
+  //!    * `ptr`   : A pointer to the memory location where the elements of `value` will be stored.
+  //!    * `c`     : A [relative conditional expression](@ref eve::relativeconditional_expr) masking
+  //!                the operation.
+  //!
+  //!   **Overloads**
+  //!
+  //!    1. Stores the elements of `value` into the memory location pointed to by `ptr`.
+  //!    2. Same as 1. but lanes masked by the condition `c` will not be stored.
+  //!
+  //================================================================================================
+  inline constexpr auto store = functor<store_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/store.hpp>
@@ -91,6 +88,6 @@ EVE_MAKE_CALLABLE(store_, store);
 #  include <eve/module/core/regular/impl/simd/arm/sve/store.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_RISCV_HEADER)
-#  include <eve/module/core/regular/impl/simd/riscv/store.hpp>
-#endif
+// #if defined(EVE_INCLUDE_RISCV_HEADER)
+// #  include <eve/module/core/regular/impl/simd/riscv/store.hpp>
+// #endif
