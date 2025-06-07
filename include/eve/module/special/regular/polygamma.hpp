@@ -19,19 +19,20 @@
 namespace eve
 {
 template<typename Options>
-struct trigamma_t : elementwise_callable<trigamma_t, Options>
+struct digamma_t : elementwise_callable<digamma_t, Options>
 {
   template<eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(trigamma_t, trigamma_);
+  EVE_CALLABLE_OBJECT(digamma_t, digamma_);
 };
 
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var trigamma
-//!   @brief `elementwise_callable` object computing the Trigamma function i.e.
+//!   @var digamma
+//!   @brief `elementwise_callable` object computing the Digamma function i.e.
+//!   the logarithmic derivative of the \f$\Gamma\f$  function.
 //!
 //!   @groupheader{Header file}
 //!
@@ -45,11 +46,11 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto trigamma(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto trigamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto trigamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -61,17 +62,17 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 //!
 //!   **Return value**
 //!
-//!     1. The value of the Trigamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
-//!   *  [Wolfram MathWorld: Trigamma Function](https://mathworld.wolfram.com/TrigammaFunction.html)
+//!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/trigamma.cpp}
+//!   @godbolt{doc/special/digamma.cpp}
 //================================================================================================
-  inline constexpr auto trigamma = functor<trigamma_t>;
+  inline constexpr auto digamma = functor<digamma_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -79,15 +80,12 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
   namespace detail
   {
     template<typename T, callable_options O>
-
-    constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;
-
-
       auto br_1_2 = [](auto x, auto result){
-        // computes trigamma(a0)/a0 for double or double vectors
+        // computes digamma(a0)/a0 for double or double vectors
         // xx is sqr(a0) and 0 <= abs(a0) <= 3.25
         T y(0.99558162689208984);
         T root1(1569415565.0 / 1073741824uL);
