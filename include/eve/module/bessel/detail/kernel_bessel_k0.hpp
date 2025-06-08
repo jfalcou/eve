@@ -32,14 +32,14 @@ namespace eve::detail
           -8.928694018000029415e-02f,
           2.985980684180969241e-03f};
         T a                               = sqr(x / 2);
-        a                                 = inc((reverse_horner(a, P)/reverse_horner(a, Q) + y) * a);
+        a                                 = inc((reverse_horner(a, coefficients(P))/reverse_horner(a, coefficients(Q)) + y) * a);
         using A5 = kumi::result::fill_t<5, elt_t>;
         constexpr A5 P2 = {1.159315158e-01f,
                            2.789828686e-01f,
                            2.524902861e-02f,
                            8.457241514e-04f,
                            1.530051997e-05f};
-        return reverse_horner(sqr(x), P2) - log(x) * a;
+        return reverse_horner(sqr(x), coefficients(P2)) - log(x) * a;
         return a;
       }
       else
@@ -57,7 +57,7 @@ namespace eve::detail
                           -1.367653946978586591e-05};
 
         T a = sqr(x / 2);
-        a   = inc((reverse_horner(a, P) / reverse_horner(a, Q) + y) * a);
+        a   = inc((reverse_horner(a, coefficients(P)) / reverse_horner(a, coefficients(Q)) + y) * a);
 
         using A8 = kumi::result::fill_t<8, elt_t>;
         constexpr A8 P2 = {1.159315156584124484e-01,
@@ -68,7 +68,7 @@ namespace eve::detail
                            1.627106892422088488e-07,
                            1.208266102392756055e-09,
                            6.611686391749704310e-12};
-        return reverse_horner(sqr(x), P2) - eve::log(x) * a;
+        return reverse_horner(sqr(x), coefficients(P2)) - eve::log(x) * a;
       }
     };
 
@@ -90,11 +90,11 @@ namespace eve::detail
         };
         auto r = rec[pedantic](x);
         if( eve::all(x < maxlog(as(x))) )
-          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
+          return (inc(reverse_horner(r, coefficients(P))/reverse_horner(r, coefficients(Q))) * exp(-x) * rsqrt(x));
         else
         {
           T ex = exp(-x / 2);
-          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * ex * rsqrt(x)) * ex;
+          return (inc(reverse_horner(r, coefficients(P))/reverse_horner(r, coefficients(Q))) * ex * rsqrt(x)) * ex;
         }
       }
       else
@@ -120,11 +120,11 @@ namespace eve::detail
                            1.586261269326235053e-01};
         auto                           r = rec[pedantic](x);
         if( eve::all(x < maxlog(as(x))) )
-          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
+          return (inc(reverse_horner(r, coefficients(P))/reverse_horner(r, coefficients(Q))) * exp(-x) * rsqrt(x));
         else
         {
           T ex = exp(-x / 2);
-          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * ex * rsqrt(x)) * ex;
+          return (inc(reverse_horner(r, coefficients(P))/reverse_horner(r, coefficients(Q))) * ex * rsqrt(x)) * ex;
         }
       }
     };

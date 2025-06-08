@@ -57,8 +57,8 @@ namespace eve::detail
                                1.0};
         T                              y      = 8 * rec[pedantic](px);
         T                              y2     = sqr(y);
-        auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
-        auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
+        auto                           rc     = reverse_horner(y2, coefficients(PC))/reverse_horner(y2, coefficients(QC));
+        auto                           rs     = reverse_horner(y2, coefficients(PS))/reverse_horner(y2, coefficients(QS));
         auto                           factor = rsqrt(pi(as(px)) * px);
         auto [sx, cx]                         = sincos(px);
         auto value                            = factor * fma(y, rs * (sx + cx), rc * (sx - cx));
@@ -77,7 +77,7 @@ namespace eve::detail
                              1.937383947804541E-003f,
                              -3.405537384615824E-002f};
 
-          return (z - 1.46819706421238932572E1f) * px * horner(z, JP);
+          return (z - 1.46819706421238932572E1f) * px * horner(z, coefficients(JP));
         };
 
       auto br_8 = [](auto px)
@@ -102,9 +102,9 @@ namespace eve::detail
                                   3.503787691653334E-001f,
                                   -1.637986776941202E-001f,
                                   3.749989509080821E-001f};
-          auto                 p       = w * horner(q, MO1);
+          auto                 p       = w * horner(q, coefficients(MO1));
           w                            = sqr(q);
-          auto xn                      = q * horner(w, PH1) - thpio4f;
+          auto xn                      = q * horner(w, coefficients(PH1)) - thpio4f;
           return p * cos(xn + px);
         };
 
@@ -163,7 +163,7 @@ namespace eve::detail
             5.32278620332680085395E18,
           };
           auto  z  = sqr(xx);
-          auto  w  = horner(z, RP) / horner(z, RQ);
+          auto  w  = horner(z, coefficients(RP)) / horner(z, coefficients(RQ));
           elt_t Z1 = 1.46819706421238932572E1;
           elt_t Z2 = 4.92184563216946036703E1;
           return w * xx * (z - Z1) * (z - Z2);
@@ -214,8 +214,8 @@ namespace eve::detail
 
           auto           w      = 5.0 * rec[pedantic](xx);
           auto           z      = sqr(w);
-          auto           p      = horner(z, PP) / horner(z, PQ);
-          auto           q      = horner(z, QP) / horner(z, QQ);
+          auto           p      = horner(z, coefficients(PP)) / horner(z, coefficients(PQ));
+          auto           q      = horner(z, coefficients(QP)) / horner(z, coefficients(QQ));
           constexpr auto thpio4 = 2.35619449019234492885; /* 3*pi/4 */
           auto           xn     = xx - thpio4;
           auto [sxn, cxn]       = sincos(xn);
