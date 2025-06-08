@@ -441,7 +441,7 @@ namespace eve
     //! @brief Element-wise equality comparison of two eve::logical
     friend EVE_FORCEINLINE logical operator==(logical v, logical w) noexcept
     {
-      return detail::self_eq(v,w);
+      return is_equal(v,w);
     }
 
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
@@ -449,7 +449,7 @@ namespace eve
     requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator==(logical v, S w) noexcept
     {
-      return v == logical{w};
+      return is_equal(v, w);
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::logical
@@ -457,7 +457,7 @@ namespace eve
     requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator==(S v, logical w) noexcept
     {
-      return w == v;
+      return is_equal(v, w);
     }
 
     //! @brief Element-wise inequality comparison of two eve::logical
