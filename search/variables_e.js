@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['of_5fclass_0',['of_class',['../group__core__arithmetic_ga690abaa61eff462af4d2c5978bca34be.html#ga690abaa61eff462af4d2c5978bca34be',1,'eve']]],
-  ['omega_1',['omega',['../group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566',1,'eve']]],
-  ['one_2',['one',['../group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5',1,'eve']]],
-  ['oneminus_3',['oneminus',['../group__core__arithmetic_gacf950f83c49a8875b30ecf506fbaa85c.html#gacf950f83c49a8875b30ecf506fbaa85c',1,'eve']]],
-  ['oneosqrteps_4',['oneosqrteps',['../group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370',1,'eve']]],
-  ['oneotwoeps_5',['oneotwoeps',['../group__core__constants_gac0cd00964886659218db19f7dea18b17.html#gac0cd00964886659218db19f7dea18b17',1,'eve']]],
-  ['overflow_6',['overflow',['../group__algo__traits.html#gaa8930f7c6f6695df724456400e2192de',1,'eve::algo']]]
+  ['pattern_0',['pattern',['../group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd',1,'eve']]],
+  ['popcount_1',['popcount',['../group__core__bitops_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322',1,'eve']]],
+  ['pow_2',['pow',['../group__math__exp_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb',1,'eve']]],
+  ['pow1p_3',['pow1p',['../group__math__exp_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def',1,'eve']]],
+  ['pow_5fabs_4',['pow_abs',['../group__math__exp_ga7dc798b64cf565837240f4d135722cbe.html#ga7dc798b64cf565837240f4d135722cbe',1,'eve']]],
+  ['powm1_5',['powm1',['../group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d',1,'eve']]],
+  ['prev_6',['prev',['../group__core__internal_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae',1,'eve']]],
+  ['prime_5fceil_7',['prime_ceil',['../group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665',1,'eve']]],
+  ['prime_5ffloor_8',['prime_floor',['../group__combinatorial_ga88c5c11a1583d1787e367f08385a7dc8.html#ga88c5c11a1583d1787e367f08385a7dc8',1,'eve']]]
 ];

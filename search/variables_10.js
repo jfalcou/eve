@@ -1,5 +1,25 @@
 var searchData=
 [
-  ['quadrant_0',['quadrant',['../group__math__trig_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f',1,'eve']]],
-  ['quarter_1',['quarter',['../group__math__constants_ga98984927f36697347e571b0d587f47e7.html#ga98984927f36697347e571b0d587f47e7',1,'eve']]]
+  ['radindeg_0',['radindeg',['../group__math__trig_ga7b1c77c546053d766a5886f84e5c1dd4.html#ga7b1c77c546053d766a5886f84e5c1dd4',1,'eve']]],
+  ['radinpi_1',['radinpi',['../group__math__trig_ga5dc9acb0c739948399c79c68f1bd5eaa.html#ga5dc9acb0c739948399c79c68f1bd5eaa',1,'eve']]],
+  ['range_5fref_2',['range_ref',['../group__algo__concepts_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524',1,'eve::algo']]],
+  ['rat_3',['rat',['../group__core__arithmetic_ga66698fa1c0740a501e7a6f90c7813cec.html#ga66698fa1c0740a501e7a6f90c7813cec',1,'eve']]],
+  ['read_4',['read',['../group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818',1,'eve']]],
+  ['rec_5',['rec',['../group__core__arithmetic_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a',1,'eve']]],
+  ['reldist_6',['reldist',['../group__core__arithmetic_ga1c45daa0bbee61dee718a0de1e815d65.html#ga1c45daa0bbee61dee718a0de1e815d65',1,'eve']]],
+  ['rem_7',['rem',['../group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657',1,'eve']]],
+  ['remainder_8',['remainder',['../group__core__arithmetic_ga1d7e5ff026cc7e26f9b4814692232bb3.html#ga1d7e5ff026cc7e26f9b4814692232bb3',1,'eve']]],
+  ['rempio2_9',['rempio2',['../group__math__trig_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45',1,'eve']]],
+  ['replace_5fignored_10',['replace_ignored',['../group__core__logical_gafaa07222ff0f44384515607d9f7d43a7.html#gafaa07222ff0f44384515607d9f7d43a7',1,'eve']]],
+  ['reverse_11',['reverse',['../group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5',1,'eve']]],
+  ['reverse_5fhorner_12',['reverse_horner',['../group__math_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe',1,'eve']]],
+  ['reverse_5fin_5fsubgroups_13',['reverse_in_subgroups',['../group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c',1,'eve']]],
+  ['rising_5ffactorial_14',['rising_factorial',['../group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd',1,'eve']]],
+  ['rotl_15',['rotl',['../group__core__bitops_ga83d344731d1a47a91e75d631940c9571.html#ga83d344731d1a47a91e75d631940c9571',1,'eve']]],
+  ['rotr_16',['rotr',['../group__core__bitops_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70',1,'eve']]],
+  ['round_17',['round',['../group__core__arithmetic_gaf23afad64ceaef8914f279dc10f03faf.html#gaf23afad64ceaef8914f279dc10f03faf',1,'eve']]],
+  ['roundscale_18',['roundscale',['../group__core__arithmetic_ga677dabc1ce72bb1de0bf181b322aa8b6.html#ga677dabc1ce72bb1de0bf181b322aa8b6',1,'eve']]],
+  ['rshl_19',['rshl',['../group__core__bitops_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec',1,'eve']]],
+  ['rshr_20',['rshr',['../group__core__bitops_ga9622c49784c564f93798074ac6e6fe1f.html#ga9622c49784c564f93798074ac6e6fe1f',1,'eve']]],
+  ['rsqrt_21',['rsqrt',['../group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d',1,'eve']]]
 ];
