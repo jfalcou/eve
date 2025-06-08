@@ -162,8 +162,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { opts: -O0                 , linker:                 }
-        - { opts: "-O0 -stdlib=libc++", linker: -stdlib=libc++  }
+        - { opts: "-DEVE_NO_FORCEINLINE -O0", linker:                 }
+        - { opts: "-DEVE_NO_FORCEINLINE -O0 -stdlib=libc++", linker: "-stdlib=libc++"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4
@@ -334,11 +334,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
-      # Linux kernel need a fix on our CI machine
-      # - { comp: clang       , arch: x86_asan, opts: -msse2                                }
-        - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
-        - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
       - name: Fetch current branch
