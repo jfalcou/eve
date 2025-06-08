@@ -66,8 +66,8 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   TTS_EQUAL((newton)(a0, eve::coefficients(tup2), eve::nodes(tup1)), (fma)(a0 - 1, 1, 2));
   TTS_EQUAL((newton)(a0, eve::coefficients(tup3), eve::nodes(tup2)), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 
-  TTS_EQUAL(newton[pedantic](a0, tup0, tup0), T(0));
-  TTS_EQUAL(newton[pedantic](a0, tup1, tup0), T(1));
-  TTS_EQUAL(newton[pedantic](a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL(newton[pedantic](a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+  TTS_EQUAL(newton[pedantic](a0, eve::coefficients(tup0), eve::nodes(tup0)), T(0));
+  TTS_EQUAL(newton[pedantic](a0, eve::coefficients(tup1), eve::nodes(tup0)), T(1));
+  TTS_EQUAL(newton[pedantic](a0, eve::coefficients(tup2), eve::nodes(tup1)), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL(newton[pedantic](a0, eve::coefficients(tup3), eve::nodes(tup2)), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 };

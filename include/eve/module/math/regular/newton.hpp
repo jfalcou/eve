@@ -30,7 +30,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, Cs...,  Ns...>
-    operator()(X x, kumi::tuple<Cs...> const & t1, kumi::tuple<Ns...> const & t2) const noexcept
+    operator()(X x, coefficients<kumi::tuple<Cs...>> const & t1, nodes<kumi::tuple<Ns...>> const & t2) const noexcept
     {
       static_assert((sizeof...(Cs) == 0 && sizeof...(Ns) == 0)||
                  (sizeof...(Cs) ==  sizeof...(Ns)+1), "[eve::newton]: nodes and coefs have incompatible sizes");
@@ -114,8 +114,8 @@ namespace eve
   {
     template<typename X, typename ...Coefs, typename... Nodes, callable_options O >
     EVE_FORCEINLINE constexpr auto
-    newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  kumi::tuple<Coefs...> const& cs
-           , kumi::tuple<Nodes...> const& ns)
+    newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  coefficients<kumi::tuple<Coefs...>> const& cs
+           , nodes<kumi::tuple<Nodes...>> const& ns)
     {
 
       using r1_t  =  common_value_t<X, Coefs...>;
@@ -158,7 +158,7 @@ namespace eve
       {
          kumi::result::fill_t<s, r_t> tcn{r_t{cns}...};
         auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
-        return newton[o](x,tc,tn);
+        return newton[o](x,coefficients{tc},nodes{tn});
       }
     }
   }
