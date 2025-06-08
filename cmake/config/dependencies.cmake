@@ -7,7 +7,7 @@
 ##==================================================================================================
 ## Find Boost
 ##==================================================================================================
-find_package(Boost 1.74.0 QUIET)
+find_package(Boost 1.74.0 NO_MODULE QUIET)
 
 if(Boost_FOUND)
   message( STATUS "[eve] Boost found in ${Boost_INCLUDE_DIRS} - Boost dependent tests activated")
