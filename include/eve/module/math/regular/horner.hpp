@@ -59,7 +59,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto horner(floating_value auto x, value auto ...ci)                      noexcept; // 1
-//!      constexpr auto horner(floating_value auto x, kumi::non_empty_product_type auto tci) noexcept; // 2
+//!      constexpr auto horner(floating_value auto x, eve::coefficients auto tci) noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
@@ -76,7 +76,8 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in decreasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!    * `tci`: eve::coefficients is a specialization of [tuple](@ref kumi::product_type) of floating values,
+//!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

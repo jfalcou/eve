@@ -54,7 +54,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto reverse_horner(floating_value auto x, value auto ci...)                       noexcept; // 1
-//!      constexpr auto reverse_horner(floating_value auto x, kumi::non_empty_product_type auto tci)  noexcept; // 2
+//!      constexpr auto reverse_horner(floating_value auto x, eve::coefficients tci)                  noexcept; // 2
 //!
 //!      // Semantic options
 //!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 3
@@ -70,14 +70,15 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in increasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!    * `tci`: eve:coefficients is a specialization of [tuple](@ref kumi::product_type) of floating values
+//!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
 //!      If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by increasing
-//!      power order,  the Reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
+//!      power order,  the reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
 //!      following formula:
 //!
 //!     \f$\qquad\qquad\displaystyle p(x) = (((c_{n-1}x+c_{n-2})x+ ... )x + c_0)\f$
