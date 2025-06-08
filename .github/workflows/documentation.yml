@@ -20,7 +20,7 @@ jobs:
   documentation:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v7
+      image: ghcr.io/jfalcou/compilers:v9
     strategy:
       fail-fast: false
       matrix:
