@@ -53,15 +53,19 @@ TTS_CASE_WITH("Check behavior of horner on wide",
   //============================================================================
   //== tuples
   //============================================================================
-  auto tab1 = kumi::tuple{1};
-  auto tab2 = kumi::tuple{1, 2};
-  auto tab3 = kumi::tuple{1, 2, 3};
+  auto tab0 = eve::coefficients{};
+  auto tab1 = eve::coefficients{1};
+  auto tab2 = eve::coefficients{1, 2};
+  auto tab3 = eve::coefficients{1, 2, 3};
 
+  TTS_EQUAL(horner(a0, tab0), T(0));
   TTS_EQUAL(horner(a0, tab1), T(1));
   TTS_EQUAL(horner(a0, tab2), fma(a0, 1, 2));
   TTS_EQUAL(horner(a0, tab3), fma(a0, fma(a0, 1, 2), 3));
 
+  TTS_EQUAL(horner[pedantic](a0, tab0), T(0));
   TTS_EQUAL(horner[pedantic](a0, tab1), T(1));
   TTS_EQUAL(horner[pedantic](a0, tab2), fma[pedantic](a0, 1, 2));
   TTS_EQUAL(horner[pedantic](a0, tab3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+
 };

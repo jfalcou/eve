@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
+#include <eve/traits/helpers.hpp>
 
 namespace eve
 {
@@ -25,8 +26,8 @@ namespace eve
 
     template<floating_value X, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>
+    operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
     EVE_CALLABLE_OBJECT(reverse_horner_t, reverse_horner_);
@@ -114,7 +115,7 @@ namespace eve
         using e_t =  element_type_t<X>;
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
         t_t c{e_t(c0), e_t(cs)...};
-        return reverse_horner[o](xx, c);
+        return reverse_horner[o](xx, coefficients<t_t>(c));
       }
       else
       {
@@ -122,15 +123,15 @@ namespace eve
         auto x = r_t(xx);
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, r_t>;
         t_t c {r_t{c0}, r_t{cs}...};
-        return reverse_horner[o](x, c);
+        return reverse_horner[o](x, coefficients<t_t>(c));
       }
     }
 
-    template<typename X, typename... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
-    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x,  kumi::tuple<Cs...> tup) noexcept
+    template<typename X, kumi::product_type Tuple, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const & tup) noexcept
     {
-      return horner[o](x, kumi::reverse(tup));
+      return horner[o](x, coefficients<Tuple>(kumi::reverse(tup)));
     }
   }
 }

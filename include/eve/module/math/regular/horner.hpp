@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
+#include <eve/traits/helpers.hpp>
 
 namespace eve
 {
@@ -23,10 +24,10 @@ namespace eve
     operator()(X x, T t,  Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, t, ts...); }
 
-    template<floating_value X, kumi::non_empty_product_type Tup>
+    template<floating_value X, kumi::product_type Tup>
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>
+    operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
     EVE_CALLABLE_OBJECT(horner_t, horner_);
@@ -129,9 +130,12 @@ namespace eve
 
     template<typename X, kumi::product_type Tuple, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    horner_(EVE_REQUIRES(cpu_), O const & o, X x, Tuple const& tup) noexcept
+    horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const& tup) noexcept
     {
-      return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
+      if constexpr(Tuple::size() == 0)
+        return eve::zero(as(x));
+      else
+        return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
     }
   }
 }
