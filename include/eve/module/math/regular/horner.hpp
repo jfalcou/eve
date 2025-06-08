@@ -109,7 +109,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename X, typename C, typename... Cs, callable_options O>
+    template<value X, value C, typename... Cs, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<X, C, Cs...>
     horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
     {
@@ -128,7 +128,7 @@ namespace eve
       }
     }
 
-    template<typename X, kumi::product_type Tuple, callable_options O>
+    template<value X, kumi::product_type Tuple, callable_options O>
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const& tup) noexcept
     {

@@ -106,20 +106,20 @@ namespace eve
 
   namespace detail
   {
-    template<typename X, typename C, typename... Cs, callable_options O>
+    template<typename X, value C, value... Cs, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
     {
-      if constexpr((... && scalar_value<Cs>))
+      if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
       {
-        using e_t =  element_type_t<X>;
+        using e_t = element_type_t<X>;
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
         t_t c{e_t(c0), e_t(cs)...};
         return reverse_horner[o](xx, coefficients<t_t>(c));
       }
       else
       {
-        using r_t = common_value_t<X, Cs...>;
+        using r_t = common_value_t<X, C, Cs...>;
         auto x = r_t(xx);
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, r_t>;
         t_t c {r_t{c0}, r_t{cs}...};
