@@ -37,7 +37,7 @@ namespace eve::detail
       {
         T y      = sqr(xx);
         T z      = 2 * log(xx / x1) * j0opi;
-        T r      = reverse_horner(y, P)/reverse_horner(y, Q);
+        T r      = reverse_horner(y, coefficients(P))/reverse_horner(y, coefficients(Q));
         T factor = (xx + x1) * ((xx - x11 / 256) - x12);
         return fma(factor, r, z);
       };
@@ -143,8 +143,8 @@ namespace eve::detail
         };
         T                            y      = T(8) / xx;
         T                            y2     = sqr(y);
-        T                            rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
-        T                            rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
+        T                            rc     = reverse_horner(y2, coefficients(PC))/reverse_horner(y2, coefficients(QC));
+        T                            rs     = reverse_horner(y2, coefficients(PS))/reverse_horner(y2, coefficients(QS));
         T                            factor = rsqrt(Pi * xx);
         auto [sx, cx]                       = sincos(xx);
         return factor * fma(y, rs * (cx + sx), rc * (sx - cx));

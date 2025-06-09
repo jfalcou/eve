@@ -30,7 +30,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, Cs...,  Ns...>
-    operator()(X x, kumi::tuple<Cs...> const & t1, kumi::tuple<Ns...> const & t2) const noexcept
+    operator()(X x, coefficients<kumi::tuple<Cs...>> const & t1, nodes<kumi::tuple<Ns...>> const & t2) const noexcept
     {
       static_assert((sizeof...(Cs) == 0 && sizeof...(Ns) == 0)||
                  (sizeof...(Cs) ==  sizeof...(Ns)+1), "[eve::newton]: nodes and coefs have incompatible sizes");
@@ -65,8 +65,8 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto newton(floating_value auto x, floating_value auto ... cmi)         noexcept; // 1
-//!      constexpr auto newton(floating_value auto x, kumi::non_empty_product_type auto ci
-//!                                          kumi::non_empty_product_type auto mi)         noexcept; // 2
+//!      constexpr auto newton(floating_value auto x, eve::coefficients ci
+//!                                                   eve::nodes auto ni)                  noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/)     noexcept; // 3
@@ -80,9 +80,9 @@ namespace eve
 //!   **Parameters**
 //!
 //!    * `x`:  [real floating argument](@ref eve::floating_value).
-//!    * `ci`:  tuple  containing the coefficients by decreasing power order.
-//!    * `cm`:  tuple  containing the nodes by decreasing power order.
-//!    * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
+//!    * `ci`:  eve::coefficients tuple  containing the coefficients by decreasing power order.
+//!    * `cn`:  eve::nodes tuple  containing the nodes by decreasing power order.
+//!    * `cni...`: all the coefficients followed by all the nodes, both in decreasing power order.
 //!                The total number of values is to be odd. If s is this number, the (s+1)/2 first
 //!                are taken as the coefs and the others are the nodes.
 //!                Note that the values of the cmi are not necessarily floating but the non floating ones
@@ -114,8 +114,8 @@ namespace eve
   {
     template<typename X, typename ...Coefs, typename... Nodes, callable_options O >
     EVE_FORCEINLINE constexpr auto
-    newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  kumi::tuple<Coefs...> const& cs
-           , kumi::tuple<Nodes...> const& ns)
+    newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  coefficients<kumi::tuple<Coefs...>> const& cs
+           , nodes<kumi::tuple<Nodes...>> const& ns)
     {
 
       using r1_t  =  common_value_t<X, Coefs...>;
@@ -158,7 +158,7 @@ namespace eve
       {
          kumi::result::fill_t<s, r_t> tcn{r_t{cns}...};
         auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
-        return newton[o](x,tc,tn);
+        return newton[o](x,coefficients{tc},nodes{tn});
       }
     }
   }

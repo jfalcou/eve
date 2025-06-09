@@ -59,30 +59,25 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
   TTS_EQUAL(reverse_horner[pedantic](a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
 
 
-//   {
-//     //============================================================================
-//     //== tuples
-//     //============================================================================
-//     auto tab0 = kumi::tuple{};
-//     auto tab1 = kumi::tuple{1};
-//     auto tab2 = kumi::tuple{2, 1};
-//     auto tab3 = kumi::tuple{3, 2, 1};
+  {
+    //============================================================================
+    //== tuples
+    //============================================================================
+    auto tab0 = eve::coefficients{};
+    auto tab1 = eve::coefficients{1};
+    auto tab2 = eve::coefficients{2, 1};
+    auto tab3 = eve::coefficients{3, 2, 1};
 
-//     TTS_EQUAL((reverse_horner)(a0, tab0), T(0));
-//     TTS_EQUAL((reverse_horner)(a0, tab1), T(1));
-//     TTS_EQUAL((reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
-//     TTS_EQUAL((reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+    TTS_EQUAL((reverse_horner)(a0, tab0), T(0));
+    TTS_EQUAL((reverse_horner)(a0, tab1), T(1));
+    TTS_EQUAL((reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL((reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
 
-//     TTS_EQUAL(pedantic(reverse_horner)(a0, tab0), T(0));
-//     TTS_EQUAL(pedantic(reverse_horner)(a0, tab1), T(1));
-//     TTS_EQUAL(pedantic(reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
-//     TTS_EQUAL(pedantic(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
-
-//     TTS_EQUAL(numeric(reverse_horner)(a0, tab0), T(0));
-//     TTS_EQUAL(numeric(reverse_horner)(a0, tab1), T(1));
-//     TTS_EQUAL(numeric(reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
-//     TTS_EQUAL(numeric(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
-//   }
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab0), T(0));
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab1), T(1));
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+  }
 
 
  };

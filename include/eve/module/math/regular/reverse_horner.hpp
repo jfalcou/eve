@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
+#include <eve/traits/helpers.hpp>
 
 namespace eve
 {
@@ -25,8 +26,8 @@ namespace eve
 
     template<floating_value X, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>
+    operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
     EVE_CALLABLE_OBJECT(reverse_horner_t, reverse_horner_);
@@ -53,7 +54,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto reverse_horner(floating_value auto x, value auto ci...)                       noexcept; // 1
-//!      constexpr auto reverse_horner(floating_value auto x, kumi::non_empty_product_type auto tci)  noexcept; // 2
+//!      constexpr auto reverse_horner(floating_value auto x, eve::coefficients tci)                  noexcept; // 2
 //!
 //!      // Semantic options
 //!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 3
@@ -69,14 +70,15 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in increasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!    * `tci`: eve:coefficients is a specialization of [tuple](@ref kumi::product_type) of floating values
+//!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
 //!      If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by increasing
-//!      power order,  the Reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
+//!      power order,  the reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
 //!      following formula:
 //!
 //!     \f$\qquad\qquad\displaystyle p(x) = (((c_{n-1}x+c_{n-2})x+ ... )x + c_0)\f$
@@ -105,32 +107,32 @@ namespace eve
 
   namespace detail
   {
-    template<typename X, typename C, typename... Cs, callable_options O>
+    template<typename X, value C, value... Cs, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
     {
-      if constexpr((... && scalar_value<Cs>))
+      if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
       {
-        using e_t =  element_type_t<X>;
+        using e_t = element_type_t<X>;
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
         t_t c{e_t(c0), e_t(cs)...};
-        return reverse_horner[o](xx, c);
+        return reverse_horner[o](xx, coefficients<t_t>(c));
       }
       else
       {
-        using r_t = common_value_t<X, Cs...>;
+        using r_t = common_value_t<X, C, Cs...>;
         auto x = r_t(xx);
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, r_t>;
         t_t c {r_t{c0}, r_t{cs}...};
-        return reverse_horner[o](x, c);
+        return reverse_horner[o](x, coefficients<t_t>(c));
       }
     }
 
-    template<typename X, typename... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
-    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x,  kumi::tuple<Cs...> tup) noexcept
+    template<typename X, kumi::product_type Tuple, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const & tup) noexcept
     {
-      return horner[o](x, kumi::reverse(tup));
+      return horner[o](x, coefficients<Tuple>(kumi::reverse(tup)));
     }
   }
 }

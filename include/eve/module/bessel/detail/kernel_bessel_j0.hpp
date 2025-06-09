@@ -53,8 +53,8 @@ namespace eve::detail
                                1.0};
         T                              y      = 8 * rec[pedantic](px);
         T                              y2     = sqr(y);
-        auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
-        auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
+        auto                           rc     = reverse_horner(y2, coefficients(PC))/reverse_horner(y2, coefficients(QC));
+        auto                           rs     = reverse_horner(y2, coefficients(PS))/reverse_horner(y2, coefficients(QS));
         auto                           factor = rsqrt(pi(as(px)) * px);
         auto [sx, cx]                         = sincos(px);
         auto value                            = factor * fnma(y, rs * (sx - cx), rc * (sx + cx));
@@ -145,7 +145,7 @@ namespace eve::detail
           1.71086294081043136091E18,
         };
         auto p = (z - DR1) * (z - DR2);
-        p *= horner(z, RP) / horner(z, RQ);
+        p *= horner(z, coefficients(RP)) / horner(z, coefficients(RQ));
         return p;
       };
 
@@ -191,8 +191,8 @@ namespace eve::detail
         };
         auto w                  = 5.0 * rec[pedantic](xx);
         auto q                  = sqr(w);
-        auto p                  = horner(q, PP) / horner(q, PQ);
-        q                       = horner(q, QP) / horner(q, QQ);
+        auto p                  = horner(q, coefficients(PP)) / horner(q, coefficients(PQ));
+        q                       = horner(q, coefficients(QP)) / horner(q, coefficients(QQ));
         auto xn                 = xx - pio_4(as(xx));
         auto [s, c]             = sincos(xn);
         p                       = fms(p, c, w * q * s);

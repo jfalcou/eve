@@ -20,11 +20,11 @@ int main()
   std::cout << "-> reverse_horner(xd, 1.0, -2.0, 3.0, -4.0) = " << eve::reverse_horner(xd, 1.0, -2.0, 3.0, -4.0) << '\n';
   std::cout << "-> reverse_horner(0.5, 1, b, 3, -4)         = " << eve::reverse_horner(0.5, 1, b, 3, -4) << '\n';
   std::cout << "-> reverse_horner(x, 1, -2, 3, -4)          = " << eve::reverse_horner(xd, 1, -2, 3, -4)  << '\n';
-  std::cout << "-> reverse_horner(xd, v)                    = " << eve::reverse_horner(xd, v)  << '\n';
-  std::cout << "-> reverse_horner(xd, t)                    = " << eve::reverse_horner(xd, t)   << '\n';
-  std::cout << "-> reverse_horner(x, t)                     = " << eve::reverse_horner(x, t)   << '\n';
-  std::cout << "-> reverse_horner(x, wv)                    = " << eve::reverse_horner(x, wv) << '\n';
-  std::cout << "-> reverse_horner(0.5f, wv)                 = " << eve::reverse_horner(0.5, wv) << '\n';
-  std::cout << "-> reverse_horner(xd, wv)                   = " << eve::reverse_horner(xd, wv) << '\n';
-  std::cout << "-> reverse_horner(1.0, t)                   = " << eve::reverse_horner(1.0, t) << '\n';
+  std::cout << "-> reverse_horner(xd, v)                    = " << eve::reverse_horner(xd, eve::coefficients(v))  << '\n';
+  std::cout << "-> reverse_horner(xd, t)                    = " << eve::reverse_horner(xd, eve::coefficients(t))   << '\n';
+  std::cout << "-> reverse_horner(x, t)                     = " << eve::reverse_horner(x, eve::coefficients(t))   << '\n';
+  std::cout << "-> reverse_horner(x, wv)                    = " << eve::reverse_horner(x, eve::coefficients(wv)) << '\n';
+  std::cout << "-> reverse_horner(0.5f, wv)                 = " << eve::reverse_horner(0.5, eve::coefficients(wv)) << '\n';
+  std::cout << "-> reverse_horner(xd, wv)                   = " << eve::reverse_horner(xd, eve::coefficients(wv)) << '\n';
+  std::cout << "-> reverse_horner(1.0, t)                   = " << eve::reverse_horner(1.0, eve::coefficients(t)) << '\n';
 }

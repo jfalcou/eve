@@ -88,7 +88,7 @@ namespace eve
       {
         constexpr A3 P = { 0.000000000000000000000e+00, 2.331643981597117584689e+00, 1.931973535237478945863e+00 };
         constexpr A3 Q = { 1.000000000000000000000e+00, 1.605803223118019582808e+00, 4.174677763382451962312e-01 };
-        return dec(reverse_horner(r, P) / reverse_horner(r, Q));
+        return dec(reverse_horner(r, coefficients(P)) / reverse_horner(r, coefficients(Q)));
       }
       else
       {

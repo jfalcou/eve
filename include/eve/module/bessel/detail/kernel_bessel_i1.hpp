@@ -32,7 +32,7 @@ namespace eve::detail
                                 1.331933703e-12f};
           T                              xo_2 = xx / 2;
           T                              a    = sqr(xo_2);
-          T                              r    = reverse_horner(a, 1.0f, 0.5f, reverse_horner(a, P));
+          T                              r    = reverse_horner(a, 1.0f, 0.5f, reverse_horner(a, coefficients(P)));
           return xo_2 * r;
           ;
         }
@@ -54,7 +54,7 @@ namespace eve::detail
                                 1.332898928162290861e-23};
           T                               xo_2 = xx / 2;
           T                               a    = sqr(xo_2);
-          T                               r    = reverse_horner(a, 1.0, 0.5, reverse_horner(a, P));
+          T                               r    = reverse_horner(a, 1.0, 0.5, reverse_horner(a, coefficients(P)));
           return xo_2 * r;
           ;
         }
@@ -71,7 +71,7 @@ namespace eve::detail
                               -2.65157315524784407e-02f,
                               -1.47148600683672014e-01f};
           auto                           ex = eve::exp(xx / 2);
-          return ex * (ex * reverse_horner(rec[pedantic](xx), P) * rsqrt(xx));
+          return ex * (ex * reverse_horner(rec[pedantic](xx), coefficients(P)) * rsqrt(xx));
         }
         else
         {
@@ -85,7 +85,7 @@ namespace eve::detail
             -6.967602516005787001e+12, 4.614040809616582764e+13,  -2.298849639457172489e+14,
             8.325554073334618015e+14,  -2.067285045778906105e+15, 3.146401654361325073e+15,
             -2.213318202179221945e+15};
-          return eve::exp(xx) * reverse_horner(rec[pedantic](xx), P) * eve::rsqrt(xx);
+          return eve::exp(xx) * reverse_horner(rec[pedantic](xx), coefficients(P)) * eve::rsqrt(xx);
         }
       };
 
@@ -100,7 +100,7 @@ namespace eve::detail
                               -4.090421597376992892e-02,
                               -5.843630344778927582e-02};
           auto                           ex = eve::exp(xx / 2);
-          return ex * (ex * reverse_horner(rec[pedantic](xx), P) / eve::sqrt(xx));
+          return ex * (ex * reverse_horner(rec[pedantic](xx), coefficients(P)) / eve::sqrt(xx));
         }
         else { return inf(as(xx)); }
       };
