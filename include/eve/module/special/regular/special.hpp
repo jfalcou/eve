@@ -33,4 +33,5 @@
 #include <eve/module/special/regular/signgam.hpp>
 #include <eve/module/special/regular/stirling.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/regular/trigamma.hpp>
 #include <eve/module/special/regular/zeta.hpp>
