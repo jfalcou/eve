@@ -115,8 +115,8 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 
 
       auto r       = nan(as<T>());                      // nan and zero case treated here
-      r            = if_else(x == inf(as(z)), zero, r);
-      auto notdone = eve::is_nez(z) && eve::is_not_nan(z) && (x != inf(as(z)));
+      r            = if_else(z == inf(as(z)), zero, r);
+      auto notdone = eve::is_nez(z) && eve::is_not_nan(z) && (z != inf(as(z)));
 
       if( eve::any(notdone) )
       {
