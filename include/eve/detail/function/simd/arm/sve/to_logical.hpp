@@ -32,11 +32,11 @@ namespace eve::detail
     {
       if constexpr (S::size() < fundamental_cardinal_v<T>)
       {
-        return sve_true<T>();
+        return to_logical_impl(tag, keep_first(cardinal_v<S>), tgt);
       }
       else
       {
-        return to_logical_impl(tag, keep_first(cardinal_v<S>), tgt);
+        return sve_true<T>();
       }
     }
     else if constexpr (std::same_as<C, ignore_all_>) return svpfalse();
