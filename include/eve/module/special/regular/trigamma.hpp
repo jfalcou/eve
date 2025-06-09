@@ -80,7 +80,7 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T z) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto br_small =  [](auto x){
@@ -115,18 +115,18 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 
 
       auto r       = nan(as<T>());                      // nan and zero case treated here
-      r            = if_else(x == inf(as(x)), zero, r);
-      auto notdone = eve::is_nez(x) && eve::is_not_nan(x) && (x != inf(as(x)));
+      r            = if_else(x == inf(as(z)), zero, r);
+      auto notdone = eve::is_nez(z) && eve::is_not_nan(z) && (x != inf(as(z)));
 
       if( eve::any(notdone) )
       {
-        notdone = next_interval(br_neg, notdone, eve::is_ltz(x), r, x);
+        notdone = next_interval(br_neg, notdone, eve::is_ltz(z), r, z);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_small, notdone, x < T(1.0e-4), r, x);
+          notdone = next_interval(br_small, notdone, z < T(1.0e-4), r, z);
           if( eve::any(notdone) )
           {
-            notdone = last_interval(br_else, notdone, r, x);
+            notdone = last_interval(br_else, notdone, r, z);
           }
         }
       }
