@@ -25,12 +25,11 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -msse2    , pch: ON}
-        - { comp: clang, arch: x86    , opts: -mavx2    , pch: ON}
-        - { comp: clang, arch: aarch64, opts: -Wno-psabi, pch: ON}
-        - { comp: clang, arch: x86    , opts: -msse2    , pch: OFF}
-        - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
-        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi, pch: OFF}
+        - { comp: clang, arch: aarch64, opts: -Wno-psabi}
+        - { comp: clang, arch: x86    , opts: -mavx2    }
+        - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi}
+        - { comp: gcc  , arch: x86    , opts: -msse2    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -40,8 +39,7 @@ jobs:
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
-                    -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake" \
-                    -DEVE_USE_PCH=${{ matrix.cfg.arch }}
+                    -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake"
 
       - name: Compile Documentation Tests
         run:  |
