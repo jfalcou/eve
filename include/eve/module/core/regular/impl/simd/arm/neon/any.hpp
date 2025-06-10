@@ -22,7 +22,6 @@ any_(EVE_REQUIRES(neon128_),
      logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_64_>
 {
   using C = rbr::result::fetch_t<condition_key, O>;
-  auto cond = opts[condition_key];
   using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<2>>;
 
   if constexpr( C::is_complete && !C::is_inverted ) return false;
