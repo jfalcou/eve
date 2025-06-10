@@ -22,7 +22,7 @@ namespace eve::detail
 // Fills undefined values with zeros
 template<arithmetic_scalar_value T, typename N, typename PtrTy>
 EVE_FORCEINLINE wide<T, N>
-                perform_alternative_load(logical<wide<T, N>> mask, as<wide<T, N>> tgt, PtrTy p)
+                perform_alternative_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
   wide<T, N> zero_init {0};
   if constexpr( N::value < eve::fundamental_cardinal_v<T> )
@@ -44,7 +44,7 @@ EVE_FORCEINLINE wide<T, N>
 // Undefined values are undefined
 template<arithmetic_scalar_value T, typename N, typename PtrTy>
 EVE_FORCEINLINE wide<T, N>
-                perform_load(logical<wide<T, N>> mask, as<wide<T, N>> tgt, PtrTy p)
+                perform_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
   constexpr auto c = categorize<wide<T, N>>();
   if constexpr( match(c, category::size8_) ) return __riscv_vle8(mask, p, N::value);
@@ -58,7 +58,7 @@ template<relative_conditional_expr C,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE wide<T, N>
-load_(EVE_SUPPORTS(rvv_), C const& cond, safe_type const& s, eve::as<wide<T, N>> const& tgt, Ptr p)
+load_(EVE_SUPPORTS(rvv_), C const& cond, safe_type const&, eve::as<wide<T, N>> const& tgt, Ptr p)
 requires(rvv_abi<abi_t<T, N>>)
 {
   auto ptr = unalign(p);

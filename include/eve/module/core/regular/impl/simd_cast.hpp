@@ -26,9 +26,12 @@ simd_cast_(EVE_REQUIRES(cpu_), O const&, T x, as<Target> tgt) noexcept
   {
     Target res;
     res.storage().fill(0);
-    std::memcpy(res.storage().data(),
-                x.storage().data(),
+
+    // Prevent g++ Wclass-memaccess warning when simd_casting emulated logical<wide>
+    std::memcpy(reinterpret_cast<unsigned char*>(res.storage().data()),
+                reinterpret_cast<unsigned char const*>(x.storage().data()),
                 std::min(sizeof(typename T::storage_type), sizeof(typename Target::storage_type)));
+
     return res;
   }
   else if constexpr( sizeof(T) < sizeof(Target) ) { return simd_cast(eve::combine(x, T{}), tgt); }
