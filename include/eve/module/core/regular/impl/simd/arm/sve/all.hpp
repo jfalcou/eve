@@ -10,6 +10,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/logical_ornot.hpp>
 
 namespace eve::detail
 {
@@ -28,10 +29,8 @@ requires sve_abi<abi_t<T, N>>
   }
   else
   {
-    const auto masked_count = count_true[cx](v);
-
-    if constexpr (relative_conditional_expr<C>) return masked_count == cx.count(as(v));
-    else                                        return masked_count == count_true(expand_mask(cx, as(v)));
+    if constexpr (relative_conditional_expr<C>) return count_true[cx](v) == cx.count(as(v));
+    else                                        return count_true(logical_ornot(v, expand_mask(cx, as(v)))) == N::value;
   }
 }
 }
