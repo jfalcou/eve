@@ -255,8 +255,9 @@ var searchData=
   ['elementwise_5fcallable_3c_20tanpi_5ft_2c_20options_2c_20quarter_5fcircle_5foption_20_3e_252',['elementwise_callable&lt; tanpi_t, Options, quarter_circle_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20tgamma_5ft_2c_20options_20_3e_253',['elementwise_callable&lt; tgamma_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20three_5ffma_5ft_2c_20options_20_3e_254',['elementwise_callable&lt; three_fma_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20two_5fadd_5ft_2c_20options_20_3e_255',['elementwise_callable&lt; two_add_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20two_5fprod_5ft_2c_20options_20_3e_256',['elementwise_callable&lt; two_prod_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20ulpdist_5ft_2c_20options_20_3e_257',['elementwise_callable&lt; ulpdist_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20zeta_5ft_2c_20options_20_3e_258',['elementwise_callable&lt; zeta_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]]
+  ['elementwise_5fcallable_3c_20trigamma_5ft_2c_20options_20_3e_255',['elementwise_callable&lt; trigamma_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20two_5fadd_5ft_2c_20options_20_3e_256',['elementwise_callable&lt; two_add_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20two_5fprod_5ft_2c_20options_20_3e_257',['elementwise_callable&lt; two_prod_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20ulpdist_5ft_2c_20options_20_3e_258',['elementwise_callable&lt; ulpdist_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20zeta_5ft_2c_20options_20_3e_259',['elementwise_callable&lt; zeta_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]]
 ];
