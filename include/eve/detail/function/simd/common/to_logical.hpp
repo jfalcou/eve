@@ -72,11 +72,11 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
   {
     if constexpr (T::size() < fundamental_cardinal_v<element_type_t<as_arithmetic_t<T>>>)
     {
-      return l_t {true};
+      return to_logical(keep_first(cardinal_v<T>), tgt);
     }
     else
     {
-      return to_logical(keep_first(cardinal_v<T>), tgt);
+      return l_t {true};
     }
   }
   else if constexpr( !eve::use_complete_storage<l_t>)
