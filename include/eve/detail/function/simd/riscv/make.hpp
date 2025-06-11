@@ -129,7 +129,7 @@ EVE_FORCEINLINE wide<T, N>
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
   std::array on_stack {static_cast<T>(vs)...};
-  return load(ignore_none, safe, as<wide<T, N>> {}, on_stack.data());
+  return load(on_stack.data(), as<wide<T, N>>{});
 }
 
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V1, typename... Vs>
