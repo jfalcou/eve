@@ -41,7 +41,7 @@ namespace eve
   template<typename Options>
   struct ew_drop_func_t : strict_elementwise_callable<ew_drop_func_t, Options>
   {
-    auto operator()() const { return EVE_DISPATCH_CALL(eve::wide<int>{}); }
+    auto operator()(int a) const { return EVE_DISPATCH_CALL(a); }
     EVE_CALLABLE_OBJECT(ew_drop_func_t, ew_drop_func_);
   };
 
@@ -69,17 +69,17 @@ namespace eve::detail
   }
 
   template<eve::callable_options O, eve::conditional_expr C>
-  auto ew_drop_func_(EVE_REQUIRES(cpu_), C const&, O const&, eve::wide<int>)
+  auto ew_drop_func_(EVE_REQUIRES(cpu_), C const&, O const&, int)
   {
     TTS_EXPECT(!O::contains(condition_key));
-    return OverloadType::masked;
+    return wide<int>{ (int) OverloadType::masked };
   }
 
   template<eve::callable_options O>
-  auto ew_drop_func_(EVE_REQUIRES(cpu_), O const&, eve::wide<int>)
+  auto ew_drop_func_(EVE_REQUIRES(cpu_), O const&, int)
   {
     TTS_EXPECT(!O::contains(condition_key));
-    return OverloadType::regular;
+    return eve::wide<int>{ (int) OverloadType::regular };
   }
 }
 
@@ -125,8 +125,8 @@ TTS_CASE("Check callable always have conditional_key when chained")
 
 TTS_CASE("Check elementwise callable condition_key drop")
 {
-  TTS_EQUAL(eve::ew_drop_func(), OverloadType::regular);
-  TTS_EQUAL(eve::ew_drop_func[eve::ignore_none](), OverloadType::regular);
-  TTS_EQUAL(eve::ew_drop_func[true](), OverloadType::masked);
-  TTS_EQUAL(eve::ew_drop_func[eve::ignore_all](), OverloadType::masked);
+  TTS_EQUAL(eve::ew_drop_func(3011).get(0), (int) OverloadType::regular);
+  TTS_EQUAL(eve::ew_drop_func[eve::ignore_none](3011).get(0), (int) OverloadType::regular);
+  TTS_EQUAL(eve::ew_drop_func[true](3011).get(0), (int) OverloadType::masked);
+  TTS_EQUAL(eve::ew_drop_func[eve::ignore_all](3011).get(0), (int) OverloadType::masked);
 };
