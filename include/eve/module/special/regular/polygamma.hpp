@@ -19,20 +19,20 @@
 namespace eve
 {
 template<typename Options>
-struct digamma_t : elementwise_callable<digamma_t, Options>
+struct polygamma_t : elementwise_callable<polygamma_t, Options>
 {
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<eve::value N, eve::floating_value T>
+  constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
 
-  EVE_CALLABLE_OBJECT(digamma_t, digamma_);
+  EVE_CALLABLE_OBJECT(polygamma_t, polygamma_);
 };
 
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var digamma
-//!   @brief `elementwise_callable` object computing the Digamma function i.e.
-//!   the logarithmic derivative of the \f$\Gamma\f$  function.
+//!   @var polygamma
+//!   @brief `elementwise_callable` object computing the Polygamma function i.e.
+//!   the second derivative of the \f$\log\Gamma\f$  function.
 //!
 //!   @groupheader{Header file}
 //!
@@ -46,11 +46,11 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto polygamma(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto polygamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto polygamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -62,163 +62,97 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!
 //!   **Return value**
 //!
-//!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!     1. The value of the Polygamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
-//!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
+//!   *  [Wolfram MathWorld: Polygamma Function](https://mathworld.wolfram.com/PolygammaFunction.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/digamma.cpp}
+//!   @godbolt{doc/special/polygamma.cpp}
 //================================================================================================
-  inline constexpr auto digamma = functor<digamma_t>;
+  inline constexpr auto polygamma = functor<polygamma_t>;
 //================================================================================================
 //! @}
 //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+    template<integral_value N, typename T, callable_options O>
+    constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N s, T x) noexcept
     {
-      using elt_t  = element_type_t<T>;
-      auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;
-      auto br_1_2 = [](auto x, auto result){
-        // computes digamma(a0)/a0 for double or double vectors
-        // xx is sqr(a0) and 0 <= abs(a0) <= 3.25
-        T y(0.99558162689208984);
-        T root1(1569415565.0 / 1073741824uL);
-        T root2((381566830.0 / 1073741824uL) / 1073741824uL);
-        T root3(0.9016312093258695918615325266959189453125e-19);
+      using r_t = eve::as_wide_as<T, N>;
+      return polygamma(eve::convert(s, eve::as(eve::element_type_t<r_t>())), x);
+    }
 
-        auto g = x - root1;
-        g -= root2;
-        g -= root3;
-        x = dec(x);
-        if constexpr( std::is_same_v<elt_t, double> )
-        {
-          auto r = eve::reverse_horner(x, T(0x1.04e9e69894978p-2), T(-0x1.4d5d0f9ab412fp-2), T(-0x1.4cf68d26e295ap-1)
-                                      , T(-0x1.2821c13c5e2bfp-2), T(-0x1.72b2e63723c78p-5), T(-0x1.0f7e5f66c2537p-9))/
-            eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.09d1b06674d41p+1), T(0x1.75eb79397c930p+0)
-                               , T(0x1.be65d28de361cp-2), T(0x1.bb9c8cc612ca3p-5), T(0x1.16fc90a0a1908p-9)
-                               , T(-0x1.2b84f95bbf448p-21));
-          return fma(g, y, g * r) + result;
-        }
-        else
-        {
-          auto r =
-          eve::reverse_horner(x, T(0x1.04e9e6p-2f), T(-0x1.4d5d10p-2f), T(-0x1.4cf68ep-1f), T(-0x1.2821c2p-2f)
-                             , T(-0x1.72b2e6p-5f), T(-0x1.0f7e60p-9f))/
-          eve::reverse_horner(x, T(0x1.000000p+0f), T(0x1.09d1b0p+1f), T(0x1.75eb7ap+0f), T(0x1.be65d2p-2f)
-                             , T(0x1.bb9c8cp-5f), T(0x1.16fc90p-9f), T(-0x1.2b84fap-21f));
-          return fma(g, y, g * r) + result;
-        }
-      };
-
-      auto br_large = [](auto x, auto result){
-        // if we're above the lower-limit for the asymptotic expansion then use it:
-        x = dec(x);
-        result += log(x);
-        result += rec[pedantic](x + x);
-        auto z = rec[pedantic](sqr(x));
-        T    y(0);
-        if constexpr( std::is_same_v<elt_t, double> )
-        {
-          y =
-            eve::reverse_horner(z, T(0x1.5555555555555p-4), T(-0x1.1111111111111p-7), T(0x1.0410410410410p-8)
-                               , T(-0x1.1111111111111p-8), T(0x1.f07c1f07c1f08p-8), T(-0x1.5995995995996p-6)
-                               , T(0x1.5555555555555p-4), T(-0x1.c5e5e5e5e5e5ep-2));
-        }
-        else
-        {
-          y =
-          eve::reverse_horner(z, T(0x1.555556p-4f), T(-0x1.111112p-7f), T(0x1.041042p-8f), T(-0x1.111112p-8f)
-                             , T(0x1.f07c20p-8f), T(-0x1.59959ap-6f), T(0x1.555556p-4f), T(-0x1.c5e5e6p-2f));
-        }
-        result -= z * y;
-        return result;
-      };
-
-      if constexpr( scalar_value<T> )
+    template<typename N, typename T, callable_options O>
+    constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N s, T x) noexcept
+    {
+      if constexpr(integral_value<N>)
       {
-        auto result = zero(as(a));
-        if( a == 0 ) return copysign(inf(as(a)), a);
-        if( a < 0 )
-        {
-          if( 0 && (a > -1) ) result = -a;
-          else
-          {
-            a      = oneminus(a);
-            result = a - floor(a);
-          }
-          if( result > 0.5 ) result -= 1;
-          if( result == 0.5 ) result = zero(as(a));
-          else if( result ) result = pi(as(a)) * cotpi(result);
-          else result = nan(as(a));
-          // we are ready to increment result that was
-          // Pi<A0>()/tanpi(remainder) if a0 < 0  and remainder != 0
-          // Nan<A0>                   if a0 < 0  and remainder == 0
-          // 0                         in any other cases
-        }
-        if( a >= dlarge )
-        { // If we're above the lower-limit for the asymptotic eapansion then use it:
-          return br_large(a, result);
-        }
-        // If a > 2 reduce to the interval [1,2]:
-        while( a > 2 )
-        {
-          a -= 1;
-          result += 1 / a;
-        }
-        // If a < 1 use shift to > 1:
-        if( a < 1 )
-        {
-          result = -1 / a;
-          a += 1;
-        }
-        return br_1_2(a, result);
+      using r_t = eve::as_wide_as<T, N>;
+      return polygamma(eve::convert(s, eve::as(eve::element_type_t<r_t>())), x);
       }
-      else // simd
+      else
       {
-        a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
-        auto notdone = is_not_nan(a);
-        auto result  = zero(as(a));
-        auto test    = is_lez(a);
-        if( eve::any(test) )
-        {
-          auto va        = a;
-          a              = oneminus[test](a);
-          auto remainder = frac[raw](a);
-          remainder      = dec[remainder > 0.5](remainder);
-          remainder      = if_else(is_eqz(remainder), nan(as(a)), remainder);
-          remainder      = if_else(remainder == T(0.5), zero, pi(as(a)) * cotpi(remainder));
-          result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
-          result         = if_else(test, result, zero);
-        }
-        auto r = nan(as<T>());
+        using r_t = eve::common_value_t<N, T>;
+        using elt_t =  eve::element_type_t<r_t>;
+        auto br_spec =  [](auto x){
+          return zero(as(x));
+        };
+
+        auto br_else =  [](auto x, auto m){
+//          auto t = eve::rec(x);
+          elt_t  b = 10.0;
+          auto value = eve::zero(as(x));
+          int n = eve::maximum(if_else(x > b, eve::zero, eve::floor(b-x)));
+
+          for(int i=n; i >= 0 ; --i)
+          {
+            value =  add[x+i != 0](value, pow(x+i, -m));
+          }
+          return value;
+ //          x+= n+1;
+//           auto w = pow(t, m);
+//           auto y = w * eve::fam(eve::rec(m), eve::half(as(w)), t);
+
+//           auto eval =  [](auto x, auto y, auto m)
+//           {
+//             constexpr int M = 9;
+//             std::array<double, M> p{0.08333333333333333,-0.008333333333333333,0.003968253968253968,
+//                                     -0.004166666666666667,0.007575757575757576,-0.021092796092796094,
+//                                     0.08333333333333333,-0.4432598039215686,3.0539543302701198};
+//             std::array<double, M> d;
+//             d[0] = m+1;
+//             for(int k=1; k < M ; ++k)
+//             {
+//               d[k] = (2*k+m-1)*(2*k+m-2) / ((2*k-1)*(2*k-2));
+//             }
+//             auto r = zero(as(y));
+//             for(int i=M-1; i >= 0 ; --i)
+//             {
+//               r = r+d[i]*x*(p[i]+r);
+//             }
+//             return r;
+//           };
+//           auto z = eval(x, y, m);
+//           auto t2 = eve::sqr(t);
+//           y += w*t2 * z;
+//           return value+y;
+        };
+
+
+        auto r       = nan(as<T>());                      // nan and zero case treated here
+        r            = if_else(x == inf(as(x)), zero, r);
+        auto notdone = eve::is_nez(x) && eve::is_not_nan(x) && (x != inf(as(x)));
+
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);
+          notdone = next_interval(br_spec, notdone,eve::false_(eve::as(x)), r, x);
           if( eve::any(notdone) )
           {
-            // If a > 2 reduce to the interval [1,2]:
-            a         = if_else(a > dlarge, one, a);
-            auto cond = a > T(2);
-            while( eve::any(cond) )
-            {
-              a      = dec[cond](a);
-              result = add[cond](result, rec[pedantic](a));
-              cond   = a > T(2);
-            }
-            cond = a < T(1);
-            while( eve::any(cond) )
-            {
-              result = add[cond](result, -rec[pedantic](a));
-              a      = inc[cond](a);
-              cond   = a < T(1);
-            }
-            notdone = last_interval(br_1_2, notdone, r, a, result);
+            notdone = last_interval(br_else, notdone, r, x, s-1);
           }
         }
         return r;
