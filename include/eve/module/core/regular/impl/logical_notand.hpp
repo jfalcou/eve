@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<callable_options O, relaxed_logical_value T>
-  EVE_FORCEINLINE constexpr T logical_notand_(EVE_REQUIRES(cpu_), O const& opts, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr T logical_notand_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
     return logical_andnot(b, a);
   }
