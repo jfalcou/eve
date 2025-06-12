@@ -128,7 +128,7 @@ void logical_test_compile_reject(F f)
 }
 
 template<typename M, typename T, typename F, typename FS>
-void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
+void logical_test_simd_inner(F ff, FS fs, M l0, M l1, T a0)
 {
   using l_t = eve::element_type_t<M>;
 
@@ -140,7 +140,7 @@ void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
   using v_t  = eve::element_type_t<T>;
   using d_t  = eve::downgrade_t<v_t>;
   using ld_t  = eve::as_logical_t<d_t>;
-  auto da0   = eve::convert(a0, eve::as<d_t>());
+  auto da0   = tts::poison(eve::convert(a0, eve::as<d_t>()));
   TTS_EQUAL(ff(l1, da0 > 1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e, f > 1)}; }, l1, da0));
   TTS_EQUAL(ff(da0 > 1, l1), tts::map([&](auto e, auto f) -> ld_t { return bool{fs(e > 1, f)}; }, da0, l1));
 
@@ -149,10 +149,66 @@ void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
 
   // upgraded
   using u_t  = eve::upgrade_t<v_t>;
-  auto ua0   = eve::convert(a0, eve::as<u_t>());
+  auto ua0   = tts::poison(eve::convert(a0, eve::as<u_t>()));
   TTS_EQUAL(ff(l1, ua0 > 1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e, f > 1)}; }, l1, ua0));
   TTS_EQUAL(ff(ua0 > 1, l1), tts::map([&](auto e, auto f) -> l_t { return bool{fs(e > 1, f)}; }, ua0, l1));
 
   TTS_EQUAL(ff((ua0 > 1).get(0), l0), tts::map([&](auto e) -> l_t { return bool{fs((ua0 > 1).get(0), e)}; }, l0));
   TTS_EQUAL(ff(l0, (ua0 > 1).get(0)), tts::map([&](auto e) -> l_t { return bool{fs(e, (ua0 > 1).get(0))}; }, l0));
+}
+
+template<typename T, typename U, typename Mask, typename F>
+void logical_test_cx(F ff, T a, U b, Mask mask)
+{
+  using r_t = eve::common_logical_t<T, U>;
+
+  TTS_EQUAL(ff[mask](a, b), eve::if_else(mask, ff(a, b), eve::false_(as<r_t>{})));
+}
+
+template<typename M, typename T, typename Mask, typename F>
+void logical_test_simd_inner_cx(F ff, M l0, M l1, T a0, Mask mask)
+{
+  logical_test_cx(ff, l0, l1, mask);
+  logical_test_cx(ff, l0, l1.get(0), mask);
+  logical_test_cx(ff, l0.get(0), l1, mask);
+
+  // downgraded
+  using v_t  = eve::element_type_t<T>;
+  using d_t  = eve::downgrade_t<v_t>;
+  auto da0   = tts::poison(eve::convert(a0, eve::as<d_t>()));
+  logical_test_cx(ff, l1, da0 > 1, mask);
+  logical_test_cx(ff, da0 > 1, l1, mask);
+  logical_test_cx(ff, (da0 > 1).get(0), l0, mask);
+  logical_test_cx(ff, l0, (da0 > 1).get(0), mask);
+
+  // upgraded
+  using u_t  = eve::upgrade_t<v_t>;
+  auto ua0   = tts::poison(eve::convert(a0, eve::as<u_t>()));
+  logical_test_cx(ff, l1, ua0 > 1, mask);
+  logical_test_cx(ff, ua0 > 1, l1, mask);
+  logical_test_cx(ff, (ua0 > 1).get(0), l0, mask);
+  logical_test_cx(ff, l0, (ua0 > 1).get(0), mask);
+}
+
+template<typename M, typename T, typename F, typename FS>
+void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
+{
+  logical_test_simd_inner(ff, fs, l0, l1, a0);
+
+  logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_none);
+  logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_all);
+  logical_test_simd_inner_cx(ff, l0, l1, a0, true);
+  logical_test_simd_inner_cx(ff, l0, l1, a0, false);
+
+  M m = tts::poison(M{ [](auto i, auto) { return i % 2 == 0; } });
+  logical_test_simd_inner_cx(ff, l0, l1, a0, m);
+
+  constexpr auto cardinal = eve::cardinal_v<T>;
+
+  if constexpr (cardinal >= 2)
+  {
+    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(1, 1));
+    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+  }
 }
