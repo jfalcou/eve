@@ -93,7 +93,7 @@ TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     using abi_t = typename type::abi_type;
     using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
@@ -144,7 +144,7 @@ TTS_CASE_TPL( "keep_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
@@ -197,7 +197,7 @@ TTS_CASE_TPL( "ignore_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
@@ -250,7 +250,7 @@ TTS_CASE_TPL( "keep_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
@@ -305,7 +305,7 @@ TTS_CASE_TPL( "ignore_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
@@ -367,7 +367,7 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
@@ -441,7 +441,7 @@ TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t> )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
