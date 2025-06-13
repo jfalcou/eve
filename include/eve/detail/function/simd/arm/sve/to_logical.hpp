@@ -51,19 +51,7 @@ namespace eve::detail
     }
     else if constexpr (std::same_as<C, ignore_first> || std::same_as<C, keep_last>)
     {
-      int count = c.count(tgt) + (fundamental_cardinal_v<T> - cardinal_v<S>);
-
-      if constexpr (current_api >= sve2)
-      {
-        if      constexpr (sizeof(T) == 1) return svwhilegt_b8(count, 0);
-        else if constexpr (sizeof(T) == 2) return svwhilegt_b16(count, 0);
-        else if constexpr (sizeof(T) == 4) return svwhilegt_b32(count, 0);
-        else if constexpr (sizeof(T) == 8) return svwhilegt_b64(count, 0);
-      }
-      else
-      {
-        return svnot_z(sve_true<T>(), to_logical_impl(tag, keep_first(c.offset(tgt)), tgt));
-      }
+      return svnot_z(to_logical_impl(tag, keep_first(cardinal_v<S>), tgt), to_logical_impl(tag, keep_first(c.offset(tgt)), tgt));
     }
     else if constexpr (std::same_as<C, keep_between> || std::same_as<C, ignore_extrema>)
     {
