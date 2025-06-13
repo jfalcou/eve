@@ -66,8 +66,6 @@ namespace eve::detail
     // we don't care about PROMOTE as we only accept similar types.
     else
     {
-      constexpr auto cat = categorize<wide<T, N>>();
-
       if      constexpr( cat == category::float64x8  )  return _mm512_fnmadd_pd(a, b, c);
       else if constexpr( cat == category::float32x16 )  return _mm512_fnmadd_ps(a, b, c);
       else if constexpr( supports_fma3)

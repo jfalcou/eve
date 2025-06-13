@@ -1,3 +1,10 @@
+//======================================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+*/
+//======================================================================================================================
 #ifndef PRAGMAS_PRAGMA_HPP_INCLUDED
 #define PRAGMAS_PRAGMA_HPP_INCLUDED
 #include <eve/detail/spy.hpp>
@@ -8,8 +15,7 @@
     _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wuninitialized\"")           \
         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 
-#  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
-_Pragma("GCC diagnostic pop")
+#  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA _Pragma("GCC diagnostic pop")
 
 #elif defined(SPY_COMPILER_IS_CLANG)
 

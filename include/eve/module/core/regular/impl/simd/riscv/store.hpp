@@ -45,10 +45,7 @@ EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(rvv_), wide<T, N> v, Ptr p)
 requires(rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {
-  auto const tgt = as<wide<T>> {};
-  auto       ptr = unalign(p);
-
-  return riscv_store(v, p);
+  return riscv_store(v, unalign(p));
 }
 
 // Conditional store

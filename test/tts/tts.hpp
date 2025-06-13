@@ -448,21 +448,21 @@ namespace tts
   };
   template<typename... Ls> struct concatenate { using type = decltype( (Ls{} + ...) ); };
   template<typename... Ls> using concatenate_t = typename concatenate<Ls...>::type;
-  
+
   // filter types with predicate
   template<template<typename> typename Pred, typename Type> struct filter
   {
-    template<typename... Ls> static constexpr types<Ls...> tuple_to_types(const std::tuple<Ls...>&);
+    template<typename... Ls> static types<Ls...> tuple_to_types(const std::tuple<Ls...>&);
     template<typename T>
-    static constexpr std::conditional_t<Pred<T>::value, std::tuple<T>, std::tuple<>> filter_type();
+    static std::conditional_t<Pred<T>::value, std::tuple<T>, std::tuple<>> filter_type();
 
-    template<typename... Ls> static constexpr auto filter_impl(types<Ls...>)
+    template<typename... Ls> static auto filter_impl(types<Ls...>)
     {
       return tuple_to_types(std::tuple_cat(filter_type<Ls>()...));
     }
-    using type = decltype(filter_impl(Type {}));
+    using type = decltype(filter_impl(Type{}));
   };
-  
+
   template<typename T> struct type {};
   using real_types        = types < double,float>;
   using int_types         = types < std::int64_t , std::int32_t , std::int16_t , std::int8_t>;
