@@ -9,6 +9,7 @@
 
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/detail/validate_mask.hpp>
 #include <eve/traits/overload/impl/conditional.hpp>
 
 namespace eve
@@ -55,7 +56,7 @@ namespace eve
         [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
 
         // Check that the mask and the value are of same kind if simd
-        constexpr bool compatible_mask = !(simd_value<decltype(cond.mask(as(x0)))> && (scalar_value<T> && ... && scalar_value<Ts>));
+        constexpr bool compatible_mask = detail::validate_mask_for<cond_t, decltype(f(x0, xs...))>();
         static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
 
         // Shush any other cascading errors

@@ -74,3 +74,7 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/logical_andnot.hpp>
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/logical_andnot.hpp>
+#endif
