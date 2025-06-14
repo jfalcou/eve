@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
 
 namespace eve::detail
 {
@@ -23,12 +24,21 @@ namespace eve::detail
   }
 
   template<relative_conditional_expr C, simd_value S>
-  EVE_FORCEINLINE as_logical_t<S> to_logical_incomplete([[maybe_unused]] sve_ tag, C c, eve::as<S> tgt) noexcept
+  EVE_FORCEINLINE as_logical_t<S> to_logical_impl([[maybe_unused]] sve_ tag, C c, [[maybe_unused]] as<S> tgt) noexcept
     requires sve_abi<typename S::abi_type>
   {
     using T = element_type_t<as_arithmetic_t<S>>;
-
-    if constexpr (std::same_as<C, ignore_none_>) return sve_true<T>();
+    if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr (S::size() < fundamental_cardinal_v<T>)
+      {
+        return to_logical_impl(tag, keep_first(cardinal_v<S>), tgt);
+      }
+      else
+      {
+        return sve_true<T>();
+      }
+    }
     else if constexpr (std::same_as<C, ignore_all_>) return svpfalse();
     else if constexpr (std::same_as<C, keep_first> || std::same_as<C, ignore_last>)
     {
@@ -41,30 +51,18 @@ namespace eve::detail
     }
     else if constexpr (std::same_as<C, ignore_first> || std::same_as<C, keep_last>)
     {
-      int count = c.count(tgt);
-
-      if constexpr (current_api >= sve2)
-      {
-        if      constexpr (sizeof(T) == 1) return svwhilegt_b8(count, 0);
-        else if constexpr (sizeof(T) == 2) return svwhilegt_b16(count, 0);
-        else if constexpr (sizeof(T) == 4) return svwhilegt_b32(count, 0);
-        else if constexpr (sizeof(T) == 8) return svwhilegt_b64(count, 0);
-      }
-      else
-      {
-        return svnot_z(sve_true<T>(), to_logical_incomplete(tag, keep_first(c.offset(tgt)), tgt));
-      }
+      return svnot_z(to_logical_impl(tag, keep_first(cardinal_v<S>), tgt), to_logical_impl(tag, keep_first(c.offset(tgt)), tgt));
     }
     else if constexpr (std::same_as<C, keep_between> || std::same_as<C, ignore_extrema>)
     {
       int first_count = c.offset(tgt);
       int last_count = c.roffset(tgt);
 
-      return to_logical_incomplete(tag, ignore_first(first_count), tgt) && to_logical_incomplete(tag, ignore_last(last_count), tgt);
+      return to_logical_impl(tag, ignore_first(first_count), tgt) && to_logical_impl(tag, ignore_last(last_count), tgt);
     }
     else
     {
-      return to_logical_incomplete(cpu_{}, c, tgt);
+      return to_logical_impl(cpu_{}, c, tgt);
     }
   }
 }
