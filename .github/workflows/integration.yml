@@ -47,7 +47,7 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: [ubuntu-latest]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v9
     strategy:
       fail-fast: false
     steps:
@@ -68,7 +68,7 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: [ubuntu-latest]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v9
     strategy:
       fail-fast: false
     steps:
@@ -87,7 +87,7 @@ jobs:
   multi-arch:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v9
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
