@@ -20,29 +20,14 @@ namespace eve::detail
   {
     const auto m = v.bits();
 
-    if constexpr (N::value == 1)
+    if constexpr (match_option<condition_key, O, ignore_none_>)
     {
-      if constexpr (match_option<condition_key, O, ignore_none_>)
-      {
-        return static_cast<bool>(m.get(0));
-      }
-      else
-      {
-        const auto cm = expand_mask(opts[condition_key], as<wide<T, N>>{});
-        return static_cast<bool>(v.get(0)) || !static_cast<bool>(cm.get(0));
-      }
+      return vec_all_eq(remove_garbage(m).storage(), true_(as(m)).storage());
     }
     else
     {
-      if constexpr (match_option<condition_key, O, ignore_none_>)
-      {
-        return vec_all_eq(remove_garbage(m).storage(), true_(as(m)).storage());
-      }
-      else
-      {
-        const auto mask = expand_mask_no_garbage(opts[condition_key], as(v)).bits();
-        return vec_all_eq((m & mask).storage(), mask.storage());
-      }
+      const auto mask = expand_mask_no_garbage(opts[condition_key], as(v)).bits();
+      return vec_all_eq((m & mask).storage(), mask.storage());
     }
   }
 }
