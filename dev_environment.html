@@ -139,7 +139,7 @@ Docker setup</h1>
 <h1><a class="anchor" id="dev_docker_helper"></a>
 Running EVE docker</h1>
 <p>Running <b>EVE</b> CI docker can be done by moving to <b>EVE</b> source folder than run the following command:</p>
-<pre class="fragment">docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v6
+<pre class="fragment">docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
 </pre><p>This will give you access to an interactive shell running inside the Docker Image. We strongly advice to make a small Bash function that you can add to your bash profile to easily spin up an instance of Docker.</p>
 <pre class="fragment"># .bashrc
 dockhere()
