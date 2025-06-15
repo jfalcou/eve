@@ -23,20 +23,20 @@ all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   auto cond = opts[condition_key];
 
   if constexpr (scalar_value<T>) return eve::all[cond](v.value());
-  else
-  if constexpr( C::is_complete && !C::is_inverted ) return true;
+  else if constexpr( C::is_complete && !C::is_inverted ) return true;
   else if constexpr( has_emulated_abi_v<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
-    bool res = true;
+      bool res = true;
 
-    std::ptrdiff_t first = cond.offset(eve::as<T> {});
-    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
-    EVE_ASSUME((first >= 0) && (first <= last) && (last <= T::size()));
-    while( first != last ) res = res && v.get(first++);
+      std::ptrdiff_t first = cond.offset(eve::as<T> {});
+      std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+      constexpr std::ptrdiff_t size = T::size();
+      EVE_ASSUME((first >= 0) && (first <= last) && (last <= size));
+      while( first != last ) res = res && v.get(first++);
 
-    return res;
+      return res;
     }
     else
     {
