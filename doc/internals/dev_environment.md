@@ -43,7 +43,7 @@ Running **EVE** CI docker can be done by moving to **EVE** source folder than ru
 command:
 
 @verbatim
-docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v6
+docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
 @endverbatim
 
 This will give you access to an interactive shell running inside the Docker Image. We strongly
