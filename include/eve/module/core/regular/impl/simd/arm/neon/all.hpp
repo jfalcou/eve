@@ -32,7 +32,6 @@ all_(EVE_REQUIRES(neon128_),
   else
   {
     if constexpr( sizeof(T) * N() <= 4u ) return all.behavior(cpu_{}, opts, v0);
-    auto cond = opts[condition_key];
     auto dwords = eve::bit_cast(v0.bits(), eve::as<u32_2> {});
     dwords      = vpmin_u32(dwords, dwords);
 
@@ -91,4 +90,3 @@ all_(EVE_REQUIRES(neon128_),
   }
 }
 }
-
