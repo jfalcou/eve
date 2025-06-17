@@ -19,7 +19,7 @@
 namespace eve
 {
 template<typename Options>
-struct hurwitz_t : elementwise_callable<hurwitz_t, Options>
+struct hurwitz_t : callable<hurwitz_t, Options>
 {
   template<eve::value N, eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
@@ -79,22 +79,12 @@ struct hurwitz_t : elementwise_callable<hurwitz_t, Options>
 
   namespace detail
   {
-    template<integral_value N, typename T, callable_options O>
-    constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const&, N s, T x) noexcept
-    {
-      using r_t = eve::as_wide_as<T, N>;
-      return hurwitz(eve::convert(s, eve::as(eve::element_type_t<r_t>())), x);
-    }
-
     template<typename N, typename T, callable_options O>
     constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const&, N s, T z) noexcept
     {
-
-
       if constexpr(integral_value<N>)
       {
-      using r_t = eve::as_wide_as<T, N>;
-      return hurwitz(eve::convert(s, eve::as(eve::element_type_t<r_t>())), z);
+        return hurwitz(T(s), z);
       }
       else
       {
