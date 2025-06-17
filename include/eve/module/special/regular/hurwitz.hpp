@@ -14,7 +14,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
 #include <eve/module/special/regular/trigamma.hpp>
-#include <iostream>
 
 namespace eve
 {
@@ -108,25 +107,20 @@ struct hurwitz_t : callable<hurwitz_t, Options>
         };
 
         auto scalar_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto z){
-          std::cout << "scalar hurwitz(" << s << ", " << z << ")" << std::endl;
-
           auto x = z;
           int  nx(xf);
           auto minus_s = -s;
 
-          std::cout << "scalar --1 zeta " << zeta << std::endl;
           if (x < cutoff) // shift using recurrence formula
           {
             if (nx < 0)
             {
-              std::cout << "scalar --2 zeta " << zeta << std::endl;
               auto minus_z = -z;
               zeta += eve::pow(minus_z, minus_s);
               if (xf != z)
               {
                 zeta += pow(z - nx, minus_s);
               }
-              std::cout << "simd --3 zeta " << zeta << std::endl;
               if (s > 0)
               {
                 for (int v = -nx-1; v >= 1;  --v){
@@ -143,24 +137,17 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                   if(zeta == zeta0) break; // prevent long loop for large -x > 0
                 }
               }
-              std::cout << "simd --3 zeta " << zeta << std::endl;
             }
             else // x ≥ 0 && z != 0
             {
-              std::cout << "scalar --4 zeta " << zeta << std::endl;
               zeta += eve::pow(z, minus_s);
             }
-          std::cout << "scalar --5 zeta " << zeta << std::endl;
-
           }
-          std::cout << "hurwitz scalar --1 zeta" << zeta << std::endl;
           // loop order depends on sign of s, as above
           if (x < cutoff) // shift using recurrence formula
           {
-            std::cout << "hurwitz 2 scalar second loop" << std::endl;
             if (s > 0)
             {
-               std::cout << "hurwitz 2 scalar s > 0 " <<   s << std::endl;
              for(int v=std::max(1, 1-nx); v <= n-1; ++v)
               {
                 auto zeta0 = zeta;
@@ -170,7 +157,6 @@ struct hurwitz_t : callable<hurwitz_t, Options>
             }
             else
             {
-              std::cout << "hurwitz 2 scalar s <  0 " <<   s << std::endl;
               for(int v=n-1; v >= std::max(1, 1-nx); --v)
               {
                 auto zeta0 = zeta;
@@ -178,18 +164,13 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
-            std::cout << "hurwitz scalar --1 zeta" << zeta << std::endl;
-
             z += n;
-            std::cout <<  "hurwitz 2 z" << z << std::endl;
           }
           return zeta;
 
         };
 
         auto simd_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto z){
-          std::cout << "simd hurwitz(" << s << ", " << z << ")" << std::endl;
-
           auto x = z;
           auto  nx(xf);
           auto minus_s = -s;
@@ -197,7 +178,6 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           auto test1 = x < cutoff;
           auto test2 = nx < 0;
           auto test3 = test1 && test2;
-          std::cout << "simd --1 zeta " << zeta << std::endl;
           if(eve::any(test1)) // shift using recurrence formula if  x < cutoff;
           {
             if (eve::any(test1 && test2))
@@ -205,7 +185,6 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               zeta += if_else(test3, eve::pow(minus_z, minus_s), eve::zero);
               zeta += if_else(test3 && xf != z, pow(z - nx, minus_s), eve::zero);
             }
-            std::cout << "simd --2 zeta " << zeta << std::endl;
             if (s > 0)
             {
               auto v = -nx-1;
@@ -216,11 +195,6 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large -x > 0
                 v = eve::dec(v);
               }
-//                  for (int v = -nx-1; v >= 1;  --v){
-//                   auto zeta0 = zeta;
-//                   zeta+=eve::pow(minus_z - v, minus_s);
-//                   if(zeta == zeta0) break; // prevent long loop for large -x > 0
-//                 }
             }
             else
             {
@@ -232,30 +206,17 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large -x > 0
                 v = eve::inc(v);
               }
-//                  for (int v = 1; v <= -nx-1; ++v){
-//                  auto zeta0 = zeta;
-//                   zeta+=eve::pow(minus_z - v, minus_s);
-//                   if(zeta == zeta0) break; // prevent long loop for large -x > 0
-//                 }
             }
-            std::cout << "simd --3 zeta " << zeta << std::endl;
           }
-          std::cout << "simd --4 zeta " << zeta << std::endl;
           if (eve::any(test1 && !test2)) // x ≥ 0 && z != 0
           {
             zeta += if_else(test1 && !test2, eve::pow(z, minus_s), zero);
           }
-          std::cout << "simd --5 zeta " << zeta << std::endl;
-
-
-//          std::cout << "hurwitz 1 zeta" << zeta << std::endl;
           // loop order depends on sign of s, as above
           if(eve::any(test1)) // shift using recurrence formula
           {
-            std::cout << "hurwitz 2 simd second loop" << std::endl;
             if (s > 0)
             {
-              std::cout << "hurwitz 2 simd s > 0 " <<   s << std::endl;
               auto v = eve::max(eve::one(eve::as(n)), oneminus(nx));
               while (eve::any(test1 && eve::is_less_equal(v, dec(n))))
               {
@@ -264,16 +225,9 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large m
                 v = inc(v);
               }
-//               for(int v=std::max(1, 1-nx); v <= n-1; ++v)
-//               {
-//                 auto zeta0 = zeta;
-//                 zeta+=eve::pow(z + v, minus_s);
-//                 if(zeta == zeta0) break; // prevent long loop for large m
-//               }
             }
             else
             {
-              std::cout << "hurwitz 2 simd s <= 0 " <<   s << std::endl;
               auto v = n-1;
 
               while (eve::any(test1 && eve::is_greater_equal(v, eve::max(eve::one(eve::as(nx)), oneminus(nx)))))
@@ -283,20 +237,10 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large m
                 v = dec(v);
               }
-//               for(int v=n-1; v >= std::max(1, 1-nx); --v)
-//               {
-//                 auto zeta0 = zeta;
-//                 zeta+=eve::pow(z + v, minus_s);
-//                 if(zeta == zeta0) break; // prevent long loop for large m
-//               }
             }
-            std::cout << "hurwitz 2 simd --1 zeta" << zeta << std::endl;
-
             z += n;
-            std::cout <<  "hurwitz 2 z" << z << std::endl;
           }
           return zeta;
-
         };
 
 
@@ -317,15 +261,12 @@ struct hurwitz_t : callable<hurwitz_t, Options>
         {
           int nx(xf);
           int n(eve::ceil(cutoff - nx));
-//          auto under_cutoff = z < cutoff;
-          std::cout << "hurwitz scalar av scalar_1 zeta " << zeta <<  std::endl;
-          zeta = scalar_1(zeta, xf, n, cutoff, z); //z+s+m+cutoff+asymptotic(z, m);
+          zeta = scalar_1(zeta, xf, n, cutoff, z);
           z = if_else(under_cutoff, z+n, z);
-          std::cout << "hurwitz av asymp z " << z <<  std::endl;
           auto t = eve::rec(z);
           auto w = pow(t, m);
           zeta += w * (eve::rec(m) + elt_t(0.5)*t);
-          t *= t; // # 1/z^2;
+          t *= t; //  1/z^2;
           zeta += w*t*asymptotic(t, m);
           return zeta;
         }
@@ -341,12 +282,8 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 
           auto nx(xf);
           auto n(eve::ceil(cutoff - nx));
-          std::cout << "hurwitz simd av simd_1 zeta " << zeta <<  std::endl;
           zeta = simd_1(zeta, xf, n, cutoff, z);
           z = if_else(under_cutoff && z != eve::one(eve::as(z)) && eve::is_nez(z), z+n, z);
-          std::cout << "hurwitz simd av asymp zeta " << zeta <<  std::endl;
-          std::cout << "hurwitz simd av asymp z " << z <<  std::endl;
-          std::cout << "hurwitz simd av asymp m " << m <<  std::endl;
           auto t = eve::rec(z);
           auto w = pow(t, m);
           zeta += w * (eve::rec(m) + elt_t(0.5)*t);
