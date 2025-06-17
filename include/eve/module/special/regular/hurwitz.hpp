@@ -119,15 +119,15 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 
         if constexpr(scalar_value<r_t>)
         {
-          std::cout << "scalar hurwitz(" << s << ", " << z << ")" << std::endl;
+          std::cout << "scalar hurwitz1(" << s << ", " << z << ")" << std::endl;
 
           auto x = z;
 
           auto zeta =  eve::zero(eve::as(z));
-          std::cout << "cutoff " << cutoff << std::endl;
+//          std::cout << "cutoff " << cutoff << std::endl;
           if (x < cutoff) // shift using recurrence formula
           {
-            std::cout << "shift" << std::endl;
+//            std::cout << "shift" << std::endl;
             auto xf = eve::floor(x);
             int  nx(xf);
             int n(eve::ceil(cutoff - nx));
@@ -159,24 +159,25 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                    if(zeta == zeta0) break; // prevent long loop for large -x > 0
                 }
               }
-              std::cout << "nnx " << nx <<  std::endl;
-              std::cout << "z   " << z   <<  std::endl;
-              std::cout << " 1 zeta " << zeta<<  std::endl;
-              std::cout << "no supplementary term" << std::endl;
+//               std::cout << "nnx " << nx <<  std::endl;
+//               std::cout << "z   " << z   <<  std::endl;
+//               std::cout << " 1 zeta " << zeta<<  std::endl;
+//               std::cout << "no supplementary term" << std::endl;
              }
             else // x ≥ 0 && z != 0
             {
               zeta += eve::pow(z, minus_s);
-              std::cout << "nnx " << nx <<  std::endl;
-              std::cout << "z   " << z   <<  std::endl;
-              std::cout << " 2 zeta " << zeta<<  std::endl;
-              std::cout << "supplementary term" << std::endl;
+//               std::cout << "nnx " << nx <<  std::endl;
+//               std::cout << "z   " << z   <<  std::endl;
+//               std::cout << " 2 zeta " << zeta<<  std::endl;
+//               std::cout << "supplementary term" << std::endl;
            }
+            std::cout << "hurwitz 1 zeta" << zeta << std::endl;
 
             // loop order depends on sign of s, as above
             if (s > 0)
             {
-              std::cout << "icitte " << zeta << std::endl;
+//              std::cout << "icitte " << zeta << std::endl;
               //std::cout <<  "4-- s > 0, m " <<  m << " z " << z << " nx " <<  nx << " n " << n << std::endl;
               for(int v=std::max(1, 1-nx); v <= n-1; ++v)
               {
@@ -184,7 +185,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 zeta+=eve::pow(z + v, minus_s);
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
-              std::cout <<  "icitte zeta " << zeta << std::endl;
+//              std::cout <<  "icitte zeta " << zeta << std::endl;
            }
             else
             {
@@ -196,13 +197,15 @@ struct hurwitz_t : callable<hurwitz_t, Options>
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
+            std::cout << "hurwitz 2 zeta" << zeta << std::endl;
             z += n;
-              std::cout << "av asympt "<<  std::endl;
-              std::cout << "z    " << z   <<  std::endl;
-              std::cout << " 3 zeta " << zeta<<  std::endl;
+            std::cout <<  "hurwitz 2 z" << z << std::endl;
 
           }
-          //std::cout << "av scalar asympt " << z << " -> r " << zeta << std::endl;
+          std::cout << "hurwitz av asymp zeta " << zeta <<  std::endl;
+          std::cout << "hurwitz av asymp z " << z <<  std::endl;
+          std::cout << "hurwitz av asymp m " << m <<  std::endl;
+
           auto t = eve::rec(z);
           auto w = pow(t, m);
           //std::cout << "t " << t << " w " << w << std::endl;

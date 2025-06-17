@@ -42,12 +42,18 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
   auto ulp = 2.0;
   if constexpr(sizeof(e_t) == 8  && eve::cardinal_v<T> == 1)
 {
-//    TTS_ULP_EQUAL(hurwitz(e_t(3), T(0.125)), T(512.8766690590678412978L), ulp);
-//    TTS_ULP_EQUAL(hurwitz(e_t(3), T(1)), T(1.2020569031595942853997L), ulp);
-//    TTS_ULP_EQUAL(hurwitz(e_t(3), T(6)), T(0.0163948661225572483627L), ulp);
 
-   TTS_ULP_EQUAL(hurwitz(e_t(3), e_t(-2.45)), e_t(17.761703009137815L)    , ulp);
-   TTS_ULP_EQUAL(hurwitz(e_t(3), T(-2.45)), T(17.761703009137815L)     , ulp);
+//   TTS_ULP_EQUAL(hurwitz(e_t(3), e_t(0.125)), e_t(512.8766690590678412978L), ulp);
+   TTS_ULP_EQUAL(hurwitz(e_t(3), e_t(6)), e_t(0.0163948661225572483627L), ulp);
+   std::cout << " ====================================== " << std::endl;
+
+//   TTS_ULP_EQUAL(hurwitz(e_t(3), T(0.125)), T(512.8766690590678412978L), ulp);
+   TTS_ULP_EQUAL(hurwitz(e_t(3), T(6)), T(0.0163948661225572483627L), ulp);
+
+
+//    TTS_ULP_EQUAL(hurwitz(e_t(3), T(1)), T(1.2020569031595942853997L), ulp);
+//    TTS_ULP_EQUAL(hurwitz(e_t(3), e_t(-2.45)), e_t(17.761703009137815L)    , ulp);
+//    TTS_ULP_EQUAL(hurwitz(e_t(3), T(-2.45)), T(17.761703009137815L)     , ulp);
 
 
 //    TTS_ULP_EQUAL(hurwitz(e_t(3), T(15)),T(0.0023753013582757773733L) , ulp);

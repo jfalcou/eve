@@ -23,6 +23,7 @@
 #include <eve/module/special/regular/gamma_p.hpp>
 #include <eve/module/special/regular/gamma_p_inv.hpp>
 #include <eve/module/special/regular/hurwitz.hpp>
+#include <eve/module/special/regular/hurwitz2.hpp>
 #include <eve/module/special/regular/lambert.hpp>
 #include <eve/module/special/regular/lbeta.hpp>
 #include <eve/module/special/regular/lfactorial.hpp>
