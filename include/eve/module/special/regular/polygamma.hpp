@@ -89,10 +89,10 @@ struct polygamma_t : callable<polygamma_t, Options>
       if (m == 1)    return eve::trigamma(z);
       auto pi  = eve::pi(eve::as(z));
 
-      auto mediumcotderiv = [](auto n, auto x)
-        {
-          constexpr std::array<kumi::tuple
-        }:
+   //    auto mediumcotderiv = [](auto n, auto x)
+//         {
+//           constexpr std::array<kumi::tuple
+//         }:
       
         auto largecotderiv = [](auto n, auto x)
         {

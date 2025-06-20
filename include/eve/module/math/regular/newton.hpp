@@ -37,6 +37,14 @@ namespace eve
       return EVE_DISPATCH_CALL(x, t1, t2);
     }
 
+    template<floating_value X, eve::detail::range R1, eve::detail::range R2>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<X, typename R1::value_type, typename R2::value_type>
+    operator()(X x, R1 const& t1,  R2 const & t2) const noexcept
+    {
+      return EVE_DISPATCH_CALL(x, t1, t2);
+    }
+
     EVE_CALLABLE_OBJECT(newton_t, newton_);
   };
 
@@ -159,6 +167,39 @@ namespace eve
          kumi::result::fill_t<s, r_t> tcn{r_t{cns}...};
         auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
         return newton[o](x,coefficients{tc},nodes{tn});
+      }
+    }
+
+    template<typename X, typename RC,  typename RN, callable_options O >
+    EVE_FORCEINLINE constexpr auto
+    newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  RC const& rc, RN const & rn)
+    {
+      using r_t   = common_value_t<X, typename RC::value_type, typename RN::value_type>;
+      auto x      = r_t(xx);
+      auto firstc = begin(rc);
+      auto lastc  = end(rc);
+      if( firstc == lastc ) return r_t(0);
+      else
+      {
+        auto siz = std::distance(firstc, lastc);
+//     EVE_ASSERT(siz == inc(std::distance(begin(rn), end(rn))),
+//                "number of nodes must equal to the number of coefficients minus 1");
+        if( siz == 1 ) return r_t(*firstc);
+        else
+        {
+          using std::advance;
+          auto firstn = begin(rn);
+          auto curn   = firstn;
+          auto curc   = firstc;
+          advance(curc, 1);
+          advance(curn, 1);
+          auto dfma = fma[o];
+          r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
+          auto step = [&](auto that, auto argc, auto argn) { return dfma( that, sub(x, argn), argc); };
+          for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )
+            that = step(that, *curc, *curn);
+          return that;
+        }
       }
     }
   }
