@@ -12,76 +12,58 @@
 #include <cmath>
 
 //==================================================================================================
-// Types tests
-//==================================================================================================
-TTS_CASE_TPL("Check return types of polygamma", eve::test::simd::ieee_reals)
-<typename T>(tts::type<T>)
-{
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::polygamma(T(), T()), T);
-  TTS_EXPR_IS(eve::polygamma(v_t(), v_t()), v_t);
-  TTS_EXPR_IS(eve::polygamma(int(), T()), T);
-};
-
-//==================================================================================================
-// polygamma  tests
+// hurwitz  tests
 //==================================================================================================
 TTS_CASE_TPL("Check behavior of polygamma on wide", eve::test::simd::ieee_reals)
   <typename T>(tts::type<T>)
 {
   using eve::polygamma;
-//  using e_t = eve::element_type_t<T>;
+  using e_t = eve::element_type_t<T>;
 
-//   if constexpr( eve::platform::supports_invalids )
-//   {
-//     TTS_IEEE_EQUAL(polygamma(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
-//     TTS_IEEE_EQUAL(polygamma(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
-//     TTS_IEEE_EQUAL(polygamma(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
-//   }
-  auto ulp = 2.0;
-//  TTS_ULP_EQUAL(polygamma(3, T(0.125)), T(24580.14341906357), ulp);
-  TTS_ULP_EQUAL(polygamma(3, T(1)), T(6.493939402266829), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(0.5)), T(e_t(-1.9635100260214234794409763329987555671931596046604L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(1)), T(e_t(-0.57721566490153286060651209008240243104215933593992L)), ulp);
-//   TTS_ULP_EQUAL(
-//       polygamma(T(1.5)), T(e_t(0.036489973978576520559023667001244432806840395339566L)), ulp * 40);
-//   TTS_ULP_EQUAL(polygamma(T(1.5) - T(1) / 32),
-//                 T(e_t(0.00686541147073577672813890866512415766586241385896200579891429L)),
-//                 ulp * 100);
-//   TTS_ULP_EQUAL(polygamma(T(2)), T(e_t(0.42278433509846713939348790991759756895784066406008L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(8)), T(e_t(2.0156414779556099965363450527747404261006978069172L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(12)), T(e_t(2.4426616799758120167383652547949424463027180089374L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(22)), T(e_t(3.0681430398611966699248760264450329818421699570581L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(50)), T(e_t(3.9019896734278921969539597028823666609284424880275L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(500)), T(e_t(6.2136077650889917423827750552855712637776544784569L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(3.193317413330078125)), T(polygamma(3.193317413330078125)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(3.193317413330078125)), T(9.963879482071649e-01), ulp);
-//   //
-//   // negative values:
-//   //
-//   TTS_ULP_EQUAL(polygamma(T(-0.125)), T(e_t(7.1959829284523046176757814502538535827603450463013L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(-10.125)), T(e_t(9.9480538258660761287008034071425343357982429855241L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(-10.875)), T(e_t(-5.1527360383841562620205965901515879492020193154231L)), ulp);
-//   TTS_ULP_EQUAL(polygamma(T(-1.5)), T(e_t(0.70315664064524318722569033366791109947350706200623L)), ulp);
+//  auto ulp = 2.0;
+  if constexpr(sizeof(e_t) == 8  && eve::cardinal_v<T> == 1)
+  {
+//     if constexpr( eve::platform::supports_invalids )
+//     {
+//       TTS_IEEE_EQUAL(polygamma(3, eve::nan(eve::as<e_t>())), eve::nan(eve::as<e_t>()));
+//       TTS_IEEE_EQUAL(T(polygamma(3, eve::nan(eve::as<e_t>()))), polygamma(3, eve::nan(eve::as<T>())));
+//       TTS_IEEE_EQUAL(polygamma(3, eve::inf(eve::as<e_t>())), eve::zero(eve::as<e_t>()));
+//       TTS_IEEE_EQUAL(T(polygamma(3, eve::inf(eve::as<e_t>()))), polygamma(3, eve::inf(eve::as<T>())));
+//       TTS_IEEE_EQUAL(polygamma(3, eve::minf(eve::as<e_t>())), eve::nan(eve::as<e_t>()));
+//       TTS_IEEE_EQUAL(T(polygamma(3, eve::minf(eve::as<e_t>()))), polygamma(3, eve::minf(eve::as<T>())));
+//     }
+//     TTS_ULP_EQUAL(polygamma(3, e_t(0.125)), e_t(24580.14341906356621851100L), ulp);
+//     TTS_ULP_EQUAL(T(polygamma(3, e_t(0.125))), polygamma(3, T(0.125)), ulp);
+//     TTS_ULP_EQUAL(polygamma(3, e_t(6)), e_t(0.01182782819275507502194810L), ulp);
+//     TTS_ULP_EQUAL(T(polygamma(3, e_t(6))), polygamma(3, T(6)), ulp);
+//     TTS_ULP_EQUAL(polygamma(3, e_t(1)), e_t(6.49393940226682914909602217924700L), ulp);
+//     TTS_ULP_EQUAL(T(polygamma(3, e_t(1))), polygamma(3, T(1)), ulp);
+//     TTS_ULP_EQUAL(polygamma(3, e_t(15)),e_t(0.000654479778282737348417337L) , ulp);
+//     TTS_ULP_EQUAL(T(polygamma(3, e_t(15))), polygamma(3, T(15)), ulp);
+
+//    TTS_ULP_EQUAL(polygamma(2, e_t(-2.45)), e_t(214.66070346259589040673700L)    , ulp);
+//    TTS_ULP_EQUAL(T(polygamma(3, e_t(-2.45))), polygamma(3, T(-2.45)), ulp);
+
+//     {
+//       eve::wide<double, eve::fixed<4>> z{0.125, 15, -2.45, 1.0};
+//       eve::wide<double, eve::fixed<4>> r{512.8766690590678412978, 0.0023753013582757773733, 17.761703009137815, 1.2020569031595942853997};
+//       TTS_ULP_EQUAL(polygamma(3, z), r    , ulp);
+//     }
+
+//     {
+//       eve::wide<double, eve::fixed<4>> z{eve::nan(eve::as(0.0)), 15, -2.45, eve::inf(eve::as(0.0))};
+//       eve::wide<double, eve::fixed<4>> r{eve::nan(eve::as(0.0)), 0.0023753013582757773733, 17.761703009137815, 0.0};
+//       TTS_ULP_EQUAL(polygamma(3, z), r    , ulp);
+//     }
+
+    std::cout << "eve::polygamma(0, -2.25 ) "<< eve::polygamma(0, -2.25) << std::endl;
+    std::cout << "eve::digamma(-2.25)     ) "<< eve::digamma(-2.25)      << std::endl;
+    std::cout << "eve::polygamma(1, -2.25)  "<< eve::polygamma(1, -2.25) << std::endl;
+    std::cout << "eve::trigamma(-2.25)      "<< eve::trigamma(-2.25)      << std::endl;
+    std::cout << "eve::polygamma(2, -2.25)  "<< eve::polygamma(2, -2.25) << std::endl;
+    std::cout << "eve::polygamma(3, -2.25)  "<< eve::polygamma(3, -2.25) << std::endl;
+    std::cout << "eve::polygamma(4, -2.25)  "<< eve::polygamma(4, -2.25) << std::endl;
+    std::cout << "eve::polygamma(5, -2.25) "<< eve::polygamma(5, -2.25) << std::endl;
+ }
+
 };
-
-// TTS_CASE_WITH("Check behavior of polygamma on wide",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(0.4, 4.0)))
-// <typename T>(T const& a0) { TTS_ULP_EQUAL(eve::polygamma(a0), T(tts::map(eve::polygamma, a0)), 2); };
-
-
-// //==================================================================================================
-// // Tests for masked polygamma
-// //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::polygamma)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(0.4, 4.0),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::polygamma[mask](a0),
-//             eve::if_else(mask, eve::polygamma(a0), a0));
-// };

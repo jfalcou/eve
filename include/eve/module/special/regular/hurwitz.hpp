@@ -81,14 +81,14 @@ struct hurwitz_t : callable<hurwitz_t, Options>
     template<typename N, typename T, callable_options O>
     constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const&, N s, T z) noexcept
     {
+      using r_t = T;
+      using elt_t =  eve::element_type_t<r_t>;
       if constexpr(integral_value<N>)
       {
-        return hurwitz(T(s), z);
+        return hurwitz(elt_t(s), z);
       }
       else
       {
-        using r_t = eve::common_value_t<N, T>;
-        using elt_t =  eve::element_type_t<r_t>;
 
         auto asymptotic =  [](auto x, auto m){
           constexpr int M = 10;

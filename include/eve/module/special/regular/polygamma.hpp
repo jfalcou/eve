@@ -9,19 +9,18 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/log_abs_gamma.hpp>
+#include <eve/module/special/regular/zeta.hpp>
+#include <eve/module/special/regular/trigamma.hpp>
 
 namespace eve
 {
 template<typename Options>
-struct polygamma_t : elementwise_callable<polygamma_t, Options>
+struct polygamma_t : callable<polygamma_t, Options>
 {
-  template<eve::value N, eve::floating_value T>
+  template<eve::scalar_value N, eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
 
   EVE_CALLABLE_OBJECT(polygamma_t, polygamma_);
@@ -46,17 +45,17 @@ struct polygamma_t : elementwise_callable<polygamma_t, Options>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto polygamma(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto polygamma(scalar_value auto n, floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto polygamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto polygamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto polygamma[conditional_expr auto c](scalar_value auto n, floating_value auto x) noexcept; // 2
+//!      constexpr auto polygamma[logical_value auto m](scalar_value auto n, floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [floating_value](@ref eve::value).
+//!     * `x`: [scalar_value](@ref eve::value). (see note below)
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -64,6 +63,10 @@ struct polygamma_t : elementwise_callable<polygamma_t, Options>
 //!
 //!     1. The value of the Polygamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @note Only integral (or flint) positive values of n correspond to the proper polygamma definition. You can use
+//!        non intetgral values but the function result may be different to
+//!        the standard definitions of polygamma extension.
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
@@ -79,83 +82,65 @@ struct polygamma_t : elementwise_callable<polygamma_t, Options>
 
   namespace detail
   {
-    template<integral_value N, typename T, callable_options O>
-    constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N s, T x) noexcept
-    {
-      using r_t = eve::as_wide_as<T, N>;
-      return polygamma(eve::convert(s, eve::as(eve::element_type_t<r_t>())), x);
-    }
-
     template<typename N, typename T, callable_options O>
-    constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N s, T x) noexcept
+    constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N m, T z) noexcept
     {
-      if constexpr(integral_value<N>)
-      {
-      using r_t = eve::as_wide_as<T, N>;
-      return polygamma(eve::convert(s, eve::as(eve::element_type_t<r_t>())), x);
-      }
+      if (is_eqz(m)) return eve::digamma(z);
+      if (m == 1)    return eve::trigamma(z);
+      auto pi  = eve::pi(eve::as(z));
+
+      auto mediumcotderiv = [](auto n, auto x)
+        {
+          constexpr std::array<kumi::tuple
+        }:
+      
+        auto largecotderiv = [](auto n, auto x)
+        {
+        auto p = n+1;
+        x -= eve::nearest(x);
+        auto s = eve::rec(eve::pow(x, p));
+        n = 1;
+        auto s0 = eve::zero(eve::as(s));
+        while (1)
+        {
+          s0 = s;
+          auto a = eve::pow(x+n, p);
+          auto b = eve::pow(x-n, p);
+          auto t = (a + b) / (a * b);
+          s += t;
+          if (eve::all(s == s0)) break;
+          n += 1;
+        }
+        std::cout << "2 n " << n << std::endl;
+        return s*eve::inv_pi(eve::as(x)); ;
+      };
+
+      auto cotderiv =  [pi, largecotderiv](auto n,  auto x){ //derivatives of order n of cotpi(x);
+        std::cout << "1 n " << n << std::endl;
+        using elt_t =  eve::element_type_t<T>;
+        auto pi2 = eve::pi2(eve::as(x));
+        switch (n){
+        case 0 : return eve::cotpi(x);
+        case 1 : return -eve::sqr(eve::cscpi(x));
+        case 2 : return 2*pi2*eve::cotpi(x)*eve::sqr(eve::cscpi(x));
+        case 3 : return -2*pi*pi2*eve::sqr(eve::cscpi(x))*(2*eve::sqr(cotpi(x)) + eve::sqr(cscpi(x)));
+        case 4 : return 8*eve::sqr(pi2)*cotpi(x)*eve::sqr(cscpi(x))*(eve::sqr(cotpi(x)) + 2*eve::sqr(cscpi(x)));
+        default :return eve::sign_alternate(n)*largecotderiv(n, x)*tgamma(elt_t(n+1));
+        }
+      };
+      using elt_t =  eve::element_type_t<T>;
+
+      int s = m+1;
+      auto gez = eve::is_gez(z);
+      auto mg = -eve::tgamma(elt_t(s));
+      auto hupos  = eve::hurwitz(s,z);
+      auto sa = eve::sign_alternate(m);
+      if (eve::all(gez))
+        return sa*hupos*mg;
       else
       {
-        using r_t = eve::common_value_t<N, T>;
-        using elt_t =  eve::element_type_t<r_t>;
-        auto br_spec =  [](auto x){
-          return zero(as(x));
-        };
-
-        auto br_else =  [](auto x, auto m){
-//          auto t = eve::rec(x);
-          elt_t  b = 10.0;
-          auto value = eve::zero(as(x));
-          int n = eve::maximum(if_else(x > b, eve::zero, eve::floor(b-x)));
-
-          for(int i=n; i >= 0 ; --i)
-          {
-            value =  add[x+i != 0](value, pow(x+i, -m));
-          }
-          return value;
- //          x+= n+1;
-//           auto w = pow(t, m);
-//           auto y = w * eve::fam(eve::rec(m), eve::half(as(w)), t);
-
-//           auto eval =  [](auto x, auto y, auto m)
-//           {
-//             constexpr int M = 9;
-//             std::array<double, M> p{0.08333333333333333,-0.008333333333333333,0.003968253968253968,
-//                                     -0.004166666666666667,0.007575757575757576,-0.021092796092796094,
-//                                     0.08333333333333333,-0.4432598039215686,3.0539543302701198};
-//             std::array<double, M> d;
-//             d[0] = m+1;
-//             for(int k=1; k < M ; ++k)
-//             {
-//               d[k] = (2*k+m-1)*(2*k+m-2) / ((2*k-1)*(2*k-2));
-//             }
-//             auto r = zero(as(y));
-//             for(int i=M-1; i >= 0 ; --i)
-//             {
-//               r = r+d[i]*x*(p[i]+r);
-//             }
-//             return r;
-//           };
-//           auto z = eval(x, y, m);
-//           auto t2 = eve::sqr(t);
-//           y += w*t2 * z;
-//           return value+y;
-        };
-
-
-        auto r       = nan(as<T>());                      // nan and zero case treated here
-        r            = if_else(x == inf(as(x)), zero, r);
-        auto notdone = eve::is_nez(x) && eve::is_not_nan(x) && (x != inf(as(x)));
-
-        if( eve::any(notdone) )
-        {
-          notdone = next_interval(br_spec, notdone,eve::false_(eve::as(x)), r, x);
-          if( eve::any(notdone) )
-          {
-            notdone = last_interval(br_else, notdone, r, x, s-1);
-          }
-        }
-        return r;
+        auto huneg = eve::hurwitz(s, eve::oneminus(z));
+        return eve::if_else(gez, mg*sa*hupos, (mg*huneg - pi*cotderiv(m,z)));
       }
     }
   }

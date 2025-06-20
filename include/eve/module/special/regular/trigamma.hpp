@@ -79,12 +79,15 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
   namespace detail
   {
     template<typename T, callable_options O>
-
-    constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+    constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T z) noexcept
     {
-      using elt_t  = element_type_t<T>;
-      auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;
-
+      auto r = eve::nan(eve::as(z));
+      auto done = eve::is_nan(z) || eve::is_minf(z);
+      z = if_else(done, zero, z);
+      auto ispinf = eve::is_pinf(z);
+      done =  done || ispinf;
+      r =if_else(ispinf, zero, r);
+      z = if_else(ispinf, zero, z);
 
       auto br_1_2 = [](auto x, auto result){
         // computes trigamma(a0)/a0 for double or double vectors
@@ -118,113 +121,40 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
         }
       };
 
-      auto br_large = [](auto x, auto result){
-        // if we're above the lower-limit for the asymptotic expansion then use it:
-        x = dec(x);
-        result += log(x);
-        result += rec[pedantic](x + x);
-        auto z = rec[pedantic](sqr(x));
-        T    y(0);
-        if constexpr( std::is_same_v<elt_t, double> )
+      auto br_pos = [](auto x){//x >  0
+        auto psi = eve::zero(eve::as(x));
+        constexpr int N = 10;
+        auto test = x < N;
+        if (eve::any(test))
         {
-          y =
-            eve::reverse_horner(z, T(0x1.5555555555555p-4), T(-0x1.1111111111111p-7), T(0x1.0410410410410p-8)
-                               , T(-0x1.1111111111111p-8), T(0x1.f07c1f07c1f08p-8), T(-0x1.5995995995996p-6)
-                               , T(0x1.5555555555555p-4), T(-0x1.c5e5e5e5e5e5ep-2));
+          auto n = N - eve::floor(x);
+          psi += eve::if_else(test, eve::sqr(eve::rec(x)), zero);
+          auto v = eve::one(eve::as(x));
+          while(eve::any(test && v < n))
+          {
+            psi += if_else(test && v < n, eve::sqr(eve::rec(x+v)), zero);
+            v = inc(v);
+          }
+          x = if_else(test, x+n, x);
         }
-        else
-        {
-          y =
-          eve::reverse_horner(z, T(0x1.555556p-4f), T(-0x1.111112p-7f), T(0x1.041042p-8f), T(-0x1.111112p-8f)
-                             , T(0x1.f07c20p-8f), T(-0x1.59959ap-6f), T(0x1.555556p-4f), T(-0x1.c5e5e6p-2f));
-        }
-        result -= z * y;
-        return result;
+        auto t = eve::rec(x);
+        auto w = eve::sqr(t);
+        psi += t + eve::half(eve::as(x))*w;
+        psi += t*w*eve::reverse_horner(w, 0.16666666666666666,-0.03333333333333333,0.023809523809523808,-0.03333333333333333
+                              ,0.07575757575757576,-0.2531135531135531,1.1666666666666667,-7.092156862745098); //Bernouillis
+        return psi;
       };
 
-      if constexpr( scalar_value<T> )
+      auto notdone = !done;
+      if (eve::any(notdone))
       {
-        auto result = zero(as(a));
-        if( a == 0 ) return copysign(inf(as(a)), a);
-        if( a < 0 )
-        {
-          if( 0 && (a > -1) ) result = -a;
-          else
-          {
-            a      = oneminus(a);
-            result = a - floor(a);
-          }
-          if( result > 0.5 ) result -= 1;
-          if( result == 0.5 ) result = zero(as(a));
-          else if( result ) result = pi(as(a)) * cotpi(result);
-          else result = nan(as(a));
-          // we are ready to increment result that was
-          // Pi<A0>()/tanpi(remainder) if a0 < 0  and remainder != 0
-          // Nan<A0>                   if a0 < 0  and remainder == 0
-          // 0                         in any other cases
-        }
-        if( a >= dlarge )
-        { // If we're above the lower-limit for the asymptotic eapansion then use it:
-          return br_large(a, result);
-        }
-        // If a > 2 reduce to the interval [1,2]:
-        while( a > 2 )
-        {
-          a -= 1;
-          result += 1 / a;
-        }
-        // If a < 1 use shift to > 1:
-        if( a < 1 )
-        {
-          result = -1 / a;
-          a += 1;
-        }
-        return br_1_2(a, result);
-      }
-      else // simd
-      {
-        a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
-        auto notdone = is_not_nan(a);
-        auto result  = zero(as(a));
-        auto test    = is_lez(a);
-        if( eve::any(test) )
-        {
-          auto va        = a;
-          a              = oneminus[test](a);
-          auto remainder = frac[raw](a);
-          remainder      = dec[remainder > 0.5](remainder);
-          remainder      = if_else(is_eqz(remainder), nan(as(a)), remainder);
-          remainder      = if_else(remainder == T(0.5), zero, pi(as(a)) * cotpi(remainder));
-          result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
-          result         = if_else(test, result, zero);
-        }
-        auto r = nan(as<T>());
+        notdone = next_interval(br_pos, notdone, is_gtz(z), r, z);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);
-          if( eve::any(notdone) )
-          {
-            // If a > 2 reduce to the interval [1,2]:
-            a         = if_else(a > dlarge, one, a);
-            auto cond = a > T(2);
-            while( eve::any(cond) )
-            {
-              a      = dec[cond](a);
-              result = add[cond](result, rec[pedantic](a));
-              cond   = a > T(2);
-            }
-            cond = a < T(1);
-            while( eve::any(cond) )
-            {
-              result = add[cond](result, -rec[pedantic](a));
-              a      = inc[cond](a);
-              cond   = a < T(1);
-            }
-            notdone = last_interval(br_1_2, notdone, r, a, result);
-          }
+          last_interval(br_neg, notdone, r, z);
         }
-        return r;
       }
+      return r;
     }
   }
 }
