@@ -214,7 +214,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];
 
-    if constexpr (std::input_iterator<DS> && !std::is_pointer_v<DS>)
+    if constexpr (requires { src.load(opts, tgt); })
+    {
+      return src.load(opts, tgt);
+    }
+    else if constexpr (std::input_iterator<DS> && !std::is_pointer_v<DS>)
     {
       return load_iterator_(opts, src, tgt);
     }
@@ -236,10 +240,6 @@ namespace eve::detail
       {
         return eve::load[opts.drop(unsafe2)](src, tgt);
       }
-    }
-    else if constexpr (requires { src.load(opts, tgt); })
-    {
-      return src.load(opts, tgt);
     }
     else if constexpr (has_bundle_abi_v<Wide>)
     {
