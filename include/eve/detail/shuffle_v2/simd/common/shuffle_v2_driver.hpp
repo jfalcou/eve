@@ -8,6 +8,9 @@
 #pragma once
 
 #include <eve/detail/shuffle_v2/simplify_plain_shuffle.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+
+#include <iostream>
 
 namespace eve::detail
 {
@@ -58,7 +61,9 @@ shuffle_emulated(pattern_t<I...>, fixed<G>, kumi::tuple<Ts...> xs)
   return shuffle_emulated_no_group(p2, xs);
 }
 
-// upscale pattern-------
+// shuffle_v2_combined_l-------
+
+// Takes multiple shuffle resuts and retuns a total level for the operation
 
 template<typename Tuple>
 constexpr auto
@@ -80,15 +85,98 @@ shuffle_v2_combined_l()
 
 // shuffle_v2_driver_call_native
 
-template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
+// Unpacks the tuple of arguments.
+
+struct shuffle_v2_driver_call_native
+{
+  template<typename NativeSelector,
+           std::ptrdiff_t G,
+           std::ptrdiff_t... I,
+           typename... Ts,
+           std::size_t... i>
+  EVE_FORCEINLINE auto impl(NativeSelector     selector,
+                            pattern_t<I...>    p,
+                            fixed<G>           g,
+                            kumi::tuple<Ts...> xs,
+                            std::index_sequence<i...>)
+  {
+    if constexpr( requires { selector(p, g, get<i>(xs)...); } )
+    {
+      return selector(p, g, get<i>(xs)...);
+    }
+    else { return kumi::tuple {no_matching_shuffle_t {}, eve::index<-1>}; }
+  }
+
+  template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
+  EVE_FORCEINLINE auto
+  operator()(NativeSelector selector, pattern_t<I...> p, fixed<G> g, kumi::tuple<Ts...> xs)
+  {
+    return impl(selector, p, g, xs, std::index_sequence_for<Ts...> {});
+  }
+};
+
+// shuffle_v2_free_masking
+
+// On certain architectures most (if not all) instructions have a masked
+// version.
+// In order to substantially simplify the logic, we rely on the compiler
+// here: we generate the native shuffle + blend and the compiler will
+// be responsible for mixing them.
+
+template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
 EVE_FORCEINLINE auto
-shuffle_v2_common_l0_l1(pattern_t<I...>, fixed<G>, kumi::tuple<T, Ts...> xs)
+shuffle_v2_free_masking(NativeSelector        selector,
+                        pattern_t<I...>       p,
+                        fixed<G>              g,
+                        kumi::tuple<T, Ts...> xs)
+{
+  constexpr bool free_masking =
+      !logical_value<T> && (current_api >= avx512 || current_api >= sve || current_api >= rvv);
+  constexpr std::array idxs {I...};
+
+  if constexpr( !free_masking ) return shuffle_v2_driver_call_native {}(selector, p, g, xs);
+  // For just replacing zeroes we should have a native implementation.
+  else if constexpr( idxm::is_just_zeroes_replaced(idxs) )
+  {
+    return shuffle_v2_driver_call_native {}(selector, p, g, xs);
+  }
+  else if constexpr( std::tuple_size_v<decltype(xs)> == 1U && idxm::has_zeroes(idxs) )
+  {
+    // NOTE: we don't replace the we_ with 0s because that way the compiler
+    //       would be forced to override them with 0s and that might not be required.
+    //       Example: shift produces 0s natively but we might force a mask with a we_
+    auto mask          = is_na_logical_mask(p, g, as(get<0>(xs)));
+    auto p1            = idxm::to_pattern<idxm::replace_na(idxs, we_)>();
+    auto [shuffled, l] = shuffle_v2_driver_call_native {}(selector, p1, g, xs);
+
+    if constexpr( decltype(l)::value != -1 )
+    {
+      T back = eve::bit_cast(shuffled, eve::as<T>{});
+      back   = if_else(mask, T{0}, back);
+      return kumi::tuple {back, l};
+    }
+    else { return kumi::tuple {shuffled, l}; }
+  }
+  else return shuffle_v2_driver_call_native {}(selector, p, g, xs);
+}
+
+// shuffle_v2_try_common_l0_l1
+
+// Handle common cases that are l0 and l1 regardless of the platform.
+
+template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
+EVE_FORCEINLINE auto
+shuffle_v2_try_common_l0_l1(NativeSelector        selector,
+                            pattern_t<I...>       p,
+                            fixed<G>              g,
+                            kumi::tuple<T, Ts...> xs)
 {
   constexpr std::array idxs {I...};
 
   // l0
   if constexpr( idxm::is_identity(idxs) && G == T::size() )
   {
+    // exactly first register as a result.
     return kumi::tuple {get<0>(xs), eve::index<0>};
   }
   // l1
@@ -98,48 +186,21 @@ shuffle_v2_common_l0_l1(pattern_t<I...>, fixed<G>, kumi::tuple<T, Ts...> xs)
     using T1 = typename T::template rescale<N1>;
     return kumi::tuple {T1 {typename T1::value_type(0)}, eve::index<1>};
   }
-  else return kumi::tuple {no_matching_shuffle_t {}, eve::index<-1>};
+  else return shuffle_v2_free_masking(selector, p, g, xs);
 }
 
-template<typename NativeSelector,
-         std::ptrdiff_t G,
-         std::ptrdiff_t... I,
-         typename... Ts,
-         std::size_t... i>
-EVE_FORCEINLINE auto
-shuffle_v2_driver_call_native_invoke(NativeSelector     selector,
-                                     pattern_t<I...>    p,
-                                     fixed<G>           g,
-                                     kumi::tuple<Ts...> xs,
-                                     std::index_sequence<i...>)
-{
-  if constexpr( auto r = shuffle_v2_common_l0_l1(p, g, xs);
-                std::tuple_element_t<1, decltype(r)>::value != -1 )
-  {
-    return r;
-  }
-  else if constexpr( requires { selector(p, g, get<i>(xs)...); } )
-  {
-    return selector(p, g, get<i>(xs)...);
-  }
-  else { return kumi::tuple {no_matching_shuffle_t {}, eve::index<-1>}; }
-}
+// shuffle_v2_simplify_pattern
 
 template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
 EVE_FORCEINLINE auto
-shuffle_v2_driver_call_native(NativeSelector        selector,
-                              pattern_t<I...>       p,
-                              fixed<G>              g,
-                              kumi::tuple<T, Ts...> xs)
+shuffle_v2_simplify_pattern(NativeSelector        selector,
+                            pattern_t<I...>       p,
+                            fixed<G>              g,
+                            kumi::tuple<T, Ts...> xs)
 {
   auto xgp = simplify_plain_shuffle(p, g, xs);
 
-  auto r = shuffle_v2_driver_call_native_invoke(
-      selector,
-      xgp.p,
-      xgp.g,
-      xgp.x,
-      std::make_index_sequence<std::tuple_size_v<decltype(xgp.x)>> {});
+  auto r             = shuffle_v2_try_common_l0_l1(selector, xgp.p, xgp.g, xgp.x);
   auto [shuffled, l] = r;
   if constexpr( decltype(l)::value == -1 ) return r;
   else
@@ -166,7 +227,7 @@ shuffle_v2_driver_another_emulation_check(NativeSelector        selector,
     auto [shuffled_tuple, l] = shuffle_emulated(p, g, xs);
     return kumi::tuple {get<0>(shuffled_tuple), l};
   }
-  else return shuffle_v2_driver_call_native(selector, p, g, xs);
+  else return shuffle_v2_simplify_pattern(selector, p, g, xs);
 }
 
 // shuffle_v2_driver_wide_logicals
