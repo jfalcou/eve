@@ -96,7 +96,7 @@ shuffle_v2_common_l0_l1(pattern_t<I...>, fixed<G>, kumi::tuple<T, Ts...> xs)
   {
     using N1 = eve::fixed<pattern_t<I...>::size() * G>;
     using T1 = typename T::template rescale<N1>;
-    return kumi::tuple {T1{ typename T1::value_type(0) }, eve::index<1>};
+    return kumi::tuple {T1 {typename T1::value_type(0)}, eve::index<1>};
   }
   else return kumi::tuple {no_matching_shuffle_t {}, eve::index<-1>};
 }
@@ -164,7 +164,7 @@ shuffle_v2_driver_another_emulation_check(NativeSelector        selector,
   if constexpr( eve::has_emulated_abi_v<T> )
   {
     auto [shuffled_tuple, l] = shuffle_emulated(p, g, xs);
-    return kumi::tuple{ get<0>(shuffled_tuple), l };
+    return kumi::tuple {get<0>(shuffled_tuple), l};
   }
   else return shuffle_v2_driver_call_native(selector, p, g, xs);
 }
@@ -212,7 +212,8 @@ struct shuffle_v2_driver_drop_unsued
     constexpr auto p2                = get<0>(p2_selected_wides);
     constexpr auto selected_wides    = get<1>(p2_selected_wides);
 
-    kumi::tuple xs_ = [&]<std::size_t... i>(std::index_sequence<i...>) {
+    kumi::tuple xs_ = [&]<std::size_t... i>(std::index_sequence<i...>)
+    {
       return kumi::tuple {get<selected_wides[i]>(xs)...};
     }(std::make_index_sequence<selected_wides.size()> {});
 
@@ -273,8 +274,8 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
     // Level: if we just shuffle, then it's 0. If we need a 0 constant - that's 1 but
     //        not on emulated, on emulated we don't count anything.
     constexpr bool has_zeroes = ((I == na_) || ...);
-    auto l     = eve::index < (has_zeroes && !has_emulated_abi_v<T>) ? 1 : 0 > ;
-    auto get_i = [&]<std::ptrdiff_t i>(eve::index_t<i>)
+    auto           l          = eve::index < (has_zeroes && !has_emulated_abi_v<T>) ? 1 : 0 > ;
+    auto           get_i      = [&]<std::ptrdiff_t i>(eve::index_t<i>)
     {
       if constexpr( i == na_ ) return eve::zero(eve::as<T> {});
       else if constexpr( i == we_ ) return get<0>(xs);
@@ -293,7 +294,8 @@ struct shuffle_v2_driver_aggregation
   static EVE_FORCEINLINE auto aggregate_componets(kumi::tuple<Ts...> components)
   {
     // No callback - can probably use lambda without inlining problems
-    return [&]<std::size_t... i>(std::index_sequence<i...>) {
+    return [&]<std::size_t... i>(std::index_sequence<i...>)
+    {
       return kumi::tuple {T {get<2 * i>(components), get<2 * i + 1>(components)}...};
     }(std::make_index_sequence<std::tuple_size_v<decltype(components)> / 2> {});
   }
@@ -348,7 +350,8 @@ struct shuffle_v2_driver_bundle
     auto get_one_field = [&]<std::ptrdiff_t i>(index_t<i>)
     { return kumi::map([](auto x) { return get<i>(x); }, xs); };
 
-    return [&]<std::size_t... field_i>(std::index_sequence<field_i...>) {
+    return [&]<std::size_t... field_i>(std::index_sequence<field_i...>)
+    {
       return kumi::tuple {get_one_field(index<(std::ptrdiff_t)field_i>)...};
     }(std::make_index_sequence<std::tuple_size_v<T>> {});
   }

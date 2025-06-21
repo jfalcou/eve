@@ -21,8 +21,8 @@ shuffle_l_fallback_try_sse2_group_plus_u8(P)
   {
     // We split into shuffle big registers and then shuffle u8s internally.
     // This is limited by what u8 shuffles we can do: rotate and slide.
-    constexpr auto p0 = get<0>(*p0p1);
-    constexpr auto p1 = get<1>(*p0p1);
+    constexpr auto p0        = get<0>(*p0p1);
+    constexpr auto p1        = get<1>(*p0p1);
     constexpr auto u8pattern = idxm::upscale_pattern(p0) ? p1 : p0; // u8 pattern can't be upscaled
     constexpr auto most_repeated = idxm::most_repeated_pattern_a<u8pattern>;
 
@@ -76,7 +76,7 @@ requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else return kumi::tuple{no_matching_shuffle, eve::index<-1>};
+  else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>

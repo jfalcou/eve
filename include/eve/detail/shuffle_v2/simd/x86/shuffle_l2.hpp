@@ -98,8 +98,8 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
   else if constexpr( current_api < avx512 ) return no_matching_shuffle;
   else
   {
-    constexpr auto   m = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
-    auto          mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+    constexpr auto m    = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
+    auto           mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
 
     if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_epi32(mask, x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_epi32(mask, x, m);
@@ -465,10 +465,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_within_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 {
-  if constexpr( !idxm::shuffle_within_n(P::idxs, 16 / sizeof(T)) )
-  {
-    return no_matching_shuffle;
-  }
+  if constexpr( !idxm::shuffle_within_n(P::idxs, 16 / sizeof(T)) ) { return no_matching_shuffle; }
   else if constexpr( auto r = shuffle_l2_x86_within_128x2_shuffle_ps(p, g, x, y);
                      matched_shuffle<decltype(r)> )
   {

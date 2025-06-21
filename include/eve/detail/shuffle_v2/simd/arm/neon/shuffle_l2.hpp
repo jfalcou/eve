@@ -152,14 +152,14 @@ shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
       else if constexpr( sizeof(T) == 2 ) return vdup_lane_u16(x, m);
       else return vdup_lane_u8(x, m);
     }
-    else if constexpr ( current_api >= asimd )
+    else if constexpr( current_api >= asimd )
     {
       if constexpr( sizeof(T) == 8 ) return vdupq_laneq_u64(x, m);
       else if constexpr( sizeof(T) == 4 ) return vdupq_laneq_u32(x, m);
       else if constexpr( sizeof(T) == 2 ) return vdupq_laneq_u16(x, m);
       else return vdupq_laneq_u8(x, m);
     }
-    else return no_matching_shuffle_t{};
+    else return no_matching_shuffle_t {};
   }
 }
 
@@ -207,7 +207,8 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_neon_copy_lane_self(p, g, x); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r = shuffle_l2_neon_copy_lane_self(p, g, x);
+                     matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -240,7 +241,7 @@ EVE_FORCEINLINE auto
 shuffle_l2_neon_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto starts_from = idxm::is_in_order(P::idxs);
-  if constexpr (!starts_from) return no_matching_shuffle_t{};
+  if constexpr( !starts_from ) return no_matching_shuffle_t {};
   else return vext(x, y, eve::index<*starts_from>);
 }
 
@@ -253,7 +254,7 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr ( auto r = shuffle_l2_neon_ext_2(p, g, x, y); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r = shuffle_l2_neon_ext_2(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }

@@ -40,8 +40,8 @@ shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
   {
     constexpr auto p0 = get<0>(*P::shuffle_4in4);
     constexpr auto p1 = get<1>(*P::shuffle_4in4);
-    auto [r0, l0] = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
-    auto [r1, l1] = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
+    auto [r0, l0]     = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
+    auto [r1, l1]     = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
     return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
 }

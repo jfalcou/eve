@@ -22,13 +22,15 @@ up_element_size(wide<T, N> x)
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t To>
 EVE_FORCEINLINE auto
-up_element_size_to(wide<T, N> x, eve::fixed<To>) {
-  if constexpr (sizeof(T) == To) return x;
+up_element_size_to(wide<T, N> x, eve::fixed<To>)
+{
+  if constexpr( sizeof(T) == To ) return x;
   else return up_element_size_to(up_element_size(x), eve::lane<To>);
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
+EVE_FORCEINLINE auto
+shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::g_size * P::most_repeated.size() > 8 ) return no_matching_shuffle;
   else
