@@ -17,7 +17,7 @@ template<std::ptrdiff_t... I>
 constexpr auto
 upscale_pattern(pattern_t<I...> p)
 {
-  constexpr std::optional attempt = idxm::upscale_pattern(std::array{I...});
+  constexpr std::optional attempt = idxm::upscale_pattern(std::array {I...});
   if constexpr( !attempt ) return p;
   else return idxm::to_pattern<*attempt>();
 }

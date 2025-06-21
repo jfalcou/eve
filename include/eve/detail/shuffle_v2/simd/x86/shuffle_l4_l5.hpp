@@ -122,7 +122,7 @@ EVE_FORCEINLINE auto
 shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
-  if constexpr ( P::reg_size != 32 || current_api < avx2 ) return no;
+  if constexpr( P::reg_size != 32 || current_api < avx2 ) return no;
   else if constexpr( constexpr auto slide = idxm::is_slide_left_2(P::idxs, P::reg_size / P::g_size);
                      slide )
   {
@@ -135,9 +135,8 @@ shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
     if constexpr( slide > n16 )
     {
-      constexpr auto alignr_p =
-          idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide - n16);
-      r = shuffle_l<2>(bc, cd, idxm::to_pattern<alignr_p>());
+      constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide - n16);
+      r                       = shuffle_l<2>(bc, cd, idxm::to_pattern<alignr_p>());
     }
     else
     {

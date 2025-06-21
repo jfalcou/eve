@@ -106,7 +106,7 @@ template<typename Internal> struct shuffle_reverse_arguments
   {
     auto error = impl(args...);
     static_assert(!shuffle_user_error<decltype(error)>);
-    return kumi::tuple{error, eve::index<0>};
+    return kumi::tuple {error, eve::index<0>};
   }
 };
 

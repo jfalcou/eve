@@ -781,7 +781,7 @@ adjust_indexes_to_skip_unusued_inputs(extracted_blends_info<NumRegisters, N>& re
   {
     const auto& blend = res.register_blends[i];
     offsets[i]        = current_offset;
-    current_offset    += blend.present_in_shuffle ? 0 : cardinal;
+    current_offset += blend.present_in_shuffle ? 0 : cardinal;
   }
 
   for( auto& idx : res.finished_pattern )
@@ -820,7 +820,7 @@ extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t cardinal)
     {
       res.register_blends[wide_i].present_in_blend  = true;
       res.register_blends[wide_i].idxs[pos_in_wide] = 1;
-      res.finished_pattern[i] = we_;
+      res.finished_pattern[i]                       = we_;
     }
     else
     {
