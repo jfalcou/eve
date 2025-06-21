@@ -108,7 +108,8 @@ struct slide_left_impl_t
       auto mask = detail::mask_type(tgt);
       return level(mask, g, s) + 4;
     }
-    else if constexpr( current_api >= neon || current_api >= sve )
+    else if constexpr( current_api >= sve ) return 2;
+    else if constexpr( current_api >= neon )
     {
       if( reg_size <= 8 ) return 2;
       return 3;
@@ -121,7 +122,7 @@ struct slide_left_impl_t
         if( is_shift_by_4 ) return 2;
         if( reg_size <= 16 ) return 2;
         if( is_shift_by_2 ) return 3;
-        if (reg_size == 64) return 5; // this is not yet done
+        if( reg_size == 64 ) return 5; // this is not yet done
       }
       if( reg_size == 32 && is_shift_by_16 ) return 2;
       if( current_api >= avx2 && reg_size == 32 ) { return 4; }
@@ -169,8 +170,8 @@ struct slide_left_t : detail::named_shuffle_1<slide_left_impl_t>
 {};
 
 inline constexpr auto slide_left2 = slide_left_t {};
-  //================================================================================================
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//!  @}
+//================================================================================================
 
 }
