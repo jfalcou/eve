@@ -20,7 +20,7 @@ namespace eve
   template<typename T> struct pointer_traits<T const*>  { using value_type = T; };
 
   template<typename T>
-  requires requires { typename T::value_type; }
+  requires (!detail::range<T> && requires { typename T::value_type; })
   struct pointer_traits<T>
   {
     using value_type = typename T::value_type;

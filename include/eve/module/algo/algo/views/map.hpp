@@ -326,20 +326,20 @@ namespace eve::algo::views
       return map_convert(base.cardinal_cast(N), load_op, store_op);
     }
 
-    template<relative_conditional_expr C, decorator S>
-      requires iterator<I> && (!std::same_as<LoadOp, nothing_t>)
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
-                                                C c,
-                                                S s,
-                                                eve::as<vw_type>,
-                                                map_iterator self)
+    template<callable_options O>
+    EVE_FORCEINLINE auto load(O const& opts, as<vw_type>) const
+      requires iterator<I>
     {
-      auto loaded =  self.load_op(eve::load(drop_alternative(c), s,
-                                            self.base, eve::as<wide_value_type_t<I>>{}));
+      using C = rbr::result::fetch_t<condition_key, O>;
+      auto c = opts[condition_key];
+
+      auto loaded = load_op(eve::load[opts][drop_alternative(c)](base, as<wide_value_type_t<I>>{}));
+
       if constexpr (C::has_alternative)
       {
         loaded = eve::replace_ignored(loaded, c, c.alternative);
       }
+
       return loaded;
     }
 

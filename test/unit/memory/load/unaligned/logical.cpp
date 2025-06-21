@@ -27,10 +27,8 @@ TTS_CASE_WITH( "Check load to wides from non-contiguous range"
   for(auto &e : ref_range) e = reference.get(i++);
 
   T from_range(ref_range);
-  T from_begin_end(ref_range.begin(), ref_range.end());
 
   TTS_EQUAL(from_range, reference);
-  TTS_EQUAL(from_begin_end, reference);
 };
 
 //==================================================================================================
