@@ -47,7 +47,7 @@ TTS_CASE_TPL("Check behavior of eve::logical_xor(invalid)", eve::test::scalar::a
 TTS_CASE_WITH("Check behavior of eve::logical_xor(logical<wide>)",
               eve::test::simd::all_types,
               tts::generate(tts::logicals(0, 3), tts::logicals(1, 2), tts::randoms(0, 2)))
-<typename M, typename T>(M const& l0, [[maybe_unused]] M const& l1, [[maybe_unused]] T const& a0)
+<typename M, typename T>(M const& l0, M const& l1, T const& a0)
 {
   using l_t = eve::element_type_t<M>;
 
