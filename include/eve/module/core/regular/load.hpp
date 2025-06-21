@@ -38,13 +38,6 @@ namespace eve
   //!     template<detail::data_source Ptr, simd_value Wide>
   //!     Wide load(Ptr ptr, as<Wide> tgt) const noexcept;                                                               // 1
   //!
-  //!     template<std::input_iterator Iterator>
-  //!     as_wide_t<typename std::iterator_traits<Iterator>::value_type>
-  //!     load(Iterator b, Iterator e) const noexcept;                                                                   // 1
-  //!
-  //!     template<std::input_iterator Iterator, simd_value Wide>
-  //!     Wide load(Iterator b, Iterator e, as<Wide> tgt) const noexcept;                                                // 1
-  //!
   //!     // Conditional overloads
   //!     auto load[relative_conditional_expr c](/* any non-iterator version of the above overloads */) const noexcept;  // 2
   //!
@@ -56,7 +49,6 @@ namespace eve
   //!   **Parameters**
   //!
   //!   * `ptr`: A data source referencing the data to load.
-  //!   * `b`, `e`: A pair of iterators over the data to load.
   //!   * `c`: A [relative conditional expression](@ref eve::relative_conditional_expr) that determines which elements to load.
   //!
   //!  **Return value**
@@ -66,10 +58,10 @@ namespace eve
   //!   3. Same as 1., but uses as scalar version of the operation if a sanitizer is enabled.
   //!
   //!   @note
-  //!      2. and 3. are not available for iterators.
+  //!      2. and 3. may be sub-optimal for non-contiguous iterators.
   //!
   //!  @groupheader{Example}
-  //!  @godbolt{example/tutorial/load_ignore.cpp}
+  //!  @godbolt{doc/core/load.cpp}
   //================================================================================================
   inline constexpr auto load = functor<load_t>;
   //================================================================================================

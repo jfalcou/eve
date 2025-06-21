@@ -71,19 +71,6 @@ namespace eve::detail
   // Load impl
   //================================================================================================
 
-  template<callable_options O, std::input_iterator It, typename Wide>
-  EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const&, It src, [[maybe_unused]] It end, as<Wide> tgt) noexcept
-  {
-    if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
-    {
-      return to_logical(load(src, end, as<as_arithmetic_t<Wide>>{}));
-    }
-    else
-    {
-      return piecewise_load(src, tgt);
-    }
-  }
-
   template<detail::data_source DS, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
@@ -157,6 +144,30 @@ namespace eve::detail
     }
   }
 
+  template<callable_options O, std::input_iterator It, typename Wide>
+  EVE_FORCEINLINE Wide load_iterator_(O const& opts, It src, as<Wide> tgt) noexcept
+  {
+    using C = rbr::result::fetch_t<condition_key, O>;
+    [[maybe_unused]] auto cx = opts[condition_key];
+
+    if constexpr (std::contiguous_iterator<It>)
+    {
+      return load.behavior(cpu_{}, opts, std::to_address(src), tgt);
+    }
+    else if constexpr (!std::same_as<C, ignore_none_>)
+    {
+      return load_cx_(cx, src, tgt);
+    }
+    else if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
+    {
+      return to_logical(load(src, as<as_arithmetic_t<Wide>>{}));
+    }
+    else
+    {
+      return piecewise_load(src, tgt);
+    }
+  }
+
   template<relative_conditional_expr C, detail::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
   {
@@ -203,7 +214,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];
 
-    if constexpr (O::contains(unsafe2))
+    if constexpr (std::input_iterator<DS> && !std::is_pointer_v<DS>)
+    {
+      return load_iterator_(opts, src, tgt);
+    }
+    else if constexpr (O::contains(unsafe2))
     {
       if constexpr (spy::supports::sanitizers_status)
       {

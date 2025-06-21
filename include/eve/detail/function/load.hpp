@@ -35,21 +35,6 @@ namespace eve
       return EVE_DISPATCH_CALL(ptr, tgt);
     }
 
-    template<std::input_iterator Iterator>
-    EVE_FORCEINLINE as_wide_t<typename std::iterator_traits<Iterator>::value_type> operator()(Iterator b, Iterator e) const noexcept
-      requires (!Options::contains(condition_key) && !Options::contains(unsafe2))
-    {
-      using base = typename std::iterator_traits<Iterator>::value_type;
-      return EVE_DISPATCH_CALL(b, e, as<as_wide_t<base>>{});
-    }
-
-    template<std::input_iterator Iterator, simd_value Wide>
-    EVE_FORCEINLINE Wide operator()(Iterator b, Iterator e, as<Wide> tgt) const noexcept
-      requires (!Options::contains(condition_key) && !Options::contains(unsafe2))
-    {
-      return EVE_DISPATCH_CALL(b, e, tgt);
-    }
-
     EVE_CALLABLE_OBJECT(load_t, load_);
   };
 

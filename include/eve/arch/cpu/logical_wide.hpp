@@ -121,18 +121,11 @@ namespace eve
       : storage_base( r )
     {}
 
-    //! @brief Constructs a eve::logical from a pair of @iterator.
-    //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
-    template<std::input_iterator Iterator>
-    EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : storage_base(load(b, e, as<logical>{}))
-    {}
-
     //! @brief Constructs a eve::logical from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
     template<detail::range Range>
     EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
-                  : logical(std::begin(EVE_FWD(r)), std::end(EVE_FWD(r)))
+                  : logical(std::begin(EVE_FWD(r)))
     {}
 
     //! Constructs a eve::logical from a SIMD compatible pointer
