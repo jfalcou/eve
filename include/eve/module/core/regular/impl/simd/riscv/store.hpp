@@ -40,24 +40,14 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 // Regular store
-template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(rvv_), wide<T, N> v, Ptr p)
-requires(rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
+template<callable_options O, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+EVE_FORCEINLINE void store_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, Ptr p)
+  requires (rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {
-  return riscv_store(v, unalign(p));
-}
+  using C  = rbr::result::fetch_t<condition_key, O>;
+  auto cx  = opts[condition_key];
+  auto ptr = unalign(p);
 
-// Conditional store
-template<scalar_value T,
-         typename N,
-         relative_conditional_expr       C,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(rvv_), C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
-requires rvv_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
-{
-  auto p = unalign(ptr);
   if constexpr( C::is_complete )
   {
     if constexpr( !C::is_inverted ) return;
@@ -65,10 +55,9 @@ requires rvv_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
   }
   else if constexpr( C::has_alternative )
   {
-    auto full_data = eve::replace_ignored(v, cond, cond.alternative);
+    auto full_data = eve::replace_ignored(v, cx, cx.alternative);
     return riscv_store(full_data, p);
   }
-  else riscv_store(cond.mask(as<wide<T, N>> {}), v, p);
+  else riscv_store(cx.mask(as<wide<T, N>> {}), v, p);
 }
-
 }
