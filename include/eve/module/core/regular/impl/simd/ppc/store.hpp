@@ -12,15 +12,13 @@
 
 namespace eve::detail
 {
-template<callable_options O, scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_REQUIRES(vmx_), O const& opts,
-       wide<T, N> const& value,
-       Ptr ptr) noexcept requires ppc_abi<abi_t<T, N>> &&(!has_store_equivalent<wide<T, N>, Ptr>)
+template<relative_conditional_expr C, scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+EVE_FORCEINLINE void store_impl(vmx_, C const& cx, wide<T, N> const& value, Ptr ptr) noexcept
+  requires ppc_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr (!match_option<condition_key, O, ignore_none_>)
+  if constexpr (!std::same_as<C, ignore_none_>)
   {
-    store.behavior(cpu_{}, opts, value, ptr);
+    store_common(cpu_{}, cx, value, ptr);
   }
   else if constexpr( !std::is_pointer_v<Ptr> )
   {

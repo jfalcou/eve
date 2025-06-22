@@ -15,13 +15,13 @@
 
 namespace eve::detail
 {
-template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE void
-store_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> value, T *ptr) noexcept requires arm_abi<abi_t<T, N>>
+template<relative_conditional_expr C, arithmetic_scalar_value T, typename N>
+EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept
+  requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (!match_option<condition_key, O, ignore_none_>)
+  if constexpr (!std::same_as<C, ignore_none_>)
   {
-    store.behavior(cpu_{}, opts, value, ptr);
+    store_common(cpu_{}, cx, value, ptr);
   }
   else if constexpr( std::is_same_v<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
   {
@@ -57,15 +57,13 @@ store_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> value, T *ptr) noexcept
 }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-template<callable_options O, arithmetic_scalar_value T, typename N, typename Lanes>
-EVE_FORCEINLINE void
-store_(EVE_REQUIRES(neon128_), O const& opts,
-       wide<T, N>            value,
-       aligned_ptr<T, Lanes> ptr) noexcept requires arm_abi<abi_t<T, N>>
+template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, typename Lanes>
+EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned_ptr<T, Lanes> ptr) noexcept
+  requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (!match_option<condition_key, O, ignore_none_>)
+  if constexpr (!std::same_as<C, ignore_none_>)
   {
-    store.behavior(cpu_{}, opts, value, ptr);
+    store_common(cpu_{}, cx, value, ptr);
   }
   else if constexpr( std::is_same<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
   {
@@ -100,14 +98,12 @@ store_(EVE_REQUIRES(neon128_), O const& opts,
   }
 }
 #else
-template<callable_options O, arithmetic_scalar_value T, typename S, typename Lanes>
-EVE_FORCEINLINE void
-store_(EVE_REQUIRES(neon128_), O const& opts,
-       wide<T, S>            value,
-       aligned_ptr<T, Lanes> ptr) noexcept requires arm_abi<abi_t<T, S>>
+template<relative_conditional_expr C, arithmetic_scalar_value T, typename S, typename Lanes>
+EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, S> value, aligned_ptr<T, Lanes> ptr) noexcept
+  requires arm_abi<abi_t<T, S>>
 {
-  if constexpr (match_option<condition_key, O, ignore_none_>) store[opts](value, ptr.get());
-  else                                                        store.behavior(cpu_{}, opts, value, ptr);
+  if constexpr (std::same_as<C, ignore_none_>) store[cx](value, ptr.get());
+  else                                         store_common(cpu_{}, cx, value, ptr);
 }
 #endif
 }

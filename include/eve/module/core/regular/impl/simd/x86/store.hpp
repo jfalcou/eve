@@ -18,17 +18,12 @@
 
 namespace eve::detail
 {
-template<callable_options O, scalar_value T,
+template<relative_conditional_expr C, scalar_value T,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_REQUIRES(sse2_), O const& opts,
-       wide<T, N> const& v,
-       Ptr ptr) noexcept requires x86_abi<abi_t<T, N>> &&(!has_store_equivalent<wide<T, N>, Ptr>)
+EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
+  requires x86_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  using C = rbr::result::fetch_t<condition_key, O>;
-  auto cond = opts[condition_key];
-
   if constexpr (std::same_as<C, ignore_none_>)
   {
     if constexpr( !std::is_pointer_v<Ptr> )
@@ -73,7 +68,7 @@ store_(EVE_REQUIRES(sse2_), O const& opts,
     }
     else { memcpy(ptr, (T const *)(&v), N::value * sizeof(T)); }
   }
-  else if constexpr( C::is_complete || C::has_alternative ) store.behavior(cpu_{}, opts, v, ptr);
+  else if constexpr( C::is_complete || C::has_alternative ) store_common(cpu_{}, cond, v, ptr);
   else if constexpr( (current_api == eve::avx || current_api == eve::avx2) && sizeof(T) >= 4 )
   {
     if constexpr( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
@@ -169,7 +164,7 @@ store_(EVE_REQUIRES(sse2_), O const& opts,
     else if constexpr( match(c, category::int8x64, category::uint8x64) )
       _mm512_mask_storeu_epi8(ptr, m, v);
   }
-  else store.behavior(cpu_{}, opts, v, ptr);
+  else store_common(cpu_{}, cond, v, ptr);
 }
 
 }

@@ -19,6 +19,56 @@
 
 namespace eve::detail
 {
+  template<relative_conditional_expr C, simd_value T, typename Dst>
+  EVE_FORCEINLINE void store_common(auto api, C const& cx, T value, Dst dst) noexcept
+  {
+    if      constexpr (requires { store_impl(api, cx, value, dst); })
+    {
+      store_impl(api, cx, value, dst);
+    }
+    else if constexpr (!std::is_pointer_v<Dst>)
+    {
+      store[cx](value, dst.get());
+    }
+    else if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr (has_emulated_abi_v<T>)
+      {
+        apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
+      }
+      else if constexpr (has_aggregated_abi_v<T>)
+      {
+        value.storage().apply(
+          [&]<typename... Sub>(Sub&...v)
+          {
+            int k = 0;
+            ((store(v, dst + k), k += Sub::size()), ...);
+          });
+      }
+    }
+    else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);
+    else if constexpr (C::is_complete) return;
+    else if constexpr (has_emulated_abi_v<T>)
+    {
+      auto offset = cx.offset(as<T> {});
+      auto count  = cx.count(as<T> {});
+      using e_t   = element_type_t<T>;
+      auto *src   = (e_t *)(&value.storage());
+      std::memcpy((void *)(dst + offset), (void *)(src + offset), sizeof(e_t) * count);
+    }
+    else
+    {
+      using e_t = element_type_t<T>;
+
+      alignas(sizeof(T)) std::array<e_t, T::size()> storage;
+      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
+
+      auto offset = cx.offset(as<T> {});
+      auto count  = cx.count(as<T> {});
+      std::memcpy((void *)(dst + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
+    }
+  }
+
   template<callable_options O, simd_value T, typename Dst>
   EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, T value, Dst dst) noexcept
   {
@@ -66,47 +116,7 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr (!std::is_pointer_v<Dst>)
-    {
-      store[opts](value, dst.get());
-    }
-    else if constexpr (std::same_as<C, ignore_none_>)
-    {
-      if constexpr (has_emulated_abi_v<T>)
-      {
-        apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
-      }
-      else if constexpr (has_aggregated_abi_v<T>)
-      {
-        value.storage().apply(
-          [&]<typename... Sub>(Sub&...v)
-          {
-            int k = 0;
-            ((store(v, dst + k), k += Sub::size()), ...);
-          });
-      }
-    }
-    else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);
-    else if constexpr (C::is_complete) return;
-    else if constexpr (has_emulated_abi_v<T>)
-    {
-      auto offset = cx.offset(as<T> {});
-      auto count  = cx.count(as<T> {});
-      using e_t   = element_type_t<T>;
-      auto *src   = (e_t *)(&value.storage());
-      std::memcpy((void *)(dst + offset), (void *)(src + offset), sizeof(e_t) * count);
-    }
-    else
-    {
-      using e_t = element_type_t<T>;
-
-      alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
-
-      auto offset = cx.offset(as<T> {});
-      auto count  = cx.count(as<T> {});
-      std::memcpy((void *)(dst + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
-    }
+    else store_common(current_api, opts[condition_key], value, dst);
   }
 
   template<callable_options O, typename T, typename N, typename Dst>

@@ -40,13 +40,11 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 // Regular store
-template<callable_options O, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void store_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, Ptr p)
+template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+EVE_FORCEINLINE void store_impl(rvv_, C const& cx, wide<T, N> v, Ptr ptr)
   requires (rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {
-  using C  = rbr::result::fetch_t<condition_key, O>;
-  auto cx  = opts[condition_key];
-  auto ptr = unalign(p);
+  auto p = unalign(ptr);
 
   if constexpr( C::is_complete )
   {

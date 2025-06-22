@@ -14,14 +14,11 @@
 
 namespace eve::detail
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE void store_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, Ptr p)
+  template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE void store_impl(sve_, C const& cx, wide<T, N> v, Ptr p)
     requires (sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
   {
-    using C = rbr::result::fetch_t<condition_key, O>;
-    auto cx = opts[condition_key];
-
-    if constexpr (C::has_alternative) store.behavior(cpu_{}, opts, v, p);
+    if constexpr (C::has_alternative) store_common(cpu_{}, cx, v, p);
     else if constexpr (C::is_complete && !C::is_inverted) return;
     else svst1(expand_mask(cx, as<wide<T, N>>{}), unalign(p), v);
   }
