@@ -149,7 +149,10 @@ namespace eve
     requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
         : wide(std::begin(EVE_FWD(r)))
-    {}
+    {
+      EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Cardinal::value,
+                 "eve::wide: Range size does not match the expected cardinal.");
+    }
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
