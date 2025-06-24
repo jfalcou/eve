@@ -32,7 +32,7 @@ namespace eve
   //!       eve::callable_options and two values of the product type
   //!
   //!   Depending on the set of functions provided, said type will be said to satisfy either the
-  //!   eve::has_comparison_support and/or the eve::has_ordering_support concept.
+  //!   eve::has_equality_support and/or the eve::has_ordering_support concept.
   //!
   //!   @tparam T Type to process
   //!
@@ -47,18 +47,18 @@ namespace eve
   {};
 
   template<typename T>
-  concept has_comparison_support = requires(options<> const& o, T const& a, T const& b)
+  concept has_equality_support = requires(T const& a, T const& b)
   {
-    { comparisons<element_type_t<T>>::equal(o,a,b)      };
-    { comparisons<element_type_t<T>>::not_equal(o,a,b)  };
+    { comparisons<element_type_t<T>>::equal(a,b)      };
+    { comparisons<element_type_t<T>>::not_equal(a,b)  };
   };
 
   template<typename T>
-  concept has_ordering_support = requires(options<> const& o, T const& a, T const& b)
+  concept has_ordering_support = requires(T const& a, T const& b)
   {
-    { comparisons<element_type_t<T>>::less(o,a,b)           };
-    { comparisons<element_type_t<T>>::greater(o,a,b)        };
-    { comparisons<element_type_t<T>>::less_equal(o,a,b)     };
-    { comparisons<element_type_t<T>>::greater_equal(o,a,b)  };
+    { comparisons<element_type_t<T>>::less(a,b)           };
+    { comparisons<element_type_t<T>>::greater(a,b)        };
+    { comparisons<element_type_t<T>>::less_equal(a,b)     };
+    { comparisons<element_type_t<T>>::greater_equal(a,b)  };
   };
 }

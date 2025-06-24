@@ -41,14 +41,6 @@ requires rvv_abi<abi_t<T, N>>
 
 template<plain_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-self_eq(logical<wide<T, N>> lhs, logical<wide<T, N>> rhs) noexcept -> logical<wide<T, N>>
-requires rvv_abi<abi_t<T, N>>
-{
-  return __riscv_vmxnor(lhs, rhs, N::value);
-}
-
-template<plain_scalar_value T, typename N>
-EVE_FORCEINLINE auto
 self_neq(logical<wide<T, N>> lhs, logical<wide<T, N>> rhs) noexcept -> logical<wide<T, N>>
 requires rvv_abi<abi_t<T, N>>
 {
