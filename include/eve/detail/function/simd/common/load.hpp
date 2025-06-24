@@ -162,7 +162,7 @@ namespace eve::detail
     }
     else if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
     {
-      return to_logical(load(src, as<as_arithmetic_t<Wide>>{}));
+      return to_logical(piecewise_load(src, as<as_arithmetic_t<Wide>>{}));
     }
     else
     {
