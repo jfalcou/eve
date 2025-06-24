@@ -243,8 +243,6 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           return zeta;
         };
 
-
-        if (s == 2) return eve::trigamma(z);
         if (eve::is_nan(s)) return eve::nan(as(z));
         if (eve::all(z == eve::one(eve::as(z)) || eve::is_eqz(z))) return eve::zeta(r_t(s));
         if (eve::all(eve::is_nan(z))) return z;

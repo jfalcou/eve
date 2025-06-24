@@ -14,7 +14,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
 #include <eve/module/special/regular/trigamma.hpp>
-//#include <eve/module/special/detail/cotderiv.hpp>
 
 namespace eve
 {
@@ -56,7 +55,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [scalar_value](@ref eve::value). (see note below)
+//!     * `n`: [scalar_value](@ref eve::value). (see note below)
+//!     * `x`: [flaoting value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -241,18 +241,35 @@ namespace eve
         }
       };
 
-      using elt_t =  eve::element_type_t<T>;
-
-      auto gez = eve::is_gez(z);
+      using u_t =  eve::underlying_type_t<T>;
       int s = m+1;
-      auto mg = -eve::tgamma(elt_t(s));
+      auto mg = -eve::tgamma(u_t(s));
       auto sa =  eve::sign_alternate(m);
-      if (eve::all(gez))
+      auto gez = eve::is_positive(z);
+
+      auto br_pos =  [gez, s, mg, sa](auto z){
+        z = if_else(gez, z, eve::zero);
         return sa*eve::hurwitz(s,z)*mg;
-      else if (eve::all(!gez))
+      };
+
+      auto br_neg =  [gez, s, mg, sa, m, cotderiv](auto z){
+        z = if_else(gez, eve::mzero(eve::as(z)), z);
         return (eve::hurwitz(s,eve::oneminus(z))+sa*cotderiv(m, z))*mg;
-      else
-        return eve::if_else(gez, sa*eve::hurwitz(s,z), (eve::hurwitz(s,eve::oneminus(z))+sa*cotderiv(m, z)))*mg;
+      };
+
+
+      auto notdone = is_not_flint(z) || gez;
+      auto r = inf(as<T>()); // negative flint z elements
+
+      if( eve::any(notdone) )
+      {
+        notdone = next_interval(br_pos, notdone, gez, r, z);
+        if( eve::any(notdone) )
+        {
+          last_interval(br_neg, notdone, r, z);
+        }
+      }
+      return r;
     }
   }
 }
