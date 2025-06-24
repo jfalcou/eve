@@ -34,8 +34,8 @@ namespace eve::detail
   {
     if constexpr( kumi::product_type<element_type_t<T>> )
     {
-      if constexpr( has_comparison_support<T> ) return comparisons<T>::equal(o, a,b);
-      else                                      return a.storage() == b.storage();
+      if constexpr( has_equality_support<T> ) return comparisons<T>::equal(a,b);
+      else                                    return a.storage() == b.storage();
     }
     else if constexpr(O::contains(almost))
     {
