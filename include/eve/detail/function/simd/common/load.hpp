@@ -74,7 +74,9 @@ namespace eve::detail
   template<detail::data_source DS, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
-    if constexpr (logical<wide<T, N>>::abi_type::is_wide_logical)
+    using w_src = wide_value_type_t<DS>;
+
+    if constexpr (logical_simd_value<w_src> && abi_t<T, N>::is_wide_logical)
     {
       return bit_cast(load(ptr_cast<T const>(src), as<wide<T, N>>{}), tgt);
     }

@@ -35,7 +35,12 @@ namespace eve
   //!     template<detail::data_source Ptr, std::ptrdiff_t N>
   //!     as_wide_t<value_type_t<Ptr>, fixed<N>> load(Ptr ptr, fixed<N>) const noexcept;                                 // 1
   //!
-  //!     template<detail::data_source Ptr, simd_value Wide>
+  //!     template<detail::data_source Ptr, arithmetic_simd_value Wide>
+  //!     requires std::same_as<value_type_t<Ptr>, element_type_t<Wide>>
+  //!     Wide load(Ptr ptr, as<Wide> tgt) const noexcept;                                                               // 1
+  //!
+  //!     template<detail::data_source Ptr, logical_simd_value Wide>
+  //!     (sizeof(value_type_t<Ptr>) == sizeof(element_type_t<Wide>))
   //!     Wide load(Ptr ptr, as<Wide> tgt) const noexcept;                                                               // 1
   //!
   //!     // Conditional overloads
