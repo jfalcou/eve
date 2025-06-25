@@ -106,8 +106,8 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           return ((m + 1) * ((p[1]) + x * ex));
         };
 
-        auto scalar_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto z){
-          auto x = z;
+        auto scalar_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto zz){
+          auto x = zz;
           int  nx(xf);
           auto minus_s = -s;
 
@@ -115,11 +115,11 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           {
             if (nx < 0)
             {
-              auto minus_z = -z;
+              auto minus_z = -zz;
               zeta += eve::pow(minus_z, minus_s);
-              if (xf != z)
+              if (xf != zz)
               {
-                zeta += pow(z - nx, minus_s);
+                zeta += pow(zz - nx, minus_s);
               }
               if (s > 0)
               {
@@ -140,7 +140,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
             }
             else // x ≥ 0 && z != 0
             {
-              zeta += eve::pow(z, minus_s);
+              zeta += eve::pow(zz, minus_s);
             }
           }
           // loop order depends on sign of s, as above
@@ -151,7 +151,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
              for(int v=std::max(1, 1-nx); v <= n-1; ++v)
               {
                 auto zeta0 = zeta;
-                zeta+=eve::pow(z + v, minus_s);
+                zeta+=eve::pow(zz + v, minus_s);
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
@@ -160,21 +160,21 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               for(int v=n-1; v >= std::max(1, 1-nx); --v)
               {
                 auto zeta0 = zeta;
-                zeta+=eve::pow(z + v, minus_s);
+                zeta+=eve::pow(zz + v, minus_s);
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
-            z += n;
+            zz += n;
           }
           return zeta;
 
         };
 
-        auto simd_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto z){
-          auto x = z;
+        auto simd_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto zz){
+          auto x = zz;
           auto  nx(xf);
           auto minus_s = -s;
-          auto minus_z = -z;
+          auto minus_z = -zz;
           auto test1 = x < cutoff;
           auto test2 = nx < 0;
           auto test3 = test1 && test2;
@@ -183,7 +183,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
             if (eve::any(test1 && test2))
             {
               zeta += if_else(test3, eve::pow(minus_z, minus_s), eve::zero);
-              zeta += if_else(test3 && xf != z, pow(z - nx, minus_s), eve::zero);
+              zeta += if_else(test3 && xf != zz, pow(zz - nx, minus_s), eve::zero);
             }
             if (s > 0)
             {
@@ -210,7 +210,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           }
           if (eve::any(test1 && !test2)) // x ≥ 0 && z != 0
           {
-            zeta += if_else(test1 && !test2, eve::pow(z, minus_s), zero);
+            zeta += if_else(test1 && !test2, eve::pow(zz, minus_s), zero);
           }
           // loop order depends on sign of s, as above
           if(eve::any(test1)) // shift using recurrence formula
@@ -221,7 +221,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               while (eve::any(test1 && eve::is_less_equal(v, dec(n))))
               {
                 auto zeta0 = zeta;
-                zeta+=eve::if_else(test1 && eve::is_less_equal(v, n-1), eve::pow(z + v, minus_s), zero);
+                zeta+=eve::if_else(test1 && eve::is_less_equal(v, n-1), eve::pow(zz + v, minus_s), zero);
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large m
                 v = inc(v);
               }
@@ -233,12 +233,12 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               while (eve::any(test1 && eve::is_greater_equal(v, eve::max(eve::one(eve::as(nx)), oneminus(nx)))))
               {
                 auto zeta0 = zeta;
-                zeta+=eve::if_else(test1 && eve::is_greater_equal(v, eve::max(eve::one(eve::as(nx)), oneminus(nx))), eve::pow(z + v, minus_s), zero);
+                zeta+=eve::if_else(test1 && eve::is_greater_equal(v, eve::max(eve::one(eve::as(nx)), oneminus(nx))), eve::pow(zz + v, minus_s), zero);
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large m
                 v = dec(v);
               }
             }
-            z += n;
+            zz += n;
           }
           return zeta;
         };
