@@ -247,14 +247,14 @@ namespace eve
       auto sa =  eve::sign_alternate(m);
       auto gez = eve::is_positive(z);
 
-      auto br_pos =  [gez, s, mg, sa](auto z){
-        z = if_else(gez, z, eve::zero);
-        return sa*eve::hurwitz(s,z)*mg;
+      auto br_pos =  [gez, s, mg, sa](auto zz){
+        z = if_else(gez, zz, eve::zero);
+        return sa*eve::hurwitz(s,zz)*mg;
       };
 
-      auto br_neg =  [gez, s, mg, sa, m, cotderiv](auto z){
-        z = if_else(gez, eve::mzero(eve::as(z)), z);
-        return (eve::hurwitz(s,eve::oneminus(z))+sa*cotderiv(m, z))*mg;
+      auto br_neg =  [gez, s, mg, sa, m, cotderiv](auto zz){
+        z = if_else(gez, eve::mzero(eve::as(zz)), zz);
+        return (eve::hurwitz(s,eve::oneminus(zz))+sa*cotderiv(m, zz))*mg;
       };
 
 
