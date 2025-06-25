@@ -16,7 +16,7 @@ namespace eve
   struct all_t : conditional_callable<all_t, Options>
   {
     template<relaxed_logical_value T>
-    constexpr EVE_FORCEINLINE bool operator()(T v) const
+    EVE_FORCEINLINE bool operator()(T v) const noexcept
     {
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
         "[eve::all] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<logical_simd_value T>
-    constexpr EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
+    EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
     {
       return EVE_DISPATCH_CALL(v);
     }
@@ -52,14 +52,14 @@ namespace eve
   //!   {
   //!      // Regular overloads
   //!      template <relaxed_logical_value L>
-  //!      constexpr bool all(L x)                                                       noexcept; // 1
+  //!      bool all(L x)                                                              noexcept; // 1
   //!
   //!      template <logical_simd_value L>
-  //!      constexpr bool all(top_bits<L> t)                                             noexcept; // 1
+  //!      bool all(top_bits<L> t)                                                    noexcept; // 1
   //!
   //!      // Lanes masking
-  //!      constexpr bool all[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-  //!      constexpr bool all[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!      bool all[conditional_expr auto c](/* any of the above overloads */)        noexcept; // 2
+  //!      bool all[logical_value auto m](/* any of the above overloads */)           noexcept; // 2
   //!   }
   //!   @endcode
   //!
