@@ -8,7 +8,6 @@
 #include "test.hpp"
 
 #include <eve/module/special.hpp>
-#include <eve/module/special/detail/cotderiv.hpp>
 #include <cmath>
 
 //==================================================================================================
@@ -55,44 +54,6 @@ TTS_CASE_TPL("Check behavior of polygamma on wide", eve::test::simd::ieee_reals)
       eve::wide<double, eve::fixed<4>> r{eve::nan(eve::as(0.0)), 0.0006544797782827373, 1558.455023188714, 0.0};
       TTS_ULP_EQUAL(polygamma(3, z), r    , ulp);
     }
-
-//     std::cout << "eve::polygamma(0, -2.25 ) "<< eve::polygamma(0, -2.25) << std::endl;
-//     std::cout << "eve::digamma(-2.25)     ) "<< eve::digamma(-2.25)      << std::endl;
-//     std::cout << "eve::polygamma(1, -2.25)  "<< eve::polygamma(1, -2.25) << std::endl;
-//     std::cout << "eve::trigamma(-2.25)      "<< eve::trigamma(-2.25)      << std::endl;
-//     std::cout << "eve::polygamma(2, -2.25)  "<< eve::polygamma(2, -2.25) << std::endl;
-//     std::cout << "eve::polygamma(3, -2.25)  "<< eve::polygamma(3, -2.25) << std::endl;
-//     std::cout << "eve::polygamma(4, -2.25)  "<< eve::polygamma(4, -2.25) << std::endl;
-//     std::cout << "eve::polygamma(5, -2.25) "<< eve::polygamma(5, -2.25) << std::endl;
-
-
-
-//     for(int i=100; i < 111 ; ++i)
-//     {
-//       std::cout << std::setprecision(16) << "eve::polygamma(" << i << ", -0.25) "<< eve::polygamma(i, -0.25) << std::endl;
-//     }
-//     for(int i=2; i < 4 ; ++i)
-//     {
-//       std::cout << "eve::polygamma(" << i << ", -2.25) "<< eve::polygamma(i, -2.25) << std::endl;
-//     }
-//     for(int i=0; i < 11 ; ++i)
-//     {
-//       std::cout << "eve::zeta(" << i << ", 0.75) "<< eve::hurwitz(i, 0.75) << std::endl;
-//     }
-
-
- for(double x=-2; x >= -2.5; x+=-0.1)
- {
-   std::cout << std::setprecision(16) << "eve::polygamma(3, x) "<< eve::polygamma(3, x) << std::endl;
- }
- for(double x=-2; x >= -2.5; x+=-0.1)
- {
-   std::cout << std::setprecision(16) << "eve::hurwitz(3, 1-x) "<< eve::hurwitz(3, 1-x) << std::endl;
- }
-//  for(double x=-2.1; x >= -2.5; x+=-0.1)
-//  {
-//    std::cout << std::setprecision(16) << "eve::detail::cotdern(3, x) "<< eve::detail::cotdern(3, x) << std::endl;
-//  }
 
   }
 };
