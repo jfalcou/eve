@@ -45,14 +45,14 @@ TTS_CASE_TPL("Check behavior of polygamma on wide", eve::test::simd::ieee_reals)
 
     {
       eve::wide<double, eve::fixed<4>> z{0.125, 15, 2.45, 1.0};
-      eve::wide<double, eve::fixed<4>> r{24580.14341906357, 0.0006544797782827373,  0.24034527708135944, 6.493939402266837};
-      TTS_ULP_EQUAL(polygamma(3, z), r    , ulp);
+      eve::wide<double, eve::fixed<4>> res{24580.14341906357, 0.0006544797782827373,  0.24034527708135944, 6.493939402266837};
+      TTS_ULP_EQUAL(polygamma(3, z), res    , ulp);
     }
 
     {
       eve::wide<double, eve::fixed<4>> z{eve::nan(eve::as(0.0)), 15, -2.25, eve::inf(eve::as(0.0))};
-      eve::wide<double, eve::fixed<4>> r{eve::nan(eve::as(0.0)), 0.0006544797782827373, 1558.455023188714, 0.0};
-      TTS_ULP_EQUAL(polygamma(3, z), r    , ulp);
+      eve::wide<double, eve::fixed<4>> res{eve::nan(eve::as(0.0)), 0.0006544797782827373, 1558.455023188714, 0.0};
+      TTS_ULP_EQUAL(polygamma(3, z), res    , ulp);
     }
 
   }
