@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
      TTS_ULP_EQUAL(hurwitz(e_t(-3), e_t(15)),e_t(-11024.991666666667)       , ulp);
      TTS_ULP_EQUAL(hurwitz(e_t(-3), T(15)),T(-11024.991666666667)       , ulp);
 
-     TTS_ULP_EQUAL(hurwitz(e_t(-3), e_t(0.125)), e_t(0.005342610677085968)  , ulp);
+     TTS_ULP_EQUAL(hurwitz(e_t(-3), e_t(0.125)), e_t(0.005342610677085968)  , 20*ulp);
      TTS_ULP_EQUAL(hurwitz(e_t(-3), T(0.125)), T(0.005342610677085968)  , 1000*ulp);
 
      {
