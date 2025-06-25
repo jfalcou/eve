@@ -17,10 +17,10 @@ var searchData=
   ['ilogb_14',['ilogb',['../group__core__internal_ga8f2c3654b7498bd74bda26d39c450c98.html#ga8f2c3654b7498bd74bda26d39c450c98',1,'eve']]],
   ['inc_15',['inc',['../group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202',1,'eve']]],
   ['inf_16',['inf',['../group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08',1,'eve']]],
-  ['initial_20problem_17',['initial problem',['../intro-02.html#autotoc_md112',1,'Initial problem'],['../intro-01.html#autotoc_md107',1,'Initial problem']]],
-  ['installation_20from_20source_18',['Installation from Source',['../setup.html#autotoc_md91',1,'']]],
+  ['initial_20problem_17',['initial problem',['../intro-02.html#autotoc_md106',1,'Initial problem'],['../intro-01.html#autotoc_md101',1,'Initial problem']]],
+  ['installation_20from_20source_18',['Installation from Source',['../setup.html#autotoc_md85',1,'']]],
   ['installation_20quick_20start_19',['Installation &amp; Quick Start',['../setup.html',1,'']]],
-  ['instruction_20set_20selection_20',['Instruction Set Selection',['../setup.html#autotoc_md96',1,'']]],
+  ['instruction_20set_20selection_20',['Instruction Set Selection',['../setup.html#autotoc_md90',1,'']]],
   ['interaction_20with_20native_20code_21',['Interaction with native code.',['../inter-with-native.html',1,'']]],
   ['inverse_20hyperbolic_22',['Inverse hyperbolic',['../group__math__invhyper.html',1,'']]],
   ['inverse_20trigonometric_23',['Inverse trigonometric',['../group__math__invtrig.html',1,'']]],
@@ -78,10 +78,10 @@ var searchData=
   ['is_5fpow2_75',['is_pow2',['../group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
   ['is_5funit_76',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
   ['is_5funordered_77',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]],
-  ['issue_78',['The Issue',['../multiarch.html#autotoc_md123',1,'']]],
+  ['issue_78',['The Issue',['../multiarch.html#autotoc_md117',1,'']]],
   ['iterate_5fselected_79',['iterate_selected',['../group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc',1,'eve']]],
   ['iterator_80',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
   ['iterator_5faligned_81',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
   ['iterator_5ft_82',['iterator_t',['../group__algo__concepts_ga2b10643c19cf7b6ee3ace583f1b68595.html#ga2b10643c19cf7b6ee3ace583f1b68595',1,'eve::algo']]],
-  ['iterators_83',['Ranges or Iterators',['../algo_rationale.html#autotoc_md68',1,'']]]
+  ['iterators_83',['Ranges or Iterators',['../algo_rationale.html#autotoc_md62',1,'']]]
 ];

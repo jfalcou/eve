@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('conditional.html',''); initResizable()
 <div class="contents">
 <div class="textblock"><p>When you call a function on one or more <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a>, you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition.</p>
 <p>Let's explore the functionalities <b>EVE</b> provides for achieving those results.</p>
-<h1><a class="anchor" id="autotoc_md100"></a>
+<h1><a class="anchor" id="autotoc_md94"></a>
 Explicit Selection</h1>
 <p>Let's say the function we want to write computes the product of two values <code>a</code> and <code>b</code> if <code>a</code> is equal to <code>b</code> and their difference otherwise.</p>
 <p>The scalar code is looking like:</p>
@@ -163,7 +163,7 @@ Explicit Selection</h1>
 <li>the value to use whenever an element of said condition evaluates to <code>false</code>, here the difference of <code>a</code> and <code>b</code></li>
 </ul>
 <dl class="section warning"><dt>Warning</dt><dd>Contrary to a <code>if ... else</code> statement, <a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Select value based on conditional mask or values.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
-<h1><a class="anchor" id="autotoc_md101"></a>
+<h1><a class="anchor" id="autotoc_md95"></a>
 Conditional Function Syntax</h1>
 <p>Let's define a <code>sqrt_positive</code> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -220,10 +220,10 @@ Conditional Function Syntax</h1>
 <div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0];</div>
 <div class="line">  <span class="keywordflow">return</span> f(a);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md102"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md96"></a>
 Conditional Expressions</h1>
 <p>If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more elaborated conditions.</p>
-<h2><a class="anchor" id="autotoc_md103"></a>
+<h2><a class="anchor" id="autotoc_md97"></a>
 Mask with alternative</h2>
 <p>One may want to use the conditional syntax to call a function but instead of returning the first argument if the condition is false, one may want to return an arbitrary value. This use case is handled by the <a class="el" href="structeve_1_1if__.html" title="Extensible wrapper for SIMD conditional.">eve::if_</a> helper by wrapping logical expression so that an alternative value can be specified.</p>
 <p>Let's modify <code>sqrt_positive</code> so that, if the argument is not positive, 0 is returned instead.</p>
@@ -252,7 +252,7 @@ Mask with alternative</h2>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1if___a3c412a82b915cb199e4e120c916fb32c_html_a3c412a82b915cb199e4e120c916fb32c"><div class="ttname"><a href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">eve::if_::else_</a></div><div class="ttdeci">auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:114</div></div>
 <div class="ttc" id="astructeve_1_1if___html"><div class="ttname"><a href="structeve_1_1if__.html">eve::if_</a></div><div class="ttdoc">Extensible wrapper for SIMD conditional.</div><div class="ttdef"><b>Definition</b> conditional.hpp:102</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md104"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md98"></a>
 Context-sensitive mask</h2>
 <p>Some algorithms require conditional function calls but use logical expression relative to the element index inside a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> rather than its value. One may want for example to not compute an expression on the first and last element of such <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a>.</p>
 <p>A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
@@ -262,12 +262,12 @@ Context-sensitive mask</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_not_first( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> eve::load[ <a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1).<a class="code hl_function" href="structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea">else_</a>(99) ](ptr);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>[ <a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1).<a class="code hl_function" href="structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea">else_</a>(99) ](ptr);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_not_last( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> eve::load[ <a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1).<a class="code hl_function" href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">else_</a>(42) ](ptr);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>[ <a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1).<a class="code hl_function" href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">else_</a>(42) ](ptr);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -278,6 +278,7 @@ Context-sensitive mask</h2>
 <div class="line">  std::cout &lt;&lt; load_not_first(&amp;data[0] - 1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; load_not_last(&amp;data[1]) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__simd_ga67a13a1bb68e0de254b276da55e4ddfe_html_ga67a13a1bb68e0de254b276da55e4ddfe"><div class="ttname"><a href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a></div><div class="ttdeci">constexpr auto load</div><div class="ttdoc">Loads data from a pointer or a pair of iterators into a SIMD value.</div><div class="ttdef"><b>Definition</b> load.hpp:71</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea_html_a1a451ef557edf9be9754f6b7dde9e0ea"><div class="ttname"><a href="structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea">eve::ignore_first::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:480</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:459</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320_html_a7c4efa5e5f45c87fbeb7d847aff52320"><div class="ttname"><a href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">eve::ignore_last::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:342</div></div>
@@ -290,7 +291,7 @@ Context-sensitive mask</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_between( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> eve::load[ <a class="code hl_struct" href="structeve_1_1keep__between.html">eve::keep_between</a>(1,3).<a class="code hl_function" href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">else_</a>(-6.3f) ]( ptr );</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>[ <a class="code hl_struct" href="structeve_1_1keep__between.html">eve::keep_between</a>(1,3).<a class="code hl_function" href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">else_</a>(-6.3f) ]( ptr );</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -308,7 +309,7 @@ Context-sensitive mask</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_between( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> eve::load[ (<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1) &amp;&amp; <a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1)).else_(-6.3f) ]( ptr );</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>[ (<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1) &amp;&amp; <a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1)).else_(-6.3f) ]( ptr );</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -319,7 +320,7 @@ Context-sensitive mask</h2>
 <div class="line">  std::cout &lt;&lt; load_between(&amp;data[0] - 1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The output is obviously the same.</p>
-<h1><a class="anchor" id="autotoc_md105"></a>
+<h1><a class="anchor" id="autotoc_md99"></a>
 Conclusion</h1>
 <p>Conditional operations on <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a> is a good way to keep a high level code over some complex computations. <b>EVE</b> provides different levels of abstraction for such operations as well as various helpers to specify how the conditions can be computed based either on values or indexes. </p>
 </div></div><!-- contents -->

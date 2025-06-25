@@ -200,11 +200,6 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r) noexcept</td></tr>
 <tr class="memdesc:a4ad46a6f998bb898592da9625181634d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
 <tr class="separator:a4ad46a6f998bb898592da9625181634d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75fcee86f103e039da6bb498b7c59cf2" id="r_a75fcee86f103e039da6bb498b7c59cf2"><td class="memTemplParams" colspan="2"><a id="a75fcee86f103e039da6bb498b7c59cf2" name="a75fcee86f103e039da6bb498b7c59cf2"></a>
-template&lt;std::input_iterator It&gt; </td></tr>
-<tr class="memitem:a75fcee86f103e039da6bb498b7c59cf2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (It b, It e) noexcept</td></tr>
-<tr class="memdesc:a75fcee86f103e039da6bb498b7c59cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a pair of <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterator</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
-<tr class="separator:a75fcee86f103e039da6bb498b7c59cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b902c5e2c2b9cccd1a5ebb94ea4f295" id="r_a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memTemplParams" colspan="2"><a id="a2b902c5e2c2b9cccd1a5ebb94ea4f295" name="a2b902c5e2c2b9cccd1a5ebb94ea4f295"></a>
 template&lt;detail::range Range&gt; <br />
 requires (!std::same_as&lt;<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, std::remove_reference_t&lt;Range&gt;&gt;)</td></tr>

@@ -161,8 +161,8 @@ sve, powerpc: ....
 <div class="line"><span class="preprocessor">#endif  </span><span class="comment">// __SSSE3__</span></div>
 <div class="line"> </div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:93</div></div>
-<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:405</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md106"></a>
+<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:402</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md100"></a>
 What about non-native sizes?</h1>
 <p>If the number is less than the one that can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can be garbage.</p>
 <p>If the cardinal is larger than the one that can be natively represented, you can use slice to get to the half the wide size.</p>
