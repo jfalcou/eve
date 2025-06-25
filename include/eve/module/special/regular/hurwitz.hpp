@@ -31,7 +31,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 //! @{
 //!   @var hurwitz
 //!   @brief `elementwise_callable` object computing the Hurwitz function i.e.
-//!   the second derivative of the \f$\log\Gamma\f$  function.
+//!   \f$\sum_{k=0}^\infty (k+z)^{-s}\f$, where any term with \f$k+z = 0\f$ is excluded.
 //!
 //!   @groupheader{Header file}
 //!
@@ -61,7 +61,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 //!
 //!   **Return value**
 //!
-//!     1. The value of the Hurwitz function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!     1. The value of the Hurwitz function:  \f$\sum_{k=0}^\infty (k+z)^{-s}\f$, where any term with \f$k+z = 0\f$ is excluded.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
