@@ -13,7 +13,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
-#include <eve/module/special/regular/trigamma.hpp>
 
 namespace eve
 {

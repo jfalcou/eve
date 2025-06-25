@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
-#include <eve/module/special/regular/trigamma.hpp>
+//#include <eve/module/special/regular/trigamma.hpp>
 
 namespace eve
 {
@@ -87,7 +87,7 @@ namespace eve
     constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N m, T z) noexcept
     {
       if (is_eqz(m)) return eve::digamma(z);
-      if (m == 1)    return eve::trigamma(z);
+//      if (m == 1)    return eve::trigamma(z);
 //      auto pi  = eve::pi(eve::as(z));
 
       constexpr double coefs[] =
