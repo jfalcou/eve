@@ -195,7 +195,7 @@ namespace eve
           advance(curn, 1);
           auto dfma = fma[o];
           r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
-          auto step = [&](auto that, auto argc, auto argn) { return dfma( that, sub(x, argn), argc); };
+          auto step = [&](auto th, auto argc, auto argn) { return dfma( th, sub(x, argn), argc); };
           for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )
             that = step(that, *curc, *curn);
           return that;
