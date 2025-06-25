@@ -248,12 +248,12 @@ namespace eve
       auto gez = eve::is_positive(z);
 
       auto br_pos =  [gez, s, mg, sa](auto zz){
-        z = if_else(gez, zz, eve::zero);
+        zz = if_else(gez, zz, eve::zero);
         return sa*eve::hurwitz(s,zz)*mg;
       };
 
       auto br_neg =  [gez, s, mg, sa, m, cotderiv](auto zz){
-        z = if_else(gez, eve::mzero(eve::as(zz)), zz);
+        zz = if_else(gez, eve::mzero(eve::as(zz)), zz);
         return (eve::hurwitz(s,eve::oneminus(zz))+sa*cotderiv(m, zz))*mg;
       };
 
