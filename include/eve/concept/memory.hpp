@@ -16,4 +16,10 @@ namespace eve
   concept simd_compatible_ptr = simd_value<SIMD> &&
     (!detail::range<T>) &&
     std::same_as<element_type_t<SIMD>, value_type_t<T>>;
+
+  template<typename T, typename SIMD>
+  concept logical_simd_compatible_ptr = simd_value<SIMD> &&
+    (!detail::range<T>) &&
+   sizeof(value_type_t<T>) == sizeof(element_type_t<SIMD>);
+
 }

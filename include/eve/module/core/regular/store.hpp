@@ -15,7 +15,13 @@ namespace eve
   template<typename Options>
   struct store_t : relative_conditional_callable<store_t, Options>
   {
-    template<simd_value T, simd_compatible_ptr<T> Ptr>
+    template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
+    EVE_FORCEINLINE void operator()(T value, Ptr ptr) const noexcept
+    {
+      return EVE_DISPATCH_CALL(value, ptr);
+    }
+
+    template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
     EVE_FORCEINLINE void operator()(T value, Ptr ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(value, ptr);
@@ -43,7 +49,10 @@ namespace eve
   //!   namespace eve
   //!   {
   //!     // Regular overload
-  //!     template<simd_value T, simd_compatible_ptr<T> Ptr>
+  //!     template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
+  //!     void store(T value, Ptr ptr) noexcept;                                         // 1
+  //!
+  //!     template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
   //!     void store(T value, Ptr ptr) noexcept;                                         // 1
   //!
   //!     // Lanes masking
@@ -63,6 +72,8 @@ namespace eve
   //!    1. Stores the elements of `value` into the memory location pointed to by `ptr`.
   //!    2. Same as 1. but lanes masked by the condition `c` will not be stored.
   //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/core/store.cpp}
   //================================================================================================
   inline constexpr auto store = functor<store_t>;
   //================================================================================================
