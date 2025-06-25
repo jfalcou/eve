@@ -160,7 +160,7 @@ namespace eve
       {
         using std::advance;
         auto that = r_t(*cur);
-        auto step = [&](auto that, auto arg) { return fma[o](x, that, arg); };
+        auto step = [&](auto th, auto arg) { return fma[o](x, th, arg); };
         for( advance(cur, 1); cur != last; advance(cur, 1) ) that = step(that, *cur);
         return that;
       }

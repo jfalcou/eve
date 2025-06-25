@@ -156,7 +156,7 @@ namespace eve
       {
         auto dfma = fma[o];
         auto that = r_t(0);
-        auto step = [&](auto that, auto arg) { return dfma(x, that, arg); };
+        auto step = [&](auto th, auto arg) { return dfma(x, th, arg); };
         for(; cur != first; ++cur ) that = step(that, *cur);
         return that;
       }
