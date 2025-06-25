@@ -6,95 +6,71 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/impl/load.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/load.hpp>
+#if defined(EVE_DOXYGEN_INVOKED)
+namespace eve
+{
+  //================================================================================================
+  //! @addtogroup simd
+  //! @{
+  //!   @var load
+  //!   @brief Loads data from a pointer or a pair of iterators into a [SIMD value](@ref eve::simd_value)
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     // Regular overloads
+  //!     template<detail::data_source Ptr>
+  //!     wide_value_type_t<Ptr> load(Ptr ptr) const noexcept;                                                           // 1
+  //!
+  //!     template<detail::data_source Ptr, std::ptrdiff_t N>
+  //!     as_wide_t<value_type_t<Ptr>, fixed<N>> load(Ptr ptr, fixed<N>) const noexcept;                                 // 1
+  //!
+  //!     template<detail::data_source Ptr, arithmetic_simd_value Wide>
+  //!     requires std::same_as<value_type_t<Ptr>, element_type_t<Wide>>
+  //!     Wide load(Ptr ptr, as<Wide> tgt) const noexcept;                                                               // 1
+  //!
+  //!     template<detail::data_source Ptr, logical_simd_value Wide>
+  //!     (sizeof(value_type_t<Ptr>) == sizeof(element_type_t<Wide>))
+  //!     Wide load(Ptr ptr, as<Wide> tgt) const noexcept;                                                               // 1
+  //!
+  //!     // Conditional overloads
+  //!     auto load[relative_conditional_expr c](/* any non-iterator version of the above overloads */) const noexcept;  // 2
+  //!
+  //!     // Semantic options
+  //!     auto load[unsafe](/* any non-iterator version of the above overloads */) const noexcept;                       // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!   * `ptr`: A data source referencing the data to load.
+  //!   * `c`: A [relative conditional expression](@ref eve::relative_conditional_expr) that determines which elements to load.
+  //!
+  //!  **Return value**
+  //!
+  //!   1. A [SIMD value](@ref eve::simd_value) containing the element referenced by the data source or the iterators.
+  //!   2. Same as 1., but elements whose corresponding condition mask lane evaluates to `false` are left undefined.
+  //!   3. Same as 1., but uses as scalar version of the operation if a sanitizer is enabled.
+  //!
+  //!   @note
+  //!      2. and 3. may be sub-optimal for non-contiguous iterators.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/core/load.cpp}
+  //================================================================================================
+  inline constexpr auto load = functor<load_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
+}
 #endif
-
-// DOC TODO
-//================================================================================================
-//! @addtogroup simd
-//! @{
-//! @var load
-//!
-//! @brief Callable object computing **TODO: FILL THIS BLANK**.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | **TODO: FILL THIS BLANK**   |
-//! | `operator[]` | Construct a conditional version of current function object |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<**TODO: FILL THIS BLANK**>
-//!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`x`:   **TODO: FILL THIS BLANK**
-//!
-//! OTHER PARAMETERS
-//!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-//!
-//! **Return value**
-//!
-//! For **TODO: FILL THIS BLANK**:
-//!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! auto r = load(**TODO: FILL THIS BLANK**);
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! is semantically equivalent to:
-//!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! Target r;
-//!
-//! if constexpr( scalar_value<T> )
-//!{
-//!  **TODO: FILL THIS BLANK**
-//!}
-//! else if constexpr( simd_value<T> )
-//!{
-//!  **TODO: FILL THIS BLANK**
-//!}
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::load
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `load[cond](x, ...)` is equivalent to
-//!  `if_else(cond,load(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/load.cpp}
-//!
-//!  @}
-//================================================================================================z

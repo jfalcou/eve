@@ -142,20 +142,17 @@ namespace eve
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE wide(storage_type const& r) noexcept : storage_base(r) {}
 
-    //! @brief Constructs a eve::wide from a pair of @iterator.
-    //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
-    template<std::input_iterator It>
-    EVE_FORCEINLINE explicit wide(It b, It e) noexcept : storage_base(load(as<wide> {}, b, e))
-    {}
-
     //! @brief Constructs a eve::wide from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are
     //! @raiterator{s}.
     template<detail::range Range>
     requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
-        : wide(std::begin(EVE_FWD(r)), std::end(EVE_FWD(r)))
-    {}
+        : wide(std::begin(EVE_FWD(r)))
+    {
+      EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Cardinal::value,
+                 "eve::wide: Range size does not match the expected cardinal.");
+    }
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>

@@ -17,12 +17,9 @@
 
 namespace eve::detail
 {
-  template< arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
-  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
-                                  , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const&, Ptr p
-                                  )
-  requires arm_abi<abi_t<T, N>>
+  template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_impl(neon128_, Ptr p, as<wide<T, N>>)
+    requires arm_abi<abi_t<T, N>>
   {
     auto ptr = unalign(p);
 
@@ -64,17 +61,14 @@ namespace eve::detail
 
 #if defined(SPY_COMPILER_IS_MSVC)
   template<arithmetic_scalar_value T, typename N, typename U, typename Lanes>
-  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
-                                  , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt, aligned_ptr<U, Lanes> p
-                                  )
-  requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> load_impl(neon128_, aligned_ptr<U, Lanes> p, as<wide<T, N>> tgt)
+    requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
   {
     auto ptr = p.get();
 
     if constexpr( aligned_ptr<U, Lanes>::alignment() < 16 )
     {
-      return load_(ptr, tgt);
+      return load_impl(cpu_{}, ptr, tgt);
     }
     else
     {

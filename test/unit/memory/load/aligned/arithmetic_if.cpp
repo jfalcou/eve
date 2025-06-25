@@ -127,15 +127,15 @@ TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test
   {
     auto ptr = eve::previous_aligned_address(&x);
 
-    auto loaded = eve::unsafe(eve::load)(ptr);
+    auto loaded = eve::load[eve::unsafe](ptr);
     TTS_EXPECT(eve::any(loaded == x));
 
-    loaded = eve::unsafe(eve::load)(ptr.get());
+    loaded = eve::load[eve::unsafe](ptr.get());
     TTS_EXPECT(eve::any(loaded == x));
 
     for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < T::size(); --ignore_ptr)
     {
-      loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr);
+      loaded = eve::load[eve::unsafe][eve::ignore_first(ptr.get() - ignore_ptr)](ignore_ptr);
       TTS_EXPECT(eve::any(loaded == x));
     }
   }
@@ -145,13 +145,13 @@ TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test
     auto test = [&]<std::ptrdiff_t A>(eve::fixed<A> n)
     {
       auto ptr = eve::previous_aligned_address(&x, n);
-      auto loaded = eve::unsafe(eve::load)(ptr, n);
+      auto loaded = eve::load[eve::unsafe](ptr, n);
 
       TTS_EXPECT(eve::any(loaded == x));
 
       for (auto ignore_ptr = ptr.get(); (&x - ignore_ptr) < n(); --ignore_ptr)
       {
-        loaded = eve::unsafe(eve::load[eve::ignore_first(ptr.get() - ignore_ptr)])(ignore_ptr, n);
+        loaded = eve::load[eve::unsafe][eve::ignore_first(ptr.get() - ignore_ptr)](ignore_ptr, n);
         TTS_EXPECT(eve::any(loaded == x));
       }
     };

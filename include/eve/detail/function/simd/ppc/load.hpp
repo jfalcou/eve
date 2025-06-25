@@ -16,12 +16,9 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
-  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
-                                  , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt, Ptr ptr
-                                  )
-  requires ppc_abi<abi_t<T, N>>
+  template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE wide<T, N> load_impl(vmx_, Ptr ptr, as<wide<T, N>> tgt) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -45,7 +42,7 @@ namespace eve::detail
         }
         else
         {
-          return load(tgt, cpu_ {}, ptr);
+          return load_impl(cpu_{}, ptr, tgt);
         }
       }
     }
@@ -58,12 +55,8 @@ namespace eve::detail
   }
 
   template<typename T, typename U, typename N, typename Lanes>
-  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
-                                  , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt
-                                  , aligned_ptr<U, Lanes> ptr
-                                  )
-  requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>>
+  EVE_FORCEINLINE wide<T, N> load_impl(vmx_, aligned_ptr<U, Lanes> ptr, as<wide<T, N>> tgt) noexcept
+    requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>, wide<T, N>>
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -83,8 +76,8 @@ namespace eve::detail
       {
         if constexpr( sizeof(T) <= 8 )
         {
-          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 )  return vec_ld(0, ptr.get());
-          else                                                      return load(tgt, ptr.get());
+          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 ) return vec_ld(0, ptr.get());
+          else                                                     return load_impl(current_api, ptr.get(), tgt);
         }
       }
     }

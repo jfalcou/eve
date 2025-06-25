@@ -13,6 +13,9 @@
 #include <eve/traits/overload.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
+
+// temporary
+#include <eve/module/core/regular/unsafe.hpp>
 #include <cfenv>
 
 namespace eve
@@ -41,6 +44,7 @@ namespace eve
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
   struct strict_mode      {};
   struct widen_mode       {};
+  struct unsafe_mode      {};
 
 
   struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
@@ -79,6 +83,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto saturated        = ::rbr::flag( saturated_mode{}       );
   [[maybe_unused]] inline constexpr auto strict           = ::rbr::flag( strict_mode{}          );
   [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
+  [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -107,6 +112,9 @@ namespace eve
   struct lower_option           : detail::exact_option<lower>           {};
   struct strict_option          : detail::exact_option<strict>          {};
   struct widen_option           : detail::exact_option<widen>           {};
+  struct unsafe_option          : detail::exact_option<unsafe2>         {};
+
+  inline constexpr auto as_option(unsafe_type   const&) { return unsafe2;   }
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
