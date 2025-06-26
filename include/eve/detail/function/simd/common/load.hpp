@@ -21,6 +21,8 @@
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/traits/wide_value_type.hpp>
+#include <eve/traits/as_translation.hpp>
+#include <eve/concept/ptr_translation.hpp>
 #include <eve/wide.hpp>
 
 #include <iterator>
@@ -266,7 +268,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];
 
-    if constexpr (requires { src.load(opts, tgt); })
+    if constexpr (translatable_ptr<DS>)
+    {
+      return load.behavior(cpu_{}, opts, translate_ptr(src), tgt);
+    }
+    else if constexpr (requires { src.load(opts, tgt); })
     {
       return src.load(opts, tgt);
     }
