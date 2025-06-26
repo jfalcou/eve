@@ -25,7 +25,7 @@ namespace eve
   };
 
   template<typename Type, typename Size>
-  requires( std::is_arithmetic_v<Type>  || kumi::product_type<Type> )
+  requires (arithmetic_scalar_value<Type>)
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
