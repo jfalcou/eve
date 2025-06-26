@@ -16,7 +16,7 @@ namespace eve::detail
   struct make_t : callable<make_t, Options>
   {
     template<typename Target, typename... T>
-    EVE_FORCEINLINE constexpr auto operator()(as<Target> tgt, T... vs) const noexcept
+    EVE_FORCEINLINE constexpr Target operator()(as<Target> tgt, T... vs) const noexcept
     {
       return EVE_DISPATCH_CALL(tgt, vs...);
     }

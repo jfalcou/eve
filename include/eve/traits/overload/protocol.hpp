@@ -9,6 +9,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/traits/as_translation.hpp>
 
 //======================================================================================================================
 //! @addtogroup simd
@@ -138,6 +139,17 @@ static EVE_FORCEINLINE constexpr auto deferred_call(auto arch, Args&&...args) no
 using callable_tag_type     = TYPE                                                                                     \
 /**/
 
+namespace eve::detail
+{
+  template<typename Callable, typename... Args>
+  EVE_FORCEINLINE constexpr auto dispatch_call_impl(Callable const& c, Args&&... args)
+  {
+    using r_t = decltype(c(EVE_FWD(args)...));
+    auto res = c.behavior(eve::current_api, c.options(), eve::translate(EVE_FWD(args))...);
+    return std::bit_cast<r_t>(res);
+  }
+}
+
 //======================================================================================================================
 //! @addtogroup extensions
 //! @{
@@ -145,8 +157,7 @@ using callable_tag_type     = TYPE                                              
 //!   @brief Generate the proper call to current EVE's @callable implementation
 //! @}
 //======================================================================================================================
-#define EVE_DISPATCH_CALL(...)                                                                                         \
-this->behavior(eve::current_api, this->options(), __VA_ARGS__)                                                         \
+#define EVE_DISPATCH_CALL(...) eve::detail::dispatch_call_impl(*this, __VA_ARGS__)
 /**/
 
 //======================================================================================================================

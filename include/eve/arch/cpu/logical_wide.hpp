@@ -83,6 +83,10 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
+    using translated_element_type = logical<translate_t<Type>>;
+
+    using translated_type = logical<typename wide<Type, Cardinal>::translated_type>;
+
     //! Type describing the number of lanes of current wide
     using cardinal_type = Cardinal;
 
@@ -488,4 +492,10 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
+
+  template <typename T, typename N>
+  struct recursive_translate<logical<wide<T, N>>>
+  {
+    using type = typename logical<wide<T, N>>::translated_type;
+  };
 }

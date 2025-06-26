@@ -97,10 +97,12 @@ namespace eve
     //! The type stored in the register.
     using value_type = Type;
 
-    using translated_type = translate_t<Type>;
+    using translated_element_type = translate_t<Type>;
+
+    using translated_type = wide<translated_element_type, Cardinal>;
 
     //! The ABI tag for this register.
-    using abi_type = abi_t<translated_type, Cardinal>;
+    using abi_type = abi_t<translated_element_type, Cardinal>;
 
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
@@ -173,7 +175,7 @@ namespace eve
     template<typename S>
     requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide>{}, translated_type{translate(v)}))
+        : storage_base(detail::make(eve::as<wide>{}, translated_element_type{translate(v)}))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -184,9 +186,9 @@ namespace eve
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
         : storage_base(detail::make(eve::as<wide> {},
-                                    translated_type{translate(v0)},
-                                    translated_type{translate(v1)},
-                                    translated_type{translate(vs)}...))
+                                    translated_element_type{translate(v0)},
+                                    translated_element_type{translate(v1)},
+                                    translated_element_type{translate(vs)}...))
     {}
 
     //! Constructs a eve::wide from a sequence of values
@@ -1089,3 +1091,12 @@ template<kumi::product_type T, typename N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
 #endif
+
+namespace eve
+{
+  template <typename T, typename N>
+  struct recursive_translate<wide<T, N>>
+  {
+    using type = typename wide<T, N>::translated_type;
+  };
+}
