@@ -10,6 +10,7 @@
 #include <eve/concept/translation.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/memory/pointer.hpp>
+#include <eve/traits/value_type.hpp>
 
 #include <bit>
 #include <new>
