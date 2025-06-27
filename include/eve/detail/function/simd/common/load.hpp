@@ -35,13 +35,15 @@ namespace eve::detail
   {
     auto impl = [&](auto... I)
     {
-      auto deref = [&](auto& p, auto const &i) {
-        auto val = *p;
-        if (i != (Wide::size() - 1)) ++p;
-        return val;
-      };
-      
-      return Wide(deref(ptr, static_cast<std::ptrdiff_t>(I))...);
+      std::array<element_type_t<Wide>, Wide::size()> values;
+
+      values[0] = *ptr;
+      for(std::size_t i = 1; i < Wide::size(); ++i)
+      {
+        values[i] = *(ptr = std::next(ptr));
+      }
+
+      return Wide(values[I]...);
     };
 
     return apply<Wide::size()>(impl);
@@ -55,7 +57,7 @@ namespace eve::detail
       if constexpr (C::is_inverted) return piecewise_load(ptr, tgt);
       else                          return detail::alternative(cx, Wide {}, tgt);
     }
-    else 
+    else
     {
       std::ptrdiff_t begin = cx.offset(tgt);
       std::ptrdiff_t end = begin + cx.count(tgt);
