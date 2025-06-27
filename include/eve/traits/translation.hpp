@@ -26,7 +26,13 @@ namespace eve
   template <typename T>
   requires (!std::is_same_v<typename translation_of<T>::type, T>)
   struct recursive_translate<T>: recursive_translate<typename translation_of<T>::type>
-  { };
+  {
+    static_assert(std::is_trivial_v<T>, "Recursive translation of non-trivial types is not supported");
+    static_assert(
+      (sizeof(T) == sizeof(typename recursive_translate<T>::type)) && (alignof(T) == alignof(typename recursive_translate<T>::type)),
+      "A translated type must have the same size and alignment as the original type"
+    );
+  };
 
   // Recursively translate the type `T` until `translation_of<T>` is `T`
   template <typename T>

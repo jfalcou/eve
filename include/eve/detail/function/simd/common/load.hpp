@@ -21,6 +21,8 @@
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/traits/wide_value_type.hpp>
+#include <eve/traits/as_translation.hpp>
+#include <eve/concept/ptr_translation.hpp>
 #include <eve/wide.hpp>
 
 #include <iterator>
@@ -37,10 +39,10 @@ namespace eve::detail
     {
       std::array<element_type_t<Wide>, Wide::size()> values;
 
-      values[0] = *ptr;
+      values[0] = translate(*ptr);
       for(std::size_t i = 1; i < Wide::size(); ++i)
       {
-        values[i] = *(ptr = std::next(ptr));
+        values[i] = translate(*(ptr = std::next(ptr)));
       }
 
       return Wide(values[I]...);
@@ -71,7 +73,7 @@ namespace eve::detail
         for (std::ptrdiff_t i = begin + 1; i < end; ++i)
         {
           ++ptr;
-          res.set(i, *ptr);
+          res.set(i, translate(*ptr));
         }
       }
 
@@ -266,7 +268,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];
 
-    if constexpr (requires { src.load(opts, tgt); })
+    if constexpr (translatable_ptr<DS>)
+    {
+      return load.behavior(cpu_{}, opts, translate_ptr(src), tgt);
+    }
+    else if constexpr (requires { src.load(opts, tgt); })
     {
       return src.load(opts, tgt);
     }
