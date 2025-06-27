@@ -238,6 +238,29 @@ namespace eve::detail
   }
 
   template<callable_options O, detail::data_source DS, typename Wide>
+  SPY_DISABLE_SANITIZERS Wide load_unsafe_(O const& opts, DS src, as<Wide> tgt) noexcept
+  {
+    if constexpr (spy::supports::sanitizers_status)
+    {
+      auto cx = opts[condition_key];
+
+      auto res = detail::alternative(cx, Wide {}, tgt);
+
+      auto offset = cx.offset(tgt);
+      auto count  = cx.count(tgt);
+
+      for (std::ptrdiff_t i = offset; i != count + offset; ++i)
+        res.set(i, src[i]);
+
+      return res;
+    }
+    else
+    {
+      return eve::load[opts.drop(unsafe2)](src, tgt);
+    }
+  }
+
+  template<callable_options O, detail::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
@@ -253,22 +276,7 @@ namespace eve::detail
     }
     else if constexpr (O::contains(unsafe2))
     {
-      if constexpr (spy::supports::sanitizers_status)
-      {
-        Wide res;
-
-        auto offset = cx.offset(tgt);
-        auto count  = cx.count(tgt);
-
-        for (std::ptrdiff_t i = offset; i != count + offset; ++i)
-          res.set(i, src[i]);
-
-        return res;
-      }
-      else
-      {
-        return eve::load[opts.drop(unsafe2)](src, tgt);
-      }
+      return load_unsafe_(opts, src, tgt);
     }
     else if constexpr (has_bundle_abi_v<Wide>)
     {
