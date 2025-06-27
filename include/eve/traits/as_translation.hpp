@@ -24,7 +24,7 @@ namespace eve
   }
 
   template <typename V>
-  constexpr auto translate(as<V> val)
+  constexpr auto translate(as<V>)
   {
     return as<translate_t<V>>{};
   }

@@ -5,9 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
-
-#include <eve/concept/translation.hpp>
+#include "unit/api/translation/common.hpp"
 
 TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
 <typename T>(tts::type<T>)
@@ -18,12 +16,6 @@ TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
   TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<E>)) << "E should have a translated type";
   TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<E>, T>)) << "The translated type of E should be T";
 };
-
-template <typename E>
-struct BaseStruct { E value; };
-
-template<typename E>
-struct eve::translation_of<BaseStruct<E>> { using type = E; };
 
 TTS_CASE_TPL("Equivalent struct trait impl", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
