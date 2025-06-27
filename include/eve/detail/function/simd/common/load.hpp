@@ -39,10 +39,10 @@ namespace eve::detail
     {
       std::array<element_type_t<Wide>, Wide::size()> values;
 
-      values[0] = *ptr;
+      values[0] = translate(*ptr);
       for(std::size_t i = 1; i < Wide::size(); ++i)
       {
-        values[i] = *(ptr = std::next(ptr));
+        values[i] = translate(*(ptr = std::next(ptr)));
       }
 
       return Wide(values[I]...);
@@ -73,7 +73,7 @@ namespace eve::detail
         for (std::ptrdiff_t i = begin + 1; i < end; ++i)
         {
           ++ptr;
-          res.set(i, *ptr);
+          res.set(i, translate(*ptr));
         }
       }
 
