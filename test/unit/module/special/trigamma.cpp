@@ -32,15 +32,15 @@ TTS_CASE_TPL("Check behavior of trigamma on wide", eve::test::scalar::ieee_reals
   using eve::trigamma;
   using e_t = eve::element_type_t<T>;
 
- if constexpr( eve::platform::supports_invalids )
+  if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(trigamma(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(trigamma(eve::inf(eve::as<T>())), eve::zero(eve::as<T>()));
     TTS_IEEE_EQUAL(trigamma(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
   }
-   auto ulp = 300.0;
+  auto ulp = 300.0;
 
-  TTS_ULP_EQUAL(trigamma(T(0.00001)), T(e_t(1.0e10)), ulp);
+  TTS_ULP_EQUAL(trigamma(T(0.00001)), T(e_t(1.0000000001644909e10)), ulp);
   TTS_ULP_EQUAL(trigamma(T(0.125)), T(e_t(65.3881334449)), ulp*20);
   TTS_ULP_EQUAL(trigamma(T(0.5)), eve::pi2(eve::as<T>())/2, ulp);
   TTS_ULP_EQUAL(trigamma(T(1)), eve::pi2(eve::as<T>())/6, ulp);
@@ -60,19 +60,19 @@ TTS_CASE_TPL("Check behavior of trigamma on wide", eve::test::scalar::ieee_reals
 TTS_CASE_WITH("Check behavior of trigamma on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.4, 4.0)))
-<typename T>(T const& a0) { TTS_ULP_EQUAL(eve::trigamma(a0), T(tts::map(eve::trigamma, a0)), 300); };
+  <typename T>(T const& a0) { TTS_ULP_EQUAL(eve::trigamma(a0), T(tts::map(eve::trigamma, a0)), 3); };
 
 
 //==================================================================================================
-//  Tests for masked trigamma
+// Tests for masked trigamma
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::trigamma)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.4, 4.0),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
+                            tts::logicals(0, 3)))
+  <typename T, typename M>(T const& a0,
+                           M const& mask)
 {
   TTS_IEEE_EQUAL(eve::trigamma[mask](a0),
-            eve::if_else(mask, eve::trigamma(a0), a0));
+                 eve::if_else(mask, eve::trigamma(a0), a0));
 };

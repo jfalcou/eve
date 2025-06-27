@@ -22,6 +22,7 @@
 #include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
 #include <eve/module/special/regular/gamma_p_inv.hpp>
+#include <eve/module/special/regular/hurwitz.hpp>
 #include <eve/module/special/regular/lambert.hpp>
 #include <eve/module/special/regular/lbeta.hpp>
 #include <eve/module/special/regular/lfactorial.hpp>
@@ -29,6 +30,7 @@
 #include <eve/module/special/regular/log_gamma.hpp>
 #include <eve/module/special/regular/lrising_factorial.hpp>
 #include <eve/module/special/regular/omega.hpp>
+#include <eve/module/special/regular/polygamma.hpp>
 #include <eve/module/special/regular/rising_factorial.hpp>
 #include <eve/module/special/regular/signgam.hpp>
 #include <eve/module/special/regular/stirling.hpp>
