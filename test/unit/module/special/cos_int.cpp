@@ -47,7 +47,7 @@ TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::cos_int(T(2)),            T(  0.42298082877486487   ),  ulp);
   TTS_ULP_EQUAL(eve::cos_int(T(4)),            T( -0.1409816978869303    ), ulp);
   TTS_ULP_EQUAL(eve::cos_int(T(8)),            T(  0.12243388253200957   ), ulp);
-  TTS_ULP_EQUAL(eve::cos_int(T(ulpe10)),       T( -4.8750602517482264e-11), ulp);
+  TTS_ULP_EQUAL(eve::cos_int(T(1.0e10)),       T( -4.8750602517482264e-11), ulp);
   TTS_ULP_EQUAL(eve::cos_int(T(2.5))   ,       T(  0.2858711963653835    ), ulp);
   TTS_ULP_EQUAL(eve::cos_int(T(0.9241388730)), T(  0.29226964555971935   ), ulp);
 
