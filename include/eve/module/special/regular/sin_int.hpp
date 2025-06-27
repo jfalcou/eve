@@ -105,9 +105,9 @@ namespace eve
       };
 
       auto invt = eve::rec(t);
-      auto [s, c] = sincos(x);
-      auto spio_2 = eve::copysign(pio_2(eve::as(x)), x);
+       auto spio_2 = eve::copysign(pio_2(eve::as(x)), x);
       auto br_less144   =  [x, s, c, spio_2](auto invx2){//if t > 36 && t <=  144.0
+        auto [s, c] = sincos(x);
         auto p0 = eve::reverse_horner(invx2, t_t(0.99999999962173909991E0),
                                       t_t(0.36451060338631902917E3),
                                       t_t(0.44218548041288440874E5),
@@ -146,6 +146,7 @@ namespace eve
       };
 
       auto br_else  =  [x, s, c, spio_2](auto invx2){//if t >   144.0 && t < inf
+        auto [s, c] = sincos(x);
         auto p0 = eve::reverse_horner(invx2, t_t(0.19999999999999978257E1),
                                       t_t(0.22206119380434958727E4),
                                       t_t(0.84749007623988236808E6),
