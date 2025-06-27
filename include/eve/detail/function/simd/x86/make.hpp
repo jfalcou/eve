@@ -62,7 +62,7 @@ namespace eve::detail
         else if constexpr( match(c,category::int64x4 , category::uint64x4)  ) return _mm256_set1_epi64x(v);
         else if constexpr( match(c,category::int64x2 , category::uint64x2)  )
         {
-          [[maybe_unused]] __m128i that;
+          [[maybe_unused]] __m128i that{};
           T *ptr = reinterpret_cast<detail::alias_t<T>*>(&that);
           ptr[0] = ptr[1] = static_cast<T>(v);
           return that;
@@ -109,7 +109,7 @@ namespace eve::detail
         }
         else  if constexpr( match(c,category::int64x2, category::uint64x2) )
         {
-          [[maybe_unused]] __m128i that;
+          [[maybe_unused]] __m128i that{};
 
           T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
           T d[] = { v, static_cast<T>(vs)... };
