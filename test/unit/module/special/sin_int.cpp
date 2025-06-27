@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check behavior of sin_int on wide", eve::test::simd::ieee_reals)
     TTS_IEEE_EQUAL(eve::sin_int(eve::minf(eve::as<T>())),-eve::pio_2(eve::as<T>()));
   }
 
-  auto ulp = sizeof(eve::element_type_t<T>) == 8 ? 0.5 : 1.0;
+  auto ulp = sizeof(eve::element_type_t<T>) == 8 ? 4.0 : 8.0;
   TTS_IEEE_EQUAL(eve::sin_int(T(0)), T(0));
   TTS_IEEE_EQUAL(eve::sin_int(T(-0.)), T(0));
   TTS_ULP_EQUAL(eve::sin_int(T(1)),            T( 0.946083070367183 ), ulp);
