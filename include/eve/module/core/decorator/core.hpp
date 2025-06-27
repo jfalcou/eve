@@ -56,6 +56,8 @@ namespace eve
   struct raw_mode         {};
   struct saturated_mode   {};
 
+  struct splat_mode       {};
+
   [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
   [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
@@ -84,6 +86,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto strict           = ::rbr::flag( strict_mode{}          );
   [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
   [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
+  [[maybe_unused]] inline constexpr auto splat2           = ::rbr::flag( splat_mode{}           );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -113,6 +116,7 @@ namespace eve
   struct strict_option          : detail::exact_option<strict>          {};
   struct widen_option           : detail::exact_option<widen>           {};
   struct unsafe_option          : detail::exact_option<unsafe2>         {};
+  struct splat_option           : detail::exact_option<splat2>          {};
 
   inline constexpr auto as_option(unsafe_type   const&) { return unsafe2;   }
 
