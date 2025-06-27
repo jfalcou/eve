@@ -16,14 +16,14 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// TTS_CASE_TPL("Check return types of cos_int", eve::test::simd::ieee_reals)
-// <typename T>(tts::type<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
+TTS_CASE_TPL("Check return types of cos_int", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   TTS_EXPR_IS(eve::cos_int(T()), T);
-//   TTS_EXPR_IS(eve::cos_int(v_t()), v_t);
-// };
+  TTS_EXPR_IS(eve::cos_int(T()), T);
+  TTS_EXPR_IS(eve::cos_int(v_t()), v_t);
+};
 
 //==================================================================================================
 // cos_int  tests
@@ -31,8 +31,8 @@
 TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  if constexpr( sizeof(eve::element_type_t<T>) == 8 )
-  {
+//   if constexpr( sizeof(eve::element_type_t<T>) == 8 )
+//   {
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::cos_int(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
@@ -61,7 +61,7 @@ TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
                                      eve::cos_int(eve::inf(eve::as<double>())),
                                      eve::cos_int(eve::nan(eve::as<double>()))};
   TTS_ULP_EQUAL(eve::cos_int(w), rr, 2);
-  };
+//  };
 };
 
 
@@ -69,13 +69,13 @@ TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
 //==================================================================================================
 // Tests for masked cos_int
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::cos_int)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(0.0, 100.0),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::cos_int[mask](a0),
-//             eve::if_else(mask, eve::cos_int(a0), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cos_int)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.0, 100.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cos_int[mask](a0),
+            eve::if_else(mask, eve::cos_int(a0), a0));
+};
