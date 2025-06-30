@@ -7,5 +7,6 @@ var searchData=
   ['heuman_5flambda_4',['heuman_lambda',['../group__elliptic_ga01c9da5fa5a2746f7647fdff4808e89c.html#ga01c9da5fa5a2746f7647fdff4808e89c',1,'eve']]],
   ['hi_5',['hi',['../group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524',1,'eve']]],
   ['horner_6',['horner',['../group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb',1,'eve']]],
-  ['hypot_7',['hypot',['../group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9',1,'eve']]]
+  ['hurwitz_7',['hurwitz',['../group__special_gacecdd79be09bdeca614b2bc8c5f5a8fc.html#gacecdd79be09bdeca614b2bc8c5f5a8fc',1,'eve']]],
+  ['hypot_8',['hypot',['../group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9',1,'eve']]]
 ];
