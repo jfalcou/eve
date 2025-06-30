@@ -120,6 +120,17 @@ namespace eve::detail
       else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
-    else  return a * b - c;
+    else if constexpr (simd_value<T> || std::floating_point<T>)
+    {
+      return a * b - c;
+    }
+    else
+    {
+      using u_t = std::make_unsigned_t<T>;
+
+      return static_cast<T>(
+        static_cast<u_t>(a) * static_cast<u_t>(b) - static_cast<u_t>(c)
+      );
+    }
   }
 }

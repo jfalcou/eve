@@ -27,7 +27,7 @@ namespace eve
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
       constexpr EVE_FORCEINLINE
-    auto operator()(T0 a, T1 b) const noexcept
+    common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(heuman_lambda_t, heuman_lambda_);

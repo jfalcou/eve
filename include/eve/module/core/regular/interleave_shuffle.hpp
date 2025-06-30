@@ -19,9 +19,26 @@ namespace eve
   template<typename Options>
   struct interleave_shuffle_t : callable<interleave_shuffle_t, Options>
   {
+    template <typename T, typename U>
+    struct result;
+
+    template <typename T, typename U>
+    requires( requires{ typename T::combined_type; } ) 
+    struct result<T, U>
+    {
+      using type = typename T::combined_type;
+    };
+
+    template <typename T, typename U>
+    requires( !requires{ typename T::combined_type; } && requires{ typename U::combined_type; } ) 
+    struct result<T, U>
+    {
+      using type = typename U::combined_type;
+    };
+    
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE auto
+    EVE_FORCEINLINE typename result<T, U>::type
     operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 

@@ -18,7 +18,8 @@ namespace eve
   {
     template<product_type Src, product_type Tgt>
     requires(kumi::result::flatten_all_t<Src>::size() == kumi::result::flatten_all_t<Tgt>::size())
-    EVE_FORCEINLINE constexpr auto operator()(Src const& src, as<Tgt> tgt) const noexcept
+    EVE_FORCEINLINE constexpr std::conditional_t<scalar_value<Src>, Tgt, as_wide_t<Tgt, cardinal_t<Src>>>
+    operator()(Src const& src, as<Tgt> tgt) const noexcept
     {
       return EVE_DISPATCH_CALL(src, tgt);
     }

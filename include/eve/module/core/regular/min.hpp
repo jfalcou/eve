@@ -13,6 +13,12 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    template<typename Callable>
+    constexpr auto build_min_callable(Callable const& f) noexcept;
+  }
+
   template<typename Options>
   struct min_t : tuple_callable<min_t, Options, pedantic_option, numeric_option>
   {
@@ -33,7 +39,7 @@ namespace eve
 
     template<typename Callable>
     requires(!kumi::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return detail::build_min_callable(f); }
 
     EVE_CALLABLE_OBJECT(min_t, min_);
   };

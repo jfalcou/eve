@@ -102,7 +102,7 @@ namespace eve
 
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_not_less_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
+    is_not_less_equal_(EVE_REQUIRES(cpu_), O const & o, T aa, U bb) noexcept
     {
       if constexpr(O::contains(definitely))
       {

@@ -177,7 +177,7 @@ namespace eve::detail
       }
       else
       {
-        return a * b;
+        return common_value_t<T, U>(a * b);
       }
     }
   }

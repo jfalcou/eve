@@ -25,7 +25,7 @@ namespace eve
   };
 
   template<typename Type, typename Size>
-  requires( std::is_arithmetic_v<Type>  || kumi::product_type<Type> )
+  requires (arithmetic_scalar_value<Type>)
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
@@ -67,5 +67,5 @@ namespace eve
   };
 
   template<typename T, typename U>
-  using as_wide_as_t = typename as_wide_as<std::remove_cvref_t<T>, U>::type;
+  using as_wide_as_t = typename as_wide_as<std::remove_cvref_t<T>, std::remove_cvref_t<U>>::type;
 }

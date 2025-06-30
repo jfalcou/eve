@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/detail/fmx_utils.hpp>
 
 namespace eve
 {
@@ -21,7 +22,8 @@ namespace eve
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    constexpr EVE_FORCEINLINE
+    detail::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
