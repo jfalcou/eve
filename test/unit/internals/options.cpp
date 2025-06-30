@@ -27,21 +27,21 @@ namespace eve
   template<typename Options>
   struct func_t : callable<func_t, Options, conditional_option>
   {
-    bool operator()(tests test_id) const { return EVE_DISPATCH_CALL(test_id); }
+    bool operator()(tests test_id) const { return EVE_DISPATCH_CALL_NT(test_id); }
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 
   template<typename Options>
   struct chained_func_t : callable<chained_func_t, Options, conditional_option>
   {
-    auto operator()(tests test_id) const { return EVE_DISPATCH_CALL(test_id); }
+    auto operator()(tests test_id) const { return EVE_DISPATCH_CALL_NT(test_id); }
     EVE_CALLABLE_OBJECT(chained_func_t, chained_func_);
   };
 
   template<typename Options>
   struct ew_drop_func_t : strict_elementwise_callable<ew_drop_func_t, Options>
   {
-    auto operator()(int a) const { return EVE_DISPATCH_CALL(a); }
+    auto operator()(int a) const { return EVE_DISPATCH_CALL_NT(a); }
     EVE_CALLABLE_OBJECT(ew_drop_func_t, ew_drop_func_);
   };
 
