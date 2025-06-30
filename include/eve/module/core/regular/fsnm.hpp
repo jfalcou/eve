@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/fnms.hpp>
+#include <eve/module/core/detail/fmx_utils.hpp>
 
 namespace eve
 {
@@ -20,7 +21,8 @@ namespace eve
   {
     template<value T,  value U,  value V>
     requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const
+    constexpr EVE_FORCEINLINE
+    detail::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     template<eve::value T,eve::value U,eve::value V>

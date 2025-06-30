@@ -120,6 +120,6 @@ namespace eve::detail
       else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
-    else  return a * b - c;
+    else  return T(a * b - c);
   }
 }

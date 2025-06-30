@@ -20,6 +20,12 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    template<typename Callable>
+    constexpr auto build_minmax_callable(Callable const& f) noexcept;
+  }
+
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
@@ -41,7 +47,7 @@ namespace eve
 
     template<typename Callable>
     requires(!kumi::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return detail::build_minmax_callable(f); }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
   };
@@ -156,9 +162,8 @@ namespace eve
     }
 
     // -----  Predicate case
-    template<typename Callable, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
+    template<typename Callable>
+    EVE_FORCEINLINE constexpr auto build_minmax_callable(Callable const& f) noexcept
     {
       if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::minmax;
       else if constexpr( std::same_as<Callable, eve::is_greater_t<eve::options<>>>  )

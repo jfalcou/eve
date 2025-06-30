@@ -106,7 +106,7 @@ namespace eve::detail
       }
       else
       {
-        return a-b;
+        return T(a-b);
       }
     }
   }

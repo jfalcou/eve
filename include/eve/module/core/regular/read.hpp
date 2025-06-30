@@ -30,7 +30,8 @@ namespace eve
     }
 
     template<typename... Ptrs>
-    EVE_FORCEINLINE auto operator()(soa_ptr<Ptrs...> ptr) const noexcept { return EVE_DISPATCH_CALL(ptr); }
+    EVE_FORCEINLINE kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>
+    operator()(soa_ptr<Ptrs...> ptr) const noexcept { return EVE_DISPATCH_CALL(ptr); }
 
     EVE_CALLABLE_OBJECT(read_t, read_);
   };

@@ -93,9 +93,9 @@ namespace eve::detail
   //================================================================================================
   // Predicate case
   //================================================================================================
-  template<typename Callable, callable_options O>
+  template<typename Callable>
   EVE_FORCEINLINE constexpr auto
-  max_(EVE_REQUIRES(cpu_), O const &, Callable const & f) noexcept
+  build_max_callable(Callable const & f) noexcept
   {
     if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::max;
     else if constexpr( std::same_as<Callable, eve::is_greater_t<eve::options<>>>  ) return eve::min;

@@ -19,7 +19,7 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  EVE_FORCEINLINE constexpr T
   average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b) noexcept
   {
     if constexpr(integral_value <T>)

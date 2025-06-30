@@ -16,12 +16,22 @@
 //TODO doc
 namespace eve
 {
+  namespace detail
+  {
+    template<typename T, typename U>
+    consteval auto interleave_shuffle_rt()
+    {
+      if constexpr(simd_value<T>) return typename T::combined_type{};
+      else                        return typename U::combined_type{};
+    }
+  }
+
   template<typename Options>
   struct interleave_shuffle_t : callable<interleave_shuffle_t, Options>
   {
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE auto
+    EVE_FORCEINLINE decltype(detail::interleave_shuffle_rt<T, U>())
     operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
