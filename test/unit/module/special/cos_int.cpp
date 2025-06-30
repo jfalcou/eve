@@ -31,8 +31,6 @@ TTS_CASE_TPL("Check return types of cos_int", eve::test::simd::ieee_reals)
 TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-//   if constexpr( sizeof(eve::element_type_t<T>) == 8 )
-//   {
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::cos_int(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
@@ -62,7 +60,6 @@ TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
                                      eve::cos_int(eve::inf(eve::as<double>())),
                                      eve::cos_int(eve::nan(eve::as<double>()))};
   TTS_ULP_EQUAL(eve::cos_int(w), rr, 2);
-//  };
 };
 
 
