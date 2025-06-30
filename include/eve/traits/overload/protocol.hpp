@@ -146,7 +146,7 @@ namespace eve::detail
   {
     using r_t = decltype(c(EVE_FWD(args)...));
 
-    if (std::same_as<r_t, void>)
+    if constexpr (std::is_void_v<r_t>)
     {
       c.behavior(eve::current_api, c.options(), eve::translate(EVE_FWD(args))...);
     }
@@ -155,6 +155,12 @@ namespace eve::detail
       auto res = c.behavior(eve::current_api, c.options(), eve::translate(EVE_FWD(args))...);
       return std::bit_cast<r_t>(res);
     }
+  }
+
+  template<typename Callable, typename... Args>
+  EVE_FORCEINLINE constexpr auto dispatch_call_nt_impl(Callable const& c, Args&&... args)
+  {
+    return c.behavior(eve::current_api, c.options(), EVE_FWD(args)...);
   }
 }
 
@@ -166,6 +172,16 @@ namespace eve::detail
 //! @}
 //======================================================================================================================
 #define EVE_DISPATCH_CALL(...) eve::detail::dispatch_call_impl(*this, __VA_ARGS__)
+/**/
+
+//======================================================================================================================
+//! @addtogroup extensions
+//! @{
+//!   @def EVE_DISPATCH_CALL_NT
+//!   @brief Generate the proper call to current EVE's @callable implementation, skips the translation mekanism
+//! @}
+//======================================================================================================================
+#define EVE_DISPATCH_CALL_NT(...) eve::detail::dispatch_call_nt_impl(*this, __VA_ARGS__)
 /**/
 
 //======================================================================================================================

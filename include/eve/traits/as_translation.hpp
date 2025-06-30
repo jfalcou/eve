@@ -18,10 +18,16 @@
 namespace eve
 {
   template <typename V>
-  constexpr auto translate(V val)
+  constexpr translate_t<V> translate(V const& val)
   {
     if constexpr (has_plain_translation<element_type_t<V>>) return std::bit_cast<translate_t<V>>(val);
     else                                                    return val;
+  }
+
+  template <typename V>
+  constexpr translate_t<V>& translate(V& val)
+  {
+    return reinterpret_cast<translate_t<V>&>(val);
   }
 
   template <typename V>
