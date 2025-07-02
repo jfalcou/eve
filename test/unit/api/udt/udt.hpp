@@ -22,14 +22,6 @@ namespace udt
 
     // You're still responsible for your non-SIMD ordering
     friend constexpr auto operator<=>(grid2d,grid2d) = default;
-
-    // Constants support
-    template<typename Tag, eve::like<grid2d> T>
-    EVE_FORCEINLINE friend auto  tagged_dispatch(Tag const&, eve::as<T> const&) noexcept
-    {
-      eve::detail::callable_object<Tag> cst;
-      return T{ cst(eve::as<int>{}), cst(eve::as<int>{})};
-    }
   };
 
   // Adapt as a structured bindings compatible type for eve::product_type
