@@ -117,7 +117,7 @@ namespace eve::detail
   //====================================================================================================================
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
-                                                     O          const &opts,
+                                                     O const &,
                                                      logical<wide<T, N>> const &v,
                                                      logical<wide<T, N>> const &w
                                                     ) noexcept
