@@ -16,13 +16,3 @@
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/bit_cast.hpp>
 #endif
-
-namespace eve::detail
-{
-  template<typename T, typename Target>
-  requires (sizeof(T) == sizeof(Target))
-  EVE_FORCEINLINE constexpr Target bit_cast(T const& a, as<Target> tgt) noexcept
-  {
-    return detail::bit_cast_impl(current_api, a, tgt);
-  }
-}

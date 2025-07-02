@@ -9,6 +9,7 @@
 
 #include <eve/module/core/regular/impl/convert_helpers.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/detail/category.hpp>
 
 namespace eve::detail

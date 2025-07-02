@@ -7,7 +7,6 @@
 #pragma once
 
 #include <eve/traits/overload.hpp>
-
 #include <eve/detail/function/bit_cast.hpp>
 
 namespace eve
@@ -19,7 +18,7 @@ namespace eve
     requires (sizeof(T) == sizeof(Target))
     EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> tgt) const noexcept
     {
-      return detail::bit_cast(a, tgt);
+      return detail::bit_cast_impl(current_api, a, tgt);
     }
 
     EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
