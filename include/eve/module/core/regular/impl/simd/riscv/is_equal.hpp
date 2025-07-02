@@ -31,7 +31,7 @@ namespace eve::detail
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>>
-  is_equal_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
+  is_equal_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
   requires(rvv_abi<abi_t<T, N>>)
   {
     return __riscv_vmxnor(a, b, N::value);
