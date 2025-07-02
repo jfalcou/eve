@@ -13,16 +13,16 @@
 
 namespace eve::detail
 {
-  template<callable_options O, scalar_value T, typename N, scalar_value U, typename M>
+  template<scalar_value T, typename N, scalar_value U, typename M>
   requires( sve_abi<abi_t<T, N>> )
-  EVE_FORCEINLINE wide<U, M> bit_cast_(EVE_REQUIRES(sve_), O const&, wide<T,N> x, as<wide<U,M>> const&) noexcept
+  EVE_FORCEINLINE wide<U, M> bit_cast_impl(sve_, wide<T,N> x, as<wide<U,M>>) noexcept
   {
     if constexpr( std::is_same_v<wide<T, N>, wide<U, M>> ) return x;
     else
     {
       auto as_byte = [](auto v)
       {
-        constexpr auto c = categorize<eve::wide<T,N>>();
+        constexpr auto c = categorize<eve::wide<translate_t<T>, N>>();
               if constexpr(match(c, category::float64)) return svreinterpret_u8_f64(v);
         else  if constexpr(match(c, category::float32)) return svreinterpret_u8_f32(v);
         else  if constexpr(match(c, category::int64)  ) return svreinterpret_u8_s64(v);
@@ -35,7 +35,7 @@ namespace eve::detail
         else  if constexpr(match(c, category::uint8)  ) return v.storage();
       }(x);
 
-      constexpr auto d = categorize<wide<U, M>>();
+      constexpr auto d = categorize<wide<translate_t<U>, M>>();
 
               if constexpr(match(d, category::float64)) return svreinterpret_f64_u8(as_byte);
         else  if constexpr(match(d, category::float32)) return svreinterpret_f32_u8(as_byte);

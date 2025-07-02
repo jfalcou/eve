@@ -8,28 +8,21 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
-
-namespace eve
-{
-  template<typename Options>
-  struct bit_cast_t : callable<bit_cast_t, Options>
-  {
-    template<typename T, typename Target>
-    requires (sizeof(T) == sizeof(Target))
-    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> const& tgt) const noexcept
-    {
-      return EVE_DISPATCH_CALL(a,tgt);
-    }
-
-    EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
-  };
-
-  inline constexpr auto bit_cast = functor<bit_cast_t>;
-}
+#include <eve/traits/overload/supports.hpp>
+#include <eve/traits/overload/default_behaviors.hpp>
 
 #include <eve/detail/function/simd/common/bit_cast.hpp>
 
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/bit_cast.hpp>
 #endif
+
+namespace eve::detail
+{
+  template<typename T, typename Target>
+  requires (sizeof(T) == sizeof(Target))
+  EVE_FORCEINLINE constexpr Target bit_cast(T const& a, as<Target> tgt) noexcept
+  {
+    return detail::bit_cast_impl(current_api, a, tgt);
+  }
+}

@@ -6,11 +6,25 @@
 //==================================================================================================
 #pragma once
 
-#if defined(EVE_DOXYGEN_INVOKED)
 #include <eve/traits/overload.hpp>
+
+#include <eve/detail/function/bit_cast.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_cast_t : callable<bit_cast_t, Options>
+  {
+    template<typename T, typename Target>
+    requires (sizeof(T) == sizeof(Target))
+    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> tgt) const noexcept
+    {
+      return detail::bit_cast(a, tgt);
+    }
+
+    EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -65,6 +79,3 @@ namespace eve
 //! @}
 //================================================================================================
 }
-#endif
-
-#include <eve/detail/function/bit_cast.hpp>
