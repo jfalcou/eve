@@ -22,7 +22,7 @@ namespace eve
   {
     template<value T, value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE as_logical_t<T>  operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T, U>  operator()(T a, U b) const
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value
 // , "[eve::is_equal] simd tolerance requires at least one simd parameter." );
