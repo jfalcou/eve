@@ -10,6 +10,9 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/as_translation.hpp>
+#include <eve/detail/function/bit_cast.hpp>
+
+#include <type_traits>
 
 //======================================================================================================================
 //! @addtogroup simd
@@ -152,15 +155,10 @@ namespace eve::detail
     }
     else
     {
-      auto res = c.behavior(eve::current_api, c.options(), eve::translate(EVE_FWD(args))...);
-      return std::bit_cast<r_t>(res);
+      auto res = c.behavior(current_api, c.options(), eve::translate(EVE_FWD(args))...);
+      if constexpr (has_plain_translation<r_t>) return bit_cast_impl(current_api, res, as<r_t>{});
+      else                                      return res;
     }
-  }
-
-  template<typename Callable, typename... Args>
-  EVE_FORCEINLINE constexpr auto dispatch_call_nt_impl(Callable const& c, Args&&... args)
-  {
-    return c.behavior(eve::current_api, c.options(), EVE_FWD(args)...);
   }
 }
 
@@ -181,7 +179,7 @@ namespace eve::detail
 //!   @brief Generate the proper call to current EVE's @callable implementation, skips the translation mekanism
 //! @}
 //======================================================================================================================
-#define EVE_DISPATCH_CALL_NT(...) eve::detail::dispatch_call_nt_impl(*this, __VA_ARGS__)
+#define EVE_DISPATCH_CALL_NT(...) this->behavior(eve::current_api, this->options(), __VA_ARGS__)
 /**/
 
 //======================================================================================================================
