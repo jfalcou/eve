@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/range.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/kumi.hpp>
 
 #include <iterator>
