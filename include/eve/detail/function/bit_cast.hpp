@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload/supports.hpp>
-#include <eve/traits/overload/default_behaviors.hpp>
 
 #include <eve/detail/function/simd/common/bit_cast.hpp>
 
