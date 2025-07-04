@@ -12,7 +12,6 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/function/simd/common/load.hpp>
 

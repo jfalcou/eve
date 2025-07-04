@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/arch/platform.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/as.hpp>

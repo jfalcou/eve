@@ -11,11 +11,11 @@
 #include <eve/concept/memory.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
