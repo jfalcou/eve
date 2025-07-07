@@ -15,13 +15,6 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_eq(wide<T, N> const &v, wide<T, N> const &w) noexcept
-    requires ppc_abi<abi_t<T, N>>
-  {
-    return logical<wide<T,N>>(vec_cmpeq(v.storage(), w.storage()));
-  }
-
-  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_neq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
