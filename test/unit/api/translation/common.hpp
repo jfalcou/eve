@@ -14,7 +14,7 @@ template <typename E>
 struct BaseStruct {
   E value;
 
-  auto operator<=>(const BaseStruct&) const = default;
+  bool operator==(const BaseStruct&) const = default;
 };
 
 template<typename E>
