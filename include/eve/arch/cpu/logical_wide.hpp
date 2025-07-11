@@ -493,9 +493,12 @@ namespace eve
   //! @}
   //================================================================================================
 
-  template <typename T, typename N>
-  struct recursive_translate<logical<wide<T, N>>>
+  namespace detail
   {
-    using type = typename logical<wide<T, N>>::translated_type;
-  };
+    template <typename T, typename N>
+    consteval auto as_translated_type(as<logical<wide<T, N>>>)
+    {
+      return as<typename logical<wide<T, N>>::translated_type>{};
+    }
+  }
 }

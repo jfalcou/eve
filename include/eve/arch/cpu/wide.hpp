@@ -1092,11 +1092,11 @@ struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, 
 {};
 #endif
 
-namespace eve
+namespace eve::detail
 {
   template <typename T, typename N>
-  struct recursive_translate<wide<T, N>>
+  consteval auto as_translated_type(as<wide<T, N>>)
   {
-    using type = typename wide<T, N>::translated_type;
-  };
+    return as<typename wide<T, N>::translated_type>{};
+  }
 }
