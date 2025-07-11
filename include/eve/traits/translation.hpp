@@ -63,10 +63,14 @@ namespace eve
 
   namespace detail
   {
-    template <translatable T>
+    template <typename T>
     consteval auto as_translated_type(as<T>)
     {
-      if constexpr (std::is_same_v<typename translation_of<T>::type, T>)
+      if constexpr (requires { typename T::translated_type; })
+      {
+        return as<typename T::translated_type>{};
+      }
+      else if constexpr (std::is_same_v<typename translation_of<T>::type, T>)
       {
         return as<T>{};
       }
@@ -74,7 +78,7 @@ namespace eve
       {
         return as<typename translation_of<T>::type>{};
       }
-      else if constexpr (translatable_struct<T>)
+      else
       {
         return as_translated_type(as<typename translation_of<T>::type>{});
       }

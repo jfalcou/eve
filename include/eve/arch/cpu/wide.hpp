@@ -1091,12 +1091,3 @@ template<kumi::product_type T, typename N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
 #endif
-
-namespace eve::detail
-{
-  template <typename T, typename N>
-  consteval auto as_translated_type(as<wide<T, N>>)
-  {
-    return as<typename wide<T, N>::translated_type>{};
-  }
-}

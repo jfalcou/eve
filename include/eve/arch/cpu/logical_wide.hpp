@@ -492,13 +492,4 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
-
-  namespace detail
-  {
-    template <typename T, typename N>
-    consteval auto as_translated_type(as<logical<wide<T, N>>>)
-    {
-      return as<typename logical<wide<T, N>>::translated_type>{};
-    }
-  }
 }
