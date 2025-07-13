@@ -34,7 +34,7 @@ TTS_CASE_TPL("Checks behavior of concepts over translated type", eve::test::scal
 
   TTS_CONSTEXPR_EXPECT(eve::value<S>);
 
-  if constexpr(eve::integral_value<S>)
+  if constexpr(eve::integral_value<T>)
   {
     TTS_CONSTEXPR_EXPECT(eve::integral_value<S>);
     TTS_CONSTEXPR_EXPECT(eve::integral_scalar_value<S>);
@@ -84,19 +84,3 @@ TTS_CASE("Checks compiler rejects invalid translatables")
   TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialDefault>(v); });
   TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialCopy>(v); });
 };
-
-struct CustomType {
-  float value;
-};
-
-template<> struct eve::translation_of<CustomType> { using type = float; };
-
-namespace eve
-{
-  template <typename T, typename N>
-  consteval auto as_translated_type(as<CustomType>)
-  {
-    return as<int>{};
-  }
-}
-
