@@ -7,6 +7,8 @@
 //==================================================================================================
 #include "unit/api/translation/common.hpp"
 
+auto test(eve::translatable auto) { }
+
 TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
@@ -18,7 +20,7 @@ TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
-  
+
     eve::as_wide_as_t<E, W> wt { E { 42 } };
 
     TTS_EQUAL(eve::translate(wt), wr);
@@ -27,7 +29,9 @@ TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
       TTS_EQUAL(wt.get(i), E { 42 });
     }
   }
-  
+
+  test(trans_t { 42 });
+
   eve::as_wide_as_t<trans_t, W> wt { trans_t { 42 } };
 
   TTS_EQUAL(eve::translate(wt), wr);
@@ -85,7 +89,7 @@ TTS_CASE_TPL("Trans wide ctor - generator", eve::test::simd::all_types)
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
-  
+
     eve::as_wide_as_t<E, W> wt = [](auto i, auto) { return static_cast<E>(i * 3); };
 
     TTS_EQUAL(eve::translate(wt), wr);
@@ -96,7 +100,7 @@ TTS_CASE_TPL("Trans wide ctor - generator", eve::test::simd::all_types)
   }
 
   eve::as_wide_as_t<trans_t, W> wt = [](auto i, auto) { return trans_t { static_cast<T>(i * 3) }; };
-  
+
   TTS_EQUAL(eve::translate(wt), wr);
   for (std::ptrdiff_t i = 1; i < W::size(); ++i)
   {
@@ -120,7 +124,7 @@ TTS_CASE_TPL("Trans wide ctor - enumerating", eve::test::simd::all_types)
   {
     enum class E: T { };
     using WE = eve::as_wide_as_t<E, W>;
-  
+
     WE wt = [&]<std::size_t... N>(std::index_sequence<N...>)
           {
             return WE { static_cast<E>(1 + N)... };
@@ -137,7 +141,7 @@ TTS_CASE_TPL("Trans wide ctor - enumerating", eve::test::simd::all_types)
           {
             return WT { trans_t { static_cast<T>(1 + N) }... };
           }( std::make_index_sequence<W::size()>());
-  
+
   TTS_EQUAL(eve::translate(wt), wr);
   for (std::ptrdiff_t i = 1; i < W::size(); ++i)
   {
@@ -151,7 +155,7 @@ TTS_CASE_TPL("Trans wide - load", eve::test::simd::all_types)
   using T = eve::element_type_t<W>;
   using N = typename W::cardinal_type;
   using trans_t = BaseStruct<T>;
-  
+
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
