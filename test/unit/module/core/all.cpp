@@ -7,131 +7,72 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "unit/module/core/logical_reduction_test.hpp"
 
 #include <eve/module/core.hpp>
 
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::all return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::all return type (wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  const T val{};
+
+  TTS_EXPR_IS((eve::all(eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::all[eve::ignore_none](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::all[val > 0](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::all[true](eve::logical<T>())), bool);
+};
+
+TTS_CASE_TPL("Check eve::all return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   TTS_EXPR_IS((eve::all(eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all(bool {})), bool);
-  TTS_EXPECT((eve::all(true)));
-  TTS_EXPECT_NOT((eve::all(false)));
-  TTS_EXPECT(eve::all(eve::true_(eve::as<T>())));
-  TTS_EXPECT_NOT(eve::all(eve::false_(eve::as<T>())));
+  TTS_EXPR_IS((eve::all[eve::ignore_none](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::all[true](eve::logical<T>())), bool);
 };
 
-TTS_CASE_TPL("Check eve::all[ignore](simd)", eve::test::simd::all_types)
-<typename T>(tts::type<T>) {// complete
-                            {eve::logical<T> mask(true);
-TTS_EXPECT(eve::all(mask));
-TTS_EXPECT(eve::all[eve::ignore_none](mask));
-
-mask = eve::logical<T> {false};
-TTS_EXPECT(eve::all[eve::ignore_all](mask));
-}
-
-// some special cases
+TTS_CASE("Check eve::all return type (booleans)")
 {
-  eve::logical<T> mask(true);
+  TTS_EXPR_IS((eve::all(bool{})), bool);
+  TTS_EXPR_IS((eve::all[eve::ignore_none](bool{})), bool);
+  TTS_EXPR_IS((eve::all[true](bool{})), bool);
+};
 
-  TTS_EXPECT(eve::all[eve::ignore_first(1)](mask));
-  TTS_EXPECT(eve::all[eve::ignore_last(1)](mask));
-
-  mask.set(0, false);
-  TTS_EXPECT(eve::all[eve::ignore_first(1)](mask));
-  TTS_EXPECT(eve::all[eve::ignore_last(T::size())](mask));
-  TTS_EXPECT_NOT(eve::all[eve::ignore_last(T::size() - 1)](mask));
-}
-
-// every element
-{
-  eve::logical<T> mask(true);
-
-  for( int i = 0; i != T::size(); ++i )
+struct ManualTestAll {
+  template<typename T, typename C>
+  bool operator()(T v, C mask)
   {
-    mask.set(i, false);
-    TTS_EXPECT_NOT(eve::all(mask));
-    mask.set(i, true);
-  }
-}
-
-// ignore_first, keep_last
-{
-  eve::logical<T> mask(true);
-
-  for( int i = 0; i != T::size(); ++i )
-  {
-    TTS_EXPECT(eve::all[eve::ignore_first(i)](mask));
-    mask.set(i, false);
-    TTS_EXPECT_NOT(eve::all[eve::ignore_first(i)](mask));
-    TTS_EXPECT(eve::all[eve::ignore_first(i + 1)](mask));
-
-    TTS_EXPECT_NOT(eve::all[eve::keep_last(T::size() - i)](mask));
-    TTS_EXPECT(eve::all[eve::keep_last(T::size() - i - 1)](mask));
-  }
-}
-
-// ignore_last
-{
-  eve::logical<T> mask(true);
-
-  for( int i = 0; i != T::size(); ++i )
-  {
-    TTS_EXPECT(eve::all[eve::ignore_last(i)](mask));
-    mask.set(T::size() - i - 1, false);
-    TTS_EXPECT_NOT(eve::all[eve::ignore_last(i)](mask));
-    TTS_EXPECT(eve::all[eve::ignore_last(i + 1)](mask));
-
-    TTS_EXPECT_NOT(eve::all[eve::keep_first(T::size() - i)](mask));
-    TTS_EXPECT(eve::all[eve::keep_first(T::size() - i - 1)](mask));
-  }
-}
-
-// ignore_extrema, keep_between
-{
-  for( int i = 0; i < T::size() + 1; ++i )
-  {
-    for( int j = T::size() - i; j; --j )
+    if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
     {
-      eve::logical<T> mask([&](int k, int) { return (k >= i) && (T::size() - k) > j; });
-      TTS_EXPECT(eve::all[eve::ignore_extrema(i, j)](mask));
+      return v || !mask;
+    }
+    else
+    {
+      for (int i = 0; i < v.size(); ++i)
+        if (mask_at(mask, i) && !v.get(i))
+          return false;
 
-      if( i + j == T::size() ) continue;
-
-      mask.set(i, false);
-
-      TTS_EXPECT_NOT(eve::all[eve::ignore_extrema(i, j)](mask));
-      TTS_EXPECT(eve::all[eve::ignore_extrema(i + 1, j)](mask));
-
-      TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::size() - j)](mask));
-      TTS_EXPECT(eve::all[eve::keep_between(i + 1, T::size() - j)](mask));
-
-      mask.set(i, true);
-
-      mask.set(T::size() - j - 1, false);
-      TTS_EXPECT_NOT(eve::all[eve::ignore_extrema(i, j)](mask));
-      TTS_EXPECT(eve::all[eve::ignore_extrema(i, j + 1)](mask));
-
-      TTS_EXPECT_NOT(eve::all[eve::keep_between(i, T::size() - j)](mask));
-      TTS_EXPECT(eve::all[eve::keep_between(i, T::size() - j - 1)](mask));
+      return true;
     }
   }
-}
-}
-;
+};
 
-TTS_CASE_TPL("Check all(top_bits)", eve::test::simd::all_types)
+TTS_CASE("Check eve::all booleans")
+{
+  test_case<ManualTestAll>(eve::all, true);
+  test_case<ManualTestAll>(eve::all, false);
+};
+
+TTS_CASE_TPL("Check eve::all behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using logical = eve::logical<T>;
-  TTS_EXPECT(eve::all(eve::top_bits(logical(true))));
+  test_case<ManualTestAll>(eve::all, eve::logical<T>{true});
+  test_case<ManualTestAll>(eve::all, eve::logical<T>{false});
+};
 
-  for( int i = 0; i != T::size(); ++i )
-  {
-    logical v([=](auto e, auto) { return e != i; });
-    TTS_EXPECT_NOT(eve::all(eve::top_bits(v)));
-  }
+TTS_CASE_TPL("Check eve::all behavior on wides and top_bits", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  simd_test_cases<ManualTestAll>(eve::all, eve::as<T>{});
 };
