@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaba39938f8cf3f
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::all = {}</td>
+          <td class="memname">eve::all = functor&lt;all_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,16 +145,19 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaba39938f8cf3f
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overloads</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>(<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> x)                                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits</a> <span class="keyword">auto</span> t)                                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>(L x)                                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> t)                                                    <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>)        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)           <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
-<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition</b> all.hpp:58</div></div>
+<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr auto all</div><div class="ttdoc">Computes a bool value which is true if and only if every elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> all.hpp:81</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition</b> top_bits.hpp:80</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -166,8 +169,8 @@ $(document).ready(function(){initNavTree('group__core__reduction_gaba39938f8cf3f
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>A bool value which is true if and only if all elements of <code>x</code> are not zero.</li>
-<li>A masked version which is true if and only if all retained elements of <code>x</code> are not zero.</li>
+<li>A bool value which is true if and only if every elements of <code>x</code> evaluates to true.</li>
+<li>A masked version which ignores the masked elements during the search.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
