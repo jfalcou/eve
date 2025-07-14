@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "unit/api/translation/common.hpp"
 
-auto test(eve::translatable auto) { }
-
 TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
@@ -29,8 +27,6 @@ TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
       TTS_EQUAL(wt.get(i), E { 42 });
     }
   }
-
-  test(trans_t { 42 });
 
   eve::as_wide_as_t<trans_t, W> wt { trans_t { 42 } };
 
