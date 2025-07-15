@@ -32,14 +32,14 @@ namespace eve::detail
       else  if constexpr( is_aggregated_v<abi_t<T, N>>)
       {
         auto[l,h] = v.slice();
-        const auto r = sum[splat2](l + h);
+        const auto r = sum[splat](l + h);
         return eve::combine(r,r);
       }
       else return butterfly_reduction(v, eve::add);
     }
     else
     {
-      return sum[splat2](if_else(opts[condition_key], v, zero(as(v))));
+      return sum[splat](if_else(opts[condition_key], v, zero(as(v))));
     }
   }
 
@@ -66,7 +66,7 @@ namespace eve::detail
             r += v.get(i);
           });
 
-          return r;        
+          return r;
         }
         else  if constexpr( is_aggregated_v<abi_t<r_t, N>> )
         {
