@@ -7,6 +7,67 @@
 //==================================================================================================
 #include "unit/api/translation/common.hpp"
 
+TTS_CASE_TPL("Trans logical types", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using Lt = eve::logical<T>;
+
+  if constexpr (std::integral<T>)
+  {
+    enum class E: T { };
+    using trans_t = eve::logical<E>;
+
+    TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<trans_t>));
+    TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<trans_t>, Lt>));
+  }
+
+  using trans_t = eve::logical<BaseStruct<T>>;
+
+  TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<trans_t>));
+  TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<trans_t>, Lt>));
+};
+
+TTS_CASE_TPL("Trans wide types", eve::test::simd::all_types)
+<typename W>(tts::type<W>)
+{
+  using e_t = eve::element_type_t<W>;
+
+  if constexpr (std::integral<e_t>)
+  {
+    enum class E: e_t { };
+    using transw_t = eve::as_wide_as_t<E, W>;
+
+    TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<transw_t>));
+    TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<transw_t>, W>));
+  }
+
+  using transw_t = eve::as_wide_as_t<BaseStruct<e_t>, W>;
+
+  TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<transw_t>));
+  TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<transw_t>, W>));
+};
+
+TTS_CASE_TPL("Trans logical wide types", eve::test::simd::all_types)
+<typename B>(tts::type<B>)
+{
+  using W = eve::logical<B>;
+  using e_t = eve::element_type_t<typename W::mask_type>;
+
+  if constexpr (std::integral<e_t>)
+  {
+    enum class E: e_t { };
+    using transw_t = eve::as_wide_as_t<eve::logical<E>, W>;
+
+    TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<transw_t>));
+    TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<transw_t>, W>));
+  }
+
+  using transw_t = eve::as_wide_as_t<eve::logical<BaseStruct<e_t>>, W>;
+
+  TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<transw_t>));
+  TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<transw_t>, W>));
+};
+
 TTS_CASE_TPL("Trans wide ctor - splat", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
