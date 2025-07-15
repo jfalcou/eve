@@ -55,7 +55,7 @@ namespace eve::detail
           else
           {
             auto [l, h] = v.slice();
-            l = sum[splat2](l + h);
+            l = sum[splat](l + h);
             return wide<T,N>{l, l};
           }
         }
@@ -91,12 +91,12 @@ namespace eve::detail
         }
         else
         {
-              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return sum[splat2](v).get(0);
+              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return sum[splat](v).get(0);
           else  if constexpr(sizeof(T) == 8)                      return v.get(0)+v.get(1);
           else
           {
             auto [l,h] = v.slice();
-            return sum[splat2](l + h).get(0);
+            return sum[splat](l + h).get(0);
           }
         }
       }

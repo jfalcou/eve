@@ -16,6 +16,7 @@
 
 // temporary
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/splat.hpp>
 #include <cfenv>
 
 namespace eve
@@ -119,6 +120,7 @@ namespace eve
   struct splat_option           : detail::exact_option<splat2>          {};
 
   inline constexpr auto as_option(unsafe_type   const&) { return unsafe2;   }
+  inline constexpr auto as_option(splat_type   const&) { return splat2;   }
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
