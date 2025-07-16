@@ -97,8 +97,10 @@ namespace eve
     //! The type stored in the register.
     using value_type = Type;
 
+    //! The type resulting from translating the current wide's elements type.
     using translated_element_type = translate_t<Type>;
 
+    //! The type resulting from translating the current wide type.
     using translated_type = wide<translated_element_type, Cardinal>;
 
     //! The ABI tag for this register.

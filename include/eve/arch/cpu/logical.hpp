@@ -35,6 +35,7 @@ namespace eve
   //================================================================================================
   template<plain_scalar_value T> struct logical<T>
   {
+    //! The type resulting from translating the curent logical type.
     using translated_type = logical<translate_t<T>>;
 
     //! The type associated to the boolean mask.
