@@ -144,11 +144,11 @@ namespace eve
     //! Construct from a scalar logical
     template<scalar_value U>
     EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Construct from a `bool`
     EVE_FORCEINLINE explicit logical(std::same_as<bool> auto v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
