@@ -252,7 +252,38 @@ TTS_CASE_TPL("Translatable wide - load", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("Translatable logical wide ctor - splat", eve::test::simd::all_types)
+TTS_CASE_TPL("Translatable logical wide ctor - splat(bool)", eve::test::simd::all_types)
+<typename W>(tts::type<W>)
+{
+  using LW = eve::logical<W>;
+  using T = eve::element_type_t<W>;
+  using trans_t = eve::logical<BaseStruct<T>>;
+
+  LW wr { false };
+
+  if constexpr (std::integral<T>)
+  {
+    enum class E: T { };
+
+    eve::as_wide_as_t<eve::logical<E>, LW> wt { false };
+
+    TTS_EQUAL(eve::translate(wt), wr);
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
+    {
+      TTS_EQUAL(wt.get(i), eve::logical<E> { false });
+    }
+  }
+
+  eve::as_wide_as_t<trans_t, LW> wt { false };
+
+  TTS_EQUAL(eve::translate(wt), wr);
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
+  {
+    TTS_EQUAL(wt.get(i), trans_t { false });
+  }
+};
+
+TTS_CASE_TPL("Translatable logical wide ctor - splat(logical)", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
   using LW = eve::logical<W>;
