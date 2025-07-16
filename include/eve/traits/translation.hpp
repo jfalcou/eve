@@ -10,7 +10,7 @@
 #include <type_traits>
 namespace eve
 {
-  //! @brief Indicates to EVE that a type is translateable and its translation target.
+  //! @brief Notifies EVE that a type is translatable and its translation target.
   //!
   //! By default, most EVE functions only work on fundamental types.
   //! Translation allows the user to specify that a custom type should be treated as one of the fundamental types when
@@ -28,7 +28,7 @@ namespace eve
   //! struct eve::translation_of<MyInt> { using type = int; };
   //! @endcode
   //!
-  //! @note A translatable type's translation target can be a translateable type itself. In this case, EVE will
+  //! @note A translatable type's translation target can be a translatable type itself. In this case, EVE will
   //!       recursively resolve the translation until it reaches a fundamental type.
   template <typename T>
   struct translation_of
@@ -40,7 +40,7 @@ namespace eve
   //!
   //! @tparam T The translation candidate type
   //!
-  //! `T` must satisfies this concept in order to be safely used as a translateable type.
+  //! `T` must satisfies this concept in order to be safely used as a translatable type.
   //! `T` must be trivially consstructible, copyable, and assignable to guarantee that scalar operations produce
   //! the same results as vectorized operations executed on values of `T` when viewed as their translation targets.
   //! `T`and its translation target must have the same size and alignment to reduce the risks of undefined behavior when
@@ -91,7 +91,7 @@ namespace eve
   template <translatable T>
   using translate_t = typename decltype(detail::as_translated_type(as<T>{}))::type;
 
-  // All enums are translateable into their underlying type by default.
+  // All enums are translatable into their underlying type by default.
   template <typename T>
   requires (std::is_enum_v<T>)
   struct translation_of<T>: std::underlying_type<T>

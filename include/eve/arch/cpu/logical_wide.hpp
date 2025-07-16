@@ -74,8 +74,10 @@ namespace eve
   {
     using storage_base = detail::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
 
+    //! The type resulting from translating the current logical's elements type.
     using translated_element_type = logical<translate_t<Type>>;
 
+    //! The type resulting from translating the current logical type.
     using translated_type = logical<typename wide<Type, Cardinal>::translated_type>;
 
     //! The type stored in the register.
@@ -151,11 +153,12 @@ namespace eve
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
-          requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
-                    &&  (... && std::convertible_to<Ts,logical<Type>>)
+          requires(    std::convertible_to<translate_t<T0>, translated_element_type>
+                    && std::convertible_to<translate_t<T1>, translated_element_type>
+                    &&  (... && std::convertible_to<translate_t<Ts>, translated_element_type>)
                     &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
-        : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
+        : storage_base(detail::make(eve::as<translated_type>{}, translate(v0), translate(v1), translate(vs)...))
     {}
 
     //==============================================================================================

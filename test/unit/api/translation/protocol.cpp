@@ -54,7 +54,7 @@ namespace impl
   }
 }
 
-TTS_CASE_TPL("Trans protocol - scalar", eve::test::scalar::all_types)
+TTS_CASE_TPL("Translatable protocol - scalar", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   if constexpr (std::integral<T>)
@@ -64,7 +64,7 @@ TTS_CASE_TPL("Trans protocol - scalar", eve::test::scalar::all_types)
     E v = E { static_cast<T>(0) };
 
     auto r = test_translate(v);
-    TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back";
+    TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back to the original type";
 
     auto r_nt = test_no_translate(v);
     TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed";
@@ -74,13 +74,13 @@ TTS_CASE_TPL("Trans protocol - scalar", eve::test::scalar::all_types)
   trans_t v = eve::zero(eve::as<trans_t>{});
 
   auto r = test_translate(v);
-  TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back";
+  TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back to the original type";
 
   auto r_nt = test_no_translate(v);
   TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed";
 };
 
-TTS_CASE_TPL("Trans protocol - logical scalar", eve::test::scalar::all_types)
+TTS_CASE_TPL("Translatable protocol - logical scalar", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   if constexpr (std::integral<T>)
@@ -90,23 +90,23 @@ TTS_CASE_TPL("Trans protocol - logical scalar", eve::test::scalar::all_types)
     trans_t v = eve::false_(eve::as<trans_t>{});
 
     auto r = test_translate(v);
-    TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back, got " << tts::typename_<decltype(r)>;
+    TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back to the original type";
 
     auto r_nt = test_no_translate(v);
-    TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed, got " << tts::typename_<decltype(r)>;
+    TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed";
   }
 
   using trans_t = eve::logical<BaseStruct<T>>;
   trans_t v = eve::false_(eve::as<trans_t>{});
 
   auto r = test_translate(v);
-  TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back, got " << tts::typename_<decltype(r)>;
+  TTS_EXPECT(eve::has_plain_translation<decltype(r)>) << "The result should have been translated back to the original type";
 
   auto r_nt = test_no_translate(v);
-  TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed, got " << tts::typename_<decltype(r)>;
+  TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed";
 };
 
-TTS_CASE_TPL("Trans protocol - wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Translatable protocol - wide", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
   using e_t = eve::element_type_t<W>;
@@ -134,7 +134,7 @@ TTS_CASE_TPL("Trans protocol - wide", eve::test::simd::all_types)
   TTS_EXPECT(eve::has_plain_translation<decltype(r_nt)>) << "The type should not have changed";
 };
 
-TTS_CASE_TPL("Trans protocol - logical wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Translatable protocol - logical wide", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
   using e_t = eve::element_type_t<eve::as_arithmetic_t<W>>;
