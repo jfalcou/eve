@@ -4,6 +4,8 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ####################################################################################################
 name: EVE - Documentation Tests
+run-name: documentation
+
 on:
   pull_request:
     branches:
@@ -23,19 +25,18 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: '/usr/bin/clang++' }
-        - { comp: 'g++-14'           }
+        - { comp: '/usr/bin/clang++', opts: '' }
+        - { comp: 'g++-14'          , opts: '-nostdinc++ -isystem /opt/homebrew/include/c++/14 -isystem /opt/homebrew/include/c++/14/aarch64-apple-darwin24' }
     steps:
       - name: Print Runner Info
         run: |
-          echo "=== Runner Information ==="
           system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
       - name: Fetch current branch
         uses: actions/checkout@v4
       - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
-          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE"
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE ${{ matrix.cfg.opts }}"
       - name: Compile Documentation Tests
         run:  cd build && ninja doc.exe
       - name: Run Documentation Tests
@@ -57,7 +58,6 @@ jobs:
     steps:
       - name: Print Runner Info
         run: |
-          echo "=== Runner Information ==="
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
       - name: Fetch current branch
