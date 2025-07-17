@@ -129,8 +129,12 @@ namespace eve
 
     //! @brief Constructs a eve::logical from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
+    //
+    // [internal] The requires clause is needed to avoid ambiguity with the storage_type constructor
+    //            in emulated mode.
     template<detail::range Range>
-    EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
+    EVE_FORCEINLINE explicit logical(Range &&r) noexcept
+      requires (std::same_as<value_type_t<Range>, value_type> && !std::same_as<storage_type, Range>)
                   : logical(std::begin(EVE_FWD(r)))
     {}
 
@@ -153,9 +157,9 @@ namespace eve
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
-          requires(    std::convertible_to<translate_t<T0>, translated_element_type>
-                    && std::convertible_to<translate_t<T1>, translated_element_type>
-                    &&  (... && std::convertible_to<translate_t<Ts>, translated_element_type>)
+          requires(    std::convertible_to<T0, value_type>
+                    && std::convertible_to<T1, value_type>
+                    &&  (... && std::convertible_to<Ts, value_type>)
                     &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
         : storage_base(detail::make(eve::as<translated_type>{}, translate(v0), translate(v1), translate(vs)...))
