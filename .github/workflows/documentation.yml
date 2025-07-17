@@ -15,9 +15,33 @@ concurrency:
 
 jobs:
   ##################################################################################################
-  ## Randomized precision tests
+  ## DOCUMENTATION TESTS
   ##################################################################################################
-  documentation:
+  documentation_macOS:
+    runs-on: [macos-15]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: '/usr/bin/clang++' }
+        - { comp: 'g++-14'           }
+    steps:
+      - name: Print Runner Info
+        run: |
+          echo "=== Runner Information ==="
+          system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
+      - name: Fetch current branch
+        uses: actions/checkout@v4
+      - name: Running CMake for ${{ matrix.cfg.comp }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE"
+      - name: Compile Documentation Tests
+        run:  cd build && ninja doc.exe
+      - name: Run Documentation Tests
+        run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
+
+  documentation_generic:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v9
@@ -25,28 +49,27 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: aarch64, opts: -Wno-psabi}
-        - { comp: clang, arch: x86    , opts: -mavx2    }
-        - { comp: clang, arch: x86    , opts: -msse2    }
-        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi}
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: -mavx2     }
+        - { comp: clang, arch: x86    , opts: -msse2     }
+        - { comp: gcc  , arch: x86    , opts: -msse2     }
+        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
+        - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "=== Runner Information ==="
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
-
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
-          mkdir build
-          cd build
+          mkdir build && cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake"
-
       - name: Compile Documentation Tests
         run:  |
-          cd build
-          ninja doc.exe -j 4
-
-      - name: Running Random Sampling Tests
+          cd build && ninja doc.exe
+      - name: Run Documentation Tests
         run:  |
-          cd build
-          ctest --output-on-failure -j 4 -R ^doc.*.exe
+          cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe

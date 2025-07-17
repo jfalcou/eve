@@ -12,9 +12,12 @@ add_library(eve_test INTERFACE)
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   target_compile_options( eve_test INTERFACE /bigobj /W3 /EHsc /std:c++20 /wd4267 /wd4244 /wd4146)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics)
+  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics
+                          -ftemplate-backtrace-limit=0 -fconcepts-diagnostics-depth=8
+                        )
 else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
+                          -ftemplate-backtrace-limit=0 -fconcepts-diagnostics-depth=8
                           -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow
                           -Wno-maybe-uninitialized
                         )

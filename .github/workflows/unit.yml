@@ -162,19 +162,23 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: '/usr/bin/clang++', opts: "-DEVE_NO_FORCEINLINE -O0" }
-        - { opts: 'g++-14'          , opts: "-DEVE_NO_FORCEINLINE -O0" }
+        - { comp: '/usr/bin/clang++' }
+        - { comp: 'g++-14'           }
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "=== Runner Information ==="
+          system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
       - name: Fetch current branch
         uses: actions/checkout@v4
-      - name: Running CMake for clang++ with ${{ matrix.cfg.opts }}
+      - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
-          cmake .. -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}"
+          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE"
       - name: Compiling Unit Tests
-        run:  cd build && make unit.exe -j 2
+        run:  cd build && ninja unit.exe
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 2 -E ^doc.*.exe
 
   ##################################################################################################
   ## Windows Targets - Deactivated for now
