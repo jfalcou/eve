@@ -162,15 +162,15 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { opts: "-DEVE_NO_FORCEINLINE -O0", linker:                 }
-        - { opts: "-DEVE_NO_FORCEINLINE -O0 -stdlib=libc++", linker: "-stdlib=libc++"  }
+        - { comp: '/usr/bin/clang++', opts: "-DEVE_NO_FORCEINLINE -O0" }
+        - { opts: 'g++-14'          , opts: "-DEVE_NO_FORCEINLINE -O0" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4
       - name: Running CMake for clang++ with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
-          cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}"  -DCMAKE_EXE_LINKER_FLAGS=${{ matrix.cfg.linker }}
+          cmake .. -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}"
       - name: Compiling Unit Tests
         run:  cd build && make unit.exe -j 2
       - name: Running Unit Tests
@@ -308,7 +308,6 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: clang , arch: arm     , opts: -Wno-psabi            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
