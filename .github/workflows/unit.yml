@@ -163,7 +163,7 @@ jobs:
       matrix:
         cfg:
         - { comp: '/usr/bin/clang++', opts: '' }
-        - { comp: 'g++-14'          , opts: '-nostdinc++ -isystem /opt/homebrew/include/c++/14 -isystem /opt/homebrew/include/c++/14/aarch64-apple-darwin24' }
+        - { comp: 'g++-14'          , opts: '-Wno-psabi -nostdinc++ -isystem /opt/homebrew/include/c++/14 -isystem /opt/homebrew/include/c++/14/aarch64-apple-darwin24' }
     steps:
       - name: Print Runner Info
         run: |

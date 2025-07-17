@@ -26,7 +26,7 @@ jobs:
       matrix:
         cfg:
         - { comp: '/usr/bin/clang++', opts: '' }
-        - { comp: 'g++-14'          , opts: '-Wno-psabi -DCMAKE_SYSTEM_NAME=Generic -nostdinc++ -isystem /opt/homebrew/include/c++/14 -isystem /opt/homebrew/include/c++/14/aarch64-apple-darwin24' }
+        - { comp: 'g++-14'          , opts: '-Wno-psabi -nostdinc++ -isystem /opt/homebrew/include/c++/14 -isystem /opt/homebrew/include/c++/14/aarch64-apple-darwin24' }
     steps:
       - name: Print Runner Info
         run: |
@@ -36,7 +36,7 @@ jobs:
       - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
-          cmake .. -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE ${{ matrix.cfg.opts }}"
+          cmake .. -DCMAKE_SYSTEM_NAME=Generic -G Ninja -DCMAKE_CXX_COMPILER=${{ matrix.cfg.comp }} -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE ${{ matrix.cfg.opts }}"
       - name: Compile Documentation Tests
         run:  cd build && ninja doc.exe
       - name: Run Documentation Tests
