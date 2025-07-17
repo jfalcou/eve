@@ -35,6 +35,9 @@ namespace eve
   //================================================================================================
   template<plain_scalar_value T> struct logical<T>
   {
+    //! The type resulting from translating the curent logical type.
+    using translated_type = logical<translate_t<T>>;
+
     //! The type associated to the boolean mask.
     using value_type  = T;
 
@@ -42,7 +45,7 @@ namespace eve
     using mask_type   = T;
 
     //! The type representing the bitwise representation of the mask
-    using bits_type   = as_integer_t<T, unsigned>;
+    using bits_type   = as_integer_t<translate_t<T>, unsigned>;
 
     static constexpr bits_type true_mask  = ~bits_type{0};
     static constexpr bits_type false_mask = bits_type{0};

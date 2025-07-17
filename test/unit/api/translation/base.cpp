@@ -5,9 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
-
-#include <eve/concept/translation.hpp>
+#include "unit/api/translation/common.hpp"
 
 TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
 <typename T>(tts::type<T>)
@@ -18,12 +16,6 @@ TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
   TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<E>)) << "E should have a translated type";
   TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<E>, T>)) << "The translated type of E should be T";
 };
-
-template <typename E>
-struct BaseStruct { E value; };
-
-template<typename E>
-struct eve::translation_of<BaseStruct<E>> { using type = E; };
 
 TTS_CASE_TPL("Equivalent struct trait impl", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
@@ -42,7 +34,7 @@ TTS_CASE_TPL("Checks behavior of concepts over translated type", eve::test::scal
 
   TTS_CONSTEXPR_EXPECT(eve::value<S>);
 
-  if constexpr(eve::integral_value<S>)
+  if constexpr(eve::integral_value<T>)
   {
     TTS_CONSTEXPR_EXPECT(eve::integral_value<S>);
     TTS_CONSTEXPR_EXPECT(eve::integral_scalar_value<S>);
@@ -61,4 +53,34 @@ TTS_CASE_TPL("Checks behavior of concepts over translated type", eve::test::scal
     TTS_CONSTEXPR_EXPECT_NOT(eve::integral_scalar_value<S>);
     TTS_CONSTEXPR_EXPECT(eve::floating_value<S>);
   }
+};
+
+template<typename T>
+auto test_invalid_translation(int) -> eve::translate_t<T> { return { }; }
+
+struct NonTrivial {
+  float value;
+  NonTrivial(float v) : value(v * 2) {}
+};
+
+struct NonTrivialDefault {
+  float value;
+  NonTrivialDefault() : value(1) {}
+};
+
+struct NonTrivialCopy {
+  float value;
+  NonTrivialCopy(const NonTrivialCopy& other) : value(other.value * 2) {}
+};
+
+template<> struct eve::translation_of<NonTrivial> { using type = float; };
+template<> struct eve::translation_of<NonTrivialDefault> { using type = float; };
+template<> struct eve::translation_of<NonTrivialCopy> { using type = float; };
+
+TTS_CASE("Checks compiler rejects invalid translatables")
+{
+  int v;
+  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivial>(v); });
+  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialDefault>(v); });
+  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialCopy>(v); });
 };
