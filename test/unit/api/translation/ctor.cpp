@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "unit/api/translation/common.hpp"
+#include <list>
 
 TTS_CASE_TPL("Translatable logical types", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
@@ -203,6 +204,47 @@ TTS_CASE_TPL("Translatable wide ctor - enumerating", eve::test::simd::all_types)
   }
 };
 
+TTS_CASE_TPL("Translatable wide ctor - from range", eve::test::simd::all_types)
+<typename W>(tts::type<W>)
+{
+  using T = eve::element_type_t<W>;
+  using N = typename W::cardinal_type;
+  using trans_t = BaseStruct<T>;
+
+  W wr = [](auto i, auto) { return static_cast<T>(i * 2); };
+
+  if constexpr (std::integral<T>)
+  {
+    enum class E: T { };
+
+    std::list<E> source;
+    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    {
+      source.push_back(E{ static_cast<T>(i * 2) });
+    }
+
+    eve::wide<E, N> wt(source);
+    TTS_EQUAL(eve::translate(wt), wr);
+    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    {
+      TTS_EQUAL(wt.get(i), E { static_cast<T>(i * 2) });
+    }
+  }
+
+  std::list<trans_t> source;
+  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  {
+    source.push_back(trans_t { static_cast<T>(i * 2) });
+  }
+
+  eve::wide<trans_t, N> wt(source);
+  TTS_EQUAL(eve::translate(wt), wr);
+  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  {
+    TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i * 2) });
+  }
+};
+
 TTS_CASE_TPL("Translatable wide - load", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
@@ -396,7 +438,7 @@ TTS_CASE_TPL("Translatable logical wide ctor - generator(logical...)", eve::test
   {
     enum class E: T { };
 
-    eve::as_wide_as_t<eve::logical<E>, LW> wt = [](auto i, auto) { return trans_t { (i % 2) == 0 }; };
+    eve::as_wide_as_t<eve::logical<E>, LW> wt = [](auto i, auto) { return eve::logical<E> { (i % 2) == 0 }; };
 
     TTS_EQUAL(eve::translate(wt), wr);
     for (std::ptrdiff_t i = 0; i < W::size(); ++i)
@@ -498,5 +540,47 @@ TTS_CASE_TPL("Translatable logical wide ctor - enumerating mixed types", eve::te
   for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { (i % 3) == 0 });
+  }
+};
+
+TTS_CASE_TPL("Translatable logical wide ctor - from range", eve::test::simd::all_types)
+<typename W>(tts::type<W>)
+{
+  using LW = eve::logical<W>;
+  using T = eve::element_type_t<W>;
+  using N = typename W::cardinal_type;
+  using trans_t = eve::logical<BaseStruct<T>>;
+
+  LW wr = [](auto i, auto) { return (i % 2) == 0; };
+
+  if constexpr (std::integral<T>)
+  {
+    enum class E: T { };
+
+    std::list<eve::logical<E>> source;
+    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    {
+      source.push_back(eve::logical<E>{ (i % 2) == 0 });
+    }
+
+    eve::as_wide_as_t<eve::logical<E>, LW> wt(source);
+    TTS_EQUAL(eve::translate(wt), wr);
+    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    {
+      TTS_EQUAL(wt.get(i), eve::logical<E>{ (i % 2) == 0 });
+    }
+  }
+
+  std::list<trans_t> source;
+  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  {
+    source.push_back(trans_t{ (i % 2) == 0 });
+  }
+
+  eve::as_wide_as_t<trans_t, LW> wt(source);
+  TTS_EQUAL(eve::translate(wt), wr);
+  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  {
+    TTS_EQUAL(wt.get(i), trans_t{ (i % 2) == 0 });
   }
 };

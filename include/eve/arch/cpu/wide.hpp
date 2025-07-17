@@ -153,8 +153,8 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are
     //! @raiterator{s}.
     template<detail::range Range>
-    requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
+    requires (std::same_as<value_type_t<Range>, Type> && !std::same_as<storage_type, Range>)
         : wide(std::begin(EVE_FWD(r)))
     {
       EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Cardinal::value,
