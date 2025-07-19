@@ -7,7 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "unit/module/core/logical_reduction_test.hpp"
+#include "unit/module/core/reduction_test.hpp"
 
 #include <eve/module/core.hpp>
 
@@ -60,19 +60,19 @@ struct ManualLastTrue
 
 TTS_CASE("Check eve::last_true on booleans")
 {
-  test_case<ManualLastTrue>(eve::last_true, true);
-  test_case<ManualLastTrue>(eve::last_true, false);
+  logical_test_case<ManualLastTrue>(eve::last_true, true);
+  logical_test_case<ManualLastTrue>(eve::last_true, false);
 };
 
 TTS_CASE_TPL("Check eve::last_true behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  test_case<ManualLastTrue>(eve::last_true, eve::logical<T>{true});
-  test_case<ManualLastTrue>(eve::last_true, eve::logical<T>{false});
+  logical_test_case<ManualLastTrue>(eve::last_true, eve::logical<T>{true});
+  logical_test_case<ManualLastTrue>(eve::last_true, eve::logical<T>{false});
 };
 
 TTS_CASE_TPL("Check eve::last_true behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  simd_test_cases<ManualLastTrue>(eve::last_true, eve::as<T>{});
+  logical_simd_test_cases<ManualLastTrue>(eve::last_true, eve::as<T>{});
 };
