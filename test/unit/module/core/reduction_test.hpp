@@ -66,12 +66,12 @@ void logical_test_case_cx(Callable callable, T v, C cx)
 }
 
 template<typename TruthFn, typename Callable, typename T>
-void arithmetic_test_case_nocx(Callable callable, T v)
+void arithmetic_test_case_nocx(Callable callable, T v, double expected_ulp = 0.0)
 {
   const auto manual_res = invoke_truth_fn<TruthFn>(v, true);
   const auto res = callable(v);
 
-  TTS_EQUAL(res, manual_res);
+  TTS_ULP_EQUAL(res, manual_res, expected_ulp);
 
   if constexpr (eve::simd_value<T>)
   {
@@ -80,11 +80,13 @@ void arithmetic_test_case_nocx(Callable callable, T v)
 }
 
 template<typename TruthFn, typename Callable, typename T, typename C>
-void arithmetic_test_case_cx(Callable callable, T v, C cx)
+void arithmetic_test_case_cx(Callable callable, T v, C cx, double expected_ulp = 0.0)
 {
   if constexpr (eve::simd_value<T>) v = eve::if_else(cx, v, eve::zero(eve::as(v)));
   const auto manual_res = invoke_truth_fn<TruthFn>(v, cx);
   const auto res = callable[cx](v);
+
+  TTS_ULP_EQUAL(res, manual_res, expected_ulp);
 
   if constexpr (eve::simd_value<T>)
   {
@@ -119,14 +121,18 @@ struct LogicalTestRunner : TestRunner<TruthFn>
 template<typename TruthFn>
 struct ArithmeticTestRunner : TestRunner<TruthFn>
 {
+  double expected_ulp;
+
+  constexpr ArithmeticTestRunner(double ulp = 0.0) : expected_ulp(ulp) {}
+
   template<typename Callable, typename T>
-  static void call_nocx(Callable callable, T v) {
-    arithmetic_test_case_nocx<TruthFn>(callable, v);
+  void call_nocx(Callable callable, T v) const {
+    arithmetic_test_case_nocx<TruthFn>(callable, v, expected_ulp);
   }
 
   template<typename Callable, typename T, typename C>
-  static void call_cx(Callable callable, T v, C cx) {
-    arithmetic_test_case_cx<TruthFn>(callable, v, cx);
+  void call_cx(Callable callable, T v, C cx) const {
+    arithmetic_test_case_cx<TruthFn>(callable, v, cx, expected_ulp);
   }
 };
 
@@ -200,9 +206,9 @@ void logical_simd_test_cases(Callable callable, eve::as<T> typ)
 }
 
 template<typename TruthFn, typename Callable, typename T>
-void arithmetic_test_case(Callable callable, T v)
+void arithmetic_test_case(Callable callable, T v, double expected_ulp = 0.0)
 {
-  constexpr auto runner = arithmetic_runner<TruthFn>;
+  const auto runner = ArithmeticTestRunner<TruthFn>{expected_ulp};
   test_case<TruthFn>(callable, v, runner);
 }
 
