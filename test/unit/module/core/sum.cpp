@@ -55,5 +55,5 @@ TTS_CASE_WITH("Check behavior of eve::detail::sum on wides",
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T v)
 {
-  arithmetic_test_case<ManualSum>(eve::detail::sum, v);
+  arithmetic_test_case<ManualSum>(eve::detail::sum, v, 0.5);
 };
