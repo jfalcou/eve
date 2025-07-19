@@ -7,11 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "unit/module/core/logical_reduction_test.hpp"
-
-#include <eve/module/core.hpp>
-
-#include <type_traits>
+#include "unit/module/core/reduction_test.hpp"
 
 TTS_CASE_TPL("Check eve::all return type (wide)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
@@ -60,19 +56,19 @@ struct ManualTestAll {
 
 TTS_CASE("Check eve::all booleans")
 {
-  test_case<ManualTestAll>(eve::all, true);
-  test_case<ManualTestAll>(eve::all, false);
+  logical_test_case<ManualTestAll>(eve::all, true);
+  logical_test_case<ManualTestAll>(eve::all, false);
 };
 
 TTS_CASE_TPL("Check eve::all behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  test_case<ManualTestAll>(eve::all, eve::logical<T>{true});
-  test_case<ManualTestAll>(eve::all, eve::logical<T>{false});
+  logical_test_case<ManualTestAll>(eve::all, eve::logical<T>{true});
+  logical_test_case<ManualTestAll>(eve::all, eve::logical<T>{false});
 };
 
 TTS_CASE_TPL("Check eve::all behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  simd_test_cases<ManualTestAll>(eve::all, eve::as<T>{});
+  logical_simd_test_cases<ManualTestAll>(eve::all, eve::as<T>{});
 };
