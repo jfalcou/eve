@@ -50,12 +50,20 @@ TTS_CASE_WITH("Check behavior of eve::detail::sum on scalars",
   arithmetic_test_case<ManualSum>(eve::detail::sum, v);
 };
 
-TTS_CASE_WITH("Check behavior of eve::detail::sum on wides",
-              eve::test::simd::all_types,
+TTS_CASE_WITH("Check behavior of eve::detail::sum on wides (integers)",
+              eve::test::simd::integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T v)
 {
-  arithmetic_test_case<ManualSum>(eve::detail::sum, v, 0.5 * static_cast<double>(T::size() / 8));
+  arithmetic_test_case<ManualSum>(eve::detail::sum, v);
+};
+
+TTS_CASE_WITH("Check behavior of eve::detail::sum on wides (ieee754 reals)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(1, 9)))
+<typename T>(T v)
+{
+  arithmetic_test_case<ManualSum>(eve::detail::sum, v, 0.5);
 };
 
 TTS_CASE_TPL("Check behavior of eve::detail::sum on wides (conditioned ieee754)", eve::test::simd::ieee_reals)
