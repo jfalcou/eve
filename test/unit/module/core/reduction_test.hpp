@@ -94,11 +94,11 @@ struct ArithmeticTestRunner : TestRunner<TruthFn>
     if constexpr (eve::simd_value<T>)
     {
       auto res_splat = callable[eve::splat](v);
+      TTS_ULP_EQUAL(res_splat.get(0), manual_res, expected_ulp);
 
       for (std::ptrdiff_t i = 0; i < T::size(); ++i)
       {
         TTS_EQUAL(res_splat.get(0), res_splat.get(i));
-        TTS_ULP_EQUAL(res_splat.get(i), manual_res, expected_ulp);
       }
     }
   }
@@ -113,11 +113,11 @@ struct ArithmeticTestRunner : TestRunner<TruthFn>
     if constexpr (eve::simd_value<T>)
     {
       auto res_splat = callable[eve::splat][cx](v);
+      TTS_ULP_EQUAL(res_splat.get(0), manual_res, expected_ulp);
 
       for (std::ptrdiff_t i = 0; i < T::size(); ++i)
       {
         TTS_EQUAL(res_splat.get(0), res_splat.get(i));
-        TTS_ULP_EQUAL(res_splat.get(i), manual_res, expected_ulp);
       }
     }
   }
