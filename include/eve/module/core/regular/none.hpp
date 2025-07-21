@@ -16,21 +16,19 @@ namespace eve
   template<typename Options>
   struct none_t : strict_elementwise_callable<none_t, Options>
   {
-    template<logical_value T>
+    template<relaxed_logical_value T>
     constexpr EVE_FORCEINLINE bool operator()(T v) const noexcept
     {
+      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+         "[eve::none] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
       return !any[this->options()[condition_key]](v);
     }
 
     template<logical_simd_value T>
     constexpr EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
     {
-      return !any(v);
-    }
-
-    constexpr EVE_FORCEINLINE bool operator()(bool v) const noexcept
-    {
-      return !v;
+      return !any[this->options()[condition_key]](v);
     }
   };
 
