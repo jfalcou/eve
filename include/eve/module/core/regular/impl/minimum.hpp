@@ -9,75 +9,73 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/all.hpp>
+#include <eve/traits/overload/supports.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/splat.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), splat_type const&, wide<T, N> const& v) noexcept
-{
-  if constexpr( N::value == 1 ) return v;
-  else if constexpr( !is_aggregated_v<abi_t<T, N>> ) return butterfly_reduction(v, eve::min);
-  else
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> minimum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v) noexcept
+    requires (O::contains(splat2))
   {
-    auto [l, h] = v.slice();
-    auto r      = splat(minimum)(eve::min(l, h));
-    return eve::combine(r, r);
+    using C = rbr::result::fetch_t<condition_key, O>;
+
+    if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr( N::value == 1 ) return v;
+      else if constexpr( !is_aggregated_v<abi_t<T, N>> ) return butterfly_reduction(v, eve::min);
+      else
+      {
+        auto [l, h] = v.slice();
+        auto r      = minimum[splat](eve::min(l, h));
+        return eve::combine(r, r);
+      }
+    }
+    else
+    {
+      return minimum[splat](if_else(opts[condition_key], v, eve::valmax));
+    }
   }
-}
 
-template<simd_value T>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), splat_type const&, logical<T> const& v) noexcept
-{
-  return logical<T>(eve::all(v));
-}
-
-template<arithmetic_scalar_value T>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), T const& v) noexcept
-{
-  return v;
-}
-
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), wide<T, N> const& v) noexcept
-{
-  if constexpr( N::value == 1 ) return v.get(0);
-  else if constexpr( !is_aggregated_v<abi_t<T, N>> ) return butterfly_reduction(v, eve::min).get(0);
-  else
+  template<callable_options O, arithmetic_value T>
+  EVE_FORCEINLINE element_type_t<T> minimum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+    requires (!O::contains(splat2))
   {
-    auto [l, h] = v.slice();
-    return minimum(eve::min(l, h));
+    using C = rbr::result::fetch_t<condition_key, O>;
+
+    if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr (arithmetic_scalar_value<T>)
+      {
+        return v;
+      }
+      else
+      {
+        using N = typename T::cardinal_type;
+
+        if      constexpr (N::value == 1) return v.get(0);
+        else if constexpr (!is_aggregated_v<abi_t<element_type_t<T>, N>>)
+        {
+          return butterfly_reduction(v, eve::min).get(0);
+        }
+        else
+        {
+          auto [l, h] = v.slice();
+          return minimum(eve::min(l, h));
+        }
+      }
+    }
+    else if constexpr (arithmetic_scalar_value<T>)
+    {
+      return if_else(opts[condition_key], v, eve::valmax(eve::as(v)));
+    }
+    else
+    {
+      return minimum(if_else(opts[condition_key], v, eve::valmax));
+    }
   }
-}
-
-template<simd_value T>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), logical<T> const& v) noexcept
-{
-  return eve::all(v);
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-{
-  return minimum(if_else(cond, t, eve::valmax));
-}
-
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-minimum_(EVE_SUPPORTS(cpu_), C const& cond, splat_type const&, U const& t) noexcept
-{
-  return splat(minimum)(if_else(cond, t, eve::valmax));
-}
 }
