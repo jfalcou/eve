@@ -60,19 +60,19 @@ struct ManualFirstTrue
 
 TTS_CASE("Check eve::first_true on booleans")
 {
-  logical_test_case<ManualFirstTrue>(eve::first_true, true);
-  logical_test_case<ManualFirstTrue>(eve::first_true, false);
+  logical_reduction_test_case<ManualFirstTrue>(eve::first_true, true);
+  logical_reduction_test_case<ManualFirstTrue>(eve::first_true, false);
 };
 
 TTS_CASE_TPL("Check eve::first_true behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  logical_test_case<ManualFirstTrue>(eve::first_true, eve::logical<T>{true});
-  logical_test_case<ManualFirstTrue>(eve::first_true, eve::logical<T>{false});
+  logical_reduction_test_case<ManualFirstTrue>(eve::first_true, eve::logical<T>{true});
+  logical_reduction_test_case<ManualFirstTrue>(eve::first_true, eve::logical<T>{false});
 };
 
 TTS_CASE_TPL("Check eve::first_true behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  logical_simd_test_cases<ManualFirstTrue>(eve::first_true, eve::as<T>{});
+  logical_reduction_simd_test_cases<ManualFirstTrue>(eve::first_true, eve::as<T>{});
 };
