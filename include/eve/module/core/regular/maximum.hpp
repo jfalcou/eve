@@ -38,7 +38,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var maximum
-  //!   @brief Computes the maximal value in a simd vector
+  //!   @brief Computes the maximal value in a simd vector or valmin if the input is fully masked.
   //!
   //!   @groupheader{Header file}
   //!
