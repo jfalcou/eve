@@ -43,4 +43,6 @@
 #include <eve/module/core/constant/twotonmb.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/majorant.hpp>
+#include <eve/module/core/constant/minorant.hpp>
 #include <eve/module/core/constant/zero.hpp>
