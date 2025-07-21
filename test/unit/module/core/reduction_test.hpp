@@ -130,7 +130,7 @@ template<typename TruthFn>
 constexpr ArithmeticTestRunner<TruthFn> arithmetic_runner{};
 
 template<typename TruthFn, typename Callable, typename T, typename Runner>
-void test_case(Callable callable, T v, Runner runner)
+void reduction_test_case(Callable callable, T v, Runner runner)
 {
   runner.call_nocx(callable, v);
   runner.call_cx(callable, v, true);
@@ -158,20 +158,20 @@ void test_case(Callable callable, T v, Runner runner)
 }
 
 template<typename TruthFn, typename Callable, typename T>
-void logical_test_case(Callable callable, T v)
+void logical_reduction_test_case(Callable callable, T v)
 {
   constexpr auto runner = logical_runner<TruthFn>;
-  test_case<TruthFn>(callable, v, runner);
+  reduction_test_case<TruthFn>(callable, v, runner);
 }
 
 template<typename TruthFn, typename Callable, typename T>
-void logical_simd_test_cases(Callable callable, eve::as<T> typ)
+void logical_reduction_simd_test_cases(Callable callable, eve::as<T> typ)
 {
   constexpr auto cardinal = eve::cardinal_v<T>;
   constexpr auto runner = logical_runner<TruthFn>;
 
-  test_case<TruthFn>(callable, eve::true_(typ), runner);
-  test_case<TruthFn>(callable, eve::false_(typ), runner);
+  reduction_test_case<TruthFn>(callable, eve::true_(typ), runner);
+  reduction_test_case<TruthFn>(callable, eve::false_(typ), runner);
 
   for (std::ptrdiff_t j = 0; j < cardinal; ++j)
   {
@@ -185,22 +185,22 @@ void logical_simd_test_cases(Callable callable, eve::as<T> typ)
       rhs4.set(i, i == j ? false : true);
     }
 
-    test_case<TruthFn>(callable, rhs1, runner);
-    test_case<TruthFn>(callable, rhs2, runner);
-    test_case<TruthFn>(callable, rhs3, runner);
-    test_case<TruthFn>(callable, rhs4, runner);
+    reduction_test_case<TruthFn>(callable, rhs1, runner);
+    reduction_test_case<TruthFn>(callable, rhs2, runner);
+    reduction_test_case<TruthFn>(callable, rhs3, runner);
+    reduction_test_case<TruthFn>(callable, rhs4, runner);
   }
 }
 
 template<typename TruthFn, typename Callable, typename T>
-void arithmetic_test_case(Callable callable, T v, double expected_ulp = 0.0)
+void arithmetic_reduction_test_case(Callable callable, T v, double expected_ulp = 0.0)
 {
   const auto runner = ArithmeticTestRunner<TruthFn>{expected_ulp};
-  test_case<TruthFn>(callable, v, runner);
+  reduction_test_case<TruthFn>(callable, v, runner);
 }
 
 template<typename Callable, eve::arithmetic_simd_value T>
-void arithmetic_simd_type_test(Callable callable, eve::as<T>)
+void arithmetic_reduction_simd_type_test(Callable callable, eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   T val{};
@@ -217,7 +217,7 @@ void arithmetic_simd_type_test(Callable callable, eve::as<T>)
 }
 
 template<typename Callable, eve::arithmetic_scalar_value T>
-void arithmetic_scalar_type_test(Callable callable, eve::as<T>)
+void arithmetic_reduction_scalar_type_test(Callable callable, eve::as<T>)
 {
   T val{};
 
