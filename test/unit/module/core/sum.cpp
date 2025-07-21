@@ -8,16 +8,16 @@
 #include "test.hpp"
 #include "unit/module/core/reduction_test.hpp"
 
+TTS_CASE_TPL("Check eve::detail::sum return type (scalar)", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  arithmetic_scalar_type_test(eve::detail::sum, eve::as<T>{});
+};
+
 TTS_CASE_TPL("Check eve::detail::sum return type (wide)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   arithmetic_simd_type_test(eve::detail::sum, eve::as<T>{});
-};
-
-TTS_CASE_TPL("Check eve::detail::sum return type (wide)", eve::test::scalar::all_types)
-<typename T>(tts::type<T>)
-{
-  arithmetic_scalar_type_test(eve::detail::sum, eve::as<T>{});
 };
 
 struct ManualSum
@@ -66,7 +66,7 @@ TTS_CASE_WITH("Check behavior of eve::detail::sum on wides (ieee754 reals)",
   arithmetic_test_case<ManualSum>(eve::detail::sum, v, 0.5);
 };
 
-TTS_CASE_TPL("Check behavior of eve::detail::sum on wides (conditioned ieee754)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of eve::detail::sum on wides (conditioned ieee754 reals)", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   T v = [](auto i, auto c) { return i < c / 2 ? 10 * (i + 1) : -(10 * (i + 1) + 1); };
