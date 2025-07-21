@@ -57,6 +57,10 @@ namespace eve::detail
         }
       }
     }
+    else if constexpr (scalar_value<T>)
+    {
+      return if_else(opts[condition_key], v, eve::valmin);
+    }
     else
     {
       return maximum(if_else(opts[condition_key], v, eve::valmin));
