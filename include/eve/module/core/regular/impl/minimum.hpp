@@ -37,7 +37,7 @@ namespace eve::detail
     }
     else
     {
-      return minimum[splat](if_else(opts[condition_key], v, eve::valmax));
+      return minimum[splat](if_else(opts[condition_key], v, eve::majorant));
     }
   }
 
@@ -71,11 +71,11 @@ namespace eve::detail
     }
     else if constexpr (arithmetic_scalar_value<T>)
     {
-      return if_else(opts[condition_key], v, eve::valmax(eve::as(v)));
+      return if_else(opts[condition_key], v, eve::majorant(eve::as(v)));
     }
     else
     {
-      return minimum(if_else(opts[condition_key], v, eve::valmax));
+      return minimum(if_else(opts[condition_key], v, eve::majorant));
     }
   }
 }
