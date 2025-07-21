@@ -32,7 +32,7 @@ namespace eve::detail
     }
     else
     {
-      return maximum[splat](if_else(opts[condition_key], v, eve::valmin));
+      return maximum[splat](if_else(opts[condition_key], v, eve::minorant));
     }
   }
 
@@ -59,11 +59,11 @@ namespace eve::detail
     }
     else if constexpr (scalar_value<T>)
     {
-      return if_else(opts[condition_key], v, eve::valmin);
+      return if_else(opts[condition_key], v, eve::minorant);
     }
     else
     {
-      return maximum(if_else(opts[condition_key], v, eve::valmin));
+      return maximum(if_else(opts[condition_key], v, eve::minorant));
     }
   }
 }
