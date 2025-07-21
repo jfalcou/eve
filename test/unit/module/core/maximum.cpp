@@ -6,34 +6,54 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "unit/module/core/reduction_test.hpp"
 
-#include <eve/module/core.hpp>
-
-//==================================================================================================
-// Types tests
-//==================================================================================================
-TTS_CASE_TPL("Check return types of eve::maximum(wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::maximum return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::maximum(T()), v_t);
-  TTS_EXPR_IS(eve::maximum[eve::splat](T()), T);
+  arithmetic_scalar_type_test(eve::maximum, eve::as<T>{});
 };
 
-//==================================================================================================
-// Tests for eve::maximum
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::maximum(eve::wide)",
+TTS_CASE_TPL("Check eve::maximum return type (wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  arithmetic_simd_type_test(eve::maximum, eve::as<T>{});
+};
+
+struct ManualMaximum
+{
+  template<typename T, typename C>
+  eve::element_type_t<T> operator()(T v, C mask) const
+  {
+    if constexpr (eve::scalar_value<T>)
+    {
+      return mask ? v : eve::valmin(eve::as(v));
+    }
+    else
+    {
+      auto max = eve::valmin(eve::as<eve::element_type_t<T>>{});
+
+      for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+        if (mask_at(mask, i))
+          max = std::max(max, v.get(i));
+
+      return max;
+    }
+  }
+};
+
+TTS_CASE_WITH("Check behavior of eve::maximum on scalars",
+              eve::test::scalar::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T v)
+{
+  arithmetic_test_case<ManualMaximum>(eve::maximum, v);
+};
+
+TTS_CASE_WITH("Check behavior of eve::maximum on wides",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0)
+<typename T>(T v)
 {
-  using v_t = eve::element_type_t<T>;
-
-  v_t max_value = a0.front();
-  for( int i = 1; i != T::size(); ++i ) { max_value = std::max(max_value, a0.get(i)); }
-
-  TTS_EQUAL(eve::maximum(a0), max_value);
-  TTS_EQUAL(eve::maximum[eve::splat](a0), T(max_value));
+  arithmetic_test_case<ManualMaximum>(eve::maximum, v);
 };
