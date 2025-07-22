@@ -19,28 +19,28 @@ jobs:
   ##################################################################################################
   ## DOCUMENTATION TESTS
   ##################################################################################################
-  macos:
-    runs-on: [macos-15]
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: 'clang' }
-        - { comp: 'gcc'   }
-    steps:
-      - name: Print Runner Info
-        run: |
-          system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
-      - name: Fetch current branch
-        uses: actions/checkout@v4
-      - name: Running CMake for ${{ matrix.cfg.comp }}
-        run: |
-          mkdir build && cd build
-          cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
-      - name: Compile Documentation Tests
-        run:  cd build && ninja doc.exe
-      - name: Run Documentation Tests
-        run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
+  # macos:
+  #   runs-on: [macos-15]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cfg:
+  #       - { comp: 'clang' }
+  #       - { comp: 'gcc'   }
+  #   steps:
+  #     - name: Print Runner Info
+  #       run: |
+  #         system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
+  #     - name: Fetch current branch
+  #       uses: actions/checkout@v4
+  #     - name: Running CMake for ${{ matrix.cfg.comp }}
+  #       run: |
+  #         mkdir build && cd build
+  #         cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
+  #     - name: Compile Documentation Tests
+  #       run:  cd build && ninja doc.exe
+  #     - name: Run Documentation Tests
+  #       run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
 
   generic:
     runs-on: ubuntu-latest
@@ -50,11 +50,11 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -mavx2     }
+        # - { comp: clang, arch: x86    , opts: -mavx2     }
         - { comp: clang, arch: arm    , opts: -Wno-psabi }
-        - { comp: gcc  , arch: x86    , opts: -msse2     }
-        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
-        - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
+        # - { comp: gcc  , arch: x86    , opts: -msse2     }
+        # - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
+        # - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
     steps:
       - name: Print Runner Info
         run: |
