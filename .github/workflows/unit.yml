@@ -311,6 +311,7 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
+        - { comp: clang , arch: arm     , opts: -Wno-psabi            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -338,7 +339,6 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
-
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1

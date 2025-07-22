@@ -51,7 +51,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang, arch: x86    , opts: -mavx2     }
-        - { comp: clang, arch: x86    , opts: -msse2     }
+        - { comp: clang, arch: arm    , opts: -Wno-psabi }
         - { comp: gcc  , arch: x86    , opts: -msse2     }
         - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
         - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
