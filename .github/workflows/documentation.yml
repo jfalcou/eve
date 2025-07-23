@@ -38,7 +38,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compile Documentation Tests
-        run:  cd build && ninja doc.exe
+        run:  cd build && ninja doc.exe -j 2
       - name: Run Documentation Tests
         run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
 
