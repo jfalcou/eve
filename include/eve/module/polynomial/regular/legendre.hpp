@@ -31,14 +31,15 @@ namespace eve
     constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {
-      return EVE_DISPATCH_CALL(a, b...);
+      return EVE_DISPATCH_CALL(convert(a, as<element_type_t<common_value_t<Ts...>>>{}), b...);
     }
     template<eve::integral_value T0, eve::integral_value T1, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, T1, Ts...>)
     constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
     {
-      return EVE_DISPATCH_CALL(a, b, c...);
+      auto ct = as<element_type_t<common_value_t<Ts...>>>();
+      return EVE_DISPATCH_CALL(convert(a, ct), convert(b, ct), c...);
     }
 
     EVE_CALLABLE_OBJECT(legendre_t, legendre_);
