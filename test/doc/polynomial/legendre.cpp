@@ -15,15 +15,15 @@ int main()
   std::cout << "<- x                                 = " << x  << '\n';
   std::cout << "<- z                                 = " << z  << '\n';
 
-  // std::cout << "-> legendre(n, xd)                   = " << eve::legendre(n, xd) << '\n';
-  // std::cout << "-> legendre[ignore_last(2)](n, xd)   = " << eve::legendre[eve::ignore_last(2)](n, xd) << "\n";
-  // std::cout << "-> legendre[n > 3](n, xd)            = " << eve::legendre[n > 3](n, xd) << "\n";
-  // std::cout << "-> legendre(3, xd)                   = " << eve::legendre(3, xd) << '\n';
-  // std::cout << "-> legendre(n, 0.5)                  = " << eve::legendre(n, 0.5) << '\n';
-  // std::cout << "-> legendre(n, x)                    = " << eve::legendre(n, x)   << '\n';
-  // std::cout << "-> legendre[p_kind](n, xd)           = " << eve::legendre[eve::p_kind](n, xd) << '\n';
-  // std::cout << "-> legendre[q_kind](n, xd)           = " << eve::legendre[eve::q_kind](n, xd) << '\n';
-  // std::cout << "-> legendre[spherical](n, z, xd)     = " << eve::legendre[eve::spherical](n, z, xd) << '\n';
+  std::cout << "-> legendre(n, xd)                   = " << eve::legendre(n, xd) << '\n';
+  std::cout << "-> legendre[ignore_last(2)](n, xd)   = " << eve::legendre[eve::ignore_last(2)](n, xd) << "\n";
+  std::cout << "-> legendre[n > 3](n, xd)            = " << eve::legendre[n > 3](n, xd) << "\n";
+  std::cout << "-> legendre(3, xd)                   = " << eve::legendre(3, xd) << '\n';
+  std::cout << "-> legendre(n, 0.5)                  = " << eve::legendre(n, 0.5) << '\n';
+  std::cout << "-> legendre(n, x)                    = " << eve::legendre(n, x)   << '\n';
+  std::cout << "-> legendre[p_kind](n, xd)           = " << eve::legendre[eve::p_kind](n, xd) << '\n';
+  std::cout << "-> legendre[q_kind](n, xd)           = " << eve::legendre[eve::q_kind](n, xd) << '\n';
+  std::cout << "-> legendre[spherical](n, z, xd)     = " << eve::legendre[eve::spherical](n, z, xd) << '\n';
   std::cout << "-> legendre[associated(n, z, xd)     = " << eve::legendre[eve::associated](n, z, xd) << '\n';
-  // std::cout << "-> legendre[condon_shortley(n, z, xd = " << eve::legendre[eve::condon_shortley](n, z, xd) << '\n';
+  std::cout << "-> legendre[condon_shortley(n, z, xd = " << eve::legendre[eve::condon_shortley](n, z, xd) << '\n';
 }
