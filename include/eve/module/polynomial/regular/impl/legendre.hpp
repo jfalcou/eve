@@ -133,7 +133,7 @@ namespace eve::detail
     requires(O::contains(associated)||O::contains(condon_shortley)||O::contains(spherical))
   {
     EVE_ASSERT(eve::all(logical_and(l >= 0, is_flint(l))), "legendre(l, m, x): l is negative or not integral");
-    EVE_ASSERT(eve::all(logical_and(m >= 0, is_flint(l))), "legendre(l, m, x): m is negative or not integral");
+    EVE_ASSERT(eve::all(logical_and(m >= 0, is_flint(m))), "legendre(l, m, x): m is negative or not integral");
     if constexpr(O::contains(spherical))
     {
       auto ll   = convert(l, as_element(x));
