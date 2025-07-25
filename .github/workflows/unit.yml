@@ -162,19 +162,22 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { opts: "-DEVE_NO_FORCEINLINE -O0", linker:                 }
-        - { opts: "-DEVE_NO_FORCEINLINE -O0 -stdlib=libc++", linker: "-stdlib=libc++"  }
+        - { comp: 'clang' }
+        - { comp: 'gcc'   }
     steps:
+      - name: Print Runner Info
+        run: |
+          system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
       - name: Fetch current branch
         uses: actions/checkout@v4
-      - name: Running CMake for clang++ with ${{ matrix.cfg.opts }}
+      - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
-          cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}"  -DCMAKE_EXE_LINKER_FLAGS=${{ matrix.cfg.linker }}
+          cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compiling Unit Tests
-        run:  cd build && make unit.exe -j 2
+        run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 2 -E ^doc.*.exe
 
   ##################################################################################################
   ## Windows Targets - Deactivated for now
@@ -336,7 +339,6 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
-
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
