@@ -48,7 +48,7 @@ namespace eve
   //! - `int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept integral_value        = value<T> && std::integral<translate_element_type_t<T>>;
+  template<typename T> concept integral_value        = value<T> && std::integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -65,7 +65,7 @@ namespace eve
   //! - `float`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_value          = value<T> && std::is_signed_v<translate_element_type_t<T>>;
+  template<typename T> concept signed_value          = value<T> && std::is_signed_v<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -81,7 +81,7 @@ namespace eve
   //! - `unsigned int`
   //! - `eve::wide<std::uint8_t, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<translate_element_type_t<T>>;
+  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -97,7 +97,7 @@ namespace eve
   //! - `short int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<translate_element_type_t<T>>;
+  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -113,7 +113,7 @@ namespace eve
   //! - `double`
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
-  template<typename T> concept floating_value        = value<T> && std::floating_point<translate_element_type_t<T>>;
+  template<typename T> concept floating_value        = value<T> && std::floating_point<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================

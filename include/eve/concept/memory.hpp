@@ -15,7 +15,7 @@ namespace eve
   template<typename T, typename SIMD>
   concept simd_compatible_ptr = simd_value<SIMD> &&
     (!detail::range<T>) &&
-    std::same_as<element_type_t<SIMD>, value_type_t<T>>;
+    std::same_as<translated_element_type_t<SIMD>, translated_value_type_t<T>>;
 
   template<typename T, typename SIMD>
   concept logical_simd_compatible_ptr = simd_value<SIMD> &&

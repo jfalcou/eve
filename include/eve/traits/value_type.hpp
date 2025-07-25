@@ -9,6 +9,7 @@
 
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/translation.hpp>
 #include <eve/detail/kumi.hpp>
 
 #include <iterator>
@@ -93,4 +94,8 @@ namespace detail
   template<typename T>
   requires(!value<T> && !wide_cardinal<T>)
   using value_type_t = typename decltype(detail::value_type_impl<T>())::type;
+
+  template<typename T>
+  requires(!value<T> && !wide_cardinal<T>)
+  using translated_value_type_t = translate_t<value_type_t<T>>;
 }
