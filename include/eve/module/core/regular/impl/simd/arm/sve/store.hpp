@@ -14,33 +14,12 @@
 
 namespace eve::detail
 {
-// Regular store
-template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(sve_), wide<T, N> v, Ptr p)
-requires(sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
-{
-  auto const tgt = as<wide<T>>{};
-  auto ptr = unalign(p);
-
-  if constexpr( N() != expected_cardinal_v<T> ) store[keep_first(N::value)](bit_cast(v,tgt), p);
-  else                                          svst1(sve_true<T>(), ptr, v);
-}
-
-// Conditional store
-template<scalar_value T,
-         typename N,
-         relative_conditional_expr       C,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
-requires sve_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
-{
-  if constexpr( C::is_complete || C::has_alternative || N() != expected_cardinal_v<T> )
+  template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  EVE_FORCEINLINE void store_impl(sve_, C const& cx, wide<T, N> v, Ptr p)
+    requires (sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
   {
-    store_(EVE_RETARGET(cpu_), cond, v, ptr);
+    if constexpr (C::has_alternative) store_common(cpu_{}, cx, v, p);
+    else if constexpr (C::is_complete && !C::is_inverted) return;
+    else svst1(expand_mask(cx, as<wide<T, N>>{}), unalign(p), v);
   }
-  else svst1(cond.mask(as<wide<T, N>> {}), unalign(ptr), v);
-}
-
 }

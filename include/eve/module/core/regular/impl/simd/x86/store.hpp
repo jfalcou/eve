@@ -18,66 +18,57 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(sse2_),
-       wide<T, N> const& value,
-       Ptr ptr) noexcept requires x86_abi<abi_t<T, N>> &&(!has_store_equivalent<wide<T, N>, Ptr>)
+template<relative_conditional_expr C, scalar_value T,
+         typename N,
+         simd_compatible_ptr<wide<T, N>> Ptr>
+EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
+  requires x86_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr( !std::is_pointer_v<Ptr> )
+  if constexpr (std::same_as<C, ignore_none_>)
   {
-    if constexpr( N::value * sizeof(T) == x86_512_::bytes )
+    if constexpr( !std::is_pointer_v<Ptr> )
     {
-      if constexpr( std::is_same_v<T, double> ) _mm512_store_pd(ptr.get(), value);
-      else if constexpr( std::is_same_v<T, float> ) _mm512_store_ps(ptr.get(), value);
-      else if constexpr( std::is_integral_v<T> ) _mm512_store_si512((__m512i *)(ptr.get()), value);
+      if constexpr( N::value * sizeof(T) == x86_512_::bytes )
+      {
+        if constexpr( std::is_same_v<T, double> ) _mm512_store_pd(ptr.get(), v);
+        else if constexpr( std::is_same_v<T, float> ) _mm512_store_ps(ptr.get(), v);
+        else if constexpr( std::is_integral_v<T> ) _mm512_store_si512((__m512i *)(ptr.get()), v);
+      }
+      else if constexpr( N::value * sizeof(T) == x86_256_::bytes )
+      {
+        if constexpr( std::is_same_v<T, double> ) _mm256_store_pd(ptr.get(), v);
+        else if constexpr( std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), v);
+        else if constexpr( std::is_integral_v<T> ) _mm256_store_si256((__m256i *)(ptr.get()), v);
+      }
+      else if constexpr( N::value * sizeof(T) == x86_128_::bytes )
+      {
+        if constexpr( std::is_same_v<T, double> ) _mm_store_pd(ptr.get(), v);
+        else if constexpr( std::is_same_v<T, float> ) _mm_store_ps(ptr.get(), v);
+        else if constexpr( std::is_integral_v<T> ) _mm_store_si128((__m128i *)(ptr.get()), v);
+      }
+      else { memcpy(ptr.get(), (T const *)(&v), N::value * sizeof(T)); }
+    }
+    else if constexpr( N::value * sizeof(T) == x86_512_::bytes )
+    {
+      if constexpr( std::is_same_v<T, double> ) _mm512_storeu_pd(ptr, v);
+      else if constexpr( std::is_same_v<T, float> ) _mm512_storeu_ps(ptr, v);
+      else if constexpr( std::is_integral_v<T> ) _mm512_storeu_si512((__m512i *)(ptr), v);
     }
     else if constexpr( N::value * sizeof(T) == x86_256_::bytes )
     {
-      if constexpr( std::is_same_v<T, double> ) _mm256_store_pd(ptr.get(), value);
-      else if constexpr( std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), value);
-      else if constexpr( std::is_integral_v<T> ) _mm256_store_si256((__m256i *)(ptr.get()), value);
+      if constexpr( std::is_same_v<T, double> ) _mm256_storeu_pd(ptr, v);
+      else if constexpr( std::is_same_v<T, float> ) _mm256_storeu_ps(ptr, v);
+      else if constexpr( std::is_integral_v<T> ) _mm256_storeu_si256((__m256i *)(ptr), v);
     }
     else if constexpr( N::value * sizeof(T) == x86_128_::bytes )
     {
-      if constexpr( std::is_same_v<T, double> ) _mm_store_pd(ptr.get(), value);
-      else if constexpr( std::is_same_v<T, float> ) _mm_store_ps(ptr.get(), value);
-      else if constexpr( std::is_integral_v<T> ) _mm_store_si128((__m128i *)(ptr.get()), value);
+      if constexpr( std::is_same_v<T, double> ) _mm_storeu_pd(ptr, v);
+      else if constexpr( std::is_same_v<T, float> ) _mm_storeu_ps(ptr, v);
+      else if constexpr( std::is_integral_v<T> ) _mm_storeu_si128((__m128i *)(ptr), v);
     }
-    else { memcpy(ptr.get(), (T const *)(&value), N::value * sizeof(T)); }
+    else { memcpy(ptr, (T const *)(&v), N::value * sizeof(T)); }
   }
-  else if constexpr( N::value * sizeof(T) == x86_512_::bytes )
-  {
-    if constexpr( std::is_same_v<T, double> ) _mm512_storeu_pd(ptr, value);
-    else if constexpr( std::is_same_v<T, float> ) _mm512_storeu_ps(ptr, value);
-    else if constexpr( std::is_integral_v<T> ) _mm512_storeu_si512((__m512i *)(ptr), value);
-  }
-  else if constexpr( N::value * sizeof(T) == x86_256_::bytes )
-  {
-    if constexpr( std::is_same_v<T, double> ) _mm256_storeu_pd(ptr, value);
-    else if constexpr( std::is_same_v<T, float> ) _mm256_storeu_ps(ptr, value);
-    else if constexpr( std::is_integral_v<T> ) _mm256_storeu_si256((__m256i *)(ptr), value);
-  }
-  else if constexpr( N::value * sizeof(T) == x86_128_::bytes )
-  {
-    if constexpr( std::is_same_v<T, double> ) _mm_storeu_pd(ptr, value);
-    else if constexpr( std::is_same_v<T, float> ) _mm_storeu_ps(ptr, value);
-    else if constexpr( std::is_integral_v<T> ) _mm_storeu_si128((__m128i *)(ptr), value);
-  }
-  else { memcpy(ptr, (T const *)(&value), N::value * sizeof(T)); }
-}
-
-template<scalar_value T,
-         typename N,
-         relative_conditional_expr       C,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void
-store_(EVE_SUPPORTS(sse2_),
-       C const         & cond,
-       wide<T, N> const& v,
-       Ptr ptr) noexcept requires x86_abi<abi_t<T, N>> &&(!has_store_equivalent<wide<T, N>, Ptr>)
-{
-  if constexpr( C::is_complete || C::has_alternative ) store_(EVE_RETARGET(cpu_), cond, v, ptr);
+  else if constexpr( C::is_complete || C::has_alternative ) store_common(cpu_{}, cond, v, ptr);
   else if constexpr( (current_api == eve::avx || current_api == eve::avx2) && sizeof(T) >= 4 )
   {
     if constexpr( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
@@ -173,7 +164,7 @@ store_(EVE_SUPPORTS(sse2_),
     else if constexpr( match(c, category::int8x64, category::uint8x64) )
       _mm512_mask_storeu_epi8(ptr, m, v);
   }
-  else store_(EVE_RETARGET(cpu_), cond, v, ptr);
+  else store_common(cpu_{}, cond, v, ptr);
 }
 
 }
