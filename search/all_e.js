@@ -11,7 +11,7 @@ var searchData=
   ['lentz_5fb_8',['lentz_b',['../group__contfrac_ga77a0a59a6017a38b91d1ef18405808f5.html#ga77a0a59a6017a38b91d1ef18405808f5',1,'eve']]],
   ['lerp_9',['lerp',['../group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3',1,'eve']]],
   ['lfactorial_10',['lfactorial',['../group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017',1,'eve']]],
-  ['library_11',['library',['../setup.html#autotoc_md86',1,'Setting up the Library'],['../setup.html#autotoc_md88',1,'Using the library']]],
+  ['library_11',['library',['../setup.html#autotoc_md81',1,'Setting up the Library'],['../setup.html#autotoc_md83',1,'Using the library']]],
   ['licence_12',['Licence',['../licence.html',1,'']]],
   ['lo_13',['lo',['../group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60',1,'eve']]],
   ['load_14',['load',['../group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe',1,'eve']]],
@@ -41,7 +41,7 @@ var searchData=
   ['logspace_5fadd_38',['logspace_add',['../group__math__log_ga9556715e0b694c52d69058582bc47aa3.html#ga9556715e0b694c52d69058582bc47aa3',1,'eve']]],
   ['logspace_5fsub_39',['logspace_sub',['../group__math__log_ga6c85541a3e60b50506e87d18c2e88b34.html#ga6c85541a3e60b50506e87d18c2e88b34',1,'eve']]],
   ['lohi_40',['lohi',['../group__core__bitops_ga5fa01768959ec399cb0a910af345dd8b.html#ga5fa01768959ec399cb0a910af345dd8b',1,'eve']]],
-  ['loops_41',['Reusable loops',['../algo_rationale.html#autotoc_md61',1,'']]],
+  ['loops_41',['Reusable loops',['../algo_rationale.html#autotoc_md56',1,'']]],
   ['lpnorm_42',['lpnorm',['../group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c',1,'eve']]],
   ['lrising_5ffactorial_43',['lrising_factorial',['../group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687',1,'eve']]]
 ];
