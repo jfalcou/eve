@@ -57,5 +57,5 @@ namespace eve
 
   // Translate an element_type directly
   template <typename T>
-  using translate_element_type_t = translate_t<element_type_t<T>>;
+  using translated_element_type_t = translate_t<element_type_t<T>>;
 }

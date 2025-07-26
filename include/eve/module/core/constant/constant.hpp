@@ -52,7 +52,7 @@ namespace eve
   template<value T, auto BitsPattern>
   EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
   {
-    using t_t = translate_element_type_t<T>;
+    using t_t = translated_element_type_t<T>;
 
     if constexpr( std::integral<t_t> ) { return static_cast<T>(BitsPattern); }
     else

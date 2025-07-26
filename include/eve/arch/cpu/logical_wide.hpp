@@ -69,19 +69,25 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>,
+        : detail::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
           detail::logical_split_type_helper<Type, Cardinal>
   {
-    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base = detail::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
+
+    //! The type resulting from translating the current logical's elements type.
+    using translated_element_type = logical<translate_t<Type>>;
+
+    //! The type resulting from translating the current logical type.
+    using translated_type = logical<typename wide<Type, Cardinal>::translated_type>;
 
     //! The type stored in the register.
-    using value_type    = logical<Type>;
+    using value_type   = logical<Type>;
 
     //! The ABI tag for this register.
-    using abi_type      = abi_t<Type, Cardinal>;
+    using abi_type     = abi_t<translated_element_type, Cardinal>;
 
     //! The type used for this register storage
-    using storage_type  = typename storage_base::storage_type;
+    using storage_type = typename storage_base::storage_type;
 
     //! Type describing the number of lanes of current wide
     using cardinal_type = Cardinal;
@@ -90,7 +96,7 @@ namespace eve
     using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
-    using bits_type = wide<detail::make_integer_t<sizeof(Type), unsigned>, Cardinal>;
+    using bits_type = wide<detail::make_integer_t<sizeof(translated_element_type), unsigned>, Cardinal>;
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Cardinal>;
@@ -123,8 +129,12 @@ namespace eve
 
     //! @brief Constructs a eve::logical from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
+    //
+    // [internal] The requires clause is needed to avoid ambiguity with the storage_type constructor
+    //            in emulated mode.
     template<detail::range Range>
-    EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
+    EVE_FORCEINLINE explicit logical(Range &&r) noexcept
+      requires (std::same_as<value_type_t<Range>, value_type> && !std::same_as<storage_type, Range>)
                   : logical(std::begin(EVE_FWD(r)))
     {}
 
@@ -138,20 +148,21 @@ namespace eve
     //! Construct from a scalar logical
     template<scalar_value U>
     EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Construct from a `bool`
     EVE_FORCEINLINE explicit logical(std::same_as<bool> auto v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
-          requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
-                    &&  (... && std::convertible_to<Ts,logical<Type>>)
+          requires(    std::convertible_to<T0, value_type>
+                    && std::convertible_to<T1, value_type>
+                    &&  (... && std::convertible_to<Ts, value_type>)
                     &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
-        : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
+        : storage_base(detail::make(eve::as<translated_type>{}, translate(v0), translate(v1), translate(vs)...))
     {}
 
     //==============================================================================================
