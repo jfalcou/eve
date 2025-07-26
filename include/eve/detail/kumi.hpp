@@ -8,12 +8,12 @@
 #pragma once
 
 #define KUMI_NO_STD_ADAPTORS
-#if __has_include(<kumi/tuple.hpp>)
-# include <kumi/tuple.hpp>
+#if __has_include(<kumi/kumi.hpp>)
+# include <kumi/kumi.hpp>
 #else
 # if defined(EVE_USE_EXTERNAL_DEPENDENCIES)
-#   error "[EVE] External KUMI dependencies requested but none is available"
-#   include <kumi/tuple.hpp>
+#   error "[EVE] External KUMI dependencies requested but none are available"
+#   include <kumi/kumi.hpp>
 # else
 #   include <eve/deps/kumi/tuple.hpp>
 # endif
