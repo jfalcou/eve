@@ -12,42 +12,36 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
-// remove_garbage
 namespace eve::detail
 {
-template<conditional_expr C, typename T, typename N>
-EVE_FORCEINLINE auto
-maximum_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> T
-requires sve_abi<abi_t<T, N>>
-{
-  // Fix mask to not touch garbage lanes if it is not an ignore_*
-  auto m = cond.mask(as(v));
-  if constexpr(!relative_conditional_expr<C>) m = remove_garbage(m);
-  return svmaxv(m, v);
-}
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE auto maximum_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    if constexpr (O::contains(splat2))
+    {
+      // Attempts to force the use of a broadcasting mov
+      return wide<T, N>{ wide<T>{ maximum[opts.drop(splat2)].retarget(current_api, v) } };
+    }
+    else
+    {
+      // svmaxv is expensive, for small lanes count this approach is faster
+      if constexpr (match_option<condition_key, O, ignore_none_> && (N::value <= 2))
+      {
+        T r = v.get(0);
 
-template<conditional_expr C, typename T, typename N>
-EVE_FORCEINLINE auto
-maximum_(EVE_SUPPORTS(sve_), C const& cond, splat_type const&, wide<T, N> v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return wide<T, N>(maximum[cond](v));
-}
+        for_<1, 1, N::value>([&](auto i)
+        {
+          r = eve::max(r, v.get(i));
+        });
 
-template<typename T, typename N>
-EVE_FORCEINLINE auto
-maximum_(EVE_SUPPORTS(sve_), splat_type const&, wide<T, N> v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return wide<T, N>(maximum(v));
-}
-
-template<typename T, typename N>
-EVE_FORCEINLINE auto
-maximum_(EVE_SUPPORTS(sve_), wide<T, N> v) noexcept -> T
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( N::value == 1 ) return v.get(0);
-  else return maximum[ignore_none](v);
-}
+        return r;
+      }
+      else
+      {
+        auto m = expand_mask_no_garbage(opts[condition_key], as<logical<wide<T, N>>>{});
+        return svmaxv(m, v);
+      }
+    }
+  }
 }
