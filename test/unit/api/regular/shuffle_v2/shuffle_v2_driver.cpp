@@ -283,7 +283,6 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
   shuffle(T {}, T {}, eve::lane<G>, some_pattern2<T, G>);
 };
 
-
 // Need a template somewhere for the if constexpr to work
 TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
 <typename T>(tts::type<T>)
@@ -295,7 +294,7 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
   }
   else
   {
-    auto shuffle = eve::detail::make_shuffle_v2([] { TTS_FAIL("should not be reached"); });
+    auto         shuffle = eve::detail::make_shuffle_v2([] { TTS_FAIL("should not be reached"); });
     eve::wide<T> x {1, 2};
     {
       auto [shuffled, l] = shuffle(x, [](int i, int size) { return size - i - 1; });
@@ -308,6 +307,124 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
       auto [shuffled, l] = shuffle(x, eve::lane<2>, [](int, int) { return eve::na_; });
       TTS_EQUAL(l(), 0);
       TTS_EQUAL(shuffled, (eve::wide<T> {0.0, 0.0}));
+    }
+  }
+};
+
+TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  if( T::size() < 4 || eve::has_aggregated_abi_v<T> || eve::current_api == eve::neon
+      || !eve::supports_simd )
+  {
+    TTS_PASS();
+    return;
+  }
+  else
+  {
+    constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::sve
+                                  || eve::current_api >= eve::rvv;
+
+    const T               arithmetic_in {[](int i, int) { return i + 1; }};
+    const eve::logical<T> logical_in([](int i, int) { return i % 3 == 1; });
+
+    (void)free_masking;
+    (void)logical_in;
+
+    // identity mixed with 0s is just propagated
+    // to the shuffle.
+    {
+      constexpr auto formula = [](int i, int)
+      {
+        if( i == 0 ) return eve::na_;
+        if( i == 1 ) return eve::we_;
+        if( i == 3 ) return eve::na_;
+        return (std::ptrdiff_t)i;
+      };
+
+      auto shuffle = eve::detail::make_shuffle_v2(
+          [&]<typename G, typename U>(auto p, G, U x, auto...)
+          {
+            constexpr std::ptrdiff_t cardinal        = U::size() / G {}();
+            constexpr std::ptrdiff_t end_of_original = T::size() * sizeof(eve::element_type_t<T>)
+                                                       / sizeof(eve::element_type_t<U>) / G {}();
+
+            auto expected = [](int i, int)
+            {
+              if( i == 0 ) return eve::na_;
+              if( i == 1 ) return eve::we_;
+              if( i == 3 ) return eve::na_;
+              if( i >= end_of_original ) return eve::we_;
+              return (std::ptrdiff_t)i;
+            };
+
+            TTS_EQUAL(p, eve::fix_pattern<cardinal>(expected));
+            return kumi::tuple {x, eve::index<3>};
+          });
+
+      {
+        auto [_, l] = shuffle(arithmetic_in, formula);
+        TTS_EQUAL(l(), 3);
+      }
+
+      if constexpr( T::size() >= 8 )
+      {
+        auto [_, l] = shuffle(arithmetic_in, eve::lane<2>, formula);
+        TTS_EQUAL(l(), 3);
+      }
+
+      {
+        auto [_, l] = shuffle(logical_in, formula);
+        TTS_EQUAL(l(), 3);
+      }
+    }
+
+    // free mixing with 0s
+    {
+      constexpr auto formula = [](int i, int)
+      {
+        if( i == 0 ) return eve::na_;
+        if( i == 1 ) return eve::we_;
+        if( i == 3 ) return (std::ptrdiff_t)0;
+        return (std::ptrdiff_t)i;
+      };
+
+      auto shuffle = eve::detail::make_shuffle_v2(
+          [&]<typename G, typename U>(auto p, G, U x, auto...)
+          {
+            constexpr std::ptrdiff_t cardinal        = U::size() / G {}();
+            constexpr std::ptrdiff_t end_of_original = T::size() * sizeof(eve::element_type_t<T>)
+                                                       / sizeof(eve::element_type_t<U>) / G {}();
+
+            auto expected = [](int i, int)
+            {
+              std::ptrdiff_t instead_of_na =
+                  (free_masking && eve::arithmetic_value<U>) ? eve::we_ : eve::na_;
+              if( i == 0 ) return instead_of_na;
+              if( i == 1 ) return eve::we_;
+              if( i == 3 ) return (std::ptrdiff_t)0;
+              if( i >= end_of_original ) return eve::we_;
+              return (std::ptrdiff_t)i;
+            };
+
+            TTS_EQUAL(p, eve::fix_pattern<cardinal>(expected));
+            return kumi::tuple {x, eve::index<2>};
+          });
+
+      {
+        auto [_, l] = shuffle(arithmetic_in, formula);
+        TTS_EQUAL(l(), 2);
+      }
+      if constexpr( T::size() >= 8 )
+      {
+        auto [_, l] = shuffle(arithmetic_in, eve::lane<2>, formula);
+        TTS_EQUAL(l(), 2);
+      }
+
+      {
+        auto [_, l] = shuffle(logical_in, formula);
+        TTS_EQUAL(l(), 2);
+      }
     }
   }
 };
