@@ -150,10 +150,18 @@ Public Types</h2></td></tr>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = Type</td></tr>
 <tr class="memdesc:ad6e0f9fd221ca191f42484f47660662c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type stored in the register. <br /></td></tr>
 <tr class="separator:ad6e0f9fd221ca191f42484f47660662c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fa4bc0f15f5ef18b0cc09a0d2298429" id="r_a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="memItemLeft" align="right" valign="top"><a id="a5fa4bc0f15f5ef18b0cc09a0d2298429" name="a5fa4bc0f15f5ef18b0cc09a0d2298429"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>abi_type</b> = abi_t&lt; Type, Cardinal &gt;</td></tr>
-<tr class="memdesc:a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ABI tag for this register. <br /></td></tr>
-<tr class="separator:a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f964ba2b4950d9916b5d280c88e8d6f" id="r_a6f964ba2b4950d9916b5d280c88e8d6f"><td class="memItemLeft" align="right" valign="top"><a id="a6f964ba2b4950d9916b5d280c88e8d6f" name="a6f964ba2b4950d9916b5d280c88e8d6f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>translated_element_type</b> = <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; Type &gt;</td></tr>
+<tr class="memdesc:a6f964ba2b4950d9916b5d280c88e8d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current wide's elements type. <br /></td></tr>
+<tr class="separator:a6f964ba2b4950d9916b5d280c88e8d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09188474474c521bce2199283dd0557" id="r_aa09188474474c521bce2199283dd0557"><td class="memItemLeft" align="right" valign="top"><a id="aa09188474474c521bce2199283dd0557" name="aa09188474474c521bce2199283dd0557"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>translated_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; <a class="el" href="structeve_1_1wide.html#a6f964ba2b4950d9916b5d280c88e8d6f">translated_element_type</a>, Cardinal &gt;</td></tr>
+<tr class="memdesc:aa09188474474c521bce2199283dd0557"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current wide type. <br /></td></tr>
+<tr class="separator:aa09188474474c521bce2199283dd0557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18742aec2dcd5edb3fd2266adecbc270" id="r_a18742aec2dcd5edb3fd2266adecbc270"><td class="memItemLeft" align="right" valign="top"><a id="a18742aec2dcd5edb3fd2266adecbc270" name="a18742aec2dcd5edb3fd2266adecbc270"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>abi_type</b> = abi_t&lt; <a class="el" href="structeve_1_1wide.html#a6f964ba2b4950d9916b5d280c88e8d6f">translated_element_type</a>, Cardinal &gt;</td></tr>
+<tr class="memdesc:a18742aec2dcd5edb3fd2266adecbc270"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ABI tag for this register. <br /></td></tr>
+<tr class="separator:a18742aec2dcd5edb3fd2266adecbc270"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a592b87d63264bcc3271b84bc3a7a0f53" id="r_a592b87d63264bcc3271b84bc3a7a0f53"><td class="memItemLeft" align="right" valign="top"><a id="a592b87d63264bcc3271b84bc3a7a0f53" name="a592b87d63264bcc3271b84bc3a7a0f53"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>storage_type</b> = typename storage_base::storage_type</td></tr>
 <tr class="memdesc:a592b87d63264bcc3271b84bc3a7a0f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used for this register storage. <br /></td></tr>
@@ -200,12 +208,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r) noexcept</td></tr>
 <tr class="memdesc:a4ad46a6f998bb898592da9625181634d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
 <tr class="separator:a4ad46a6f998bb898592da9625181634d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b902c5e2c2b9cccd1a5ebb94ea4f295" id="r_a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memTemplParams" colspan="2"><a id="a2b902c5e2c2b9cccd1a5ebb94ea4f295" name="a2b902c5e2c2b9cccd1a5ebb94ea4f295"></a>
+<tr class="memitem:aa4cbde97fec5ebba311f78f757384bb3" id="r_aa4cbde97fec5ebba311f78f757384bb3"><td class="memTemplParams" colspan="2"><a id="aa4cbde97fec5ebba311f78f757384bb3" name="aa4cbde97fec5ebba311f78f757384bb3"></a>
 template&lt;detail::range Range&gt; <br />
-requires (!std::same_as&lt;<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, std::remove_reference_t&lt;Range&gt;&gt;)</td></tr>
-<tr class="memitem:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Range &amp;&amp;r) noexcept</td></tr>
-<tr class="memdesc:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <code>r</code> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
-<tr class="separator:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+requires (std::same_as&lt;value_type_t&lt;Range&gt;, Type&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, Range&gt;)</td></tr>
+<tr class="memitem:aa4cbde97fec5ebba311f78f757384bb3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Range &amp;&amp;r) noexcept</td></tr>
+<tr class="memdesc:aa4cbde97fec5ebba311f78f757384bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <code>r</code> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
+<tr class="separator:aa4cbde97fec5ebba311f78f757384bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be" id="r_a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplParams" colspan="2"><a id="a9e8f8635331b18d7ce9e1c28019722be" name="a9e8f8635331b18d7ce9e1c28019722be"></a>
 template&lt;simd_compatible_ptr&lt; <a class="el" href="structeve_1_1wide.html">wide</a> &gt; Ptr&gt; </td></tr>
 <tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Ptr ptr) noexcept</td></tr>
@@ -260,18 +268,18 @@ template&lt;scalar_value S&gt; </td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (std::size_t i, scalar_value auto v) noexcept</td></tr>
 <tr class="memdesc:a0c558b1099d1ab8939c82b766f12355a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a given lane. <br /></td></tr>
 <tr class="separator:a0c558b1099d1ab8939c82b766f12355a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f47b4c7696ac6bf60ad8641c42f88b4" id="r_a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="memItemLeft" align="right" valign="top"><a id="a5f47b4c7696ac6bf60ad8641c42f88b4" name="a5f47b4c7696ac6bf60ad8641c42f88b4"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::size_t i) const noexcept</td></tr>
-<tr class="memdesc:a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from a given lane. <br /></td></tr>
-<tr class="separator:a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbf80b38c88fb9495bad8f20f842a7ae" id="r_acbf80b38c88fb9495bad8f20f842a7ae"><td class="memItemLeft" align="right" valign="top"><a id="acbf80b38c88fb9495bad8f20f842a7ae" name="acbf80b38c88fb9495bad8f20f842a7ae"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>back</b> () const noexcept</td></tr>
-<tr class="memdesc:acbf80b38c88fb9495bad8f20f842a7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from the last lane. <br /></td></tr>
-<tr class="separator:acbf80b38c88fb9495bad8f20f842a7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91abf1f8683e031f8169a5b5473c1660" id="r_a91abf1f8683e031f8169a5b5473c1660"><td class="memItemLeft" align="right" valign="top"><a id="a91abf1f8683e031f8169a5b5473c1660" name="a91abf1f8683e031f8169a5b5473c1660"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>front</b> () const noexcept</td></tr>
-<tr class="memdesc:a91abf1f8683e031f8169a5b5473c1660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from the first lane. <br /></td></tr>
-<tr class="separator:a91abf1f8683e031f8169a5b5473c1660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab6d5f972abe85345b3ba9e5f2db10e" id="r_a6ab6d5f972abe85345b3ba9e5f2db10e"><td class="memItemLeft" align="right" valign="top"><a id="a6ab6d5f972abe85345b3ba9e5f2db10e" name="a6ab6d5f972abe85345b3ba9e5f2db10e"></a>
+Type&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::size_t i) const noexcept</td></tr>
+<tr class="memdesc:a6ab6d5f972abe85345b3ba9e5f2db10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from a given lane. <br /></td></tr>
+<tr class="separator:a6ab6d5f972abe85345b3ba9e5f2db10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ffca3c478214bf4b4ace457e492a100" id="r_a2ffca3c478214bf4b4ace457e492a100"><td class="memItemLeft" align="right" valign="top"><a id="a2ffca3c478214bf4b4ace457e492a100" name="a2ffca3c478214bf4b4ace457e492a100"></a>
+Type&#160;</td><td class="memItemRight" valign="bottom"><b>back</b> () const noexcept</td></tr>
+<tr class="memdesc:a2ffca3c478214bf4b4ace457e492a100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from the last lane. <br /></td></tr>
+<tr class="separator:a2ffca3c478214bf4b4ace457e492a100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa279df4c99dbc46206e9f70b44b1f769" id="r_aa279df4c99dbc46206e9f70b44b1f769"><td class="memItemLeft" align="right" valign="top"><a id="aa279df4c99dbc46206e9f70b44b1f769" name="aa279df4c99dbc46206e9f70b44b1f769"></a>
+Type&#160;</td><td class="memItemRight" valign="bottom"><b>front</b> () const noexcept</td></tr>
+<tr class="memdesc:aa279df4c99dbc46206e9f70b44b1f769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from the first lane. <br /></td></tr>
+<tr class="separator:aa279df4c99dbc46206e9f70b44b1f769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2088fca71239dcd0ab7e7eaa37fb1ca" id="r_ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_ac2088fca71239dcd0ab7e7eaa37fb1ca.html#ac2088fca71239dcd0ab7e7eaa37fb1ca">slice</a> () const</td></tr>
 <tr class="memdesc:ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slice a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of half cardinal. Does not participate in overload resolution if <code>Cardinal::value == 1</code>.  <br /></td></tr>
 <tr class="separator:ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>

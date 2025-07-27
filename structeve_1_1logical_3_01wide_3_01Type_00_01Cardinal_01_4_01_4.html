@@ -148,14 +148,22 @@ struct eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</div><p><b>Required he
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:a5f060eb46b55b689cb389f01b7105b5b" id="r_a5f060eb46b55b689cb389f01b7105b5b"><td class="memItemLeft" align="right" valign="top"><a id="a5f060eb46b55b689cb389f01b7105b5b" name="a5f060eb46b55b689cb389f01b7105b5b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>translated_element_type</b> = <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; Type &gt; &gt;</td></tr>
+<tr class="memdesc:a5f060eb46b55b689cb389f01b7105b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current logical's elements type. <br /></td></tr>
+<tr class="separator:a5f060eb46b55b689cb389f01b7105b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815b515edafa5a1fd54dfa58284cc2b1" id="r_a815b515edafa5a1fd54dfa58284cc2b1"><td class="memItemLeft" align="right" valign="top"><a id="a815b515edafa5a1fd54dfa58284cc2b1" name="a815b515edafa5a1fd54dfa58284cc2b1"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>translated_type</b> = <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt; typename <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt;::translated_type &gt;</td></tr>
+<tr class="memdesc:a815b515edafa5a1fd54dfa58284cc2b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current logical type. <br /></td></tr>
+<tr class="separator:a815b515edafa5a1fd54dfa58284cc2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949b3a102b27d4c7a290ea89caf45e12" id="r_a949b3a102b27d4c7a290ea89caf45e12"><td class="memItemLeft" align="right" valign="top"><a id="a949b3a102b27d4c7a290ea89caf45e12" name="a949b3a102b27d4c7a290ea89caf45e12"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt; Type &gt;</td></tr>
 <tr class="memdesc:a949b3a102b27d4c7a290ea89caf45e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type stored in the register. <br /></td></tr>
 <tr class="separator:a949b3a102b27d4c7a290ea89caf45e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac957e33daa41b5a3f551ed78c05c100" id="r_aac957e33daa41b5a3f551ed78c05c100"><td class="memItemLeft" align="right" valign="top"><a id="aac957e33daa41b5a3f551ed78c05c100" name="aac957e33daa41b5a3f551ed78c05c100"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>abi_type</b> = abi_t&lt; Type, Cardinal &gt;</td></tr>
-<tr class="memdesc:aac957e33daa41b5a3f551ed78c05c100"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ABI tag for this register. <br /></td></tr>
-<tr class="separator:aac957e33daa41b5a3f551ed78c05c100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9bc318a83f4b89872d44cf4371e66a" id="r_a0d9bc318a83f4b89872d44cf4371e66a"><td class="memItemLeft" align="right" valign="top"><a id="a0d9bc318a83f4b89872d44cf4371e66a" name="a0d9bc318a83f4b89872d44cf4371e66a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>abi_type</b> = abi_t&lt; <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a5f060eb46b55b689cb389f01b7105b5b">translated_element_type</a>, Cardinal &gt;</td></tr>
+<tr class="memdesc:a0d9bc318a83f4b89872d44cf4371e66a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ABI tag for this register. <br /></td></tr>
+<tr class="separator:a0d9bc318a83f4b89872d44cf4371e66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac94c47f8d965d821d503a0a41818fde8" id="r_ac94c47f8d965d821d503a0a41818fde8"><td class="memItemLeft" align="right" valign="top"><a id="ac94c47f8d965d821d503a0a41818fde8" name="ac94c47f8d965d821d503a0a41818fde8"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>storage_type</b> = typename storage_base::storage_type</td></tr>
 <tr class="memdesc:ac94c47f8d965d821d503a0a41818fde8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used for this register storage. <br /></td></tr>
@@ -168,10 +176,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>cardinal_type</b> = 
 using&#160;</td><td class="memItemRight" valign="bottom"><b>size_type</b> = std::ptrdiff_t</td></tr>
 <tr class="memdesc:ad6cf7dc0caa30cc3860f331f683f6c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the size of the current wide. <br /></td></tr>
 <tr class="separator:ad6cf7dc0caa30cc3860f331f683f6c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12f93e894ed656207297404449381d25" id="r_a12f93e894ed656207297404449381d25"><td class="memItemLeft" align="right" valign="top"><a id="a12f93e894ed656207297404449381d25" name="a12f93e894ed656207297404449381d25"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>bits_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; detail::make_integer_t&lt; sizeof(Type), unsigned &gt;, Cardinal &gt;</td></tr>
-<tr class="memdesc:a12f93e894ed656207297404449381d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the bits of the logical value. <br /></td></tr>
-<tr class="separator:a12f93e894ed656207297404449381d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f029da4cf63bb6eeb46609034d7ba0" id="r_aa0f029da4cf63bb6eeb46609034d7ba0"><td class="memItemLeft" align="right" valign="top"><a id="aa0f029da4cf63bb6eeb46609034d7ba0" name="aa0f029da4cf63bb6eeb46609034d7ba0"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>bits_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; detail::make_integer_t&lt; sizeof(<a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a5f060eb46b55b689cb389f01b7105b5b">translated_element_type</a>), unsigned &gt;, Cardinal &gt;</td></tr>
+<tr class="memdesc:aa0f029da4cf63bb6eeb46609034d7ba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the bits of the logical value. <br /></td></tr>
+<tr class="separator:aa0f029da4cf63bb6eeb46609034d7ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a552251c1f51965f56d96414cc8f933c8" id="r_a552251c1f51965f56d96414cc8f933c8"><td class="memItemLeft" align="right" valign="top"><a id="a552251c1f51965f56d96414cc8f933c8" name="a552251c1f51965f56d96414cc8f933c8"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>mask_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt;</td></tr>
 <tr class="memdesc:a552251c1f51965f56d96414cc8f933c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the numerical value associated to the mask. <br /></td></tr>
@@ -214,12 +222,12 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>bitmap</b> () const n
 &#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (<a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8">storage_type</a> const &amp;r) noexcept</td></tr>
 <tr class="memdesc:a19f9305f2be6c493a6e86c236fcf4f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
 <tr class="separator:a19f9305f2be6c493a6e86c236fcf4f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad74fd08f470ac565e1bed7096d119098" id="r_ad74fd08f470ac565e1bed7096d119098"><td class="memTemplParams" colspan="2"><a id="ad74fd08f470ac565e1bed7096d119098" name="ad74fd08f470ac565e1bed7096d119098"></a>
+<tr class="memitem:abed0447593ed96d503e1b0ca6eac54fb" id="r_abed0447593ed96d503e1b0ca6eac54fb"><td class="memTemplParams" colspan="2"><a id="abed0447593ed96d503e1b0ca6eac54fb" name="abed0447593ed96d503e1b0ca6eac54fb"></a>
 template&lt;detail::range Range&gt; <br />
-requires (!std::same_as&lt;<a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8">storage_type</a>, Range&gt;)</td></tr>
-<tr class="memitem:ad74fd08f470ac565e1bed7096d119098"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (Range &amp;&amp;r) noexcept</td></tr>
-<tr class="memdesc:ad74fd08f470ac565e1bed7096d119098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <code>r</code> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
-<tr class="separator:ad74fd08f470ac565e1bed7096d119098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+requires (std::same_as&lt;value_type_t&lt;Range&gt;, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8">storage_type</a>, Range&gt;)</td></tr>
+<tr class="memitem:abed0447593ed96d503e1b0ca6eac54fb"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (Range &amp;&amp;r) noexcept</td></tr>
+<tr class="memdesc:abed0447593ed96d503e1b0ca6eac54fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <code>r</code> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
+<tr class="separator:abed0447593ed96d503e1b0ca6eac54fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab463edf2bbe092c328f8dc599e49ce8f" id="r_ab463edf2bbe092c328f8dc599e49ce8f"><td class="memTemplParams" colspan="2"><a id="ab463edf2bbe092c328f8dc599e49ce8f" name="ab463edf2bbe092c328f8dc599e49ce8f"></a>
 template&lt;simd_compatible_ptr&lt; logical &gt; Ptr&gt; </td></tr>
 <tr class="memitem:ab463edf2bbe092c328f8dc599e49ce8f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (Ptr ptr) noexcept</td></tr>
@@ -234,12 +242,12 @@ template&lt;scalar_value U&gt; </td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (std::same_as&lt; bool &gt; auto v) noexcept</td></tr>
 <tr class="memdesc:a32b6d03c03af2e64979367f6d68d7016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a <code>bool</code> <br /></td></tr>
 <tr class="separator:a32b6d03c03af2e64979367f6d68d7016"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2326a61c106e43359af2b8661d506ef" id="r_aa2326a61c106e43359af2b8661d506ef"><td class="memTemplParams" colspan="2"><a id="aa2326a61c106e43359af2b8661d506ef" name="aa2326a61c106e43359af2b8661d506ef"></a>
+<tr class="memitem:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa" id="r_a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"><td class="memTemplParams" colspan="2"><a id="a3a83d0ff7cbb1ed2e9fc62dec58f7aaa" name="a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"></a>
 template&lt;typename T0 , typename T1 , typename... Ts&gt; <br />
-requires ( std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; (... &amp;&amp; std::convertible_to&lt;Ts,logical&lt;Type&gt;&gt;) &amp;&amp; (Cardinal::value == 2 + sizeof...(Ts)) )</td></tr>
-<tr class="memitem:aa2326a61c106e43359af2b8661d506ef"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (T0 const &amp;v0, T1 const &amp;v1, Ts const &amp;... vs) noexcept</td></tr>
-<tr class="memdesc:aa2326a61c106e43359af2b8661d506ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a sequence of scalar values of proper size. <br /></td></tr>
-<tr class="separator:aa2326a61c106e43359af2b8661d506ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+requires ( std::convertible_to&lt;T0, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt; &amp;&amp; std::convertible_to&lt;T1, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt; &amp;&amp; (... &amp;&amp; std::convertible_to&lt;Ts, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt;) &amp;&amp; (Cardinal::value == 2 + sizeof...(Ts)) )</td></tr>
+<tr class="memitem:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (T0 const &amp;v0, T1 const &amp;v1, Ts const &amp;... vs) noexcept</td></tr>
+<tr class="memdesc:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a sequence of scalar values of proper size. <br /></td></tr>
+<tr class="separator:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4" id="r_a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="memTemplParams" colspan="2">template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </td></tr>
 <tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a84ea3b085a785e085cbb9a9ffba1c4a4.html#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a> (Generator &amp;&amp;g) noexcept</td></tr>
 <tr class="memdesc:a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <br /></td></tr>

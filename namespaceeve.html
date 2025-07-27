@@ -256,6 +256,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1top__bits.html">top_bits</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cheapest to get bitset for simd logical.  <a href="structeve_1_1top__bits.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1translation__of.html">translation_of</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies EVE that a type is translatable and its translation target.  <a href="structeve_1_1translation__of.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1underlying__type.html">underlying_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the most scalar type associated with a type.  <a href="structeve_1_1underlying__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,6 +296,9 @@ Concepts</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1only__if.html">only_if</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the type is one of the Choices. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1translatable__ptr.html">translatable_ptr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type is a scalar pointer to a type that has a plain translation. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a plain scalar value The concept <code>plain_scalar_value&lt;T&gt;</code> is satisfied if and only if the translation of T is an instance of any non-bool, non-long double, arithmetic types. <br /></td></tr>
@@ -396,6 +402,12 @@ Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1like.html">like</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies semantic compatibility between wrapper/wrapped types. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1translatable__struct.html">translatable_struct</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the requirements for a struct to be translatable. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1translatable.html">translatable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if a type can be translated. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1generator__from.html">generator_from</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -411,6 +423,10 @@ template&lt;typename... Ts&gt; </td></tr>
 <tr class="memitem:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>common_value_t</b> = typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type</td></tr>
 <tr class="memdesc:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the SIMD-compatible common type between all <code>Ts</code>. <br /></td></tr>
 <tr class="separator:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79711a5476c4e0ba17238827c709ad33" id="r_a79711a5476c4e0ba17238827c709ad33"><td class="memTemplParams" colspan="2">template&lt;translatable T&gt; </td></tr>
+<tr class="memitem:a79711a5476c4e0ba17238827c709ad33"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a> = typename decltype(detail::as_translated_type(<a class="el" href="structeve_1_1as.html">as</a>&lt; T &gt;{}))::type</td></tr>
+<tr class="memdesc:a79711a5476c4e0ba17238827c709ad33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the final translated type of <code>T</code>.  <br /></td></tr>
+<tr class="separator:a79711a5476c4e0ba17238827c709ad33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
