@@ -1,17 +1,21 @@
 //==================================================================================================
-/*
+/**
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
-*/
+**/
 //==================================================================================================
-#pragma once
+#include "test.hpp"
 
-#include <eve/arch.hpp>
-#include <eve/traits/overload/supports.hpp>
+#include <eve/concept/translation.hpp>
+#include <eve/traits/as_translation.hpp>
 
-#include <eve/detail/function/simd/common/bit_cast.hpp>
+template <typename E>
+struct BaseStruct {
+  E value;
 
-#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-#  include <eve/detail/function/simd/arm/sve/bit_cast.hpp>
-#endif
+  bool operator==(const BaseStruct&) const = default;
+};
+
+template<typename E>
+struct eve::translation_of<BaseStruct<E>> { using type = E; };

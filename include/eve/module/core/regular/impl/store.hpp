@@ -75,7 +75,11 @@ namespace eve::detail
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
 
-    if constexpr (requires { dst.store(opts, value); })
+    if constexpr (translatable_ptr<Dst>)
+    {
+      store.behavior(cpu_{}, opts, value, translate_ptr(dst));
+    }
+    else if constexpr (requires { dst.store(opts, value); })
     {
       dst.store(opts, value);
     }

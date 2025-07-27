@@ -18,7 +18,7 @@ namespace eve::detail
     template<typename Target, typename... T>
     EVE_FORCEINLINE constexpr auto operator()(as<Target> tgt, T... vs) const noexcept
     {
-      return EVE_DISPATCH_CALL(tgt, vs...);
+      return EVE_DISPATCH_CALL_NT(tgt, vs...);
     }
 
     EVE_CALLABLE_OBJECT(make_t, make_);

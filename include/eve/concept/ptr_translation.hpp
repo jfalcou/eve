@@ -8,23 +8,22 @@
 #pragma once
 
 #include <eve/traits/translation.hpp>
+#include <eve/memory/pointer.hpp>
 
 #include <concepts>
 
 namespace eve
 {
   //==================================================================================================
-  //! @concept has_plain_translation
+  //! @concept translatable_ptr
   //! @{
-  //! @brief Specify that a type can be translated to a plain scalar value.
-  //! The concept `has_plain_translation<T>` is satisfied if and only if calling `translate_t<T>`
-  //! returns a type that is different from `T`.
+  //! @brief Specify that a type is a scalar pointer to a type that has a plain translation.
   //!
   //! ## Example Types
-  //! - `std::byte`
+  //! - `std::byte*`
   //==================================================================================================
   template <typename T>
-  concept has_plain_translation = !std::same_as<translate_t<T>, T>;
+  concept translatable_ptr = detail::scalar_pointer<T> && has_plain_translation<value_type_t<T>>;
   //==================================================================================================
   //! @}
   //==================================================================================================

@@ -17,7 +17,7 @@ namespace eve
   {
     template<typename T>
     struct  default_as_integer_sign
-          : std::conditional<std::is_signed_v<translate_element_type_t<T>>, signed, unsigned>
+          : std::conditional<std::is_signed_v<translated_element_type_t<T>>, signed, unsigned>
     {
     };
 

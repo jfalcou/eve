@@ -61,7 +61,7 @@ namespace eve
       else
       {
         // Compute the raw-est type we need to build
-        using tgt_type = translate_element_type_t<T>;
+        using tgt_type = translated_element_type_t<T>;
 
         // Compute the raw constant
         auto constant_value = Func<OptionsValues>::value(as<tgt_type>{},opts);

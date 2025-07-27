@@ -39,6 +39,7 @@
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
+#include <eve/traits/as_translation.hpp>
 
 #include <concepts>
 #include <ostream>
@@ -88,16 +89,22 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>,
+      : detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
         detail::wide_split_type_helper<Type, Cardinal>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base = detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
 
     //! The type stored in the register.
     using value_type = Type;
 
+    //! The type resulting from translating the current wide's elements type.
+    using translated_element_type = translate_t<Type>;
+
+    //! The type resulting from translating the current wide type.
+    using translated_type = wide<translated_element_type, Cardinal>;
+
     //! The ABI tag for this register.
-    using abi_type = abi_t<Type, Cardinal>;
+    using abi_type = abi_t<translated_element_type, Cardinal>;
 
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
@@ -146,8 +153,8 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are
     //! @raiterator{s}.
     template<detail::range Range>
-    requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
+    requires (std::same_as<value_type_t<Range>, Type> && !std::same_as<storage_type, Range>)
         : wide(std::begin(EVE_FWD(r)))
     {
       EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Cardinal::value,
@@ -170,7 +177,7 @@ namespace eve
     template<typename S>
     requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
+        : storage_base(detail::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -180,10 +187,10 @@ namespace eve
                   && std::is_convertible_v<S0,Type>
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
-        : storage_base(detail::make(eve::as<wide> {},
-                                    static_cast<Type>(v0),
-                                    static_cast<Type>(v1),
-                                    static_cast<Type>(vs)...))
+        : storage_base(detail::make(eve::as<translated_type> {},
+                                    static_cast<translated_element_type>(translate(v0)),
+                                    static_cast<translated_element_type>(translate(v1)),
+                                    static_cast<translated_element_type>(translate(vs))...))
     {}
 
     //! Constructs a eve::wide from a sequence of values
@@ -287,13 +294,13 @@ namespace eve
     }
 
     //! Retrieve the value from a given lane
-    EVE_FORCEINLINE auto get(std::size_t i) const noexcept { return detail::extract(*this, i); }
+    EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return detail::extract(*this, i); }
 
     //! Retrieve the value from the last lane
-    EVE_FORCEINLINE auto back() const noexcept { return get(Cardinal::value - 1); }
+    EVE_FORCEINLINE Type back() const noexcept { return get(Cardinal::value - 1); }
 
     //! Retrieve the value from the first lane
-    EVE_FORCEINLINE auto front() const noexcept { return get(0); }
+    EVE_FORCEINLINE Type front() const noexcept { return get(0); }
 
     //==============================================================================================
     //! @brief Slice a eve::wide into two eve::wide of half cardinal.
@@ -1013,8 +1020,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +that[0];
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +that[i];
+        os << '(' << +translate(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +translate(that[i]);
         return os << ')';
       }
     }
