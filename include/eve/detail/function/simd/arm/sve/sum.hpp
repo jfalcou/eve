@@ -25,7 +25,8 @@ namespace eve::detail
     }
     else
     {
-      // s/uaddv is expensive, for small lanes count this approach is faster
+      // s/uaddv is expensive on some architectures.
+      // The scalar approach should be faster for <=2 lanes on Neoverse at least up to V3.
       if constexpr (match_option<condition_key, O, ignore_none_> && (N::value <= 2))
       {
         T r = v.get(0);
