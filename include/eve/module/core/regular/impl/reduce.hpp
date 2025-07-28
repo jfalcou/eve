@@ -48,8 +48,12 @@ template<scalar_value T, typename N, typename Callable>
 EVE_FORCEINLINE auto
 reduce_(EVE_SUPPORTS(cpu_), splat_type const& s, wide<T, N> v, Callable f) noexcept
 {
-  auto op = find_reduction(f, s);
-  return op(s, v);
+  if constexpr (std::same_as<Callable, callable_add_>) return eve::detail::sum[splat](v);
+  else
+  {
+    auto op = find_reduction(f, s);
+    return op(s, v);
+  }
 }
 
 template<scalar_value T, typename N, typename Callable>
@@ -62,9 +66,9 @@ reduce_(EVE_SUPPORTS(cpu_), wide<T, N> v, Callable f) noexcept
 
 template<scalar_value T, typename N>
 EVE_FORCEINLINE auto
-reduce_(EVE_SUPPORTS(cpu_), splat_type const& s, wide<T, N> v) noexcept
+reduce_(EVE_SUPPORTS(cpu_), splat_type const&, wide<T, N> v) noexcept
 {
-  return eve::detail::sum(s, v);
+  return eve::detail::sum[splat](v);
 }
 
 template<scalar_value T, typename N>

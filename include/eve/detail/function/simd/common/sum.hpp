@@ -18,61 +18,70 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto sum_ ( EVE_SUPPORTS(cpu_)
-                            , splat_type const&, wide<T,N> const &v
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
                             ) noexcept
+    requires (O::contains(splat2))
   {
-          if constexpr( N::value == 1 )               return v;
-    else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::detail::sum(v) );
-    else  if constexpr( is_aggregated_v<abi_t<T, N>>)
-    {
-      auto[l,h] = v.slice();
-      auto r = splat(sum)( l + h );
-      return eve::combine(r,r);
-    }
-    else return butterfly_reduction(v, eve::add);
-  }
+    using C = rbr::result::fetch_t<condition_key, O>;
 
-  template<scalar_value T>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  {
-    return v;
-  }
-
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), wide<T,N> const &v) noexcept
-  {
-          if constexpr( N::value == 1 )         return v.get(0);
-    else  if constexpr( is_emulated_v<abi_t<T, N>> )
+    if constexpr (std::same_as<C, ignore_none_>)
     {
-      return [&]<std::size_t... I>(std::index_sequence<I...>)
+            if constexpr( N::value == 1 )               return v;
+      else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::detail::sum(v) );
+      else  if constexpr( is_aggregated_v<abi_t<T, N>>)
       {
-        T r = 0;
-        ((r += v.get(I)),...);
-        return r;
-      }(std::make_index_sequence<N::value>{});
+        auto[l,h] = v.slice();
+        const auto r = sum[splat](l + h);
+        return eve::combine(r,r);
+      }
+      else return butterfly_reduction(v, eve::add);
     }
-    else  if constexpr( is_aggregated_v<abi_t<T, N>> )
+    else
     {
-      auto[l,h] = v.slice();
-      return  sum( l+h );
+      return sum[splat](if_else(opts[condition_key], v, zero(as(v))));
     }
-    else return butterfly_reduction(v, eve::add).get(0);
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  template<callable_options O, arithmetic_value T>
+  EVE_FORCEINLINE element_type_t<T> sum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+    requires (!O::contains(splat2))
   {
-    return sum(if_else(cond, t, eve::zero));
-  }
+    using C = rbr::result::fetch_t<condition_key, O>;
 
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond
-                               , splat_type const&, U const &t) noexcept
-  {
-    return splat(sum)(if_else(cond, t, eve::zero));
+    if constexpr (std::same_as<C, ignore_none_>)
+    {
+      if constexpr (scalar_value<T>) return v;
+      else
+      {
+        using N   = typename T::cardinal_type;
+        using r_t = element_type_t<T>;
+
+          if constexpr( N::value == 1 )         return v.get(0);
+        else  if constexpr( is_emulated_v<abi_t<r_t, N>> )
+        {
+          r_t r = v.get(0);
+
+          for_<1, 1, N::value>([&](auto i) {
+            r += v.get(i);
+          });
+
+          return r;
+        }
+        else  if constexpr( is_aggregated_v<abi_t<r_t, N>> )
+        {
+          auto[l,h] = v.slice();
+          return  sum( l+h );
+        }
+        else return butterfly_reduction(v, eve::add).get(0);
+      }
+    }
+    else
+    {
+      const auto cx = opts[condition_key];
+
+      if constexpr (scalar_value<T>) return expand_mask(cx, as(v)) ? v : zero(as(v));
+      else                           return sum(if_else(cx, v, zero(as(v))));
+    }
   }
 }
