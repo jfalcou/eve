@@ -6,110 +6,68 @@
 */
 //==================================================================================================
 #include "test.hpp"
+#include "unit/module/core/reduction_test.hpp"
 
-#include <eve/module/core.hpp>
+TTS_CASE_TPL("Check eve::none return type (wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  const T val{};
 
-#include <type_traits>
+  TTS_EXPR_IS((eve::none(eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::none[eve::ignore_none](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::none[val > 0](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::none[true](eve::logical<T>())), bool);
+};
 
-TTS_CASE_TPL("Check eve::none return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::none return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   TTS_EXPR_IS((eve::none(eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::none(bool {})), bool);
-  TTS_EXPECT_NOT((eve::none(true)));
-  TTS_EXPECT((eve::none(false)));
-  TTS_EXPECT_NOT(eve::none(eve::true_(eve::as<T>())));
-  TTS_EXPECT(eve::none(eve::false_(eve::as<T>())));
+  TTS_EXPR_IS((eve::none[eve::ignore_none](eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::none[true](eve::logical<T>())), bool);
 };
 
-TTS_CASE_TPL("Check eve::none[ignore]", eve::test::simd::all_types)
-<typename T>(tts::type<T>) {// complete
-                            {eve::logical<T> mask(false);
-
-TTS_EXPECT(eve::none(mask));
-TTS_EXPECT(eve::none[eve::ignore_none](mask));
-TTS_EXPECT(eve::none[eve::ignore_all](mask));
-
-mask.set(0, true);
-
-TTS_EXPECT_NOT(eve::none(mask));
-TTS_EXPECT_NOT(eve::none[eve::ignore_none](mask));
-TTS_EXPECT(eve::none[eve::ignore_all](mask));
-}
-
-// some special cases
+TTS_CASE("Check eve::none return type (booleans)")
 {
-  eve::logical<T> mask(false);
+  TTS_EXPR_IS((eve::none(bool{})), bool);
+  TTS_EXPR_IS((eve::none[eve::ignore_none](bool{})), bool);
+  TTS_EXPR_IS((eve::none[true](bool{})), bool);
+};
 
-  TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
-  TTS_EXPECT(eve::none[eve::ignore_last(1)](mask));
-
-  mask.set(0, true);
-  TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
-  TTS_EXPECT(eve::none[eve::ignore_last(T::size())](mask));
-  TTS_EXPECT_NOT(eve::none[eve::ignore_last(T::size() - 1)](mask));
-}
-
-// every element
-{
-  eve::logical<T> mask(false);
-
-  for( int i = 0; i != T::size(); ++i )
+struct ManualNone {
+  template<typename T, typename C>
+  bool operator()(T v, C mask)
   {
-    mask.set(i, true);
-    TTS_EXPECT_NOT(eve::none(mask));
-    mask.set(i, false);
-  }
-}
-
-// ignore_first
-{
-  eve::logical<T> mask(false);
-
-  for( int i = 0; i != T::size(); ++i )
-  {
-    TTS_EXPECT(eve::none[eve::ignore_first(i)](mask));
-    mask.set(i, true);
-    TTS_EXPECT_NOT(eve::none[eve::ignore_first(i)](mask));
-    TTS_EXPECT(eve::none[eve::ignore_first(i + 1)](mask));
-  }
-}
-
-// ignore_last
-{
-  eve::logical<T> mask(false);
-
-  for( int i = 0; i != T::size(); ++i )
-  {
-    TTS_EXPECT(eve::none[eve::ignore_last(i)](mask));
-    mask.set(T::size() - i - 1, true);
-    TTS_EXPECT_NOT(eve::none[eve::ignore_last(i)](mask));
-    TTS_EXPECT(eve::none[eve::ignore_last(i + 1)](mask));
-  }
-}
-
-// ignore_extrema
-{
-  for( int i = 0; i < T::size() + 1; ++i )
-  {
-    for( int j = T::size() - i; j; --j )
+    if constexpr (eve::scalar_value<T> || std::same_as<T, bool>)
     {
-      eve::logical<T> mask([&](int k, int) { return (k < i) || (T::size() - k) < j; });
-      TTS_EXPECT(eve::none[eve::ignore_extrema(i, j)](mask));
+      return !(mask && v);
+    }
+    else
+    {
+      for (int i = 0; i < v.size(); ++i)
+        if (v.get(i) && mask_at(mask, i))
+          return false;
 
-      if( i + j == T::size() ) continue;
-
-      mask.set(i, true);
-
-      TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
-      TTS_EXPECT(eve::none[eve::ignore_extrema(i + 1, j)](mask));
-      mask.set(i, false);
-
-      mask.set(T::size() - j - 1, true);
-      TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
-      TTS_EXPECT(eve::none[eve::ignore_extrema(i, j + 1)](mask));
+      return true;
     }
   }
-}
-}
-;
+};
+
+TTS_CASE("Check eve::none booleans")
+{
+  logical_reduction_test_case<ManualNone>(eve::none, true);
+  logical_reduction_test_case<ManualNone>(eve::none, false);
+};
+
+TTS_CASE_TPL("Check eve::none behavior on scalars", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  logical_reduction_test_case<ManualNone>(eve::none, eve::logical<T>{true});
+  logical_reduction_test_case<ManualNone>(eve::none, eve::logical<T>{false});
+};
+
+TTS_CASE_TPL("Check eve::none behavior on wides and top_bits", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  logical_reduction_simd_test_cases<ManualNone>(eve::none, eve::as<T>{});
+};
