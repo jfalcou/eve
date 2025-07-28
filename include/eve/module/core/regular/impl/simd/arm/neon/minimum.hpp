@@ -104,7 +104,7 @@ namespace eve::detail
       }
       else
       {
-        minimum[splat].retarget(current_api, v).get(0);
+        return minimum[splat].retarget(current_api, v).get(0);
       }
     }
   }
