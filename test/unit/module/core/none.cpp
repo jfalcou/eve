@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include "unit/module/core/logical_reduction_test.hpp"
+#include "unit/module/core/reduction_test.hpp"
 
 TTS_CASE_TPL("Check eve::none return type (wide)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
@@ -55,19 +55,19 @@ struct ManualNone {
 
 TTS_CASE("Check eve::none booleans")
 {
-  test_case<ManualNone>(eve::none, true);
-  test_case<ManualNone>(eve::none, false);
+  logical_reduction_test_case<ManualNone>(eve::none, true);
+  logical_reduction_test_case<ManualNone>(eve::none, false);
 };
 
 TTS_CASE_TPL("Check eve::none behavior on scalars", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  test_case<ManualNone>(eve::none, eve::logical<T>{true});
-  test_case<ManualNone>(eve::none, eve::logical<T>{false});
+  logical_reduction_test_case<ManualNone>(eve::none, eve::logical<T>{true});
+  logical_reduction_test_case<ManualNone>(eve::none, eve::logical<T>{false});
 };
 
 TTS_CASE_TPL("Check eve::none behavior on wides and top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  simd_test_cases<ManualNone>(eve::none, eve::as<T>{});
+  logical_reduction_simd_test_cases<ManualNone>(eve::none, eve::as<T>{});
 };
