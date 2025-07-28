@@ -34,15 +34,15 @@ namespace eve::detail
       {
         constexpr auto pairwise_max = []<typename W>(W const& a, W const& b)
         {
-          constexpr auto c = categorize<W>();
+          constexpr auto cat = categorize<W>();
 
-          if constexpr( c == category::float32x2 ) return vpmax_f32(a, b);
-          else if constexpr( c == category::int32x2 ) return vpmax_s32(a, b);
-          else if constexpr( c == category::uint32x2 ) return vpmax_u32(a, b);
-          else if constexpr( c == category::int16x4 ) return vpmax_s16(a, b);
-          else if constexpr( c == category::uint16x4 ) return vpmax_u16(a, b);
-          else if constexpr( c == category::int8x8 ) return vpmax_s8(a, b);
-          else if constexpr( c == category::uint8x8 ) return vpmax_u8(a, b);
+          if constexpr( cat == category::float32x2 ) return vpmax_f32(a, b);
+          else if constexpr( cat == category::int32x2 ) return vpmax_s32(a, b);
+          else if constexpr( cat == category::uint32x2 ) return vpmax_u32(a, b);
+          else if constexpr( cat == category::int16x4 ) return vpmax_s16(a, b);
+          else if constexpr( cat == category::uint16x4 ) return vpmax_u16(a, b);
+          else if constexpr( cat == category::int8x8 ) return vpmax_s8(a, b);
+          else if constexpr( cat == category::uint8x8 ) return vpmax_u8(a, b);
         };
 
         using type = wide<T, N>;
