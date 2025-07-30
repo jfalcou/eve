@@ -1020,8 +1020,15 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +translate(that[0]);
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +translate(that[i]);
+        auto as_printable = [](Type v)
+        {
+          if      constexpr (std::integral<Type> && sizeof(Type) == 1) return +v;
+          else if constexpr (requires { os << v; })                    return v;
+          else                                                         return translate(v);
+        };
+
+        os << '(' << as_printable(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << as_printable(that[i]);
         return os << ')';
       }
     }
