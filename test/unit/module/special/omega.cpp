@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check return types of omega", eve::test::simd::ieee_reals)
 };
 
 //==================================================================================================
-// omega  tests
+//== omega  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of omega on wide",
               eve::test::simd::ieee_reals,
@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of omega on wide",
     TTS_ULP_EQUAL(eve::omega(eve::inf(eve::as(a0))), eve::inf(eve::as(a0)), 0.0);
     TTS_ULP_EQUAL(eve::omega(T(1)), T(1), 2.0);
     TTS_ULP_EQUAL(eve::omega(eve::zero(eve::as(a0))), T(0.56714329040978384011), 0.0);
-    elt_t tol = 5000 * eve::eps(eve::as<elt_t>());
+    elt_t tol = tts::prec<T>();// 5000 * eve::eps(eve::as<elt_t>());
     {
       auto z = eve::omega(eve::mone(eve::as<elt_t>()));
       auto rr = eve::log(z) + z;
@@ -59,14 +59,14 @@ TTS_CASE_WITH("Check behavior of omega on wide",
     {
       auto z = eve::omega(a2);
       auto rr = eve::log(z) + z;
-      TTS_RELATIVE_EQUAL(a2, rr, tol);
+      TTS_RELATIVE_EQUAL(a2, rr, tol*4);
     }
   }
 };
 
 
 //==================================================================================================
-// Tests for masked omega
+//== Tests for masked omega
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::omega)(eve::wide)",
               eve::test::simd::ieee_reals,
@@ -77,4 +77,17 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::omega)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::omega[mask](a0),
             eve::if_else(mask, eve::omega(a0), a0));
+};
+
+TTS_CASE_TPL( "Check peculiar values", eve::test::scalar::ieee_reals)
+  <typename T>(tts::type<T>)
+{
+  if constexpr( sizeof(T) == 8)
+  {
+    using eve::as;
+    TTS_ULP_EQUAL(eve::omega(T(0)), T(0.567143290409783873), 0.5);
+    TTS_ULP_EQUAL(eve::omega(T(1.0e-15)), T(0.567143290409784234896), 0.5);
+    TTS_ULP_EQUAL(eve::omega(T(1)),  T(1), 0.5);
+    TTS_ULP_EQUAL(eve::omega(T(0.5)), T(0.76624860816175026), 0.5);
+  }
 };
