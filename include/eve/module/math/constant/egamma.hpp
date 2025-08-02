@@ -37,6 +37,7 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
   EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(egamma_t, egamma_);
+
 };
 
 //================================================================================================
@@ -69,7 +70,7 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 //!    **Return value**
 //!
 //!      The call `eve::egamma(as<T>())` returns  \f$\gamma =
-//!      \lim_{n\to\infty}\left( \sum_{k = 0}^n \frac1k - \log n\right )\f$.
+//!      \lim_{n\to\infty}\left( \sum_{k = 0}^n \frac1k - \log n\right )\f$. γ is an alias.
 //!
 //!  @groupheader{Example}
 //!
@@ -77,4 +78,5 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 //! @}
 //================================================================================================
 inline constexpr auto egamma = functor<egamma_t>;
+inline constexpr auto γ     = functor<egamma_t>;
 }

@@ -64,6 +64,8 @@ namespace eve
 //!        (the inverse function of \f$ x \rightarrow \log x+x\f$) is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!     ω can be used as an alias.
+//!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Wright omega function](https://en.wikipedia.org/wiki/Wright_omega_function)
 //!
@@ -71,6 +73,7 @@ namespace eve
 //!  @godbolt{doc/special/omega.cpp}
 //================================================================================================
   inline constexpr auto omega = functor<omega_t>;
+  inline constexpr auto ω = functor<omega_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -95,6 +98,19 @@ namespace eve
         return xx0;
       };
 
+      auto br_4 = [&](auto xx){ // (((-2.0 < x) && (x<=1.0)
+        using u_t = eve::element_type_t<T>;
+        auto half = eve::half(eve::as(xx));
+        auto pxx = eve::dec(xx);
+        auto pxx2 =eve::sqr(pxx);
+        auto w = fam(fam(half, half, xx), fam(u_t(1.0/16.0), fam(u_t(-1.0/192.0), fam(u_t(-1.0/3072.0), u_t(13.0/61440.0), pxx), pxx), pxx), pxx2);
+        auto r=x-w-eve::log(w);
+        auto wp1=inc(w);
+        auto e=r/wp1*fms(2*wp1, fam(wp1, u_t(2.0/3.0), r), r)/fms(2*wp1, fam(wp1, u_t(2.0/3.0), r), 2*r);
+        w *= eve::inc(e);
+        return w;
+      };
+
       auto br_neg = [](auto xx){
         auto [w0, wm1] = lambert(exp(xx));
         return w0;
@@ -107,7 +123,14 @@ namespace eve
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_pos, notdone, x >= one(as(x)), r, x);
-        if( eve::any(notdone) ) { notdone = last_interval(br_neg, notdone, r, x); }
+        if( eve::any(notdone) )
+        {
+          notdone = next_interval(br_4, notdone, x >= -2, r, x);
+          if( eve::any(notdone) )
+          {
+            notdone = last_interval(br_neg, notdone, r, x);
+          }
+        }
       }
       return r;
     }

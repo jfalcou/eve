@@ -67,7 +67,7 @@ struct pi_t : constant_callable<pi_t, Options, lower_option, upper_option>
 //!
 //!    **Return value**
 //!
-//!      The call `eve::pi(as<T>())` returns the constant \f$\pi\f$.
+//!      The call `eve::pi(as<T>())` returns the constant \f$\pi\f$. π is an alias.
 //!
 //!  @groupheader{Example}
 //!
@@ -75,4 +75,5 @@ struct pi_t : constant_callable<pi_t, Options, lower_option, upper_option>
 //! @}
 //================================================================================================
 inline constexpr auto pi = functor<pi_t>;
+inline constexpr auto π = functor<pi_t>;
 }
