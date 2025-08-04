@@ -55,6 +55,20 @@ TTS_CASE_TPL("Checks behavior of concepts over translated type", eve::test::scal
   }
 };
 
+TTS_CASE_TPL("Checks behavior of translate_into", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using N = BaseStruct<T>;
+  using L0 = BaseStruct<N>;
+  using L1 = BaseStruct<T>;
+
+  TTS_CONSTEXPR_EXPECT((eve::translatable_into<L0, L1>));
+  TTS_CONSTEXPR_EXPECT((eve::translatable_into<L1, L0>));
+
+  TTS_CONSTEXPR_EXPECT((std::same_as<decltype(eve::translate_into(L0{}, eve::as<L1>{})), L1>));
+  TTS_CONSTEXPR_EXPECT((std::same_as<decltype(eve::translate_into(L1{}, eve::as<L0>{})), L0>));
+};
+
 template<typename T>
 auto test_invalid_translation(int) -> eve::translate_t<T> { return { }; }
 

@@ -10,6 +10,7 @@
 #include <type_traits>
 namespace eve
 {
+  //================================================================================================
   //! @brief Notifies EVE that a type is translatable and its translation target.
   //!
   //! By default, most EVE functions only work on fundamental types.
@@ -30,12 +31,14 @@ namespace eve
   //!
   //! @note A translatable type's translation target can be a translatable type itself. In this case, EVE will
   //!       recursively resolve the translation until it reaches a fundamental type.
+  //================================================================================================
   template <typename T>
   struct translation_of
   {
     using type = T;
   };
 
+  //================================================================================================
   //! @brief Defines the requirements for a struct to be translatable.
   //!
   //! @tparam T The translation candidate type
@@ -49,15 +52,18 @@ namespace eve
   //!       other than its default value, or having side-effects can lead to undefined or unexpected behavior when
   //!       used in vectorized operations. This also applies to the overload of any operator of `T` that is also
   //!       available for its translation target.
+  //================================================================================================
   template <typename T>
   concept translatable_struct = std::is_trivially_copyable_v<T>
                               && std::is_trivially_assignable_v<T&, T>
                               && (sizeof(T) == sizeof(typename translation_of<T>::type))
                               && (alignof(T) == alignof(typename translation_of<T>::type));
 
+  //================================================================================================
   //! @brief Determines if a type can be translated.
   //!
   //! @note This also covers non-translatable types as their translation target is themselves by default.
+  //================================================================================================
   template <typename T>
   concept translatable = std::same_as<typename translation_of<T>::type, T>
                       || std::is_enum_v<T>
@@ -87,9 +93,11 @@ namespace eve
     }
   }
 
+  //================================================================================================
   //! @brief Returns the final translated type of `T`.
   //!
   //! Recursively resolves the translation chain until reaching a fundamental type.
+  //================================================================================================
   template <translatable T>
   using translate_t = typename decltype(detail::as_translated_type(as<T>{}))::type;
 
