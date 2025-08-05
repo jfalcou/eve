@@ -129,14 +129,15 @@ $(document).ready(function(){initNavTree('concepteve_1_1translatable.html',''); 
 
 <p><code>#include &lt;eve/traits/translation.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>This also convers non-translatable types as their translation target is themselves by default. </dd></dl>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>This also covers non-translatable types as their translation target is themselves by default. </dd></dl>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1translatable.html">eve::translatable</a> =  std::same_as&lt;typename translation_of&lt;T&gt;::type, T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1translatable.html">eve::translatable</a> =  std::same_as&lt;typename translation_of&lt;T&gt;::type, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>&gt;</div>
 <div class="line">                      || std::is_enum_v&lt;T&gt;</div>
 <div class="line">                      || <a class="code hl_concept" href="concepteve_1_1translatable__struct.html">translatable_struct&lt;T&gt;</a></div>
-<div class="ttc" id="aconcepteve_1_1translatable__struct_html"><div class="ttname"><a href="concepteve_1_1translatable__struct.html">eve::translatable_struct</a></div><div class="ttdoc">Defines the requirements for a struct to be translatable.</div><div class="ttdef"><b>Definition</b> translation.hpp:49</div></div>
-<div class="ttc" id="aconcepteve_1_1translatable_html"><div class="ttname"><a href="concepteve_1_1translatable.html">eve::translatable</a></div><div class="ttdoc">Determines if a type can be translated.</div><div class="ttdef"><b>Definition</b> translation.hpp:60</div></div>
+<div class="ttc" id="aconcepteve_1_1translatable__struct_html"><div class="ttname"><a href="concepteve_1_1translatable__struct.html">eve::translatable_struct</a></div><div class="ttdoc">Defines the requirements for a struct to be translatable.</div><div class="ttdef"><b>Definition</b> translation.hpp:57</div></div>
+<div class="ttc" id="aconcepteve_1_1translatable_html"><div class="ttname"><a href="concepteve_1_1translatable.html">eve::translatable</a></div><div class="ttdoc">Determines if a type can be translated.</div><div class="ttdef"><b>Definition</b> translation.hpp:68</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

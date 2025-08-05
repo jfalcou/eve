@@ -134,7 +134,7 @@ template&lt;logical_value Mask, value Value&gt; </div>
         <tr>
           <td class="memname">eve::swap_if </td>
           <td>(</td>
-          <td class="paramtype">Mask const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Mask</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">const</a> &amp;&#160;</td>
           <td class="paramname"><em>mask</em>, </td>
         </tr>
         <tr>
@@ -176,26 +176,26 @@ template&lt;logical_value Mask, value Value&gt; </div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; a = {1.2f, 3.4f, 5.6f, 7.8f};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; b = {0.1f,1e-2f,1e-3f,1e-4f};</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a> = {1.2f, 3.4f, 5.6f, 7.8f};</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a> = {0.1f,1e-2f,1e-3f,1e-4f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Before swap_if(a &lt; 4.f,a,b)\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a                    = &quot;</span> &lt;&lt; a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- b                    = &quot;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a &lt; 4.f              = &quot;</span> &lt;&lt; (a &lt; 4.f) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a                    = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- b                    = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a &lt; 4.f              = &quot;</span> &lt;&lt; (<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a> &lt; 4.f) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">            <a class="code hl_function" href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">eve::swap_if</a>(a &lt; 4.f,a,b);</div>
+<div class="line">            <a class="code hl_function" href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">eve::swap_if</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a> &lt; 4.f,<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a>,<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a>);</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;After swap_if(a &lt; 4.f,a,b)\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; a                    = &quot;</span> &lt;&lt; a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; b                    = &quot;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; a                    = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; b                    = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__logical_gae07cec0ceff676cedb02884af507fd2c_html_gae07cec0ceff676cedb02884af507fd2c"><div class="ttname"><a href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">eve::swap_if</a></div><div class="ttdeci">void swap_if(Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</div><div class="ttdoc">Conditional swap.</div><div class="ttdef"><b>Definition</b> swap_if.hpp:39</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

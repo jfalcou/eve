@@ -136,9 +136,10 @@ $(document).ready(function(){initNavTree('concepteve_1_1plain__value.html',''); 
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1plain__value.html">eve::plain_value</a> =  plain_simd_value&lt;T&gt; || <a class="code hl_concept" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value&lt;T&gt;</a></div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1plain__value.html">eve::plain_value</a> =  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">plain_simd_value&lt;T&gt;</a> || <a class="code hl_concept" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value&lt;T&gt;</a></div>
 <div class="ttc" id="aconcepteve_1_1plain__scalar__value_html"><div class="ttname"><a href="concepteve_1_1plain__scalar__value.html">eve::plain_scalar_value</a></div><div class="ttdoc">Specify that a type represents a plain scalar value The concept plain_scalar_value&lt;T&gt; is satisfied if...</div><div class="ttdef"><b>Definition</b> scalar.hpp:48</div></div>
 <div class="ttc" id="aconcepteve_1_1plain__value_html"><div class="ttname"><a href="concepteve_1_1plain__value.html">eve::plain_value</a></div><div class="ttdoc">The concept plain_value&lt;T&gt; is satisfied if and only if T satisfies eve::plain_simd_value or eve::plai...</div><div class="ttdef"><b>Definition</b> value.hpp:149</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

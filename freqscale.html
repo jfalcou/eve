@@ -136,30 +136,30 @@ $(document).ready(function(){initNavTree('freqscale.html',''); initResizable(); 
 <div class="line"><span class="preprocessor">#include &lt;span&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef EVE_AVX512_DEFAULT_64_BYTES</span></div>
-<div class="line"><span class="keyword">static_assert</span>(eve::current_api != eve::avx512 || eve::nofs_cardinal_v&lt;std::int8_t&gt; == 32);</div>
-<div class="line"><span class="keyword">static_assert</span>(eve::current_api != eve::avx512 || eve::expected_cardinal_v&lt;std::int8_t&gt; == 64);</div>
+<div class="line"><span class="keyword">static_assert</span>(eve::current_api != eve::avx512 || <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::nofs_cardinal_v&lt;std::int8_t&gt;</a> == 32);</div>
+<div class="line"><span class="keyword">static_assert</span>(eve::current_api != eve::avx512 || <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::expected_cardinal_v&lt;std::int8_t&gt;</a> == 64);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">// EVE_AVX512_DEFAULT_64_BYTES</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> find_small_array(std::span&lt;const int&gt; a)</div>
 <div class="line">  -&gt; std::span&lt;const int&gt;::iterator</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> eve::algo::find_if(a, [](<a class="code hl_struct" href="structeve_1_1wide.html">eve::nofs_wide&lt;int&gt;</a> x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
+<div class="line">  <span class="keywordflow">return</span> eve::algo::find_if(a, [](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::nofs_wide&lt;int&gt;</a> x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> find_large_array(std::span&lt;const int&gt; a)</div>
 <div class="line">  -&gt; std::span&lt;const int&gt;::iterator</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> eve::algo::find_if[eve::algo::allow_frequency_scaling](a,</div>
-<div class="line">    [](<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
+<div class="line">    [](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int&gt;</a> x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> find_use_4_ints(std::span&lt;const int&gt; a)</div>
 <div class="line">  -&gt; std::span&lt;const int&gt;::iterator</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> eve::algo::find_if[eve::algo::force_cardinal&lt;4&gt;](a,</div>
-<div class="line">    [](<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
+<div class="line">    [](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; x) { <span class="keywordflow">return</span> x &lt; 0; });</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('inter-with-native.html',''); initResiz
 <p>That is why <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and eve::logical for native sizes are implicitly convertible to and from the intrinsic type you would expect. </p><pre class="fragment">x86: __m128/256/512 for floats and double, __m128i/256i/512i for ints
 neon: int8x8_t, int8x16_t for int8s etc.
 sve, powerpc: ....
-</pre><p> To combine this with <code>eve::algorithm</code>s we have to force a specific cardinal. All algorithms are designed to do not require templated callbacks so this remains possible. But, unfortunately views still require a templated callback.</p>
+</pre><p> To combine this with <code><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::algorithm</a></code>s we have to force a specific cardinal. All algorithms are designed to do not require templated callbacks so this remains possible. But, unfortunately views still require a templated callback.</p>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
@@ -139,13 +139,13 @@ sve, powerpc: ....
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> remove_spaces(std::string&amp; s)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>u8x16 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint8_t, eve::fixed&lt;16&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>u8x16 = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;std::uint8_t, eve::fixed&lt;16&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// eve only supports std::int8_t and std::uint8_t, not char.</span></div>
-<div class="line">  std::span s_bytes{<span class="keyword">reinterpret_cast&lt;</span>std::uint8_t*<span class="keyword">&gt;</span>(s.data()), s.<a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">size</a>()};</div>
+<div class="line">  std::span s_bytes{<span class="keyword">reinterpret_cast&lt;</span>std::uint8_t*<span class="keyword">&gt;</span>(s.data()), s.size()};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> end = eve::algo::remove_if[eve::algo::force_cardinal&lt;16&gt;](</div>
-<div class="line">    s_bytes,[](u8x16 v) -&gt; eve::logical&lt;u8x16&gt; {</div>
+<div class="line">    s_bytes,[](u8x16 v) -&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::logical&lt;u8x16&gt;</a> {</div>
 <div class="line">    <span class="comment">// A simd is_space we took from @aqrit</span></div>
 <div class="line">    __m128i lut = _mm_setr_epi8(<span class="charliteral">&#39; &#39;</span>,    0,    0,  0,</div>
 <div class="line">                                  0,    0,    0,  0,</div>
@@ -160,8 +160,7 @@ sve, powerpc: ....
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#endif  </span><span class="comment">// __SSSE3__</span></div>
 <div class="line"> </div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
-<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:409</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md96"></a>
 What about non-native sizes?</h1>
 <p>If the number is less than the one that can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can be garbage.</p>
@@ -169,10 +168,10 @@ What about non-native sizes?</h1>
 <div class="fragment"><div class="line"> </div>
 <div class="line">TTS_CASE(<span class="stringliteral">&quot;Slice Example&quot;</span>) {</div>
 <div class="line">  <span class="comment">// On most platforms is 2 registers or even 4.</span></div>
-<div class="line">  <span class="keyword">using </span>i32x16 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;16&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>i32x16 = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int, eve::fixed&lt;16&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// half type</span></div>
-<div class="line">  <span class="keyword">using </span>i32x8  = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>i32x8  = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line">  i32x16 ints {0,  1,   2,   3,</div>
 <div class="line">               4,  5,   6,   7,</div>
@@ -184,8 +183,8 @@ What about non-native sizes?</h1>
 <div class="line">    8,  9,  10,  11, 12, 13, 14,  15 };</div>
 <div class="line"> </div>
 <div class="line"> </div>
-<div class="line">  TTS_EQUAL(ints.slice(eve::lower_),  lo_expected);</div>
-<div class="line">  TTS_EQUAL(ints.slice(eve::upper_), hi_expected);</div>
+<div class="line">  TTS_EQUAL(ints.slice(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::lower_</a>),  lo_expected);</div>
+<div class="line">  TTS_EQUAL(ints.slice(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::upper_</a>), hi_expected);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> [<a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>, <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>] = ints.slice();</div>
 <div class="line"> </div>

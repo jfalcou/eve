@@ -134,7 +134,7 @@ $(document).ready(function(){initNavTree('structeve_1_1logical_3_01T_01_4.html',
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;plain_scalar_value T&gt;<br />
 struct eve::logical&lt; T &gt;</div><p><b>Required header:</b> <code>#include &lt;eve/logical.hpp&gt;</code></p>
-<p>eve::logical is an architecture-agnostic representation of a boolean mask and provides standardized API to access informations, compute values and manipulate such mask. Contrary to <code>bool</code>, an instance of logical has the same sizeof as <code>T</code>, allowing seamless interaction with an instance eve::logical&lt;eve::wide&lt; T &gt;&gt;.</p>
+<p>eve::logical is an architecture-agnostic representation of a boolean mask and provides standardized API to access informations, compute values and manipulate such mask. Contrary to <code>bool</code>, an instance of logical has the same sizeof as <code>T</code>, allowing seamless interaction with an instance <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::logical&lt;eve::wide&lt; T &gt;&gt;</a>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type of value to store a mask from </td></tr>
@@ -145,19 +145,19 @@ struct eve::logical&lt; T &gt;</div><p><b>Required header:</b> <code>#include &l
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a0506b5419f1b6c7408451d6ae0bb0b19" id="r_a0506b5419f1b6c7408451d6ae0bb0b19"><td class="memItemLeft" align="right" valign="top"><a id="a0506b5419f1b6c7408451d6ae0bb0b19" name="a0506b5419f1b6c7408451d6ae0bb0b19"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>translated_type</b> = <a class="el" href="structeve_1_1logical_3_01T_01_4.html#a83188ebd25932c504e2e289b63e223b4">logical</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; T &gt; &gt;</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">using</a>&#160;</td><td class="memItemRight" valign="bottom"><b>translated_type</b> = <a class="el" href="structeve_1_1logical_3_01T_01_4.html#a83188ebd25932c504e2e289b63e223b4">logical</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> &gt; &gt;</td></tr>
 <tr class="memdesc:a0506b5419f1b6c7408451d6ae0bb0b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the curent logical type. <br /></td></tr>
 <tr class="separator:a0506b5419f1b6c7408451d6ae0bb0b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ca253e53d508bd86a04e37251298986" id="r_a4ca253e53d508bd86a04e37251298986"><td class="memItemLeft" align="right" valign="top"><a id="a4ca253e53d508bd86a04e37251298986" name="a4ca253e53d508bd86a04e37251298986"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = T</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">using</a>&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a></td></tr>
 <tr class="memdesc:a4ca253e53d508bd86a04e37251298986"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type associated to the boolean mask. <br /></td></tr>
 <tr class="separator:a4ca253e53d508bd86a04e37251298986"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f0eebc0478c6f0faf7c0ec92c634609" id="r_a7f0eebc0478c6f0faf7c0ec92c634609"><td class="memItemLeft" align="right" valign="top"><a id="a7f0eebc0478c6f0faf7c0ec92c634609" name="a7f0eebc0478c6f0faf7c0ec92c634609"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>mask_type</b> = T</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">using</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mask_type</b> = <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a></td></tr>
 <tr class="memdesc:a7f0eebc0478c6f0faf7c0ec92c634609"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the numerical value of mask. <br /></td></tr>
 <tr class="separator:a7f0eebc0478c6f0faf7c0ec92c634609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a565e06755bae0876326ea16ffb68abc4" id="r_a565e06755bae0876326ea16ffb68abc4"><td class="memItemLeft" align="right" valign="top"><a id="a565e06755bae0876326ea16ffb68abc4" name="a565e06755bae0876326ea16ffb68abc4"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>bits_type</b> = as_integer_t&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; T &gt;, unsigned &gt;</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">using</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bits_type</b> = as_integer_t&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">translate_t</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> &gt;, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">unsigned</a> &gt;</td></tr>
 <tr class="memdesc:a565e06755bae0876326ea16ffb68abc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the bitwise representation of the mask. <br /></td></tr>
 <tr class="separator:a565e06755bae0876326ea16ffb68abc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -165,21 +165,21 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>bits_type</b> = as_i
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:a83188ebd25932c504e2e289b63e223b4" id="r_a83188ebd25932c504e2e289b63e223b4"><td class="memItemLeft" align="right" valign="top"><a id="a83188ebd25932c504e2e289b63e223b4" name="a83188ebd25932c504e2e289b63e223b4"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> () noexcept</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">constexpr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> () <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">noexcept</a></td></tr>
 <tr class="memdesc:a83188ebd25932c504e2e289b63e223b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:a83188ebd25932c504e2e289b63e223b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab884507910d1e31e78f65996e28384ca" id="r_ab884507910d1e31e78f65996e28384ca"><td class="memItemLeft" align="right" valign="top"><a id="ab884507910d1e31e78f65996e28384ca" name="ab884507910d1e31e78f65996e28384ca"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (bool v) noexcept</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">constexpr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">bool</a> v) <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">noexcept</a></td></tr>
 <tr class="memdesc:ab884507910d1e31e78f65996e28384ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a <code>bool</code> <br /></td></tr>
 <tr class="separator:ab884507910d1e31e78f65996e28384ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab653908c20a7064c7aee017040fc596c" id="r_ab653908c20a7064c7aee017040fc596c"><td class="memTemplParams" colspan="2"><a id="ab653908c20a7064c7aee017040fc596c" name="ab653908c20a7064c7aee017040fc596c"></a>
 template&lt;plain_scalar_value U&gt; </td></tr>
-<tr class="memitem:ab653908c20a7064c7aee017040fc596c"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (U const &amp;v) noexcept</td></tr>
+<tr class="memitem:ab653908c20a7064c7aee017040fc596c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">constexpr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">U</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">const</a> &amp;v) <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">noexcept</a></td></tr>
 <tr class="memdesc:ab653908c20a7064c7aee017040fc596c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a plain_scalar_value. <br /></td></tr>
 <tr class="separator:ab653908c20a7064c7aee017040fc596c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
 <tr class="memitem:a4ed137c0e48ce71166e973abce3f80dd" id="r_a4ed137c0e48ce71166e973abce3f80dd"><td class="memItemLeft" align="right" valign="top"><a id="a4ed137c0e48ce71166e973abce3f80dd" name="a4ed137c0e48ce71166e973abce3f80dd"></a>
-constexpr <a class="el" href="structeve_1_1logical_3_01T_01_4.html#a83188ebd25932c504e2e289b63e223b4">logical</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (bool v) &amp;noexcept</td></tr>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">constexpr</a> <a class="el" href="structeve_1_1logical_3_01T_01_4.html#a83188ebd25932c504e2e289b63e223b4">logical</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">bool</a> v) &amp;<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">noexcept</a></td></tr>
 <tr class="memdesc:a4ed137c0e48ce71166e973abce3f80dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a <code>bool</code> <br /></td></tr>
 <tr class="separator:a4ed137c0e48ce71166e973abce3f80dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

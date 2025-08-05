@@ -129,15 +129,17 @@ $(document).ready(function(){initNavTree('concepteve_1_1has__plain__translation.
 
 <p><code>#include &lt;eve/concept/translation.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h2><a class="anchor" id="autotoc_md13"></a>
+<div class="textblock"><p>Specify that a type can be translated into another type. That is, both types are part of the same translation tree.</p>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Example Types</h2>
 <ul>
 <li><code>std::byte</code> </li>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__plain__translation.html">eve::has_plain_translation</a> =  !std::same_as&lt;translate_t&lt;T&gt;, T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__plain__translation.html">eve::has_plain_translation</a> =  !std::same_as&lt;translate_t&lt;T&gt;, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>&gt;</div>
 <div class="ttc" id="aconcepteve_1_1has__plain__translation_html"><div class="ttname"><a href="concepteve_1_1has__plain__translation.html">eve::has_plain_translation</a></div><div class="ttdoc">Specify that a type can be translated to a plain scalar value. The concept has_plain_translation&lt;T&gt; i...</div><div class="ttdef"><b>Definition</b> translation.hpp:27</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

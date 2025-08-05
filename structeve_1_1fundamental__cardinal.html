@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('structeve_1_1fundamental__cardinal.htm
 
 <p><code>#include &lt;eve/arch/fundamental_cardinal.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, regular_abi ABI = eve::current_abi_type&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Type</a>, regular_abi ABI = eve::current_abi_type&gt;<br />
 struct eve::fundamental_cardinal&lt; Type, ABI &gt;</div><p><b>Required header:</b> <code>#include &lt;eve/arch/fundamental_cardinal.hpp&gt;</code></p>
 <p><a class="el" href="structeve_1_1fundamental__cardinal.html" title="Computes the fundamental cardinal of a given type.">eve::fundamental_cardinal</a> computes the cardinal of the smallest register able to store values of type <code>Type</code> for a given SIMD <code>ABI</code> with no uninitialized lanes.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -164,8 +164,8 @@ Helper variable template</h4>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> fundamental_cardinal_v = fundamental_cardinal_t&lt;Type, ABI&gt;::value;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"><span class="comment">// Cardinal template inline variable to use with functions like eve::load</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, <span class="keyword">typename</span> ABI = eve::current_abi_type&gt;</div>
-<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <a class="code hl_struct" href="structeve_1_1fundamental__cardinal.html">fundamental_cardinal&lt;Type,ABI&gt;</a> <span class="keyword">const</span> fundamental = {};</div>
-<div class="ttc" id="astructeve_1_1fundamental__cardinal_html"><div class="ttname"><a href="structeve_1_1fundamental__cardinal.html">eve::fundamental_cardinal</a></div><div class="ttdoc">Computes the fundamental cardinal of a given type.</div><div class="ttdef"><b>Definition</b> fundamental_cardinal.hpp:67</div></div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">fundamental_cardinal&lt;Type,ABI&gt;</a> <span class="keyword">const</span> fundamental = {};</div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

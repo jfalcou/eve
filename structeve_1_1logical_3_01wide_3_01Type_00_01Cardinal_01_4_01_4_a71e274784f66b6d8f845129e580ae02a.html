@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('structeve_1_1logical_3_01wide_3_01Type
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
+template&lt;arithmetic_scalar_value Type, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Cardinal</a> &gt; </div>
 <div class="memtemplate">
 template&lt;std::size_t Slice&gt; </div>
 <table class="mlabels">
@@ -134,9 +134,9 @@ template&lt;std::size_t Slice&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::slice </td>
+          <td class="memname"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">auto</a> eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Type</a>, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Cardinal</a> &gt; &gt;::slice </td>
           <td>(</td>
-          <td class="paramtype">slice_t&lt; Slice &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">slice_t</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Slice</a> &gt;&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -147,9 +147,9 @@ template&lt;std::size_t Slice&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See also</dt><dd>eve::upper_ </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::upper_</a> </dd>
 <dd>
-eve::lower_</dd></dl>
+<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::lower_</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>A tag indicating which slice is required</td></tr>
@@ -162,18 +162,19 @@ eve::lower_</dd></dl>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the logical&lt;wide&gt; [true false true .. ]</span></div>
-<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i%2 == 0;};</div>
-<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::logical&lt;eve::wide&lt;int&gt;</a>&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i%2 == 0;};</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> = r.slice(eve::lower_);</div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> = r.slice(eve::upper_);</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a>.slice(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::lower_</a>);</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a>.slice(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::upper_</a>);</div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr auto hi</div><div class="ttdoc">elementwise_callable computing the most significant half of each lane.</div><div class="ttdef"><b>Definition</b> hi.hpp:71</div></div>
 <div class="ttc" id="agroup__core__bitops_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr auto lo</div><div class="ttdoc">Computes the least significant half of each lane.</div><div class="ttdef"><b>Definition</b> lo.hpp:73</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

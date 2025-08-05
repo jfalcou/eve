@@ -152,13 +152,13 @@ we assume that <code><a class="el" href="group__core__predicates_ga419057bf1a8ca
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt;relaxed_range Rng, <span class="keyword">typename</span> Less&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga5f1bdb9f21c4908a972e3391675cdc78.html#ga5f1bdb9f21c4908a972e3391675cdc78">max_element</a>(Rng&amp;&amp; rng, Less less) -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Rng&gt;</a>;   <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga5f1bdb9f21c4908a972e3391675cdc78.html#ga5f1bdb9f21c4908a972e3391675cdc78">max_element</a>(Rng&amp;&amp; rng, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Less</a> less) -&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">unaligned_iterator_t&lt;Rng&gt;</a>;   <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="keyword">template</span>&lt;relaxed_range Rng&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga5f1bdb9f21c4908a972e3391675cdc78.html#ga5f1bdb9f21c4908a972e3391675cdc78">max_element</a>(Rng&amp;&amp; rng) -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Rng&gt;</a>;            <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga5f1bdb9f21c4908a972e3391675cdc78.html#ga5f1bdb9f21c4908a972e3391675cdc78">max_element</a>(Rng&amp;&amp; rng) -&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">unaligned_iterator_t&lt;Rng&gt;</a>;            <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
 <div class="ttc" id="agroup__algos_ga5f1bdb9f21c4908a972e3391675cdc78_html_ga5f1bdb9f21c4908a972e3391675cdc78"><div class="ttname"><a href="group__algos_ga5f1bdb9f21c4908a972e3391675cdc78.html#ga5f1bdb9f21c4908a972e3391675cdc78">eve::algo::max_element</a></div><div class="ttdeci">constexpr auto max_element</div><div class="ttdoc">SIMD variation on std::max_element not exact match</div><div class="ttdef"><b>Definition</b> max_element.hpp:92</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Returns the position of a maximum value, according to less. If the range is empty - returns past the end.</li>
 <li>Same as 1 but the less is <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less</a></code></li>
@@ -176,7 +176,7 @@ we assume that <code><a class="el" href="group__core__predicates_ga419057bf1a8ca
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
 <div class="line">  std::vector&lt;int&gt; v{ 2, 4, -1, 4, 0, 1 };</div>
 <div class="line"> </div>

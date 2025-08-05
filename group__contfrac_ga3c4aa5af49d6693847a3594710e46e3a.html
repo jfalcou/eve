@@ -144,9 +144,10 @@ $(document).ready(function(){initNavTree('group__contfrac_ga3c4aa5af49d6693847a3
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Gen, eve::scalar_value T&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">lentz_a</a>(Gen g, <span class="keyword">const</span> T&amp; tol, <span class="keywordtype">size_t</span> &amp; max_terms) <span class="keyword">noexcept</span>;</div>
+<div class="line">  <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Gen, eve::scalar_value T&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">lentz_a</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Gen</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">g</a>, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">tol</a>, <span class="keywordtype">size_t</span> &amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">max_terms</a>) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__contfrac_ga3c4aa5af49d6693847a3594710e46e3a_html_ga3c4aa5af49d6693847a3594710e46e3a"><div class="ttname"><a href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">eve::lentz_a</a></div><div class="ttdeci">constexpr auto lentz_a</div><div class="ttdoc">Implement the lentz scheme to evaluate continued fractions.</div><div class="ttdef"><b>Definition</b> lentz_a.hpp:77</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -155,7 +156,7 @@ $(document).ready(function(){initNavTree('group__contfrac_ga3c4aa5af49d6693847a3
 <li><code>max_terms</code> : no more than max_terms calls to the generator will be made,</li>
 </ul>
 <p>The generator type should be an invocable which supports the following operations:</p><ul>
-<li>The call to g() returns a floating value or a pair (kumi::tuple) of such. Each time this operator is called then the next pair of a and b values has to be returned, or, if result_type is not a pair type, then the next b value has to be returned and all the a values are assumed to be equal to one.</li>
+<li>The call to <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">g()</a> returns a floating value or a pair (kumi::tuple) of such. Each time this operator is called then the next pair of a and b values has to be returned, or, if result_type is not a pair type, then the next b value has to be returned and all the a values are assumed to be equal to one.</li>
 <li>In all the continued fraction evaluation functions the effective tol parameter is the relative precision desired in the result, The evaluation of the fraction will continue until the last term evaluated leaves the relative error in the result less than tolerance or the max_terms iteration is reached.</li>
 </ul>
 <p><b>Return value</b></p>
@@ -166,29 +167,28 @@ $(document).ready(function(){initNavTree('group__contfrac_ga3c4aa5af49d6693847a3
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><span class="keyword">struct </span>const_fraction</div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">const_fraction</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">typedef</span> T result_type;</div>
+<div class="line">   <span class="keyword">typedef</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">result_type</a>;</div>
 <div class="line"> </div>
-<div class="line">   result_type operator()()</div>
+<div class="line">   <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">result_type</a> operator()()</div>
 <div class="line">   {</div>
-<div class="line">     <span class="keywordflow">return</span> T{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
+<div class="line">     <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
 <div class="line">   }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> z{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
-<div class="line">  <span class="keyword">auto</span> ref = (-z+<a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(<a class="code hl_variable" href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a>(z)+4))/2;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref constant fracs are: &quot;</span> &lt;&lt; ref &lt;&lt; std::endl;</div>
-<div class="line">  const_fraction&lt;<span class="keyword">decltype</span>(z)&gt; func;</div>
-<div class="line">  <span class="keyword">auto</span> gr = <a class="code hl_variable" href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">eve::lentz_a</a>(func,<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 100);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs are: &quot;</span> &lt;&lt; gr &lt;&lt; std::endl;</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">z</a>{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">ref</a> = (-<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">z</a>+<a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(<a class="code hl_variable" href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">z</a>)+4))/2;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref constant fracs are: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">ref</a> &lt;&lt; std::endl;</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">const_fraction</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">z</a>)&gt; func;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">gr</a> = <a class="code hl_variable" href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">eve::lentz_a</a>(func,<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::as&lt;double&gt;</a>()), 100);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs are: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">gr</a> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:80</div></div>
 <div class="ttc" id="agroup__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf_html_gacb015917b1a95c38dab29df14695c1bf"><div class="ttname"><a href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition</b> sqr.hpp:92</div></div>
 <div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:73</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>

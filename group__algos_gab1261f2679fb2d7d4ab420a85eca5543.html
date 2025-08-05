@@ -157,15 +157,15 @@ $(document).ready(function(){initNavTree('group__algos_gab1261f2679fb2d7d4ab420a
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
 <div class="line">    <span class="keyword">template</span>&lt;relaxed_range R1, relaxed_range R2, <span class="keyword">typename</span> Equal&gt;</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">search</a>(R1&amp;&amp; haystack, R2&amp;&amp; needle, Equal equal)  <span class="comment">// (1)</span></div>
-<div class="line">      -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;R1&gt;</a></div>
+<div class="line">    <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">search</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">R1</a>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">R2</a>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Equal</a> equal)  <span class="comment">// (1)</span></div>
+<div class="line">      -&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">unaligned_iterator_t&lt;R1&gt;</a></div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">template</span>&lt;relaxed_range R1, relaxed_range R2&gt;</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">search</a>(R1&amp;&amp; haystack, R2&amp;&amp; needle)  <span class="comment">// (2)</span></div>
-<div class="line">      -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;R1&gt;</a></div>
+<div class="line">    <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">search</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">R1</a>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">R2</a>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>)  <span class="comment">// (2)</span></div>
+<div class="line">      -&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">unaligned_iterator_t&lt;R1&gt;</a></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
 <div class="ttc" id="agroup__algos_gab1261f2679fb2d7d4ab420a85eca5543_html_gab1261f2679fb2d7d4ab420a85eca5543"><div class="ttname"><a href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a></div><div class="ttdeci">constexpr auto search</div><div class="ttdoc">SIMD version of std::search (subsequence in a sequence).</div><div class="ttdef"><b>Definition</b> search.hpp:426</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></code>. In order to mimic the behaviour of <code>std::search</code>, it will also cast the types, so that you can search unrelated types.</p>
 <p>Version (1) won't do implicit types conversions for you, you can either handle them in the predicate or use <code>views::convert</code>.</p>
 <p><b>Parameters (1)</b></p>
@@ -189,85 +189,85 @@ $(document).ready(function(){initNavTree('group__algos_gab1261f2679fb2d7d4ab420a
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line">std::ptrdiff_t</div>
-<div class="line">substring_in_string(std::string_view haystack, std::string_view needle)</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(std::string_view <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, std::string_view <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>)</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// NOTE: eve is not supporting `char` directly, you need to use int8_t or uint8_t</span></div>
-<div class="line">  std::span h(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(haystack.data()), haystack.size());</div>
-<div class="line">  std::span n(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(needle.data()), needle.size());</div>
+<div class="line">  std::span <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>.data()), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>.size());</div>
+<div class="line">  std::span <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">n</a>(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>.data()), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>.size());</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> res = <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(h, n);</div>
-<div class="line">  <span class="keywordflow">return</span> res - h.begin();</div>
+<div class="line">  <span class="keyword">auto</span> res = <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">n</a>);</div>
+<div class="line">  <span class="keywordflow">return</span> res - <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>.begin();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
-<div class="line">basic_example()</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">basic_example</a>()</div>
 <div class="line">{</div>
-<div class="line">  std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</div>
-<div class="line">  std::string_view haystack(<span class="stringliteral">&quot;one two three&quot;</span>);</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">__func__</a> &lt;&lt; std::endl;</div>
+<div class="line">  std::string_view <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>(<span class="stringliteral">&quot;one two three&quot;</span>);</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;empty: &quot;</span> &lt;&lt; substring_in_string(haystack, <span class="stringliteral">&quot;&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;one: &quot;</span> &lt;&lt; substring_in_string(haystack, <span class="stringliteral">&quot;one&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;two: &quot;</span> &lt;&lt; substring_in_string(haystack, <span class="stringliteral">&quot;two&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;three: &quot;</span> &lt;&lt; substring_in_string(haystack, <span class="stringliteral">&quot;three&quot;</span>) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;not there: &quot;</span> &lt;&lt; substring_in_string(haystack, <span class="stringliteral">&quot;not there&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;empty: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <span class="stringliteral">&quot;&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;one: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <span class="stringliteral">&quot;one&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;two: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <span class="stringliteral">&quot;two&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;three: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <span class="stringliteral">&quot;three&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;not there: &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <span class="stringliteral">&quot;not there&quot;</span>) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;\n&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
-<div class="line">implicit_conversions()</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">implicit_conversions</a>()</div>
 <div class="line">{</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt; &quot;</span> &lt;&lt; __func__ &lt;&lt; <span class="stringliteral">&quot; &lt;&lt;&lt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt; &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">__func__</a> &lt;&lt; <span class="stringliteral">&quot; &lt;&lt;&lt;&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">  std::vector&lt;double&gt;      haystack {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};</div>
-<div class="line">  std::vector&lt;std::int8_t&gt; needle {2, 3};</div>
+<div class="line">  std::vector&lt;double&gt;      <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a> {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};</div>
+<div class="line">  std::vector&lt;std::int8_t&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a> {2, 3};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;chars in doubles: &quot;</span> &lt;&lt; (<a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(haystack, needle) - haystack.begin())</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;chars in doubles: &quot;</span> &lt;&lt; (<a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>) - <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>.begin())</div>
 <div class="line">            &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;\n&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">std::ptrdiff_t</div>
-<div class="line">substring_in_string_case_insensitive(std::string_view haystack, std::string_view needle)</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string_case_insensitive</a>(std::string_view <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>, std::string_view <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>)</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// NOTE: eve is not supporting `char` directly, you need to use int8_t or uint8_t</span></div>
-<div class="line">  std::span h(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(haystack.data()), haystack.size());</div>
-<div class="line">  std::span n(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(needle.data()), needle.size());</div>
+<div class="line">  std::span <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>.data()), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">haystack</a>.size());</div>
+<div class="line">  std::span <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">n</a>(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::uint8_t *<span class="keyword">&gt;</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>.data()), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">needle</a>.size());</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// @the-moisrex provided this. See `case_insensitive_equals.cpp` for details.</span></div>
-<div class="line">  <span class="keyword">auto</span> to_upper = [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;std::uint8_t&gt;</a> <span class="keyword">auto</span> c)</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">to_upper</a> = [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;std::uint8_t&gt;</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">constexpr</span> std::uint8_t alphabet_length = <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>;</div>
-<div class="line">    <span class="keyword">constexpr</span> std::uint8_t a_A_offset      = <span class="charliteral">&#39;a&#39;</span> - <span class="charliteral">&#39;A&#39;</span>;</div>
+<div class="line">    <span class="keyword">constexpr</span> std::uint8_t <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">alphabet_length</a> = <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>;</div>
+<div class="line">    <span class="keyword">constexpr</span> std::uint8_t <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a_A_offset</a>      = <span class="charliteral">&#39;a&#39;</span> - <span class="charliteral">&#39;A&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>[(c - std::uint8_t(<span class="charliteral">&#39;a&#39;</span>)) &lt;= alphabet_length](c, a_A_offset);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>[(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a> - std::uint8_t(<span class="charliteral">&#39;a&#39;</span>)) &lt;= <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">alphabet_length</a>](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a_A_offset</a>);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// NOTE: we could also use views::map</span></div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(h, n, [&amp;](<span class="keyword">auto</span> x, <span class="keyword">auto</span> y) { <span class="keywordflow">return</span> to_upper(x) == to_upper(y); })</div>
-<div class="line">         - h.begin();</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__algos_gab1261f2679fb2d7d4ab420a85eca5543.html#gab1261f2679fb2d7d4ab420a85eca5543">eve::algo::search</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">n</a>, [&amp;](<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">y</a>) { <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">to_upper</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>) == <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">to_upper</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">y</a>); })</div>
+<div class="line">         - <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">h</a>.begin();</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
-<div class="line">custom_predicates()</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">custom_predicates</a>()</div>
 <div class="line">{</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt; &quot;</span> &lt;&lt; __func__ &lt;&lt; <span class="stringliteral">&quot; &lt;&lt;&lt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt; &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">__func__</a> &lt;&lt; <span class="stringliteral">&quot; &lt;&lt;&lt;&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;substring_in_string_case_insensitive: &quot;</span></div>
-<div class="line">            &lt;&lt; substring_in_string_case_insensitive(<span class="stringliteral">&quot;Uabc Ab&quot;</span>, <span class="stringliteral">&quot;C A&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">            &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string_case_insensitive</a>(<span class="stringliteral">&quot;Uabc Ab&quot;</span>, <span class="stringliteral">&quot;C A&quot;</span>) &lt;&lt; std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;substring_in_string_case_insensitive: &quot;</span></div>
-<div class="line">            &lt;&lt; substring_in_string_case_insensitive(<span class="stringliteral">&quot;Uabc Ab&quot;</span>, <span class="stringliteral">&quot;Ab&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">            &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">substring_in_string_case_insensitive</a>(<span class="stringliteral">&quot;Uabc Ab&quot;</span>, <span class="stringliteral">&quot;Ab&quot;</span>) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;\n&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span></div>
-<div class="line">main()</div>
+<div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  basic_example();</div>
-<div class="line">  implicit_conversions();</div>
-<div class="line">  custom_predicates();</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">basic_example</a>();</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">implicit_conversions</a>();</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">custom_predicates</a>();</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition</b> product_type.hpp:107</div></div>
 <div class="ttc" id="agroup__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a_html_ga13ddd05c1c516674e73d2ed018fa5d5a"><div class="ttname"><a href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a></div><div class="ttdeci">constexpr auto sub</div><div class="ttdoc">tuple_callable computing the difference of its first argument with the sum of the others.</div><div class="ttdef"><b>Definition</b> sub.hpp:122</div></div>

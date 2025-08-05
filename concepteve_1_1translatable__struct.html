@@ -135,16 +135,16 @@ $(document).ready(function(){initNavTree('concepteve_1_1translatable__struct.htm
   </table>
   </dd>
 </dl>
-<p><code>T</code> must satisfies this concept in order to be safely used as a translatable type. <code>T</code> must be trivially consstructible, copyable, and assignable to guarantee that scalar operations produce the same results as vectorized operations executed on values of <code>T</code> when viewed as their translation targets. <code>T</code>and its translation target must have the same size and alignment to reduce the risks of undefined behavior when translating between them. </p>
+<p><code>T</code> must satisfy this concept in order to be safely used as a translatable type. <code>T</code> and its translation target must have the same size and alignment. <code>T</code> must be trivially copyable, and assignable to guarantee that scalar operations produce the same results as vectorized operations executed on values of <code>T</code> when observed as their translation targets.</p>
+<dl class="section note"><dt>Note</dt><dd>While <code>T</code> is not required to be trivially constructible, a constructor of <code>T</code> initializing it with anything other than its default value, or having side-effects can lead to undefined or unexpected behavior when used in vectorized operations. This also applies to the overload of any operator of <code>T</code> that is also available for its translation target. </dd></dl>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1translatable__struct.html">eve::translatable_struct</a> =  std::is_trivially_copyable_v&lt;T&gt;</div>
 <div class="line">                              &amp;&amp; std::is_trivially_assignable_v&lt;T&amp;, T&gt;</div>
-<div class="line">                              &amp;&amp; std::is_trivially_default_constructible_v&lt;T&gt;</div>
-<div class="line">                              &amp;&amp; std::is_trivially_constructible_v&lt;T, typename translation_of&lt;T&gt;::type&gt;</div>
-<div class="line">                              &amp;&amp; (<span class="keyword">sizeof</span>(T) == <span class="keyword">sizeof</span>(<span class="keyword">typename</span> translation_of&lt;T&gt;::type))</div>
-<div class="line">                              &amp;&amp; (<span class="keyword">alignof</span>(T) == <span class="keyword">alignof</span>(<span class="keyword">typename</span> translation_of&lt;T&gt;::type))</div>
-<div class="ttc" id="aconcepteve_1_1translatable__struct_html"><div class="ttname"><a href="concepteve_1_1translatable__struct.html">eve::translatable_struct</a></div><div class="ttdoc">Defines the requirements for a struct to be translatable.</div><div class="ttdef"><b>Definition</b> translation.hpp:49</div></div>
+<div class="line">                              &amp;&amp; (<span class="keyword">sizeof</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>) == <span class="keyword">sizeof</span>(<span class="keyword">typename</span> translation_of&lt;T&gt;::type))</div>
+<div class="line">                              &amp;&amp; (<span class="keyword">alignof</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>) == <span class="keyword">alignof</span>(<span class="keyword">typename</span> translation_of&lt;T&gt;::type))</div>
+<div class="ttc" id="aconcepteve_1_1translatable__struct_html"><div class="ttname"><a href="concepteve_1_1translatable__struct.html">eve::translatable_struct</a></div><div class="ttdoc">Defines the requirements for a struct to be translatable.</div><div class="ttdef"><b>Definition</b> translation.hpp:57</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

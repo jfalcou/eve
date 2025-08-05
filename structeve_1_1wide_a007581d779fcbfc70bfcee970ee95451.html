@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('structeve_1_1wide_a007581d779fcbfc70bf
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
+template&lt;arithmetic_scalar_value Type, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Cardinal</a> &gt; </div>
 <div class="memtemplate">
 template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>, <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a> &gt; Generator&gt; </div>
 <table class="mlabels">
@@ -134,9 +134,9 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b07
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; Type, Cardinal &gt;::wide </td>
+          <td class="memname"><a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Type</a>, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Cardinal</a> &gt;::wide </td>
           <td>(</td>
-          <td class="paramtype">Generator &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Generator</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>g</em></td><td>)</td>
           <td></td>
         </tr>
@@ -148,8 +148,9 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b07
 </table>
 </div><div class="memdoc">
 <p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
-<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1cardinal.html">cardinal</a>);</div>
+<div class="fragment"><div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1cardinal.html">cardinal</a>);</div>
 <div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition</b> generator.hpp:30</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="astructeve_1_1cardinal_html"><div class="ttname"><a href="structeve_1_1cardinal.html">eve::cardinal</a></div><div class="ttdoc">Computes the cardinal of a given type.</div><div class="ttdef"><b>Definition</b> cardinal.hpp:54</div></div>
 </div><!-- fragment --><p> <br  />
 </p>
@@ -164,13 +165,12 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b07
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the wide [N-1 ... 0]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> c - i - 1;};</div>
-<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int&gt;</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>) { <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a> - i - 1;};</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

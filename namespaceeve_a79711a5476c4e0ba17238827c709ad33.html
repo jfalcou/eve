@@ -129,11 +129,13 @@ $(document).ready(function(){initNavTree('namespaceeve_a79711a5476c4e0ba17238827
 template&lt;translatable T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a> = typedef typename decltype(detail::as_translated_type(<a class="el" href="structeve_1_1as.html">as</a>&lt;T&gt;{}))::type</td>
+          <td class="memname"><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">using</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a> = <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typedef</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">decltype</a>(detail::as_translated_type(<a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>&gt;{}))::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Recursively translates the type <code>T</code> until <code><a class="el" href="structeve_1_1translation__of.html" title="Notifies EVE that a type is translatable and its translation target.">translation_of</a>&lt;T&gt;</code> is <code>T</code>. </p>
+<p>Recursively resolves the translation chain until reaching a fundamental type. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2__w_2eve_2eve_2include_2eve_2traits_2as_translation_8hpp-example.html#a2">/__w/eve/eve/include/eve/traits/as_translation.hpp</a>.</dd>
+</dl>
 
 </div>
 </div>

@@ -130,11 +130,12 @@ $(document).ready(function(){initNavTree('concepteve_1_1has__store__equivalent.h
 <p><code>#include &lt;eve/module/core/regular/store_equivalent.hpp&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Ptr&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a> =  simd_compatible_ptr&lt;Ptr, T&gt; &amp;&amp;(</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a> =  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">simd_compatible_ptr&lt;Ptr, T&gt;</a> &amp;&amp;(</div>
 <div class="line">    !std::same_as&lt;kumi::tuple&lt;ignore_none_, T, Ptr&gt;,</div>
 <div class="line">                  <span class="keyword">decltype</span>(store_equivalent(<a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">ignore_none</a>, std::declval&lt;T&gt;(), std::declval&lt;Ptr&gt;()))&gt;)</div>
 <div class="ttc" id="aconcepteve_1_1has__store__equivalent_html"><div class="ttname"><a href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a></div><div class="ttdoc">tests if store_equivalent has a non-default definition for a value and a pointer.</div><div class="ttdef"><b>Definition</b> store_equivalent.hpp:44</div></div>
 <div class="ttc" id="agroup__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:240</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

@@ -188,16 +188,16 @@ Adapting UDT to SIMD processing</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>adapt</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a> x, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
 <div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr auto atan2</div><div class="ttdoc">elementwise_callable object computing the arc tangent using the signs of the arguments to determine t...</div><div class="ttdef"><b>Definition</b> atan2.hpp:109</div></div>
 <div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr auto hypot</div><div class="ttdoc">tuple_callable computing the  norm of its inputs.</div><div class="ttdef"><b>Definition</b> hypot.hpp:88</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --><p>Note how the semantic improved by being able to explicitly states we return a SIMD register made of instance of <code>polar_coords</code>.</p>
 <h1><a class="anchor" id="autotoc_md110"></a>
 Creating SIMD-aware UDT</h1>
@@ -242,11 +242,11 @@ Storage and Processing</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>udt</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
+<div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a> x, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
 <div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a>{rho, theta};</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;polar_coords&gt;</a>{rho, theta};</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> to_polar( std::vector&lt;float&gt; <span class="keyword">const</span>&amp; xs, std::vector&lt;float&gt; <span class="keyword">const</span>&amp; ys)</div>
@@ -287,7 +287,7 @@ Storage and Processing</h1>
 <div class="line">  <span class="keyword">auto</span> to_cartesian(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;polar_coords&gt;</a> <span class="keyword">auto</span> in) {</div>
 <div class="line">    <span class="keyword">auto</span> r = rho(in);</div>
 <div class="line">    <span class="keyword">auto</span> t = theta(in);</div>
-<div class="line">   <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;cartesian_coords&gt;</a>{},</div>
+<div class="line">   <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::as&lt;cartesian_coords&gt;</a>{},</div>
 <div class="line">                   r * <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a>(t), r * <a class="code hl_variable" href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a>(t));</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -306,7 +306,6 @@ Storage and Processing</h1>
 <div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr auto cos</div><div class="ttdoc">elementwise_callable object computing the cosine.</div><div class="ttdef"><b>Definition</b> cos.hpp:92</div></div>
 <div class="ttc" id="agroup__math__trig_gaf171d35de1087cbe903e3c5748cf19f3_html_gaf171d35de1087cbe903e3c5748cf19f3"><div class="ttname"><a href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a></div><div class="ttdeci">constexpr auto sin</div><div class="ttdoc">elementwise_callable object computing the sine.</div><div class="ttdef"><b>Definition</b> sin.hpp:91</div></div>
 <div class="ttc" id="astructeve_1_1algo_1_1soa__vector_html_acfa067cbe1080920388e2637eb920180"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector.html#acfa067cbe1080920388e2637eb920180">eve::algo::soa_vector::size</a></div><div class="ttdeci">size_type size() const noexcept</div><div class="ttdoc">Returns the number of elements in the container.</div><div class="ttdef"><b>Definition</b> soa_vector.hpp:147</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md112"></a>
 Conclusion</h1>
 <p>In this tutorial, we managed to:</p><ul>

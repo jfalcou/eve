@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('group__extensions_gafb7ce9baadbb712995
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Build the callable object from the function object type</span></div>
-<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> func = eve::functor&lt;func_t&gt;;</div>
+<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> func = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::functor&lt;func_t&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// As func_t used EVE_CALLABLE_OBJECT_FROM, we can write overloads in this namespace</span></div>
 <div class="line">  <span class="keyword">namespace </span>impl</div>
@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('group__extensions_gafb7ce9baadbb712995
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  std::cout &lt;&lt; my_lib::func(8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; my_lib::func(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;short&gt;</a>{77}) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; my_lib::func(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;short&gt;</a>{77}) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; my_lib::func(25.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(double) supported     : &quot;</span></div>
@@ -228,7 +228,7 @@ $(document).ready(function(){initNavTree('group__extensions_gafb7ce9baadbb712995
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(wide&lt;float&gt;) supported: &quot;</span></div>
-<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;my_lib::func&gt;, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>&gt;</div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;my_lib::func&gt;, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a>&gt;</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:51</div></div>
@@ -236,8 +236,8 @@ $(document).ready(function(){initNavTree('group__extensions_gafb7ce9baadbb712995
 <div class="ttc" id="agroup__extensions_html_gaa3458167ed8a49f4d2bcc308470b0d75"><div class="ttname"><a href="group__extensions.html#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a></div><div class="ttdeci">#define EVE_REQUIRES(ARCH)</div><div class="ttdoc">Flag a function to support delayed calls on given architecture.</div><div class="ttdef"><b>Definition</b> protocol.hpp:204</div></div>
 <div class="ttc" id="agroup__extensions_html_gad83e12234bfdd5eb87538358c5b1b6b4"><div class="ttname"><a href="group__extensions.html#gad83e12234bfdd5eb87538358c5b1b6b4">EVE_CALLABLE_NAMESPACE</a></div><div class="ttdeci">#define EVE_CALLABLE_NAMESPACE()</div><div class="ttdoc">Register a namespace as suitable for containing eve::callable overloads.</div><div class="ttdef"><b>Definition</b> protocol.hpp:192</div></div>
 <div class="ttc" id="agroup__extensions_html_gaf0beae174fce698157d30319be9355d0"><div class="ttname"><a href="group__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a></div><div class="ttdeci">#define EVE_DISPATCH_CALL(...)</div><div class="ttdoc">Generate the proper call to current EVE's Callable Object implementation.</div><div class="ttdef"><b>Definition</b> protocol.hpp:172</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="astructeve_1_1callable_html"><div class="ttname"><a href="structeve_1_1callable.html">eve::callable</a></div><div class="ttdoc">CRTP base class defining an EVE's Callable Object.</div><div class="ttdef"><b>Definition</b> callable.hpp:49</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

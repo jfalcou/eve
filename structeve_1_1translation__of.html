@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('structeve_1_1translation__of.html','')
 
 <p><code>#include &lt;eve/traits/translation.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>&gt;<br />
 struct eve::translation_of&lt; T &gt;</div><p>By default, most EVE functions only work on fundamental types. Translation allows the user to specify that a custom type should be treated as one of the fundamental types when used in EVE.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -140,13 +140,14 @@ struct eve::translation_of&lt; T &gt;</div><p>By default, most EVE functions onl
   </dd>
 </dl>
 <p>Example: </p><div class="fragment"><div class="line"><span class="comment">// Custom type that should be treated as an int</span></div>
-<div class="line"><span class="keyword">struct </span>MyInt { <span class="keywordtype">int</span> <a class="code hl_concept" href="concepteve_1_1value.html">value</a>; };</div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">MyInt</a> { <span class="keywordtype">int</span> <a class="code hl_concept" href="concepteve_1_1value.html">value</a>; };</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Specialize translation_of to map MyInt to int in EVE</span></div>
 <div class="line"><span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structeve_1_1translation__of.html">eve::translation_of</a>&lt;MyInt&gt; { <span class="keyword">using </span>type = int; };</div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structeve_1_1translation__of.html">eve::translation_of</a>&lt;<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">MyInt</a>&gt; { <span class="keyword">using </span>type = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">int</a>; };</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
-<div class="ttc" id="astructeve_1_1translation__of_html"><div class="ttname"><a href="structeve_1_1translation__of.html">eve::translation_of</a></div><div class="ttdoc">Notifies EVE that a type is translatable and its translation target.</div><div class="ttdef"><b>Definition</b> translation.hpp:35</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
+<div class="ttc" id="astructeve_1_1translation__of_html"><div class="ttname"><a href="structeve_1_1translation__of.html">eve::translation_of</a></div><div class="ttdoc">Notifies EVE that a type is translatable and its translation target.</div><div class="ttdef"><b>Definition</b> translation.hpp:37</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>A translatable type's translation target can be a translatable type itself. In this case, EVE will recursively resolve the translation until it reaches a fundamental type. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

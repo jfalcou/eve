@@ -159,17 +159,18 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span> &lt;simd_value T, logical_simd_value L&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>(T x, L m);                       <span class="comment">// (1)</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">L</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">m</a>);                       <span class="comment">// (1)</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C,</div>
-<div class="line">             <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T,</div>
-<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>[C ignore](T x, L m)              <span class="comment">// (2)</span></div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">L</a>&gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">compress</a>[C ignore](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">L</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">m</a>)              <span class="comment">// (2)</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:46</div></div>
 <div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition</b> conditional.hpp:52</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition</b> vectorized.hpp:34</div></div>
 <div class="ttc" id="agroup__core__compress_ga653bcb136e1f2983814787c42567f541_html_ga653bcb136e1f2983814787c42567f541"><div class="ttname"><a href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a></div><div class="ttdeci">constexpr callable_compress_ compress</div><div class="ttdoc">A low level function to compress one simd value based on a mask.</div><div class="ttdef"><b>Definition</b> compress.hpp:89</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -188,7 +189,7 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="line"> </div>
 <div class="line"><span class="comment">// template to make if constexpr not activate</span></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keywordtype">void</span> show_return_type(T)</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">show_return_type</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::same_as&lt;T, std::int8_t&gt; &amp;&amp; eve::current_api == eve::sse4_2)</div>
 <div class="line">  {</div>
@@ -201,7 +202,7 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="line">    <span class="comment">// We will also return how many are in each chunk</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// clang-format off</span></div>
-<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;T&gt;</a> in {</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;T&gt;</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a> {</div>
 <div class="line">       1,  2,  0,  4, <span class="comment">//</span></div>
 <div class="line">       5,  0,  6,  7, <span class="comment">//</span></div>
 <div class="line">       8,  9, 10, 11, <span class="comment">//</span></div>
@@ -209,38 +210,38 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="line">    };</div>
 <div class="line">    <span class="comment">// clang-format on</span></div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">using </span>i8x8 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">    <span class="keyword">using </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">i8x8</a> = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;std::int8_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">using </span>chunk = kumi::tuple&lt;i8x8, int&gt;;  <span class="comment">// int should be ptrdiff_t - this is a bug</span></div>
+<div class="line">    <span class="keyword">using </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">chunk</a> = kumi::tuple&lt;i8x8, int&gt;;  <span class="comment">// int should be ptrdiff_t - this is a bug</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ignore will be interpreted as false in the mask</span></div>
-<div class="line">    kumi::tuple&lt;chunk, chunk&gt; compressed = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1)](in, in != 0);</div>
+<div class="line">    kumi::tuple&lt;chunk, chunk&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed</a> = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1)](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a> != 0);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> [<a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>, <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>] = compressed;</div>
+<div class="line">    <span class="keyword">auto</span> [<a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>, <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>] = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed</a>;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> [lo_compressed, lo_count] = <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>;</div>
-<div class="line">    <span class="keyword">auto</span> [hi_compressed, hi_count] = <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>;</div>
+<div class="line">    <span class="keyword">auto</span> [<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_compressed</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_count</a>] = <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>;</div>
+<div class="line">    <span class="keyword">auto</span> [<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">hi_compressed</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">hi_count</a>] = <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>;</div>
 <div class="line"> </div>
-<div class="line">    TTS_EQUAL(5, lo_count); <span class="comment">// 2 zeroes in the first 8 elements + ignore_first</span></div>
-<div class="line">    TTS_EQUAL(7, hi_count); <span class="comment">// 1 zero in the second 8 elements</span></div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">TTS_EQUAL</a>(5, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_count</a>); <span class="comment">// 2 zeroes in the first 8 elements + ignore_first</span></div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">TTS_EQUAL</a>(7, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">hi_count</a>); <span class="comment">// 1 zero in the second 8 elements</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// The &#39;tail&#39; after removed elements is unspecified</span></div>
 <div class="line">    <span class="comment">// so looking at them is not helpful.</span></div>
-<div class="line">    lo_compressed.set(5, -1);</div>
-<div class="line">    lo_compressed.set(6, -1);</div>
-<div class="line">    lo_compressed.set(7, -1);</div>
-<div class="line">    hi_compressed.set(7, -1);</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_compressed</a>.set(5, -1);</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_compressed</a>.set(6, -1);</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_compressed</a>.set(7, -1);</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">hi_compressed</a>.set(7, -1);</div>
 <div class="line"> </div>
-<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(lo_compressed == i8x8{2, 4, 5, 6, 7, -1, -1, -1}));</div>
-<div class="line">    TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(hi_compressed == i8x8{8, 9, 10, 11, 12, 14, 15, -1}));</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">TTS_EXPECT</a>(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lo_compressed</a> == <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">i8x8</a>{2, 4, 5, 6, 7, -1, -1, -1}));</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">TTS_EXPECT</a>(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">hi_compressed</a> == <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">i8x8</a>{8, 9, 10, 11, 12, 14, 15, -1}));</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Here is how one can use `eve::compress` directly.</span></div>
 <div class="line"><span class="comment">// This how for some platforms we can implement `compress_copy_unsafe_dense`.</span></div>
-<div class="line"><span class="keywordtype">int</span>* compress_copy_using_compress_directly(<span class="keyword">const</span> <span class="keywordtype">int</span>* in, <span class="keywordtype">int</span>* out)</div>
+<div class="line"><span class="keywordtype">int</span>* <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compress_copy_using_compress_directly</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>, <span class="keywordtype">int</span>* out)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> loaded = <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>(in);</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">loaded</a> = <a class="code hl_variable" href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// a tuple or compressed wides.</span></div>
 <div class="line">  <span class="comment">// each part is not just a wide but is a tuple&lt;wide, count&gt;</span></div>
@@ -248,44 +249,44 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="line">  <span class="comment">//</span></div>
 <div class="line">  <span class="comment">// So using chunk = kumi::tuple&lt;wide&lt;int, N1&gt;&gt;;</span></div>
 <div class="line">  <span class="comment">// So kumi::tuple&lt;chunk, ...&gt;</span></div>
-<div class="line">  kumi::tuple compressed_whole = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>(loaded, loaded != 0);</div>
+<div class="line">  kumi::tuple <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed_whole</a> = <a class="code hl_variable" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541">eve::compress</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">loaded</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">loaded</a> != 0);</div>
 <div class="line"> </div>
-<div class="line">  kumi::for_each([&amp;](<span class="keyword">auto</span> compressed_lengh) {</div>
-<div class="line">    <span class="keyword">auto</span> [compressed, length] = compressed_lengh;</div>
-<div class="line">    <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(compressed, out);</div>
-<div class="line">    out += length;</div>
-<div class="line">  }, compressed_whole);</div>
+<div class="line">  kumi::for_each([&amp;](<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed_lengh</a>) {</div>
+<div class="line">    <span class="keyword">auto</span> [<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">length</a>] = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed_lengh</a>;</div>
+<div class="line">    <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed</a>, out);</div>
+<div class="line">    out += <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">length</a>;</div>
+<div class="line">  }, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compressed_whole</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> out;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> validate_compress_copy(<span class="keyword">auto</span> f)</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">validate_compress_copy</a>(<span class="keyword">auto</span> f)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">constexpr</span> std::size_t N = <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;int&gt;::size</a>();</div>
-<div class="line">  std::array&lt;int, N&gt; in = {};</div>
+<div class="line">  std::array&lt;int, N&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a> = {};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span> (std::size_t i = 0; i != N; ++i) {</div>
-<div class="line">    <span class="keywordflow">if</span> (i % 4 == 0) in[i] = 0;</div>
+<div class="line">    <span class="keywordflow">if</span> (i % 4 == 0) <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>[i] = 0;</div>
 <div class="line">    <span class="keywordflow">else</span></div>
 <div class="line">    {</div>
-<div class="line">      in[i] = i;</div>
+<div class="line">      <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>[i] = i;</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  std::array&lt;int, N&gt; expected = {};</div>
-<div class="line">  std::copy_if(in.begin(), in.end(), expected.begin(), [](<span class="keywordtype">int</span> x) { return x != 0; });</div>
+<div class="line">  std::array&lt;int, N&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">expected</a> = {};</div>
+<div class="line">  std::copy_if(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>.begin(), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>.end(), <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">expected</a>.begin(), [](<span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>) { return x != 0; });</div>
 <div class="line"> </div>
 <div class="line">  std::array&lt;int, N&gt; out = {};</div>
-<div class="line">  <span class="keyword">auto</span>* o = f(in.data(), out.data());</div>
+<div class="line">  <span class="keyword">auto</span>* o = f(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">in</a>.data(), out.data());</div>
 <div class="line">  std::fill(o, out.data() + out.size(), 0);</div>
 <div class="line"> </div>
-<div class="line">  TTS_EQUAL(expected, out);</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">TTS_EQUAL</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">expected</a>, out);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  show_return_type(std::int8_t{0});</div>
-<div class="line">  validate_compress_copy(compress_copy_using_compress_directly);</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">show_return_type</a>(std::int8_t{0});</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">validate_compress_copy</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">compress_copy_using_compress_directly</a>);</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr auto hi</div><div class="ttdoc">elementwise_callable computing the most significant half of each lane.</div><div class="ttdef"><b>Definition</b> hi.hpp:71</div></div>
 <div class="ttc" id="agroup__core__bitops_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr auto lo</div><div class="ttdoc">Computes the least significant half of each lane.</div><div class="ttdef"><b>Definition</b> lo.hpp:73</div></div>
@@ -293,7 +294,6 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 <div class="ttc" id="agroup__memory_ga92b6c322f7422825155c2a590be84f09_html_ga92b6c322f7422825155c2a590be84f09"><div class="ttname"><a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:78</div></div>
 <div class="ttc" id="agroup__simd_ga67a13a1bb68e0de254b276da55e4ddfe_html_ga67a13a1bb68e0de254b276da55e4ddfe"><div class="ttname"><a href="group__simd_ga67a13a1bb68e0de254b276da55e4ddfe.html#ga67a13a1bb68e0de254b276da55e4ddfe">eve::load</a></div><div class="ttdeci">constexpr auto load</div><div class="ttdoc">Loads data from a pointer or a pair of iterators into a SIMD value.</div><div class="ttdef"><b>Definition</b> load.hpp:71</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:459</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 <div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:409</div></div>
 </div><!-- fragment --> 
 </div>

@@ -146,24 +146,25 @@ $(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Regular overload</span></div>
 <div class="line">  <span class="keyword">template</span>&lt;arithmetic_simd_value T, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                         <span class="comment">// 1</span></div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Ptr</a> ptr) <span class="keyword">noexcept</span>;                                         <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">template</span>&lt;logical_simd_value T, logical_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                         <span class="comment">// 1</span></div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Ptr</a> ptr) <span class="keyword">noexcept</span>;                                         <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Lanes masking</span></div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">mul</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">mul</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
 <div class="ttc" id="agroup__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f_html_ga06eee505775e24c81fa5f5b22382251f"><div class="ttname"><a href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a></div><div class="ttdeci">constexpr auto mul</div><div class="ttdoc">tuple_callable` computing the product of its arguments.</div><div class="ttdef"><b>Definition</b> mul.hpp:119</div></div>
 <div class="ttc" id="agroup__memory_ga92b6c322f7422825155c2a590be84f09_html_ga92b6c322f7422825155c2a590be84f09"><div class="ttname"><a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:78</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>value</code> : The <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a> to store.</li>
 <li><code>ptr</code> : A pointer to the memory location where the elements of <code>value</code> will be stored.</li>
-<li><code>c</code> : A relative conditional expression masking the operation.</li>
+<li><code>c</code> : A <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">relative conditional expression</a> masking the operation.</li>
 </ul>
 <p><b>Overloads</b></p>
 <ol type="1">
@@ -174,38 +175,37 @@ $(document).ready(function(){initNavTree('group__memory_ga92b6c322f7422825155c2a
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> arr[4];</div>
-<div class="line">  <span class="keywordtype">int</span> iarr[4];</div>
-<div class="line">  eve::logical&lt;float&gt; larr[4];</div>
+<div class="line">  <span class="keywordtype">float</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">arr</a>[4];</div>
+<div class="line">  <span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">iarr</a>[4];</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::logical&lt;float&gt;</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">larr</a>[4];</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; w = {3, 2, 1, 0};</div>
-<div class="line">  eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;&gt;&gt; lw = {<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">false</span>};</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">w</a> = {3, 2, 1, 0};</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lw</a> = {<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">false</span>};</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(w, arr);</div>
-<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(lw, larr);</div>
-<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(lw, iarr);</div>
+<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">w</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">arr</a>);</div>
+<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lw</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">larr</a>);</div>
+<div class="line">  <a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">lw</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">iarr</a>);</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;arr: &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : arr) {</div>
-<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> : <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">arr</a>) {</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;larr: &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : larr) {</div>
-<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> : <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">larr</a>) {</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;iarr: &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : iarr) {</div>
-<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (val ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;) &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> : <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">iarr</a>) {</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">val</a> ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;) &quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

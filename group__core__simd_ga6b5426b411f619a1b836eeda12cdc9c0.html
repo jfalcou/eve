@@ -145,9 +145,10 @@ $(document).ready(function(){initNavTree('group__core__simd_ga6b5426b411f619a1b8
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt;simd_value W&gt;</div>
-<div class="line">   <span class="keyword">typename</span> W::combined_type <a class="code hl_variable" href="group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">combine</a>(W a, W b) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">typename</span> W::combined_type <a class="code hl_variable" href="group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">combine</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">W</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a>, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">W</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a>) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0_html_ga6b5426b411f619a1b836eeda12cdc9c0"><div class="ttname"><a href="group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">eve::combine</a></div><div class="ttdeci">constexpr auto combine</div><div class="ttdoc">Combines two SIMD values in a larger one.</div><div class="ttdef"><b>Definition</b> combine.hpp:58</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -161,17 +162,16 @@ $(document).ready(function(){initNavTree('group__core__simd_ga6b5426b411f619a1b8
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wide_ft</a> = <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wide_ft</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf</a> = {-1.0f, 2.0f, -3.0f, -32768.0f};</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pf2 = <a class="code hl_variable" href="group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">eve::combine</a>(pf,pf);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;pf                  ---&gt; &quot;</span>  &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::combine(pf,pf) ---&gt; &quot;</span>  &lt;&lt; pf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf2</a> = <a class="code hl_variable" href="group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">eve::combine</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf</a>,<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf</a>);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;pf                  ---&gt; &quot;</span>  &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::combine(pf,pf) ---&gt; &quot;</span>  &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">pf2</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -129,9 +129,10 @@ $(document).ready(function(){initNavTree('concepteve_1_1only__if.html',''); init
 
 <p><code>#include &lt;eve/concept/options.hpp&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Choices&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>, <span class="keyword">typename</span>... <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Choices</a>&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1only__if.html">eve::only_if</a> =  detail::is_one_of&lt;T&gt;(detail::types&lt;Choices...&gt; {})</div>
 <div class="ttc" id="aconcepteve_1_1only__if_html"><div class="ttname"><a href="concepteve_1_1only__if.html">eve::only_if</a></div><div class="ttdoc">Checks if the type is one of the Choices.</div><div class="ttdef"><b>Definition</b> options.hpp:32</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

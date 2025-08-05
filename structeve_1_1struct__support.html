@@ -129,9 +129,9 @@ $(document).ready(function(){initNavTree('structeve_1_1struct__support.html','')
 <p>CRTP base-class to declare operators for user-defined product type.  
  <a href="structeve_1_1struct__support.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Self, typename ... Fields&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">Self</a>, <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">typename</a> ... Fields&gt;<br />
 struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b> <code>#include &lt;eve/traits/product_type.hpp&gt;</code></p>
-<p><code><a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a></code> is a CRTP based helper class to define product type like user-defined type. If <code>Self</code> is this type that inherits from <code>eve::struct_supports&lt;Self,Fields...&gt;</code>, it will behave as a structure containing members of type <code>Fields...</code> and provides supports for operators based on the implementation of <code>Self</code>.</p>
+<p><code><a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a></code> is a CRTP based helper class to define product type like user-defined type. If <code>Self</code> is this type that inherits from <code><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::struct_supports</a>&lt;Self,Fields...&gt;</code>, it will behave as a structure containing members of type <code>Fields...</code> and provides supports for operators based on the implementation of <code>Self</code>.</p>
 <p>Generated operators include:</p><ul>
 <li>Member-wise equality is provided by default</li>
 <li>Lexicographial order is provided unless <code><a class="el" href="structeve_1_1supports__ordering.html" title="Register a user-defined type to supports ordering.">eve::supports_ordering</a>&lt;Self&gt;::value</code> evaluates to <code>false</code></li>
@@ -151,18 +151,18 @@ struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// vec3 is a product type made of 3 floats</span></div>
-<div class="line"><span class="keyword">struct </span>vec3 : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;vec3, float, float, float&gt;</div>
+<div class="line"><span class="keyword">struct </span><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">vec3</a> : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;vec3, float, float, float&gt;</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// To simplify member access, we can wrap access to the product type</span></div>
 <div class="line">  <span class="comment">// elements via a named friend accessor.</span></div>
-<div class="line">  <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) x(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">  <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> get&lt;0&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">get&lt;0&gt;</a>(std::forward&lt;<span class="keyword">decltype</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>)&gt;(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>));</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) y(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">  <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">y</a>(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span>&amp;&amp; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> get&lt;1&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">get&lt;1&gt;</a>(std::forward&lt;<span class="keyword">decltype</span>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>)&gt;(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">self</a>));</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) z(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
@@ -199,11 +199,11 @@ struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b>
 <div class="line">  }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&gt;</a> p ( [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;vec3&gt;</a> p ( [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )</div>
 <div class="line">                          {</div>
-<div class="line">                            <span class="keywordflow">return</span> vec3{1.f+i,4.f-i,1.f/(1+i)};</div>
+<div class="line">                            <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">vec3</a>{1.f+i,4.f-i,1.f/(1+i)};</div>
 <div class="line">                          }</div>
 <div class="line">                        );</div>
 <div class="line">  std::cout &lt;&lt; p &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -211,12 +211,12 @@ struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b>
 <div class="line">  p = p + p;</div>
 <div class="line">  std::cout &lt;&lt; p &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  p -= vec3{1,1,1};</div>
+<div class="line">  p -= <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">vec3</a>{1,1,1};</div>
 <div class="line">  std::cout &lt;&lt; p &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition</b> product_type.hpp:107</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition</b> product_type.hpp:154</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
