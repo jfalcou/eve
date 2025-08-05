@@ -17,6 +17,12 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @brief Translates a value to its translated type.
+  //!
+  //! @param val The value to translate
+  //! @return The translated value of type `translate_t<V>`
+  //================================================================================================
   template <typename V>
   constexpr translate_t<V> translate(V const& val)
   {
@@ -24,18 +30,50 @@ namespace eve
     else                                                    return val;
   }
 
+  //================================================================================================
+  //! @brief Translates a mutable reference to a reference its translated type.
+  //!
+  //! @param val The mutable reference to translate
+  //! @return A mutable reference to the translated representation of `val`
+  //================================================================================================
   template <typename V>
   constexpr translate_t<V>& translate(V& val)
   {
     return reinterpret_cast<translate_t<V>&>(val);
   }
 
+  //================================================================================================
+  //! @brief Translates an `as` type wrapper to a type wrapper of its translated type.
+  //!
+  //! @tparam V The wrapper type to translate
+  //! @return Type tag for the translated type
+  //!
+  //! @example
+  //! @code
+  //!   enum class E: int { };
+  //!   eve::as<E> tag;
+  //!   static_assert(std::same_as<decltype(eve::translate(tag)), eve::as<int>>);
+  //! @endcode
+  //================================================================================================
   template <typename V>
   constexpr auto translate(as<V>)
   {
     return as<translate_t<V>>{};
   }
 
+  //================================================================================================
+  //! @brief Translates a pointer to get a pointer to the same value through its translated type.
+  //!
+  //! @param ptr The pointer to translate
+  //! @return A pointer of the translated type
+  //!
+  //! @example
+  //! @code
+  //!   enum class E: int { };
+  //!   E* ptr;
+  //!   static_assert(std::same_as<decltype(eve::translate_ptr(ptr)), int*>);
+  //! @endcode
+  //================================================================================================
   template <detail::scalar_pointer Ptr>
   constexpr auto translate_ptr(Ptr ptr)
   {
@@ -57,5 +95,25 @@ namespace eve
     {
       return ptr;
     }
+  }
+
+  //================================================================================================
+  //! @brief Performs a translation between two types that are part of the same translation tree.
+  //!
+  //! @param val The source value to translate
+  //! @tparam Dst The destination type to translate into
+  //!
+  //! @example
+  //! @code
+  //!   enum class A : int { };
+  //!   enum class B : int { };
+  //!   A a;
+  //!   B b = eve::translate_into(a, eve::as<B>{});
+  //! @endcode
+  //================================================================================================
+  template <typename Dst, translatable_into<Dst> Src>
+  constexpr auto translate_into(Src const& val, as<Dst>)
+  {
+    return std::bit_cast<Dst>(val);
   }
 }

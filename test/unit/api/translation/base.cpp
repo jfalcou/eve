@@ -55,32 +55,42 @@ TTS_CASE_TPL("Checks behavior of concepts over translated type", eve::test::scal
   }
 };
 
+TTS_CASE_TPL("Checks behavior of translate_into", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using N = BaseStruct<T>;
+  using L0 = BaseStruct<N>;
+  using L1 = BaseStruct<T>;
+
+  TTS_CONSTEXPR_EXPECT((eve::translatable_into<L0, L1>));
+  TTS_CONSTEXPR_EXPECT((eve::translatable_into<L1, L0>));
+
+  TTS_CONSTEXPR_EXPECT((std::same_as<decltype(eve::translate_into(L0{}, eve::as<L1>{})), L1>));
+  TTS_CONSTEXPR_EXPECT((std::same_as<decltype(eve::translate_into(L1{}, eve::as<L0>{})), L0>));
+};
+
 template<typename T>
 auto test_invalid_translation(int) -> eve::translate_t<T> { return { }; }
-
-struct NonTrivial {
-  float value;
-  NonTrivial(float v) : value(v * 2) {}
-};
-
-struct NonTrivialDefault {
-  float value;
-  NonTrivialDefault() : value(1) {}
-};
 
 struct NonTrivialCopy {
   float value;
   NonTrivialCopy(const NonTrivialCopy& other) : value(other.value * 2) {}
 };
 
-template<> struct eve::translation_of<NonTrivial> { using type = float; };
-template<> struct eve::translation_of<NonTrivialDefault> { using type = float; };
+struct NonTrivialAssign {
+  float value;
+  NonTrivialAssign& operator=(const NonTrivialAssign& other) {
+    value = other.value * 2;
+    return *this;
+  }
+};
+
 template<> struct eve::translation_of<NonTrivialCopy> { using type = float; };
+template<> struct eve::translation_of<NonTrivialAssign> { using type = float; };
 
 TTS_CASE("Checks compiler rejects invalid translatables")
 {
   int v;
-  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivial>(v); });
-  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialDefault>(v); });
   TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialCopy>(v); });
+  TTS_EXPECT_NOT_COMPILES(v, { test_invalid_translation<NonTrivialAssign>(v); });
 };
