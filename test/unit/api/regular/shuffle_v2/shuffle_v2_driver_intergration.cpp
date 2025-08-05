@@ -37,11 +37,20 @@ TTS_CASE("integrating with fake native shuffle")
 
   using T = eve::wide<int, eve::fixed<4>>;
 
+  constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::sve
+                                || eve::current_api >= eve::rvv;
+
   tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, 0>);
   tst(T {4, 3, 2, 1}, eve::index<4>, T {1, 2, 3, 4}, eve::pattern<3, 2, 1, 0>);
   tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::pattern<2, 3, 0, 1>);
   tst(T {0, 0, 1, 2}, eve::index<1>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<eve::we_, 0>);
-  tst(T {3, 4, 0, 0}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, eve::na_>);
+  // Note masking will never actually be level 1, this is just happens here due how fake shuffle
+  // works.
+  tst(T {3, 4, 0, 0},
+      eve::index < free_masking ? 1 : 2 >,
+      T {1, 2, 3, 4},
+      eve::lane<2>,
+      eve::pattern<1, eve::na_>);
 
   // T05
   using T025 = eve::wide<int, eve::fixed<1>>;

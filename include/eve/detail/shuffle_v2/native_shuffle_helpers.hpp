@@ -40,6 +40,19 @@ is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt
   else return is_na_or_we_mask(p, g, tgt);
 }
 
+template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
+EVE_FORCEINLINE auto
+is_na_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt)
+{
+  if constexpr( !logical_simd_value<T> ) return is_na_logical_mask(p, g, eve::as<logical<T>> {});
+  else if constexpr( G == 1 ) return T {I == na_ ...};
+  else
+  {
+    constexpr std::array idxs {I...};
+    return is_na_logical_mask(idxm::to_pattern<idxm::expand_group<G>(idxs)>(), eve::lane<1>, tgt);
+  }
+}
+
 template<typename T, std::ptrdiff_t... I>
 EVE_FORCEINLINE T
 make_idx_mask(eve::pattern_t<I...>, as<T>)
@@ -111,5 +124,4 @@ mask_type(eve::as<T> tgt)
   if constexpr( logical_simd_value<T> ) return eve::as<decltype(T {}.mask())> {};
   else return tgt;
 }
-
 }
