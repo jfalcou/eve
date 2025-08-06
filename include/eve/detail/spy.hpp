@@ -75,8 +75,8 @@ namespace spy::_
   template<int M1, int N1, int P1, int M2, int N2, int P2>
   constexpr std::strong_ordering operator<=>(version_id<M1, N1, P1>, version_id<M2, N2, P2>) noexcept
   {
-    if constexpr (constexpr auto cmp = M1 <=> M2; cmp != 0) return cmp;
-    else if constexpr (constexpr auto cmp = N1 <=> N2; cmp != 0) return cmp;
+    if constexpr (constexpr auto cmp0 = M1 <=> M2; cmp0 != 0) return cmp0;
+    else if constexpr (constexpr auto cmp1 = N1 <=> N2; cmp1 != 0) return cmp1;
     else return P1 <=> P2;
   }
   template<int M = 1, int N = 0, int P = 0> constexpr inline version_id<M, N, P> version = {};
