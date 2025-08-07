@@ -58,6 +58,7 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
+#include <eve/module/core/regular/dekker_prod.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>
@@ -68,12 +69,14 @@
 #include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/fdim.hpp>
 #include <eve/module/core/regular/fast_two_add.hpp>
+#include <eve/module/core/regular/fast_two_sub.hpp>
 #include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/flush_denormal.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fma_two_prod.hpp>
 #include <eve/module/core/regular/fmod.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
@@ -181,6 +184,7 @@
 #include <eve/module/core/regular/of_class.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/precision.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/rat.hpp>
 #include <eve/module/core/regular/read.hpp>
@@ -227,4 +231,5 @@
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/write.hpp>
