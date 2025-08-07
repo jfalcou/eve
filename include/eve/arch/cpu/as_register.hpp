@@ -55,39 +55,50 @@ namespace eve
     template<typename Type, typename Cardinal>
     struct  blob
     {
+      static constexpr auto replication = Cardinal::value / expected_cardinal_v<Type>;
+
       using is_product_type             = void;
       using cardinal_t                  = expected_cardinal_t<Type>;
       using value_type                  = as_wide_t<Type, cardinal_t>;
       using subvalue_type               = as_wide_t<Type, typename Cardinal::split_type>;
-      static constexpr auto replication = Cardinal::value/expected_cardinal_v<Type>;
+      using storage_t                   = kumi::result::fill_t<replication, value_type>;
 
-      std::array<value_type, replication> storage;
+      storage_t storage;
 
       EVE_FORCEINLINE void assign_parts(subvalue_type const& l, subvalue_type const& h)
       {
-        std::array<subvalue_type,2> data{l,h};
-
+        auto src = reinterpret_cast<std::byte const*>(&l);
         auto dst = reinterpret_cast<std::byte*>(this);
-        auto src = reinterpret_cast<std::byte*>(data.data());
-        std::memcpy(dst, src, sizeof(*this));
+        std::memcpy(dst, src, sizeof(*this) / 2);
+
+        auto src2 = reinterpret_cast<std::byte const*>(&h);
+        auto dst2 = dst + sizeof(*this) / 2;
+        std::memcpy(dst2, src2, sizeof(*this) / 2);
       }
 
       EVE_FORCEINLINE auto slice() const
       {
-        std::array<subvalue_type,2> data{};
+        std::array<subvalue_type, 2> data{};
 
         auto src = reinterpret_cast<std::byte const*>(this);
-        auto dst = reinterpret_cast<std::byte*>(data.data());
-        std::memcpy(dst, src, sizeof(*this));
+        auto dst = &data[0];
+        std::memcpy(dst, src, sizeof(*this) / 2);
+
+        auto src2 = src + sizeof(*this) / 2;
+        auto dst2 = &data[1];
+        std::memcpy(dst2, src2, sizeof(*this) / 2);
 
         return data;
       }
 
-      template<std::size_t I>
-      friend EVE_FORCEINLINE auto&        get(blob& b) noexcept       { return b.storage[I]; }
+      // Return a view of the blob as an std::array of wides of the expected cardinal for this type.
+      EVE_FORCEINLINE auto slice_to_expected() const noexcept { return storage; }
 
       template<std::size_t I>
-      friend EVE_FORCEINLINE auto const&  get(blob const& b) noexcept { return b.storage[I]; }
+      friend EVE_FORCEINLINE auto&        get(blob& b) noexcept       { return kumi::get<I>(b.storage); }
+
+      template<std::size_t I>
+      friend EVE_FORCEINLINE auto const&  get(blob const& b) noexcept { return kumi::get<I>(b.storage); }
 
       template<typename Func>
       EVE_FORCEINLINE void for_each(Func f, auto... w)       { kumi::for_each(f, *this, w.storage()...); }

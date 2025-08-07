@@ -108,23 +108,109 @@ namespace eve::detail
     }
   }
 
+  // Aggregate replication count for a given type
+  template<typename T>
+  constexpr std::ptrdiff_t replication()
+  {
+    if constexpr (requires { T::storage_type::replication; }) return T::storage_type::replication;
+    else if constexpr (scalar_value<T>)                       return 0;
+    else                                                      return 1;
+  }
+
+  template<typename... Ts>
+  constexpr std::ptrdiff_t max_replication()
+  {
+    return std::max({ replication<Ts>()... });
+  }
+
+  // Returns true if all Ts have the same replication count or 0.
+  // That is, if all Ts are either scalars or aggregates with the same internal replication count.
+  template<typename... Ts>
+  constexpr bool has_same_replication()
+  {
+    constexpr auto max_repl = max_replication<Ts...>();
+    return ((( replication<Ts>() == max_repl) || (replication<Ts>() == 0) ) && ...);
+  }
+
   template<typename Func, typename... Ts>
   EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
   {
-    // We use this function to turn every parameters into either a pair of slices
-    // or a pair of scalar so that the apply later down is more regular
-    auto slicer = []<typename T>(T t)
+    if constexpr (has_same_replication<Ts...>())
     {
-      if constexpr(simd_value<T>) return t.slice(); else return kumi::make_tuple(t,t);
-    };
+      constexpr auto max_repl = max_replication<Ts...>();
 
-    // Build the lists of all ready-to-aggregate values
-    auto parts = kumi::make_tuple(slicer(ts)...);
+      // Convert all values to tuples of wides of the expected cardinal
+      auto slicer = []<typename T>(T t)
+      {
+        if constexpr (simd_value<T>) return t.storage().slice_to_expected();
+        else                         return kumi::fill<max_repl>(t);
+      };
 
-    // Apply f on both side of the slices and re-combine
-    using half_result_t = decltype(f(get<0>(slicer(ts))...));
-    using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
+      // Build the lists of all ready-to-aggregate values
+      auto parts = kumi::make_tuple(slicer(ts)...);
+      auto process = [&](auto i) { return kumi::apply([&](auto... p) { return f( get<i>(p)... ); }, parts); };
 
-    return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+      using small_result_t = decltype(process(kumi::index<0>));
+      using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
+      using storage_t = typename wide_t::storage_type;
+
+      // return decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
+      auto rewrap = [](auto const& inner) -> decltype(auto)
+      {
+        // Handle the case where the returned type's storage is itself a product type.
+        // Functions returning zipped values need an extra level of storage wrapping.
+        if constexpr (product_type<storage_t>)
+        {
+          auto inner_tuple = kumi::generate<kumi::size_v<storage_t>>([&](auto i)
+          {
+            using inner_wide_t = typename kumi::element_t<i, storage_t>;
+
+            // Whether we should re-wrap the inner storage into the proper product type.
+            if constexpr (has_aggregated_abi_v<inner_wide_t>)
+            {
+              using inner_storage_t = typename inner_wide_t::storage_type;
+              return kumi::apply([&](auto... m){ return inner_wide_t { inner_storage_t { kumi::get<i>(m.storage())... } }; }, inner);
+            }
+            else if constexpr (requires { kumi::get<i>(inner); })
+            {
+              return kumi::get<i>(inner);
+            }
+            else
+            {
+              void*p = inner;
+              void* f = kumi::get<i>(inner);
+              // static_assert(i < kumi::size_v<inner>, "Index out of bounds for inner tuple");
+            }
+          });
+
+          return inner_tuple;
+        }
+        else
+        {
+          return  inner;
+        }
+      };
+
+      return wide_t { storage_t { rewrap(kumi::generate<max_repl>([&process](auto i) { return process(i); })) }};
+    }
+    else
+    {
+      // We use this function to turn every parameters into either a pair of slices
+      // or a pair of scalar so that the apply later down is more regular
+      auto slicer = []<typename T>(T t)
+      {
+        if constexpr (simd_value<T>) return t.slice();
+        else                         return kumi::make_tuple(t,t);
+      };
+
+      // Build the lists of all ready-to-aggregate values
+      auto parts = kumi::make_tuple(slicer(ts)...);
+
+      // Apply f on both side of the slices and re-combine
+      using half_result_t = decltype(f(get<0>(slicer(ts))...));
+      using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
+
+      return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+    }
   }
 }
