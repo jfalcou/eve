@@ -23,6 +23,4 @@ int main()
   std::cout << "-> epsilon(wi0)                 = " << eve::epsilon(wi0) << "\n";
   std::cout << "-> epsilon[ignore_last(2)](wi0) = " << eve::epsilon[eve::ignore_last(2)](wi0) << "\n";
   std::cout << "-> epsilon[wi0 != 0](wi0)       = " << eve::epsilon[wi0 != 0](wi0) << "\n";
-    std::cout << eve::epsilon[eve::kahan](wf0)/eve::epsilon(wf0) << std::endl;
-
 }

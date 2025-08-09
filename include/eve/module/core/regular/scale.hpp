@@ -15,25 +15,26 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <iostream>
 
 namespace eve
 {
   template<typename Options>
-  struct sulp_t : elementwise_callable<sulp_t, Options, kahan_option, harrisson_option>
+  struct scale_t : elementwise_callable<scale_t, Options, pedantic_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
-    EVE_CALLABLE_OBJECT(sulp_t, sulp_);
+    EVE_CALLABLE_OBJECT(scale_t, scale_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var sulp
-//!   @brief `elementwise_callable` object computing the classical unit in the last place (Kahan)
-//!      or the harrisson version multiplied by the sign of the input.
+//!   @var scale
+//!   @brief `elementwise_callable` object computing underflow-safe and almost overflow-free
+//!      scaling factor for the input.
 //!
 //!   @groupheader{Header file}
 //!
@@ -47,15 +48,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto sulp(value auto x)                          noexcept; // 1
+//!      constexpr auto scale(floating_value auto x)                 noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto sulp[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto sulp[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto scale[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto scale[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto sulp[kahan](value auto x)                    noexcept; // 1
-//!      constexpr auto sulp[harrison](value auto x)                 noexcept; // 3
+//!      constexpr auto scale[pedantic](value auto x)                noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -66,20 +66,19 @@ namespace eve
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
-//!
-//!      1. The distance of x to the next representable element in the type of `x` in the x direction. (Kahan definition)
-//!      2. [The operation is performed conditionnaly](@ref conditional).
-//!      3. The distance of x to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
+//!     1. provide a value s such that |x|/s, is much above the underflow threshold and much
+//!        below the overflow threshold (so that, for example, we can safely square it); (return maxflint for 0);
+//!        moreover it is an integer power of 2 (in order to avoid rounding errors when multiplying or dividing by it).
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. same as 1. but return 1 for 0
 //!
 //!  @groupheader{External references}
-//!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
-//!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)
 //!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/sulp.cpp}
+//!  @godbolt{doc/core/scale.cpp}
 //================================================================================================
-  inline constexpr auto sulp = functor<sulp_t>;
+  inline constexpr auto scale = functor<scale_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -87,27 +86,19 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto sulp_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    EVE_FORCEINLINE constexpr auto scale_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(integral_value<T>)
-        return T(1);
+      using e_t = eve::element_type_t<T>;
+      constexpr e_t eps = eve::eps(eve::as<e_t>());
+      constexpr e_t phi = (eps/2)*(1+eps);
+      constexpr e_t eta = eve::smallestposval(eve::as<e_t>())+2/eps;
+      auto y = eve::abs(a0);
+      auto e = eve::fma(phi, y, eta);
+      auto ysup = y+e;
+      if constexpr(O::contains(pedantic))
+        return inc[eve::is_eqz(a0)](ysup-y);
       else
-      {
-        using e_t = eve::element_type_t<T>;
-        constexpr e_t eps = eve::eps(eve::as<e_t>());
-        if constexpr(O::contains(harrisson))
-        {
-          constexpr e_t psi = 1-eps/2;
-          auto a = psi*a0;
-          return a0-a;
-        }
-        else //kahan is the default
-        {
-          constexpr e_t psi = eps*e_t(3)/4;
-          auto a = eve::fma(psi, a0, a0);
-          return a-a0;
-        }
-      }
+        return ysup-y;
     }
   }
 }

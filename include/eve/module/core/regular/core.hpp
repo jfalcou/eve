@@ -205,6 +205,7 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/scan.hpp>
+#include <eve/module/core/regular/scale.hpp>
 #include <eve/module/core/regular/scatter.hpp>
 #include <eve/module/core/regular/shl.hpp>
 #include <eve/module/core/regular/shr.hpp>
