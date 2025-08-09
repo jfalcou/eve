@@ -59,6 +59,9 @@ namespace eve
 //!
 //!     * 'xh+xl' is 'x',  but each has much less significant digits.
 //!
+//!  @groupheader{External references}
+//!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
+
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/veltkamp.cpp}
@@ -79,7 +82,7 @@ namespace eve
       if constexpr( spy::supports::fma_)
       {
         T const ah = fnma(C, a, c);
-        T       al = a-ah;
+        T       al = fms(Cp1, a, c);
         return  eve::zip(ah, al);
       }
       else

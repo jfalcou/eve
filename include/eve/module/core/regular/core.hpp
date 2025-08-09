@@ -220,6 +220,8 @@
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/sufp.hpp>
+#include <eve/module/core/regular/sulp.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>

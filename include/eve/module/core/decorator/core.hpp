@@ -28,6 +28,8 @@ namespace eve
   struct cylindrical_mode     {};
   struct definitely_mode      {};
   struct eccentric_mode       {};
+  struct harrisson_mode       {};
+  struct kahan_mode           {};
   struct kind_1_mode          {};
   struct kind_2_mode          {};
   struct left_mode            {};
@@ -64,7 +66,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
-  [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}            );
+  [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}       );
+  [[maybe_unused]] inline constexpr auto harrisson        = ::rbr::flag( harrisson_mode{}       );
+  [[maybe_unused]] inline constexpr auto kahan            = ::rbr::flag( kahan_mode{}           );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
@@ -94,6 +98,8 @@ namespace eve
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct cylindrical_option     : detail::exact_option<cylindrical>     {};
   struct eccentric_option       : detail::exact_option<eccentric>       {};
+  struct harrisson_option       : detail::exact_option<harrisson>       {};
+  struct kahan_option           : detail::exact_option<kahan>           {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
   struct left_option            : detail::exact_option<left>            {};
