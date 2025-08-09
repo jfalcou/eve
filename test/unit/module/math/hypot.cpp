@@ -78,16 +78,20 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of hypot(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100.0, 100.0),
-                            tts::randoms(-100.0, 100.0),
-                            tts::randoms(-100.0, 100.0)))
+              tts::generate(tts::randoms(-10000.0, 10000.0),
+                            tts::randoms(-10000.0, 10000.0),
+                            tts::randoms(-10000.0, 10000.0)))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::hypot;
   using eve::pedantic;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 2);
+      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5) << a0 << " -- " << a1 << '\n';
+  TTS_ULP_EQUAL(
+    hypot[eve::pedantic](a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5);
+  TTS_ULP_EQUAL(
+    hypot[eve::raw](a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(hypot(a0, a1, a2),
@@ -137,6 +141,16 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
                 cases.smallestposval*eve::sqrt(T(5)), 1)<< cases.smallestposval<< '\n';
   TTS_ULP_EQUAL(eve::hypot[eve::pedantic](cases.smallestposval, cases.smallestposval),
                 cases.smallestposval*eve::sqrt_2(eve::as<T>()), 1)<< cases.smallestposval<< '\n';
+  TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.nan, a0), cases.nan);
+  TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.minf, a0), cases.inf);
+  TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.nan, cases.minf), cases.nan);
+  TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.inf, cases.nan), cases.nan);
+  TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.mzero, cases.mzero), T(0));
+  TTS_IEEE_EQUAL(eve::hypot(cases.nan, a0), cases.nan);
+  TTS_IEEE_EQUAL(eve::hypot(cases.minf, a0), cases.inf);
+  TTS_IEEE_EQUAL(eve::hypot(cases.nan, cases.minf), cases.inf);
+  TTS_IEEE_EQUAL(eve::hypot(cases.inf, cases.nan), cases.inf);
+  TTS_IEEE_EQUAL(eve::hypot(cases.mzero, cases.mzero), T(0));
 #endif
                 };
 

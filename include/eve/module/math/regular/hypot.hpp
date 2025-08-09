@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct hypot_t : tuple_callable<hypot_t, Options, pedantic_option>
+  struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -57,7 +57,8 @@ namespace eve
 //!      constexpr auto hypot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                noexcept; // 4
+//!      constexpr auto hypot[raw](/*any of the above overloads*/)                      noexcept; // 4
+//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                 noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -72,11 +73,13 @@ namespace eve
 //!
 //!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
 //!        The result type is the [common value type](@ref common_value_t) of the
-//!        absolute values of the parameters.
+//!        absolute values of the parameters. (Some appropriate scaling is done to enhance precision
+//!        and avoid overflows.
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. The pedantic option`  computes the result without undue overflow or underflow
-//!        at intermediate stages of the computation and can be more accurate than the regulard call.
+//!    4. the naive formula is used.
+//!    5. The pedantic option`  computes the result without undue overflow or underflow
+//!        at intermediate stages of the computation and can be more accurate than the regular call.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
@@ -129,9 +132,21 @@ namespace eve
           h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
           return h;
         }
+        else if constexpr(O::contains(raw))
+        {
+          //naive fast computation
+          return eve::sqrt(eve::sum_of_prod(r0, r0, r1, r1));
+        }
         else
         {
-          return eve::sqrt(add(sqr(r_t(r0)), sqr(r_t(r1))));
+          // scaling using the algorithm suggested by
+          // https://members.loria.fr/PZimmermann/papers/split.pdf
+          auto d = eve::scale(average(eve::abs(r0), eve::abs(r1)));
+          auto id= eve::rec(d);
+          auto r0d = r0*id;
+          auto r1d = r1*id;
+          auto r = d*eve::sqrt(eve::sum_of_prod[pedantic](r0d, r0d, r1d, r1d));
+          return if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
         }
       }
       else //N parameters
