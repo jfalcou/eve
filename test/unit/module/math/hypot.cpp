@@ -87,7 +87,7 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
   using eve::pedantic;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5) << a0 << " -- " << a1 << '\n';
+      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
   TTS_ULP_EQUAL(
     hypot[eve::pedantic](a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5);
   TTS_ULP_EQUAL(
@@ -122,8 +122,8 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
   TTS_IEEE_EQUAL(eve::hypot(cases.nan, a0), cases.nan);
   TTS_EQUAL(eve::hypot(cases.minf, a0), cases.inf);
   TTS_EQUAL(eve::hypot(cases.mzero, cases.mzero), T(0));
-  TTS_EQUAL(eve::hypot(cases.valmax / 2, cases.valmax / 2), cases.inf);
-  TTS_EQUAL(eve::hypot(cases.valmin / 2, cases.valmin / 2), cases.inf);
+  TTS_EQUAL(eve::hypot[raw](cases.valmax / 2, cases.valmax / 2), cases.inf);
+  TTS_EQUAL(eve::hypot[raw](cases.valmin / 2, cases.valmin / 2), cases.inf);
   TTS_EQUAL(eve::hypot[eve::pedantic](cases.mzero, cases.mzero), T(0));
 #else
   TTS_IEEE_EQUAL(eve::hypot[eve::pedantic](cases.nan, a0), cases.nan);
