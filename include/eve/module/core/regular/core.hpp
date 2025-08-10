@@ -58,7 +58,6 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
-#include <eve/module/core/regular/dekker_prod.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>
