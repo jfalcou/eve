@@ -20,19 +20,19 @@
 namespace eve
 {
   template<typename Options>
-  struct scale_t : elementwise_callable<scale_t, Options, pedantic_option>
+  struct safe_scale_t : elementwise_callable<safe_scale_t, Options, pedantic_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
-    EVE_CALLABLE_OBJECT(scale_t, scale_);
+    EVE_CALLABLE_OBJECT(safe_scale_t, safe_scale_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var scale
+//!   @var safe_scale
 //!   @brief `elementwise_callable` object computing underflow-safe and almost overflow-free
 //!      scaling factor for the input.
 //!
@@ -48,14 +48,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto scale(floating_value auto x)                 noexcept; // 1
+//!      constexpr auto safe_scale(floating_value auto x)                 noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto scale[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto scale[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto safe_scale[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto safe_scale[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto scale[pedantic](value auto x)                noexcept; // 3
+//!      constexpr auto safe_scale[pedantic](value auto x)                noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -76,9 +76,9 @@ namespace eve
 //!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/scale.cpp}
+//!  @godbolt{doc/core/safe_scale.cpp}
 //================================================================================================
-  inline constexpr auto scale = functor<scale_t>;
+  inline constexpr auto safe_scale = functor<safe_scale_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -86,7 +86,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto scale_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    EVE_FORCEINLINE constexpr auto safe_scale_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using e_t = eve::element_type_t<T>;
       constexpr e_t eps = eve::eps(eve::as<e_t>());
