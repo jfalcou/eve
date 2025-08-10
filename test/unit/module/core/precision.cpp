@@ -16,5 +16,5 @@
 TTS_CASE_TPL("Check return types of eve::precision", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  TTS_EQUAL(eve::precision(T()), 1+eve::nbmantissabits(eve::as(T())));
+  TTS_EQUAL(eve::hardware_precision(T()), 1+eve::nbmantissabits(eve::as(T())));
 };
