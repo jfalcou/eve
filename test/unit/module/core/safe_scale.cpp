@@ -31,18 +31,18 @@ TTS_CASE_WITH("Check behavior of eve::sulp(simd)",
   using eve::as;
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve::scale(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::scale(eve::inf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::scale(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::scale(eve::zero(eve::as<T>())), eve::maxflint(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::safe_scale(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::safe_scale(eve::inf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::safe_scale(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::safe_scale(eve::zero(eve::as<T>())), eve::maxflint(eve::as<T>()), 0);
   }
 
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(1))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale[eve::pedantic](T(0))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(10))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(5))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(2))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(1.5))))));
-  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::scale(T(1000.6))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(1))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale[eve::pedantic](T(0))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(10))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(5))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(2))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(1.5))))));
+  TTS_EXPECT(eve::all(eve::is_flint(eve::log2(eve::safe_scale(T(1000.6))))));
 
     };
