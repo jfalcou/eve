@@ -13,20 +13,20 @@
 namespace eve
 {
   template<typename Options>
-  struct precision_t : callable<precision_t, Options>
+  struct hardware_precision_t : callable<hardware_precision_t, Options>
   {
     template<typename T>
     constexpr EVE_FORCEINLINE int  operator()(T t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
-    EVE_CALLABLE_OBJECT(precision_t, precision_);
+    EVE_CALLABLE_OBJECT(hardware_precision_t, hardware_precision_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var precision
-//!   @brief Computes the precision of the hardware implementation of a floating point type
+//!   @var hardware_precision
+//!   @brief Computes the hardware_precision of the hardware implementation of a floating point type
 //!
 //!   **Defined in Header**
 //!
@@ -40,7 +40,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      constexpr int template < floating_scalar_value t>
-//!      int precision(T dummy) noexcept;
+//!      int hardware_precision(T dummy) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -55,10 +55,10 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/precision.cpp}
+//!  @godbolt{doc/core/regular/hardware_precision.cpp}
 //!
 //================================================================================================
-  inline constexpr auto precision = functor<precision_t>;
+  inline constexpr auto hardware_precision = functor<hardware_precision_t>;
 //================================================================================================
 ///! @}
 //================================================================================================
@@ -66,7 +66,7 @@ namespace eve
   namespace detail
   {
     template < typename T, callable_options O>
-    constexpr int precision_ (EVE_REQUIRES(cpu_), O const&, T) noexcept
+    constexpr int hardware_precision_ (EVE_REQUIRES(cpu_), O const&, T) noexcept
     {
       //     constexpr T z(0);
       constexpr int radix = 2; //malcolm(z);
