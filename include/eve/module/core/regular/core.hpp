@@ -230,6 +230,7 @@
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
 #include <eve/module/core/regular/two_add.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
