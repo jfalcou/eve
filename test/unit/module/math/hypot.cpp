@@ -85,6 +85,7 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
 {
   using eve::hypot;
   using eve::pedantic;
+  using eve::raw;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
