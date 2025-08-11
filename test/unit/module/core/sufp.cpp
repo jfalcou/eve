@@ -8,7 +8,7 @@
 #include "test.hpp"
 
 #include <eve/module/core.hpp>
-
+#include <eve/module/math.hpp>
 #include <type_traits>
 
 //==================================================================================================
