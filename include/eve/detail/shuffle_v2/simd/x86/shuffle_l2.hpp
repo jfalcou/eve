@@ -228,7 +228,9 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(P::idxs);
 
-    // TODO(2135): this is accidentally important.
+    // TODO(2135): P should not have 0s. However while removing all other if
+    // like this one worked, this specific if lead to tests failing.
+    // Left a followup TODO.
     if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, x, mm);
     else
     {
