@@ -10,8 +10,6 @@
 #include <eve/detail/shuffle_v2/simplify_plain_shuffle.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-#include <iostream>
-
 namespace eve::detail
 {
 
