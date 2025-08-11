@@ -79,10 +79,10 @@ shuffle_l2_x86_repeated_128_4_shorts(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_128_4x32(P, fixed<G>, wide<T, N> x)
 {
-  if constexpr( sizeof(T) * G < 4 ) return no_matching_shuffle;
-  else if constexpr( !P::has_zeroes )
+  if constexpr( sizeof(T) * G < 4 || P::has_zeroes ) return no_matching_shuffle;
+  else
   {
     constexpr auto m = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
 
@@ -94,16 +94,6 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
     }
     else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_epi32(x, m);
     else return _mm512_shuffle_epi32(x, m);
-  }
-  else if constexpr( current_api < avx512 ) return no_matching_shuffle;
-  else
-  {
-    constexpr auto m    = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
-    auto           mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-
-    if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_epi32(mask, x, m);
-    else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_epi32(mask, x, m);
-    else return _mm512_maskz_shuffle_epi32(mask, x, m);
   }
 }
 
@@ -184,10 +174,10 @@ shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_256_permute4x64(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::g_size < 8 ) return no_matching_shuffle;
-  else if constexpr( P::has_zeroes && current_api < avx512 ) return no_matching_shuffle;
+  else if constexpr( P::has_zeroes ) return no_matching_shuffle;
   // Within lane is faster so prefer it
   else if constexpr( idxm::shuffle_within_halves(*P::repeated_32) )
   {
@@ -195,34 +185,15 @@ shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
 
     auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
 
-    if constexpr( !P::has_zeroes )
-    {
-      if constexpr( P::reg_size == 32 ) return _mm256_permute_pd(x_f64, mm);
-      else return _mm512_permute_pd(x_f64, mm);
-    }
-    else
-    {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-      if constexpr( P::reg_size == 32 ) return _mm256_maskz_permute_pd(mask, x_f64, mm);
-      else return _mm256_maskz_permute_pd(mask, x_f64, mm);
-    }
+    if constexpr( P::reg_size == 32 ) return _mm256_permute_pd(x_f64, mm);
+    else return _mm512_permute_pd(x_f64, mm);
   }
   else if constexpr( current_api > avx )
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(*P::repeated_32);
 
-    if constexpr( !P::has_zeroes )
-    {
-      if constexpr( P::reg_size == 32 ) return _mm256_permute4x64_epi64(x, mm);
-      else return _mm512_permutex_epi64(x, mm);
-    }
-    else
-    {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-
-      if constexpr( P::reg_size == 32 ) return _mm256_maskz_permutex_epi64(mask, x, mm);
-      else return _mm512_maskz_permutex_epi64(mask, x, mm);
-    }
+    if constexpr( P::reg_size == 32 ) return _mm256_permute4x64_epi64(x, mm);
+    else return _mm512_permutex_epi64(x, mm);
   }
   else return no_matching_shuffle;
 }
@@ -257,6 +228,9 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(P::idxs);
 
+    // TODO(2135): P should not have 0s. However while removing all other if
+    // like this one worked, this specific if lead to tests failing.
+    // Left a followup TODO.
     if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, x, mm);
     else
     {
@@ -268,14 +242,14 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_alignr_epi32_self(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_alignr_epi32_self(P, fixed<G>, wide<T, N> x)
 {
-  if constexpr( P::g_size < 4 || current_api < avx512 ) return no_matching_shuffle;
+  if constexpr( P::g_size < 4 || current_api < avx512 || P::has_zeroes ) return no_matching_shuffle;
   else if constexpr( constexpr auto rotation = idxm::is_rotate(P::idxs_no_na); !rotation )
   {
     return no_matching_shuffle;
   }
-  else if constexpr( !P::has_zeroes )
+  else
   {
     static_assert(P::reg_size > 16, "sanity check - sse alignr is better");
 
@@ -285,35 +259,12 @@ shuffle_l2_alignr_epi32_self(P p, fixed<G> g, wide<T, N> x)
     if constexpr( P::reg_size == 32 )
     {
       if constexpr( P::g_size >= 8 ) return _mm256_alignr_epi64(x, x, shift_epi64);
-      else return _mm256_alignr_epi64(x, x, shift_epi32);
+      else return _mm256_alignr_epi32(x, x, shift_epi32);
     }
     else
     {
       if constexpr( P::g_size >= 8 ) return _mm512_alignr_epi64(x, x, shift_epi64);
       else return _mm512_alignr_epi32(x, x, shift_epi32);
-    }
-  }
-  else
-  {
-    constexpr std::ptrdiff_t shift_epi32 = (N() - *rotation) * P::g_size / 4;
-    constexpr std::ptrdiff_t shift_epi64 = (N() - *rotation) * P::g_size / 8;
-
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-
-    if constexpr( P::reg_size == 16 )
-    {
-      if constexpr( P::g_size >= 8 ) return _mm128_maskz_alignr_epi64(mask, x, x, shift_epi64);
-      else return _mm128_maskz_alignr_epi32(mask, x, x, shift_epi32);
-    }
-    else if constexpr( P::reg_size == 32 )
-    {
-      if constexpr( P::g_size >= 8 ) return _mm256_maskz_alignr_epi64(mask, x, x, shift_epi64);
-      else return _mm256_maskz_alignr_epi32(mask, x, x, shift_epi32);
-    }
-    else
-    {
-      if constexpr( P::g_size >= 8 ) return _mm512_maskz_alignr_epi64(mask, x, x, shift_epi64);
-      else return _mm512_maskz_alignr_epi32(mask, x, x, shift_epi32);
     }
   }
 }
@@ -429,10 +380,9 @@ shuffle_l2_x86_repeated_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128x2_shuffle_ps(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_within_128x2_shuffle_ps(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
-  if constexpr( sizeof(T) < 4 ) return no_matching_shuffle;
-  else if constexpr( P::has_zeroes && current_api < avx512 ) return no_matching_shuffle;
+  if constexpr( sizeof(T) < 4 || P::has_zeroes ) return no_matching_shuffle;
   else if constexpr( constexpr auto opt_mm = idxm::x86_shuffle_ps_2<P::g_size>(P::idxs); !opt_mm )
   {
     return no_matching_shuffle;
@@ -444,20 +394,9 @@ shuffle_l2_x86_within_128x2_shuffle_ps(P p, fixed<G> g, wide<T, N> x, wide<T, N>
     auto y_f32     = bit_cast(y, eve::as<floats_t> {});
 
     constexpr int mm = *opt_mm;
-    if constexpr( !P::has_zeroes )
-    {
-      if constexpr( P::reg_size == 16 ) return _mm_shuffle_ps(x_f32, y_f32, mm);
-      else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_ps(x_f32, y_f32, mm);
-      else return _mm512_shuffle_ps(x_f32, y_f32, mm);
-    }
-    else
-    {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-
-      if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
-      else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
-      else return _mm512_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
-    }
+    if constexpr( P::reg_size == 16 ) return _mm_shuffle_ps(x_f32, y_f32, mm);
+    else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_ps(x_f32, y_f32, mm);
+    else return _mm512_shuffle_ps(x_f32, y_f32, mm);
   }
 }
 
@@ -489,24 +428,18 @@ shuffle_l2_x86_permute2f128(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_shuffle_i32x4(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_shuffle_i32x4(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   // the _mm256_maskz_shuffle_i32x4 is not supported yet.
   if constexpr( sizeof(T) < 4 || P::reg_size < 64 ) return no_matching_shuffle;
-  else if constexpr( constexpr auto m = idxm::mm512_shuffle_i64x2_idx(P::idxs_no_na); !m )
+  else if constexpr( constexpr auto m = idxm::mm512_shuffle_i64x2_idx(P::idxs); !m )
   {
     return no_matching_shuffle;
   }
   else
   {
     constexpr int mm = *m;
-    if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, y, mm);
-    else
-    {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-      if constexpr( sizeof(T) >= 8 ) return _mm512_maskz_shuffle_i64x2(mask, x, y, mm);
-      else return _mm512_maskz_shuffle_i64x2(mask, x, y, mm);
-    }
+    return _mm512_shuffle_i64x2(x, y, mm);
   }
 }
 
@@ -528,7 +461,7 @@ shuffle_l2_x86_shuffle_128_2regs(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_alignr_epi32(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_alignr_epi32(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::g_size < 4 ) return no_matching_shuffle;
   else if constexpr( current_api < avx512 ) return no_matching_shuffle;
@@ -536,7 +469,7 @@ shuffle_l2_x86_alignr_epi32(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
   {
     return no_matching_shuffle;
   }
-  else if constexpr( !P::has_zeroes )
+  else
   {
     static_assert(P::reg_size > 16, "sanity check - sse alignr is better");
 
@@ -552,29 +485,6 @@ shuffle_l2_x86_alignr_epi32(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
     {
       if constexpr( P::g_size >= 8 ) return _mm512_alignr_epi64(y, x, shift_epi64);
       else return _mm512_alignr_epi32(y, x, shift_epi32);
-    }
-  }
-  else
-  {
-    constexpr std::ptrdiff_t shift_epi32 = *starts_from * P::g_size / 4;
-    constexpr std::ptrdiff_t shift_epi64 = *starts_from * P::g_size / 8;
-
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-
-    if constexpr( P::reg_size == 16 )
-    {
-      if constexpr( P::g_size >= 8 ) return _mm128_maskz_alignr_epi64(mask, y, x, shift_epi64);
-      else return _mm128_maskz_alignr_epi32(mask, y, x, shift_epi32);
-    }
-    else if constexpr( P::reg_size == 32 )
-    {
-      if constexpr( P::g_size >= 8 ) return _mm256_maskz_alignr_epi64(mask, y, x, shift_epi64);
-      else return _mm256_maskz_alignr_epi32(mask, y, x, shift_epi32);
-    }
-    else
-    {
-      if constexpr( P::g_size >= 8 ) return _mm512_maskz_alignr_epi64(mask, y, x, shift_epi64);
-      else return _mm512_maskz_alignr_epi32(mask, y, x, shift_epi32);
     }
   }
 }

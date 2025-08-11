@@ -46,7 +46,7 @@ shuffle_l2_svrev(P, eve::fixed<G>, T x)
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>
 auto
-shuffle_l2_svrevbhw(P p, eve::fixed<G> g, eve::wide<T, N> _x)
+shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
 {
   constexpr std::ptrdiff_t reverse_size = P::most_repeated_no_zeroes.size() * P::g_size;
   if constexpr( reverse_size > 8 ) return no_matching_shuffle;
@@ -56,28 +56,11 @@ shuffle_l2_svrevbhw(P p, eve::fixed<G> g, eve::wide<T, N> _x)
     auto x  = up_element_size_to(_x, eve::lane<reverse_size>);
     using U = decltype(x);
 
-    if constexpr( !P::has_zeroes )
-    {
-      auto m = sve_true<T>();
+    auto m = sve_true<T>();
 
-      if constexpr( P::g_size == 1 ) return U {svrevb_x(m, x)};
-      else if constexpr( P::g_size == 2 ) return U {svrevh_x(m, x)};
-      else if constexpr( P::g_size == 4 ) return U {svrevw_x(m, x)};
-    }
-    else
-    {
-      // Didn't work out of the gate for some reason.
-      (void)p;
-      (void)g;
-      return no_matching_shuffle;
-#if 0
-      auto m = is_na_or_we_mask(p, g, eve::as<eve::logical<eve::wide<T, N>>> {});
-
-      if constexpr( P::g_size == 1 ) return U {svrevb_z(m, x)};
-      else if constexpr( P::g_size == 2 ) return U {svrevh_z(m, x)};
-      else if constexpr( P::g_size == 4 ) return U {svrevw_z(m, x)};
-#endif
-    }
+    if constexpr( P::g_size == 1 ) return U {svrevb_x(m, x)};
+    else if constexpr( P::g_size == 2 ) return U {svrevh_x(m, x)};
+    else if constexpr( P::g_size == 4 ) return U {svrevw_x(m, x)};
   }
 }
 

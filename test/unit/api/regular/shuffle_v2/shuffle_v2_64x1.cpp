@@ -23,6 +23,8 @@ TTS_CASE("shuffle_v2: 64x1")
   {
     // We can do better sometimes but not yet
     if( eve::current_api >= eve::sve ) {
+      if (idxm::matches(p, {eve::na_, 0})) return 2;
+      if (idxm::matches(p, {1, eve::na_})) return 2;
       if (idxm::matches(p, {1, 0})) return 2;
       if (idxm::matches(p, {3, 0, 1, 2})) return 2;
       if (idxm::matches(p, {1, 2, 3, 0})) return 2;
