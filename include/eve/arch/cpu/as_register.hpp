@@ -61,9 +61,9 @@ namespace eve
       using cardinal_t                  = expected_cardinal_t<Type>;
       using value_type                  = as_wide_t<Type, cardinal_t>;
       using subvalue_type               = as_wide_t<Type, typename Cardinal::split_type>;
-      using storage_t                   = kumi::result::fill_t<replication, value_type>;
+      using storage_type                = kumi::result::fill_t<replication, value_type>;
 
-      storage_t storage;
+      storage_type storage;
 
       EVE_FORCEINLINE void assign_parts(subvalue_type const& l, subvalue_type const& h)
       {
@@ -91,7 +91,7 @@ namespace eve
         return data;
       }
 
-      // Return a view of the blob as an std::array of wides of the expected cardinal for this type.
+      // Return a view of the blob as a collection of wide of the expected cardinal for this type.
       EVE_FORCEINLINE auto slice_to_expected() const noexcept { return storage; }
 
       template<std::size_t I>

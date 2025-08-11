@@ -12,9 +12,36 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
 #include <algorithm>
 #include <utility>
+
+
+  namespace kumi
+  {
+    template<int N, kumi::product_type T>
+    auto chunks(T const& t)
+    {
+      auto ref = kumi::to_ref(t);
+      constexpr auto nb = (kumi::size_v<T>+N-1)/N;
+
+      return kumi::generate<nb>
+      ( [&](auto idx)
+        {
+          auto w = [&]<std::size_t... J>(std::index_sequence<J...>, auto i)
+          {
+            return kumi::reorder<(i*N+J)...>(ref);
+          };
+
+          constexpr auto sz = kumi::size_v<T>;
+          constexpr auto chk = (idx+1)*N > sz ? sz - idx*N : N;
+          return w(std::make_index_sequence<chk>{},kumi::index<idx>);
+        }
+      );
+    }
+  }
+
 
 namespace eve::detail
 {
@@ -154,44 +181,76 @@ namespace eve::detail
       using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
       using storage_t = typename wide_t::storage_type;
 
-      // return decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
+      // Flatten the per-slice result in case it still contains aggregated values.
+      // In order to prepare them for the `rewrap` operation.
+      auto inner_output = kumi::apply([&](auto... m)
+        {
+          auto v_or_t = []<typename V>(V v) {
+            if constexpr (has_aggregated_abi_v<V>) return v.storage().slice_to_expected();
+            else                                   return kumi::make_tuple(v);
+          };
+
+          return kumi::cat(v_or_t(m)...);
+        }, kumi::generate<max_repl>(process));
+
+      // Returns decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
       auto rewrap = [](auto const& inner) -> decltype(auto)
       {
         // Handle the case where the returned type's storage is itself a product type.
         // Functions returning zipped values need an extra level of storage wrapping.
-        if constexpr (product_type<storage_t>)
+        // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
+        if constexpr (product_type<storage_t> && !instance_of<storage_t, blob>)
         {
-          auto inner_tuple = kumi::generate<kumi::size_v<storage_t>>([&](auto i)
-          {
-            using inner_wide_t = typename kumi::element_t<i, storage_t>;
+          return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
+            {
+              using inner_wide_t = typename kumi::element_t<i, storage_t>;
 
-            // Whether we should re-wrap the inner storage into the proper product type.
-            if constexpr (has_aggregated_abi_v<inner_wide_t>)
-            {
-              using inner_storage_t = typename inner_wide_t::storage_type;
-              return kumi::apply([&](auto... m){ return inner_wide_t { inner_storage_t { kumi::get<i>(m.storage())... } }; }, inner);
-            }
-            else if constexpr (requires { kumi::get<i>(inner); })
-            {
-              return kumi::get<i>(inner);
-            }
-            else
-            {
-              void*p = inner;
-              void* f = kumi::get<i>(inner);
-              // static_assert(i < kumi::size_v<inner>, "Index out of bounds for inner tuple");
-            }
-          });
-
-          return inner_tuple;
+              // Whether we should re-wrap the inner storage into the proper product type.
+              if constexpr (has_aggregated_abi_v<inner_wide_t> || product_type<kumi::element_t<0, decltype(inner)>>)
+              {
+                return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<i>(m.storage())... }; }, inner);
+              }
+              else
+              {
+                return kumi::get<i>(inner);
+              }
+            });
         }
         else
         {
-          return  inner;
+          using current_wide = kumi::element_t<0, decltype(inner)>;
+          constexpr std::ptrdiff_t current_card = current_wide::size();
+          constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
+          using expected_wide = typename current_wide::template rescale<fixed<expected_card>>;
+
+          if constexpr (current_card < expected_card)
+          {
+            auto chunks = kumi::chunks<expected_card / current_card>(inner);
+
+            if constexpr (kumi::size_v<decltype(inner)> == (expected_card / current_card))
+            {
+              return kumi::apply([&](auto... c) { return expected_wide { c... }; }, inner);
+            }
+            else
+            {
+              return kumi::map([&]<typename W>(W const& w) -> decltype(auto)
+              {
+                return kumi::apply([](auto... c)
+                {
+                  return expected_wide { c... };
+                }, w);
+              }, chunks);
+            }
+          }
+          else
+          {
+            return inner;
+          }
         }
       };
 
-      return wide_t { storage_t { rewrap(kumi::generate<max_repl>([&process](auto i) { return process(i); })) }};
+      if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) }};
+      else                                        return rewrap(inner_output);
     }
     else
     {
