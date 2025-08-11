@@ -328,9 +328,6 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
     const T               arithmetic_in {[](int i, int) { return i + 1; }};
     const eve::logical<T> logical_in([](int i, int) { return i % 3 == 1; });
 
-    (void)free_masking;
-    (void)logical_in;
-
     // identity mixed with 0s is just propagated
     // to the shuffle.
     {
