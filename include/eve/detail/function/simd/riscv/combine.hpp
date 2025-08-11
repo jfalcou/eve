@@ -53,7 +53,7 @@ requires rvv_abi<abi_t<T, N>>
   else
   {
     // TODO: optimize
-    return to_logical(eve::combine(l.mask(), h.mask()));
+    return to_logical(combine(current_api, l.mask(), h.mask()));
   }
 }
 }
