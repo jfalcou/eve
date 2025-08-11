@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE wide<T, typename N::combined_type>
   combine(sve_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   requires sve_abi<abi_t<T, N>>
   {
@@ -35,7 +35,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE logical<wide<T, typename N::combined_type>>
   combine(sve_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   requires sve_abi<abi_t<T, N>>
   {

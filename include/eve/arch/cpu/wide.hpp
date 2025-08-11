@@ -11,6 +11,7 @@
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/combinable.hpp>
 #include <eve/concept/invocable.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
@@ -248,12 +249,12 @@ namespace eve
         : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
     {}
 
-    //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.
-    //! Does not participate in overload resolution if `Cardinal::value != 2 * Half::value`.
-    template<typename Half>
-    EVE_FORCEINLINE wide(wide<Type, Half> const& l, wide<Type, Half> const& h) noexcept
-    requires(Cardinal::value == 2 * Half::value)
-        : storage_base(detail::combine(eve::current_api, l, h))
+    //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
+    //!        to the current cardinal.
+    template<arithmetic_simd_value W0, arithmetic_simd_value W1, arithmetic_simd_value... Ws>
+    EVE_FORCEINLINE wide(W0 w0, W1 w1, Ws... ws) noexcept
+    requires (combinable_to<wide, W0, W1, Ws...>)
+      : storage_base(detail::combine(eve::current_api, w0, w1, ws...))
     {}
 
     //==============================================================================================

@@ -39,7 +39,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE logical<wide<T, typename N::combined_type>>
 combine(rvv_ const&, logical<wide<T, N>> l, logical<wide<T, N>> h) noexcept
 requires rvv_abi<abi_t<T, N>>
 {

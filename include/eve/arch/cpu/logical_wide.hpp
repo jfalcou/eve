@@ -203,17 +203,13 @@ namespace eve
                   : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
-    //! @brief Constructs a eve::logical by combining two eve::logical of half the current cardinal.
-    //! Does not participate in overload resolution if `Cardinal::value != 2 * Half::value`.
-    template<typename Half>
-    EVE_FORCEINLINE logical ( logical<wide<Type, Half>> const &l
-                            , logical<wide<Type, Half>> const &h
-                            ) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
-    requires( Cardinal::value == 2 * Half::value )
-#endif
-                  : storage_base(detail::combine(eve::current_api, l, h))
-    {}
+    //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
+    //!        to the current cardinal.
+    template<logical_simd_value WL0, logical_simd_value WL1, logical_simd_value... WLs>
+    EVE_FORCEINLINE logical(WL0 wl0, WL1 wl1, WLs... wls) noexcept
+    requires (combinable_to<logical, WL0, WL1, WLs...>)
+      : storage_base(detail::combine(eve::current_api, wl0, wl1, wls...))
+    { }
 
     //==============================================================================================
     //! @name Assignment operators
