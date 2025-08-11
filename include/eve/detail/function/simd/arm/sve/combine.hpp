@@ -49,7 +49,7 @@ namespace eve::detail
     }
     else
     {
-      return to_logical(eve::combine(l.mask(),h.mask()));
+      return to_logical(combine(current_api, l.mask(),h.mask()));
     }
   }
 }
