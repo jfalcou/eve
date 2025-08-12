@@ -82,7 +82,7 @@ namespace eve
         return is_gtz(a) && is_eqz(a & dec(a));
       else
       {
-        constexpr auto c = 2/eps(eve::as<eve::element_type_t<T>>())-1;
+        constexpr auto c = 1-eps(eve::as<eve::element_type_t<T>>())/2;
         auto yh = a*c;
         return is_eqz(fms[pedantic](a, c, yh));
       }
