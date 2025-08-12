@@ -1022,7 +1022,8 @@ namespace eve
 
         auto as_printable = [](Type v)
         {
-          if      constexpr (std::integral<Type> && sizeof(Type) == 1) return +v;
+          if constexpr (std::same_as<translate_t<Type>, detail::f16>)  return v.to_float32();
+          else if constexpr (std::integral<Type> && sizeof(Type) == 1) return +v;
           else if constexpr (requires { os << v; })                    return v;
           else                                                         return translate(v);
         };
