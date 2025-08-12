@@ -7,47 +7,63 @@
 //==================================================================================================
 #include "test.hpp"
 
-
-TTS_CASE_TPL("combine", eve::test::scalar::all_types)
-<typename T>(tts::type<T>)
+TTS_CASE_TPL("combine - arithmetic", eve::test::simd::all_types)
+<typename W>(tts::type<W>)
 {
-  constexpr std::size_t max_size_bit = 7; // 128 bytes max
+  constexpr std::ptrdiff_t card_out = W::size();
 
-  std::array<T, 1 << max_size_bit> data;
-  for(int i = 0; i < (1 << max_size_bit); i++) data[i] = 1 + i;
-
-  [&]<std::size_t... TB>(std::index_sequence<TB...>)
+  if constexpr (card_out > 1)
   {
-    auto outer = [&](auto tbv)
+    using T = eve::element_type_t<W>;
+    using HW = typename W::split_type;
+    using W1 = eve::wide<T, eve::fixed<1>>;
+
+    std::array<T, card_out> data;
+    for(std::ptrdiff_t i = 0; i < card_out; i++) data[i] = 1 + i;
+
+    auto wref = W{ &data[0] };
+
+    TTS_EQUAL(eve::combine(HW{ &data[0] }, HW{ &data[card_out / 2] }), wref);
+
+    std::array<W1, card_out> wides;
+    for(std::ptrdiff_t i = 0; i < card_out; ++i) wides[i] = W1{ &data[i] };
+
+    auto from_w1 = [&wides]<std::size_t... I>(std::index_sequence<I...>)
     {
-      constexpr std::size_t target_bit = decltype(tbv)::value;
+      return eve::combine(wides[I]...);
+    }(std::make_index_sequence<card_out>{});
 
-      [&]<std::size_t... I>(std::index_sequence<I...>)
-      {
-        auto r = [&](auto N)
-        {
-          constexpr std::size_t card_in = (1 << N);
-          constexpr std::size_t K = (1 << (target_bit - N));
-          std::array<eve::wide<T, eve::fixed<card_in>>, K> wides;
+    TTS_EQUAL(from_w1, wref);
+  }
+};
 
-          for(std::size_t i = 0; i < K; ++i)
-          {
-            wides[i] = eve::wide<T, eve::fixed<card_in>>(&data[i * card_in]);
-          }
+TTS_CASE_TPL("combine - logical", eve::test::simd::all_types)
+<typename BW>(tts::type<BW>)
+{
+  constexpr std::ptrdiff_t card_out = BW::size();
 
-          eve::wide<T, eve::fixed<card_in * K>> ref(&data[0]);
-          auto combined = [&]<std::size_t... J>(std::index_sequence<J...>)
-          {
-            return eve::combine(wides[J]...);
-          }(std::make_index_sequence<K>{});
+  if constexpr (card_out > 1)
+  {
+    using W = eve::logical<BW>;
+    using T = eve::element_type_t<W>;
+    using HW = typename W::split_type;
+    using W1 = typename W::template rescale<eve::fixed<1>>;
 
-          TTS_EQUAL(combined, ref);
-        };
+    std::array<T, card_out> data;
+    for(std::ptrdiff_t i = 0; i < card_out; i++) data[i] = (i % 3) == 0;
 
-        (r(std::integral_constant<std::size_t, I>{}), ...);
-      }(std::make_index_sequence<target_bit>{});
-    };
+    auto wref = W{ &data[0] };
 
-    (outer(std::integral_constant<std::size_t, TB + 1>{}), ...);
-  }(std::make_index_sequence<max_size_bit>{});
+    TTS_EQUAL(eve::combine(HW{ &data[0] }, HW{ &data[card_out / 2] }), wref);
+
+    std::array<W1, card_out> wides;
+    for(std::ptrdiff_t i = 0; i < card_out; ++i) wides[i] = W1{ &data[i] };
+
+    auto from_w1 = [&wides]<std::size_t... I>(std::index_sequence<I...>)
+    {
+      return eve::combine(wides[I]...);
+    }(std::make_index_sequence<card_out>{});
+
+    TTS_EQUAL(from_w1, wref);
+  }
 };
