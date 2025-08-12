@@ -17,7 +17,7 @@
 #include <cstdint>
 #include <compare>
 #include <limits>
-
+#include <iostream>
 namespace eve
 {
   namespace detail
@@ -59,96 +59,83 @@ namespace eve
     template <std::floating_point T>
     constexpr std::uint16_t emulated_fp_to_fp16(T value) noexcept
     {
-      constexpr int      F_EXP_BITS   = 11;
-      constexpr int      F_FRAC_BITS  = std::numeric_limits<double>::digits - 1;
-      constexpr int      F_BIAS       = std::numeric_limits<double>::max_exponent - 1;
-      constexpr uint32_t F_EXP_MAX    = (1u << F_EXP_BITS) - 1;
+      const uint32_t u32 = std::bit_cast<uint32_t>(static_cast<float>(value));
+      const uint16_t sign = (u32 >> 16) & 0x8000;
 
-      constexpr int      H_EXP_BITS   = 5;
-      constexpr int      H_FRAC_BITS  = 10;
-      constexpr int      H_BIAS       = (1 << (H_EXP_BITS - 1)) - 1;
-      constexpr uint16_t H_EXP_MAX    = (1u << H_EXP_BITS) - 1;
-
-      uint64_t bits = std::bit_cast<uint64_t>(static_cast<double>(value));
-      uint64_t sign  = bits >> 63;
-      uint64_t exp_f = (bits >> F_FRAC_BITS) & F_EXP_MAX;
-      uint64_t frac  = bits & ((1ull << F_FRAC_BITS) - 1);
-
-      // Handle NaN: always produce 0xFFFF
-      if (exp_f == F_EXP_MAX && frac != 0)
-      {
-        return 0xFFFFu;
+      if (std::isnan(value)) {
+        return 0xFFFF;
       }
 
-      uint16_t hsign = static_cast<uint16_t>(sign << 15);
-      uint16_t hexp;
-      uint16_t hfrac;
-
-      if (exp_f == F_EXP_MAX)
-      {
-        hexp  = H_EXP_MAX;
-        hfrac = 0;
+      if (std::isinf(value)) {
+        return sign | 0x7C00;
       }
-      else
-      {
-        int e_unbiased = static_cast<int>(exp_f) - F_BIAS;
 
-        if (e_unbiased >= H_BIAS)
-        {
-          hexp  = H_EXP_MAX;
-          hfrac = 0;
-        }
-        else if (e_unbiased < -H_BIAS - H_FRAC_BITS)
-        {
-          hexp  = 0;
-          hfrac = 0;
-        }
-        else if (e_unbiased < 1 - H_BIAS)
-        {
-          // Subnormal case: e_unbiased < -14
-          int shift = (1 - H_BIAS - e_unbiased) + (F_FRAC_BITS - H_FRAC_BITS);
-          uint64_t mant = (1ull << F_FRAC_BITS) | frac;
+      const int32_t biased_exp32 = ((u32 >> 23) & 0xFF) - 127;
+      const uint32_t mantissa32 = u32 & 0x7FFFFF;
 
-          // Round to nearest, ties to even
-          uint64_t sub = mant >> shift;
-          if (shift > 0 && (mant >> (shift - 1)) & 1) {
-            // Check if we need to round up
-            bool round_up = true;
-            if (shift > 1) {
-              // Check if it's exactly halfway (ties to even)
-              uint64_t lower_bits = mant & ((1ull << (shift - 1)) - 1);
-              if (lower_bits == 0) {
-                // Ties to even: round up only if result would be odd
-                round_up = (sub & 1) == 1;
-              }
-            }
-            if (round_up) {
-              ++sub;
-            }
+      // Case 1: The number is too large and will overflow to float16 infinity.
+      // The maximum exponent for a normal float16 is 15.
+      if (biased_exp32 > 15) {
+          return sign | 0x7C00;
+      }
+
+      // Case 2: The number will be a normalized float16.
+      // The exponent range for normal float16s is [-14, 15].
+      if (biased_exp32 >= -14) {
+          // Re-bias the exponent for the 5-bit float16 format (bias of 15).
+          uint16_t exp16 = static_cast<uint16_t>(biased_exp32 + 15);
+
+          // Round the 23-bit mantissa to 10 bits. The shift is 13 bits.
+          // Add half of the least significant bit of the target mantissa for rounding.
+          uint32_t rounded_mant = mantissa32 + (1u << 12);
+          uint16_t mantissa16 = rounded_mant >> 13;
+
+          // Check if rounding caused the mantissa to overflow.
+          if (rounded_mant & 0x800000) {
+              mantissa16 = 0; // Mantissa becomes zero
+              exp16++;        // Exponent is incremented
           }
 
-          hexp  = 0;
-          hfrac = static_cast<uint16_t>(sub);
-        }
-        else
-        {
-          int newe   = e_unbiased + H_BIAS;
-          hexp       = static_cast<uint16_t>(newe);
-          uint64_t fr = frac + (1ull << (F_FRAC_BITS - H_FRAC_BITS - 1));
-          if (fr & (1ull << F_FRAC_BITS))
-          {
-            fr    = 0;
-            hexp += 1;
-            if (hexp >= H_EXP_MAX)
-            {
-              return hsign | (H_EXP_MAX << H_FRAC_BITS);
-            }
+          // If rounding caused the exponent to overflow, the result is infinity.
+          if (exp16 > 30) {
+              return sign | 0x7C00;
           }
-          hfrac = static_cast<uint16_t>(fr >> (F_FRAC_BITS - H_FRAC_BITS));
-        }
+
+          return sign | (exp16 << 10) | mantissa16;
       }
 
-      return static_cast<uint16_t>(hsign | (hexp << H_FRAC_BITS) | hfrac);
+      // Case 3: The number will become a subnormal float16 or underflow to zero.
+      // The smallest float16 subnormal has an effective exponent of -24.
+      if (biased_exp32 < -24) {
+          return sign; // Underflow to signed zero.
+      }
+
+      // Handle subnormal conversion for exponents in range [-24, -15].
+      // The float32 value is (1.mantissa32) * 2^biased_exp32.
+      // We want to represent this as (0.mantissa16) * 2^-14.
+      // This requires a right-shift of the significand.
+      const uint32_t significand32 = mantissa32 | 0x800000;
+
+      // The shift amount is derived from the goal of aligning the exponents.
+      // shift = - (exponent + 1)
+      const int shift = -(biased_exp32 + 1);
+
+      // Implement round-to-nearest-even.
+      uint32_t truncated_part = significand32 & ((1u << shift) - 1);
+      uint16_t mantissa16 = significand32 >> shift;
+
+      // Check the guard bit (the MSB of the truncated part).
+      if ((truncated_part > (1u << (shift - 1))) || // Greater than halfway
+          ((truncated_part == (1u << (shift - 1))) && ((mantissa16 & 1) != 0))) { // Exactly halfway, round to even
+          mantissa16++;
+      }
+
+      // A subnormal number could round up to become the smallest normal number.
+      if (mantissa16 >= 0x400) {
+          return sign | 0x0400; // Smallest normal f16
+      }
+
+      return sign | mantissa16;
     }
 
     template <std::integral T>
