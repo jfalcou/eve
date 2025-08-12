@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
-//!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
+//!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sufp.cpp}

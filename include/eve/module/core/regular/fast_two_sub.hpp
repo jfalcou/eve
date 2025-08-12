@@ -30,7 +30,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var quick_two_add
+//!   @var fast_two_sub
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  sub and error,
 //!
@@ -46,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U  >
-//!      kumi::tuple<T, T> quick_two_add(T x, U y) noexcept;
+//!      kumi::tuple<T, T> fast_two_sub(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -68,7 +68,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/quick_two_add.cpp}
+//!  @godbolt{doc/core/regular/fast_two_sub.cpp}
 //!
 //! @}
 //================================================================================================

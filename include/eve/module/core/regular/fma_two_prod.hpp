@@ -26,7 +26,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var two_prod
+//!   @var fma_two_prod
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  product and error,
 //!
@@ -42,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U  >
-//!      auto two_prod(T x, U y) noexcept;
+//!      auto fma_two_prod(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/two_prod.cpp}
+//!  @godbolt{doc/core/regular/fma_two_prod.cpp}
 //!
 //! @}
 //================================================================================================
