@@ -50,6 +50,7 @@ namespace eve
   struct unsafe_mode      {};
 
 
+  struct to_nearest_odd_mode {};
   struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
   struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEG_INF
   struct upward_mode      { static constexpr int value = 0x08 | 0x02; }; // _MM_FROUND_TO_POS_INF
@@ -92,6 +93,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
   [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
   [[maybe_unused]] inline constexpr auto splat2           = ::rbr::flag( splat_mode{}           );
+  [[maybe_unused]] inline constexpr auto to_nearest_odd   = ::rbr::flag( to_nearest_odd_mode{}  );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -124,8 +126,9 @@ namespace eve
   struct widen_option           : detail::exact_option<widen>           {};
   struct unsafe_option          : detail::exact_option<unsafe2>         {};
   struct splat_option           : detail::exact_option<splat2>          {};
+  struct to_nearest_odd_option  : detail::exact_option<to_nearest_odd>  {};
 
-  inline constexpr auto as_option(unsafe_type   const&) { return unsafe2;   }
+  inline constexpr auto as_option(unsafe_type   const&) { return unsafe2; }
   inline constexpr auto as_option(splat_type   const&) { return splat2;   }
 
   // ----------------------------------------------------------------------------------

@@ -183,7 +183,6 @@
 #include <eve/module/core/regular/of_class.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
-#include <eve/module/core/regular/hardware_precision.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/rat.hpp>
 #include <eve/module/core/regular/read.hpp>

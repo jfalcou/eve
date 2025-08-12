@@ -27,9 +27,10 @@ int main()
   std::cout << "-> add(wu0, wu1)                 = " << eve::add(wu0, wu1) << "\n";
   std::cout << "-> add(wi0, wi1)                 = " << eve::add(wi0, wi1) << "\n";
 
-  std::cout << std::setprecision(20) << "-> add(wf0, wf1)          = " << eve::add(wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> add[lower](wf0, wf1)   = " << eve::add[eve::lower](wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)   = " << eve::add[eve::upper](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add(wf0, wf1)                  = " << eve::add(wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[to_nearest_odd(wf0, wf1)   = " << eve::add(wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[lower](wf0, wf1)           = " << eve::add[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)           = " << eve::add[eve::upper](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[lower][strict](wf0, wf1)   = " << eve::add[eve::lower][eve::strict](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[upper][strict](wf0, wf1)   = " << eve::add[eve::upper][eve::strict](wf0, wf1) << "\n";
 

@@ -15,7 +15,7 @@ namespace eve
 {
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
-                                upper_option, strict_option, widen_option>
+                                upper_option, to_nearest_odd_option, strict_option, widen_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -27,7 +27,7 @@ namespace eve
 
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... > //typename result<T0, T1, Ts...>::type
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
     constexpr operator()(T0 t0, T1 t1, Ts...ts)
       const noexcept
     {
@@ -81,6 +81,7 @@ namespace eve
 //!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
 //!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 7
+//!      constexpr auto add[to_nearest_odd](/*any of the above overloads*/)           noexcept; // 8
 
 //!   }
 //!   @endcode
@@ -96,24 +97,29 @@ namespace eve
 //!
 //!    The value of the sum of the arguments is returned.
 //!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
-//!       This call performs additions in reverse incoming order.
+//!       This call performs additions in reverse incoming order. If you have not changed the processor rounding mode,
+//!       round toward nearest mode tie to even is generally performed on standard systems.
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!    4. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
-//!    5. The summation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!    5. The summation is computed in a round toward \f$-\infty\f$ mode. The result is guaranted
 //!       to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
-//!    6. The summation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!    6. The summation is computed in a round toward \f$\infty\f$ mode. The result is guaranted
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!    7. The summation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and  64 bits integrals.
+//!    8. The summation is computed in a round toward nearest mode but tie to odd (not hardware available on common systems).
 //!
 //!   @note
-//!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
-//!      standard scalar types is the original one and so can lead to automatic promotion.
+//!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
+//!       standard scalar types is the original one and so can lead to automatic promotion.
+//!     * add has many options. The regular user will only be interested with saturated,
+//!       unless it has to deal with uncommon accuracy or order properties requirements whose enforcement can have
+//!       an heavy cost even if hardware fma-like processor intrinsics are available.
 //!
 //!  @groupheader{Example}
 //!

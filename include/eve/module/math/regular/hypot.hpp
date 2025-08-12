@@ -71,7 +71,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
+//!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$. (naive formula)
 //!        The result type is the [common value type](@ref common_value_t) of the
 //!        absolute values of the parameters. (Some appropriate scaling is done to enhance precision
 //!        and avoid overflows.

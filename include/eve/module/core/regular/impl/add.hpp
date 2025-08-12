@@ -21,6 +21,8 @@
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/half.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 
 namespace eve::detail
 {
@@ -31,6 +33,14 @@ namespace eve::detail
     if constexpr(O::contains(widen))
     {
       return add[o.drop(widen)](upgrade(a), upgrade(b));
+    }
+    else if constexpr(floating_value<T> && (O::contains(to_nearest_odd)))
+    {
+      auto d = eve::add[lower](a, b);
+      auto u = eve::add[upper](a, b);
+      auto e = u+d;
+      constexpr auto hf = eve::half(eve::as<eve::element_type_t<T>>());
+      return eve::fnma(e, hf, u)+d;
     }
     else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
