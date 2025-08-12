@@ -72,7 +72,7 @@ namespace eve
       uint64_t bits = std::bit_cast<uint64_t>(static_cast<double>(value));
       uint64_t sign  = bits >> 63;
       uint64_t exp_f = (bits >> F_FRAC_BITS) & F_EXP_MAX;
-      uint64_t frac  = bits & ((1ul << F_FRAC_BITS) - 1);
+      uint64_t frac  = bits & ((1ull << F_FRAC_BITS) - 1);
 
       // Handle NaN: always produce 0xFFFF
       if (exp_f == F_EXP_MAX && frac != 0)
@@ -107,7 +107,7 @@ namespace eve
         {
           // Subnormal case: e_unbiased < -14
           int shift = (1 - H_BIAS - e_unbiased) + (F_FRAC_BITS - H_FRAC_BITS);
-          uint64_t mant = (1ul << F_FRAC_BITS) | frac;
+          uint64_t mant = (1ull << F_FRAC_BITS) | frac;
 
           // Round to nearest, ties to even
           uint64_t sub = mant >> shift;
@@ -116,7 +116,7 @@ namespace eve
             bool round_up = true;
             if (shift > 1) {
               // Check if it's exactly halfway (ties to even)
-              uint64_t lower_bits = mant & ((1ul << (shift - 1)) - 1);
+              uint64_t lower_bits = mant & ((1ull << (shift - 1)) - 1);
               if (lower_bits == 0) {
                 // Ties to even: round up only if result would be odd
                 round_up = (sub & 1) == 1;
@@ -134,8 +134,8 @@ namespace eve
         {
           int newe   = e_unbiased + H_BIAS;
           hexp       = static_cast<uint16_t>(newe);
-          uint64_t fr = frac + (1ul << (F_FRAC_BITS - H_FRAC_BITS - 1));
-          if (fr & (1ul << F_FRAC_BITS))
+          uint64_t fr = frac + (1ull << (F_FRAC_BITS - H_FRAC_BITS - 1));
+          if (fr & (1ull << F_FRAC_BITS))
           {
             fr    = 0;
             hexp += 1;
@@ -159,36 +159,30 @@ namespace eve
 
     constexpr std::partial_ordering emulated_fp16_compare(std::uint16_t a_bits, std::uint16_t b_bits) noexcept
     {
-      // Check for NaN (exp = 0x1F, mantissa != 0)
       bool a_is_nan = ((a_bits & 0x7C00) == 0x7C00) && ((a_bits & 0x03FF) != 0);
       bool b_is_nan = ((b_bits & 0x7C00) == 0x7C00) && ((b_bits & 0x03FF) != 0);
 
       if (a_is_nan || b_is_nan) {
-        // NaN comparisons are unordered
         return std::partial_ordering::unordered;
       }
 
-      // Extract signs
       bool a_sign = (a_bits & 0x8000) != 0;
       bool b_sign = (b_bits & 0x8000) != 0;
 
-      // Different signs
       if (a_sign != b_sign) {
-        // Handle zero cases: +0 == -0
         bool a_is_zero = (a_bits & 0x7FFF) == 0;
         bool b_is_zero = (b_bits & 0x7FFF) == 0;
+
         if (a_is_zero && b_is_zero) return std::partial_ordering::equivalent;
 
         return a_sign ? std::partial_ordering::less : std::partial_ordering::greater;
       }
 
-      // Same signs - compare magnitudes
       uint16_t a_mag = a_bits & 0x7FFF;
       uint16_t b_mag = b_bits & 0x7FFF;
 
       if (a_mag == b_mag) return std::partial_ordering::equivalent;
 
-      // For negative numbers, larger magnitude means smaller value
       if (a_sign) {
         return (a_mag > b_mag) ? std::partial_ordering::less : std::partial_ordering::greater;
       } else {
