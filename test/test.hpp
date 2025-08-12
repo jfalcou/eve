@@ -247,15 +247,12 @@ namespace eve::test::scalar
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
-  using ieee_reals_wf16   = eve::test::wides<tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using signed_types      = eve::test::wides<::tts::signed_types>::type;
-  using signed_types_wf16 = eve::test::wides<::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
   using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
-  using all_types_wf16    = eve::test::wides<::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16>>>::type;
 }
 
 //==================================================================================================
