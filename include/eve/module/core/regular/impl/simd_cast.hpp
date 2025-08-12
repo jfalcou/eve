@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {
@@ -34,7 +34,7 @@ simd_cast_(EVE_REQUIRES(cpu_), O const&, T x, as<Target> tgt) noexcept
 
     return res;
   }
-  else if constexpr( sizeof(T) < sizeof(Target) ) { return simd_cast(combine(current_api, x, T{}), tgt); }
+  else if constexpr( sizeof(T) < sizeof(Target) ) { return simd_cast(eve::combine(x, T{}), tgt); }
   else if constexpr( sizeof(T) > sizeof(Target) ) { return simd_cast(x.slice(lower_), tgt); }
   else { return bit_cast(x, tgt); }
 }
