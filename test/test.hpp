@@ -233,23 +233,29 @@ namespace eve::test
 namespace eve::test::scalar
 {
   using ieee_reals        = ::tts::real_types;
+  using ieee_reals_wf16   = ::tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16>>;
   using signed_integers   = ::tts::int_types;
   using signed_types      = ::tts::signed_types;
+  using signed_types_wf16 = ::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16>>;
   using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
   using all_types         = ::tts::arithmetic_types;
+  using all_types_wf16    = ::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16>>;
 }
 
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
+  using ieee_reals_wf16   = eve::test::wides<tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using signed_types      = eve::test::wides<::tts::signed_types>::type;
+  using signed_types_wf16 = eve::test::wides<::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
   using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
+  using all_types_wf16    = eve::test::wides<::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16>>>::type;
 }
 
 //==================================================================================================
@@ -339,6 +345,33 @@ namespace tts
     eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
 
     return poison(that);
+  }
+
+  auto produce(type<eve::float16> const&, auto g, auto& rng, auto... args)
+  {
+    auto data = produce(type<float>{}, g, rng, args...);
+    return eve::float16{ data };
+  }
+
+  template<std::size_t N>
+  auto produce(type<std::array<eve::float16, N>> const&, auto g, auto& rng, auto... args)
+  {
+    std::array<eve::float16, N> data;
+
+    for(std::size_t i = 0; i < N; ++i)
+    {
+      data[i] = produce(type<eve::float16>{}, g, rng, args...);
+    }
+
+    return data;
+  }
+
+  template<std::ptrdiff_t N>
+  auto produce(type<eve::wide<eve::float16, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
+  {
+    auto arr = produce(type<std::array<eve::float16, N>>{}, g, rng, args...);
+
+    return poison(eve::load(arr.data(), eve::fixed<N>{}));
   }
 
   //================================================================================================

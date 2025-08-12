@@ -20,6 +20,7 @@ struct bitincrement_t : constant_callable<bitincrement_t, Options, lower_option,
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
   {
     if      constexpr(std::integral<T>        ) return T(1);
+    else if constexpr(std::same_as<T, detail::f16>) return detail::f16_from_bits(0x0001);
     else if constexpr(std::same_as<T, float>  ) return T(0x1p-149);
     else if constexpr(std::same_as<T, double> ) return T(0x0.0000000000001p-1022);
   }

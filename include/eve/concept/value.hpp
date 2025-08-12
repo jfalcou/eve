@@ -113,7 +113,9 @@ namespace eve
   //! - `double`
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
-  template<typename T> concept floating_value        = value<T> && std::floating_point<translated_element_type_t<T>>;
+  template<typename T> concept floating_value = value<T>
+                                                && (std::floating_point<translated_element_type_t<T>>
+                                                    || std::same_as<translated_element_type_t<T>, detail::f16>);
   //================================================================================================
   //! @}
   //================================================================================================

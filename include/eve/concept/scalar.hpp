@@ -11,6 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/traits/translation.hpp>
 #include <eve/concept/translation.hpp>
+#include <eve/arch/float16.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -23,8 +24,8 @@ namespace eve::detail
 template<typename T>
 constexpr bool is_plain() noexcept
 {
-  return    !(std::is_same_v<T, bool> || std::is_same_v<T, long double>)
-        &&  (std::is_floating_point_v<T> || std::is_integral_v<T>);
+  return    !(std::same_as<T, bool> || std::same_as<T, long double>)
+        &&  (std::is_floating_point_v<T> || std::is_integral_v<T> || std::same_as<T, detail::f16>);
 }
 }
 

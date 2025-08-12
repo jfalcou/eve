@@ -19,7 +19,8 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      return T(-1);
+      if constexpr (std::same_as<T, detail::f16>) return detail::f16_from_bits(0xBC00);
+      else                                        return T(-1);
     }
 
     template<plain_value T>
