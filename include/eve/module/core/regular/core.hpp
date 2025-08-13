@@ -232,3 +232,6 @@
 #include <eve/module/core/regular/modadd.hpp>
 #include <eve/module/core/regular/modmul.hpp>
 #include <eve/module/core/regular/modsub.hpp>
+#include <eve/module/core/regular/modpow.hpp>
+#include <eve/module/core/regular/modrec.hpp>
+#include <eve/module/core/regular/moddiv.hpp>
