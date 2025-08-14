@@ -22,7 +22,7 @@ struct allbits_t : constant_callable<allbits_t, Options, lower_option, upper_opt
   {
     constexpr auto mask = ~0ULL;
     if      constexpr(std::integral<T>       )  return T(mask);
-    else if constexpr(std::same_as<T, detail::f16>) return detail::f16_from_bits(0xFFFF);
+    else if constexpr(std::same_as<T, eve::float16>) return detail::float16_from_bits(0xFFFF);
     else if constexpr(std::same_as<T, double>)  return T(std::bit_cast<double>(~0ULL));
     else if constexpr(std::same_as<T, float >)  return T(std::bit_cast<float>(~0U));
   }

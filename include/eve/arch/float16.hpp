@@ -17,125 +17,75 @@
 #include <cstdint>
 #include <compare>
 #include <limits>
-#include <iostream>
+
 namespace eve
 {
   namespace detail
   {
+    // taken from https://github.com/QiJune/majel/blob/master/float16.h
+    static constexpr int32_t f16_shift = 13;
+    static constexpr int32_t f16_shiftSign = 16;
+    static constexpr int32_t f16_infN = 0x7F800000;
+    // the following constant is set to 65519 instead of 56504 to emulate the rounding behaviour observed on f16 hw.
+    static constexpr int32_t f16_maxN = 0x477FEF00; //max flt16 as flt32
+    static constexpr int32_t f16_minN = 0x38800000; //min flt16 normal as flt32
+    static constexpr int32_t f16_sigN = 0x80000000; //sign bit
+    static constexpr int32_t f16_infC = f16_infN >> f16_shift;
+    static constexpr int32_t f16_nanN = (f16_infC + 1) << f16_shift; //minimum flt16 nan as float32
+    static constexpr int32_t f16_maxC = f16_maxN >> f16_shift;
+    static constexpr int32_t f16_minC = f16_minN >> f16_shift;
+    static constexpr int32_t f16_sigC = f16_sigN >> f16_shiftSign;
+    static constexpr int32_t f16_mulN = 0x52000000; //(1 << 23) / minN
+    static constexpr int32_t f16_mulC = 0x33800000; //minN / (1 << (23 - shift))
+    static constexpr int32_t f16_subC = 0x003FF; //max flt32 subnormal downshifted
+    static constexpr int32_t f16_norC = 0x00400; //min flt32 normal downshifted
+    static constexpr int32_t f16_maxD = f16_infC - f16_maxC - 1;
+    static constexpr int32_t f16_minD = f16_minC - f16_subC - 1;
+
+    union Bits {
+        float f;
+        int32_t si;
+        uint32_t ui;
+    };
+
     constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
     {
-      std::uint32_t sign = (raw & 0x8000) << 16;
-      std::uint32_t exp = (raw & 0x7C00) >> 10;
-      std::uint32_t mantissa = raw & 0x03FF;
-
-      if (exp == 0) {
-        if (mantissa == 0) {
-          return std::bit_cast<float>(sign);
-        } else {
-          // Subnormal - convert to normalized float32
-          int shift = 0;
-          while ((mantissa & 0x0400) == 0) {
-            mantissa <<= 1;
-            shift++;
-          }
-          mantissa &= 0x03FF;
-          exp = 127 - 15 - shift + 1;
-          return std::bit_cast<float>(sign | (exp << 23) | (mantissa << 13));
-        }
-      } else if (exp == 31) {
-        // Infinity or NaN
-        if (mantissa == 0) {
-          return std::bit_cast<float>(sign | 0x7F800000);
-        } else {
-          return std::numeric_limits<float>::quiet_NaN();
-        }
-      } else {
-        // Normal case, adjust exponent bias
-        exp = exp - 15 + 127;
-        return std::bit_cast<float>(sign | (exp << 23) | (mantissa << 13));
-      }
+      Bits v;
+      v.ui = raw;
+      int32_t sign = v.si & f16_sigC;
+      v.si ^= sign;
+      sign <<= f16_shiftSign;
+      v.si ^= ((v.si + f16_minD) ^ v.si) & -(v.si > f16_subC);
+      v.si ^= ((v.si + f16_maxD) ^ v.si) & -(v.si > f16_maxC);
+      Bits s;
+      s.si = f16_mulC;
+      s.f *= v.si;
+      int32_t mask = -(f16_norC > v.si);
+      v.si <<= f16_shift;
+      v.si ^= (s.si ^ v.si) & mask;
+      v.si |= sign;
+      return v.f;
     }
 
     template <std::floating_point T>
     constexpr std::uint16_t emulated_fp_to_fp16(T value) noexcept
     {
-      const uint32_t u32 = std::bit_cast<uint32_t>(static_cast<float>(value));
-      const uint16_t sign = (u32 >> 16) & 0x8000;
+      const float f = static_cast<float>(value);
 
-      if (std::isnan(value)) {
-        return 0xFFFF;
-      }
-
-      if (std::isinf(value)) {
-        return sign | 0x7C00;
-      }
-
-      const int32_t biased_exp32 = ((u32 >> 23) & 0xFF) - 127;
-      const uint32_t mantissa32 = u32 & 0x7FFFFF;
-
-      // Case 1: The number is too large and will overflow to float16 infinity.
-      // The maximum exponent for a normal float16 is 15.
-      if (biased_exp32 > 15) {
-          return sign | 0x7C00;
-      }
-
-      // Case 2: The number will be a normalized float16.
-      // The exponent range for normal float16s is [-14, 15].
-      if (biased_exp32 >= -14) {
-          // Re-bias the exponent for the 5-bit float16 format (bias of 15).
-          uint16_t exp16 = static_cast<uint16_t>(biased_exp32 + 15);
-
-          // Round the 23-bit mantissa to 10 bits. The shift is 13 bits.
-          // Add half of the least significant bit of the target mantissa for rounding.
-          uint32_t rounded_mant = mantissa32 + (1u << 12);
-          uint16_t mantissa16 = rounded_mant >> 13;
-
-          // Check if rounding caused the mantissa to overflow.
-          if (rounded_mant & 0x800000) {
-              mantissa16 = 0; // Mantissa becomes zero
-              exp16++;        // Exponent is incremented
-          }
-
-          // If rounding caused the exponent to overflow, the result is infinity.
-          if (exp16 > 30) {
-              return sign | 0x7C00;
-          }
-
-          return sign | (exp16 << 10) | mantissa16;
-      }
-
-      // Case 3: The number will become a subnormal float16 or underflow to zero.
-      // The smallest float16 subnormal has an effective exponent of -24.
-      if (biased_exp32 < -24) {
-          return sign; // Underflow to signed zero.
-      }
-
-      // Handle subnormal conversion for exponents in range [-24, -15].
-      // The float32 value is (1.mantissa32) * 2^biased_exp32.
-      // We want to represent this as (0.mantissa16) * 2^-14.
-      // This requires a right-shift of the significand.
-      const uint32_t significand32 = mantissa32 | 0x800000;
-
-      // The shift amount is derived from the goal of aligning the exponents.
-      // shift = - (exponent + 1)
-      const int shift = -(biased_exp32 + 1);
-
-      // Implement round-to-nearest-even.
-      uint32_t truncated_part = significand32 & ((1u << shift) - 1);
-      uint16_t mantissa16 = significand32 >> shift;
-
-      // Check the guard bit (the MSB of the truncated part).
-      if ((truncated_part > (1u << (shift - 1))) || // Greater than halfway
-          ((truncated_part == (1u << (shift - 1))) && ((mantissa16 & 1) != 0))) { // Exactly halfway, round to even
-          mantissa16++;
-      }
-
-      // A subnormal number could round up to become the smallest normal number.
-      if (mantissa16 >= 0x400) {
-          return sign | 0x0400; // Smallest normal f16
-      }
-
-      return sign | mantissa16;
+      Bits v, s;
+      v.f = f;
+      uint32_t sign = v.si & f16_sigN;
+      v.si ^= sign;
+      sign >>= f16_shiftSign; // logical shift
+      s.si = f16_mulN;
+      s.si = s.f * v.f; // correct subnormals
+      v.si ^= (s.si ^ v.si) & -(f16_minN > v.si);
+      v.si ^= (f16_infN ^ v.si) & -((f16_infN > v.si) & (v.si > f16_maxN));
+      v.si ^= (f16_nanN ^ v.si) & -((f16_nanN > v.si) & (v.si > f16_infN));
+      v.ui >>= f16_shift; // logical shift
+      v.si ^= ((v.si - f16_maxD) ^ v.si) & -(v.si > f16_maxC);
+      v.si ^= ((v.si - f16_minD) ^ v.si) & -(v.si > f16_subC);
+      return v.ui | sign;
     }
 
     template <std::integral T>
@@ -191,189 +141,143 @@ namespace eve
     };
   }
 
-  namespace
-  {
-    struct from_underlying { };
-  }
+  #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)
+    namespace detail
+    {
+      static constexpr bool supports_f16_type = spy::supports::fp16::type;
+      static constexpr bool supports_f16_scalar_ops = spy::supports::fp16::scalar_ops;
+      static constexpr bool supports_f16_vector_ops = spy::supports::fp16::vector_ops;
+    }
 
-  template<typename Underlying>
-  struct basic_float16
-  {
-    private:
-      Underlying data;
+    using float16 = _Float16;
+  #else
+    namespace detail
+    {
+      static constexpr bool supports_f16_type = false;
+      static constexpr bool supports_f16_scalar_ops = false;
+      static constexpr bool supports_f16_vector_ops = false;
+    }
 
-      constexpr explicit basic_float16(from_underlying, Underlying value) noexcept
-        : data(value) {}
+    struct float16 {
+      private:
+        uint16_t data;
 
-      template <std::floating_point T>
-      constexpr static Underlying make(T value) noexcept;
+        template <typename T>
+        constexpr T into() const noexcept
+        {
+          return static_cast<T>(detail::emulated_fp16_to_fp32(data));
+        }
 
-      template <std::integral T>
-      constexpr static Underlying make(T value) noexcept;
+      public:
+        constexpr float16() = default;
+        constexpr explicit float16(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
+        constexpr explicit float16(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
-      template <typename T>
-      constexpr T into() const noexcept
-      {
-        if constexpr (supports::type) return static_cast<T>(data);
-        else                          return static_cast<T>(detail::emulated_fp16_to_fp32(data));
-      }
 
-    public:
-      using supports = detail::fp16_supports_info;
+        constexpr EVE_FORCEINLINE operator float()              const noexcept { return into<float>(); }
+        constexpr EVE_FORCEINLINE operator double()             const noexcept { return into<double>(); }
 
-      constexpr basic_float16() noexcept = default;
-      constexpr basic_float16(basic_float16 const&) noexcept = default;
+        constexpr EVE_FORCEINLINE operator char()               const noexcept { return into<char>(); }
+        constexpr EVE_FORCEINLINE operator signed char()        const noexcept { return into<signed char>(); }
+        constexpr EVE_FORCEINLINE operator unsigned char()      const noexcept { return into<unsigned char>(); }
+        constexpr EVE_FORCEINLINE operator short()              const noexcept { return into<short>(); }
+        constexpr EVE_FORCEINLINE operator unsigned short()     const noexcept { return into<unsigned short>(); }
+        constexpr EVE_FORCEINLINE operator int()                const noexcept { return into<int>(); }
+        constexpr EVE_FORCEINLINE operator unsigned int()       const noexcept { return into<unsigned int>(); }
+        constexpr EVE_FORCEINLINE operator long()               const noexcept { return into<long>(); }
+        constexpr EVE_FORCEINLINE operator unsigned long()      const noexcept { return into<unsigned long>(); }
+        constexpr EVE_FORCEINLINE operator long long()          const noexcept { return into<long long>(); }
+        constexpr EVE_FORCEINLINE operator unsigned long long() const noexcept { return into<unsigned long long>(); }
 
-      constexpr explicit basic_float16(std::integral auto value) noexcept
-        : data(make(value)) {}
+        // Arithmetic operators
+        constexpr EVE_FORCEINLINE float16 operator+(float16 const& other) const noexcept
+        {
+          return float16{into<float>() + static_cast<float>(other)};
+        }
 
-      constexpr explicit basic_float16(std::floating_point auto value) noexcept
-        : data(make(value)) {}
+        constexpr EVE_FORCEINLINE float16 operator-(float16 const& other) const noexcept
+        {
+          return float16{into<float>() - static_cast<float>(other)};
+        }
 
-      constexpr EVE_FORCEINLINE static basic_float16 from_bits(std::uint16_t bits) noexcept
-      {
-        return basic_float16{ from_underlying{}, std::bit_cast<Underlying>(bits) };
-      }
+        constexpr EVE_FORCEINLINE float16 operator*(float16 const& other) const noexcept
+        {
+          return float16{into<float>() * static_cast<float>(other)};
+        }
 
-      constexpr EVE_FORCEINLINE std::uint16_t bits() const noexcept
-      {
-        return std::bit_cast<std::uint16_t>(data);
-      }
+        constexpr EVE_FORCEINLINE float16 operator/(float16 const& other) const noexcept
+        {
+          return float16{into<float>() / static_cast<float>(other)};
+        }
 
-      constexpr EVE_FORCEINLINE operator float()              const noexcept { return into<float>(); }
-      constexpr EVE_FORCEINLINE operator double()             const noexcept { return into<double>(); }
+        constexpr EVE_FORCEINLINE float16 operator-() const noexcept
+        {
+          return float16{-into<float>()};
+        }
 
-      constexpr EVE_FORCEINLINE operator char()               const noexcept { return into<char>(); }
-      constexpr EVE_FORCEINLINE operator signed char()        const noexcept { return into<signed char>(); }
-      constexpr EVE_FORCEINLINE operator unsigned char()      const noexcept { return into<unsigned char>(); }
-      constexpr EVE_FORCEINLINE operator short()              const noexcept { return into<short>(); }
-      constexpr EVE_FORCEINLINE operator unsigned short()     const noexcept { return into<unsigned short>(); }
-      constexpr EVE_FORCEINLINE operator int()                const noexcept { return into<int>(); }
-      constexpr EVE_FORCEINLINE operator unsigned int()       const noexcept { return into<unsigned int>(); }
-      constexpr EVE_FORCEINLINE operator long()               const noexcept { return into<long>(); }
-      constexpr EVE_FORCEINLINE operator unsigned long()      const noexcept { return into<unsigned long>(); }
-      constexpr EVE_FORCEINLINE operator long long()          const noexcept { return into<long long>(); }
-      constexpr EVE_FORCEINLINE operator unsigned long long() const noexcept { return into<unsigned long long>(); }
+        constexpr EVE_FORCEINLINE float16& operator+=(float16 const& other) noexcept
+        {
+          return *this = *this + other;
+        }
 
-      // Arithmetic operators
-      constexpr EVE_FORCEINLINE basic_float16 operator+(basic_float16 const& other) const noexcept
-      {
-        if constexpr (supports::type) return basic_float16{from_underlying{}, data + other.data};
-        else                          return basic_float16{into<float>() + static_cast<float>(other)};
-      }
+        constexpr EVE_FORCEINLINE float16& operator-=(float16 const& other) noexcept
+        {
+          return *this = *this - other;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16 operator-(basic_float16 const& other) const noexcept
-      {
-        if constexpr (supports::type) return basic_float16{from_underlying{}, data - other.data};
-        else                          return basic_float16{into<float>() - static_cast<float>(other)};
-      }
+        constexpr EVE_FORCEINLINE float16& operator*=(float16 const& other) noexcept
+        {
+          return *this = *this * other;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16 operator*(basic_float16 const& other) const noexcept
-      {
-        if constexpr (supports::type) return basic_float16{from_underlying{}, data * other.data};
-        else                          return basic_float16{into<float>() * static_cast<float>(other)};
-      }
+        constexpr EVE_FORCEINLINE float16& operator/=(float16 const& other) noexcept
+        {
+          return *this = *this / other;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16 operator/(basic_float16 const& other) const noexcept
-      {
-        if constexpr (supports::type) return basic_float16{from_underlying{}, data / other.data};
-        else                          return basic_float16{into<float>() / static_cast<float>(other)};
-      }
+        constexpr EVE_FORCEINLINE float16& operator++() noexcept
+        {
+          *this += float16{1.0f};
+          return *this;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16 operator-() const noexcept
-      {
-        if constexpr (supports::type) return basic_float16{from_underlying{}, -data};
-        else                          return basic_float16{-into<float>()};
-      }
+        constexpr EVE_FORCEINLINE float16 operator++(int) noexcept
+        {
+          float16 tmp = *this;
+          ++(*this);
+          return tmp;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16& operator+=(basic_float16 const& other) noexcept
-      {
-        return *this = *this + other;
-      }
+        constexpr EVE_FORCEINLINE float16& operator--() noexcept
+        {
+          *this -= float16{1.0f};
+          return *this;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16& operator-=(basic_float16 const& other) noexcept
-      {
-        return *this = *this - other;
-      }
+        constexpr EVE_FORCEINLINE float16 operator--(int) noexcept
+        {
+          float16 tmp = *this;
+          --(*this);
+          return tmp;
+        }
 
-      constexpr EVE_FORCEINLINE basic_float16& operator*=(basic_float16 const& other) noexcept
-      {
-        return *this = *this * other;
-      }
-
-      constexpr EVE_FORCEINLINE basic_float16& operator/=(basic_float16 const& other) noexcept
-      {
-        return *this = *this / other;
-      }
-
-      constexpr EVE_FORCEINLINE basic_float16& operator++() noexcept
-      {
-        *this += basic_float16{1.0f};
-        return *this;
-      }
-
-      constexpr EVE_FORCEINLINE basic_float16 operator++(int) noexcept
-      {
-        basic_float16 tmp = *this;
-        ++(*this);
-        return tmp;
-      }
-
-      constexpr EVE_FORCEINLINE basic_float16& operator--() noexcept
-      {
-        *this -= basic_float16{1.0f};
-        return *this;
-      }
-
-      constexpr EVE_FORCEINLINE basic_float16 operator--(int) noexcept
-      {
-        basic_float16 tmp = *this;
-        --(*this);
-        return tmp;
-      }
-
-      constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(basic_float16 const& other) const noexcept
-      {
-        if constexpr (supports::type) return data <=> other.data;
-        else                          return detail::emulated_fp16_compare(data, other.data);
-      }
-  };
-
-#if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)
-  using float16 = basic_float16<_Float16>;
-
-  template<>
-  struct translation_of<float16>
-  {
-    using type = _Float16;
-  };
-#else
-  using float16 = basic_float16<std::uint16_t>;
-#endif
+        constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16 const& other) const noexcept
+        {
+          return detail::emulated_fp16_compare(data, other.data);
+        }
+    };
+  #endif
 
   namespace detail
   {
-    using f16 = translate_t<float16>;
-
-    constexpr f16 f16_from_bits(std::uint16_t bits) noexcept
+    constexpr static float16 float16_from_bits(std::uint16_t bits) noexcept
     {
-      return std::bit_cast<f16>(bits);
+      return std::bit_cast<float16>(bits);
     }
-  }
 
-  template<typename Underlying>
-  template<std::floating_point T>
-  constexpr Underlying basic_float16<Underlying>::make(T value) noexcept
-  {
-    if constexpr (basic_float16<Underlying>::supports::type) return static_cast<Underlying>(value);
-    else                                                     return detail::emulated_fp_to_fp16(value);
-  }
-
-  template<typename Underlying>
-  template<std::integral T>
-  constexpr Underlying basic_float16<Underlying>::make(T value) noexcept
-  {
-    if constexpr (basic_float16<Underlying>::supports::type) return static_cast<Underlying>(value);
-    else                                                     return detail::emulated_int_to_fp16(value);
+    constexpr static std::uint16_t float16_to_bits(float16 value) noexcept
+    {
+      return std::bit_cast<std::uint16_t>(value);
+    }
   }
 }

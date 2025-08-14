@@ -115,7 +115,7 @@ namespace eve
   //================================================================================================
   template<typename T> concept floating_value = value<T>
                                                 && (std::floating_point<translated_element_type_t<T>>
-                                                    || std::same_as<translated_element_type_t<T>, detail::f16>);
+                                                    || std::same_as<translated_element_type_t<T>, eve::float16>);
   //================================================================================================
   //! @}
   //================================================================================================

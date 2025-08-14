@@ -110,7 +110,7 @@ TTS_CASE("emulated float16 conversion - f16 roundtrip")
   TTS_EXPECT(eve::is_positive(overflow_pos));
 
   // overflow to +infinity - valmax rounding edge case
-  float overflow_pos_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp_to_fp16(65505.0f));
+  float overflow_pos_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp_to_fp16(65519.0f));
   TTS_EXPECT(!eve::is_infinite(overflow_pos_r));
   TTS_EXPECT(eve::is_positive(overflow_pos_r));
 
@@ -120,7 +120,7 @@ TTS_CASE("emulated float16 conversion - f16 roundtrip")
   TTS_EXPECT(eve::is_negative(overflow_neg));
 
   // underflow to -infinity - valmax rounding edge case
-  float overflow_neg_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp_to_fp16(-65505.0f));
+  float overflow_neg_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp_to_fp16(-65519.0f));
   TTS_EXPECT(!eve::is_infinite(overflow_neg_r));
   TTS_EXPECT(eve::is_negative(overflow_neg_r));
 };
@@ -144,16 +144,16 @@ TTS_CASE("test emulated float16 comparison")
     TTS_EXPECT(cmp(b, a) == std::partial_ordering::less);
   };
 
-  uint16_t zero = eve::float16{0.0f}.bits();
-  uint16_t one = eve::float16{1.0f}.bits();
-  uint16_t mone = eve::float16{-1.0f}.bits();
-  uint16_t mzero = eve::float16{-0.0f}.bits();
-  uint16_t inf = eve::inf(eve::as<eve::float16>{}).bits();
-  uint16_t minf = eve::minf(eve::as<eve::float16>{}).bits();
-  uint16_t nan = eve::nan(eve::as<eve::float16>{}).bits();
-  uint16_t subnorm = eve::float16{3e-6f}.bits();
-  uint16_t msubnorm = eve::float16{-1e-7f}.bits();
-  uint16_t smaller_subnorm = eve::float16{1e-7f}.bits();
+  uint16_t zero = eve::detail::float16_to_bits(eve::float16{0.0f});
+  uint16_t one = eve::detail::float16_to_bits(eve::float16{1.0f});
+  uint16_t mone = eve::detail::float16_to_bits(eve::float16{-1.0f});
+  uint16_t mzero = eve::detail::float16_to_bits(eve::float16{-0.0f});
+  uint16_t inf = eve::detail::float16_to_bits(eve::inf(eve::as<eve::float16>{}));
+  uint16_t minf = eve::detail::float16_to_bits(eve::minf(eve::as<eve::float16>{}));
+  uint16_t nan = eve::detail::float16_to_bits(eve::nan(eve::as<eve::float16>{}));
+  uint16_t subnorm = eve::detail::float16_to_bits(eve::float16{3e-6f});
+  uint16_t msubnorm = eve::detail::float16_to_bits(eve::float16{-1e-7f});
+  uint16_t smaller_subnorm = eve::detail::float16_to_bits(eve::float16{1e-7f});
 
   // normal values
   expect_eq(zero, mzero);
