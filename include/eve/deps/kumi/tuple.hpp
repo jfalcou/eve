@@ -1722,6 +1722,12 @@ namespace kumi
       template<typename... Args>
       static constexpr auto make(Args&&... args)
       {
+        if constexpr ( record_type<T> ) return kumi::make_record( KUMI_FWD(args)...);
+        else                            return kumi::make_tuple ( KUMI_FWD(args)...);
+      }
+      template<typename... Args>
+      static constexpr auto build(Args&&... args)
+      {
         if constexpr ( record_type<T> ) return kumi::record{ KUMI_FWD(args)...};
         else                            return kumi::tuple { KUMI_FWD(args)...};
       }
@@ -1863,7 +1869,7 @@ namespace kumi
                                     , [[maybe_unused]] index_t<I0> i0
                                     ) noexcept
   {
-    return _::builder<std::remove_cvref_t<Tuple>>
+    return _::builder<Tuple>
             ::make(extract(t,index<0>, index<I0>), extract(t,index<I0>));
   }
   namespace result
@@ -2198,7 +2204,7 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return _::builder<std::remove_cvref_t<Tuple>>::make( KUMI_FWD(v), get<I>(KUMI_FWD(t))...);
+      return _::builder<Tuple>::make( KUMI_FWD(v), get<I>(KUMI_FWD(t))...);
     }
     (std::make_index_sequence<Tuple::size()>());
   }
@@ -2206,14 +2212,14 @@ namespace kumi
   [[nodiscard]] KUMI_ABI constexpr auto pop_front(Tuple const& t)
   {
     if constexpr(Tuple::size()>0) return extract(t, index<1>);
-    else                          return _::builder<std::remove_cvref_t<Tuple>>::make();
+    else                          return _::builder<Tuple>::make();
   }
   template<product_type Tuple, typename T>
   [[nodiscard]] KUMI_ABI constexpr auto push_back(Tuple const& t, T&& v)
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return _::builder<std::remove_cvref_t<Tuple>>::make(get<I>(KUMI_FWD(t))..., KUMI_FWD(v));
+      return _::builder<Tuple>::make(get<I>(KUMI_FWD(t))..., KUMI_FWD(v));
     }
     (std::make_index_sequence<Tuple::size()>());
   }
@@ -2221,7 +2227,7 @@ namespace kumi
   [[nodiscard]] KUMI_ABI constexpr auto pop_back(Tuple const& t)
   {
     if constexpr(Tuple::size()>1) return extract(t,index<0>, index<Tuple::size()-1>);
-    else                          return _::builder<std::remove_cvref_t<Tuple>>::make();
+    else                          return _::builder<Tuple>::make();
   }
   namespace result
   {
