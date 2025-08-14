@@ -228,3 +228,5 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/write.hpp>
+
+#include <eve/module/core/regular/dichotomy.hpp>
