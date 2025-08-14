@@ -144,16 +144,16 @@ TTS_CASE("test emulated float16 comparison")
     TTS_EXPECT(cmp(b, a) == std::partial_ordering::less);
   };
 
-  uint16_t zero = eve::detail::float16_to_bits(eve::float16{0.0f});
-  uint16_t one = eve::detail::float16_to_bits(eve::float16{1.0f});
-  uint16_t mone = eve::detail::float16_to_bits(eve::float16{-1.0f});
-  uint16_t mzero = eve::detail::float16_to_bits(eve::float16{-0.0f});
+  uint16_t zero = eve::detail::float16_to_bits(static_cast<eve::float16>(0.0f));
+  uint16_t one = eve::detail::float16_to_bits(static_cast<eve::float16>(1.0f));
+  uint16_t mone = eve::detail::float16_to_bits(static_cast<eve::float16>(-1.0f));
+  uint16_t mzero = eve::detail::float16_to_bits(static_cast<eve::float16>(-0.0f));
   uint16_t inf = eve::detail::float16_to_bits(eve::inf(eve::as<eve::float16>{}));
   uint16_t minf = eve::detail::float16_to_bits(eve::minf(eve::as<eve::float16>{}));
   uint16_t nan = eve::detail::float16_to_bits(eve::nan(eve::as<eve::float16>{}));
-  uint16_t subnorm = eve::detail::float16_to_bits(eve::float16{3e-6f});
-  uint16_t msubnorm = eve::detail::float16_to_bits(eve::float16{-1e-7f});
-  uint16_t smaller_subnorm = eve::detail::float16_to_bits(eve::float16{1e-7f});
+  uint16_t subnorm = eve::detail::float16_to_bits(static_cast<eve::float16>(3e-6f));
+  uint16_t msubnorm = eve::detail::float16_to_bits(static_cast<eve::float16>(-1e-7f));
+  uint16_t smaller_subnorm = eve::detail::float16_to_bits(static_cast<eve::float16>(1e-7f));
 
   // normal values
   expect_eq(zero, mzero);
