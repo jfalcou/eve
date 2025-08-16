@@ -23,24 +23,24 @@ namespace eve
   namespace detail
   {
     // taken from https://github.com/QiJune/majel/blob/master/float16.h
-    static constexpr int32_t f16_shift = 13;
-    static constexpr int32_t f16_shiftSign = 16;
-    static constexpr int32_t f16_infN = 0x7F800000;
+    static constexpr int32_t fp16_shift = 13;
+    static constexpr int32_t fp16_shiftSign = 16;
+    static constexpr int32_t fp16_infN = 0x7F800000;
     // the following constant is set to 65519 instead of 56504 to emulate the rounding behaviour observed on f16 hw.
-    static constexpr int32_t f16_maxN = 0x477FEF00; //max flt16 as flt32
-    static constexpr int32_t f16_minN = 0x38800000; //min flt16 normal as flt32
-    static constexpr int32_t f16_sigN = 0x80000000; //sign bit
-    static constexpr int32_t f16_infC = f16_infN >> f16_shift;
-    static constexpr int32_t f16_nanN = (f16_infC + 1) << f16_shift; //minimum flt16 nan as float32
-    static constexpr int32_t f16_maxC = f16_maxN >> f16_shift;
-    static constexpr int32_t f16_minC = f16_minN >> f16_shift;
-    static constexpr int32_t f16_sigC = f16_sigN >> f16_shiftSign;
-    static constexpr int32_t f16_mulN = 0x52000000; //(1 << 23) / minN
-    static constexpr int32_t f16_mulC = 0x33800000; //minN / (1 << (23 - shift))
-    static constexpr int32_t f16_subC = 0x003FF; //max flt32 subnormal downshifted
-    static constexpr int32_t f16_norC = 0x00400; //min flt32 normal downshifted
-    static constexpr int32_t f16_maxD = f16_infC - f16_maxC - 1;
-    static constexpr int32_t f16_minD = f16_minC - f16_subC - 1;
+    static constexpr int32_t fp16_maxN = 0x477FEF00; //max flt16 as flt32
+    static constexpr int32_t fp16_minN = 0x38800000; //min flt16 normal as flt32
+    static constexpr int32_t fp16_sigN = 0x80000000; //sign bit
+    static constexpr int32_t fp16_infC = fp16_infN >> fp16_shift;
+    static constexpr int32_t fp16_nanN = (fp16_infC + 1) << fp16_shift; //minimum flt16 nan as float32
+    static constexpr int32_t fp16_maxC = fp16_maxN >> fp16_shift;
+    static constexpr int32_t fp16_minC = fp16_minN >> fp16_shift;
+    static constexpr int32_t fp16_sigC = fp16_sigN >> fp16_shiftSign;
+    static constexpr int32_t fp16_mulN = 0x52000000; //(1 << 23) / minN
+    static constexpr int32_t fp16_mulC = 0x33800000; //minN / (1 << (23 - shift))
+    static constexpr int32_t fp16_subC = 0x003FF; //max flt32 subnormal downshifted
+    static constexpr int32_t fp16_norC = 0x00400; //min flt32 normal downshifted
+    static constexpr int32_t fp16_maxD = fp16_infC - fp16_maxC - 1;
+    static constexpr int32_t fp16_minD = fp16_minC - fp16_subC - 1;
 
     union Bits {
         float f;
@@ -52,16 +52,16 @@ namespace eve
     {
       Bits v;
       v.ui = raw;
-      int32_t sign = v.si & f16_sigC;
+      int32_t sign = v.si & fp16_sigC;
       v.si ^= sign;
-      sign <<= f16_shiftSign;
-      v.si ^= ((v.si + f16_minD) ^ v.si) & -(v.si > f16_subC);
-      v.si ^= ((v.si + f16_maxD) ^ v.si) & -(v.si > f16_maxC);
+      sign <<= fp16_shiftSign;
+      v.si ^= ((v.si + fp16_minD) ^ v.si) & -(v.si > fp16_subC);
+      v.si ^= ((v.si + fp16_maxD) ^ v.si) & -(v.si > fp16_maxC);
       Bits s;
-      s.si = f16_mulC;
+      s.si = fp16_mulC;
       s.f *= v.si;
-      int32_t mask = -(f16_norC > v.si);
-      v.si <<= f16_shift;
+      int32_t mask = -(fp16_norC > v.si);
+      v.si <<= fp16_shift;
       v.si ^= (s.si ^ v.si) & mask;
       v.si |= sign;
       return v.f;
@@ -74,17 +74,17 @@ namespace eve
 
       Bits v, s;
       v.f = f;
-      uint32_t sign = v.si & f16_sigN;
+      uint32_t sign = v.si & fp16_sigN;
       v.si ^= sign;
-      sign >>= f16_shiftSign; // logical shift
-      s.si = f16_mulN;
+      sign >>= fp16_shiftSign; // logical shift
+      s.si = fp16_mulN;
       s.si = s.f * v.f; // correct subnormals
-      v.si ^= (s.si ^ v.si) & -(f16_minN > v.si);
-      v.si ^= (f16_infN ^ v.si) & -((f16_infN > v.si) & (v.si > f16_maxN));
-      v.si ^= (f16_nanN ^ v.si) & -((f16_nanN > v.si) & (v.si > f16_infN));
-      v.ui >>= f16_shift; // logical shift
-      v.si ^= ((v.si - f16_maxD) ^ v.si) & -(v.si > f16_maxC);
-      v.si ^= ((v.si - f16_minD) ^ v.si) & -(v.si > f16_subC);
+      v.si ^= (s.si ^ v.si) & -(fp16_minN > v.si);
+      v.si ^= (fp16_infN ^ v.si) & -((fp16_infN > v.si) & (v.si > fp16_maxN));
+      v.si ^= (fp16_nanN ^ v.si) & -((fp16_nanN > v.si) & (v.si > fp16_infN));
+      v.ui >>= fp16_shift; // logical shift
+      v.si ^= ((v.si - fp16_maxD) ^ v.si) & -(v.si > fp16_maxC);
+      v.si ^= ((v.si - fp16_minD) ^ v.si) & -(v.si > fp16_subC);
       return v.ui | sign;
     }
 
@@ -144,18 +144,18 @@ namespace eve
   #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)
     namespace detail
     {
-      static constexpr bool supports_f16_type = spy::supports::fp16::type;
-      static constexpr bool supports_f16_scalar_ops = spy::supports::fp16::scalar_ops;
-      static constexpr bool supports_f16_vector_ops = spy::supports::fp16::vector_ops;
+      static constexpr bool supports_fp16_native_type = spy::supports::fp16::type;
+      static constexpr bool supports_fp16_scalar_ops = spy::supports::fp16::scalar_ops;
+      static constexpr bool supports_fp16_vector_ops = spy::supports::fp16::vector_ops;
     }
 
     using float16 = _Float16;
   #else
     namespace detail
     {
-      static constexpr bool supports_f16_type = false;
-      static constexpr bool supports_f16_scalar_ops = false;
-      static constexpr bool supports_f16_vector_ops = false;
+      static constexpr bool supports_fp16_native_type = false;
+      static constexpr bool supports_fp16_scalar_ops = false;
+      static constexpr bool supports_fp16_vector_ops = false;
     }
 
     struct float16 {
