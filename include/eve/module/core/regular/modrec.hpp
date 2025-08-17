@@ -25,8 +25,8 @@ namespace eve
       EVE_FORCEINLINE T0
     constexpr operator()(T0 x0, unsigned int p)  const noexcept
     {
-      EVE_ASSERT(eve::all(eve::is_flint(x0)), "x0 is not a floating integer");
-      EVE_ASSERT(eve::all(eve::is_flint(x1)), "x1 is not a floating integer");
+      EVE_ASSERT(eve::all(eve::is_flint(x0)), "x0 is not a floating positive integer");
+      EVE_ASSERT(eve::all(x0 < p)           , "x0 is not less than p");
       return EVE_DISPATCH_CALL(x0, p);
     }
 
