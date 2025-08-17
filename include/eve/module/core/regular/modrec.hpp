@@ -66,7 +66,7 @@ namespace eve
 //!         x is supposed to be flint postitive and less than p.
 //!
 //!  @note if p is not a prime number the modular product of x by the result is the gcd of x and p.
-//!  
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/modrec.cpp}
 //================================================================================================
@@ -92,7 +92,7 @@ namespace eve::detail
       auto neznr = eve::is_nez(nr);
       while (eve::any(neznr))
       {
-        auto q = if_else(neznr, div[eve::toward_zero](r, nr), zero);
+        auto q =  div[neznr][eve::toward_zero][eve::left](nr, r);
         auto tmp0 = t-q*nt;
         t = if_else(neznr, nt, t);
         nt =if_else(neznr, tmp0, nt);

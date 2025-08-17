@@ -91,8 +91,8 @@ struct bezout_t : elementwise_callable<bezout_t, Options>
 
       while (eve::any(neznr))
       {
-
-        auto q =  if_else(neznr, div[eve::toward_zero](r, nr), zero);
+//        auto q =  if_else(neznr, div[eve::toward_zero](r, nr), zero);
+        auto q =  div[neznr][eve::toward_zero][eve::left](nr, r);
         auto tmp0 = t-q*nt;
         t = if_else(neznr, nt, t);
         nt =if_else(neznr, tmp0, nt);
@@ -101,12 +101,8 @@ struct bezout_t : elementwise_callable<bezout_t, Options>
         nr = if_else(neznr,tmp1, nr);
         neznr = eve::is_nez(nr);
       }
-
-//        if b ≠ 0 then
       auto bez = eve::div[eve::toward_zero][eve::is_nez(b)][eve::left](b, r-t*a);
       return eve::zip(r, t, bez);
-//    else
-//        bezout_t = 0
     }
   }
 }
