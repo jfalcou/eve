@@ -82,14 +82,15 @@ namespace eve::detail
   {
     using r_t = eve::common_value_t<T0, T1>;
     using e_t = eve::element_type_t<r_t>;
-    e_t u = eve::rec(e_t(ip));
+    e_t p(ip);
+    e_t u = eve::rec(p);
     auto [h, l] = eve::two_prod(x, y);
     auto b = h*u;
     auto c = eve::floor(b);
-    auto d = eve::fnma(c, ip, h);
+    auto d = eve::fnma(c, p, h);
     auto g = d+l;
-    g = eve::add[is_ltz(g)](g, ip);
-    g = eve::sub[g >= ip](g, ip);
+    g = eve::add[eve::is_ltz(g)](g, p);
+    g = eve::sub[g >= ip](g, p);
     return g;
   }
 }

@@ -27,3 +27,4 @@
 #include <eve/module/combinatorial/regular/nth_prime.hpp>
 #include <eve/module/combinatorial/regular/prime_ceil.hpp>
 #include <eve/module/combinatorial/regular/prime_floor.hpp>
+#include <eve/module/combinatorial/regular/bezout.hpp>

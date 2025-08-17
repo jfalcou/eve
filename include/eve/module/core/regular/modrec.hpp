@@ -11,6 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/modpow.hpp>
+#include <eve/module/core/regular/modmul.hpp>
+#include <eve/module/core/regular/modsub.hpp>
 
 namespace eve
 {
@@ -50,23 +52,21 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto modrec(auto x0, auto p) noexcept;
-//!
-//!      // semantic modifyier
-//!      constexpr auto modadd(auto x0, auto p) noexcept;
-///!   }
+//!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x0`: flint  arguments.
-//!     * `p`: unsigned int prime value
+//!     * `x`: flint  argument.
+//!     * `p`: unsigned  prime value
 //!
 //!    **Return value**
 //!
-//!      1. The value of the product of the arguments modulo p is returned.
-//!         x1 is supposed to be flint postitive and less than p.
-//!      2. Same, but x1 and x2 are only supposed to be flint and are reduced first modulo p.
+//!      The value of the inverse of the arguments modulo p is returned.
+//!         x is supposed to be flint postitive and less than p.
 //!
+//!  @note if p is not a prime number the modular product of x by the result is the gcd of x and p.
+//!  
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/modrec.cpp}
 //================================================================================================
@@ -79,8 +79,29 @@ namespace eve
 namespace eve::detail
 {
   template<typename T0, callable_options O>
-  constexpr auto  modrec_(EVE_REQUIRES(cpu_), O const&, T0 a0, unsigned int ip) noexcept
+  constexpr auto  modrec_(EVE_REQUIRES(cpu_), O const&, T0 a, unsigned int ip) noexcept
   {
-    return modpow(a0, ip-2, ip);
+//     if constexpr(simd_value<T0>)
+//       return modpow(a, ip-2, ip);
+//     else
+    {
+      T0 t(0);
+      T0 nt(1);
+      T0 r(ip);
+      T0 nr(a);
+      auto neznr = eve::is_nez(nr);
+      while (eve::any(neznr))
+      {
+        auto q = if_else(neznr, div[eve::toward_zero](r, nr), zero);
+        auto tmp0 = t-q*nt;
+        t = if_else(neznr, nt, t);
+        nt =if_else(neznr, tmp0, nt);
+        auto tmp1 = r-q*nr;
+        r = if_else(neznr,nr, r);
+        nr = if_else(neznr,tmp1, nr);
+        neznr = eve::is_nez(nr);
+      }
+      return if_else(is_ltz(t), t+ip, t);
+    }
   }
 }
