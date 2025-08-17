@@ -24,6 +24,7 @@ TTS_CASE("shuffle_v2: 8x1")
     // We can do better sometimes but not yet
     if (eve::current_api >= eve::vmx)
     {
+      if (idxm::is_slide_left(p) || idxm::is_slide_right(p)) return 2;
       if (idxm::is_lane_broadcast(p)) return 2;
       return 3;
     }

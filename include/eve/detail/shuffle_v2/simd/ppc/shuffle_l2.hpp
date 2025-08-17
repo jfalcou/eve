@@ -28,7 +28,11 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
-  if constexpr( auto r = shuffle_l2_ppc_vec_splat(p, g, x); matched_shuffle<decltype(r)> )
+  if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_ppc_vec_splat(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
