@@ -55,7 +55,7 @@ template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto
 shuffle_emulated(pattern_t<I...>, fixed<G>, kumi::tuple<Ts...> xs)
 {
-  constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G>(std::array {I...})>();
+  constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G>(std::array<std::ptrdiff_t,sizeof...(I)>{I...})>();
   return shuffle_emulated_no_group(p2, xs);
 }
 
@@ -322,7 +322,8 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
   if constexpr( G < T::size() ) return shuffle_v2_driver_multiple_registers(selector, p, g, xs);
   else if constexpr( G > T::size() )
   {
-    constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G / T::size()>(std::array {I...})>();
+    constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G / T::size()>
+                        (std::array<std::ptrdiff_t,sizeof...(I)>{I...})>();
     return shuffle_v2_overly_large_groups(selector, p2, eve::lane<T::size()>, xs);
   }
   else if constexpr( G == T::size() )
