@@ -12,7 +12,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/concept/combinable.hpp>
-#include <eve/deps/kumi/tuple.hpp>
+#include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
