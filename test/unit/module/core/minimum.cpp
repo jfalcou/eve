@@ -6,42 +6,54 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "unit/module/core/reduction_test.hpp"
 
-#include <eve/module/core.hpp>
-
-//==================================================================================================
-// Types tests
-//==================================================================================================
-TTS_CASE_TPL("Check return types of eve::minimum(wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::minimum return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::minimum(T()), v_t);
-  TTS_EXPR_IS(eve::minimum(eve::logical<T>()), bool);
-  TTS_EXPR_IS(eve::splat(eve::minimum)(T()), T);
-  TTS_EXPR_IS(eve::splat(eve::minimum)(eve::logical<T>()), eve::logical<T>);
+  arithmetic_reduction_scalar_type_test(eve::minimum, eve::as<T>{});
 };
 
-//==================================================================================================
-// Tests for eve::minimum
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::minimum(eve::wide)",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
-<typename T, typename L>(T const& a0, L const& l0)
+TTS_CASE_TPL("Check eve::minimum return type (wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
-  using v_t     = eve::element_type_t<T>;
-  v_t min_value = a0.front();
-  for( int i = 1; i != T::size(); ++i ) { min_value = std::min(min_value, a0.get(i)); }
+  arithmetic_reduction_simd_type_test(eve::minimum, eve::as<T>{});
+};
 
-  TTS_EQUAL(eve::minimum(a0), min_value);
-  TTS_EQUAL(eve::splat(eve::minimum)(a0), T(min_value));
+struct ManualMinimum
+{
+  template<typename T, typename C>
+  eve::element_type_t<T> operator()(T v, C mask) const
+  {
+    if constexpr (eve::scalar_value<T>)
+    {
+      return mask ? v : eve::majorant(eve::as(v));
+    }
+    else
+    {
+      auto min = eve::majorant(eve::as<eve::element_type_t<T>>{});
 
-  TTS_EQUAL(eve::minimum(l0), (l0.size() == 1));
-  TTS_EQUAL(eve::splat(eve::minimum)(l0), L(l0.size() == 1));
+      for (int i = 0; i < v.size(); ++i)
+        if (mask_at(mask, i))
+          min = std::min(min, v.get(i));
 
-  TTS_EQUAL(eve::minimum[l0](a0), eve::minimum(eve::if_else(l0, a0, eve::valmax(eve::as(a0)))));
-  TTS_EQUAL(eve::splat(eve::minimum[l0])(a0),
-            T(eve::minimum(eve::if_else(l0, a0, eve::valmax(eve::as(a0))))));
+      return min;
+    }
+  }
+};
+
+TTS_CASE_WITH("Check behavior of eve::minimum on scalars",
+              eve::test::scalar::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T v)
+{
+  arithmetic_reduction_test_case<ManualMinimum>(eve::minimum, v);
+};
+
+TTS_CASE_WITH("Check behavior of eve::minimum on wides",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T v)
+{
+  arithmetic_reduction_test_case<ManualMinimum>(eve::minimum, v);
 };

@@ -11,12 +11,34 @@
 
 namespace eve
 {
-//DOC TODO
+  template<typename Options>
+  struct minimum_t : conditional_callable<minimum_t, Options, splat_option>
+  {
+    template<arithmetic_value T>
+    EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
+      requires (!Options::contains(splat2))
+    {
+      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+        "[eve::minimum] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    template<arithmetic_simd_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept
+      requires (Options::contains(splat2))
+    {
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    EVE_CALLABLE_OBJECT(minimum_t, minimum_);
+  };
+
 //================================================================================================
 //! @addtogroup core_reduction
 //! @{
 //!   @var minimum
-//!   @brief Computes the minimal value in a simd vector
+//!   @brief Computes the minimal value in a simd vector or [majorant](@ref eve::majorant) if the input is fully masked.
 //!
 //!   @groupheader{Header file}
 //!
@@ -30,29 +52,34 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto minimum(value auto x)                          noexcept; // 1;
+//!      template<arithmetic_value T>
+//!      element_type_t<T> minimum(T v) requires(!O::contains(splat))                noexcept; // 1
+//!
+//!      template<arithmetic_simd_value T>
+//!      T minimum(T v) requires(O::contains(splat))                                 noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto minimum[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto minimum[logical_value auto m](value auto x)    noexcept; // 2
+//!      auto minimum[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 3
+//!      auto minimum[logical_value auto m](/*any of the above overloads*/)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameter**
 //!
-//!     * `x`: [argument](@ref eve::value).
+//!     * `v`: [argument](@ref eve::arithmetic_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The minimal value of all lanes.
-//!     2. The  minimal value of the retained lanes
+//!     1. The minimal value of all lanes. Scalar values are returned as is.
+//!     2. The minimal value of all lanes splatted across every lane of said input.
+//!     3. Same as the above but the masked lanes are ignored during the operation.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minimum.cpp}
 //================================================================================================
-  EVE_MAKE_CALLABLE(minimum_, minimum);
+  inline constexpr auto minimum = functor<minimum_t>;
 //================================================================================================
 //! @}
 //================================================================================================
