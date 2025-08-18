@@ -15,27 +15,25 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/regular/sulp.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct epsilon_t : elementwise_callable<epsilon_t, Options, upward_option, downward_option
-                                          , kahan_option, harrisson_option>
+  struct sulp_t : elementwise_callable<sulp_t, Options, kahan_option, harrisson_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
-    EVE_CALLABLE_OBJECT(epsilon_t, epsilon_);
+    EVE_CALLABLE_OBJECT(sulp_t, sulp_);
   };
 
 //================================================================================================
-//! @addtogroup core_fma_internal
+//! @addtogroup core_accuracy
 //! @{
-//!   @var epsilon
-//!   @brief `elementwise_callable` object computing the distance of the absolute value of the parameter
-//!    to the next representable element of its type.
+//!   @var sulp
+//!   @brief `elementwise_callable` object computing the classical unit in the last place (Kahan)
+//!      or the harrisson version multiplied by the sign of the input.
 //!
 //!   @groupheader{Header file}
 //!
@@ -49,15 +47,15 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto epsilon(value auto x)                          noexcept; // 1
+//!      constexpr auto sulp(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto epsilon[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto epsilon[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto sulp[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto sulp[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto abs[downward](value auto x)                    noexcept; // 3
-//!      constexpr auto abs[upward](value auto x)                      noexcept; // 1
+//!      constexpr auto sulp[kahan](value auto x)                    noexcept; // 1
+//!      constexpr auto sulp[harrison](value auto x)                 noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -69,21 +67,19 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. The distance of abs(x) to the next representable element in the type of `x`. (Kahan definition)
+//!      1. The distance of x to the next representable element in the type of `x` in the x direction. (Kahan definition)
 //!      2. [The operation is performed conditionnaly](@ref conditional).
-//!      3. The distance of abs(x) to the previous representable element in the type of `x`. (Goldberg definition)
-//!
-//!    @note somewhat faster algorithms are at hand using [sulp](@ref sulp),
-//!      if you are insterested by by the signed ulp value.
+//!      3. The distance of x to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 //!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)
+//!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/epsilon.cpp}
+//!  @godbolt{doc/core/sulp.cpp}
 //================================================================================================
-  inline constexpr auto epsilon = functor<epsilon_t>;
+  inline constexpr auto sulp = functor<sulp_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -91,22 +87,26 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    EVE_FORCEINLINE constexpr auto sulp_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(integral_value<T>)
         return T(1);
       else
       {
-        auto aa = eve::abs(a0);
-        auto finite = is_finite(aa);
-        if constexpr(O::contains(kahan) || O::contains(harrisson))
+        using e_t = eve::element_type_t<T>;
+        constexpr e_t eps = eve::eps(eve::as<e_t>());
+        if constexpr(O::contains(harrisson))
         {
-          return eve::sulp[finite][o](aa);
+          constexpr e_t psi = 1-eps/2;
+          auto a = psi*a0;
+          return a0-a;
         }
-        else if constexpr(O::contains(downward))
-          return dist[finite](aa, prev(aa));
-        else // upward is the default
-          return dist[finite](aa, next(aa));
+        else //kahan is the default
+        {
+          constexpr e_t psi = eps*e_t(3)/4;
+          auto a = eve::fma(psi, a0, a0);
+          return a-a0;
+        }
       }
     }
   }

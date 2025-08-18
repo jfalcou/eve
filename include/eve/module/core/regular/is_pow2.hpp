@@ -19,7 +19,7 @@ namespace eve
   template<typename Options>
   struct is_pow2_t : elementwise_callable<is_pow2_t, Options>
   {
-    template<eve::integral_value T>
+    template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -78,7 +78,14 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_pow2_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return is_gtz(a) && is_eqz(a & dec(a));
+      if constexpr(eve::integral_value<T>)
+        return is_gtz(a) && is_eqz(a & dec(a));
+      else
+      {
+        constexpr auto c = 1-eps(eve::as<eve::element_type_t<T>>())/2;
+        auto yh = a*c;
+        return is_eqz(fms[pedantic](a, c, yh));
+      }
     }
   }
 }

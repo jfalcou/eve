@@ -38,3 +38,21 @@ TTS_CASE_WITH("Check behavior of is_pow2(wide) on unsigned integral ",
                 { return std::exp2(std::trunc(std::log2(f_t(e)))) == f_t(e); },
                 a0));
 };
+
+
+//==================================================================================================
+// is_pow2(simd) floating  tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of is_pow2(wide) on unsigned integral ",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::ramp(1)))
+<typename T>(T const& a0)
+{
+  using v_t = eve::element_type_t<T>;
+  using f_t = eve::as_floating_point_t<v_t>;
+
+  TTS_EQUAL(eve::is_pow2(a0),
+            tts::map([](auto e) -> eve::logical<v_t>
+                { return std::exp2(std::trunc(std::log2(f_t(e)))) == f_t(e); },
+                a0));
+};

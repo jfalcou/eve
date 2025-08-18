@@ -68,12 +68,14 @@
 #include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/fdim.hpp>
 #include <eve/module/core/regular/fast_two_add.hpp>
+#include <eve/module/core/regular/fast_two_sub.hpp>
 #include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/flush_denormal.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fma_two_prod.hpp>
 #include <eve/module/core/regular/fmod.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
@@ -199,6 +201,7 @@
 #include <eve/module/core/regular/rshr.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
 #include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/regular/safe_scale.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/scatter.hpp>
@@ -216,6 +219,8 @@
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/sufp.hpp>
+#include <eve/module/core/regular/sulp.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>
@@ -223,8 +228,10 @@
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
 #include <eve/module/core/regular/two_add.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/write.hpp>

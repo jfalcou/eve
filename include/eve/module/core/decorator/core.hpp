@@ -28,6 +28,8 @@ namespace eve
   struct cylindrical_mode     {};
   struct definitely_mode      {};
   struct eccentric_mode       {};
+  struct harrisson_mode       {};
+  struct kahan_mode           {};
   struct kind_1_mode          {};
   struct kind_2_mode          {};
   struct left_mode            {};
@@ -48,6 +50,7 @@ namespace eve
   struct unsafe_mode      {};
 
 
+  struct to_nearest_odd_mode {};
   struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
   struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEG_INF
   struct upward_mode      { static constexpr int value = 0x08 | 0x02; }; // _MM_FROUND_TO_POS_INF
@@ -64,7 +67,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
-  [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}            );
+  [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}       );
+  [[maybe_unused]] inline constexpr auto harrisson        = ::rbr::flag( harrisson_mode{}       );
+  [[maybe_unused]] inline constexpr auto kahan            = ::rbr::flag( kahan_mode{}           );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
@@ -88,12 +93,15 @@ namespace eve
   [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
   [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
   [[maybe_unused]] inline constexpr auto splat2           = ::rbr::flag( splat_mode{}           );
+  [[maybe_unused]] inline constexpr auto to_nearest_odd   = ::rbr::flag( to_nearest_odd_mode{}  );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct cylindrical_option     : detail::exact_option<cylindrical>     {};
   struct eccentric_option       : detail::exact_option<eccentric>       {};
+  struct harrisson_option       : detail::exact_option<harrisson>       {};
+  struct kahan_option           : detail::exact_option<kahan>           {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
   struct left_option            : detail::exact_option<left>            {};
@@ -118,8 +126,9 @@ namespace eve
   struct widen_option           : detail::exact_option<widen>           {};
   struct unsafe_option          : detail::exact_option<unsafe2>         {};
   struct splat_option           : detail::exact_option<splat2>          {};
+  struct to_nearest_odd_option  : detail::exact_option<to_nearest_odd>  {};
 
-  inline constexpr auto as_option(unsafe_type   const&) { return unsafe2;   }
+  inline constexpr auto as_option(unsafe_type   const&) { return unsafe2; }
   inline constexpr auto as_option(splat_type   const&) { return splat2;   }
 
   // ----------------------------------------------------------------------------------

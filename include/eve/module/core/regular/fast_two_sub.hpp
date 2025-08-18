@@ -9,32 +9,30 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_not_less.hpp>
-#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct fast_two_add_t : elementwise_callable<fast_two_add_t, Options>
+  struct fast_two_sub_t : elementwise_callable<fast_two_sub_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>>
+    constexpr EVE_FORCEINLINE kumi::tuple<common_value_t<T, U>, common_value_t<T, U>>
     operator()(T a, U b) const noexcept
     {
       EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b))), "|a| >=  |b| not satisfied for all elements");
-      return EVE_DISPATCH_CALL(a, b); }
+      return EVE_DISPATCH_CALL(a, b);
+    }
 
-    EVE_CALLABLE_OBJECT(fast_two_add_t, fast_two_add_);
+    EVE_CALLABLE_OBJECT(fast_two_sub_t, fast_two_sub_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var fast_two_add
+//!   @var fast_two_sub
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   pair of  add and error,
+//!   pair of  sub and error,
 //!
 //!   **Defined in Header**
 //!
@@ -48,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U  >
-//!      kumi::tuple<T, T> quick_two_add(T x, U y) noexcept;
+//!      kumi::tuple<T, T> fast_two_sub(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -65,25 +63,29 @@ namespace eve
 //!
 //! where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//! @warning   the algoritm needs |x| >= |y|,  and will assert if the condition is not met
+//! @warning   raw version assube |x| >= |y|,  regular assert if the condition is not met
+//!            and only pedantic version treat infinite values properly
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/fast_two_add.cpp}
-//================================================================================================
-  inline constexpr auto fast_two_add = functor<fast_two_add_t>;
-//================================================================================================
+//!
+//!  @godbolt{doc/core/regular/fast_two_sub.cpp}
+//!
 //! @}
 //================================================================================================
+inline constexpr auto fast_two_sub = functor<fast_two_sub_t>;
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE auto fast_two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE auto
+    fast_two_sub_(EVE_REQUIRES(cpu_), O const&
+                 , T a
+                 , U b) noexcept
     {
-      T s   = a + b;
-      T err =  b - (s - a);
+      T s   = a - b;
+      T err =  (a-s) -b;
       if constexpr(eve::platform::supports_infinites ) err = if_else(is_finite(s), err, zero);
-      return  eve::zip(s, err);
+      return eve::zip(s, err);
     }
   }
 }
