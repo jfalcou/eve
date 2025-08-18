@@ -81,27 +81,22 @@ namespace eve::detail
   template<typename T0, callable_options O>
   constexpr auto  modrec_(EVE_REQUIRES(cpu_), O const&, T0 a, unsigned int ip) noexcept
   {
-//     if constexpr(simd_value<T0>)
-//       return modpow(a, ip-2, ip);
-//     else
+    T0 t(0);
+    T0 nt(1);
+    T0 r(ip);
+    T0 nr(a);
+    auto neznr = eve::is_nez(nr);
+    while (eve::any(neznr))
     {
-      T0 t(0);
-      T0 nt(1);
-      T0 r(ip);
-      T0 nr(a);
-      auto neznr = eve::is_nez(nr);
-      while (eve::any(neznr))
-      {
-        auto q =  div[neznr][eve::toward_zero][eve::left](nr, r);
-        auto tmp0 = t-q*nt;
-        t = if_else(neznr, nt, t);
-        nt =if_else(neznr, tmp0, nt);
-        auto tmp1 = r-q*nr;
-        r = if_else(neznr,nr, r);
-        nr = if_else(neznr,tmp1, nr);
-        neznr = eve::is_nez(nr);
-      }
-      return if_else(is_ltz(t), t+ip, t);
+      auto q =  div[neznr][eve::toward_zero][eve::left](nr, r);
+      auto tmp0 = t-q*nt;
+      t = if_else(neznr, nt, t);
+      nt =if_else(neznr, tmp0, nt);
+      auto tmp1 = r-q*nr;
+      r = if_else(neznr,nr, r);
+      nr = if_else(neznr,tmp1, nr);
+      neznr = eve::is_nez(nr);
     }
+    return if_else(is_ltz(t), t+ip, t);
   }
 }

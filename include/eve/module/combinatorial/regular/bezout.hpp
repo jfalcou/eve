@@ -17,7 +17,7 @@
 namespace eve
 {
 template<typename Options>
-struct bezout_t : elementwise_callable<bezout_t, Options>
+struct bezout_t : callable<bezout_t, Options>
 {
   template<eve::value T, value U>
   requires (same_lanes_or_scalar<T, U>)
@@ -91,8 +91,7 @@ struct bezout_t : elementwise_callable<bezout_t, Options>
 
       while (eve::any(neznr))
       {
-//        auto q =  if_else(neznr, div[eve::toward_zero](r, nr), zero);
-        auto q =  div[neznr][eve::toward_zero][eve::left](nr, r);
+        auto q =  div[neznr][eve::toward_zero][eve::left](if_else(neznr, nr, one), r);
         auto tmp0 = t-q*nt;
         t = if_else(neznr, nt, t);
         nt =if_else(neznr, tmp0, nt);
@@ -101,7 +100,7 @@ struct bezout_t : elementwise_callable<bezout_t, Options>
         nr = if_else(neznr,tmp1, nr);
         neznr = eve::is_nez(nr);
       }
-      auto bez = eve::div[eve::toward_zero][eve::is_nez(b)][eve::left](b, r-t*a);
+      auto bez = eve::div[eve::toward_zero](r-t*a, b);
       return eve::zip(r, t, bez);
     }
   }
