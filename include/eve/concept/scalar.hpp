@@ -25,7 +25,7 @@ template<typename T>
 constexpr bool is_plain() noexcept
 {
   return    !(std::same_as<T, bool> || std::same_as<T, long double>)
-        &&  (std::is_floating_point_v<T> || std::is_integral_v<T> || std::same_as<T, eve::float16>);
+        &&  (std::is_floating_point_v<T> || std::is_integral_v<T> || std::same_as<T, eve::float16_t>);
 }
 }
 

@@ -19,7 +19,7 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&,  Opts const&)
     {
-      if      constexpr(std::same_as<T, eve::float16>) return detail::float16_from_bits(0x6c00);
+      if      constexpr(std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x6c00);
       else if constexpr(std::same_as<T, float>)
       {
         if constexpr(Opts::contains(upper))        return T(0x1.6a09e8p+11f);

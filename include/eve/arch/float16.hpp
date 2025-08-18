@@ -22,11 +22,11 @@ namespace eve
 {
   namespace detail
   {
-    // taken from https://github.com/QiJune/majel/blob/master/float16.h
+    // taken from https://github.com/QiJune/majel/blob/master/float16_t.h
     static constexpr int32_t fp16_shift = 13;
     static constexpr int32_t fp16_shiftSign = 16;
     static constexpr int32_t fp16_infN = 0x7F800000;
-    // the following constant is set to 65519 instead of 56504 to emulate the rounding behaviour observed on f16 hw.
+    // the following constant is set to 65519 instead of 56504 to emulate the rounding behaviour observed on real hw.
     static constexpr int32_t fp16_maxN = 0x477FEF00; //max flt16 as flt32
     static constexpr int32_t fp16_minN = 0x38800000; //min flt16 normal as flt32
     static constexpr int32_t fp16_sigN = 0x80000000; //sign bit
@@ -149,7 +149,7 @@ namespace eve
       static constexpr bool supports_fp16_vector_ops = spy::supports::fp16::vector_ops;
     }
 
-    using float16 = _Float16;
+    using float16_t = _Float16;
   #else
     namespace detail
     {
@@ -158,7 +158,7 @@ namespace eve
       static constexpr bool supports_fp16_vector_ops = false;
     }
 
-    struct float16 {
+    struct float16_t {
       private:
         uint16_t data;
 
@@ -169,9 +169,9 @@ namespace eve
         }
 
       public:
-        constexpr float16() = default;
-        constexpr explicit float16(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr explicit float16(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
+        constexpr float16_t() = default;
+        constexpr explicit float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
+        constexpr explicit float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
 
         constexpr EVE_FORCEINLINE operator float()              const noexcept { return into<float>(); }
@@ -189,79 +189,82 @@ namespace eve
         constexpr EVE_FORCEINLINE operator long long()          const noexcept { return into<long long>(); }
         constexpr EVE_FORCEINLINE operator unsigned long long() const noexcept { return into<unsigned long long>(); }
 
-        // Arithmetic operators
-        constexpr EVE_FORCEINLINE float16 operator+(float16 const& other) const noexcept
+        constexpr EVE_FORCEINLINE float16_t& operator+=(float16_t const& other) noexcept
         {
-          return float16{into<float>() + static_cast<float>(other)};
-        }
-
-        constexpr EVE_FORCEINLINE float16 operator-(float16 const& other) const noexcept
-        {
-          return float16{into<float>() - static_cast<float>(other)};
-        }
-
-        constexpr EVE_FORCEINLINE float16 operator*(float16 const& other) const noexcept
-        {
-          return float16{into<float>() * static_cast<float>(other)};
-        }
-
-        constexpr EVE_FORCEINLINE float16 operator/(float16 const& other) const noexcept
-        {
-          return float16{into<float>() / static_cast<float>(other)};
-        }
-
-        constexpr EVE_FORCEINLINE float16 operator-() const noexcept
-        {
-          return float16{-into<float>()};
-        }
-
-        constexpr EVE_FORCEINLINE float16& operator+=(float16 const& other) noexcept
-        {
-          return *this = *this + other;
-        }
-
-        constexpr EVE_FORCEINLINE float16& operator-=(float16 const& other) noexcept
-        {
-          return *this = *this - other;
-        }
-
-        constexpr EVE_FORCEINLINE float16& operator*=(float16 const& other) noexcept
-        {
-          return *this = *this * other;
-        }
-
-        constexpr EVE_FORCEINLINE float16& operator/=(float16 const& other) noexcept
-        {
-          return *this = *this / other;
-        }
-
-        constexpr EVE_FORCEINLINE float16& operator++() noexcept
-        {
-          *this += float16{1.0f};
+          *this = float16_t(into<float>() + static_cast<float>(other));
           return *this;
         }
 
-        constexpr EVE_FORCEINLINE float16 operator++(int) noexcept
+        constexpr EVE_FORCEINLINE float16_t& operator-=(float16_t const& other) noexcept
         {
-          float16 tmp = *this;
+          *this = float16_t(into<float>() - static_cast<float>(other));
+          return *this;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t& operator*=(float16_t const& other) noexcept
+        {
+          *this = float16_t(into<float>() * static_cast<float>(other));
+          return *this;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t& operator/=(float16_t const& other) noexcept
+        {
+          *this = float16_t(into<float>() / static_cast<float>(other));
+          return *this;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator+(float16_t const& other) const noexcept
+        {
+          return float16_t(*this) += other;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator-(float16_t const& other) const noexcept
+        {
+          return float16_t(*this) -= other;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator*(float16_t const& other) const noexcept
+        {
+          return float16_t(*this) *= other;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator/(float16_t const& other) const noexcept
+        {
+          return float16_t(*this) /= other;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator-() const noexcept
+        {
+          return float16_t{-into<float>()};
+        }
+
+        constexpr EVE_FORCEINLINE float16_t& operator++() noexcept
+        {
+          *this += float16_t{1.0f};
+          return *this;
+        }
+
+        constexpr EVE_FORCEINLINE float16_t operator++(int) noexcept
+        {
+          float16_t tmp = *this;
           ++(*this);
           return tmp;
         }
 
-        constexpr EVE_FORCEINLINE float16& operator--() noexcept
+        constexpr EVE_FORCEINLINE float16_t& operator--() noexcept
         {
-          *this -= float16{1.0f};
+          *this -= float16_t{1.0f};
           return *this;
         }
 
-        constexpr EVE_FORCEINLINE float16 operator--(int) noexcept
+        constexpr EVE_FORCEINLINE float16_t operator--(int) noexcept
         {
-          float16 tmp = *this;
+          float16_t tmp = *this;
           --(*this);
           return tmp;
         }
 
-        constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16 const& other) const noexcept
+        constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16_t const& other) const noexcept
         {
           return detail::emulated_fp16_compare(data, other.data);
         }
@@ -270,14 +273,9 @@ namespace eve
 
   namespace detail
   {
-    constexpr static float16 float16_from_bits(std::uint16_t bits) noexcept
+    constexpr static eve::float16_t float16_from_bits(std::uint16_t bits) noexcept
     {
-      return std::bit_cast<float16>(bits);
-    }
-
-    constexpr static std::uint16_t float16_to_bits(float16 value) noexcept
-    {
-      return std::bit_cast<std::uint16_t>(value);
+      return std::bit_cast<eve::float16_t>(bits);
     }
   }
 }

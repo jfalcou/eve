@@ -20,7 +20,7 @@ namespace eve
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       if      constexpr(std::integral<T>        ) return T(1);
-      else if constexpr(std::same_as<T, eve::float16>) return detail::float16_from_bits(0x0001);
+      else if constexpr(std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x0001);
       else if constexpr(std::same_as<T, float>  ) return T( 0x1p-149);
       else if constexpr(std::same_as<T, double> ) return T(0x0.0000000000001p-1022);
     }

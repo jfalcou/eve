@@ -21,7 +21,7 @@ namespace eve
     {
       using i_t = as_uinteger_t<T>;
 
-      if      constexpr(std::same_as<T, eve::float16>) return i_t(0x83FF);
+      if      constexpr(std::same_as<T, eve::float16_t>) return i_t(0x83FF);
       else if constexpr(std::same_as<T, float>  ) return i_t(0x807FFFFFU);
       else if constexpr(std::same_as<T, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
     }
