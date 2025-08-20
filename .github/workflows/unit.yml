@@ -330,7 +330,7 @@ jobs:
     needs: avx512
     runs-on: [self-hosted, avx512]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v8
       options: -u root
     strategy:
       fail-fast: false
