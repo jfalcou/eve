@@ -101,7 +101,7 @@ namespace kumi
   struct unwrap_field_capture { using type = T; };
   template<typename T>
   requires (requires { T::is_field_capture; })
-  struct unwrap_field_capture<T> { using type = T::type; };
+  struct unwrap_field_capture<T> { using type = typename T::type; };
   template<typename T>
   using unwrap_field_capture_t = typename unwrap_field_capture<T>::type;
   template<typename T>
