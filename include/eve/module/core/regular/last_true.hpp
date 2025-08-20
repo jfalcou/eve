@@ -74,7 +74,7 @@ namespace eve
   //!   At the moment there isn't a function that would do otherwise.
   //!
   //!   ## What if I know there is a match?
-  //!   We would recommend `*eve::last_true(m)` - this is likely to trigger
+  //!   We would recommend `eve::last_true(m)` - this is likely to trigger
   //!   compiler optimizations, based on it being UB otherwise.
   //!
   //!  @groupheader{Example}
