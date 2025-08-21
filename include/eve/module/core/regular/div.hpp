@@ -17,7 +17,7 @@ namespace eve
   struct div_t : tuple_callable<div_t, Options, saturated_option, upward_option, downward_option,
                                 to_nearest_option, toward_zero_option, upper_option,
                                 lower_option, strict_option, left_option,
-                                right_option>
+                                right_option, mod_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -74,6 +74,7 @@ namespace eve
 //!      constexpr auto div[right](/*any of the above overloads*/)                    noexcept; // 1
 //!      constexpr auto div[saturated](integral_value auto x, integral_value auto y)) noexcept; // 7
 //!      constexpr auto div[left](/*any of the above overloads*/)                     noexcept; // 8
+//!      constexpr auto div[mod = p](/*any of the above overloads*/)                  noexcept; // 9
 //!   }
 //!   @endcode
 //!
@@ -111,6 +112,8 @@ namespace eve
 //!         [`valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
 //!         the division of [`valmin(as(x))`](@ref valmin)
 //!         by -1 that produces [`valmax(as(x))`](@ref valmax).
+//!      9. compute the result in modular arithmetic. the parameters must be positive flint
+//!        and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!    @note
 //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
