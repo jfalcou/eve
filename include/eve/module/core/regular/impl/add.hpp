@@ -23,12 +23,14 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  requires(!O::contains(mod))
   {
     if constexpr(O::contains(widen))
     {
@@ -93,6 +95,18 @@ namespace eve::detail
         return T(a+b);
       }
     }
+  }
+
+  template<callable_options O, typename T0, typename T1>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& , T0 x, T1 y ) noexcept
+  requires(O::contains(mod))
+  {
+    std::cout << "icitte" << std::endl;
+//     using r_t =  eve::common_value_t<T0, T1>;
+//     auto p = o[mod].value(r_t());
+//     auto s = x+y;
+//     return eve::sub[s >= p](s, p);
+    return x+y;
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
