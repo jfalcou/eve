@@ -166,6 +166,11 @@ namespace eve
   inline constexpr threshold_t<default_tolerance> threshold = {};
 
 
+   struct default_mod
+  {
+    friend std::ostream& operator<<(std::ostream& os, default_mod const&) { return os << "1"; }
+  };
+
   //  ============================================================================================
   // mod
 
