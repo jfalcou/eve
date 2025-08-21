@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct sub_t : tuple_callable<sub_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, left_option,
-                                right_option>
+                                right_option, mod_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
