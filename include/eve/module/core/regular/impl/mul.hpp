@@ -24,7 +24,6 @@
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/prev.hpp>
-//#include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/traits/updown.hpp>
 
@@ -194,7 +193,7 @@ namespace eve::detail
     auto [h, l] = eve::two_prod(x, y);
     auto b = h/p;
     auto c = eve::floor(b);
-    auto d = eve::fnma(c, p, h);
+    auto d = eve::fnma[pedantic](c, p, h);
     auto g = d+l;
     g = eve::add[eve::is_ltz(g)](g, p);
     g = eve::sub[g >= p](g, p);

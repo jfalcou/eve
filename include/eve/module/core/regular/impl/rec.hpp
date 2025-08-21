@@ -19,12 +19,14 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/any.hpp>
 
 namespace eve::detail
 {
 
   template<value T, callable_options O>
   constexpr T  rec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+  requires(!O::contains(mod))
   {
     if constexpr( floating_value<T> )
     {
@@ -81,5 +83,24 @@ namespace eve::detail
           return map(eve::rec, a);
       }
     }
+  }
+
+
+  template<callable_options O, floating_value T>
+  EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(cpu_), O const& o, T a ) noexcept
+  requires(O::contains(mod))
+  {
+    auto p = o[mod].value(T());
+    auto base(a);
+    long int expo(p-2);
+
+    auto result = eve::one(as<T>());
+    while( eve::any(is_nez(expo)))
+    {
+      result = mul[mod = p](result, if_else(is_odd(expo), base, one));
+      expo = expo >> 1;
+      base = mul[mod = p](base, base);
+    }
+    return result;
   }
 }

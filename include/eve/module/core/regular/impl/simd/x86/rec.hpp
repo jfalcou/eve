@@ -25,7 +25,8 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(sse2_),
                                   O const& o,
                                   wide<T, N> const& v) noexcept
-  requires x86_abi<abi_t<T, N>>
+  requires(x86_abi<abi_t<T, N>> && !O::contains(mod))
+
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, o, v);
@@ -106,7 +107,7 @@ namespace eve::detail
                                   C const                & mask,
                                   O const                & opts,
                                   wide<T, N> const       & a0) noexcept
-  requires x86_abi<abi_t<T, N>>
+  requires(x86_abi<abi_t<T, N>> && !O::contains(mod))
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(mask, a0, as(a0));
