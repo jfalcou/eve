@@ -123,7 +123,7 @@ namespace eve::detail
 
   template<callable_options O, typename T, std::same_as<T>... Ts>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
-  requires(!O::contains(left)&& sizeof...(Ts) != 0)
+  requires(!O::contains(left)&& (sizeof...(Ts) != 0))
   {
     if constexpr(O::contains(widen))
       return sub[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);

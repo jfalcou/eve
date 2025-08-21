@@ -15,7 +15,7 @@ namespace eve
 {
   template<typename Options>
   struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
-                                       upper_option, strict_option, widen_option>
+                                       upper_option, strict_option, widen_option, mod_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -79,7 +79,8 @@ namespace eve
 //!      constexpr auto mul[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto mul[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto mul[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-//!      constexpr auto sub[widen](/*any of the above overloads*/)                    noexcept; // 7
+//!      constexpr auto mul[widen](/*any of the above overloads*/)                    noexcept; // 7
+//!      constexpr auto mul[mod = p](/*any of the above overloads*/)                  noexcept; // 8
 //!   }
 //!   @endcode
 //!
@@ -108,6 +109,8 @@ namespace eve
 //!       ensures generally faster computation, but strict inequality.
 //!    7. The operation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and 64 bits integrals.
+//!    8. compute the result in modular arithmetic. the parameters must be floating positive
+//!       and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!   @note
 //!      Although the infix notation with `*` is supported for two parameters, the `*` operator on
