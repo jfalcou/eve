@@ -28,6 +28,8 @@
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/shr.hpp>
+//#include <eve/module/core/regular/rec.hpp>  // div does not want to include rec
+
 
 #include <cfenv>
 #include <type_traits>
@@ -42,6 +44,7 @@ namespace eve::detail
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  requires(!O::contains(mod))
   {
     if constexpr(O::contains(left))
     {
@@ -216,9 +219,18 @@ namespace eve::detail
     }
   }
 
+
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(cpu_), O const& o, T a, T b ) noexcept
+  requires(O::contains(mod))
+  {
+    return eve::mul[o](a, b); //this is false
+    //   return eve::mul[o](a, eve::rec[o](b));  //this does not compile because rec includes any.hpp
+  }
+
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
-  requires(!O::contains(left))
+  requires(!O::contains(left) && (sizeof...(Ts) != 0) )
   {
     auto that = r1;
     if (O::contains(upper))  that = mul[lower](r1, rs...);
