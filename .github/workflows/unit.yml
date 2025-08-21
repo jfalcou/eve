@@ -126,34 +126,6 @@ jobs:
         run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
 
   ##################################################################################################
-  ## RISC-V Targets
-  ##################################################################################################
-  riscv:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v8
-      options: -u root
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128" }
-
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
-      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        run: |
-          mkdir build && cd build
-          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
-        run:  cd build && ninja unit.meta.exe unit.arch.exe  unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 5
-      - name: Compiling Big Unit Tests
-        run:  cd build && ninja unit.api.compress.exe -j 1
-      - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
-
-  ##################################################################################################
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
@@ -350,3 +322,32 @@ jobs:
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## RISC-V Targets
+  ##################################################################################################
+  riscv:
+    needs: avx512
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v8
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128" }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.meta.exe unit.arch.exe  unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 2
+      - name: Compiling Big Unit Tests
+        run:  cd build && ninja unit.api.compress.exe -j 1
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
