@@ -33,6 +33,7 @@ namespace eve
   struct kind_1_mode          {};
   struct kind_2_mode          {};
   struct left_mode            {};
+  struct mod_mode             {};
   struct modular_mode         {};
   struct numeric_mode         {};
   struct p_kind_mode          {};
@@ -195,4 +196,17 @@ namespace eve
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
 
+  template<typename Value> struct mod_t;
+
+  struct mod_option
+  {
+    template<typename Value>
+    EVE_FORCEINLINE constexpr auto process(auto const& base, mod_t<Value> const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+  };
 }
