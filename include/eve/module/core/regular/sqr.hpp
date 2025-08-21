@@ -20,7 +20,8 @@
 namespace eve
 {
 template<typename Options>
-struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option>
+struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option,
+                                    upper_option, mod_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -57,6 +58,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!      constexpr auto sqr[saturated](value auto x)               noexcept; // 3
 //!      constexpr auto sqr[lower](value auto x)                   noexcept; // 4
 //!      constexpr auto sqr[upper](value auto x)                   noexcept; // 5
+//!      constexpr auto add[mod = p](value auto x)                 noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -65,6 +67,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!     * `x`: [value](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `p`: modulo p operation. p must be flint less than maxflint.
 //!
 //!    **Return value**
 //!
@@ -80,7 +83,9 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!       to be less or equal to the exact one.
 //!     5. The square is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
 //!       to be greater or equal to the exact one.
-//!
+//!     6. compute the result in modular arithmetic. the parameter must be flint positive
+//!       and less than the modulus. The modulus itself must be less than maxflint.
+///!
 //!  @note
 //!      For  [integral signed values](@ref eve::value)   if `eve::abs[eve::saturated](x)`
 //!      is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
@@ -95,7 +100,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //================================================================================================
 
   namespace detail
-  { 
+  {
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
@@ -117,4 +122,3 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
     }
   }
 }
- 
