@@ -93,7 +93,7 @@ namespace eve
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
-//!     * `p`: modulo p operation. p must be floating less than maxflint.
+//!     * `p`: modulo p operation. p must be flint less than maxflint.
 //!
 //!    **Return value**
 //!
