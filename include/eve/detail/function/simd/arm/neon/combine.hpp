@@ -12,7 +12,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE wide<T, typename N::combined_type>
   combine(neon128_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires std::same_as<abi_t<T, N>, arm_64_>
   {

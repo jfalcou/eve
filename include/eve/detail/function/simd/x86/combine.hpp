@@ -18,7 +18,7 @@ namespace eve::detail
   // 2*128-bits regular combine
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE wide<T, typename N::combined_type>
   combine(sse2_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -88,7 +88,7 @@ namespace eve::detail
   // Non aggregated, skinny logicals
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE logical<wide<T, typename N::combined_type>>
   combine ( avx512_ const & , logical<wide<T, N>> const &l
                             , logical<wide<T, N>> const &h
           ) noexcept

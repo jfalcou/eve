@@ -7,6 +7,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/function/combine.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -17,7 +18,15 @@ namespace eve
     template<simd_value T>
     constexpr EVE_FORCEINLINE typename T::combined_type operator()(T a, T b) const noexcept
     {
-      return typename T::combined_type{a, b};
+      return detail::combine(eve::current_api, a, b);
+    }
+
+    template<simd_value T0, simd_value T1, simd_value T2, simd_value... Ts>
+    constexpr EVE_FORCEINLINE typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>
+    operator()(T0 a, T1 b, T2 c, Ts... ts) const noexcept
+      requires (combinable<T0, T1, T2, Ts...>)
+    {
+      return detail::combine(eve::current_api, a, b, c, ts...);
     }
   };
 

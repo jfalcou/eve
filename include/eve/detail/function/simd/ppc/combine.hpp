@@ -12,7 +12,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE wide<T, typename N::combined_type>
   combine(vmx_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

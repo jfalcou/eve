@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {
