@@ -29,7 +29,7 @@ function removeANSIEscapeCodes(inputString) {
 
 async function postCE(jsonObject) {
   try {
-    const response = await fetch("https://www.godbolt.org/api/compiler/clang1500/compile", {
+    const response = await fetch("https://www.godbolt.org/api/compiler/clang2010/compile", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -95,7 +95,7 @@ class SendToGodbolt extends HTMLElement {
           if (textContent.includes("main(")) {
             let data = {
               "source": textContent,
-              "compiler": "clang1500",
+              "compiler": "clang2010",
               "options": {
                 "userArguments": "-O0 -std=c++20 -DEVE_NO_FORCEINLINE",
                 "compilerOptions": { "executorRequest": true },
@@ -162,7 +162,7 @@ class SendToGodbolt extends HTMLElement {
             {
               "arguments": "",
               "compiler": {
-                "id": "clang1500",
+                "id": "clang2010",
                 "libs": [
                   { "id": "eve", "version": "trunk" },
                   { "id": "tts", "version": "trunk" }
