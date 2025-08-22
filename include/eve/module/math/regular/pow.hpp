@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option>
+  struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option, mod_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
@@ -69,14 +69,15 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto pow(value auto x, value auto y)                          noexcept; // 1
+//!      constexpr auto pow(value auto x, value auto y)                              noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto pow[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto pow[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!      constexpr auto pow[conditional_expr auto c](value auto x, value auto y)     noexcept; // 2
+//!      constexpr auto pow[logical_value auto m](value auto x, value auto y)        noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow[raw](value auto x, value auto y)                         noexcept; // 3
+//!      constexpr auto pow[mod = p] (floating_value auto x, floating_value auto y)  noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -112,6 +113,8 @@ namespace eve
 //!       * except where specified above, if any argument is NaN, NaN is returned
 //!    2. [The operation is performed conditionnaly](@ref conditional)
 //!    3. faster but less accurate call
+//!    4. compute the result in modular arithmetic. the parameters must be flint positive
+//!       and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/pow.cpp}
@@ -151,10 +154,25 @@ namespace eve
 
     template<floating_value T,  floating_value U, callable_options O> //3
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw))
+      if constexpr(O::contains(mod))
+      {
+        auto p = o[mod].value(r_t());
+        auto base(a0);
+        r_t expo(a1);
+
+        auto result = eve::one(as<r_t>());
+        while( eve::any(is_nez(expo)))
+        {
+          result = mul[mod = p](result, if_else(is_odd(expo), base, one));
+          expo = eve::floor(expo/2);
+          base = mul[mod = p](base, base);
+        }
+        return result;
+      }
+      else if constexpr(O::contains(raw))
       {
         return exp(a1*log(a0));
       }
