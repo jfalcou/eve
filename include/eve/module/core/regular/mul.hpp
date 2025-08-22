@@ -109,7 +109,7 @@ namespace eve
 //!       ensures generally faster computation, but strict inequality.
 //!    7. The operation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and 64 bits integrals.
-//!    8. compute the result in modular arithmetic. the parameters must be floating positive
+//!    8. compute the result in modular arithmetic. the parameters must be flint positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!   @note
