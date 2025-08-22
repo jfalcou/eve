@@ -17,32 +17,6 @@
 #include <algorithm>
 #include <utility>
 
-
-  namespace kumi
-  {
-    template<int N, kumi::product_type T>
-    auto chunks(T const& t)
-    {
-      auto ref = kumi::to_ref(t);
-      constexpr auto nb = (kumi::size_v<T>+N-1)/N;
-
-      return kumi::generate<nb>
-      ( [&](auto idx)
-        {
-          auto w = [&]<std::size_t... J>(std::index_sequence<J...>, auto i)
-          {
-            return kumi::reorder<(i*N+J)...>(ref);
-          };
-
-          constexpr auto sz = kumi::size_v<T>;
-          constexpr auto chk = (idx+1)*N > sz ? sz - idx*N : N;
-          return w(std::make_index_sequence<chk>{},kumi::index<idx>);
-        }
-      );
-    }
-  }
-
-
 namespace eve::detail
 {
   // Extract ith element of a wide or propagate the value if non SIMD
