@@ -270,6 +270,7 @@ TTS_CASE("most_repeated_pattern")
 
   test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, std::array {1, 0});
   test(eve::pattern<1, we_, 3, 2, 5, we_, 7, we_>, std::array {1, 0});
+  test(eve::pattern<1, 0, 3, 2, we_, we_, we_, we_>, std::array {1, 0});
 };
 
 TTS_CASE("reduce_repeated_pattern_until")

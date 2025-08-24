@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <bit>
+
 namespace eve::detail
 {
 
@@ -43,11 +45,17 @@ shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
 
     if constexpr( constexpr auto slide = idxm::is_slide_left(P::most_repeated) )
     {
-      return up_element_size_to(x, size_to_shift) >> eve::index<8 * sizeof(T) * *slide>;
+      auto up  = up_element_size_to(x, size_to_shift);
+      auto idx = eve::index<8 * sizeof(T) * *slide>;
+      if constexpr( std::endian::native == std::endian::little ) return up >> idx;
+      else return up << idx;
     }
     else if constexpr( constexpr auto slide = idxm::is_slide_right(P::most_repeated) )
     {
-      return up_element_size_to(x, size_to_shift) << eve::index<8 * sizeof(T) * *slide>;
+      auto up  = up_element_size_to(x, size_to_shift);
+      auto idx = eve::index<8 * sizeof(T) * *slide>;
+      if constexpr( std::endian::native == std::endian::little ) return up << idx;
+      else return up >> idx;
     }
     else return no_matching_shuffle;
   }
