@@ -15,7 +15,8 @@ namespace eve
 {
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
-                                upper_option, to_nearest_odd_option, strict_option, widen_option>
+                                upper_option, to_nearest_odd_option, strict_option,
+                                widen_option, kahan_option,  raw_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -82,6 +83,7 @@ namespace eve
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
 //!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 7
 //!      constexpr auto add[to_nearest_odd](/*any of the above overloads*/)           noexcept; // 8
+//!      constexpr auto add[kahan](/*any of the above overloads*/)                    noexcept; // 9
 
 //!   }
 //!   @endcode
@@ -113,6 +115,9 @@ namespace eve
 //!    7. The summation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and  64 bits integrals.
 //!    8. The summation is computed in a round toward nearest mode but tie to odd (not hardware available on common systems).
+//!    9. A kahan summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
+//!       are assumed  positive and non increasing and (or at least with non increasing exponents) adding raw option can
+//!       speed a bit the summation,
 //!
 //!   @note
 //!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
@@ -121,6 +126,8 @@ namespace eve
 //!       unless it has to deal with uncommon accuracy or order properties requirements whose enforcement can have
 //!       an heavy cost even if hardware fma-like processor intrinsics are available.
 //!
+//!  @groupheader{External references}
+//!    {kahan summation](https://en.wikipedia.org/wiki/Kahan_summation_algorithm)
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/add.cpp}

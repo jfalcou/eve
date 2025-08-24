@@ -11,6 +11,6 @@ int main()
   std::cout << "<- wf0               = " << wf0 << "\n";
   std::cout << "<- wf1               = " << wf1 << "\n";
   std::cout << std::setprecision(20);
-  std::cout << "-> two_add(wf0, wf1)      = " << eve::two_add(wf0, wf1) << "\n";
-  std::cout << "-> two_add[raw](wf0, wf1) = " << eve::two_add[eve::raw](wf0, wf1) << "\n";
+  std::cout << "-> two_sub(wf0, wf1)      = " << eve::two_sub(wf0, wf1) << "\n";
+  std::cout << "-> two_sub[raw](wf0, wf1) = " << eve::two_sub[eve::raw](wf0, wf1) << "\n";
 }

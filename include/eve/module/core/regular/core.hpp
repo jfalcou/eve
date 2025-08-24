@@ -67,8 +67,6 @@
 #include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/fdim.hpp>
-#include <eve/module/core/regular/fast_two_add.hpp>
-#include <eve/module/core/regular/fast_two_sub.hpp>
 #include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
@@ -230,6 +228,7 @@
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
+#include <eve/module/core/regular/two_sub.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>

@@ -14,23 +14,22 @@
 namespace eve
 {
   template<typename Options>
-  struct fast_two_sub_t : elementwise_callable<fast_two_sub_t, Options>
+  struct two_sub_t : elementwise_callable<two_sub_t, Options, mag_option, raw_option>
   {
     template<eve::floating_value T, eve::floating_value U>
-    constexpr EVE_FORCEINLINE kumi::tuple<common_value_t<T, U>, common_value_t<T, U>>
+    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>>
     operator()(T a, U b) const noexcept
     {
-      EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b))), "|a| >=  |b| not satisfied for all elements");
       return EVE_DISPATCH_CALL(a, b);
     }
 
-    EVE_CALLABLE_OBJECT(fast_two_sub_t, fast_two_sub_);
+    EVE_CALLABLE_OBJECT(two_sub_t, two_sub_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var fast_two_sub
+//!   @var two_sub
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  sub and error,
 //!
@@ -45,14 +44,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U  >
-//!      kumi::tuple<T, T> fast_two_sub(T x, U y) noexcept;
+//!      constexpr auto two_sub(floating_value auto x, floating_value auto y)      noexcept; //1
+//!      constexpr auto two_sub[raw](floating_value auto x, floating_value auto y) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`, `y` :  [floating arguments](@ref eve::value).
 //!
 //!   **Return value**
 //!
@@ -60,32 +59,41 @@ namespace eve
 //!
 //!     * `a` is `x+y`
 //!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
+//!        where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//! where \f$\oplus\f$ adds its two parameters with infinite precision.
+//!     1. classical alogoritm  (6 fps)
+//!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps)
 //!
-//! @warning   raw version assube |x| >= |y|,  regular assert if the condition is not met
-//!            and only pedantic version treat infinite values properly
+//!  @groupheader{External references}
+//!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fast_two_sub.cpp}
+//!  @godbolt{doc/core/regular/two_sub.cpp}
 //!
 //! @}
 //================================================================================================
-inline constexpr auto fast_two_sub = functor<fast_two_sub_t>;
+inline constexpr auto two_sub = functor<two_sub_t>;
 
   namespace detail
   {
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE auto
-    fast_two_sub_(EVE_REQUIRES(cpu_), O const&
-                 , T a
-                 , U b) noexcept
+    two_sub_(EVE_REQUIRES(cpu_), O const& , T a , U b) noexcept
     {
-      T s   = a - b;
-      T err =  (a-s) -b;
-      if constexpr(eve::platform::supports_infinites ) err = if_else(is_finite(s), err, zero);
-      return eve::zip(s, err);
+      auto r0 = a - b;
+      T err;
+      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| <  |b| (or if radix is not 2, not our case)
+      {
+        err =   (a-r0) -b;
+      }
+      else //6fp always okq
+      {
+        auto z  = r0 - a;
+        err = a - (r0 - z) - (z +b);
+      }
+      if constexpr( eve::platform::supports_infinites ) err = if_else(is_infinite(r0), eve::zero, err);
+      return eve::zip(r0, err);
     }
   }
 }
