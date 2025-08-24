@@ -15,7 +15,6 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <iostream>
 
 namespace eve
 {
