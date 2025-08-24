@@ -15,11 +15,13 @@
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/maxmag.hpp>
+#include <eve/module/core/regular/minmag.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct two_add_t : elementwise_callable<two_add_t, Options>
+  struct two_add_t : elementwise_callable<two_add_t, Options, mag_option, raw_option>
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -50,7 +52,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto two_add(floating_value auto x, floating_value auto y) noexcept;
+//!      constexpr auto two_add(floating_value auto x, floating_value auto y)      noexcept; //1
+//!      constexpr auto two_add[raw](floating_value auto x, floating_value auto y) noexcept; //2
 //!   }
 //!   @endcode
 //!
@@ -65,6 +68,11 @@ namespace eve
 //!       * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
 //!          where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
+//!     1. classical alogoritm (6 fps)
+//!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps)
+//!
+//!  @groupheader{External references}
+//!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/two_add.cpp}
@@ -80,12 +88,18 @@ namespace eve
     constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       auto r0 = a + b;
-      auto z  = r0 - a;
-      auto r1 = a - (r0 - z) + (b - z);
-      if constexpr( eve::platform::supports_infinites )
-        r1 = if_else(is_infinite(r0), eve::zero, r1);
-
-      return eve::zip(r0, r1);
+      T err;
+      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| <  |b| (or if radix is not 2, not our case)
+      {
+        err =  b - (r0 - a);
+      }
+       else //6fp always ok
+      {
+        auto z  = r0 - a;
+        err = a - (r0 - z) + (b - z);
+      }
+      if constexpr( eve::platform::supports_infinites ) err = if_else(is_infinite(r0), eve::zero, err);
+      return eve::zip(r0, err);
     }
   }
 }

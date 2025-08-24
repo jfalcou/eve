@@ -115,6 +115,22 @@ namespace eve::detail
     //      we might want to do this manually
     if constexpr(O::contains(widen))
       return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+    else if constexpr(O::contains(kahan))
+    {
+      auto get_fn= [](){
+        if constexpr(O::contains(raw)) return two_add[raw];
+        else return two_add;
+      };
+      auto pair_add = [fn = get_fn()](auto pair0, auto r1){
+        auto [a0, e0] = pair0;
+        auto [s, e1] = fn(a0, r1);
+        return zip(s, e0+e1);
+      };
+      auto p0   = two_add(r0,r1);
+      ((p0 = pair_add(p0,rs)),...);
+      auto [r, e] = p0;
+      return r+e;
+    }
     else
     {
       r0   = add[o](r0,r1);
