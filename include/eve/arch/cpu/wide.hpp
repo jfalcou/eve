@@ -25,7 +25,6 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/rem.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/sub.hpp>
@@ -257,25 +256,6 @@ namespace eve
     requires (combinable_to<wide, W0, W1, Ws...>)
       : storage_base(detail::combine(eve::current_api, w0, w1, ws...))
     {}
-
-    template<typename S0, typename S1, typename S2, typename... SN>
-    EVE_FORCEINLINE wide(wide<Type, S0> const& a0
-                        ,wide<Type, S1> const& a1
-                        ,wide<Type, S2> const& a2
-                        ,wide<Type, SN> const&... an) noexcept
-    requires (std::same_as<S0, S1> && std::same_as<S0, S2> && (std::same_as<S2, SN> && ...) && Cardinal::value == S0::value * (3 + sizeof...(SN)))
-    {
-      Type buffer[Cardinal::value];
-
-      constexpr std::size_t sub_c = S0::value;
-      std::size_t offset = 0;
-      eve::store(a0, buffer + offset); offset += sub_c;
-      eve::store(a1, buffer + offset); offset += sub_c;
-      eve::store(a2, buffer + offset); offset += sub_c;
-      ( (eve::store(an, buffer + offset), offset += sub_c), ... );
-
-      *this = eve::load(buffer, Cardinal{});
-    }
 
     //==============================================================================================
     //! @}

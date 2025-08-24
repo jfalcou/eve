@@ -199,22 +199,16 @@ namespace eve::detail
 
           if constexpr (current_card < expected_card)
           {
-            auto chunks = kumi::chunks<expected_card / current_card>(inner);
-
-            if constexpr (kumi::size_v<decltype(inner)> == (expected_card / current_card))
+            auto chunks = kumi::map([&]<typename W>(W const& w) -> decltype(auto)
             {
-              return kumi::apply([&](auto... c) { return expected_wide { c... }; }, inner);
-            }
-            else
-            {
-              return kumi::map([&]<typename W>(W const& w) -> decltype(auto)
+              return kumi::apply([](auto... c)
               {
-                return kumi::apply([](auto... c)
-                {
-                  return expected_wide { c... };
-                }, w);
-              }, chunks);
-            }
+                return expected_wide { c... };
+              }, w);
+            }, kumi::chunks<expected_card / current_card>(inner));
+
+            if constexpr (kumi::size_v<decltype(chunks)> == 1) return kumi::get<0>(chunks);
+            else                                               return chunks;
           }
           else
           {
@@ -223,8 +217,7 @@ namespace eve::detail
         }
       };
 
-      if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) }};
-      else                                        return rewrap(inner_output);
+      return wide_t { storage_t { rewrap(inner_output) }};
     }
     else
     {
