@@ -38,7 +38,10 @@ int main()
   std::cout << "-> add[widen](wu0, wu1)          = " << eve::add[eve::widen](wu0, wu1) << "\n";
   std::cout << "-> add(wf0, wf1)                 = " << eve::add(wf0, wf1) << "\n";
   std::cout << "-> add[widen](wf0, wf1)          = " << eve::add[eve::widen](wf0, wf1) << "\n";
-  auto eps_4 = eve::eps(eve::as<double>())/4;
-  std::cout << eve::add[eve::kahan](1.0, eps_4, eps_4, eps_4, eps_4) << "\n";
-  std::cout << eve::add(1.0, eps_4, eps_4, eps_4, eps_4) << "\n";
+  auto eps_4 = eve::eps(eve::as<float>())/4;
+  std::cout << "-> add(1.0f, eps_4, eps_4, eps_4, eps_4)          = " << eve::add(1.0f, eps_4, eps_4, eps_4, eps_4) << "\n";
+  std::cout << "-> add[kahan](1.0f, eps_4, eps_4, eps_4, eps_4)   = " << eve::add[eve::kahan](1.0f, eps_4, eps_4, eps_4, eps_4) << "// float result\n";
+  std::cout << "-> add(1.0f, eps_4, eps_4, eps_4, eps_4)          = " << eve::add(1.0f, eps_4, eps_4, eps_4, eps_4) << "\n";
+  std::cout << "-> add[widen](1.0f, eps_4, eps_4, eps_4, eps_4)   = " << eve::add[eve::widen](1.0f, eps_4, eps_4, eps_4, eps_4) << "// double result\n";
+
 }
