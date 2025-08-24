@@ -18,7 +18,7 @@ namespace eve::detail
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-  requires (x86_abi<abi_t<T, N>> && !O::contains(mod))
+  requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
     if constexpr(O::contains(left))
     {
@@ -85,7 +85,7 @@ namespace eve::detail
   // Masked case
   template<callable_options O, conditional_expr C, floating_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(avx512_), C const& cx, O const& o, wide<T, N> v, wide<T, N> w) noexcept
-  requires (x86_abi<abi_t<T, N>> && !O::contains(mod))
+  requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
