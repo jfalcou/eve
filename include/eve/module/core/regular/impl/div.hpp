@@ -28,7 +28,7 @@
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/shr.hpp>
-//#include <eve/module/core/regular/rec.hpp>  // div does not want to include rec
+#include <eve/module/core/regular/rec.hpp>
 
 
 #include <cfenv>
@@ -224,8 +224,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(cpu_), O const& o, T a, T b ) noexcept
   requires(O::contains(mod))
   {
-    return eve::mul[o](a, b); //this is false
-    //   return eve::mul[o](a, eve::rec[o](b));  //this does not compile because rec includes any.hpp
+    return eve::mul[o](a, eve::rec[o](b));
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
