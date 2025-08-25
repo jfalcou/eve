@@ -16,6 +16,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {

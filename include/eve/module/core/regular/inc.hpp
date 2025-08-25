@@ -13,6 +13,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
