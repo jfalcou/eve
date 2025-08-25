@@ -47,7 +47,7 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, typename T>
+  template<callable_options O, , arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(sve_), O const& o, T x, T y ) noexcept
   requires(sve_abi<abi_t<T, N>> && O::contains(mod))
   {
