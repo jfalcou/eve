@@ -205,13 +205,13 @@ namespace eve
       return v;
     }
 
-    constexpr auto operator()(keyword_type const&) const noexcept { return *this; }
+    constexpr T operator()(keyword_type const&) const noexcept { return *this; }
 
     template<typename T> constexpr auto value(T const&) const
     {
       using type = T; //element_type_t<T>;
       if constexpr(std::same_as<Value,default_mod>) return eve::one(as<type>{});
-      else                                          return value_;
+      else                                          return static_cast<type> value_>;
     }
 
     Value value_;
