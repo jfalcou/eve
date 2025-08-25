@@ -49,7 +49,7 @@ namespace eve::detail
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(sve_), O const& o, T x, T y ) noexcept
-  requires(O::contains(mod))
+  requires(sve_abi<abi_t<T, N>> && O::contains(mod))
   {
     auto p = o[mod].value(T());
     auto s = x-y;
