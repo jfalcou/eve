@@ -211,7 +211,7 @@ namespace eve
     {
       using type = T; //element_type_t<T>;
       if constexpr(std::same_as<Value,default_mod>) return eve::one(as<type>{});
-      else                                          return static_cast<type> value_>;
+      else                                          return static_cast<type>(value_);
     }
 
     Value value_;
