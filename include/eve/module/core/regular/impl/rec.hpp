@@ -92,13 +92,13 @@ namespace eve::detail
   {
     auto p = o[mod].value(T());
     auto base(a);
-    long int expo(p-2);
+    auto expo(p-2);
 
     auto result = eve::one(as<T>());
     while( eve::any(is_nez(expo)))
     {
       result = mul[mod = p](result, if_else(is_odd(expo), base, one));
-      expo = expo >> 1;
+      expo = floor(expo/2);
       base = mul[mod = p](base, base);
     }
     return result;
