@@ -217,7 +217,8 @@ namespace eve::detail
         }
       };
 
-      return wide_t { storage_t { rewrap(inner_output) }};
+      if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) } };
+      else                                        return rewrap(inner_output);
     }
     else
     {
