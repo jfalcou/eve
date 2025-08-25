@@ -63,12 +63,24 @@ namespace eve
 			return EVE_DISPATCH_CALL(a, b);
 		}
 
-	EVE_CALLABLE_OBJECT(test_pt_t, test_pt_);
+		EVE_CALLABLE_OBJECT(test_pt_t, test_pt_);
+	};
+
+	template <typename Options>
+	struct test_mixed_t : strict_elementwise_callable<test_mixed_t, Options>
+	{
+		template <typename T, typename U, typename N>
+		wide<U, N> operator()(wide<T, N> a, wide<U, N> b) const {
+			return EVE_DISPATCH_CALL(a, b);
+		}
+
+		EVE_CALLABLE_OBJECT(test_mixed_t, test_mixed_);
 	};
 
 	inline constexpr auto test_upgrade   = functor<test_upgrade_t>;
 	inline constexpr auto test_downgrade = functor<test_downgrade_t>;
 	inline constexpr auto test_pt        = functor<test_pt_t>;
+	inline constexpr auto test_mixed     = functor<test_mixed_t>;
 }
 
 namespace eve::detail
@@ -100,6 +112,12 @@ namespace eve::detail
     auto [b0, b1] = b;
 		auto y = eve::convert(b0 + b1, eve::as<std::uint8_t>{});
 		return zip(x, y);
+	}
+
+	template <callable_options O, typename T, typename U, typename N>
+	wide<U, N> test_mixed_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, wide<U, N> b)
+	{
+		return wide<U, N>{ [&](auto i, auto) { return U(a.get(i) + b.get(i)); } };
 	}
 }
 
@@ -142,4 +160,23 @@ TTS_CASE_TPL("aggregate stress test - product type", eve::test::simd::all_types)
 
 	TTS_EQUAL(ra, eve::convert(a, eve::as<eve::upgrade_t<T>>{}));
 	TTS_EQUAL(rb, eve::convert(b0 + b1, eve::as<std::uint8_t>{}));
+};
+
+TTS_CASE_TPL("aggregate stress test - mixed type", tts::cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
+<typename T0, typename T1>(tts::type<kumi::tuple<T0, T1>>)
+{
+	using W0 = eve::wide<T0, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+
+	// T0's exepected cardinal to ensure the same lane count
+	using W1 = eve::wide<T1, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+
+	W0 a{ [](auto i, auto){ return T0(i * 3 + 7); } };
+	W1 b{ [](auto i, auto){ return T1(i + 1); } };
+
+	auto r = eve::test_mixed(a, b);
+
+	for (std::ptrdiff_t i = 0; i < r.size(); ++i)
+	{
+		TTS_EQUAL(r.get(i), T1(T0(i * 3 + 7) + T1(i + 1)));
+	}
 };
