@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/regular/add.hpp>
-#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
 namespace eve
@@ -105,7 +105,7 @@ namespace eve
       else if constexpr(O::contains(mod) )
       {
         auto p = o[mod].value(T());
-        return eve::sub[mod = p](a, one(eve::as(a)));
+        return eve::dec(eve::if_else(eve::is_eqz(a), p, a));
       }
       else
         return add[o](a, mone(eve::as(a)));
