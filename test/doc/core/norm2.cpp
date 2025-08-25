@@ -38,10 +38,12 @@ int main()
 // //   std::cout << "-> sum_of_squares[widen](wu0, wu1)          = " << eve::sum_of_squares[eve::widen](wu0, wu1) << "\n";
 // //   std::cout << "-> sum_of_squares(wf0, wf1)                 = " << eve::sum_of_squares(wf0, wf1) << "\n";
 // //   std::cout << "-> sum_of_squares[widen](wf0, wf1)          = " << eve::sum_of_squares[eve::widen](wf0, wf1) << "\n";
-//   auto sqteps_2 = eve::sqrteps(eve::as<float>())/2;
-//   double dsqteps_2 = double(sqteps_2);
-//   std::cout << "-> sum_of_squares(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)          = " << eve::sum_of_squares(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "\n";
-//   std::cout << "-> sum_of_squares[kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// float result\n";
-//   std::cout << "-> sum_of_squares(1.0, dsqteps_2, dsqteps_2, dsqteps_2, dsqteps_2)       = " << eve::sum_of_squares(1.0, dsqteps_2, dsqteps_2, dsqteps_2, dsqteps_2) << "// double result\n";
-  std::cout << eve::gros_pipo(1.0, 2.0, 3.0, 5.0)   << std::endl;
+  std::cout << std::setprecision(16);
+  auto sqteps_2 = eve::sqrteps(eve::as<float>())/2;
+  double dsqteps_2 = double(sqteps_2);
+  std::cout << "-> norm2(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)          = " << eve::norm2(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "\n";
+  std::cout << "-> norm2[kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::norm2[eve::kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// float result\n";
+  std::cout << "-> norm2(1.0, dsqteps_2, dsqteps_2, dsqteps_2, dsqteps_2)       = " << eve::norm2(1.0, dsqteps_2, dsqteps_2, dsqteps_2, dsqteps_2) << "// double result\n";
+  std::cout << eve::norm2(1.0, 2.0, 3.0, 4.0)   << std::endl;
+  std::cout << eve::norm2[eve::kahan](1.0, 2.0, 3.0, 4.0)   << std::endl;
 }
