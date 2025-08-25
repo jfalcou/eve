@@ -20,7 +20,7 @@
 namespace eve
 {
 template<typename Options>
-struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option>
+struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option, strict_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -95,7 +95,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //================================================================================================
 
   namespace detail
-  { 
+  {
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
@@ -117,4 +117,3 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
     }
   }
 }
- 
