@@ -112,12 +112,19 @@ namespace eve
     requires(sizeof...(Ts) != 0)
     {
       using r_t = common_value_t<T0, Ts...>;
+      auto pedantify = [&](auto r){
+        if constexpr(O::contains(pedantic) && floating_value<r_t>)
+        {
+          auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
+          return if_else(inf_found, inf(as(r)), r);
+        }
+        else
+          return r;
+      };
       if constexpr(O::contains(kahan))
       {
-//        std::cout << "icitte0" << std::endl;
         auto pair_sqr_add = [](auto pair0, auto r1){
           auto [r0, e0] = pair0;
-          //        std::cout << "r0 " << r0 <<  "  r& " << r1 << std::endl;
           auto [s, e1] = eve::two_fma_approx(r1, r1, r0);
           return zip(s, e0+e1);
         };
@@ -125,7 +132,7 @@ namespace eve
         ((p0 = pair_sqr_add(p0,args)),...);
         auto [r, e] = p0;
         auto res = r+ e;
-        return res;
+        return pedantify(res);
       }
       else
       {
@@ -136,14 +143,7 @@ namespace eve
             return eve::sqr;
         };
         r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
-        if constexpr(O::contains(pedantic))
-        {
-          auto inf_found = is_infinite(r_t(a0));
-          inf_found =  (inf_found || ... || is_infinite(r_t(args)));
-          return if_else(inf_found, inf(as(r)), r);
-        }
-        else
-          return r;
+        return pedantify(r);
       }
     }
   }

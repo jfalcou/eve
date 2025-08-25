@@ -117,6 +117,9 @@ namespace eve::detail
       return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
     else if constexpr(O::contains(kahan))
     {
+      // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
+      // Accurate floating-point summation part I: Faithful rounding.
+      // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
       auto get_fn= [](){
         if constexpr(O::contains(raw)) return two_add[raw];
         else return two_add;
