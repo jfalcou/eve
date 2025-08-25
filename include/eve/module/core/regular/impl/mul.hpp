@@ -191,7 +191,6 @@ namespace eve::detail
   {
     using r_t =  eve::common_value_t<T0, T1>;
     auto p = o[mod].value(r_t());
-//    auto u = eve::rec(p);
     auto [h, l] = eve::two_prod(x, y);
     auto b = h/p;
     auto c = eve::floor(b);
