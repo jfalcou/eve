@@ -57,7 +57,7 @@ namespace eve
 //!      constexpr auto dec[upper](value auto x)                   noexcept; // 5
 //!      constexpr auto dec[lower][strict](value auto x)           noexcept; // 4
 //!      constexpr auto dec[upper][strict](value auto x)           noexcept; // 5
-//!      constexpr auto dec[mod = p][strict](value auto x)          noexcept; // 6
+//!      constexpr auto dec[mod = p](value auto x)                 noexcept; // 6
 //!   @endcode
 //!
 //!   **Parameters**

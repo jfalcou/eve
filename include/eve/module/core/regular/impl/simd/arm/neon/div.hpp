@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-  requires ( ppc_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))
+  requires ( arm_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))
   {
     if (O::contains(left))
     {
