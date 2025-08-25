@@ -76,7 +76,7 @@ requires x86_abi<abi_t<T,N>>
       }
       else
       {
-        if      constexpr( sizeof(T) <= 2 ) return aggregate(if_else, v0, v1, v2);
+        if      constexpr( sizeof(T) <= 2 ) return slice_apply(if_else, v0, v1, v2);
         else if constexpr( sizeof(T) >= 4 )
         {
           using f_t = wide<as_floating_point_t<T>, N>;

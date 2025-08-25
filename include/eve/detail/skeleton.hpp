@@ -109,6 +109,28 @@ namespace eve::detail
     }
   }
 
+  // Apply the function `f` to every `ts` once sliced.
+  template<typename Func, typename... Ts>
+  EVE_FORCEINLINE auto slice_apply(Func f, Ts... ts)
+  {
+    // We use this function to turn every parameters into either a pair of slices
+    // or a pair of scalar so that the apply later down is more regular
+    auto slicer = []<typename T>(T t)
+    {
+      if constexpr (simd_value<T>) return t.slice();
+      else                         return kumi::make_tuple(t,t);
+    };
+
+    // Build the lists of all ready-to-aggregate values
+    auto parts = kumi::make_tuple(slicer(ts)...);
+
+    // Apply f on both side of the slices and re-combine
+    using half_result_t = decltype(f(get<0>(slicer(ts))...));
+    using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
+
+    return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+  }
+
   // Aggregate replication count for a given type
   template<typename T>
   constexpr std::ptrdiff_t replication()
@@ -222,22 +244,7 @@ namespace eve::detail
     }
     else
     {
-      // We use this function to turn every parameters into either a pair of slices
-      // or a pair of scalar so that the apply later down is more regular
-      auto slicer = []<typename T>(T t)
-      {
-        if constexpr (simd_value<T>) return t.slice();
-        else                         return kumi::make_tuple(t,t);
-      };
-
-      // Build the lists of all ready-to-aggregate values
-      auto parts = kumi::make_tuple(slicer(ts)...);
-
-      // Apply f on both side of the slices and re-combine
-      using half_result_t = decltype(f(get<0>(slicer(ts))...));
-      using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
-
-      return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+      return slice_apply(f, ts...);
     }
   }
 }
