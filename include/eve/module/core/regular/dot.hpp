@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct dot_t : tuple_callable<dot_t, Options>
+  struct dot_t : tuple_callable<dot_t, Options, kahan_option>
   {
     template<eve::value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -63,7 +63,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto dot(auto value x, auto value y) noexcept;
+//!      // Regular overloads
+//!      constexpr auto dot(auto value... xs, auto value... ys)        noexcept; // 1
+//!
+//!      // Semantic options
+//!      constexpr auto dot[kahan](/*any of the above overloads*/)     noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -75,7 +79,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    dot product. For values it is just the product.
+//!    dot product. \f$\sum_s x_s*y_s\f$.
+//!    With kahan option the result is more accurately computed using a compensated algorithm.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dot.cpp}
@@ -93,16 +98,15 @@ namespace eve
     {
       return mul(a, b);
     }
-  }
 
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o , Ts... args) noexcept
-    requires(sizeof...(Ts) != 0  && sizeof...(Ts)%2 == 0)
+    dot_(EVE_REQUIRES(cpu_), O const &  , Ts... args) noexcept
+    requires(sizeof...(Ts) > 2  && sizeof...(Ts)%2 == 0)
     {
       using r_t =  eve::common_value_t<Ts...>;
-      auto coeffs = kumi::tuple{xs...};
-      auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(T)/2>);
+      auto coeffs = kumi::tuple{r_t(args)...};
+      auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(Ts)/2>);
       if constexpr(O::contains(kahan))
       {
         auto[f0,fs] = kumi::split(f, kumi::index<1>);
@@ -122,7 +126,7 @@ namespace eve
       else
       {
         return kumi::sum( kumi::map([](auto a, auto b) { return a*b; }, f, s));
-     }
+      }
     }
-
+  }
 }

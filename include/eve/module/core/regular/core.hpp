@@ -221,7 +221,6 @@
 #include <eve/module/core/regular/sulp.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/sum_of_squares.hpp>
-//#include <eve/module/core/regular/norm2.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>
 #include <eve/module/core/regular/three_fma.hpp>

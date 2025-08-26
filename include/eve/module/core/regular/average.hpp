@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option, strict_option>
+  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option,
+                                    strict_option, kahan_option>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -73,6 +74,7 @@ namespace eve
 //!      constexpr auto average[lower](eve::value auto x, eve::value auto y)                        noexcept; // 7
 //!      constexpr auto average[upper][strict](eve::value auto x, eve::value auto y)                noexcept; // 6
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
+//!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 8
 //!
 //!   }
 //!   @endcode
@@ -108,8 +110,11 @@ namespace eve
 //!        For integral type entries, these are similar to `ceil((x+y)/2)`, but converted to an integral value.
 //!     7. The average is computed in a 'round toward \f$ +\infty\f$ mode. The result is guaranted
 //!        to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
-//!       ensures generally faster computation, but strict inequality.
-//         For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
+//!        ensures generally faster computation, but strict inequality.
+//!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
+//!     8. Compesated algorithm for better precision.
+//!
+//!  @note unless raw option is used no spurious overflow can be obtained.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
