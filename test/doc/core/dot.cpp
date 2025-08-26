@@ -21,5 +21,6 @@ int main()
   std::cout << "-> dot(wf0, wf1) = " << eve::dot(wf0, wf1) << "\n";
   std::cout << "-> dot(wu0, wu1) = " << eve::dot(wu0, wu1) << "\n";
   std::cout << "-> dot(wi0, wi1) = " << eve::dot(wi0, wi1) << "\n";
-  std::cout << "-> dot(wf0, wf0, wf1, wf1) = "<< eve::dot(eve::zip(wf0, wf0), eve::zip(wf1, wf1)) << "\n";
+  std::cout << "-> dot(wf0, wf1, wf0, wf1) = "<< eve::dot(wf0, wf1, wf0, wf1) << "\n";
+  std::cout << "-> dot[kahan](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::kahan](wf0, wf1, wf0, wf1) << "\n";
 }

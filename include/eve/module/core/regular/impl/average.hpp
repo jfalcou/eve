@@ -14,6 +14,7 @@
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/rec.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
 
 
 namespace eve::detail
@@ -47,6 +48,21 @@ namespace eve::detail
       if constexpr(O::contains(raw))
       {
         return add[o.drop(raw)](r0, args...)/(sizeof...(args) + 1);
+      }
+      else if constexpr(O::contains(kahan))
+      {
+        using r_t =  eve::common_value_t<Ts...>;
+        auto coeffs = kumi::tuple{args...};
+        T invn  = rec[pedantic](T(sizeof...(args) + 1u));
+        auto pair_add = [invn](auto pair0, auto r1){
+          auto [r, e0] = pair0;
+          auto [s, e1] = eve::two_fma_approx(r1, invn, r);
+          return zip(s, e0+e1);
+        };
+        auto p0   = two_prod(r_t(r0), invn);
+        ((p0 = pair_add(p0,args)),...);
+        auto [r, e] = p0;
+        return r+ e;
       }
       else
       {
