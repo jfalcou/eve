@@ -76,7 +76,7 @@ namespace eve::detail
         else if constexpr (c == category::float32x4)                  return _mm_cmple_ps(a, b);
         else if constexpr (c == category::float64x2)                  return _mm_cmple_pd(a, b);
         else if constexpr (use_avx2)                                  return eve::min(a, b) == a;
-        else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return aggregate(is_less_equal, a, b);
+        else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return slice_apply(is_less_equal, a, b);
         else if constexpr (use_sse4_1)                                return eve::min(a, b) == a;
         else                                                          return !is_less(b, a);
       }

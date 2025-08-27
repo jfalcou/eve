@@ -28,3 +28,155 @@ TTS_CASE("Check that aggregated_ ABI participates to function mangling" )
   TTS_EQUAL( aggregation_kind(eve::aggregated_{}), +1);
 # endif
 };
+
+namespace eve
+{
+	template <typename Options>
+	struct test_upgrade_t : strict_elementwise_callable<test_upgrade_t, Options>
+	{
+		template <typename T, typename N>
+		wide<upgrade_t<T>, typename N::split_type> operator()(wide<T, N> a) const {
+			return EVE_DISPATCH_CALL(a);
+		}
+
+		EVE_CALLABLE_OBJECT(test_upgrade_t, test_upgrade_);
+	};
+
+	template <typename Options>
+	struct test_downgrade_t : strict_elementwise_callable<test_downgrade_t, Options>
+	{
+		template <typename T, typename N>
+		wide<downgrade_t<T>, N> operator()(wide<T, N> a) const
+		{
+			return EVE_DISPATCH_CALL(a);
+		}
+
+		EVE_CALLABLE_OBJECT(test_downgrade_t, test_downgrade_);
+	};
+
+	template <typename Options>
+	struct test_pt_t : strict_elementwise_callable<test_pt_t, Options>
+	{
+		template <typename T, typename N>
+		zipped<wide<upgrade_t<T>, N>, wide<std::uint8_t, N>> operator()(wide<T, N> a, zipped<wide<T, N>, wide<T, N>> b) const
+		{
+			return EVE_DISPATCH_CALL(a, b);
+		}
+
+		EVE_CALLABLE_OBJECT(test_pt_t, test_pt_);
+	};
+
+	template <typename Options>
+	struct test_mixed_t : strict_elementwise_callable<test_mixed_t, Options>
+	{
+		template <typename T, typename U, typename N>
+		wide<U, N> operator()(wide<T, N> a, wide<U, N> b) const {
+			return EVE_DISPATCH_CALL(a, b);
+		}
+
+		EVE_CALLABLE_OBJECT(test_mixed_t, test_mixed_);
+	};
+
+	inline constexpr auto test_upgrade   = functor<test_upgrade_t>;
+	inline constexpr auto test_downgrade = functor<test_downgrade_t>;
+	inline constexpr auto test_pt        = functor<test_pt_t>;
+	inline constexpr auto test_mixed     = functor<test_mixed_t>;
+}
+
+namespace eve::detail
+{
+	template <callable_options O, typename T, typename N>
+	wide<upgrade_t<T>, typename N::split_type> test_upgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)
+	{
+		using r_t = wide<upgrade_t<T>, typename N::split_type>;
+		using out_t = upgrade_t<T>;
+
+		for (std::ptrdiff_t i = 1; i < v.size(); ++i)
+		{
+			TTS_EQUAL(v.get(i), T(v.get(i - 1) + 3));
+		}
+
+		return r_t{ [&](auto i, auto){ return out_t(v.get(i * 2)); } };
+	}
+
+	template <callable_options O, typename T, typename N>
+	wide<downgrade_t<T>, N> test_downgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)
+	{
+		return eve::convert(v, eve::as<downgrade_t<T>>{});
+	}
+
+	template <callable_options O, typename T, typename N>
+	zipped<wide<upgrade_t<T>, N>, wide<std::uint8_t, N>> test_pt_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, zipped<wide<T, N>, wide<T, N>> b)
+	{
+		auto x = eve::convert(a, eve::as<upgrade_t<T>>{});
+    auto [b0, b1] = b;
+		auto y = eve::convert(b0 + b1, eve::as<std::uint8_t>{});
+		return zip(x, y);
+	}
+
+	template <callable_options O, typename T, typename U, typename N>
+	wide<U, N> test_mixed_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, wide<U, N> b)
+	{
+		return wide<U, N>{ [&](auto i, auto) { return U(a.get(i) + b.get(i)); } };
+	}
+}
+
+TTS_CASE_TPL("aggregate stress test - upgrade", eve::test::simd::all_types)
+<typename W0>(tts::type<W0>)
+{
+	using T = eve::element_type_t<W0>;
+	using W = typename W0::combined_type;
+
+	W a([](auto i, auto){ return T((i + 2) * 3); });
+	auto r = eve::test_upgrade(tts::poison(a));
+
+	for (std::ptrdiff_t i = 0; i < r.size(); ++i)
+	{
+		TTS_EQUAL(r.get(i), eve::upgrade_t<T>(T((i + 1) * 6)));
+	}
+};
+
+TTS_CASE_TPL("aggregate stress test - downgrade", eve::test::simd::all_types)
+<typename W0>(tts::type<W0>)
+{
+	using T = eve::element_type_t<W0>;
+	using W = typename W0::combined_type;
+
+	W a([](auto i, auto){ return T(i); });
+	TTS_EQUAL(eve::test_downgrade(tts::poison(a)), eve::convert(a, eve::as<eve::downgrade_t<T>>{}));
+};
+
+TTS_CASE_TPL("aggregate stress test - product type", eve::test::simd::all_types)
+<typename W0>(tts::type<W0>)
+{
+	using T = eve::element_type_t<W0>;
+	using W = typename W0::combined_type;
+
+	W a([](auto i, auto){ return T(i * 2 + 10); });
+	W b0([](auto i, auto){ return T(i + 1); });
+	W b1([](auto i, auto){ return T(i * 3); });
+
+	auto [ra, rb] = eve::test_pt(tts::poison(a), eve::zip(tts::poison(b0), tts::poison(b1)));
+
+	TTS_EQUAL(ra, eve::convert(a, eve::as<eve::upgrade_t<T>>{}));
+	TTS_EQUAL(rb, eve::convert(b0 + b1, eve::as<std::uint8_t>{}));
+};
+
+TTS_CASE_TPL("aggregate stress test - mixed type", tts::cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
+<typename T0, typename T1>(tts::type<kumi::tuple<T0, T1>>)
+{
+	using W0 = eve::wide<T0, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+
+	// T0's exepected cardinal to ensure the same lane count
+	using W1 = eve::wide<T1, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+
+	W0 a{ [](auto i, auto){ return T0(i * 3 + 7); } };
+	W1 b{ [](auto i, auto){ return T1(i + 1); } };
+
+	auto r = eve::test_mixed(a, b);
+
+	for (std::ptrdiff_t i = 0; i < r.size(); ++i)
+	{
+		TTS_EQUAL(r.get(i), T1(T0(i * 3 + 7) + T1(i + 1)));
+	}
+};

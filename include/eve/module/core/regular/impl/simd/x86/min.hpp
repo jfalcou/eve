@@ -64,20 +64,20 @@ namespace eve::detail
       else if constexpr( current_api >= avx2 && c == category::uint32x8 )
         return _mm256_min_epu32(v0, v1);
       else if constexpr( match(c, category::int32x8, category::uint32x8) )
-        return aggregate(min, v0, v1);
+        return slice_apply(min, v0, v1);
       // 256 - 16 bit ints
       else if constexpr( current_api >= avx2 && c == category::int16x16 )
         return _mm256_min_epi16(v0, v1);
       else if constexpr( current_api >= avx2 && c == category::uint16x16 )
         return _mm256_min_epu16(v0, v1);
       else if constexpr( match(c, category::int16x16, category::uint16x16) )
-        return aggregate(eve::min, v0, v1);
+        return slice_apply(eve::min, v0, v1);
       // 256 - 8 bit ints
       else if constexpr( current_api >= avx2 && c == category::int8x32 ) return _mm256_min_epi8(v0, v1);
       else if constexpr( current_api >= avx2 && c == category::uint8x32 )
         return _mm256_min_epu8(v0, v1);
       else if constexpr( match(c, category::int8x32, category::uint8x32) )
-        return aggregate(eve::min, v0, v1);
+        return slice_apply(eve::min, v0, v1);
 
       // 128
       else if constexpr( c == category::float64x2 ) return _mm_min_pd(v0, v1);

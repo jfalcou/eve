@@ -94,7 +94,7 @@ namespace eve::detail
           else if constexpr (use_avx2 && c == category::uint16x16)      return eve::min(a, b) != b;
           else if constexpr (use_avx2 && c == category::int8x32)        return _mm256_cmpgt_epi8(b, a);
           else if constexpr (use_avx2 && c == category::uint8x32)       return eve::min(a, b) != b;
-          else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return aggregate(is_less, a, b);
+          else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return slice_apply(is_less, a, b);
           else if constexpr (use_sse4_2 && c == category::int64x2)      return _mm_cmpgt_epi64(b, a);
           else if constexpr (c == category::int32x4)                    return _mm_cmplt_epi32(a, b);
           else if constexpr (c == category::int16x8)                    return _mm_cmplt_epi16(a, b);
