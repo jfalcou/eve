@@ -14,14 +14,20 @@ project_root = Path(subprocess.check_output(["git", "rev-parse", "--show-topleve
 abis = { 'arm_abi': 'arm/neon', 'sve_abi': 'arm/sve', 'x86abi': 'x86', 'ppc_abi': 'ppc' }
 callable_def_regex = re.compile(r'\bstruct\s+(\w+?)_t\s*?:\s*?(callable|strict_elementwise_callable|elementwise_callable|strict_tuple_callable|tuple_callable|constant_callable)')
 include_regex = re.compile(r'^\s*?#\s*?include\s*?<(.*?)>', re.MULTILINE)
+test_callable_regex = re.compile(r'eve::(\w*?)[\(\[]')
 
 file_cache = { }
+test_file_cache = { }
 
 def populate_file_cache():
   for file in project_root.glob('include/eve/**/*.hpp'):
     content = file.read_text()
     includes = Counter(include_regex.findall(content))
     file_cache[str(file)] = (content, includes)
+
+  for file in project_root.glob('test/doc/**/*.cpp'):
+    content = file.read_text()
+    test_file_cache[str(file)] = content
 
 # checks that no file contains multiple different arch tags
 def check_arch_tags():
@@ -98,7 +104,7 @@ def check_orphan_headers():
     "eve/std.hpp",
     "eve/memory.hpp",
     "eve/arch/detection.hpp",
-    
+
     "eve/module/algo.hpp",
     "eve/module/bessel.hpp",
     "eve/module/combinatorial.hpp",
@@ -115,12 +121,25 @@ def check_orphan_headers():
     if cut_path not in referenced and cut_path not in orphan_ignorelist:
       print(f"Found orphan header: {cut_path}")
 
+def check_doc_wrong_tests():
+  ignorelist = [
+    'as', 'ignore_last', 'ignore_first', 'keep_between', 'keep_first', 'keep_last', 'inf', 'minf', 'nan', 'pi', 'pio_2',
+    'pio_3', 'pio_4', 'eps', 'one', 'valmax', 'valmin', 'float32', 'float64', 'uint32', 'mindenormal', 'smallestposval',
+    'maximum', 'convert', 'all', 'iota'
+  ]
+
+  for file, content in test_file_cache.items():
+    matchs = { match for match in test_callable_regex.findall(content) if not (match in ignorelist or match.endswith('_')) }
+    if len(matchs) > 1:
+      print(f"Multiple callables in doc test: {matchs} in {file}")
+
 if __name__ == '__main__':
   populate_file_cache()
-  
+
   check_arch_tags()
   check_callables_defs()
   check_dup_includes()
   check_orphan_headers()
+  check_doc_wrong_tests()
 
   print("done")
