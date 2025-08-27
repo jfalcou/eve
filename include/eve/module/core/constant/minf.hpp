@@ -19,7 +19,8 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      return  T(-std::numeric_limits<T>::infinity());
+      if constexpr (std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0xFC00);
+      else                                        return T(-std::numeric_limits<T>::infinity());
     }
 
     template<floating_value T>

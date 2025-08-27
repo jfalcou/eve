@@ -19,7 +19,8 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      return std::numeric_limits<T>::max();
+      if constexpr (std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x7BFF);
+      else                                        return std::numeric_limits<T>::max();
     }
 
     template<plain_value T>

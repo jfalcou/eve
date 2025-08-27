@@ -233,12 +233,15 @@ namespace eve::test
 namespace eve::test::scalar
 {
   using ieee_reals        = ::tts::real_types;
+  using ieee_reals_wf16   = ::tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using signed_types      = ::tts::signed_types;
+  using signed_types_wf16 = ::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
   using all_types         = ::tts::arithmetic_types;
+  using all_types_wf16    = ::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
 }
 
 namespace eve::test::simd
@@ -339,6 +342,33 @@ namespace tts
     eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
 
     return poison(that);
+  }
+
+  auto produce(type<eve::float16_t> const&, auto g, auto& rng, auto... args)
+  {
+    auto data = produce(type<float>{}, g, rng, args...);
+    return eve::float16_t{ data };
+  }
+
+  template<std::size_t N>
+  auto produce(type<std::array<eve::float16_t, N>> const&, auto g, auto& rng, auto... args)
+  {
+    std::array<eve::float16_t, N> data;
+
+    for(std::size_t i = 0; i < N; ++i)
+    {
+      data[i] = produce(type<eve::float16_t>{}, g, rng, args...);
+    }
+
+    return data;
+  }
+
+  template<std::ptrdiff_t N>
+  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
+  {
+    auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
+
+    return poison(eve::load(arr.data(), eve::fixed<N>{}));
   }
 
   //================================================================================================

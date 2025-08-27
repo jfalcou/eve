@@ -16,10 +16,11 @@ namespace eve
   template<typename Options>
   struct maxflint_t : constant_callable<maxflint_t, Options, lower_option, upper_option>
   {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      if      constexpr(std::same_as<T, float>  ) return T(0x1p+24);
+      if      constexpr(std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x6800);
+      else if constexpr(std::same_as<T, float>  ) return T(0x1p+24);
       else if constexpr(std::same_as<T, double> ) return T(0x1p+53);
     }
 
@@ -33,8 +34,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var maxflint
-//!   @brief Computes the the greatest floating point representing an integer and
-//!   such that n != n+1.
+//!   @brief Computes the smallest floating point representing an integer such that n == n+1.
 //!
 //!   **Defined in Header**
 //!
@@ -58,6 +58,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      The call `eve::maxflint(as<T>())` is semantically equivalent to:
+//!        * `T(2048.0f)` if `eve::element_type_t<T>` is float16.
 //!        * `T(16777216.0f)` if `eve::element_type_t<T>` is float.
 //!        * `T(9007199254740992.0)` if `eve::element_type_t<T>` is double.
 //!
