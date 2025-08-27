@@ -32,4 +32,9 @@ int main()
   std::cout << "-> manhattan(wf0, wf1)                 = " << eve::manhattan(wf0, wf1) << "\n";
   std::cout << "-> manhattan[upper](wf0, wf1)          = " << eve::manhattan[eve::upper](wf0, wf1) << "\n";
   std::cout << "-> manhattan[upper][strict](wf0, wf1)  = " << eve::manhattan[eve::upper][eve::strict](wf0, wf1) << "\n";
+
+  std::cout << std::defaultfloat;
+  std::vector v{1.0, -2.0, -3.0, 4.0};
+  std::cout << "-> manhattan(v)                        = " << eve::manhattan(v) << "\n";
+
 }
