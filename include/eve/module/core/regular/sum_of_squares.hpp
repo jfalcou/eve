@@ -22,26 +22,34 @@ namespace eve
   struct sum_of_squares_t : tuple_callable<sum_of_squares_t, Options, pedantic_option, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, kahan_option>
   {
-    template<value T0, eve::value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<value T0, eve::value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-    EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
-    constexpr operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+   template<value... Ts>
+    EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    constexpr operator()(Ts...ts) const noexcept
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<eve::detail::range R>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<typename R::value_type>
+    operator()(R const& t) const noexcept
+    requires(!Options::contains(widen))
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(sum_of_squares_t, sum_of_squares_);
   };
@@ -66,10 +74,7 @@ namespace eve
 //!      // Regular overloads
 //!      constexpr auto sum_of_squares(value auto x, value auto ... xs)                          noexcept; // 1
 //!      constexpr auto sum_of_squares(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto sum_of_squares[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto sum_of_squares[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto dot(Range r)                                                             noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto sum_of_squares[saturated](/*any of the above overloads*/)                noexcept; // 4
@@ -87,9 +92,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!       1. The value of the sum of the absolute value of the arguments is returned.
+//!       1. The value of the sum of the squared values of the arguments is returned.
 //!       2. equivalent to the call on the elements of the tuple.
-//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       3. equivalent to the call on the elements of the range
 //!       4. internally uses `saturated` options.
 //!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 //!       6. uses kahan compensated algorihtm for better accuracy.
@@ -104,62 +109,101 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+
+    template<value... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o, T a0) noexcept
+    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o ,Ts... args) noexcept
+    requires(O::contains(widen))
     {
-      if constexpr (!O::contains(widen))
-        return sum_of_squares[o.drop(widen)](upgrade(a0));
-      else if constexpr (!O::contains(saturated) || floating_value<T>)
-        return eve::sqr(a0);
-      else
-        return eve::sqr[saturated](a0);
+      return sum_of_squares[o.drop(widen)](upgrade(args)...);
     }
 
-    template<typename T0, typename... Ts, callable_options O>
+    template<value T0, value... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     sum_of_squares_(EVE_REQUIRES(cpu_), O const & o , T0 a0, Ts... args) noexcept
-    requires(sizeof...(Ts) != 0)
+    requires(!O::contains(widen))
     {
-      if constexpr (O::contains(widen))
-        return sum_of_squares[o.drop(widen)](upgrade(a0), upgrade(args)...);
-      else
-      {
-        using r_t = common_value_t<T0, Ts...>;
-        auto pedantify = [&](auto r){
-          if constexpr(O::contains(pedantic) && floating_value<r_t>)
-          {
-            auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
-            return if_else(inf_found, inf(as(r)), r);
-          }
-          else
-            return r;
-        };
-        if constexpr(O::contains(kahan))
+      if constexpr(sizeof...(Ts) == 0) return eve::sqr[o](a0);
+      using r_t = common_value_t<T0, Ts...>;
+      auto pedantify = [&](auto r){
+        if constexpr(O::contains(pedantic) && floating_value<r_t>)
         {
-          auto pair_sqr_add = [](auto pair0, auto r1){
-            auto [r0, e0] = pair0;
-            auto [s, e1] = eve::two_fma_approx(r1, r1, r0);
-            return zip(s, e0+e1);
-          };
-          auto p0   = two_prod(a0, a0);
-          ((p0 = pair_sqr_add(p0,args)),...);
-          auto [r, e] = p0;
-          auto res = r+ e;
-          return pedantify(res);
+          auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
+          return if_else(inf_found, inf(as(r)), r);
         }
         else
+          return r;
+      };
+      if constexpr(O::contains(kahan))
+      {
+        auto pair_sqr_add = [](auto pair0, auto r1){
+          auto [r0, e0] = pair0;
+          auto [s, e1] = eve::two_fma_approx(r1, r1, r0);
+          return zip(s, e0+e1);
+        };
+        auto p0   = two_prod(a0, a0);
+        ((p0 = pair_sqr_add(p0,args)),...);
+        auto [r, e] = p0;
+        auto res = r+ e;
+        return pedantify(res);
+      }
+      else
+      {
+        auto l_sqr = [](){
+          if constexpr(integral_value<r_t> && O::contains(saturated))
+          return eve::sqr[saturated];
+          else
+            return eve::sqr;
+        };
+        r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
+        return pedantify(r);
+      }
+    }
+
+    template<eve::detail::range R, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o, R r1) noexcept
+    requires(!O::contains(widen))
+    {
+      using r_t = typename R::value_type;
+      auto inf_found(eve::false_(eve::as<r_t>()));
+      auto pedantify = [&](auto r){
+        if constexpr(O::contains(pedantic) && floating_value<r_t>)
+        return if_else(inf_found, inf(as(r)), r);
+        else
+          return r;
+      };
+      auto fr1 = begin(r1);
+      auto lr1  = end(r1);
+      if( fr1 == lr1 ) return r_t(0);
+      using std::advance;
+      auto cr1 = fr1;
+
+      advance(cr1, 1);
+      if constexpr(O::contains(kahan))
+      {
+        auto [su,err] = eve::two_prod(*fr1, *fr1);
+        if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(*fr1);
+        auto step = [&](auto a) {
+          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(a);
+          auto[s1, e1] = eve::two_fma_approx(a, a, su);
+          err += e1;
+          su = s1;
+        };
+        for(; cr1 != lr1; advance(cr1, 1)) step(*cr1);
+        return pedantify(su+err);
+      }
+      else
+      {
+        auto su = sqr[o](*fr1);
+        for(; cr1 != lr1; advance(cr1, 1))
         {
-          auto l_sqr = [](){
-            if constexpr(integral_value<r_t> && O::contains(saturated))
-            return eve::sqr[saturated];
-            else
-              return eve::sqr;
-          };
-          r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
-          return pedantify(r);
+          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(*cr1);
+          su += sqr[o](*cr1);
         }
+        return pedantify(su);
       }
     }
   }
+
 }
