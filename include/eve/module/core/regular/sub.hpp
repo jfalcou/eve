@@ -10,13 +10,14 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct sub_t : tuple_callable<sub_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, left_option,
-                                right_option>
+                                right_option, mod_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -82,6 +83,7 @@ namespace eve
 //!      constexpr auto sub[widen](/*any of the above overloads*/)                    noexcept; // 7
 //!      constexpr auto sub[right](/*any of the above overloads*/)                    noexcept; // 1
 //!      constexpr auto sub[left](/*any of the above overloads*/)                     noexcept; // 8
+//!      constexpr auto sub[mod = p](/*any of the above overloads*/)                  noexcept; // 9
 //!   }
 //!   @endcode
 //!
@@ -91,6 +93,7 @@ namespace eve
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `p`: modulo p operation. p must be floating less than maxflint.
 //!
 //!    **Return value**
 //!
@@ -110,6 +113,8 @@ namespace eve
 //!    7. The operation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and 64 bits integrals.
 //!    8. `sub[left](a, b)` is semantically equivalent to  `sub(b, a)`
+//!    9. compute the result in modular arithmetic. the parameters must be floating positive
+//!       and less than the modulus p. The modulus itself must be less than maxflint.
 //!
 //!
 //!   @note

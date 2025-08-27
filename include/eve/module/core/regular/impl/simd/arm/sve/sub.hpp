@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires sve_abi<abi_t<T, N>>
+  requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     if constexpr(O::contains_any(widen, left))
     {
@@ -48,8 +48,17 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(sve_), O const& o, T x, T y ) noexcept
+  requires(sve_abi<abi_t<T, N>> && O::contains(mod))
+  {
+    auto p = o[mod].value(T());
+    auto s = x-y;
+    return add[eve::is_ltz(s)](s, p);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires sve_abi<abi_t<T, N>>
+  requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     if constexpr(O::contains(left))
     {

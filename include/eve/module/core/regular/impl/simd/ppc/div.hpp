@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<callable_options O, floating_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires ppc_abi<abi_t<T, N>>
+  requires ( ppc_abi<abi_t<T, N>> && !O::contains(mod))
   {
     if (O::contains(left))
     {

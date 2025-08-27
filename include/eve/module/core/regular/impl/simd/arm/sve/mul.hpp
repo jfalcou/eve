@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires sve_abi<abi_t<T, N>>
+  requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>)||
                  O::contains(widen))
@@ -27,7 +27,7 @@ namespace eve::detail
 
   template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires sve_abi<abi_t<T, N>>
+  requires(sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     if constexpr(O::contains(widen))
     {
