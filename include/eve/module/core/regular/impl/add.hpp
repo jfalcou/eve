@@ -111,6 +111,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   requires(sizeof...(Ts) != 0)
   {
+    using r_t = eve::common_value_t<Ts...>;
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
     if constexpr(O::contains(widen))
@@ -124,20 +125,20 @@ namespace eve::detail
         if constexpr(O::contains(raw)) return two_add[raw];
         else return two_add;
       };
-      auto pair_add = [fn = get_fn()](auto pair0, auto r1){
+      auto pair_add = [fn = get_fn()](auto pair0, auto ri){
         auto [a0, e0] = pair0;
-        auto [s, e1] = fn(a0, r1);
+        auto [s, e1] = fn(a0, ri);
         return zip(s, e0+e1);
       };
-      auto p0   = two_add(r0,r1);
-      ((p0 = pair_add(p0,rs)),...);
+      auto p0   = two_add(r_t(r0),r_t(r1));
+      ((p0 = pair_add(p0,r_t(rs))),...);
       auto [r, e] = p0;
       return r+e;
     }
     else
     {
-      r0   = add[o](r0,r1);
-      ((r0 = add[o](r0,rs)),...);
+      r0   = add[o](r_t(r0),r_t(r1));
+      ((r0 = add[o](r_t(r0),r_t(rs))),...);
       return r0;
     }
   }

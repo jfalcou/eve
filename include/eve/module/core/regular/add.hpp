@@ -122,7 +122,7 @@ namespace eve
 //!       and less than the modulus. The modulus itself must be less than maxflint.
 //!    10. A kahan summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
 //!       are assumed  positive and non increasing and (or at least with non increasing exponents) adding raw option can
-//!       speed a bit the summation,
+//!       speed a bit the accurate summation,
 //!
 //!   @note
 //!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on

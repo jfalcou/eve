@@ -52,7 +52,6 @@ namespace eve::detail
       else if constexpr(O::contains(kahan))
       {
         using r_t =  eve::common_value_t<Ts...>;
-        auto coeffs = kumi::tuple{args...};
         T invn  = rec[pedantic](T(sizeof...(args) + 1u));
         auto pair_add = [invn](auto pair0, auto r1){
           auto [r, e0] = pair0;

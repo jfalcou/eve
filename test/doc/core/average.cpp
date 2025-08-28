@@ -33,5 +33,7 @@ int main()
   std::cout << "-> average[raw](1.0f, eps_2, eps_2, eps_2)    = " << eve::average[eve::raw](1.0f, eps_2, eps_2, eps_2) << "\n";
   auto deps_2 = double(eps_2);
   std::cout << "-> average(1.0, deps_2, deps_2, eps_2)        = " << float(eve::average[eve::kahan](1.0, deps_2, deps_2, deps_2)) << " // double computation converted to float\n";
+  auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
+  std::cout << "-> average[kahan](tup)   = " << eve::average[eve::kahan](tup) << "\n";
 
 }
