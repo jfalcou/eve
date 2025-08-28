@@ -23,10 +23,11 @@ int main()
   std::cout << "-> dot(wi0, wi1) = " << eve::dot(wi0, wi1) << "\n";
   std::cout << "-> dot(wf0, wf1, wf0, wf1) = "<< eve::dot(wf0, wf1, wf0, wf1) << "\n";
   std::cout << "-> dot[kahan](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::kahan](wf0, wf1, wf0, wf1) << "\n";
+   std::cout << "-> dot[widen](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::widen](wf0, wf1, wf0, wf1) << "\n";
 
-   std::vector vwf0= {wf0, 2*wf0, 3*wf0};
-   std::vector vwf1= {wf1, 2*wf1, 3*wf1};
-  std::cout << "-> dot(vwf0, vwf1) = " << eve::dot(vwf0, vwf1) << "\n";
-  std::cout << "-> dot[kahan](vwf0, vwf1) = " << eve::dot[eve::kahan](vwf0, vwf1) << "\n";
-
+//    kumi::tuple vwf0= {wf0, 2*wf0, 3*wf0};
+//    kumi::tuple vwf1= {wf1, 2*wf1, 3*wf1};
+//    std::cout << "-> dot(vwf0, vwf1) = " << eve::dot(kumi::cat(vwf0, vwf1)) << "\n";
+//    std::cout << "-> dot[kahan](vwf0, vwf1) = " << eve::dot[eve::kahan](vwf0, vwf1) << "\n";
+   
 }

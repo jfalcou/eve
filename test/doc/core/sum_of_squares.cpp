@@ -35,19 +35,15 @@ int main()
   std::cout << std::setprecision(20) << "-> sum_of_squares[upper][strict](wf0, wf1)   = " << eve::sum_of_squares[eve::upper][eve::strict](wf0, wf1) << "\n";
 
   std::cout << "-> sum_of_squares(wu0, wu1)                 = " << eve::sum_of_squares(wu0, wu1) << "\n";
-//  std::cout << "-> sum_of_squares[widen](wu0, wu1)          = " << eve::sum_of_squares[eve::widen](wu0, wu1) << "\n";
+  std::cout << "-> sum_of_squares[widen](wu0, wu1)          = " << eve::sum_of_squares[eve::widen](wu0, wu1) << "\n";
   std::cout << "-> sum_of_squares(wf0, wf1)                 = " << eve::sum_of_squares(wf0, wf1) << "\n";
-//  std::cout << "-> sum_of_squares[widen](wf0, wf1)          = " << eve::sum_of_squares[eve::widen](wf0, wf1) << "\n";
+  std::cout << "-> sum_of_squares[widen](wf0, wf1)          = " << eve::sum_of_squares[eve::widen](wf0, wf1) << "\n";
   std::cout << std::setprecision(16);
   auto sqteps_2 = eve::sqrteps(eve::as<float>())/2;
   std::cout << "-> sum_of_squares(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)          = " << eve::sum_of_squares(1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "\n";
   std::cout << "-> sum_of_squares[kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// float result\n";
-//  std::cout << "-> sum_of_squares[widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// double result\n";
+  std::cout << "-> sum_of_squares[widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// double result\n";
 
-  std::vector v{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
-  std::cout << "-> sum_of_squares[kahan](v)   = " << eve::sum_of_squares[eve::kahan](v) << "\n";
-
-  std::cout << eve::value<decltype(v)> << "\n";
-
-
+  auto tup = kumi::tuple{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
+  std::cout << "-> sum_of_squares[kahan](tup)   = " << eve::sum_of_squares[eve::kahan](tup) << "\n";
 }

@@ -44,12 +44,12 @@ namespace eve
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     { return EVE_DISPATCH_CALL(t); }
 
-    template<eve::detail::range R>
-    EVE_FORCEINLINE constexpr
-    eve::common_value_t<typename R::value_type>
-    operator()(R const& t) const noexcept
-    requires(!Options::contains(widen))
-    { return EVE_DISPATCH_CALL(t); }
+//     template<eve::detail::range R>
+//     EVE_FORCEINLINE constexpr
+//     eve::common_value_t<typename R::value_type>
+//     operator()(R const& t) const noexcept
+//     requires(!Options::contains(widen))
+//     { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(sum_of_squares_t, sum_of_squares_);
   };
@@ -109,7 +109,6 @@ namespace eve
 
   namespace detail
   {
-
     template<value... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     sum_of_squares_(EVE_REQUIRES(cpu_), O const & o ,Ts... args) noexcept
@@ -159,51 +158,5 @@ namespace eve
         return pedantify(r);
       }
     }
-
-    template<eve::detail::range R, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o, R r1) noexcept
-    requires(!O::contains(widen))
-    {
-      using r_t = typename R::value_type;
-      auto inf_found(eve::false_(eve::as<r_t>()));
-      auto pedantify = [&](auto r){
-        if constexpr(O::contains(pedantic) && floating_value<r_t>)
-        return if_else(inf_found, inf(as(r)), r);
-        else
-          return r;
-      };
-      auto fr1 = begin(r1);
-      auto lr1  = end(r1);
-      if( fr1 == lr1 ) return r_t(0);
-      using std::advance;
-      auto cr1 = fr1;
-
-      advance(cr1, 1);
-      if constexpr(O::contains(kahan))
-      {
-        auto [su,err] = eve::two_prod(*fr1, *fr1);
-        if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(*fr1);
-        auto step = [&](auto a) {
-          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(a);
-          auto[s1, e1] = eve::two_fma_approx(a, a, su);
-          err += e1;
-          su = s1;
-        };
-        for(; cr1 != lr1; advance(cr1, 1)) step(*cr1);
-        return pedantify(su+err);
-      }
-      else
-      {
-        auto su = sqr[o](*fr1);
-        for(; cr1 != lr1; advance(cr1, 1))
-        {
-          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(*cr1);
-          su += sqr[o](*cr1);
-        }
-        return pedantify(su);
-      }
-    }
   }
-
 }

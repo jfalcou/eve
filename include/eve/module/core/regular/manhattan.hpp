@@ -33,15 +33,6 @@ namespace eve
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
-
-    template<eve::detail::range R>
-    EVE_FORCEINLINE constexpr
-    eve::common_value_t<typename R::value_type>
-    operator()(R const& t) const noexcept
-    requires(!Options::contains(widen))
-    { return EVE_DISPATCH_CALL(t); }
-
-
     EVE_CALLABLE_OBJECT(manhattan_t, manhattan_);
   };
 
@@ -112,7 +103,7 @@ namespace eve
       else
         return eve::abs[saturated](a0);
     }
-
+    
     template<typename T0,typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
     manhattan_(EVE_REQUIRES(cpu_), O const & o , T0 a0, T1 a1, Ts... args) noexcept
@@ -120,15 +111,12 @@ namespace eve
       using r_t = common_value_t<T0, T1, Ts...>;
       auto l_abs = [](){
         if constexpr(integral_value<r_t> && O::contains(saturated))
-          return eve::abs[saturated];
+        return eve::abs[saturated];
         else
           return eve::abs;
       };
       r_t r;
-      if constexpr(O::contains(kahan) && eve::floating_value<r_t>)
-        r = eve::add[o][raw](l_abs()(r_t(a0)), l_abs()(r_t(a1)), l_abs()(r_t(args))...);
-      else
-        r = eve::add[o](l_abs()(r_t(a0)), l_abs()(r_t(a1)), l_abs()(r_t(args))...);
+      r = eve::add[o](l_abs()(r_t(a0)), l_abs()(r_t(a1)), l_abs()(r_t(args))...);
       if constexpr(O::contains(pedantic))
       {
         auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));
@@ -137,50 +125,6 @@ namespace eve
       }
       else
         return r;
-    }
-
-   template<eve::detail::range R, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    manhattan_(EVE_REQUIRES(cpu_), O const & o, R r1) noexcept
-    requires(!O::contains(widen))
-    {
-      using r_t = typename R::value_type;
-      auto inf_found(eve::false_(eve::as<r_t>()));
-      auto pedantify = [&](auto r){
-        if constexpr(O::contains(pedantic) && floating_value<r_t>)
-        return if_else(inf_found, inf(as(r)), r);
-        else
-          return r;
-      };
-      auto fr1 = begin(r1);
-      auto lr1  = end(r1);
-      if( fr1 == lr1 ) return r_t(0);
-      using std::advance;
-      auto cr1 = fr1;
-
-      if constexpr(O::contains(kahan))
-      {
-        r_t su(0);
-        r_t err(0);
-        auto step = [&](auto a) {
-          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(a);
-          auto[s1, e1] = eve::two_add(eve::abs(a), su);
-          err += e1;
-          su = s1;
-        };
-        for(; cr1 != lr1; advance(cr1, 1)) step(*cr1);
-        return pedantify(su+err);
-      }
-      else
-      {
-        r_t su(0);
-        for(; cr1 != lr1; advance(cr1, 1))
-        {
-          if constexpr(O::contains(pedantic)) inf_found = inf_found && eve::is_infinite(*cr1);
-          su += abs[o](*cr1);
-        }
-        return pedantify(su);
-      }
     }
   }
 }

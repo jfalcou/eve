@@ -117,7 +117,7 @@ namespace eve
 //!    8. The summation is computed in a round toward nearest mode but tie to odd (not hardware available on common systems).
 //!    9. A kahan summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
 //!       are assumed  positive and non increasing and (or at least with non increasing exponents) adding raw option can
-//!       speed a bit the summation,
+//!       speed a bit the accurate summation,
 //!
 //!   @note
 //!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
