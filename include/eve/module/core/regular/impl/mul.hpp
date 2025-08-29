@@ -28,6 +28,7 @@
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/traits/updown.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -206,12 +207,31 @@ namespace eve::detail
   requires(sizeof...(Vs) !=  0)
   {
     //TODO: optimize, see add_
+    using r_t =  eve::common_value_t<T, U, Vs...>;
     if constexpr(O::contains(widen))
       return mul[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+    else if constexpr(O::contains(kahan))
+    {
+      // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
+      // Accurate floating-point summation part I: Faithful rounding.
+      // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
+      auto pair_prod = [](auto pair0, auto ri){
+        auto [a0, e0] = pair0;
+        auto [p, e1] = two_prod(a0, ri);
+        auto e2 = fma[pedantic](e1, a0, e0);
+        std::cout <<  "\n p " << p << " e2 " << e2 << std::endl;
+        return zip(p, e2);
+      };
+      auto p0   = two_prod(r_t(r0),r_t(r1));
+      ((p0 = pair_prod(p0,r_t(rs))),...);
+      auto [r, e] = p0;
+      std::cout <<  " === " << r << " e " << e << std::endl;
+      return r+e;
+    }
     else
     {
-      r0   = mul[o](r0,r1);
-      ((r0 = mul[o](r0,rs)),...);
+      r0   = mul[o](r_t(r0),r_t(r1));
+      ((r0 = mul[o](r_t(r0),r_t(rs))),...);
       return r0;
     }
   }

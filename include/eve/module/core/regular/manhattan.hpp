@@ -103,7 +103,7 @@ namespace eve
       else
         return eve::abs[saturated](a0);
     }
-    
+
     template<typename T0,typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
     manhattan_(EVE_REQUIRES(cpu_), O const & o , T0 a0, T1 a1, Ts... args) noexcept

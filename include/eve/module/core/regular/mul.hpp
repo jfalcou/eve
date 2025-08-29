@@ -16,7 +16,8 @@ namespace eve
 {
   template<typename Options>
   struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
-                                       upper_option, strict_option, widen_option, mod_option>
+                                       upper_option, strict_option, widen_option,
+                                       mod_option, kahan_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -28,8 +29,7 @@ namespace eve
 
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... > //typename result<T0, T1, Ts...>::type
-    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
       const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);

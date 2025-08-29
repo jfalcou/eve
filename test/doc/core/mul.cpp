@@ -1,5 +1,6 @@
 // revision 0
 #include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 #include <iomanip>
 
@@ -30,4 +31,10 @@ int main()
   std::cout << "-> mul[widen](wu0, wu1)          = " << eve::mul[eve::widen](wu0, wu1) << "\n";
   std::cout << "-> mul(wf0, wf1)                 = " << eve::mul(wf0, wf1) << "\n";
   std::cout << "-> mul[widen](wf0, wf1)          = " << eve::mul[eve::widen](wf0, wf1) << "\n";
+  auto sqte = 2.1f; //eve::exp(eve::eps(eve::as<float>()));
+  std::cout << std::setprecision(15);
+  std::cout << "-> mul[kahan](exp(1.0f), sqte,sqte,sqte,sqte,sqte) = " << eve::mul[eve::kahan](eve::exp(1.0f),sqte,sqte,sqte,sqte,sqte) << "\n";
+  std::cout << "-> mul(exp(1.0f),sqte,sqte,sqte,sqte,sqte)         = " << eve::mul(eve::exp(1.0f), sqte,sqte,sqte,sqte,sqte) << "\n";
+  std::cout << "-> mul[widen](exp(1.0f), sqte,sqte,sqte,sqte,sqte) = " << float(eve::mul[eve::widen](eve::exp(1.0f), sqte,sqte,sqte,sqte,sqte)) << "\n";
+
 }
