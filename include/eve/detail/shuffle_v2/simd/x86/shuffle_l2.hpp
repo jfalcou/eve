@@ -174,28 +174,35 @@ shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_repeated_256_permute4x64(P, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_independent_permute2x64(P, fixed<G>, wide<T, N> x)
 {
-  if constexpr( P::g_size < 8 ) return no_matching_shuffle;
+  if constexpr( P::g_size != 8 || P::reg_size < 32 ) return no_matching_shuffle;
   else if constexpr( P::has_zeroes ) return no_matching_shuffle;
-  // Within lane is faster so prefer it
-  else if constexpr( idxm::shuffle_within_halves(*P::repeated_32) )
+  else if constexpr( !idxm::shuffle_within_n(P::idxs, 2) ) return no_matching_shuffle;
+  else
   {
-    constexpr int mm = idxm::x86_shuffle_4_in_lane(*P::repeated_32);
+    constexpr int mm = idxm::x86_permute_pd(P::idxs);
 
     auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
 
     if constexpr( P::reg_size == 32 ) return _mm256_permute_pd(x_f64, mm);
     else return _mm512_permute_pd(x_f64, mm);
   }
-  else if constexpr( current_api > avx )
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_repeated_256_permute4x64(P, fixed<G>, wide<T, N> x)
+{
+  if constexpr( P::g_size != 8 || eve::current_api < avx2 ) return no_matching_shuffle;
+  else if constexpr( P::has_zeroes ) return no_matching_shuffle;
+  else
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(*P::repeated_32);
 
     if constexpr( P::reg_size == 32 ) return _mm256_permute4x64_epi64(x, mm);
     else return _mm512_permutex_epi64(x, mm);
   }
-  else return no_matching_shuffle;
 }
 
 /*
@@ -258,8 +265,8 @@ shuffle_l2_alignr_epi32_self(P, fixed<G>, wide<T, N> x)
 
     if constexpr( P::reg_size == 32 )
     {
-      if constexpr( P::g_size >= 8 ) return _mm256_alignr_epi64(x, x, shift_epi64);
-      else return _mm256_alignr_epi32(x, x, shift_epi32);
+      static_assert(P::g_size != 8, "_mm256_permute4x64_epi64 should cover this");
+      return _mm256_alignr_epi32(x, x, shift_epi32);
     }
     else
     {
@@ -279,6 +286,11 @@ requires(P::out_reg_size == P::reg_size)
     return r;
   }
   else if constexpr( auto r = shuffle_l2_x86_128_insert_one_zero(p, g, x);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_independent_permute2x64(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;

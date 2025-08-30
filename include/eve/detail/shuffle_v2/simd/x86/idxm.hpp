@@ -189,4 +189,15 @@ x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N> idxs)
   return x86_shuffle_ps_2<g_size>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
+constexpr int x86_permute_pd(std::span<const std::ptrdiff_t> idxs) {
+  int res = 0;
+
+  for (std::ptrdiff_t i = 0; i != std::ssize(idxs); i += 2) {
+    if (idxs[i] == i + 1) res = res | (1 << i);
+    if (idxs[i + 1] == i + 1) res = res | (1 << (i + 1));
+  }
+
+  return res;
+}
+
 }
