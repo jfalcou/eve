@@ -245,12 +245,6 @@ TTS_CASE("_mm_alignr_epi8(x, x)")
 
 TTS_CASE("_mm_move_epi64 / _mm_insert_epi16")
 {
-  if constexpr( !(eve::current_api >= eve::sse2) )
-  {
-    TTS_PASS();
-    return;
-  }
-
   run<eve::sse4_1, std::uint64_t, 2>(eve::pattern<na_, 1>);
   run<eve::sse2, std::uint64_t, 2>(eve::pattern<0, na_>);
 
@@ -266,6 +260,46 @@ TTS_CASE("_mm_move_epi64 / _mm_insert_epi16")
                                      { return (i == 0) ? na_ : i; });
   run<eve::sse4_1, std::uint8_t, 16>([](std::ptrdiff_t i, std::ptrdiff_t)
                                      { return (i == 5) ? na_ : i; });
+};
+
+TTS_CASE("_mm_permute_pd")
+{
+  // At the time of writing these are not actually implemented as
+  // _mm_permute_pd but _mm_permute_pd could do them so we
+  // test that we are getting a level 2 shuffle here.
+  //
+  // _mm_permute_pd is just worse than _mm_shuffle_epi32 for example
+  run<eve::avx, std::uint64_t, 2>(eve::pattern<0, 0>);
+  run<eve::avx, std::uint64_t, 2>(eve::pattern<1, 1>);
+  run<eve::avx, std::uint64_t, 2>(eve::pattern<1, 0>);
+
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<1, 0, 3, 2>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<1, 0, 2, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 0, 2, 2>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 0, 3, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<1, 0, 2, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<1, 1, 2, 2>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<1, 1, 3, 3>);
+
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 2, 2, /**/ 4, 4, 6, 6>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 3, 3, /**/ 4, 4, 7, 7>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 3, 3, /**/ 5, 5, 6, 6>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 0, 3, 2, /**/ 4, 5, 6, 6>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 1, 2, 2, /**/ 5, 4, 7, 6>);
+};
+
+TTS_CASE("_mm256_permute4x64_epi64 / _mm512_permutex_epi64")
+{
+  run<eve::avx2, std::uint64_t, 4>(eve::pattern<1, 0, 3, 2>);
+  run<eve::avx2, std::uint64_t, 4>(eve::pattern<3, 0, 2, 3>);
+  run<eve::avx2, std::uint64_t, 4>(eve::pattern<1, 1, 3, 3>);
+  run<eve::avx2, std::uint64_t, 4>(eve::pattern<1, 1, 1, 1>);
+  run<eve::avx2, std::uint64_t, 4>(eve::pattern<3, 2, 1, 0>);
+
+  run<eve::avx2, std::uint64_t, 8>(eve::pattern<1, 0, 3, 2, /**/ 5, 4, 7, 6>);
+  run<eve::avx2, std::uint64_t, 8>(eve::pattern<3, 0, 2, 3, /**/ 7, 4, 6, 7>);
+  run<eve::avx2, std::uint64_t, 8>(eve::pattern<2, 2, 2, 2, /**/ 6, 6, 6, 6>);
+  run<eve::avx2, std::uint64_t, 8>(eve::pattern<0, 1, 1, 0, /**/ 4, 5, 5, 4>);
 };
 
 }
