@@ -192,6 +192,8 @@ x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N> idxs)
 constexpr int x86_permute_pd(std::span<const std::ptrdiff_t> idxs) {
   int res = 0;
 
+  // Shuffles in pairs. For each pair 2 bits.
+  // bit == 0 - take 0s element, 1 - take first.
   for (std::ptrdiff_t i = 0; i != std::ssize(idxs); i += 2) {
     if (idxs[i] == i + 1) res = res | (1 << i);
     if (idxs[i + 1] == i + 1) res = res | (1 << (i + 1));

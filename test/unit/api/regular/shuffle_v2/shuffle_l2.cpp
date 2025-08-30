@@ -302,4 +302,22 @@ TTS_CASE("_mm256_permute4x64_epi64 / _mm512_permutex_epi64")
   run<eve::avx2, std::uint64_t, 8>(eve::pattern<0, 1, 1, 0, /**/ 4, 5, 5, 4>);
 };
 
+TTS_CASE("_mm256_permute2f128_si256")
+{
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1, 0, 1>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<2, 3, 2, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<2, 3, na_, na_>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<na_, na_, 2, 3>);
+};
+
+TTS_CASE("_mm512_shuffle_i64x2")
+{
+  // one register
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 1, 0, 1, 0, 1, 0, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<6, 7, 4, 5, 2, 3, 0, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<6, 7, 2, 3, 2, 3, 0, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<2, 3, 6, 7, 2, 3, 4, 5>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<4, 5, 0, 1, 6, 7, 2, 3>);
+};
+
 }
