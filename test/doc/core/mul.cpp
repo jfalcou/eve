@@ -31,10 +31,13 @@ int main()
   std::cout << "-> mul[widen](wu0, wu1)          = " << eve::mul[eve::widen](wu0, wu1) << "\n";
   std::cout << "-> mul(wf0, wf1)                 = " << eve::mul(wf0, wf1) << "\n";
   std::cout << "-> mul[widen](wf0, wf1)          = " << eve::mul[eve::widen](wf0, wf1) << "\n";
-  auto sqte = 2.1f; //eve::exp(eve::eps(eve::as<float>()));
   std::cout << std::setprecision(15);
-  std::cout << "-> mul[kahan](exp(1.0f), sqte,sqte,sqte,sqte,sqte) = " << eve::mul[eve::kahan](eve::exp(1.0f),sqte,sqte,sqte,sqte,sqte) << "\n";
-  std::cout << "-> mul(exp(1.0f),sqte,sqte,sqte,sqte,sqte)         = " << eve::mul(eve::exp(1.0f), sqte,sqte,sqte,sqte,sqte) << "\n";
-  std::cout << "-> mul[widen](exp(1.0f), sqte,sqte,sqte,sqte,sqte) = " << float(eve::mul[eve::widen](eve::exp(1.0f), sqte,sqte,sqte,sqte,sqte)) << "\n";
+  auto pi = eve::pi(eve::as<float>());
+  auto e  = eve::euler(eve::as<float>());
+  auto l2 = eve::log_2(eve::as<float>());
+  auto tup = kumi::tuple{pi, e, 1.2345f, l2, pi, e, 1.2345f, l2, 1.35f*pi, l2+pi,  0.07856f};
+  std::cout << "-> mul[kahan](tup)  = " << eve::mul[eve::kahan](tup) << "\n";
+  std::cout << "-> mul(tup)         = " << eve::mul(tup) << "\n";
+  std::cout << "-> mul[widen](tup)  = " << float(eve::mul[eve::widen](tup)) << "\n";
 
 }

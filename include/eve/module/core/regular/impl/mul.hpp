@@ -186,6 +186,7 @@ namespace eve::detail
     }
   }
 
+<<<<<<< HEAD
   template<callable_options O, typename T0, typename T1>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& o, T0 x, T1 y ) noexcept
   requires(O::contains(mod))
@@ -202,35 +203,34 @@ namespace eve::detail
     return g;
   }
 
-  template<callable_options O, typename T, typename U, typename... Vs>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
-  requires(sizeof...(Vs) !=  0)
+  template<callable_options O, typename... Vs>
+  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, Vs... rs) noexcept
+  requires (sizeof...(Vs) != 0)
   {
-    //TODO: optimize, see add_
-    using r_t =  eve::common_value_t<T, U, Vs...>;
+    using r_t =  eve::common_value_t<Vs...>;
     if constexpr(O::contains(widen))
-      return mul[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+      return mul[o.drop(widen)](upgrade(rs)...);
+    else if constexpr(sizeof...(Vs) == 1)
+      return r_t(rs...);
     else if constexpr(O::contains(kahan))
     {
       // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
       // Accurate floating-point summation part I: Faithful rounding.
       // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
-      auto pair_prod = [](auto pair0, auto ri){
-        auto [a0, e0] = pair0;
-        auto [p, e1] = two_prod(a0, ri);
-        auto e2 = fma[pedantic](e1, a0, e0);
-        std::cout <<  "\n p " << p << " e2 " << e2 << std::endl;
-        return zip(p, e2);
+      auto pair_prod = [](auto pair0, auto xi){
+        auto [p, eim1] = pair0;
+        auto [p1, ec] = two_prod(p, xi);
+        auto e2 = fma[pedantic](eim1, xi, ec);
+        return zip(p1, e2);
       };
-      auto p0   = two_prod(r_t(r0),r_t(r1));
+      auto p0   = kumi::tuple{eve::one(as<r_t>()),eve::zero(as<r_t>())};
       ((p0 = pair_prod(p0,r_t(rs))),...);
       auto [r, e] = p0;
-      std::cout <<  " === " << r << " e " << e << std::endl;
       return r+e;
     }
     else
     {
-      r0   = mul[o](r_t(r0),r_t(r1));
+      auto r0 = eve::one(as<r_t>());
       ((r0 = mul[o](r_t(r0),r_t(rs))),...);
       return r0;
     }
