@@ -223,7 +223,7 @@ namespace eve::detail
         auto e2 = fma[pedantic](eim1, xi, ec);
         return zip(p1, e2);
       };
-      auto p0   = kumi::tuple{eve::one(as<r_t>()),eve::zero(as<r_t>())};
+      eve::zipped<r_t, r_t> p0{eve::one(as<r_t>()),eve::zero(as<r_t>())};
       ((p0 = pair_prod(p0,r_t(rs))),...);
       auto [r, e] = p0;
       return r+e;

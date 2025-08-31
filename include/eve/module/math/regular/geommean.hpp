@@ -16,13 +16,13 @@
 namespace eve
 {
   template<typename Options>
-  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
+  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option, kahan_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0,T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<eve::floating_value T0, floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, Ts...>)
+    EVE_FORCEINLINE constexpr common_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
@@ -86,18 +86,18 @@ namespace eve
 
   namespace detail
   {
-    template<typename T0,typename T1, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
+    template<typename T0, typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+    geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept
     {
 
-      using r_t   = common_value_t<T0, T1, Ts...>;
+      using r_t   = common_value_t<T0, Ts...>;
       using elt_t = element_type_t<r_t>;
       constexpr std::uint64_t sz = sizeof...(Ts);
-      if constexpr(sz == 0)
+      if constexpr(sz == 1)
       {
         auto a = r_t(a0);
-        auto b = r_t(a1);
+        auto b = r_t(args...);
         if (O::contains(pedantic))
         {
           auto m  = max(a, b);
@@ -112,11 +112,11 @@ namespace eve
       }
       else
       {
-        elt_t invn  = rec[pedantic](elt_t(sizeof...(args) + 2u));
+        elt_t invn  = rec[pedantic](elt_t(sizeof...(args) + 1u));
         if (O::contains(pedantic))
         { //perhaps this is always more efficient TODO bench it
-          auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
-          auto p  = mul( r_t(ldexp[o](a0, e)), r_t(ldexp[o](a1, e)), r_t(ldexp[o](args, e))...);
+          auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
+          auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
           auto sgn = sign(p);
           p = pow_abs(p, invn);
           p = ldexp[pedantic](p, -e);
@@ -124,8 +124,8 @@ namespace eve
         }
         else
         {
-          r_t   that(pow_abs(r_t(a0), invn) * pow_abs(r_t(a1), invn));
-          r_t   sgn  = sign(r_t(a0)) * sign(r_t(a1));
+          r_t   that(pow_abs(r_t(a0), invn));
+          r_t   sgn  = sign(r_t(a0));
           auto  next = [&](auto avg, auto x){
             sgn *= sign(x);
             return avg * pow_abs(r_t(x), invn);

@@ -19,4 +19,10 @@ int main()
   std::cout << "-> geommean[ignore_last(2)](pf, qf)= " << eve::geommean[eve::ignore_last(2)](pf, qf) << "\n";
   std::cout << "-> geommean[pf >  0.0](pf, qf)     = " << eve::geommean[pf > 0.0](pf, qf) << "\n";
   std::cout << "-> geommean[pf >  0.0](pf, qf, rf) = " << eve::geommean(pf, qf, rf) << "\n";
+  auto apf = eve::abs(pf);
+  auto aqf = eve::abs(qf);
+  auto arf = eve::abs(rf);
+  std::cout << "-> geommean(apf, aqf, arf)            = " << eve::geommean(apf, aqf, arf) << "\n";
+  std::cout << "-> geommean[kahan](apf, aqf, arf)     = " << eve::geommean[eve::kahan](apf, aqf, arf) << "\n";
+  std::cout << "-> geommean[pedantic]](apf, aqf, arf) = " << eve::geommean[eve::pedantic](apf, aqf, arf) << "\n";
 }

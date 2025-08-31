@@ -39,5 +39,8 @@ int main()
   std::cout << "-> mul[kahan](tup)  = " << eve::mul[eve::kahan](tup) << "\n";
   std::cout << "-> mul(tup)         = " << eve::mul(tup) << "\n";
   std::cout << "-> mul[widen](tup)  = " << float(eve::mul[eve::widen](tup)) << "\n";
+  auto z = kumi::tuple{wf0, wf1, wf1};
+  std::cout << "-> mul[kahan](wf0, wf1, wf1)  = " << eve::mul[eve::kahan](z) << "\n";
+  // std::cout << "-> mul[kahan](wf0, wf1, wf1)  = " << eve::mul[eve::kahan](wf0, wf1, wf1) << "\n";
 
 }
