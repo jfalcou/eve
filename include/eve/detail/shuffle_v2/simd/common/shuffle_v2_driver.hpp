@@ -13,6 +13,15 @@
 namespace eve::detail
 {
 
+// We'd like to avoid this because it leads to infinite recursions
+// in case of an unforseen problems but in certain situations
+// it proved very difficult.
+template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
+EVE_FORCEINLINE auto shuffle_v2_driver_restart(NativeSelector     selector,
+                                               pattern_t<I...>    p,
+                                               fixed<G>           g,
+                                               kumi::tuple<Ts...> xs);
+
 // emulated shuffle ------------------------------------
 
 template<typename T, typename... Ts>
@@ -132,9 +141,7 @@ shuffle_v2_free_masking(NativeSelector        selector,
       !logical_value<T> && (current_api >= avx512 || current_api >= sve || current_api >= rvv);
   constexpr std::array idxs {I...};
 
-  if constexpr( !free_masking ) return shuffle_v2_driver_call_native {}(selector, p, g, xs);
-  // For just replacing zeroes we should have a native implementation.
-  else if constexpr( idxm::is_just_zeroes_replaced(idxs) )
+  if constexpr( !free_masking || !idxm::has_zeroes(idxs) )
   {
     return shuffle_v2_driver_call_native {}(selector, p, g, xs);
   }
@@ -143,17 +150,21 @@ shuffle_v2_free_masking(NativeSelector        selector,
     // NOTE: we don't replace the we_ with 0s because that way the compiler
     //       would be forced to override them with 0s and that might not be required.
     //       Example: shift produces 0s natively but we might force a mask with a we_
-    auto mask          = is_na_logical_mask(p, g, as(get<0>(xs)));
     auto p1            = idxm::to_pattern<idxm::replace_na(idxs, we_)>();
-    auto [shuffled, l] = shuffle_v2_driver_call_native {}(selector, p1, g, xs);
+    auto [shuffled, l] = shuffle_v2_driver_restart(selector, p1, g, xs);
 
-    if constexpr( decltype(l)::value != -1 )
+    if constexpr( decltype(l)::value == -1 ) return kumi::tuple {shuffled, l};
+    else
     {
-      T back = eve::bit_cast(shuffled, eve::as<T>{});
-      back   = if_else(mask, T{0}, back);
-      return kumi::tuple {back, l};
+      using N1 = eve::fixed<pattern_t<I...>::size() * G>;
+      using T1 = typename T::template rescale<N1>;
+
+      T1   back = eve::bit_cast(shuffled, eve::as<T1> {});
+      auto mask = is_na_logical_mask(p, g, as(back));
+      back      = if_else(mask, T1 {0}, back);
+
+      return kumi::tuple {back, index<std::max(decltype(l)::value, std::ptrdiff_t(2))>};
     }
-    else { return kumi::tuple {shuffled, l}; }
   }
   else return shuffle_v2_driver_call_native {}(selector, p, g, xs);
 }
@@ -482,6 +493,17 @@ shuffle_v2_driver_start(NativeSelector        selector,
 {
   if constexpr( !eve::supports_simd ) return shuffle_emulated(p, g, xs);
   else return shuffle_v2_driver_bundle {}(selector, p, g, xs);
+}
+
+// NOTE: a separate name for start to convey meaning better.
+template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
+EVE_FORCEINLINE auto
+shuffle_v2_driver_restart(NativeSelector     selector,
+                          pattern_t<I...>    p,
+                          fixed<G>           g,
+                          kumi::tuple<Ts...> xs)
+{
+  return shuffle_v2_driver_start(selector, p, g, xs);
 }
 
 // entry point -----------------------------------------

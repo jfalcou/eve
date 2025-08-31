@@ -328,54 +328,6 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
     const T               arithmetic_in {[](int i, int) { return i + 1; }};
     const eve::logical<T> logical_in([](int i, int) { return i % 3 == 1; });
 
-    // identity mixed with 0s is just propagated
-    // to the shuffle.
-    {
-      constexpr auto formula = [](int i, int)
-      {
-        if( i == 0 ) return eve::na_;
-        if( i == 1 ) return eve::we_;
-        if( i == 3 ) return eve::na_;
-        return (std::ptrdiff_t)i;
-      };
-
-      auto shuffle = eve::detail::make_shuffle_v2(
-          [&]<typename G, typename U>(auto p, G, U x, auto...)
-          {
-            constexpr std::ptrdiff_t cardinal        = U::size() / G {}();
-            constexpr std::ptrdiff_t end_of_original = T::size() * sizeof(eve::element_type_t<T>)
-                                                       / sizeof(eve::element_type_t<U>) / G {}();
-
-            auto expected = [](int i, int)
-            {
-              if( i == 0 ) return eve::na_;
-              if( i == 1 ) return eve::we_;
-              if( i == 3 ) return eve::na_;
-              if( i >= end_of_original ) return eve::we_;
-              return (std::ptrdiff_t)i;
-            };
-
-            TTS_EQUAL(p, eve::fix_pattern<cardinal>(expected));
-            return kumi::tuple {x, eve::index<3>};
-          });
-
-      {
-        auto [_, l] = shuffle(arithmetic_in, formula);
-        TTS_EQUAL(l(), 3);
-      }
-
-      if constexpr( T::size() >= 8 )
-      {
-        auto [_, l] = shuffle(arithmetic_in, eve::lane<2>, formula);
-        TTS_EQUAL(l(), 3);
-      }
-
-      {
-        auto [_, l] = shuffle(logical_in, formula);
-        TTS_EQUAL(l(), 3);
-      }
-    }
-
     // free mixing with 0s
     {
       constexpr auto formula = [](int i, int)

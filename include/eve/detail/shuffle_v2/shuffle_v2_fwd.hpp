@@ -89,6 +89,13 @@ namespace eve
 //!    "swap_adjacent is at most level 5", and not "5 * number of output registers"
 //!
 //!    If it proves to be important to accumulate all shuffles, we will change it in the future.
+//!
+//!    ## Free~ish masking
+//!
+//!    Certain platforms (avx512, sve, rvv) provide masked version of instructions.
+//!    Perfectly correctly handling them with the methodology described above gets very unwieldy.
+//!    As a simplification - at this point - these masking is considered free starting from level 2.
+//!    We also rely on the compiler to merge the masking into an adjucent insrtuction.
 //! @}
 //================================================================================================
 constexpr auto shuffle_v2_core = detail::make_shuffle_v2(detail::native_shuffle_lookup);
