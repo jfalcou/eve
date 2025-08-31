@@ -62,7 +62,7 @@ namespace eve
 //!      constexpr auto oneminus[upper](value auto x)                   noexcept; // 5
 //!      constexpr auto oneminus[lower][strict](value auto x)           noexcept; // 4
 //!      constexpr auto oneminus[upper][strict](value auto x)           noexcept; // 5
-//!      constexpr auto oneminus[mod = p][strict](value auto x)         noexcept; // 6
+//!      constexpr auto oneminus[mod = p](value auto x)                 noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -109,7 +109,14 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return add[o](one(eve::as<T>()), minus[o](v));
+        if constexpr(O::contains(mod))
+        {
+          auto p = o[mod].value(T());
+          auto z = oneminus(v);
+          return eve::if_else(z < 0, z+p, z);
+        }
+        else
+          return add[o](one(eve::as<T>()), minus[o](v));
       }
       else
       {

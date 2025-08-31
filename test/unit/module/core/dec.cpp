@@ -67,6 +67,23 @@ TTS_CASE_WITH("Check behavior of dec(wide) and dec[mask](wide) on signed types",
   }
 };
 
+//==================================================================================================
+//==  dec modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of dec mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::dec;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(dec[mod = p](a0), eve::if_else(a0 == 0, p-1, a0-1), 0.5);
+};
+
 TTS_CASE_WITH("Check behavior of dec(wide) and dec[mask](wide) on unsigned types",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(1, 100)))

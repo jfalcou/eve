@@ -156,3 +156,23 @@ TTS_CASE_WITH("Check behavior of div on signed types",
       tts::map([](auto e, auto f, auto g) { return g > 64 ? div[saturated](e, f) : e; }, a0, a1, a2),
       0.5);
 };
+
+//==================================================================================================
+//==  div modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of div mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96),
+                            tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0, T const& ra1)
+{
+  using eve::div;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  auto a1 = eve::floor(ra1);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  auto z =  eve::mul[mod = p](a0, eve::rec[mod = p](a1));
+  TTS_ULP_EQUAL(div[mod = p](a0, a1), z, 0.5);
+};

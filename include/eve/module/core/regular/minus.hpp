@@ -13,6 +13,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
@@ -97,7 +98,7 @@ namespace eve
     {
       if constexpr (O::contains(mod))
       {
-        return o[mod].value(T())-v;
+        return eve::if_else(eve::is_eqz(v), v, o[mod].value(T())-v);
       }
       else if      constexpr (floating_value<T>)
       {

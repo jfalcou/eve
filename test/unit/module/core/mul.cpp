@@ -13,7 +13,7 @@
 // Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -73,7 +73,7 @@ TTS_CASE_WITH("Check behavior of mul on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+  <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;
   using eve::saturated;
@@ -109,7 +109,7 @@ TTS_CASE_WITH("Check behavior of mul widen on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1,  T const&a2)
+  <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::mul;
   using eve::widen;
@@ -124,6 +124,53 @@ TTS_CASE_WITH("Check behavior of mul widen on wide",
 };
 
 //==================================================================================================
+//==  mul modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of mul mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96),
+                            tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0, T const& ra1)
+{
+  using eve::mul;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  auto a1 = eve::floor(ra1);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(mul[mod = p](a0, a1), eve::rem(a0*a1, p), 0.5);
+};
+
+//==================================================================================================
+//==  mul modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of mul mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96),
+                            tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0, T const& ra1)
+{
+  using eve::mul;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  auto a1 = eve::floor(ra1);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  auto rem = [p](auto x){
+    while (true)
+    {
+      auto t = x >= p;
+      if (eve::none(t)) return x;
+      x = eve::sub[t](x, p);
+    }
+  };
+  auto z = rem(a0*a1);
+  TTS_ULP_EQUAL(mul[mod = p](a0, a1), rem(a0*a1), 0.5);
+};
+
+//==================================================================================================
 //==  conditional mul tests on simd
 //==================================================================================================
 auto mini = []<typename T>(eve::as<T> const&)
@@ -134,15 +181,15 @@ TTS_CASE_WITH("Check behavior of mul on signed types",
               tts::generate(tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+  <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;
   using eve::saturated;
   TTS_EQUAL(mul[a2 > T(64)](a0, a1),
             tts::map([](auto e, auto f, auto g) { return g > 64 ? mul(e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(
-      mul[saturated][a2 > T(64)](a0, a1),
-      tts::map([](auto e, auto f, auto g) { return g > 64 ? mul[saturated](e, f) : e; }, a0, a1, a2));
+    mul[saturated][a2 > T(64)](a0, a1),
+    tts::map([](auto e, auto f, auto g) { return g > 64 ? mul[saturated](e, f) : e; }, a0, a1, a2));
 };
 
 
@@ -154,9 +201,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::mul)(eve::wide)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
- <typename T, typename M>(T const& a0,
+  <typename T, typename M>(T const& a0,
                            T const& a1,
-                         M const& mask)
+                           M const& mask)
 {
   TTS_IEEE_EQUAL(eve::mul[mask](a0, a1),
                  eve::if_else(mask, eve::mul(a0, a1), a0));

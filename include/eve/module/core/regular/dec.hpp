@@ -106,7 +106,7 @@ namespace eve
       else if constexpr(O::contains(mod) )
       {
         auto p = o[mod].value(T());
-        return eve::if_else(eve::is_eqz(a), p-1, a-1);
+        return eve::if_else(eve::is_eqz(a), eve::dec(p), eve::dec(a));
       }
       else
         return add[o](a, mone(eve::as(a)));

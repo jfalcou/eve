@@ -85,6 +85,23 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types
   TTS_EQUAL(eve::inc[eve::saturated][m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
 };
 
+//==================================================================================================
+//==  inc modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of inc mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::inc;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(inc[mod = p](a0), eve::if_else(a0 == p-1, 0, a0+1), 0.5);
+};
+
 TTS_CASE_TPL("Check corner-cases behavior of inc(wide) and inc[mask](wide)", eve::test::simd::all_types)
 <typename T>(tts::type<T> tgt)
 {

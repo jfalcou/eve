@@ -97,3 +97,20 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::minus variants on wide",
     TTS_EQUAL(eve::minus(T(0)), T(0));
   }
 };
+
+//==================================================================================================
+//==  minus modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of minus mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::minus;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(minus[mod = p](a0), eve::if_else(eve::is_eqz(a0), a0, p-a0), 0.5);
+};

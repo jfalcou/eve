@@ -104,3 +104,22 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::oneminus variants on wide",
     TTS_EQUAL(eve::oneminus[eve::saturated](T(0)), T(1));
   }
 };
+
+
+//==================================================================================================
+//==  oneminus modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of oneminus mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::oneminus;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  auto z =  oneminus(a0);
+  TTS_ULP_EQUAL(oneminus[mod = p](a0), eve::if_else(z < 0, z+p, z), 0.5);
+};

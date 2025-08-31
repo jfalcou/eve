@@ -104,7 +104,7 @@ namespace eve::detail
     using r_t =  eve::common_value_t<T0, T1>;
     auto p = o[mod].value(r_t());
     auto s = x+y;
-    return eve::if_else(s >= p, s, s-p);
+    return eve::if_else(s >= p, s-p, p);
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>

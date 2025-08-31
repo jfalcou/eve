@@ -57,7 +57,7 @@ namespace eve
 //!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
 //!      constexpr auto inc[lower][strict](value auto x)           noexcept; // 4
 //!      constexpr auto inc[upper][strict](value auto x)           noexcept; // 5
-//!      constexpr auto inc[mod = p][strict](value auto x)         noexcept; // 6
+//!      constexpr auto inc[mod = p](value auto x)                 noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -102,6 +102,11 @@ namespace eve
       {
         using u_t = as_integer_t<T>;
         return T(u_t(a)+u_t(1));
+      }
+      else if constexpr(O::contains(mod))
+      {
+        auto p = o[mod].value(T());
+        return eve::if_else(a == p-1, zero, eve::inc(a));
       }
       else
         return eve::add[o](a, one(eve::as(a)));
