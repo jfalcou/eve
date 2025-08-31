@@ -23,7 +23,11 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b) noexcept
   {
-    if constexpr(integral_value <T>)
+    if constexpr(O::contains(widen))
+    {
+      return average[o.drop(widen)](upgrade(a), upgrade(b));
+    }
+    else if constexpr(integral_value <T>)
     {
       if constexpr(O::contains(upper))
         return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
@@ -38,10 +42,14 @@ namespace eve::detail
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T
+  EVE_FORCEINLINE constexpr auto
   average_(EVE_REQUIRES(cpu_), O const & o, T const &r0, Ts const &... args) noexcept
   {
-    if constexpr(sizeof...(Ts) == 0)
+    if constexpr(O::contains(widen))
+    {
+      return add[o.drop(widen)](upgrade(r0), upgrade(args)...);
+    }
+    else    if constexpr(sizeof...(Ts) == 0)
       return r0;
     else
     {

@@ -15,19 +15,33 @@ namespace eve
 {
   template<typename Options>
   struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option,
-                                    strict_option, kahan_option>
+                                    strict_option, kahan_option, widen_option>
   {
     template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    requires(eve::same_lanes_or_scalar<T, U> && !Options::contains(widen))
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
+   template<value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U> && Options::contains(widen))
+     constexpr EVE_FORCEINLINE common_value_t<eve::upgrade_t<T>, eve::upgrade_t<U>> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
     template<eve::floating_value T0, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...>)
+    requires(eve::same_lanes_or_scalar<T0, Ts...> && Options::contains(widen))
     EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
     operator()(T0 t0, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, ts...);
+    }
+
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
+    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
@@ -74,7 +88,8 @@ namespace eve
 //!      constexpr auto average[lower](eve::value auto x, eve::value auto y)                        noexcept; // 7
 //!      constexpr auto average[upper][strict](eve::value auto x, eve::value auto y)                noexcept; // 6
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
-//!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 8
+//!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
+//!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
 //!
 //!   }
 //!   @endcode
@@ -112,7 +127,8 @@ namespace eve
 //!        to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
-//!     8. Compesated algorithm for better precision.
+//!      8. The average is computed in the double sized element type (if available).
+///!     9. Compesated algorithm for better precision.
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
 //!

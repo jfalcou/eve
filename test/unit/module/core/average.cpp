@@ -137,3 +137,20 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
     TTS_EXPECT(eve::all(average[strict][lower](w0, -w1) <= average[lower](w0, -w1)));
   }
 };
+
+
+TTS_CASE_WITH("Check behavior of average kahan on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::average;
+  using eve::widen;
+  using eve::kahan;
+  using eve::as;
+  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+    TTS_ULP_EQUAL(average[kahan](a0, a1, a2), eve::downgrade(average[widen](a0, a1, a2)), 0.5);
+
+};

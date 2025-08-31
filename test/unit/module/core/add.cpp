@@ -203,3 +203,20 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
   TTS_IEEE_EQUAL(eve::add[eve::ignore_all.else_(42)][lower](a0, a1), T{42});
 
 };
+
+
+TTS_CASE_WITH("Check behavior of add kahan on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::add;
+  using eve::widen;
+  using eve::kahan;
+  using eve::as;
+  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+    TTS_ULP_EQUAL(add[kahan](a0, a1, a2), eve::downgrade(add[widen](a0, a1, a2)), 0.5);
+
+};
