@@ -19,65 +19,77 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b) noexcept
+
+
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  U const &b) noexcept
   {
-    if constexpr(O::contains(widen))
-    {
-      return average[o.drop(widen)](upgrade(a), upgrade(b));
-    }
-    else if constexpr(integral_value <T>)
+    using e_t = element_type_t<common_value_t<T, U>>;
+    if constexpr(integral_value <T> && integral_value<U>)
     {
       if constexpr(O::contains(upper))
         return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
       else
         return (a & b) + ((a ^ b) >> 1);   //compute floor( (x+y)/2 )
     }
+    else if constexpr(O::contains(widen))
+    {
+      return average[o.drop(widen)](upgrade(a), upgrade(b));
+    }
     else
     {
-      const auto h = eve::half(eve::as<T>());
-      return fma[o](a, h, b*h);
+      const auto h = eve::half(eve::as<e_t>());
+      return fma[pedantic](a, h, b*h);
     }
   }
 
-  template<typename T, std::same_as<T>... Ts, callable_options O>
+  template<typename T0, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  average_(EVE_REQUIRES(cpu_), O const & o, T const &r0, Ts const &... args) noexcept
+  average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
+  requires(sizeof...(Ts) !=  0)
   {
     if constexpr(O::contains(widen))
     {
-      return add[o.drop(widen)](upgrade(r0), upgrade(args)...);
+      return average[o.drop(widen)](upgrade(a0), upgrade(args)...);
     }
-    else    if constexpr(sizeof...(Ts) == 0)
-      return r0;
+    else if constexpr(sizeof...(Ts) == 0)
+      return a0;
     else
     {
+      using r_t =  eve::common_value_t<T0, Ts...>;
+      using e_t =  eve::element_type_t<r_t>;
+      constexpr auto N = sizeof...(Ts)+1;
+      constexpr e_t invn  = 1/(e_t(N));
       if constexpr(O::contains(raw))
       {
-        return add[o.drop(raw)](r0, args...)/(sizeof...(args) + 1);
+        if constexpr(integral_value<r_t>)
+        {
+          return add[o.drop(raw)](a0, args...)/N;
+        }
+        else
+        {
+          return add[o.drop(raw)](a0, args...)*invn;
+        }
       }
       else if constexpr(O::contains(kahan))
       {
-        using r_t =  eve::common_value_t<Ts...>;
-        T invn  = rec[pedantic](T(sizeof...(args) + 1u));
         auto pair_add = [invn](auto pair0, auto r1){
           auto [r, e0] = pair0;
           auto [s, e1] = eve::two_fma_approx(r1, invn, r);
           return zip(s, e0+e1);
         };
-        auto p0   = two_prod(r_t(r0), invn);
+        auto p0 = two_prod(r_t(a0), invn);
         ((p0 = pair_add(p0,args)),...);
         auto [r, e] = p0;
-        return r+ e;
+        return r+e;
       }
       else
       {
-        T invn  = rec[pedantic](T(sizeof...(args) + 1u));
-        T that(r0 * invn);
-        auto lfma = fma[o];
-        auto  next = [invn, lfma](auto avg, auto x) { return lfma(x, invn, avg); };
-        ((that = next(that, args)), ...);
+        r_t that(a0 * invn);
+//        auto lfma = fma[o];
+        auto  next = [invn, o](auto avg, auto x) { return  eve::add[o](x*invn, avg); }; //lfma(x, invn, avg); };
+        ((that = next(that, r_t(args))), ...);
         return that;
       }
     }
