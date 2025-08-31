@@ -166,7 +166,6 @@ TTS_CASE_WITH("Check behavior of mul mod on wide",
       x = eve::sub[t](x, p);
     }
   };
-  auto z = rem(a0*a1);
   TTS_ULP_EQUAL(mul[mod = p](a0, a1), rem(a0*a1), 0.5);
 };
 
