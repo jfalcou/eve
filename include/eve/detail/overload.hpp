@@ -93,7 +93,7 @@ namespace tag { struct TAG {}; }                                                
       EVE_FORCEINLINE constexpr auto operator[](T c) const noexcept                                \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        using type = std::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
+        using type = detail::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
         return (*this)[if_(logical<type>(c))];                                                     \
       }                                                                                            \
                                                                                                    \

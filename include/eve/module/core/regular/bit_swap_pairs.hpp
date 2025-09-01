@@ -27,7 +27,7 @@ namespace eve
     template<typename T, typename I0, typename I1>
     struct result
     {
-      using type = std::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
+      using type = detail::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
     };
 
     template<integral_value T, integral_value I0, integral_value I1>
@@ -36,7 +36,7 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(v, i0, i1);
     }
-    
+
     template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE constexpr T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
     {

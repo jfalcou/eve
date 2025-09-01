@@ -41,7 +41,7 @@ constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
       if constexpr(scalar_value<T> != scalar_value<U>)
       {
         using w_t  = as_wide_as_t<T,U>;
-        using wi_t = std::conditional_t<simd_value<U>, U, wide<i_t,cardinal_t<T>>>;
+        using wi_t = detail::conditional_t<simd_value<U>, U, wide<i_t,cardinal_t<T>>>;
 
         return ldexp[o]( w_t(a), wi_t(b) );
       }
@@ -71,7 +71,7 @@ constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
   {
     using elt_t = element_type_t<T>;
     using i_t   = as_integer_t<T>;
-    using shf_t = std::conditional_t<simd_value<T>, T, elt_t>;
+    using shf_t = detail::conditional_t<simd_value<T>, T, elt_t>;
 
     auto  bb   = convert(b, as<element_type_t<i_t>>{});
     auto  ik   = bb + maxexponent(as<shf_t>());

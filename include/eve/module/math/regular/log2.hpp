@@ -103,7 +103,7 @@ namespace eve
         using uiT   = as_integer_t<T, unsigned>;
         using iT    = as_integer_t<T, signed>;
         constexpr bool is_avx = current_api == avx;
-        using TT =  std::conditional_t<is_avx, T, iT >;
+        using TT =  detail::conditional_t<is_avx, T, iT >;
         using elt_t = element_type_t<T>;
         if constexpr( std::is_same_v<elt_t, float> )
         {

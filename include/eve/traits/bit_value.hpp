@@ -89,7 +89,7 @@ namespace eve
   struct bit_value<T0,Ts...>
   {
     static constexpr auto sz = detail::adequate_size<T0,Ts...>();
-    using type  = std::conditional_t< sz.is_scalar
+    using type  = detail::conditional_t< sz.is_scalar
                                     , T0
                                     , as_wide_t<T0, fixed<sz.size / sizeof(T0)>>
                                     >;
