@@ -15,6 +15,8 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
+#include <eve/module/core/detail/force_if_any.hpp>
+#include <eve/module/core/constant/inf.hpp>
 
 namespace eve
 {
@@ -22,6 +24,7 @@ namespace eve
   struct sum_of_squares_t : tuple_callable<sum_of_squares_t, Options, pedantic_option, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, kahan_option>
   {
+
     template<value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
     requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
@@ -30,7 +33,7 @@ namespace eve
     }
 
    template<value... Ts>
-    EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    EVE_FORCEINLINE upgrade_t<common_value_t<Ts...>>
     constexpr operator()(Ts...ts) const noexcept
     requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
     {
@@ -43,13 +46,6 @@ namespace eve
     operator()(Tup const& t) const noexcept
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     { return EVE_DISPATCH_CALL(t); }
-
-//     template<eve::detail::range R>
-//     EVE_FORCEINLINE constexpr
-//     eve::common_value_t<typename R::value_type>
-//     operator()(R const& t) const noexcept
-//     requires(!Options::contains(widen))
-//     { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(sum_of_squares_t, sum_of_squares_);
   };
@@ -74,12 +70,11 @@ namespace eve
 //!      // Regular overloads
 //!      constexpr auto sum_of_squares(value auto x, value auto ... xs)                          noexcept; // 1
 //!      constexpr auto sum_of_squares(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!      constexpr auto dot(Range r)                                                             noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto sum_of_squares[saturated](/*any of the above overloads*/)                noexcept; // 4
-//!      constexpr auto sum_of_squares[pedantic](/*any of the above overloads*/)                 noexcept; // 5
-//!      constexpr auto sum_of_squares[kahan](/*any of the above overloads*/)                    noexcept; // 6
+//!      constexpr auto sum_of_squares[saturated](/*any of the above overloads*/)                noexcept; // 3
+//!      constexpr auto sum_of_squares[pedantic](/*any of the above overloads*/)                 noexcept; // 4
+//!      constexpr auto sum_of_squares[kahan](/*any of the above overloads*/)                    noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -94,10 +89,9 @@ namespace eve
 //!
 //!       1. The value of the sum of the squared values of the arguments is returned.
 //!       2. equivalent to the call on the elements of the tuple.
-//!       3. equivalent to the call on the elements of the range
-//!       4. internally uses `saturated` options.
-//!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
-//!       6. uses kahan compensated algorihtm for better accuracy.
+//!       3. internally uses `saturated` options.
+//!       4. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+//!       5. uses kahan like compensated algorithm for better accuracy.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sum_of_squares.cpp}
@@ -122,18 +116,20 @@ namespace eve
     sum_of_squares_(EVE_REQUIRES(cpu_), O const & o , T0 a0, Ts... args) noexcept
     requires(!O::contains(widen))
     {
-      if constexpr(sizeof...(Ts) == 0) return eve::sqr[o](a0);
       using r_t = common_value_t<T0, Ts...>;
-      auto pedantify = [&](auto r){
-        if constexpr(O::contains(pedantic) && floating_value<r_t>)
-        {
-          auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
-          return if_else(inf_found, inf(as(r)), r);
-        }
-        else
-          return r;
-      };
-      if constexpr(O::contains(kahan))
+
+//       auto force_inf_if_any = [&](auto r){
+//         if constexpr(O::contains(pedantic) && floating_value<r_t>)
+//         {
+//           auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
+//           return if_else(inf_found, inf(as(r)), r);
+//         }
+//         else
+//           return r;
+//       };
+
+      if constexpr(sizeof...(Ts) == 0) return eve::sqr[o](a0);
+      else if constexpr(O::contains(kahan))
       {
         auto pair_sqr_add = [](auto pair0, auto r1){
           auto [r0, e0] = pair0;
@@ -143,8 +139,8 @@ namespace eve
         auto p0   = two_prod(a0, a0);
         ((p0 = pair_sqr_add(p0,args)),...);
         auto [r, e] = p0;
-        auto res = r+ e;
-        return pedantify(res);
+        auto res = r+e;
+        return force_if_any(o, res, eve::is_infinite, inf(as(res)), a0, args...);
       }
       else
       {
@@ -155,7 +151,7 @@ namespace eve
             return eve::sqr;
         };
         r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
-        return pedantify(r);
+        return force_if_any(o, r, eve::is_infinite, inf(as(r)), a0, args...);
       }
     }
   }
