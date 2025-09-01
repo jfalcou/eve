@@ -18,7 +18,6 @@
 #include <eve/concept/scalar.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
@@ -254,7 +253,7 @@ namespace eve
     template<arithmetic_simd_value W0, arithmetic_simd_value W1, arithmetic_simd_value... Ws>
     EVE_FORCEINLINE wide(W0 w0, W1 w1, Ws... ws) noexcept
     requires (combinable_to<wide, W0, W1, Ws...>)
-      : storage_base(detail::combine(eve::current_api, w0, w1, ws...))
+      : storage_base(combine(w0, w1, ws...))
     {}
 
     //==============================================================================================

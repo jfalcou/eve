@@ -19,7 +19,6 @@
 #include <eve/detail/alias.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/bitmask.hpp>
-#include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
@@ -208,7 +207,7 @@ namespace eve
     template<logical_simd_value WL0, logical_simd_value WL1, logical_simd_value... WLs>
     EVE_FORCEINLINE logical(WL0 wl0, WL1 wl1, WLs... wls) noexcept
     requires (combinable_to<logical, WL0, WL1, WLs...>)
-      : storage_base(detail::combine(eve::current_api, wl0, wl1, wls...))
+      : storage_base(combine(wl0, wl1, wls...))
     { }
 
     //==============================================================================================

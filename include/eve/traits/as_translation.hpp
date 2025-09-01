@@ -126,7 +126,7 @@ namespace eve
   //! @endcode
   //================================================================================================
   template <typename Dst, translatable_into<Dst> Src>
-  constexpr auto translate_into(Src const& val, as<Dst>)
+  constexpr Dst translate_into(Src const& val, as<Dst>)
   {
     return std::bit_cast<Dst>(val);
   }
