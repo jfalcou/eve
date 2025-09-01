@@ -9,9 +9,9 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/as.hpp>
+#include <eve/arch/arm/arm_utils.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/ptr.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::detail
