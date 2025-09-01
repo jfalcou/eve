@@ -16,7 +16,7 @@
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
 TTS_CASE_WITH( "Check load to wides from non-contiguous range"
-        , eve::test::simd::all_types
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
 <typename T>(T reference)
@@ -35,7 +35,7 @@ TTS_CASE_WITH( "Check load to wides from non-contiguous range"
 // Load into wide from an unaligned pointer
 //==================================================================================================
 TTS_CASE_WITH( "Check load to wides from unaligned pointer"
-        , eve::test::simd::all_types
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
 <typename T>(T reference)
