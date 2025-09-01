@@ -93,7 +93,7 @@ namespace eve
 //!       3. [The operation is performed conditionnaly](@ref conditional)
 //!       4. internally uses `saturated` options.
 //!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
-//!       6. uses kahan compensated algorihtm for better accuracy.
+//!       6. uses kahan like compensated algorithm for better accuracy.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/manhattan.cpp}

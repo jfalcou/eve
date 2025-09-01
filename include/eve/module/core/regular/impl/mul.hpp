@@ -186,7 +186,6 @@ namespace eve::detail
     }
   }
 
-<<<<<<< HEAD
   template<callable_options O, typename T0, typename T1>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& o, T0 x, T1 y ) noexcept
   requires(O::contains(mod))

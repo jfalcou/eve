@@ -25,4 +25,6 @@ int main()
   std::cout << "-> geommean(apf, aqf, arf)            = " << eve::geommean(apf, aqf, arf) << "\n";
   std::cout << "-> geommean[kahan](apf, aqf, arf)     = " << eve::geommean[eve::kahan](apf, aqf, arf) << "\n";
   std::cout << "-> geommean[pedantic]](apf, aqf, arf) = " << eve::geommean[eve::pedantic](apf, aqf, arf) << "\n";
+  auto tup = eve::zip(apf, aqf, arf);
+  std::cout << "-> geommean[kahan](tup)         = " << eve::geommean[eve::kahan](tup) << "\n";
 }

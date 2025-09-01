@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
   TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2),
                 tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
- TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
+  TTS_ULP_EQUAL(geommean(eve::zip(a0, a1, a2)),
                 tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
 };
@@ -83,4 +83,20 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::geommean)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::geommean[mask](a0, a1),
             eve::if_else(mask, eve::geommean(a0, a1), a0));
+};
+
+TTS_CASE_WITH("Check behavior of geommean kahan on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(1, eve::valmax),
+                            tts::randoms(1, eve::valmax),
+                            tts::randoms(1, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::geommean;
+  using eve::widen;
+  using eve::kahan;
+  using eve::as;
+  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+    TTS_ULP_EQUAL(geommean[kahan](a0, a1, a2), eve::downgrade(geommean[widen](a0, a1, a2)), 5.0);
+
 };

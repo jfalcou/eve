@@ -44,6 +44,6 @@ int main()
   std::cout << "-> sum_of_squares[kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::kahan](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// float result\n";
   std::cout << "-> sum_of_squares[widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2)   = " << eve::sum_of_squares[eve::widen](1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2) << "// double result\n";
 
-  auto tup = kumi::tuple{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
+  auto tup = eve::zip{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
   std::cout << "-> sum_of_squares[kahan](tup)   = " << eve::sum_of_squares[eve::kahan](tup) << "\n";
 }
