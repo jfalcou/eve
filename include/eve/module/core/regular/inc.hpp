@@ -13,11 +13,13 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option, upper_option, strict_option>
+  struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option,
+                                      upper_option, strict_option, mod_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -55,6 +57,7 @@ namespace eve
 //!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
 //!      constexpr auto inc[lower][strict](value auto x)           noexcept; // 4
 //!      constexpr auto inc[upper][strict](value auto x)           noexcept; // 5
+//!      constexpr auto inc[mod = p](value auto x)                 noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -63,6 +66,7 @@ namespace eve
 //!     * `x`: [SIMD or scalar value](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `p`: modulo p operation. p must be flint less than maxflint.
 //!
 //!    **Return value**
 //!
@@ -76,6 +80,8 @@ namespace eve
 //!      5. The increment is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
+//!      6. compute the result in modular arithmetic. the parameter must be flint positive
+//!        and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/inc.cpp}
@@ -96,6 +102,11 @@ namespace eve
       {
         using u_t = as_integer_t<T>;
         return T(u_t(a)+u_t(1));
+      }
+      else if constexpr(O::contains(mod))
+      {
+        auto p = o[mod].value(T());
+        return eve::if_else(a == p-1, zero, eve::inc(a));
       }
       else
         return eve::add[o](a, one(eve::as(a)));

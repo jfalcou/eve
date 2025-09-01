@@ -16,6 +16,8 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
@@ -31,6 +33,7 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
+  requires(!O::contains(mod))
   {
     if constexpr(O::contains(widen))
     {
@@ -182,8 +185,25 @@ namespace eve::detail
     }
   }
 
+  template<callable_options O, typename T0, typename T1>
+  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& o, T0 x, T1 y ) noexcept
+  requires(O::contains(mod))
+  {
+    using r_t =  eve::common_value_t<T0, T1>;
+    auto p = o[mod].value(r_t());
+    auto [h, l] = eve::two_prod(x, y);
+    auto b = h/p;
+    auto c = eve::floor(b);
+    auto d = eve::fnma[pedantic](c, p, h);
+    auto g = d+l;
+    g = eve::add[eve::is_ltz(g)](g, p);
+    g = eve::sub[g >= p](g, p);
+    return g;
+  }
+
   template<callable_options O, typename T, typename U, typename... Vs>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
+  requires(sizeof...(Vs) !=  0)
   {
     //TODO: optimize, see add_
     if constexpr(O::contains(widen))

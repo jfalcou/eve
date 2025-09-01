@@ -23,12 +23,14 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  requires(!O::contains(mod))
   {
     if constexpr(O::contains(widen))
     {
@@ -95,8 +97,19 @@ namespace eve::detail
     }
   }
 
+  template<callable_options O, typename T0, typename T1>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T0 x, T1 y ) noexcept
+  requires(O::contains(mod))
+  {
+    using r_t =  eve::common_value_t<T0, T1>;
+    auto p = o[mod].value(r_t());
+    auto s = x+y;
+    return eve::if_else(s >= p, s-p, p);
+  }
+
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  requires(sizeof...(Ts) != 0)
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually

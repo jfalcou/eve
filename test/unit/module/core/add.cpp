@@ -131,6 +131,26 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
 };
 
 //==================================================================================================
+//==  add modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of add mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96),
+                            tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0, T const& ra1)
+{
+  using eve::add;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  auto a1 = eve::floor(ra1);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  auto z = a0+a1;
+  TTS_ULP_EQUAL(add[mod = p](a0, a1), eve::if_else(z > p, z-p, p), 0.5);
+};
+
+//==================================================================================================
 //==  conditional add tests on simd
 //==================================================================================================
 auto mini = tts::constant([]<typename T>(eve::as<T> const&)

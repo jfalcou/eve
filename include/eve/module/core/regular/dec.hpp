@@ -12,11 +12,15 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/detail/modular.hpp>
+
 namespace eve
 {
   template<typename Options>
-  struct dec_t : elementwise_callable<dec_t, Options, saturated_option, lower_option, upper_option, strict_option>
+  struct dec_t : elementwise_callable<dec_t, Options, saturated_option, lower_option,
+                                      upper_option, strict_option, mod_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -54,6 +58,7 @@ namespace eve
 //!      constexpr auto dec[upper](value auto x)                   noexcept; // 5
 //!      constexpr auto dec[lower][strict](value auto x)           noexcept; // 4
 //!      constexpr auto dec[upper][strict](value auto x)           noexcept; // 5
+//!      constexpr auto dec[mod = p](value auto x)                 noexcept; // 6
 //!   @endcode
 //!
 //!   **Parameters**
@@ -61,6 +66,7 @@ namespace eve
 //!     * `x`: [SIMD or scalar value](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `p`: modulo p operation. p must be flint less than maxflint.
 //!
 //!    **Return value**
 //!
@@ -74,6 +80,8 @@ namespace eve
 //!      5. The decrement is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!         to be greater or equal to the exact one (except for Nans).Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
+//!      6. compute the result in modular arithmetic. the parameter must be flint positive
+//!        and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dec.cpp}
@@ -88,11 +96,17 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
-      if constexpr(integral_value<T> && O::contains(saturated))  return dec[a != valmin(eve::as(a))](a);
+      if constexpr(integral_value<T> && O::contains(saturated))
+        return dec[a != valmin(eve::as(a))](a);
       else if constexpr( signed_integral_scalar_value<T>)
       {
         using u_t = as_integer_t<T>;
         return T(u_t(a)+u_t(-1));
+      }
+      else if constexpr(O::contains(mod) )
+      {
+        auto p = o[mod].value(T());
+        return eve::if_else(eve::is_eqz(a), eve::dec(p), eve::dec(a));
       }
       else
         return add[o](a, mone(eve::as(a)));

@@ -164,7 +164,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> const&) const
     {
       return 0ULL;
     }
@@ -221,7 +221,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> const&) const
     {
       return T::size();
     }
@@ -291,7 +291,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return count_;
@@ -361,7 +361,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return T::size() - count_;
@@ -430,7 +430,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return count_;
@@ -466,7 +466,7 @@ namespace eve
       EVE_ASSERT(n >= 0, "[eve::ignore_first] Invalid count");
     }
 
-    template<typename T> 
+    template<typename T>
     EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(count_ <= T::size(), "[eve::ignore_first] Invalid count");
@@ -499,7 +499,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return T::size() - count_;
@@ -535,7 +535,7 @@ namespace eve
       EVE_ASSERT((b >= 0) && (b <= e), "[eve::keep_between] Invalid begin/end indices");
     }
 
-    template<typename T> 
+    template<typename T>
     EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(end_ <= T::size(), "[eve::keep_between] Invalid begin/end indices");
@@ -568,7 +568,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return end_ - begin_;
@@ -612,7 +612,7 @@ namespace eve
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    template<typename T> 
+    template<typename T>
     EVE_FORCEINLINE constexpr void check_mask(eve::as<T>) const
     {
       EVE_ASSERT(first_count_ + last_count_ <= T::size(), "[eve::ignore_extrema] Invalid first/last indices");
@@ -638,7 +638,7 @@ namespace eve
     }
 
     //! Number of lanes to be left unmasked
-    template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> tgt) const
+    template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t count(eve::as<T> tgt) const
     {
       check_mask(tgt);
       return T::size() - last_count_ - first_count_;

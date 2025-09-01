@@ -10,12 +10,13 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
 template<typename Options>
 struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
-                                    lower_option, upper_option, strict_option>
+                                    lower_option, upper_option, strict_option, mod_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -53,6 +54,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!      constexpr auto rec[pedantic](value auto x)                noexcept; // 4
 //!      constexpr auto rec[lower](floating_value auto x)          noexcept; // 5
 //!      constexpr auto rec[upper](floating_value auto x)          noexcept; // 6
+//!      constexpr auto rec[mod = p](floating_value auto x)        noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -73,6 +75,9 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!         to be less or equal to the exact one (except for Nans).
 //!      6. The inverse is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!        to be greater or equal to the exact one (except for Nans).
+//!      7. compute the result in modular arithmetic. the parameters must be flint positive
+//!         and less than the modulus. The modulus itself must be less than maxflint. Note that
+//!         mul{mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)
 //!
 //!  @note
 //!     For [integral value](@ref eve::integral_value) `rec(x)` is equivalent to:

@@ -73,3 +73,20 @@ TTS_CASE_WITH("Check behavior of eve::sqr(eve::wide)",
 
   }
 };
+
+//==================================================================================================
+//==  sqr modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sqr mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::sqr;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(sqr[mod = p](a0), eve::mul[mod = p](a0, a0), 0.5);
+};

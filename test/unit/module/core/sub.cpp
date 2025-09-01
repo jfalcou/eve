@@ -116,6 +116,10 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   }
 };
 
+//==================================================================================================
+//==  sub widen tests
+//==================================================================================================
+
 TTS_CASE_WITH("Check behavior of sub widen on wide",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
@@ -133,6 +137,26 @@ TTS_CASE_WITH("Check behavior of sub widen on wide",
   TTS_ULP_EQUAL(sub[widen ](kumi::tuple{a0, a1}), sub[widen ](a0, a1), 0.5);
   TTS_ULP_EQUAL(sub[widen ](kumi::tuple{a0, a1, a2}), sub[widen ](a0, a1, a2), 0.5);
 
+};
+
+//==================================================================================================
+//==  sub modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sub mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 96),
+                            tts::randoms(0, 96))
+             )
+  <typename T>(T const& ra0, T const& ra1)
+{
+  using eve::sub;
+  using eve::mod;
+  auto a0 = eve::floor(ra0);
+  auto a1 = eve::floor(ra1);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  auto z = a0-a1;
+  TTS_ULP_EQUAL(sub[mod = p](a0, a1), eve::if_else(z < 0, z+p, z), 0.5);
 };
 
 //==================================================================================================
@@ -157,27 +181,27 @@ TTS_CASE_WITH("Check behavior of sub[mask]",
   {
     TTS_IEEE_EQUAL(sub[m](a0, a1), tts::map([](auto e, auto f, auto me) { return me ? sub(e, f) : e; }, a0, a1, m));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::upper][m](a0, a1) >= sub(a0, a1),
               sub[eve::upper][m](a0, a1) == a0)));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::lower][m](a0, -a1) <= sub(a0, -a1),
               sub[eve::lower][m](a0, -a1) == a0)));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::strict][m][eve::upper](a0, a1) > sub(a0, a1),
               sub[eve::strict][m][eve::upper](a0, a1) == a0)));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::strict][m][eve::lower](a0, -a1) < sub(a0, -a1),
               sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::strict][m][eve::upper](a0, a1) >= sub[eve::upper](a0, a1),
               sub[eve::strict][m][eve::upper](a0, a1) == a0)));
 
-    TTS_EXPECT(eve::all(eve::if_else(m, 
+    TTS_EXPECT(eve::all(eve::if_else(m,
               sub[eve::strict][m][eve::lower](a0, -a1) <= sub[eve::lower](a0, -a1),
               sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
   }

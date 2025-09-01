@@ -9,17 +9,20 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
+#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct minus_t : elementwise_callable<minus_t, Options, saturated_option>
+  struct minus_t : elementwise_callable<minus_t, Options, saturated_option, mod_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const { return EVE_DISPATCH_CALL(a); }
@@ -54,6 +57,7 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto minus[saturated](value auto x)               noexcept; // 3
+//!      constexpr auto minus[mod = p](value auto x)                 noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -62,6 +66,7 @@ namespace eve
 //!     * `x` :  [real](@ref eve::value) argument.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `p`: modulo p operation. p must be flint less than maxflint.
 //!
 //!   **Return value**
 //!
@@ -71,6 +76,8 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated version of eve::minus. More specifically, for any signed integer value `x`, the expression
 //!         `minus[saturated](valmin(as(x)))` evaluates to `valmax(as(x))`.
+//!      4. compute the result in modular arithmetic. the parameter must be flint positive
+//!        and less than the modulus. The modulus itself must be less than maxflint.
 //!
 //!  @note  Although the operator notation with `-` is supported, the `-` operator on
 //!     standard scalar type is the original one and so can lead to automatic promotion.
@@ -87,9 +94,13 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
+    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
     {
-      if      constexpr (floating_value<T>)
+      if constexpr (O::contains(mod))
+      {
+        return eve::if_else(eve::is_eqz(v), v, o[mod].value(T())-v);
+      }
+      else if      constexpr (floating_value<T>)
       {
         return bit_xor(v, signmask(eve::as(v)));
       }

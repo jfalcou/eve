@@ -106,3 +106,21 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
     }
   }
 };
+
+//==================================================================================================
+//==  rec modular tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of rec mod on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(1, 96))
+             )
+  <typename T>(T const& ra0)
+{
+  using eve::rec;
+  using eve::mod;
+  using eve::mul;
+  auto a0 = eve::floor(ra0);
+  using e_t =  eve::element_type_t<T>;
+  e_t p = 97;
+  TTS_ULP_EQUAL(mul[mod = p](rec[mod = p](a0), a0), eve::one(eve::as(a0)), 0.5);
+};
