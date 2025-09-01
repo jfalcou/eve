@@ -17,16 +17,6 @@ namespace eve
   struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option,
                                     strict_option, kahan_option, widen_option>
   {
- //    template<value T,  value U>
-//     requires(eve::same_lanes_or_scalar<T, U> && !Options::contains(widen))
-//     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-//     { return EVE_DISPATCH_CALL(a, b); }
-
-//    template<value T,  value U>
-//     requires(eve::same_lanes_or_scalar<T, U> && Options::contains(widen))
-//      constexpr EVE_FORCEINLINE common_value_t<eve::upgrade_t<T>, eve::upgrade_t<U>> operator()(T a, U b) const
-//     { return EVE_DISPATCH_CALL(a, b); }
-
     template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
     EVE_FORCEINLINE constexpr common_value_t<Ts...>
@@ -51,15 +41,6 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
-
-//     template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-//     EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value,Tup>
-//     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-//     {
-//       return EVE_DISPATCH_CALL(t);
-//     }
 
     EVE_CALLABLE_OBJECT(average_t, average_);
   };

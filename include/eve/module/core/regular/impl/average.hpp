@@ -40,7 +40,7 @@ namespace eve::detail
     else
     {
       const auto h = eve::half(eve::as<e_t>());
-      return fma[pedantic](a, h, b*h);
+      return fma[o][pedantic](a, h, b*h);
     }
   }
 
@@ -69,7 +69,7 @@ namespace eve::detail
         }
         else
         {
-          return add[o.drop(raw)](a0, args...)*invn;
+          return eve::mul[o](add[o.drop(raw)](a0, args...), invn);
         }
       }
       else if constexpr(O::contains(kahan))
@@ -87,8 +87,8 @@ namespace eve::detail
       else
       {
         r_t that(a0 * invn);
-//        auto lfma = fma[o];
-        auto  next = [invn, o](auto avg, auto x) { return  eve::add[o](x*invn, avg); }; //lfma(x, invn, avg); };
+        auto lfma = fma[o];
+        auto  next = [invn, lfma](auto avg, auto x) { return lfma(x, invn, avg); };
         ((that = next(that, r_t(args))), ...);
         return that;
       }

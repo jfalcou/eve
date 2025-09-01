@@ -132,6 +132,7 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
   if constexpr (eve::floating_value<T>)
   {
     TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >  average(w0, w1)));
+    TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >= average(w0, w1)));
     TTS_EXPECT(eve::all(average[strict][lower](w0, -w1) <  average(w0, -w1)));
     TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >= average[upper](w0, w1)));
     TTS_EXPECT(eve::all(average[strict][lower](w0, -w1) <= average[lower](w0, -w1)));
