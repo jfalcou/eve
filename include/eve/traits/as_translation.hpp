@@ -11,6 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/traits/value_type.hpp>
+#include <eve/traits/pointer.hpp>
 
 #include <bit>
 #include <new>
@@ -27,6 +28,20 @@ namespace eve
   constexpr translate_t<V> translate(V const& val)
   {
     if constexpr (has_plain_translation<element_type_t<V>>) return std::bit_cast<translate_t<V>>(val);
+    else                                                    return val;
+  }
+
+  //================================================================================================
+  //! @brief Translates an `std::array` to an `std::array` of its translated value type and the same size.
+  //!
+  //! @param T The element type of the array to translate
+  //! @param N The size of the array to translate
+  //! @return The translated array of type `std::array<translate_t<V>, N>`
+  //================================================================================================
+  template <typename T, size_t N>
+  constexpr std::array<translate_t<T>, N> translate(std::array<T, N> val)
+  {
+    if constexpr (has_plain_translation<element_type_t<T>>) return std::bit_cast<std::array<translate_t<T>, N>>(val);
     else                                                    return val;
   }
 
@@ -79,7 +94,7 @@ namespace eve
   {
     if constexpr (has_plain_translation<value_type_t<Ptr>>)
     {
-      using trans_t = translate_t<value_type_t<Ptr>>;
+      using trans_t = detail::copy_qualifiers_t<translated_value_type_t<Ptr>, Ptr>;
 
       if constexpr (std::is_pointer_v<Ptr>)
       {
@@ -87,8 +102,7 @@ namespace eve
       }
       else
       {
-        using r_t = typename Ptr::template rebind<trans_t>;
-        return r_t { translate_ptr(ptr.get()) };
+        return std::bit_cast<typename Ptr::template rebind<trans_t>>(ptr);
       }
     }
     else
@@ -112,7 +126,7 @@ namespace eve
   //! @endcode
   //================================================================================================
   template <typename Dst, translatable_into<Dst> Src>
-  constexpr auto translate_into(Src const& val, as<Dst>)
+  constexpr Dst translate_into(Src const& val, as<Dst>)
   {
     return std::bit_cast<Dst>(val);
   }

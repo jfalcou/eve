@@ -9,6 +9,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/traits/as_translation.hpp>
 
 namespace eve
 {
@@ -18,7 +19,9 @@ namespace eve
     template<simd_value T>
     constexpr EVE_FORCEINLINE typename T::combined_type operator()(T a, T b) const noexcept
     {
-      return detail::combine(eve::current_api, a, b);
+      return translate_into(
+        detail::combine(eve::current_api, translate(a), translate(b)),
+        as<typename T::combined_type>{});
     }
 
     template<simd_value T0, simd_value T1, simd_value T2, simd_value... Ts>
@@ -26,7 +29,9 @@ namespace eve
     operator()(T0 a, T1 b, T2 c, Ts... ts) const noexcept
       requires (combinable<T0, T1, T2, Ts...>)
     {
-      return detail::combine(eve::current_api, a, b, c, ts...);
+      return translate_into(
+        detail::combine(eve::current_api, translate(a), translate(b), translate(c), translate(ts)...),
+        as<typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>>{});
     }
   };
 
