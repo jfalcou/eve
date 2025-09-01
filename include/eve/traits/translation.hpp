@@ -106,4 +106,11 @@ namespace eve
   requires (std::is_enum_v<T>)
   struct translation_of<T>: std::underlying_type<T>
   { };
+
+  // If `T` can be translated to `U`, then `std::array<T, N>` can be translated to `std::array<U, N>`.
+  template <typename T, size_t N>
+  struct translation_of<std::array<T, N>>
+  {
+    using type = std::array<translate_t<T>, N>;
+  };
 }
