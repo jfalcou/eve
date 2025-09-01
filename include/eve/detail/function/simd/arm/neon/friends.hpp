@@ -48,8 +48,9 @@ namespace eve::detail
       else  if constexpr( cat == category::float64x2) return vceqq_f64(v, w);
       else  if constexpr( cat == category::int64x2)   return vceqq_s64(v, w);
       else  if constexpr( cat == category::uint64x2)  return vceqq_u64(v, w);
+      else return map(eq, v, w);
     }
-    else  if constexpr( sizeof(T) == 8 )            return map(eq, v, w);
+    else    return map(eq, v, w);
   }
 
   //================================================================================================

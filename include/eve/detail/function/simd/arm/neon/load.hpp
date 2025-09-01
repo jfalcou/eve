@@ -45,6 +45,8 @@ namespace eve::detail
       else  if constexpr( c == category::int8x8   )   return vld1_s8(ptr);
       else  if constexpr( c == category::uint8x16 )   return vld1q_u8(ptr);
       else  if constexpr( c == category::uint8x8  )   return vld1_u8(ptr);
+      else  if constexpr (c == category::float16x8)   return vld1q_f16(reinterpret_cast<const __fp16*>(ptr));
+      else  if constexpr (c == category::float16x4)   return vld1_f16(reinterpret_cast<const __fp16*>(ptr));
       else if constexpr( current_api >= asimd)
       {
               if constexpr( c == category::float64x2 )  return vld1q_f64(ptr);
@@ -94,6 +96,8 @@ namespace eve::detail
         else  if constexpr( c == category::int8x8   )   return vld1_s8_ex(ptr,64);
         else  if constexpr( c == category::uint8x16 )   return vld1q_u8_ex(ptr,128);
         else  if constexpr( c == category::uint8x8  )   return vld1_u8_ex(ptr,64);
+        else  if constexpr (c == category::float16x8)   return vld1q_f16(ptr);
+        else  if constexpr (c == category::float16x4)   return vld1_f16(ptr);
         else if constexpr( current_api >= asimd)
         {
                 if constexpr( c == category::float64x2 )  return vld1q_f64_ex(ptr,128);
