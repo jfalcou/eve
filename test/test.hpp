@@ -44,6 +44,12 @@ namespace tts
   template<typename T, typename U>
   double absolute_distance(T const &l, U const &r);
 
+  template<>
+  double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
+  {
+    return ulp_distance(static_cast<float>(l), static_cast<float>(r));
+  }
+
   template<typename T, typename N>
   inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
@@ -247,12 +253,15 @@ namespace eve::test::scalar
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
+  using ieee_reals_wf16   = eve::test::wides<tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using signed_types      = eve::test::wides<::tts::signed_types>::type;
+  using signed_types_wf16 = eve::test::wides<::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
   using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
+  using all_types_wf16    = eve::test::wides<eve::test::scalar::all_types_wf16>::type;
 }
 
 //==================================================================================================
@@ -346,28 +355,14 @@ namespace tts
 
   auto produce(type<eve::float16_t> const&, auto g, auto& rng, auto... args)
   {
-    auto data = produce(type<float>{}, g, rng, args...);
-    return eve::float16_t{ data };
-  }
-
-  template<std::size_t N>
-  auto produce(type<std::array<eve::float16_t, N>> const&, auto g, auto& rng, auto... args)
-  {
-    std::array<eve::float16_t, N> data;
-
-    for(std::size_t i = 0; i < N; ++i)
-    {
-      data[i] = produce(type<eve::float16_t>{}, g, rng, args...);
-    }
-
-    return data;
+    float data = produce(type<float>{}, g, rng, args...);
+    return static_cast<eve::float16_t>(data);
   }
 
   template<std::ptrdiff_t N>
   auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
   {
     auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
-
     return poison(eve::load(arr.data(), eve::fixed<N>{}));
   }
 

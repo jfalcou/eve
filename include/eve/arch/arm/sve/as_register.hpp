@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/predef.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
@@ -26,7 +27,12 @@ namespace eve
 
     if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {
-      if constexpr (std::same_as<T, float>)
+      if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        using type = svfloat16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+        return type{};
+      }
+      else if constexpr (std::same_as<T, float>)
       {
         using type = svfloat32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
