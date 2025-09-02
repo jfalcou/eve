@@ -95,6 +95,9 @@ namespace eve
 //!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 //!       6. uses kahan like compensated algorithm for better accuracy.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia taxicab norm](https://en.wikipedia.org/wiki/Norm_(mathematics))
+
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/manhattan.cpp}
 //================================================================================================
