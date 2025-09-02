@@ -30,17 +30,17 @@ namespace eve
       return EVE_DISPATCH_CALL(ts...);
     }
 
- //    template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-//     EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value,Tup>
-//     operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
-//     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
-//       EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
-//     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
+    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
+    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
+      EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
+    operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
 
     EVE_CALLABLE_OBJECT(dot_t, dot_);
   };
@@ -84,7 +84,7 @@ namespace eve
 //!
 //!    1. dot product. \f$\sum_s x_s*y_s\f$.
 //!    2. use teh content of the tuples
-//!    3. With kahan option the result is more accurately computed using a compensated algorithm.
+//!    3. With kahan option the result is more accurately computed using a compensated kahan like algorithm.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dot.cpp}
@@ -96,9 +96,10 @@ namespace eve
 
   namespace detail
   {
+
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    dot_(EVE_REQUIRES(cpu_), O const & o , Ts... args) noexcept
+    dot_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     requires(sizeof...(Ts) > 1  && sizeof...(Ts)%2 == 0)
     {
       if constexpr(sizeof...(Ts) == 2)
@@ -110,7 +111,7 @@ namespace eve
           return dot[o.drop(widen)](upgrade(r_t(args))...);
         else
         {
-          auto coeffs = kumi::tuple{r_t(args)...};
+          auto coeffs = eve::zip(r_t(args)...);
           auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(Ts)/2>);
           if constexpr(O::contains(kahan))
           {
