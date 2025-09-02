@@ -20,7 +20,7 @@ template<typename T, typename N> auto page()
   auto start    = nb_elem - std::max(algt,N::value);
   std::vector<T, alloc_t> ref(nb_elem);
 
-  T k = {1};
+  T k = T {1};
   for(std::size_t i=start;i<nb_elem;++i) ref[i] = k++;
 
   return std::pair{ref,start};
