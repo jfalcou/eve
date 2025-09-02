@@ -17,8 +17,7 @@ namespace eve
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, to_nearest_odd_option, strict_option,
-                                widen_option, mod_option,
-                                to_nearest_odd_option, kahan_option>
+                                widen_option, mod_option, kahan_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -39,13 +38,13 @@ namespace eve
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+      EVE_FORCEINLINE constexpr
     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+      EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
 
@@ -120,8 +119,8 @@ namespace eve
 //!    8. The summation is computed in a round toward nearest mode but tie to odd (not hardware available on common systems).
 //!    9. compute the result in modular arithmetic. the parameters must be floating positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.
-//!    10. A kahan summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
-//!       are assumed  positive and non increasing and (or at least with non increasing exponents) adding raw option can
+//!    10. A kahan like summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
+//!       are assumed  positive and non increasing (or at least with non increasing exponents) adding raw option can
 //!       speed a bit the accurate summation,
 //!
 //!   @note
