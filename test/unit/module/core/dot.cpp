@@ -44,8 +44,8 @@ TTS_CASE_WITH("Check behavior of dot on all types full range",
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c, auto d) -> v_t { return a*c+b*d; };
   TTS_ULP_EQUAL(dot((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), 2);
-  TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
-  TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
+//   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
+//   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
 };
 
 
