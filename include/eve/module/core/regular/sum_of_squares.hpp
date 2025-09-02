@@ -117,17 +117,6 @@ namespace eve
     requires(!O::contains(widen))
     {
       using r_t = common_value_t<T0, Ts...>;
-
-//       auto force_inf_if_any = [&](auto r){
-//         if constexpr(O::contains(pedantic) && floating_value<r_t>)
-//         {
-//           auto inf_found =  (is_infinite(r_t(a0)) || ... || is_infinite(r_t(args)));
-//           return if_else(inf_found, inf(as(r)), r);
-//         }
-//         else
-//           return r;
-//       };
-
       if constexpr(sizeof...(Ts) == 0) return eve::sqr[o](a0);
       else if constexpr(O::contains(kahan))
       {
@@ -146,7 +135,7 @@ namespace eve
       {
         auto l_sqr = [](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
-          return eve::sqr[saturated];
+            return eve::sqr[saturated];
           else
             return eve::sqr;
         };
