@@ -25,6 +25,7 @@ namespace eve::detail
         constexpr auto c = categorize<eve::wide<translate_t<T>, N>>();
               if constexpr(match(c, category::float64)) return svreinterpret_u8_f64(v);
         else  if constexpr(match(c, category::float32)) return svreinterpret_u8_f32(v);
+        else  if constexpr(match(c, category::float16)) return svreinterpret_u8_f16(v);
         else  if constexpr(match(c, category::int64)  ) return svreinterpret_u8_s64(v);
         else  if constexpr(match(c, category::uint64) ) return svreinterpret_u8_u64(v);
         else  if constexpr(match(c, category::int32)  ) return svreinterpret_u8_s32(v);
@@ -39,6 +40,7 @@ namespace eve::detail
 
               if constexpr(match(d, category::float64)) return svreinterpret_f64_u8(as_byte);
         else  if constexpr(match(d, category::float32)) return svreinterpret_f32_u8(as_byte);
+        else  if constexpr(match(d, category::float16)) return svreinterpret_f16_u8(as_byte);
         else  if constexpr(match(d, category::int64)  ) return svreinterpret_s64_u8(as_byte);
         else  if constexpr(match(d, category::uint64) ) return svreinterpret_u64_u8(as_byte);
         else  if constexpr(match(d, category::int32)  ) return svreinterpret_s32_u8(as_byte);
