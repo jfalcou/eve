@@ -56,8 +56,10 @@ namespace eve
 //!      constexpr auto epsilon[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto abs[downward](value auto x)                    noexcept; // 3
-//!      constexpr auto abs[upward](value auto x)                      noexcept; // 1
+//!      constexpr auto epsilon[downward](value auto x)                    noexcept; // 3
+//!      constexpr auto epsilon[upward](value auto x)                      noexcept; // 1
+//!      constexpr auto epsilon[kahan](value auto x)                       noexcept; // 1
+//!      constexpr auto epsilon[harrisson](value auto x)                   noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -72,6 +74,7 @@ namespace eve
 //!      1. The distance of abs(x) to the next representable element in the type of `x`. (Kahan definition)
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The distance of abs(x) to the previous representable element in the type of `x`. (Goldberg definition)
+//!      4. The distance of abs(x) to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
 //!
 //!    @note somewhat faster algorithms are at hand using [sulp](@ref sulp),
 //!      if you are insterested by by the signed ulp value.
@@ -101,7 +104,7 @@ namespace eve
         auto finite = is_finite(aa);
         if constexpr(O::contains(kahan) || O::contains(harrisson))
         {
-          return eve::sulp[finite][o](aa);
+          return if_else(finite, eve::sulp[o](aa), aa); ;
         }
         else if constexpr(O::contains(downward))
           return dist[finite](aa, prev(aa));
