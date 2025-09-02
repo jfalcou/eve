@@ -114,14 +114,14 @@ EVE_FORCEINLINE auto convert_integers_chain(In v0, as<Out> tgt) noexcept
   // Convert from large to very small is a chain of downward convert
   if constexpr( sizeof(in_t) / sizeof(out_t) > 2 )
   {
-    using s_t    = std::conditional_t<std::is_signed_v<in_t>, signed, unsigned>;
+    using s_t    = detail::conditional_t<std::is_signed_v<in_t>, signed, unsigned>;
     using next_t = make_integer_t<sizeof(in_t) / 2, s_t>;
     return convert(convert(v0, as<next_t> {}), tgt);
   }
   // Convert from small to very large is a chain of upward convert
   else if constexpr( sizeof(out_t) / sizeof(in_t) > 2 )
   {
-    using s_t    = std::conditional_t<std::is_signed_v<in_t>, signed, unsigned>;
+    using s_t    = detail::conditional_t<std::is_signed_v<in_t>, signed, unsigned>;
     using next_t = make_integer_t<sizeof(in_t) * 2, s_t>;
     return convert(convert(v0, as<next_t> {}), tgt);
   }

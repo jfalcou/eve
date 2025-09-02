@@ -157,12 +157,12 @@ namespace eve::detail
         int32_t hi;
         int32_t lo;
       };
-      using i32_ts  = std::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
+      using i32_ts  = detail::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
       using ui64_ts = std::uint64_t;
       using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
       using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
-      using i32_t   = std::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
-      using ui64_t  = std::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
+      using i32_t   = detail::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
+      using ui64_t  = detail::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
 
       constexpr auto                alg        = alignment_v<T>;
       alignas(alg) constexpr double toverp[75] = {
@@ -288,9 +288,9 @@ namespace eve::detail
       using ui_tv  = as_wide_t<uint32_t, cardinal_t<T>>;
       using wui_tv = as_wide_t<uint64_t, cardinal_t<T>>;
       using i_tv   = as_wide_t<int64_t, cardinal_t<T>>;
-      using i_t    = std::conditional_t<scalar_value<T>, i_ts, i_tv>;
-      using ui_t   = std::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
-      using wui_t  = std::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
+      using i_t    = detail::conditional_t<scalar_value<T>, i_ts, i_tv>;
+      using ui_t   = detail::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
+      using wui_t  = detail::conditional_t<scalar_value<T>, wui_ts, wui_tv>;
 
       constexpr auto alg = alignment_v<ui_tv>;
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses

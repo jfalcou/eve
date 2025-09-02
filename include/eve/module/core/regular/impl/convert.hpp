@@ -23,7 +23,7 @@ namespace eve::detail
     }
     else
     {
-      using out_t = std::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
+      using out_t = detail::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
       out_t res;
 
       auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
@@ -82,7 +82,7 @@ namespace eve::detail
         }
         else
         {
-          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t)) 
+          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
           {
             return bit_cast(v0, as<out_t> {});
           }
@@ -96,7 +96,7 @@ namespace eve::detail
             using i_t = as<logical<as_integer_t<out_ae_t, signed>>>;
             return bit_cast(convert(v0, i_t {}), as<out_t> {});
           }
-          else 
+          else
           {
             return convert_impl(EVE_TARGETS(current_api_type), v0, tgt);
           }

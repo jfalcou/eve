@@ -27,8 +27,8 @@ namespace eve::detail
     using b_t = as_integer_t<r_t>;
     if constexpr(sizeof...(Ts) == 0)
     {
-      using ra_t = std::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
-      using rb_t = std::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
+      using ra_t = detail::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
+      using rb_t = detail::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
       auto ba = bit_cast(a, as<ra_t>{});
       auto bb = bit_cast(b, as<rb_t>{});
       return bit_cast( bit_and(bit_not(b_t(ba)),b_t(bb)), as<r_t>());

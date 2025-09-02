@@ -269,7 +269,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto process(auto const& base, O opt) const
     {
       // Just delay the evaluation of the type by injecting some templates
-      using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
+      using type = detail::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
       return process(base, condition_key = if_(logical<type>(opt)) );
     }
 

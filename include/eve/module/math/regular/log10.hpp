@@ -92,7 +92,7 @@ namespace eve
         using iT      = as_integer_t<T, signed>;
         using elt_t   = element_type_t<T>;
         constexpr bool is_avx = current_api == avx;
-        using TT =  std::conditional_t<is_avx, T, iT >;
+        using TT =  detail::conditional_t<is_avx, T, iT >;
         T Invlog_10hi = ieee_constant<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(eve::as<T>{});
         T Invlog_10lo = ieee_constant<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(eve::as<T>{});
         T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});

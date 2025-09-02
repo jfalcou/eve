@@ -90,7 +90,7 @@ namespace eve
       {
         using iT    = as_integer_t<T, signed>;
         constexpr bool is_avx = current_api == avx;
-        using TT =  std::conditional_t<is_avx, T, iT >;
+        using TT =  detail::conditional_t<is_avx, T, iT >;
         T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
         T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
         using uiT   = as_integer_t<T, unsigned>;

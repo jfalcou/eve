@@ -63,7 +63,7 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
   // represented. We then use an unsigned version of the index type.
   // We don't just use unsigned indexes all the time cause on most cases,
   // signed comparisons are faster and this will lead to pessimisation.
-  using i_t = std::conditional_t<(T::size() >= 128 && sizeof(element_type_t<l_t>) == 1),
+  using i_t = detail::conditional_t<(T::size() >= 128 && sizeof(element_type_t<l_t>) == 1),
                                  typename l_t::bits_type,
                                  as_integer_t<typename l_t::bits_type, signed>>;
 

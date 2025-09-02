@@ -502,7 +502,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 
   using d_t = as<downgrade_t<element_type_t<U>>>;
   using t_t =
-      std::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
+      detail::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
 
        if constexpr ( match(c_o, category::float_)                  ) return convert(convert(v, as<t_t> {}), tgt);
   else if constexpr ( c_i == category::int8x16  && mo16x8 && a41    ) return _mm_cvtepi8_epi16(v);

@@ -66,7 +66,7 @@ namespace eve
         // Compute the raw constant
         auto constant_value = Func<OptionsValues>::value(as<tgt_type>{},opts);
         using type          = decltype(constant_value);
-        using out_t         = typename std::conditional_t< std::same_as<type,tgt_type>
+        using out_t         = typename detail::conditional_t< std::same_as<type,tgt_type>
                                                          , detail::always<T>
                                                          , as_wide_as<type, T>
                                                          >::type;

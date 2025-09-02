@@ -53,7 +53,7 @@ namespace eve::detail
 
     template<typename S> struct widen : as_wide<S, fixed_t> {};
 
-    using base  = std::conditional_t< kumi::product_type<value_t>
+    using base  = detail::conditional_t< kumi::product_type<value_t>
                                     , kumi::as_tuple<value_t,widen>
                                     , as_wide<value_t, fixed_t>
                                     >;

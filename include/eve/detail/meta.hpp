@@ -267,4 +267,19 @@ namespace eve::detail
   // one_of concept
   template<typename T, typename... Ts>
   concept one_of = (std::same_as<T,Ts> || ... || false);
+
+  template <bool>
+  struct conditional_impl_ {
+      template <typename T, typename U>
+      using type = U;
+  };
+
+  template <>
+  struct conditional_impl_<true> {
+      template <typename T, typename U>
+      using type = T;
+  };
+
+  template <bool test, typename T, typename U>
+  using conditional_t = conditional_impl_<test>:: template type<T, U>;
 }
