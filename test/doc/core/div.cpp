@@ -29,10 +29,10 @@ int main()
             << " -> div[upper](rf, sf)       = " << eve::div[eve::upper](rf, sf)       << '\n'
             << " -> div[to_nearest](rf, sf)  = " << eve::div[eve::to_nearest](rf, sf)  << '\n';
 
-  auto k = eve::zip(pf, pf, pf, 1);
+  auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'
             << " -> div(k)                        = " << eve::div(k)                       << '\n'
-            << " -> div(eve::zip(pf, pf))      = " << eve::div(eve::zip(pf, pf))    << '\n'
-            << " -> div(eve::zip(pf, 1.0f)     = " << eve::div(eve::zip(pf, 1.0f))  << '\n'
-            << " -> div(eve::zip(1.0f, pf)     = " << eve::div(eve::zip(1.0f, pf))  << '\n';
+            << " -> div(kumi::tuple{pf, pf})      = " << eve::div( kumi::tuple{pf, pf})    << '\n'
+            << " -> div(kumi::tuple{pf, 1.0f)     = " << eve::div( kumi::tuple{pf, 1.0f})  << '\n'
+            << " -> div(kumi::tuple{1.0f, pf)     = " << eve::div( kumi::tuple{1.0f, pf})  << '\n';
 }

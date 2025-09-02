@@ -41,8 +41,7 @@ namespace eve
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
+    EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     { return EVE_DISPATCH_CALL(t); }
@@ -140,7 +139,10 @@ namespace eve
             return eve::sqr;
         };
         r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
-        return force_if_any(o, r, eve::is_infinite, inf(as(r)), a0, args...);
+        if constexpr(integral_value<r_t>)
+          return r;
+        else
+          return force_if_any(o, r, eve::is_infinite, inf(as(r)), a0, args...);
       }
     }
   }

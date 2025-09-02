@@ -35,11 +35,11 @@ int main()
   auto pi = eve::pi(eve::as<float>());
   auto e  = eve::euler(eve::as<float>());
   auto l2 = eve::log_2(eve::as<float>());
-  auto tup = eve::zip{pi, e, 1.2345f, l2, pi, e, 1.2345f, l2, 1.35f*pi, l2+pi,  0.07856f};
+  auto tup = kumi::tuple{pi, e, 1.2345f, l2, pi, e, 1.2345f, l2, 1.35f*pi, l2+pi,  0.07856f};
   std::cout << "-> mul[kahan](tup)  = " << eve::mul[eve::kahan](tup) << "\n";
   std::cout << "-> mul(tup)         = " << eve::mul(tup) << "\n";
   std::cout << "-> mul[widen](tup)  = " << float(eve::mul[eve::widen](tup)) << "\n";
-  auto z = eve::zip(wf0, wf1, wf1);
+  auto z = kumi::tuple{wf0, wf1, wf1};
   std::cout << "-> mul[kahan](wf0, wf1, wf1)  = " << eve::mul[eve::kahan](z) << "\n";
   std::cout << "-> mul[kahan](wf0, wf1, wf1)  = " << eve::mul[eve::kahan](wf0, wf1, wf1) << "\n";
 

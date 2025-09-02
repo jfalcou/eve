@@ -43,7 +43,7 @@ int main()
   std::cout << "-> add[kahan](1.0f, eps_4, eps_4, eps_4, eps_4)   = " << eve::add[eve::kahan](1.0f, eps_4, eps_4, eps_4, eps_4) << "// float result\n";
   std::cout << "-> add(1.0f, eps_4, eps_4, eps_4, eps_4)          = " << eve::add(1.0f, eps_4, eps_4, eps_4, eps_4) << "\n";
   std::cout << "-> add[widen](1.0f, eps_4, eps_4, eps_4, eps_4)   = " << float(eve::add[eve::widen](1.0f, eps_4, eps_4, eps_4, eps_4)) << "// double result converted to float\n";
-  auto tup = eve::zip(.0f, eps_4, eps_4, eps_4, eps_4);
+  auto tup = kumi::tuple{1.0f, eps_4, eps_4, eps_4, eps_4};
   std::cout << "-> add[kahan](tup)   = " << eve::add[eve::kahan](tup) << "\n";
 
 
