@@ -14,8 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option,
-                                    strict_option, kahan_option, widen_option>
+  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option,
+                                    lower_option, strict_option, kahan_option,
+                                    widen_option>
   {
     template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
@@ -116,13 +117,13 @@ namespace eve
 //!        to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
-//!      8. The average is computed in the double sized element type (if available).
-///!     9. Compesated algorithm for better precision.
+//!     8. The average is computed in the double sized element type (if available).
+//!     9. Compesated algorithm for better precision.
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
+//!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/average.cpp}

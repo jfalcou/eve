@@ -19,8 +19,6 @@
 
 namespace eve::detail
 {
-
-
   template<typename T, typename U, callable_options O>
   EVE_FORCEINLINE constexpr auto
   average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  U const &b) noexcept
@@ -60,7 +58,7 @@ namespace eve::detail
       using r_t =  eve::common_value_t<T0, Ts...>;
       using e_t =  eve::element_type_t<r_t>;
       constexpr auto N = sizeof...(Ts)+1;
-      constexpr e_t invn  = 1/(e_t(N));
+      constexpr e_t invn = 1/(e_t(N));
       if constexpr(O::contains(raw))
       {
         if constexpr(integral_value<r_t>)
