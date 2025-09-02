@@ -12,6 +12,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
 #include <algorithm>
 #include <utility>
@@ -108,14 +109,16 @@ namespace eve::detail
     }
   }
 
+  // Apply the function `f` to every `ts` once sliced.
   template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
+  EVE_FORCEINLINE auto slice_apply(Func f, Ts... ts)
   {
     // We use this function to turn every parameters into either a pair of slices
     // or a pair of scalar so that the apply later down is more regular
     auto slicer = []<typename T>(T t)
     {
-      if constexpr(simd_value<T>) return t.slice(); else return kumi::make_tuple(t,t);
+      if constexpr (simd_value<T>) return t.slice();
+      else                         return kumi::make_tuple(t,t);
     };
 
     // Build the lists of all ready-to-aggregate values
@@ -126,5 +129,123 @@ namespace eve::detail
     using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
 
     return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
+  }
+
+  // Aggregate replication count for a given type
+  template<typename T>
+  constexpr std::ptrdiff_t replication()
+  {
+    if constexpr (requires { T::storage_type::replication; }) return T::storage_type::replication;
+    else if constexpr (scalar_value<T>)                       return 0;
+    else                                                      return 1;
+  }
+
+  template<typename... Ts>
+  constexpr std::ptrdiff_t max_replication()
+  {
+    return std::max({ replication<Ts>()... });
+  }
+
+  // Returns true if all Ts have the same replication count or 0.
+  // That is, if all Ts are either scalars or aggregates with the same internal replication count.
+  template<typename... Ts>
+  constexpr bool has_same_replication()
+  {
+    constexpr auto max_repl = max_replication<Ts...>();
+    return ((( replication<Ts>() == max_repl) || (replication<Ts>() == 0) ) && ...);
+  }
+
+  template<typename Func, typename... Ts>
+  EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
+  {
+    if constexpr (has_same_replication<Ts...>())
+    {
+      constexpr auto max_repl = max_replication<Ts...>();
+
+      // Convert all values to tuples of wides of the expected cardinal
+      auto slicer = []<typename T>(T t)
+      {
+        if constexpr (simd_value<T>) return t.storage().slice_to_expected();
+        else                         return kumi::fill<max_repl>(t);
+      };
+
+      // Build the lists of all ready-to-aggregate values
+      auto parts = kumi::make_tuple(slicer(ts)...);
+      auto process = [&](auto i) { return kumi::apply([&](auto... p) { return f( get<i>(p)... ); }, parts); };
+
+      using small_result_t = decltype(process(kumi::index<0>));
+      using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
+      using storage_t = typename wide_t::storage_type;
+
+      // Flatten the per-slice result in case it still contains aggregated values.
+      // In order to prepare them for the `rewrap` operation.
+      auto inner_output = kumi::apply([&](auto... m)
+        {
+          auto v_or_t = []<typename V>(V v) {
+            if constexpr (has_aggregated_abi_v<V>) return v.storage().slice_to_expected();
+            else                                   return kumi::make_tuple(v);
+          };
+
+          return kumi::cat(v_or_t(m)...);
+        }, kumi::generate<max_repl>(process));
+
+      // Returns decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
+      auto rewrap = [](auto const& inner) -> decltype(auto)
+      {
+        // Handle the case where the returned type's storage is itself a product type.
+        // Functions returning zipped values need an extra level of storage wrapping.
+        // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
+        if constexpr (product_type<storage_t> && !instance_of<storage_t, blob>)
+        {
+          return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
+            {
+              using inner_wide_t = typename kumi::element_t<i, storage_t>;
+
+              // Whether we should re-wrap the inner storage into the proper product type.
+              if constexpr (has_aggregated_abi_v<inner_wide_t> || product_type<kumi::element_t<0, decltype(inner)>>)
+              {
+                return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<i>(m.storage())... }; }, inner);
+              }
+              else
+              {
+                return kumi::get<i>(inner);
+              }
+            });
+        }
+        else
+        {
+          using current_wide = kumi::element_t<0, decltype(inner)>;
+          constexpr std::ptrdiff_t current_card = current_wide::size();
+          constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
+          using expected_wide = typename current_wide::template rescale<fixed<expected_card>>;
+
+          if constexpr (current_card < expected_card)
+          {
+            auto chunks = kumi::map([&]<typename W>(W const& w) -> decltype(auto)
+            {
+              return kumi::apply([](auto... c)
+              {
+                return expected_wide { c... };
+              }, w);
+            }, kumi::chunks<expected_card / current_card>(inner));
+
+            if constexpr (kumi::size_v<decltype(chunks)> == 1) return kumi::get<0>(chunks);
+            else                                               return chunks;
+          }
+          else
+          {
+            return inner;
+          }
+        }
+      };
+
+      if      constexpr (has_emulated_abi_v<wide_t>)   return kumi::apply([](auto... m) { return wide_t{m...}; }, rewrap(inner_output));
+      else if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) } };
+      else                                             return rewrap(inner_output);
+    }
+    else
+    {
+      return slice_apply(f, ts...);
+    }
   }
 }

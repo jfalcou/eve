@@ -125,7 +125,7 @@ namespace eve::detail
         auto s = a;
         constexpr auto smul = [](auto va, auto vb) { return va * vb; };
 
-        if constexpr (N::value >= 2) return aggregate(smul, s, b);
+        if constexpr (N::value >= 2) return slice_apply(smul, s, b);
         else                         return map(smul, s, b);
       }
     }
