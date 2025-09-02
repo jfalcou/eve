@@ -138,7 +138,10 @@ namespace eve
         else
         {
           r_t r = eve::add[o](l_abs(r_t(args))...);
-          return force_if_any(o, r, eve::is_infinite, inf(as(r)), args...);
+          if constexpr(integral_value<r_t>)
+            return r;
+          else
+            return force_if_any(o, r, eve::is_infinite, inf(as(r)), args...);
         }
       }
     }
