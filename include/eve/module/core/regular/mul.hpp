@@ -15,9 +15,9 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
-                                       upper_option, strict_option, widen_option,
-                                       mod_option, kahan_option>
+  struct mul_t : tuple_callable<mul_t, Options, saturated_option, lower_option,
+                                upper_option, strict_option, widen_option,
+                                mod_option, kahan_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))

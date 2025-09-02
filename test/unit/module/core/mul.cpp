@@ -84,14 +84,14 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   TTS_ULP_EQUAL(mul[saturated](a0, a2), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul(eve::zip(a0, a2)), tts::map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](eve::zip(a0, a2)), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul(eve::zip(a0, a1, a2)), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](eve::zip(a0, a1, a2)), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( mul[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[lower](mul[lower](e, f), g); }, a0, a1, a2), 1.0);
-    TTS_ULP_EQUAL( mul[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[upper](mul[upper](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( mul[lower](eve::zip(a0, a1, a2)), tts::map([&](auto e, auto f, auto g) { return mul[lower](mul[lower](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( mul[upper](eve::zip(a0, a1, a2)), tts::map([&](auto e, auto f, auto g) { return mul[upper](mul[upper](e, f), g); }, a0, a1, a2), 1.0);
     TTS_EXPECT(eve::all(mul[upper](a0, a1, a2) >=  mul[lower](a0, a1, a2)));
     T  w0{0.1};
     T  w1{0.12f};
@@ -118,8 +118,8 @@ TTS_CASE_WITH("Check behavior of mul widen on wide",
 
   TTS_ULP_EQUAL(mul[widen](a0, a1), mul(eve::upgrade(a0), eve::upgrade(a1)), 0.5);
   TTS_ULP_EQUAL(mul[widen ](a0, a1, a2), mul(eve::upgrade(a0), eve::upgrade(a1), eve::upgrade(a2)), 0.5);
-  TTS_ULP_EQUAL(mul[widen ](kumi::tuple{a0, a1}), mul[widen ](a0, a1), 0.5);
-  TTS_ULP_EQUAL(mul[widen ](kumi::tuple{a0, a1, a2}), mul[widen ](a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul[widen ](eve::zip(a0, a1)), mul[widen ](a0, a1), 0.5);
+  TTS_ULP_EQUAL(mul[widen ](eve::zip(a0, a1, a2)), mul[widen ](a0, a1, a2), 0.5);
 
 };
 

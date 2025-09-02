@@ -34,13 +34,27 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
-  requires(!O::contains(mod))
   {
     if constexpr(O::contains(widen))
     {
       return mul[opts.drop(widen)](upgrade(a), upgrade(b));
     }
-    else    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    else if constexpr(O::contains(mod))
+    {
+      using r_t =  eve::common_value_t<T, U>;
+      auto x = r_t(a);
+      auto y = r_t(b);
+      auto p = opts[mod].value(r_t());
+      auto [h, l] = eve::two_prod(x, y);
+      auto bb = h/p;
+      auto cc = eve::floor(bb);
+      auto dd = eve::fnma[pedantic](cc, p, h);
+      auto g = dd+l;
+      g = eve::add[eve::is_ltz(g)](g, p);
+      g = eve::sub[g >= p](g, p);
+      return g;
+    }
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -184,22 +198,6 @@ namespace eve::detail
         return common_value_t<T, U>(a * b);
       }
     }
-  }
-
-  template<callable_options O, typename T0, typename T1>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& o, T0 x, T1 y ) noexcept
-  requires(O::contains(mod))
-  {
-    using r_t =  eve::common_value_t<T0, T1>;
-    auto p = o[mod].value(r_t());
-    auto [h, l] = eve::two_prod(x, y);
-    auto b = h/p;
-    auto c = eve::floor(b);
-    auto d = eve::fnma[pedantic](c, p, h);
-    auto g = d+l;
-    g = eve::add[eve::is_ltz(g)](g, p);
-    g = eve::sub[g >= p](g, p);
-    return g;
   }
 
   template<callable_options O, typename... Vs>
