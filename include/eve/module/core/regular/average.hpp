@@ -43,6 +43,12 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, t1);
     }
 
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
 
