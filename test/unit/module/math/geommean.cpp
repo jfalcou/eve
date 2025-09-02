@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
   TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2),
                 tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
-  TTS_ULP_EQUAL(geommean(eve::zip(a0, a1, a2)),
+  TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
                 tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
 };
