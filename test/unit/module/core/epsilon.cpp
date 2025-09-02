@@ -64,10 +64,10 @@ TTS_CASE_WITH("Check behavior of eve::epsilon(simd)",
 
     TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(1)), eve::eps(as<T>())/2, 0.5);
     TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(0)), eve::mindenormal(as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(10)), 5*eve::eps(as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(5)), 5*eve::eps(as<T>())/2, 0.5);
+    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(10)), 8*eve::eps(as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(5)), 4*eve::eps(as<T>()), 0.5);
     TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(2)), eve::eps(as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(1.5)), 3*eve::eps(as<T>())/4, 0.5);
+    TTS_ULP_EQUAL(eve::epsilon[eve::harrisson](T(1.5)), eve::eps(as<T>()), 0.5);
   }
   else
   {
