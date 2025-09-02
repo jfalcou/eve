@@ -42,10 +42,10 @@ TTS_CASE_WITH("Check behavior of sum_of_squares on all types full range",
   using eve::sum_of_squares;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return sqr(a) + sqr(b) + sqr(c); };
-  TTS_ULP_EQUAL(sum_of_squares((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(sum_of_squares[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(sum_of_squares(eve::zip((a0), (a1), (a2))), tts::map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(sum_of_squares[eve::pedantic](eve::zip((a0), (a1), (a2))), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(sum_of_squares(a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(sum_of_squares[eve::pedantic](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(sum_of_squares(kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(sum_of_squares[eve::pedantic](kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
 };
 
 
