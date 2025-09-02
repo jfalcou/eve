@@ -88,6 +88,10 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!    4. uses kahan like compensated algorithm for better accuracy.
 //!
+//!
+//!  @groupheader{External references}
+//!   *  [wikipedia Geometric mean](https://en.wikipedia.org/wiki/Geometric_mean)
+
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/geommean.cpp}
 //================================================================================================
