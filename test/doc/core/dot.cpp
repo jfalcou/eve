@@ -25,9 +25,9 @@ int main()
   std::cout << "-> dot[kahan](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::kahan](wf0, wf1, wf0, wf1) << "\n";
    std::cout << "-> dot[widen](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::widen](wf0, wf1, wf0, wf1) << "\n";
 
-//    kumi::tuple vwf0= {wf0, 2*wf0, 3*wf0};
-//    kumi::tuple vwf1= {wf1, 2*wf1, 3*wf1};
-//    std::cout << "-> dot(vwf0, vwf1) = " << eve::dot(kumi::cat(vwf0, vwf1)) << "\n";
-//    std::cout << "-> dot[kahan](vwf0, vwf1) = " << eve::dot[eve::kahan](vwf0, vwf1) << "\n";
-   
+   auto vwf0= eve::zip(wf0, 2*wf0, 3*wf0);
+   auto vwf1= eve::zip(wf1, 2*wf1, 3*wf1);
+   std::cout << "-> dot(vwf0, vwf1)   = " << eve::dot(vwf0, vwf1) << "\n";
+   std::cout << "-> dot[kahan](vwf0, vwf1) = " << eve::dot[eve::kahan](vwf0, vwf1) << "\n";
+
 }

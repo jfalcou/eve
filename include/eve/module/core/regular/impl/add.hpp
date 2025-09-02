@@ -28,29 +28,31 @@
 namespace eve::detail
 {
 
-  template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  template<callable_options O, typename T0, typename T1>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T0 a0, T1 b0) noexcept
   {
+      using r_t =  eve::common_value_t<T0, T1>;
+      auto a = r_t(a0);
+      auto b = r_t(b0);
     if constexpr(O::contains(mod))
     {
-      using r_t =  eve::common_value_t<T0, T1>;
       auto p = o[mod].value(r_t());
-      auto s = x+y;
+      auto s = a+b;
       return eve::if_else(s >= p, s-p, p);
     }
     else if constexpr(O::contains(widen))
     {
       return add[o.drop(widen)](upgrade(a), upgrade(b));
     }
-    else if constexpr(floating_value<T> && (O::contains(to_nearest_odd)))
+    else if constexpr(floating_value<r_t> && (O::contains(to_nearest_odd)))
     {
       auto d = eve::add[lower](a, b);
       auto u = eve::add[upper](a, b);
       auto e = u+d;
-      constexpr auto hf = eve::half(eve::as<eve::element_type_t<T>>());
+      constexpr auto hf = eve::half(eve::as<eve::element_type_t<r_t>>());
       return eve::fnma(e, hf, u)+d;
     }
-    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    else if constexpr(floating_value<r_t> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -69,9 +71,9 @@ namespace eve::detail
           return eve::next[eve::is_gtz(e)](r);
       }
     }
-    else if constexpr(O::contains(saturated) && integral_value<T>)
+    else if constexpr(O::contains(saturated) && integral_value<r_t>)
     {
-      if constexpr( signed_integral_value<T> )
+      if constexpr( signed_integral_value<r_t> )
       {
         auto test = is_ltz(b);
         auto pos  = min(sub(valmax(as(a)), b), a);
@@ -81,7 +83,7 @@ namespace eve::detail
       else
       {
         // Triggers conditional MOV that directly read the flag register
-        T r = add(a, b);
+        r_t r = add(a, b);
         return bit_or(r, bit_mask(is_less(r, a)));
       }
     }
@@ -91,14 +93,14 @@ namespace eve::detail
       //  - a + b is done in scalar
       //  - emulation occurs and again, a + b is done in scalar
       //  - a product_type with custom operator+ is used
-      if constexpr(signed_integral_scalar_value<T>)
+      if constexpr(signed_integral_scalar_value<r_t>)
       {
-        using u_t = as_integer_t<T, unsigned>;
-        return T(u_t(a)+u_t(b));
+        using u_t = as_integer_t<r_t, unsigned>;
+        return r_t(u_t(a)+u_t(b));
       }
       else
       {
-        return T(a+b);
+        return r_t(a+b);
       }
     }
   }
