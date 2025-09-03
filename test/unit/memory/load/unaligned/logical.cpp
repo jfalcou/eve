@@ -15,7 +15,7 @@
 //==================================================================================================
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
-TTS_CASE_WITH( "Check load to wides from non-contiguous range"
+TTS_CASE_WITH( "Check load to logical wides from non-contiguous range"
         , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
@@ -34,7 +34,7 @@ TTS_CASE_WITH( "Check load to wides from non-contiguous range"
 //==================================================================================================
 // Load into wide from an unaligned pointer
 //==================================================================================================
-TTS_CASE_WITH( "Check load to wides from unaligned pointer"
+TTS_CASE_WITH( "Check load to logical wides from unaligned pointer"
         , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
@@ -57,4 +57,21 @@ TTS_CASE_WITH( "Check load to wides from unaligned pointer"
     TTS_EQUAL(eve::load(ptr)        , reference         );
     TTS_EQUAL(eve::load(const_ptr)  , reference         );
   }
+};
+
+TTS_CASE_WITH( "Check load to logical wides from unaligned pointer to non-logical elements"
+        , eve::test::simd::all_types_wf16
+        , tts::generate(tts::logicals(1,2))
+        )
+<typename T>(T reference)
+{
+  using v_t = eve::element_type_t<typename T::mask_type>;
+
+  auto [data  ,idx  ] = page<v_t, eve::fixed<T::size()>>();
+
+  auto* ptr              = &data[idx] - 1;
+  auto const* const_ptr  = ptr;
+
+  TTS_EQUAL((eve::load(ptr        , eve::as<T>{})), reference         );
+  TTS_EQUAL((eve::load(const_ptr  , eve::as<T>{})), reference         );
 };
