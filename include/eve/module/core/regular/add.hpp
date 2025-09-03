@@ -19,34 +19,36 @@ namespace eve
                                 upper_option, to_nearest_odd_option, strict_option,
                                 widen_option, mod_option, kahan_option>
   {
-    template<eve::value T0, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<T0, Ts...> constexpr operator()(T0 t0, Ts...ts)
+    template<eve::value T0, eve::value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, ts...);
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
-    template<eve::value T0, value... Ts>
+    template<eve::value T0, eve::value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<Ts>... >
-    constexpr operator()(T0 t0, Ts...ts)
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
+    constexpr operator()(T0 t0, T1 t1, Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, ts...);
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
       EVE_FORCEINLINE constexpr
     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
+    { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(add_t, add_);
   };

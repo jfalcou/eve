@@ -35,7 +35,6 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
-
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
       EVE_FORCEINLINE constexpr
