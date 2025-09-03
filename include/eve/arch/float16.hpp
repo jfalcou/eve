@@ -170,8 +170,8 @@ namespace eve
 
       public:
         constexpr float16_t() = default;
-        constexpr explicit float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr explicit float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
+        constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
+        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
 
         constexpr EVE_FORCEINLINE explicit operator float()              const noexcept { return into<float>(); }
