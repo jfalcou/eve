@@ -63,6 +63,8 @@ namespace eve
 //!          where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
 //!          infinite precision.
 //!
+//!  @groupheader{External references}
+//!   *  [Error free transformations](https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/two_prod.cpp}
@@ -71,7 +73,6 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
 
   namespace detail
   {

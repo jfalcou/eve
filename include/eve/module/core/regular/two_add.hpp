@@ -21,7 +21,7 @@
 namespace eve
 {
   template<typename Options>
-  struct two_add_t : elementwise_callable<two_add_t, Options, mag_option, raw_option>
+  struct two_add_t : elementwise_callable<two_add_t, Options, mag_option, raw_option, pedantic_option>
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -52,8 +52,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
+//!      // Regular overload
 //!      constexpr auto two_add(floating_value auto x, floating_value auto y)      noexcept; //1
 //!      constexpr auto two_add[raw](floating_value auto x, floating_value auto y) noexcept; //2
+//!
+//!      // Semantic options
+//!      constexpr auto two_add[pedantic](floating_value auto x, floating_value auto y)  noexcept; //3
 //!   }
 //!   @endcode
 //!
@@ -70,6 +74,7 @@ namespace eve
 //!
 //!     1. classical alogoritm (6 fps)
 //!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps)
+//!     3. take care of overflow
 //!
 //!  @groupheader{External references}
 //!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
@@ -98,7 +103,8 @@ namespace eve
         auto z  = r0 - a;
         err = a - (r0 - z) + (b - z);
       }
-      if constexpr( eve::platform::supports_infinites ) err = if_else(is_infinite(r0), eve::zero, err);
+      if constexpr( eve::platform::supports_infinites && O::contains(pedantic))
+        err = if_else(is_infinite(r0), eve::zero, err);
       return eve::zip(r0, err);
     }
   }

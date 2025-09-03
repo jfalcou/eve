@@ -73,7 +73,6 @@
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/flush_denormal.hpp>
 #include <eve/module/core/regular/fma.hpp>
-#include <eve/module/core/regular/fma_two_prod.hpp>
 #include <eve/module/core/regular/fmod.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
