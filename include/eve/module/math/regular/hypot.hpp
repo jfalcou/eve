@@ -10,12 +10,13 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/force_if_any.hpp>
 #include <eve/module/core.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option>
+  struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option, kahan_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -59,6 +60,7 @@ namespace eve
 //!      // Semantic options
 //!      constexpr auto hypot[raw](/*any of the above overloads*/)                      noexcept; // 4
 //!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto hypot[kahan](/*any of the above overloads*/)                    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -80,6 +82,7 @@ namespace eve
 //!    4. the naive formula is used.
 //!    5. The pedantic option`  computes the result without undue overflow or underflow
 //!        at intermediate stages of the computation and can be more accurate than the regular call.
+//!    6. kahan us naive formula but kahan-like compensated accurate summation.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
@@ -159,8 +162,11 @@ namespace eve
         }
         else
         {
-          r_t that = add(sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
-          return eve::sqrt(that);
+          r_t that = add[o](sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
+          if constexpr(O::contains(pedantic))
+            return force_if_any(o, eve::sqrt(that), eve::is_infinite, inf(as<r_t>()), eve::sqr(rs)...);
+          else
+            return eve::sqrt(that);
         }
       }
     }
