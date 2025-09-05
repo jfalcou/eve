@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option>
+  struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option, kahan_option>
   {
     template<value P, floating_value T0, floating_value T1, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -102,7 +102,7 @@ namespace eve
       else
       {
         if( eve::all(p == P(2)) ) return hypot[o](r_t(a0), r_t(a1), r_t(args)...);
-        else if( eve::all(p == P(1)) ) return manhattan/*[o]*/(r_t(a0), r_t(a1), r_t(args)...);
+        else if( eve::all(p == P(1)) ) return manhattan[o](r_t(a0), r_t(a1), r_t(args)...);
         else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
         else
         {
@@ -112,7 +112,7 @@ namespace eve
             auto any_is_inf = is_infinite(r_t(a0)) || (is_infinite(r_t(a1)) || ... || is_infinite(r_t(args)));
             auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
             auto f = [&](auto a){return pow_abs(ldexp[o](r_t(a), e), rp); };
-            r_t that = add(f(a0), f(a1), f(args)...);
+            r_t that = add[o](f(a0), f(a1), f(args)...);
             auto r = ldexp[pedantic](pow_abs(that, rec[pedantic](rp)), -e);
             auto isinfp = is_infinite(rp);
             auto rinf = maxabs(r_t(a0), r_t(a1), r_t(args)...);
@@ -122,7 +122,7 @@ namespace eve
           else
           {
             auto rp = r_t(p);
-            r_t that = add(pow_abs(r_t(a0),rp), pow_abs(r_t(a1), rp), pow_abs(r_t(args), rp)...);
+            r_t that = add[o](pow_abs(r_t(a0),rp), pow_abs(r_t(a1), rp), pow_abs(r_t(args), rp)...);
             auto r = pow(that, rec[pedantic](rp));
             auto isinfp = is_infinite(rp);
             if (eve::none(isinfp)) return r;
