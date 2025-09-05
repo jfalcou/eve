@@ -50,23 +50,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto am(floating_value auto u, floating_value auto x)                 noexcept; // 1
-//!
-//!      //Semantic modifiers
-//!      constexpr auto am[modular](floating_value auto u, floating_value auto alpha)    noexcept; // 1
-//!      constexpr auto am[eccentric(floating_value auto u, floating_value auto k)       noexcept; // 1
-//!      constexpr auto am[threshold = tol](floating_value auto u, floating_value auto x) noexcept;// 3
+//!      constexpr auto am(floating_value auto u, floating_value auto x)                  noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto am[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 2
 //!      constexpr auto am[logical_value autolm](/*any of the above overloads*/)          noexcept; // 2
+//!
+//!      //Semantic modifiers
+//!      constexpr auto am[modular](floating_value auto u, floating_value auto alpha)     noexcept; // 1
+//!      constexpr auto am[eccentric(floating_value auto u, floating_value auto k)        noexcept; // 1
+//!      constexpr auto am[threshold = tol](floating_value auto u, floating_value auto x) noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `u`: argument.
-//!     * `x`: amplitude parameter (\f$0\le m\le 1).
+//!     * `x`: amplitude parameter (\f$0\le m\le 1\f$).
 //!     * `alpha`: modular angle given in radian (modular option).
 //!     * `m` : elliptic modulus or eccentricity (eccentric option).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
@@ -85,7 +85,7 @@ namespace eve
 //!   * \f$ m = k^2 = \sin^2\alpha\f$ is named the parameter (no option).
 //!   Each of the above three quantities is completely determined by any of the others (given that they are non-negative).
 //!   Thus, they can be used interchangeably (give the right option).
-
+//!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: am](https://en.cppreference.com/w/cpp/numeric/special_functions/am)
 //!   *  [DLMF: Jacobi zeta](https://dlmf.nist.gov/22.16)
