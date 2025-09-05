@@ -21,7 +21,9 @@ namespace eve
   {
     static constexpr auto find()
     {
-      if constexpr(supports_simd)
+      constexpr bool is_fp16_no_support = std::same_as<Type, eve::float16_t> && !detail::supports_fp16_vector_ops;
+
+      if constexpr(supports_simd && !is_fp16_no_support)
       {
         constexpr auto width  = sizeof(Type) * Cardinal;
         constexpr bool f64    = std::is_same_v<Type,double>;

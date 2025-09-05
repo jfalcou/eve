@@ -170,8 +170,8 @@ namespace eve
 
       public:
         constexpr float16_t() = default;
-        constexpr explicit float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr explicit float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
+        constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
+        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
 
         constexpr EVE_FORCEINLINE explicit operator float()              const noexcept { return into<float>(); }
@@ -267,6 +267,11 @@ namespace eve
         constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16_t const& other) const noexcept
         {
           return detail::emulated_fp16_compare(data, other.data);
+        }
+
+        constexpr EVE_FORCEINLINE bool operator==(float16_t const& other) const noexcept
+        {
+          return data == other.data;
         }
     };
   #endif
