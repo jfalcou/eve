@@ -86,6 +86,7 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
   using eve::hypot;
   using eve::pedantic;
   using eve::raw;
+  using eve::kahan;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
@@ -105,6 +106,9 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
                   tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot[pedantic](kumi::tuple{a0, a1, a2}),
+                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  2);
+    TTS_ULP_EQUAL(hypot[kahan](kumi::tuple{a0, a1, a2}),
                   tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
    }
