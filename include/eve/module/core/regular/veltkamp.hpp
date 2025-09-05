@@ -31,7 +31,7 @@ namespace eve
 //!   @brief split a loating-point number with radix 2 and p mantissa bits
 //!   x into two floating-point numbers xh and xl such that, the
 //!   significand of xh fits in p-floor(p/2), the significand of xl fits in floor(p/2) digits, and
-//!   x = xh + xl` exactly. Where p is the number of mantissa bits of the floating type element.
+//!   `x = xh + xl` exactly. Where p is the number of mantissa bits of the floating type element.
 //!
 //!   **Defined in Header**
 //!
@@ -45,7 +45,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template<eve::floating_value T, eve::floating_value U  >
-//!      constexpr kumi::tuple<T, T> veltkamp(T x) noexcept;
+//!      constexpr eve::zipped<T, T> veltkamp(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -61,10 +61,9 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
-
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/veltkamp.cpp}
+//!  @godbolt{doc/core/veltkamp.cpp}
 //!
 //! @}
 //================================================================================================
