@@ -67,10 +67,10 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
-//!       * `a` is `x+y`
-//!       * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
-//!          where \f$\oplus\f$ adds its two parameters with infinite precision.
+//!       Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
+//!         * `a` is `x+y`
+//!         * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
+//!            where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
 //!     1. classical alogoritm (6 fps)
 //!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps)
