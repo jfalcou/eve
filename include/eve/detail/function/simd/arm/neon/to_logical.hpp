@@ -21,6 +21,6 @@ namespace eve::detail
   EVE_FORCEINLINE logical<wide<T, N>> to_logical( wide<T,N> const& v ) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    return eve::bit_cast(eve::bit_cast(v, as<wide<as_integer_t<T, unsigned>, N>>{}) > 0, as<logical<wide<T, N>>>{});
+    return v != 0;
   }
 }
