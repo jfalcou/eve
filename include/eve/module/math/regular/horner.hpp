@@ -13,11 +13,12 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits/helpers.hpp>
+#include <bit>
 
 namespace eve
 {
   template<typename Options>
-  struct horner_t : callable<horner_t, Options, pedantic_option>
+  struct horner_t : callable<horner_t, Options, pedantic_option, kahan_option>
   {
     template<floating_value X, value T, value... Ts>
     requires(eve::same_lanes_or_scalar<X, T, Ts...>)
@@ -66,7 +67,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto horner(floating_value auto x, value auto ...ci)                      noexcept; // 1
-//!      constexpr auto horner(floating_value auto x, eve::coefficients auto tci) noexcept; // 2
+//!      constexpr auto horner(floating_value auto x, eve::coefficients auto tci)            noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
@@ -74,6 +75,7 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto horner[pedantic](/*any of the above overloads*/)                     noexcept; // 4
+//!      constexpr auto horner[kahan](/*any of the above overloads*/)                        noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -98,6 +100,7 @@ namespace eve
 //!     2. Same as the call with the elements of the tuple.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!     4. `fma[pedantic]` instead of `fma` is used in internal computations.
+//!     5. a Kahan like compensated algorithm is used to enhance accuracy.
 //!
 //!    @note If the coefficients are simd values of cardinal N, this means you simultaneously
 //!      compute the values of N polynomials.
@@ -121,17 +124,37 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<X, C, Cs...>
     horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
     {
-      using r_t          = common_value_t<X, Cs...>;
-
-      if constexpr( sizeof...(Cs) == 0 ) return r_t(c);
+      using r_t = common_value_t<X, Cs...>;
+      constexpr auto N =  sizeof...(Cs);
+      if constexpr(N == 0)
+        return r_t(c);
+      else if constexpr(O::contains(kahan))
+      {
+        using a_t = std::array<r_t, N>;
+        a_t err;
+        err[0] = 0;
+        auto i = 1;
+        auto s = r_t(c);
+        auto x = r_t(xx);
+        auto step = [&s, &err, x, &i]( auto a){
+          auto [pi, epi] = eve::two_prod(s, x);
+          auto [si, esi] = eve::two_add(pi, a);
+          s = si;
+          err[i] = epi+esi;
+          ++i;
+          return s;
+        };
+        ((s = step(r_t(cs))), ...);
+        using tup_t =  kumi::result::generate_t<N, decltype([](std::size_t){return r_t(); })>;
+        auto t = std::bit_cast<tup_t, a_t>(err);
+        return s+ eve::horner(x, coefficients(t));
+      }
       else
       {
         auto x = r_t(xx);
         r_t  that{0};
-
         that = fma[o](that, x, c);
         ((that = fma[o](that, x, cs)), ...);
-
         return that;
       }
     }
