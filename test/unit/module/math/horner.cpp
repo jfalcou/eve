@@ -43,6 +43,7 @@ TTS_CASE_WITH("Check behavior of horner on wide",
   using eve::fma;
   using eve::horner;
   using eve::pedantic;
+  using eve::kahan;
 
   {
     TTS_EQUAL(horner(a0, 0), T(0));
@@ -54,7 +55,12 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(horner[pedantic](a0, 1), T(1));
     TTS_EQUAL(horner[pedantic](a0, 1, 2), fma[pedantic](a0, 1, 2));
     TTS_EQUAL(horner[pedantic](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-  }
+
+    TTS_EQUAL(horner[kahan](a0, 0), T(0));
+    TTS_EQUAL(horner[kahan](a0, 1), T(1));
+    TTS_EQUAL(horner[kahan](a0, 1, 2), fma[pedantic](a0, 1, 2));
+    TTS_ULP_EQUAL(horner[kahan](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3), 0.5);
+ }
 
   //============================================================================
   //== tuples
