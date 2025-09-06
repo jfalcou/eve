@@ -2,7 +2,6 @@
 #include <eve/module/algo.hpp>
 #include <tts/tts.hpp>
 #include <iostream>
-//#include <numeric>
 #include <vector>
 
 int main()
