@@ -61,6 +61,8 @@ namespace eve
 //!    where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
 //!    infinite precision.
 //!
+//!  @groupheader{External references}
+//!   *  [Exact and Approximated error of the FMA](https://inria.hal.science/inria-00429617/document)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/two_fma_approx.cpp}

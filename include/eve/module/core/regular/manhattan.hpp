@@ -13,25 +13,45 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/detail/force_if_any.hpp>
+#include <eve/module/core/constant/inf.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option, lower_option,
-                                upper_option, strict_option>
+                                upper_option, strict_option, widen_option, kahan_option>
   {
-    template<value T0, eve::value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen) && (sizeof...(Ts) != 0))
+      EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()(Ts...ts)
+      const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen) && (sizeof...(Ts) != 0))
+      EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    constexpr operator()(Ts...ts)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen) )
+      EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(manhattan_t, manhattan_);
   };
@@ -64,6 +84,7 @@ namespace eve
 //!      // Semantic options
 //!      constexpr auto manhattan[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!      constexpr auto manhattan[pedantic](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto manhattan[kahan](/*any of the above overloads*/)                    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -81,7 +102,11 @@ namespace eve
 //!       3. [The operation is performed conditionnaly](@ref conditional)
 //!       4. internally uses `saturated` options.
 //!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+//!       6. uses kahan like compensated algorithm for better accuracy.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia taxicab norm](https://en.wikipedia.org/wiki/Norm_(mathematics))
+
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/manhattan.cpp}
 //================================================================================================
@@ -92,35 +117,42 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+//     template<typename T, callable_options O>
+//     EVE_FORCEINLINE constexpr auto
+//     manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+//     {
+//       if constexpr (!O::contains(saturated) || floating_value<T>)
+//         return eve::abs(a0);
+//       else
+//         return eve::abs[saturated](a0);
+//     }
+
+    template<typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
-      if constexpr (!O::contains(saturated) || floating_value<T>)
-        return eve::abs(a0);
+      if constexpr(O::contains(widen))
+        return manhattan[o.drop(widen)](upgrade(args)...);
       else
-        return eve::abs[saturated](a0);
-    }
-    template<typename T0,typename T1, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    manhattan_(EVE_REQUIRES(cpu_), O const & o , T0 a0, T1 a1, Ts... args) noexcept
-    {
-      using r_t = common_value_t<T0, T1, Ts...>;
-      auto l_abs = [](){
-        if constexpr(integral_value<r_t> && O::contains(saturated))
-          return eve::abs[saturated];
-        else
-          return eve::abs;
-      };
-      auto r = eve::add[o](l_abs()(r_t(a0)), l_abs()(r_t(a1)), l_abs()(r_t(args))...);
-      if constexpr(O::contains(pedantic))
       {
-        auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));
-        inf_found =  (inf_found || ... || is_infinite(r_t(args)));
-        return if_else(inf_found, inf(as(r)), r);
+        using r_t = common_value_t<Ts...>;
+        auto l_abs = [](){
+          if constexpr(integral_value<r_t> && O::contains(saturated))
+          return eve::abs[saturated];
+          else
+            return eve::abs;
+        }();
+        if constexpr(sizeof...(Ts) == 1)
+          return l_abs(args...);
+        else
+        {
+          r_t r = eve::add[o](l_abs(r_t(args))...);
+          if constexpr(integral_value<r_t>)
+            return r;
+          else
+            return force_if_any(o, r, eve::is_infinite, inf(as(r)), args...);
+        }
       }
-      else
-        return r;
     }
   }
 }

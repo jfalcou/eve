@@ -16,36 +16,39 @@ namespace eve
 {
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
-                                upper_option, to_nearest_odd_option, strict_option, widen_option, mod_option>
+                                upper_option, to_nearest_odd_option, strict_option,
+                                widen_option, mod_option, kahan_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()( Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
-    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    constexpr operator()(Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+      EVE_FORCEINLINE constexpr
     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+      EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(add_t, add_);
   };
@@ -84,6 +87,7 @@ namespace eve
 //!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 7
 //!      constexpr auto add[to_nearest_odd](/*any of the above overloads*/)           noexcept; // 8
 //!      constexpr auto add[mod = p](/*any of the above overloads*/)                  noexcept; // 9
+//!      constexpr auto add[kahan](/*any of the above overloads*/)                    noexcept; // 10
 //!   }
 //!   @endcode
 //!
@@ -117,6 +121,9 @@ namespace eve
 //!    8. The summation is computed in a round toward nearest mode but tie to odd (not hardware available on common systems).
 //!    9. compute the result in modular arithmetic. the parameters must be floating positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.
+//!    10. A kahan like summation is performed ensuring better accuracy,  using two-add function. If the  `x`, `...xs` parameter
+//!       are assumed  positive and non increasing (or at least with non increasing exponents) adding raw option can
+//!       speed a bit the accurate summation,
 //!
 //!   @note
 //!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
@@ -125,6 +132,8 @@ namespace eve
 //!       unless it has to deal with uncommon accuracy or order properties requirements whose enforcement can have
 //!       an heavy cost even if hardware fma-like processor intrinsics are available.
 //!
+//!  @groupheader{External references}
+//!    {kahan summation](https://en.wikipedia.org/wiki/Kahan_summation_algorithm)
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/add.cpp}

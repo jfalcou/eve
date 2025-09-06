@@ -14,29 +14,40 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option, strict_option>
+  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option,
+                                    lower_option, strict_option, kahan_option,
+                                    widen_option>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
-
-    template<eve::floating_value T0, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
-    operator()(T0 t0, Ts...ts) const noexcept
+    template<value... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+    EVE_FORCEINLINE constexpr common_value_t<Ts...>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, ts...);
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<value... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr common_value_t<eve::upgrade_t<Ts>...>
+    operator()(Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<integral_value T0,  integral_value T1>
+    requires(eve::same_lanes_or_scalar<T0, T1>)
+      EVE_FORCEINLINE common_value_t<T0, T1>
+    constexpr operator()(T0 t0, T1 t1)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-    {
-      return EVE_DISPATCH_CALL(t);
-    }
+    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
@@ -73,6 +84,8 @@ namespace eve
 //!      constexpr auto average[lower](eve::value auto x, eve::value auto y)                        noexcept; // 7
 //!      constexpr auto average[upper][strict](eve::value auto x, eve::value auto y)                noexcept; // 6
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
+//!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
+//!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
 //!
 //!   }
 //!   @endcode
@@ -108,11 +121,15 @@ namespace eve
 //!        For integral type entries, these are similar to `ceil((x+y)/2)`, but converted to an integral value.
 //!     7. The average is computed in a 'round toward \f$ +\infty\f$ mode. The result is guaranted
 //!        to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
-//!       ensures generally faster computation, but strict inequality.
-//         For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
+//!        ensures generally faster computation, but strict inequality.
+//!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
+//!     8. The average is computed in the double sized element type (if available).
+//!     9. Compensated algorithm for better precision.
+//!
+//!  @note unless raw option is used no spurious overflow can be obtained.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
+//!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/average.cpp}

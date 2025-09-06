@@ -26,7 +26,7 @@
 //! These functions allows performing some basic arithmetics operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
-//! [diff_of_prod](@ref eve::diff_of_prod), [fast_two_add](@ref eve::fast_two_add),
+//! [diff_of_prod](@ref eve::diff_of_prod),
 //! [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma), [two_add](@ref eve::two_add),
 //! [two_prod](@ref eve::two_prod), .
 //!

@@ -36,6 +36,7 @@ namespace eve
 //! @{
 //!   @var ulpdist
 //!   @brief Computes the unit in the last place distance of its arguments.
+//!     i.e. the number of representable values between these two divided by 2.
 //!
 //!   @groupheader{Header file}
 //!

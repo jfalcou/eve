@@ -120,18 +120,27 @@ namespace eve::detail
     return add[eve::is_ltz(s)](s, p);
   }
 
+  template<callable_options O, typename T0>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
+  {
+    if constexpr(O::contains(widen))
+      return upgrade(a);
+    else
+      return a;
+  }
 
-  template<callable_options O, typename T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  template<callable_options O, typename T0, typename T1, typename ... Ts>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   requires(!O::contains(left)&& (sizeof...(Ts) != 0))
   {
+    using r_t = eve::common_value_t<Ts...>;
     if constexpr(O::contains(widen))
       return sub[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
     else
     {
-      r0   = sub[o](r0,r1);
-      ((r0 = sub[o](r0,rs)),...);
-      return r0;
+      r_t r   = sub[o](r_t(r0),r_t(r1));
+      ((r0 = sub[o](r, r_t(rs))),...);
+      return r;
     }
   }
 }

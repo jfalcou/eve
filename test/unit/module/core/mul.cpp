@@ -207,3 +207,19 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::mul)(eve::wide)",
   TTS_IEEE_EQUAL(eve::mul[mask](a0, a1),
                  eve::if_else(mask, eve::mul(a0, a1), a0));
 };
+
+TTS_CASE_WITH("Check behavior of mul kahan on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::mul;
+  using eve::widen;
+  using eve::kahan;
+  using eve::as;
+  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+    TTS_ULP_EQUAL(mul[kahan](a0, a1, a2), eve::downgrade(mul[widen](a0, a1, a2)), 0.5);
+
+};

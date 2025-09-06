@@ -2,12 +2,11 @@
 #include <eve/module/algo.hpp>
 #include <tts/tts.hpp>
 #include <iostream>
-#include <numeric>
 #include <vector>
 
 int main()
 {
-  std::vector<float>  v = {1.0f, 2.0f, 3.0f, 4.0f};
+  std::vector<float>  v = {1.0f, 2.0f, 3.0f, 4.0f, -1.0f, -2.0f, -3.0f, -4.0f, 1.0f, 2.0f, 3.0f, 4.0f};
 
   std::cout << " -> v                                                                                                                        = "
             << tts::as_string(v)

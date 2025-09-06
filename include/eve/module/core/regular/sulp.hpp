@@ -71,6 +71,8 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The distance of x to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
 //!
+//!   @note invalid entries return NaN
+//!
 //!  @groupheader{External references}
 //!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 //!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)

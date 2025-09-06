@@ -16,7 +16,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct radinpi_t : elementwise_callable<radinpi_t, Options>
+  struct radinpi_t : elementwise_callable<radinpi_t, Options, kahan_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -75,7 +75,14 @@ namespace eve
     template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return inv_pi(eve::as(a)) * a;
+      if constexpr(O::contains(kahan))
+      {
+        auto pi_h = eve::inv_pi(eve::as<T>());
+        auto pi_l = ieee_constant<1.2841276633451830e-08, -1.96786766751824869411566603270715334e-17>(as<T>());
+        return fma[pedantic](pi_h, a, pi_l*a);
+      }
+      else
+        return inv_pi(eve::as(a)) * a;
     }
   }
 }
