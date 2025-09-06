@@ -28,7 +28,6 @@
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/traits/updown.hpp>
-#include <iostream>
 
 namespace eve::detail
 {

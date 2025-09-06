@@ -23,7 +23,6 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
