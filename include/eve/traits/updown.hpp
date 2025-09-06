@@ -13,7 +13,9 @@ namespace eve
 {
   namespace detail
   {
-    template < typename T > struct down
+    template<typename T> struct down;
+
+    template<value T> struct down<T>
     {
       using v_t = eve::element_type_t<T>;
 
@@ -42,7 +44,9 @@ namespace eve
       using type = eve::as_wide_as_t<decltype(sd()), T>;
     };
 
-    template < typename T > struct up
+    template < typename T > struct up;
+
+    template<value T> struct up<T>
     {
       using v_t = eve::element_type_t<T>;
 
@@ -71,7 +75,6 @@ namespace eve
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
   }
-
 
   template < typename T > using downgrade_t = typename detail::down<T>::type;
   template < typename T > using upgrade_t = typename detail::up<T>::type;
