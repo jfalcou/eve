@@ -66,6 +66,13 @@ namespace eve
       return EVE_DISPATCH_CALL(n, ts...);
     }
 
+   template<conditional_expr C, typename ...Ts>
+   EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>,C>
+    operator()(C mask, Ts... ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(mask,ts...);
+    }
+
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
 
@@ -103,7 +110,7 @@ namespace eve
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
 //!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
 //!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
-//!      constexpr auto average[welford] (/* any of the above overloads */)                         noexcept; // 10
+//!      constexpr auto average[welford] (eve::floating_value auto ... x)                           noexcept; // 10
 //!      constexpr auto average[welford](size_t n,  eve::floating_value auto prevavg,
 //!                                                 eve::floating_value auto ... x)                 noexcept; // 11
 //!
