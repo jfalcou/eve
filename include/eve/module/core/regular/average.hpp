@@ -14,9 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option,
+  struct average_t : callable<average_t, Options, raw_option, upper_option,
                                     lower_option, strict_option, kahan_option,
-                                    widen_option>
+                                    widen_option, welford_option>
   {
     template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
@@ -48,6 +48,23 @@ namespace eve
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
+
+    template<value... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+    EVE_FORCEINLINE constexpr common_value_t<Ts...>
+    operator()(std::size_t n, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(n, ts...);
+    }
+
+    template<value... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>>
+    operator()(std::size_t n, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(n, ts...);
+    }
 
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
@@ -86,6 +103,7 @@ namespace eve
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
 //!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
 //!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
+//!      constexpr auto average[welford] (/* any of the above overloads */)                         noexcept; // 10
 //!
 //!   }
 //!   @endcode
@@ -124,7 +142,8 @@ namespace eve
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
 //!     8. The average is computed in the double sized element type (if available).
-//!     9. Compensated algorithm for better precision.
+//!     9. Compesated algorithm for better precision.
+//!     10. Uses the wWlford incremental algorithm.
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
 //!
