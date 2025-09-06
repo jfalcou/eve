@@ -84,7 +84,27 @@ namespace eve::detail
       }
       else if constexpr(O::contains(welford))
       {
-        return average[welford](1u, a0, args...);
+        auto wf = [](std::size_t n, auto aa0, auto... as){
+          e_t count(n);
+          auto welfordstep = [&count](auto mprev, auto a)
+          {
+            count = inc(count);
+            r_t mcur = mprev+(a-mprev)/count;
+            return mcur;
+          };
+          auto p0 = r_t(aa0);
+          ((p0 = welfordstep(p0,r_t(as))),...);
+          return p0;
+        };
+        if constexpr(integral_scalar_value<T0>)
+        {
+          return  wf(a0, args...);
+        }
+        else
+        {
+          return wf(1u, a0, args...);
+        }
+
       }
       else
       {
@@ -97,24 +117,25 @@ namespace eve::detail
     }
   }
 
-  template<typename T0, typename ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  average_(EVE_REQUIRES(cpu_), O const & , std::size_t n, T0 prev_mean, Ts const &... args) noexcept
-  requires(O::contains(welford))
-  {
-    using r_t =  eve::common_value_t<T0, Ts...>;
-    using e_t =  eve::element_type_t<r_t>;
-    e_t count(n);
-    auto welfordstep = [&count](auto mprev, auto a)
-      {
-        count = inc(count);
-        auto mcur = mprev+(a-mprev)/count;
-        return mcur;
-      };
-    auto p0 = r_t(prev_mean);
-    ((p0 = welfordstep(p0,args)),...);
-    return p0;
-  }
+//   template<typename T0, typename ... Ts, callable_options O>
+//   EVE_FORCEINLINE constexpr auto
+//   average_(EVE_REQUIRES(cpu_), O const & , std::size_t n, T0 prev_mean, Ts const &... args) noexcept
+//   requires(O::contains(welford))
+//   {
+//     std::cout << "icitte" << std::endl;
+//     using r_t =  eve::common_value_t<T0, Ts...>;
+//     using e_t =  eve::element_type_t<r_t>;
+//     e_t count(n);
+//     auto welfordstep = [&count](auto mprev, auto a)
+//       {
+//         count = inc(count);
+//         r_t mcur = mprev+(a-mprev)/count;
+//         return mcur;
+//       };
+//     auto p0 = r_t(prev_mean);
+//     ((p0 = welfordstep(p0,r_t(args))),...);
+//     return p0;
+//   }
 
   template<conditional_expr C, typename T0, typename ... Ts, callable_options O>
 
