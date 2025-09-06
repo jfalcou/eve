@@ -117,36 +117,11 @@ namespace eve::detail
     }
   }
 
-//   template<typename T0, typename ... Ts, callable_options O>
-//   EVE_FORCEINLINE constexpr auto
-//   average_(EVE_REQUIRES(cpu_), O const & , std::size_t n, T0 prev_mean, Ts const &... args) noexcept
-//   requires(O::contains(welford))
-//   {
-//     std::cout << "icitte" << std::endl;
-//     using r_t =  eve::common_value_t<T0, Ts...>;
-//     using e_t =  eve::element_type_t<r_t>;
-//     e_t count(n);
-//     auto welfordstep = [&count](auto mprev, auto a)
-//       {
-//         count = inc(count);
-//         r_t mcur = mprev+(a-mprev)/count;
-//         return mcur;
-//       };
-//     auto p0 = r_t(prev_mean);
-//     ((p0 = welfordstep(p0,r_t(args))),...);
-//     return p0;
-//   }
-
   template<conditional_expr C, typename T0, typename ... Ts, callable_options O>
-
-  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), C c, O const& o, T0 t0, Ts... ts) noexcept
-  requires(!O::contains(welford))
+  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), C cond , O const& o, T0 t0, Ts... ts) noexcept
   {
     auto z = average[o](t0, ts...);
-    if constexpr(O::contains(eve::condition_key))
-      return  mask_op(c[eve::condition_key], return_2nd, t0, z);
-    else
-      return z;
+    return if_else(cond, z, t0);
   }
 
   template<kumi::non_empty_product_type Tup, callable_options O>
