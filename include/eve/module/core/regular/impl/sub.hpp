@@ -25,6 +25,15 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename T0>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
+  {
+    if constexpr(O::contains(widen))
+      return upgrade(a);
+    else
+      return a;
+  }
+
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
