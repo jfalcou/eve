@@ -105,8 +105,8 @@ namespace eve
 //!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
 //!      constexpr auto average[welford] (/* any of the above overloads */)                         noexcept; // 10
 //!      constexpr auto average[welford](size_t n,  eve::floating_value auto prevavg,
-//!                                                 eve::floating_value auto ... x)                 noexcept; // 11             
-//!    
+//!                                                 eve::floating_value auto ... x)                 noexcept; // 11
+//!
 //!   }
 //!   @endcode
 //!
@@ -116,7 +116,7 @@ namespace eve
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `n': number of elements on which the mean was previously computed
-//!     * `prvavg': previously computed average of n elements.  
+//!     * `prvavg': previously computed average of n elements.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -149,9 +149,12 @@ namespace eve
 //!     9. Compesated algorithm for better precision.
 //!     10. Uses the wWlford incremental algorithm.
 //!     11. Uses incremental version of welford from a previously computed mean of n elements stored in
-//!         prevavg and other new values  
+//!         `prevavg` and other new values
 //!
-//!  @note unless raw option is used no spurious overflow can be obtained.
+//!  @note
+//!     1.  with raw option is a spurious overflow can be obtained.
+//!     2.  `mean`can be used as an alias to `average`.
+//!
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
@@ -160,6 +163,7 @@ namespace eve
 //!  @godbolt{doc/core/average.cpp}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
+  inline constexpr auto mean = functor<omega_t>;
 //================================================================================================
 //! @}
 //================================================================================================
