@@ -104,7 +104,9 @@ namespace eve
 //!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
 //!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
 //!      constexpr auto average[welford] (/* any of the above overloads */)                         noexcept; // 10
-//!
+//!      constexpr auto average[welford](size_t n,  eve::floating_value auto prevavg,
+//!                                                 eve::floating_value auto ... x)                 noexcept; // 11             
+//!    
 //!   }
 //!   @endcode
 //!
@@ -113,6 +115,8 @@ namespace eve
 //!     * `x`, `y`: [integral value](@ref eve::integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `n': number of elements on which the mean was previously computed
+//!     * `prvavg': previously computed average of n elements.  
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -144,6 +148,8 @@ namespace eve
 //!     8. The average is computed in the double sized element type (if available).
 //!     9. Compesated algorithm for better precision.
 //!     10. Uses the wWlford incremental algorithm.
+//!     11. Uses incremental version of welford from a previously computed mean of n elements stored in
+//!         prevavg and other new values  
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
 //!
