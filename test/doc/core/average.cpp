@@ -19,7 +19,7 @@ int main()
   std::cout << "-> average(wf0, wf1)                          = " << eve::average(wf0, wf1) << "\n";
   std::cout << "-> average(wi0, wi1)                          = " << eve::average(wi0, wi1) << "\n";
 //  std::cout << "-> average[ignore_last(2)](wi0, wi1)          = " << eve::average[eve::ignore_last(2)](wi0, wi1) << "\n";
-  std::cout << "-> average[wi0 != 0](wi0, wi1)                = " << eve::average[wi0 != 0](wi0, wi1) << "\n";
+//  std::cout << "-> average[wi0 != 1.0](wf0, wf1)                = " << eve::average[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> average[raw](wi0, wi1)                     = " << eve::average[eve::raw](wi0, wi1) << "\n";
   std::cout << "-> average[upper](wi0, wi1)                   = " << eve::average[eve::upper](wi0, wi1) << "\n";
   std::cout << "-> average[lower](wi0, wi1)                   = " << eve::average[eve::lower](wi0, wi1) << "\n";
@@ -34,8 +34,8 @@ int main()
   auto deps_2 = double(eps_2);
   std::cout << "-> average[kahan](1.0, deps_2, deps_2, eps_2) = " << float(eve::average[eve::kahan](1.0, deps_2, deps_2, deps_2)) << " // double computation converted to float\n";
   std::cout << "-> average[welford](1.0, deps_2, deps_2, eps_2)  = " << float(eve::average[eve::welford](1.0, deps_2, deps_2, deps_2))<< "\n";
-//   auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
-//   std::cout << "-> average[kahan](tup)   = " << eve::average[eve::kahan](tup) << "\n";
+  auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
+  std::cout << "-> average[kahan](tup)   = " << eve::average[eve::kahan](tup) << "\n";
 
   auto m4 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0);
   auto m5 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0, 5.0);
