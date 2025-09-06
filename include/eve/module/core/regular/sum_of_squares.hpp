@@ -25,23 +25,22 @@ namespace eve
                                            saturated_option, lower_option, upper_option,
                                            strict_option, widen_option, kahan_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()(Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
-    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    constexpr operator()(Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
-
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
@@ -123,11 +122,14 @@ namespace eve
 
     template<value T0, value... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o , T0 a0, Ts... args) noexcept
+    sum_of_squares_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept
     requires(!O::contains(widen))
     {
       using r_t = common_value_t<T0, Ts...>;
-      if constexpr(sizeof...(Ts) == 0) return eve::sqr[o](a0);
+      if constexpr(O::contains(widen))
+        return sum_of_squares[o.drop(widen)](upgrade(args)...);
+      else if constexpr(sizeof...(Ts) == 0)
+        return eve::sqr[o](a0);
       else if constexpr(O::contains(kahan))
       {
         auto pair_sqr_add = [](auto pair0, auto r1){

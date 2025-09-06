@@ -26,13 +26,21 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename T0>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
+  {
+    if constexpr(O::contains(widen))
+      return upgrade(a);
+    else
+      return a;
+  }
 
   template<callable_options O, typename T0, typename T1>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T0 a0, T1 b0) noexcept
   {
-      using r_t =  eve::common_value_t<T0, T1>;
-      auto a = r_t(a0);
-      auto b = r_t(b0);
+    using r_t =  eve::common_value_t<T0, T1>;
+    auto a = r_t(a0);
+    auto b = r_t(b0);
     if constexpr(O::contains(mod))
     {
       auto p = o[mod].value(r_t());
@@ -104,8 +112,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  template<typename T0, typename T1, typename ... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   requires(sizeof...(Ts) != 0)
   {
     using r_t = eve::common_value_t<Ts...>;

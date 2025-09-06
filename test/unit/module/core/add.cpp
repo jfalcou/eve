@@ -85,6 +85,7 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::upper;
   using eve::strict;
 
+  TTS_ULP_EQUAL( add(a0), a0, 0.5); 
   TTS_ULP_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
