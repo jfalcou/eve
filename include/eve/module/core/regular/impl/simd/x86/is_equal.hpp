@@ -107,7 +107,7 @@ namespace eve::detail
         else if constexpr( c == category::uint32x4 ) return _mm_cmpeq_epi32(v, w);
         else if constexpr( c == category::uint16x8 ) return _mm_cmpeq_epi16(v, w);
         else if constexpr( c == category::uint8x16 ) return _mm_cmpeq_epi8(v, w);
-        else return aggregate(eq, v, w);
+        else return slice_apply(eq, v, w);
       }
     }
   }
