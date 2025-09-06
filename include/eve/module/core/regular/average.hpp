@@ -66,12 +66,12 @@ namespace eve
       return EVE_DISPATCH_CALL(n, ts...);
     }
 
-   template<conditional_expr C, typename ...Ts>
-   EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>,C>
-    operator()(C mask, Ts... ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(mask,ts...);
-    }
+//    template<conditional_expr C, typename ...Ts>
+//    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>,C>
+//     operator()(C mask, Ts... ts) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(mask,ts...);
+//     }
 
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
