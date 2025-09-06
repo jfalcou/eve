@@ -18,9 +18,9 @@ int main()
   std::cout << "<- wu0           = " << wu0 << "\n";
   std::cout << "<- wu1           = " << wu1 << "\n";
 
-  std::cout << "-> dot(wf0, wf1, wf1, wf0) = " << eve::dot(wf0, wf1, wf1, wf0) << "\n";
-  std::cout << "-> dot(wu0, wu1, wu0, wu1) = " << eve::dot(wu0, wu1, wu0, wu1) << "\n";
-  std::cout << "-> dot(wi0, wi1 wi0, wi1)  = " << eve::dot(wi0, wi1, wi0, wi1) << "\n";
+  std::cout << "-> dot(wf0, wf1) = " << eve::dot(wf0, wf1) << "\n";
+  std::cout << "-> dot(wu0, wu1) = " << eve::dot(wu0, wu1) << "\n";
+  std::cout << "-> dot(wi0, wi1)  = " << eve::dot(wi0, wi1) << "\n";
   std::cout << "-> dot(wf0, wf1, wf0, wf1) = "<< eve::dot(wf0, wf1, wf0, wf1) << "\n";
   std::cout << "-> dot[kahan](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::kahan](wf0, wf1, wf0, wf1) << "\n";
   std::cout << "-> dot[widen](wf0, wf1, wf0, wf1) = "<< eve::dot[eve::widen](wf0, wf1, wf0, wf1) << "\n";
