@@ -163,7 +163,7 @@ namespace eve
 //!  @godbolt{doc/core/average.cpp}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
-  inline constexpr auto mean = functor<omega_t>;
+  inline constexpr auto mean = functor<average_t>;
 //================================================================================================
 //! @}
 //================================================================================================
