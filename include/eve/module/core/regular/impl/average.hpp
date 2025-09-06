@@ -84,16 +84,7 @@ namespace eve::detail
       }
       else if constexpr(O::contains(welford))
       {
-        e_t count(1);
-        auto welfordstep = [&count](auto mprev, auto a)
-        {
-          count = inc(count);
-          auto mcur = mprev+(a-mprev)/count;
-          return mcur;
-        };
-        auto p0 = r_t(a0);
-        ((p0 = welfordstep(p0,args)),...);
-        return p0;
+        return average[welford](1u, a0, args...);
       }
       else
       {
@@ -127,12 +118,27 @@ namespace eve::detail
 
   template<conditional_expr C, typename T0, typename ... Ts, callable_options O>
 
-  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), C c, T0 t0, Ts... ts) noexcept
+  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), C c, O const& o, T0 t0, Ts... ts) noexcept
+  requires(!O::contains(welford))
   {
-    auto z = average(t0, ts...);
+    auto z = average[o](t0, ts...);
     if constexpr(O::contains(eve::condition_key))
       return  mask_op(c[eve::condition_key], return_2nd, t0, z);
     else
       return z;
+  }
+
+  template<kumi::non_empty_product_type Tup, callable_options O>
+  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), O const & o, Tup tup) noexcept
+  requires(!O::contains(welford))
+  {
+    return kumi::apply([o](auto...m){return average[o](m...);}, tup);
+  }
+
+  template<kumi::non_empty_product_type Tup, callable_options O>
+  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), O const & o, std::size_t n, Tup tup) noexcept
+  requires(O::contains(welford))
+  {
+    return kumi::apply([n, o](auto...m){return average[o](n, m...);}, tup);
   }
 }
