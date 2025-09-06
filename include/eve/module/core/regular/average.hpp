@@ -124,7 +124,7 @@ namespace eve
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
 //!     8. The average is computed in the double sized element type (if available).
-//!     9. Compesated algorithm for better precision.
+//!     9. Compensated algorithm for better precision.
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
 //!

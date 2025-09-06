@@ -11,7 +11,7 @@
 
 namespace eve::detail
 {
-  // if option is pedantic and any ts satisfy test value is returned else r
+  // if the `pedantic` option is satisfied and any  satisfies the predicate test, value is returned else r.
   //
   // This is used in manhattan,  sum_of_squares, hypot and lpnorm.
   template <typename O, typename T, typename ...Ts> auto force_if_any(O, T r, auto test, auto value, Ts...ts)

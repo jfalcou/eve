@@ -97,8 +97,8 @@ namespace eve
 //!    **Return value**
 //!
 //!    1. dot product. \f$\sum_s x_s*y_s\f$.
-//!    2. use teh content of the tuples
-//!    3. With kahan option the result is more accurately computed using a compensated kahan like algorithm.
+//!    2. use the content of the tuples
+//!    3. Uses a compensated kahan-like algorithm to compute the result more accurately
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dot.cpp}
