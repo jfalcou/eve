@@ -85,6 +85,7 @@ namespace eve
 //!      constexpr auto manhattan[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!      constexpr auto manhattan[pedantic](/*any of the above overloads*/)                 noexcept; // 5
 //!      constexpr auto manhattan[kahan](/*any of the above overloads*/)                    noexcept; // 6
+//!      constexpr auto manhattan[widen](/*any of the above overloads*/)                    noexcept; // 7
 //!   }
 //!   @endcode
 //!
