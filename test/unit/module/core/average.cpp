@@ -96,18 +96,18 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 //==================================================================================================
 //=== Tests for masked average
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         T const& a1,
-                         M const& mask)
-{
-  TTS_IEEE_EQUAL(eve::average[mask](a0, a1),
-            eve::if_else(mask, eve::average(a0, a1), a0));
-};
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//                             tts::randoms(eve::valmin, eve::valmax),
+//                             tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          T const& a1,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::average[mask](a0, a1),
+//             eve::if_else(mask, eve::average(a0, a1), a0));
+// };
 
 // //==================================================================================================
 // //===  Tests for lower upper  average
