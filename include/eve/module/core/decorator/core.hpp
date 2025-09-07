@@ -34,7 +34,6 @@ namespace eve
   struct kind_2_mode          {};
   struct left_mode            {};
   struct mod_mode             {};
-  struct mag_mode             {};
   struct modular_mode         {};
   struct numeric_mode         {};
   struct p_kind_mode          {};
@@ -75,7 +74,6 @@ namespace eve
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
-  [[maybe_unused]] inline constexpr auto mag              = ::rbr::flag( mag_mode{}             );
   [[maybe_unused]] inline constexpr auto modular          = ::rbr::flag( modular_mode{}         );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
@@ -108,7 +106,6 @@ namespace eve
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
   struct left_option            : detail::exact_option<left>            {};
-  struct mag_option             : detail::exact_option<mag>             {};
   struct modular_option         : detail::exact_option<modular>         {};
   struct numeric_option         : detail::exact_option<numeric>         {};
   struct p_kind_option          : detail::exact_option<p_kind>          {};

@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct two_sub_t : elementwise_callable<two_sub_t, Options, mag_option, raw_option, pedantic_option>
+  struct two_sub_t : elementwise_callable<two_sub_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T, eve::floating_value U>
     constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>>

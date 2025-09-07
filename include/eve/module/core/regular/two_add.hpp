@@ -21,7 +21,7 @@
 namespace eve
 {
   template<typename Options>
-  struct two_add_t : elementwise_callable<two_add_t, Options, mag_option, raw_option, pedantic_option>
+  struct two_add_t : elementwise_callable<two_add_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
