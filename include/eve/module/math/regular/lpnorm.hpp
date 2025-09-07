@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option, kahan_option>
+  struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option, kahan_option, widen_option>
   {
     template<value P, floating_value T0, floating_value T1, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -62,6 +62,10 @@ namespace eve
 //!      constexpr auto lpnorm[conditional_expr auto c](loating_value auto p, floating_value auto x,floating_value auto... xs)  noexcept; // 2
 //!      constexpr auto lpnorm[logical_value auto m](loating_value auto p, floating_value auto x,floating_value auto... xs)     noexcept; // 2
 //!
+//!      // Semantic options
+//!      constexpr auto average[pedantic](/* any of the above overloads */)                                                     noexcept; // 3
+//!      constexpr auto average[widen](/* any of the above overloads */)                                                        noexcept; // 4
+//!      constexpr auto average[kahan](/* any of the above overloads */)                                                        noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -76,6 +80,9 @@ namespace eve
 //!
 //!   1. \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
 //!   2. [The operation is performed conditionnaly](@ref conditional)
+//!   3. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+//!   4. The summation is computed in the double sized element type (if available).
+//!   5. Kahan like compensated algorithm is used in internal summation for better precision.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/lpnorm.cpp}
@@ -93,7 +100,9 @@ namespace eve
     {
       using c_t = common_value_t<T0, T1, Ts...>;
       using r_t = as_wide_as_t<c_t, P>;
-      if constexpr( integral_value<P> )
+      if constexpr(O::contains(widen))
+        return lpnorm(p, upgrade(a0), upgrade(a1), upgrade(args)...);
+      else if constexpr( integral_value<P> )
       {
         using e_t =  element_type_t<r_t>;
         auto fp =  convert(p, eve::as<e_t>());
