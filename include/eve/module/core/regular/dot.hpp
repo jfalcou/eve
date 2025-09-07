@@ -63,7 +63,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dot
-//!   @brief `elementwise_callable` object computing elementwise the dot product
+//!   @brief `elementwise_callable` object computing the elementwise  dot product
 //!     of the vector of the first half parameter by thevector of the last half.
 //!
 //!   @warning This is not a reduction ! For reals the dot product is the product
