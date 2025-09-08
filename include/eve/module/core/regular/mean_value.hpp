@@ -33,12 +33,15 @@ namespace eve
     template<typename>    struct is_wf_helper          : public std::false_type{};
     template<typename T>  struct is_wf_helper<wf<T>>   : public std::true_type{};
     template<typename T>  struct is_wf                 : public is_wf_helper<std::remove_cv_t<T>>::type{};
+    template<typename T> constexpr auto is_wf_v =  is_wf<T>::value;
+
+    template < typename T> struct internal_welford { using val_t = T;  };
+    template < typename T> struct internal_welford<wf<T>> { using val_t = T;  };
+    template < typename T> using  internal_welford_t = typename internal_welford<T>::val_t;
   }
 
   template<typename Options>
-  struct mean_value_t : callable<mean_value_t, Options, raw_option, upper_option,
-                                    lower_option, strict_option, kahan_option,
-                                    widen_option, welford_option>
+  struct mean_value_t : callable<mean_value_t, Options, widen_option>
   {
      template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
