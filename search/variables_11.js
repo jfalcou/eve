@@ -46,11 +46,12 @@ var searchData=
   ['sufp_43',['sufp',['../group__core__accuracy_ga7dce0ada4abd960f7bf0def2dfe2aba3.html#ga7dce0ada4abd960f7bf0def2dfe2aba3',1,'eve']]],
   ['sulp_44',['sulp',['../group__core__accuracy_gae90c87150ec07b2e30cf1fb65f32e586.html#gae90c87150ec07b2e30cf1fb65f32e586',1,'eve']]],
   ['sum_5fof_5fprod_45',['sum_of_prod',['../group__core__accuracy_gaa823eeef980dc21ff27d088758f98338.html#gaa823eeef980dc21ff27d088758f98338',1,'eve']]],
-  ['supports_5fdenormals_46',['supports_denormals',['../structeve_1_1platform.html#af3360ddd7198824495702e6af43c32b1',1,'eve::platform']]],
-  ['supports_5finfinites_47',['supports_infinites',['../structeve_1_1platform.html#a00079508a76ddc26da6a37103736efe1',1,'eve::platform']]],
-  ['supports_5finvalids_48',['supports_invalids',['../structeve_1_1platform.html#aa68340aa769d90df23eac41ccace3202',1,'eve::platform']]],
-  ['supports_5fnans_49',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
-  ['supports_5fnegative_5fzero_50',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
-  ['swap_5fadjacent_51',['swap_adjacent',['../group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5',1,'eve']]],
-  ['swap_5fpairs_52',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]]
+  ['sum_5fof_5fsquares_46',['sum_of_squares',['../group__core__arithmetic_ga2cf31d0c1be5032caa1a09827389e08e.html#ga2cf31d0c1be5032caa1a09827389e08e',1,'eve']]],
+  ['supports_5fdenormals_47',['supports_denormals',['../structeve_1_1platform.html#af3360ddd7198824495702e6af43c32b1',1,'eve::platform']]],
+  ['supports_5finfinites_48',['supports_infinites',['../structeve_1_1platform.html#a00079508a76ddc26da6a37103736efe1',1,'eve::platform']]],
+  ['supports_5finvalids_49',['supports_invalids',['../structeve_1_1platform.html#aa68340aa769d90df23eac41ccace3202',1,'eve::platform']]],
+  ['supports_5fnans_50',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
+  ['supports_5fnegative_5fzero_51',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
+  ['swap_5fadjacent_52',['swap_adjacent',['../group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5',1,'eve']]],
+  ['swap_5fpairs_53',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]]
 ];

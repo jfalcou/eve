@@ -144,10 +144,14 @@ $(document).ready(function(){initNavTree('group__core__accuracy_ga8af2528a0e1737
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">three_fma</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">three_fma</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">a</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">b</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">c</a>) <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">three_fma</a>[pedantic](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">y</a>)  <span class="keyword">noexcept</span>;            <span class="comment">//2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
-<div class="ttc" id="agroup__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b_html_ga8af2528a0e1737b2cf9729e99950aa5b"><div class="ttname"><a href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">eve::three_fma</a></div><div class="ttdeci">constexpr auto three_fma</div><div class="ttdoc">Computes the elementwise triplet of an fma value f and two errors e1 and e2 such that .</div><div class="ttdef"><b>Definition</b> three_fma.hpp:70</div></div>
+<div class="ttc" id="agroup__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b_html_ga8af2528a0e1737b2cf9729e99950aa5b"><div class="ttname"><a href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">eve::three_fma</a></div><div class="ttdeci">constexpr auto three_fma</div><div class="ttdoc">Computes the elementwise triplet of an fma value f and two errors e1 and e2 such that .</div><div class="ttdef"><b>Definition</b> three_fma.hpp:77</div></div>
 <div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -155,13 +159,21 @@ $(document).ready(function(){initNavTree('group__core__accuracy_ga8af2528a0e1737
 <li><code>a</code>, <code>b</code>, 'c': <a class="el" href="concepteve_1_1floating__value.html">floating arguments</a>.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> a triplet of values <code>[f, r1, r2]</code> such that:</p>
-<ul>
+<ol type="1">
+<li>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> a triplet of values <code>[f, r1, r2]</code> such that:<ul>
 <li><code>f</code> is <code><a class="el" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma(a, x, y)</a></code></li>
 <li><code>\f$ a\otimes x\oplus y = r1\oplus r2\oplus r3\f$ exactly *</code> \( |r1 \oplus r2| \le ulp(r1)/2\)</li>
 <li><code>\f$ |r2| \le <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">ulp(r2)</a>/2\f$</code></li>
 </ul>
+</li>
+<li>take care of overflow</li>
+</ol>
 <p>where \(\oplus\) (resp. \(\otimes\)) adds (resp. multiplies) its two parameters with infinite precision.</p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Error free transformations](<a href="https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf">https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf</a></li>
+<li><a href="https://inria.hal.science/inria-00429617/document">Exact and Approximated error of the FMA</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
