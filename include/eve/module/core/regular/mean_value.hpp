@@ -25,9 +25,10 @@ namespace eve
       operator T()   const  noexcept {return avg_; };
       std::size_t n()const  noexcept {return n_; };
 
-      //  private :
-     T avg_;
-     std::size_t n_;
+      auto up() const noexcept { return wf<upgrade_t<T>>(upgrade(avg_), n_); };
+
+      T avg_;
+      std::size_t n_;
    };
 
     template<typename>    struct is_wf_helper          : public std::false_type{};
@@ -58,6 +59,15 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(ts...);
     }
+
+    template<typename... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::wf<upgrade_t<common_value_t<detail::internal_welford_t<Ts>...>>>
+    operator()(Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
 //     template<typename WF, value... Ts>
 //     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...> && !Options::contains(widen) && detail::is_wf<WF>::value)
 //       EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF::wf_t, detail::internal_welford_t<Ts>...>>
@@ -181,10 +191,19 @@ namespace eve::detail
 {
   template<typename T0, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  mean_value_(EVE_REQUIRES(cpu_), O const &, T0 a0, Ts const &... args) noexcept
+  mean_value_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
   {
+
     using r_t =  common_value_t<detail::internal_welford_t<T0>,  detail::internal_welford_t<Ts>...>;
-    if constexpr(sizeof...(Ts) == 0)
+    if constexpr(O::contains(widen))
+    {
+      auto up_it = [](auto a){
+        if constexpr(value<decltype(a)>) return eve::upgrade(a);
+        else                             return a.up();
+      };
+      return mean_value[o.drop(widen)](up_it(a0), up_it(args)...);
+    }
+    else if constexpr(sizeof...(Ts) == 0)
     {
       if constexpr(value<T0>)
         return a0;

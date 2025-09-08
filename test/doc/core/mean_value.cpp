@@ -21,4 +21,11 @@ int main()
   std::cout << "2 " << eve::detail::is_wf_v<double> << std::endl;
   std::cout << "3 " << tts::typename_<eve::detail::internal_welford_t<decltype(ma)>> << std::endl;
   std::cout << "4 " << tts::typename_<eve::detail::internal_welford_t<double>> << std::endl;
+
+ auto mbf = eve::mean_value(3.0f, 4.0f, 5.0f);
+ auto mbd = eve::mean_value[eve::widen](3.0f, 4.0f, 5.0f);
+ std::cout << "5 " << tts::typename_<decltype(mbf)> << std::endl;
+ std::cout << "6 " << tts::typename_<decltype(mbd)> << std::endl;
+
+
 }
