@@ -43,29 +43,36 @@ namespace eve
   template<typename Options>
   struct mean_value_t : callable<mean_value_t, Options, widen_option>
   {
-     template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-       EVE_FORCEINLINE constexpr  detail::wf<common_value_t<Ts...>>
+//      template<value... Ts>
+//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+//        EVE_FORCEINLINE constexpr  detail::wf<common_value_t<Ts...>>
+//     operator()(Ts...ts) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(ts...);
+//     }
+
+    template<typename... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::wf<common_value_t<detail::internal_welford_t<Ts>...>>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
     }
+//     template<typename WF, value... Ts>
+//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...> && !Options::contains(widen) && detail::is_wf<WF>::value)
+//       EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF::wf_t, detail::internal_welford_t<Ts>...>>
+//     operator()(WF w, Ts...ts) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(w, ts...);
+//     }
 
-    template<typename WF, value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen) && detail::is_wf<WF>::value)
-      EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF::wf_t, Ts...>>
-    operator()(WF w, Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(w, ts...);
-    }
-
-    template<typename WF0, typename WF1>
-    requires(detail::is_wf<WF0>::value && detail::is_wf<WF1>::value)
-    EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF0::wf_t,typename WF1::wf_t>>
-    operator()(WF0 w0, WF1 w1) const noexcept
-    {
-      return EVE_DISPATCH_CALL(w0, w1);
-    }
+//     template<typename WF0, typename WF1>
+//     requires(detail::is_wf<WF0>::value && detail::is_wf<WF1>::value && !Options::contains(widen) )
+//     EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF0::wf_t,typename WF1::wf_t>>
+//     operator()(WF0 w0, WF1 w1) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(w0, w1);
+//     }
 
     EVE_CALLABLE_OBJECT(mean_value_t, mean_value_);
   };
@@ -169,45 +176,49 @@ namespace eve
 //================================================================================================
 
 }
+
 namespace eve::detail
 {
   template<typename T0, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   mean_value_(EVE_REQUIRES(cpu_), O const &, T0 a0, Ts const &... args) noexcept
   {
+    using r_t =  common_value_t<detail::internal_welford_t<T0>,  detail::internal_welford_t<Ts>...>;
     if constexpr(sizeof...(Ts) == 0)
-      return a0;
+    {
+      if constexpr(value<T0>)
+        return a0;
+      else
+        return a0.avg_;
+    }
     else if constexpr(value<T0>)
     {
-      using r_t =  common_value_t<T0,  Ts...>;
       auto wa0 = wf<r_t>(a0, 1u);
       return mean_value(wa0, args...);
     }
     else
     {
-      using r_t =  common_value_t<typename T0::wf_t,  Ts...>;
       auto na0 = wf<r_t>(a0.avg_, a0.n_);
       auto doit = [&na0](auto... as){
         auto welfordstep = [&na0](auto a)
         {
-          ++na0.n_;
-          na0.avg_ += (a-na0.avg_)/na0.n_;
-          return na0;
+          if constexpr(value<decltype(a)>)
+          {
+            ++na0.n_;
+            na0.avg_ += (a-na0.avg_)/na0.n_;
+            return na0;
+          }
+          else
+          {
+            auto nab = na0.n_+a.n_;
+            auto avg = sum_of_prod(r_t(na0.n_), na0.avg_, r_t(a.n_), a.avg_)/nab;
+            return  wf<r_t>(avg, nab);
+          }
         };
-        ((na0 = welfordstep(r_t(as))),...);
-        return na0;
+        ((na0 = welfordstep(as)),...);
+         return na0;
       };
       return  doit(args...);
     }
-  }
-
-  template<typename T0, typename T1, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  mean_value_(EVE_REQUIRES(cpu_), O const &, T0 na, T1 const & nb) noexcept
-  requires(detail::is_wf<T0>::value && detail::is_wf<T1>::value)
-  {
-    using r_t =  common_value_t<typename T0::wf_t,  typename T1::wf_t>;
-    auto nab = na.n_+nb.n_;
-    return wf<r_t>(sum_of_prod(r_t(na.n_), na.avg_, r_t(nb.n_), nb.avg_), nab);
   }
 }
