@@ -24,7 +24,7 @@ namespace eve::detail
     {
       return maximum.behavior(cpu_{}, opts, v);
     }
-    else if constexpr (O::contains(splat2))
+    else if constexpr (O::contains(splat))
     {
       if constexpr( eve::current_api >= eve::asimd )
       {

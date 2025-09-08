@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/module/core/regular/splat.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/add.hpp>
@@ -21,7 +20,7 @@ namespace eve::detail
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
                             ) noexcept
-    requires (O::contains(splat2))
+    requires (O::contains(splat))
   {
     using C = rbr::result::fetch_t<condition_key, O>;
 
@@ -45,7 +44,7 @@ namespace eve::detail
 
   template<callable_options O, arithmetic_value T>
   EVE_FORCEINLINE element_type_t<T> sum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
-    requires (!O::contains(splat2))
+    requires (!O::contains(splat))
   {
     using C = rbr::result::fetch_t<condition_key, O>;
 

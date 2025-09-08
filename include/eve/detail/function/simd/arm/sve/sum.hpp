@@ -18,10 +18,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(splat2))
+    if constexpr (O::contains(splat))
     {
       // Attempts to force the use of a broadcasting mov
-      return wide<T, N>{ wide<T>{ sum[opts.drop(splat2)].retarget(current_api, v) } };
+      return wide<T, N>{ wide<T>{ sum[opts.drop(splat)].retarget(current_api, v) } };
     }
     else
     {

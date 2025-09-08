@@ -17,7 +17,7 @@ namespace eve::detail
   {
     template<arithmetic_value T>
     EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
-      requires (!Options::contains(splat2))
+      requires (!Options::contains(splat))
     {
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
         "[eve::sum] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -27,7 +27,7 @@ namespace eve::detail
 
     template<arithmetic_simd_value T>
     EVE_FORCEINLINE T operator()(T v) const noexcept
-      requires (Options::contains(splat2))
+      requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);
     }

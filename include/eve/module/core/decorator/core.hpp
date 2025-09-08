@@ -16,7 +16,6 @@
 
 // temporary
 #include <eve/module/core/regular/unsafe.hpp>
-#include <eve/module/core/regular/splat.hpp>
 #include <cfenv>
 
 namespace eve
@@ -93,7 +92,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto strict           = ::rbr::flag( strict_mode{}          );
   [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
   [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
-  [[maybe_unused]] inline constexpr auto splat2           = ::rbr::flag( splat_mode{}           );
+  [[maybe_unused]] inline constexpr auto splat            = ::rbr::flag( splat_mode{}           );
   [[maybe_unused]] inline constexpr auto to_nearest_odd   = ::rbr::flag( to_nearest_odd_mode{}  );
 
   struct associated_option      : detail::exact_option<associated>      {};
@@ -126,11 +125,10 @@ namespace eve
   struct strict_option          : detail::exact_option<strict>          {};
   struct widen_option           : detail::exact_option<widen>           {};
   struct unsafe_option          : detail::exact_option<unsafe2>         {};
-  struct splat_option           : detail::exact_option<splat2>          {};
+  struct splat_option           : detail::exact_option<splat>           {};
   struct to_nearest_odd_option  : detail::exact_option<to_nearest_odd>  {};
 
   inline constexpr auto as_option(unsafe_type   const&) { return unsafe2; }
-  inline constexpr auto as_option(splat_type   const&) { return splat2;   }
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
