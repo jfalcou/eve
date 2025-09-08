@@ -34,7 +34,7 @@ namespace eve
     template<typename T>  struct is_wf_helper<wf<T>>   : public std::true_type{};
     template<typename T>  struct is_wf                 : public is_wf_helper<std::remove_cv_t<T>>::type{};
   }
-  
+
   template<typename Options>
   struct mean_value_t : callable<mean_value_t, Options, raw_option, upper_option,
                                     lower_option, strict_option, kahan_option,
@@ -54,6 +54,14 @@ namespace eve
     operator()(WF w, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(w, ts...);
+    }
+
+    template<typename WF0, typename WF1>
+    requires(detail::is_wf<WF0>::value && detail::is_wf<WF1>::value)
+    EVE_FORCEINLINE constexpr detail::wf<common_value_t<typename WF0::wf_t,typename WF1::wf_t>>
+    operator()(WF0 w0, WF1 w1) const noexcept
+    {
+      return EVE_DISPATCH_CALL(w0, w1);
     }
 
     EVE_CALLABLE_OBJECT(mean_value_t, mean_value_);
@@ -188,5 +196,15 @@ namespace eve::detail
       };
       return  doit(args...);
     }
+  }
+
+  template<typename T0, typename T1, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  mean_value_(EVE_REQUIRES(cpu_), O const &, T0 na, T1 const & nb) noexcept
+  requires(detail::is_wf<T0>::value && detail::is_wf<T1>::value)
+  {
+    using r_t =  common_value_t<typename T0::wf_t,  typename T1::wf_t>;
+    auto nab = na.n_+nb.n_;
+    return wf<r_t>(sum_of_prod(r_t(na.n_), na.avg_, r_t(nb.n_), nb.avg_), nab);
   }
 }
