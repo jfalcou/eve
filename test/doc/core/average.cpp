@@ -11,7 +11,7 @@ int main()
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
 
   std::cout << "<- wf0                                        = " << wf0 << "\n";
-  std::cout << "<- wf1                                        = " << wf1 << "\n";
+  std::cout << "<- wf1                                         = " << wf1 << "\n";
   std::cout << "<- wi0                                        = " << wi0 << "\n";
   std::cout << "<- wi1                                        = " << wi1 << "\n";
   std::cout << std::setprecision(15);
@@ -37,9 +37,9 @@ int main()
   auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
   std::cout << "-> average[kahan](tup)   = " << eve::average[eve::kahan](tup) << "\n";
 
-  auto m4 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0);
+//  auto m4 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0);
   auto m5 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0, 5.0);
-  auto m5b= eve::average[eve::welford](4u, m4, 5.0);
+//  auto m5b= eve::average[eve::welford](4u, m4, 5.0);
   std::cout << "m5 " << m5 << std::endl;
-  std::cout << "m5b " << m5b << std::endl;
+//  std::cout << "m5b " << m5b << std::endl;
 }

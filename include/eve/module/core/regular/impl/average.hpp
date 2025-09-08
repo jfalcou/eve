@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
 
-
 namespace eve::detail
 {
   template<typename T, typename U, callable_options O>
