@@ -67,7 +67,7 @@ TTS_CASE_WITH( "Check load to logical wides from unaligned pointer to non-logica
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
 
-  auto [data  ,idx  ] = page<v_t, eve::fixed<T::size()>>();
+  auto [data  ,idx  ] = arithmetic_logical_page<v_t, eve::fixed<T::size()>>();
 
   auto* ptr              = &data[idx] - 1;
   auto const* const_ptr  = ptr;

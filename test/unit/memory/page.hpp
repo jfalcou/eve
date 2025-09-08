@@ -40,3 +40,18 @@ template<typename T, typename N> auto logical_page()
 
   return std::pair{ref,start};
 }
+
+template<typename T, typename N> auto arithmetic_logical_page()
+{
+  constexpr std::ptrdiff_t algt = eve::alignment_v<eve::wide<T, N>>;
+  using alloc_t = eve::aligned_allocator<T, N>;
+
+  auto nb_elem  = 4096 / sizeof(T);
+  auto start    = nb_elem - std::max(algt, N::value);
+  std::vector<T, alloc_t> ref(nb_elem);
+
+  bool k = true;
+  for(std::size_t i = start - 1; i < nb_elem; ++i) ref[i] = (k = !k);
+
+  return std::pair{ ref, start };
+}
