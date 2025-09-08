@@ -39,7 +39,6 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   else
   {
     using ld_t = long double;
-    std::cout << sizeof(ld_t);
     auto [a, e, f] = three_fma(a0, a1, a2);
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);

@@ -16,19 +16,36 @@
 namespace eve
 {
   template<typename Options>
-  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
+  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option, widen_option, kahan_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0,T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()(Ts...ts)
+      const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
+    constexpr operator()(Ts...ts)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept  requires(kumi::size_v<Tup> >= 2)  { return EVE_DISPATCH_CALL(t); }
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr  upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(geommean_t, geommean_);
   };
@@ -60,6 +77,9 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto geommean[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
 //!      constexpr auto geommean[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto geommean[kahan](/*any of the above overloads*/)                    noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -75,7 +95,12 @@ namespace eve
 //!    1. The geometric mean of the inputs is returned
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. uses kahan like compensated algorithm for better accuracy.
 //!
+//!
+//!  @groupheader{External references}
+//!   *  [wikipedia Geometric mean](https://en.wikipedia.org/wiki/Geometric_mean)
+
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/geommean.cpp}
 //================================================================================================
@@ -86,18 +111,21 @@ namespace eve
 
   namespace detail
   {
-    template<typename T0,typename T1, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
+    template<typename T0, typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept
     {
-
-      using r_t   = common_value_t<T0, T1, Ts...>;
+      using r_t   = common_value_t<T0, Ts...>;
       using elt_t = element_type_t<r_t>;
-      constexpr std::uint64_t sz = sizeof...(Ts);
-      if constexpr(sz == 0)
+      constexpr std::uint64_t sz = sizeof...(Ts)+1;
+      if constexpr(O::contains(widen))
+        return geommean[o.drop(widen)](upgrade(a0), upgrade(args)...);
+      else if constexpr(sz == 1)
+        return a0;
+      else if constexpr(sz == 2)
       {
         auto a = r_t(a0);
-        auto b = r_t(a1);
+        auto b = r_t(args...);
         if (O::contains(pedantic))
         {
           auto m  = max(a, b);
@@ -112,27 +140,13 @@ namespace eve
       }
       else
       {
-        elt_t invn  = rec[pedantic](elt_t(sizeof...(args) + 2u));
-        if (O::contains(pedantic))
-        { //perhaps this is always more efficient TODO bench it
-          auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
-          auto p  = mul( r_t(ldexp[o](a0, e)), r_t(ldexp[o](a1, e)), r_t(ldexp[o](args, e))...);
-          auto sgn = sign(p);
-          p = pow_abs(p, invn);
-          p = ldexp[pedantic](p, -e);
-          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
-        }
-        else
-        {
-          r_t   that(pow_abs(r_t(a0), invn) * pow_abs(r_t(a1), invn));
-          r_t   sgn  = sign(r_t(a0)) * sign(r_t(a1));
-          auto  next = [&](auto avg, auto x){
-            sgn *= sign(x);
-            return avg * pow_abs(r_t(x), invn);
-          };
-          ((that = next(that, args)), ...);
-          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * that);
-        }
+        elt_t invn  = rec(elt_t(sz));
+        auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
+        auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
+        auto sgn = sign(p);
+        p = pow_abs(p, invn);
+        p = ldexp[pedantic](p, -e);
+        return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
       }
     }
   }

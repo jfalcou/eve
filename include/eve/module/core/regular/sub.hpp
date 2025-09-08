@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/detail/modular.hpp>
 
 namespace eve
 {
@@ -19,34 +18,34 @@ namespace eve
                                 upper_option, strict_option, widen_option, left_option,
                                 right_option, mod_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<eve::value T0, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<T0, Ts...> constexpr operator()(T0 t0, Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(t0, ts...);
     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... > //typename result<T0, T1, Ts...>::type
-    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+    template<eve::value T0, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<Ts>... >
+    constexpr operator()(T0 t0, Ts...ts)
       const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
     EVE_FORCEINLINE constexpr
     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept  { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept  { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(sub_t, sub_);
   };
@@ -93,7 +92,6 @@ namespace eve
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
-//!     * `p`: modulo p operation. p must be floating less than maxflint.
 //!
 //!    **Return value**
 //!

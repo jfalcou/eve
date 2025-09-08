@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
+
 int main()
 {
   eve::wide wf0{0.01, 1.01, 2.01, 3.01, -1.01, -2.01, -3.01, -4.01};
@@ -32,4 +33,9 @@ int main()
   std::cout << "-> manhattan(wf0, wf1)                 = " << eve::manhattan(wf0, wf1) << "\n";
   std::cout << "-> manhattan[upper](wf0, wf1)          = " << eve::manhattan[eve::upper](wf0, wf1) << "\n";
   std::cout << "-> manhattan[upper][strict](wf0, wf1)  = " << eve::manhattan[eve::upper][eve::strict](wf0, wf1) << "\n";
+
+  auto eps_2 = eve::eps(eve::as<float>())/2;
+  auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
+  std::cout << "-> manhattan[kahan](tup)   = " << eve::manhattan[eve::kahan](tup) << "\n";
+
 }

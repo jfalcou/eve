@@ -25,6 +25,15 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename T0>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
+  {
+    if constexpr(O::contains(widen))
+      return upgrade(a);
+    else
+      return a;
+  }
+
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
@@ -111,19 +120,9 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T x, T y ) noexcept
-  requires(O::contains(mod))
-  {
-    auto p = o[mod].value(T());
-    auto s = x-y;
-    return add[eve::is_ltz(s)](s, p);
-  }
-
-
   template<callable_options O, typename T, std::same_as<T>... Ts>
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
-  requires(!O::contains(left)&& (sizeof...(Ts) != 0))
+  requires(!O::contains(left))
   {
     if constexpr(O::contains(widen))
       return sub[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
@@ -134,4 +133,15 @@ namespace eve::detail
       return r0;
     }
   }
+
+
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T x, T y ) noexcept
+  requires(O::contains(mod))
+  {
+    auto p = o[mod].value(T());
+    auto s = x-y;
+    return add[eve::is_ltz(s)](s, p);
+  }
+
 }

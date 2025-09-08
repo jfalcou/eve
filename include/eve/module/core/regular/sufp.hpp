@@ -72,6 +72,8 @@ namespace eve
 //!      3. The same value up to a factor 2, but with faster computation. (the result is times 2 is the input is not
 //!         a power of 2).
 //!
+//!   @note invalid entries return NaN
+//!
 //!  @groupheader{External references}
 //!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 //!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
