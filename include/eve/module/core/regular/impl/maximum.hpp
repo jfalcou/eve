@@ -17,7 +17,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> maximum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v) noexcept
-    requires (O::contains(splat2))
+    requires (O::contains(splat))
   {
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {
@@ -38,7 +38,7 @@ namespace eve::detail
 
   template<callable_options O, arithmetic_value T>
   EVE_FORCEINLINE element_type_t<T> maximum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
-    requires (!O::contains(splat2))
+    requires (!O::contains(splat))
   {
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {

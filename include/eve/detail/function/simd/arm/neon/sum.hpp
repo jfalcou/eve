@@ -32,7 +32,7 @@ namespace eve::detail
     requires arm_abi<abi_t<T, N>>
   {
     if      constexpr (!match_option<condition_key, O, ignore_none_>) return sum.behavior(cpu_{}, opts, v);
-    else if constexpr (O::contains(splat2))
+    else if constexpr (O::contains(splat))
     {
             if constexpr(N::value == 1)  return v;
       else  if constexpr(current_api >= asimd)
