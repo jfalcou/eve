@@ -21,9 +21,9 @@ int main()
 
   std::cout << "---- simd with splat" << '\n'
             << "<- pf                    = " << pf << '\n'
-            << "-> splat(reduce)(pf,sum) = " << eve::splat(eve::reduce)(pf, sum) << '\n'
+            << "-> reduce[splat](pf,sum) = " << eve::reduce[eve::splat](pf, sum) << '\n'
             << "<- qi                     = " << qi << '\n'
-            << "-> splat(reduce)(qi,prod) = " << eve::splat(eve::reduce)(qi, prod) << '\n';
+            << "-> reduce[splat](qi,prod) = " << eve::reduce[eve::splat](qi, prod) << '\n';
 
   return 0;
 }

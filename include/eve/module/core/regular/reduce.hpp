@@ -62,7 +62,7 @@ namespace eve
   //! @addtogroup core_reduction
   //! @{
   //!   @var reduce
-  //!   @brief Computes the reduction of a SIMD value using a given callable or addition by default.
+  //!   @brief Computes the reduction of a SIMD value using a given callable. Performs an horizontal sum by default.
   //!
   //!   @groupheader{Header file}
   //!
@@ -126,8 +126,16 @@ namespace eve
       if      constexpr (std::same_as<Callable, tag_t<eve::add>>)         return eve::detail::sum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::min>>)         return eve::minimum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::max>>)         return eve::maximum[opts](v);
-      else if constexpr (std::same_as<Callable, tag_t<eve::logical_and>>) return eve::all[opts](v);
-      else if constexpr (std::same_as<Callable, tag_t<eve::logical_or>>)  return eve::any[opts](v);
+      else if constexpr (std::same_as<Callable, tag_t<eve::logical_and>>)
+      {
+        if constexpr (O::contains(splat))                                 return T { eve::all(v) };
+        else                                                              return eve::all(v);
+      }
+      else if constexpr (std::same_as<Callable, tag_t<eve::logical_or>>)
+      {
+        if constexpr (O::contains(splat))                                 return T { eve::any(v) };
+        else                                                              return eve::any(v);
+      }
       else if constexpr (O::contains(splat))                              return butterfly_reduction(v, f);
       else                                                                return butterfly_reduction(v, f).get(0);
     }

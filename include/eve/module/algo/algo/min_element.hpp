@@ -94,7 +94,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
 
       if( !eve::any(less(lane_best_value, wide_prev_best)) ) return;
 
-      wide_v best_one = eve::splat(eve::reduce)(lane_best_value, eve::min(less));
+      wide_v best_one = eve::reduce[eve::splat](lane_best_value, eve::min(less));
 
       auto best_indexes = array_map(best, is_not_best_lambda {less, best_one});
 
