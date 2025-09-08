@@ -75,3 +75,34 @@ TTS_CASE_TPL( "Check load to wides from re-aligned pointer", eve::test::simd::al
     }( std::make_integer_sequence<std::ptrdiff_t,6>{});
   }
 };
+
+TTS_CASE_TPL( "Check load to wides from re-aligned pointer to non-logicals", eve::test::simd::all_types_wf16)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+
+  std::array<v_t , 256> ref;
+
+  std::iota(ref.begin(), ref.end(), 0);
+
+  auto test = [&]<typename D, typename P, std::ptrdiff_t A>(eve::fixed<A>, P* f, D expected)
+  {
+    if (!eve::is_aligned(f, eve::fixed<A>{}))   return;
+
+    if constexpr (A*sizeof(P) >= D::alignment())
+    {
+      eve::aligned_ptr<P, eve::fixed<A>> ptr{f};
+      TTS_EQUAL(D{ptr}                                           , expected);
+      TTS_EQUAL(eve::load[eve::unsafe](ptr, eve::as<eve::logical<T>>{}), expected);
+    }
+  };
+
+  for (auto* f = ref.begin();f != ref.end() - T::size() + 1;++f)
+  {
+    eve::logical<T> expected(f);
+    [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
+    {
+      (test(eve::lane<(1<<(N+2))>, f, expected),...);
+    }( std::make_integer_sequence<std::ptrdiff_t,6>{});
+  }
+};
