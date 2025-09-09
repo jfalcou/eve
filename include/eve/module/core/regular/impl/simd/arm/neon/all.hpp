@@ -13,7 +13,6 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/logical_ornot.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
 
 namespace eve::detail
 {
@@ -37,13 +36,7 @@ all_(EVE_REQUIRES(neon128_),
     auto dwords = eve::bit_cast(v0.bits(), eve::as<u32_2> {});
     dwords      = vpmin_u32(dwords, dwords);
 
-    if constexpr (O::contains(splat))
-    {
-      return bit_cast(dwords, as<logical<wide<T, N>>>{});
-    }
-    else
-    {
-      std::uint32_t combined = vget_lane_u32(dwords, 0);
+    std::uint32_t combined = vget_lane_u32(dwords, 0);
 
     if constexpr( sizeof(T) >= 4 ) return static_cast<bool>(combined);
     else                           return static_cast<bool>(!~combined);
@@ -85,14 +78,9 @@ all_(EVE_REQUIRES(neon128_),
     else if constexpr( sizeof(T) == 2 ) return static_cast<bool>(vminvq_u16(v0.bits()));
     else
     {
-      if constexpr( sizeof(T) == 1 ) return vminvq_u8(v0.bits());
-      else if constexpr( sizeof(T) == 2 ) return vminvq_u16(v0.bits());
-      else
-      {
-        // Adapted from https://github.com/dotnet/runtime/pull/75864
-        auto mask = bit_cast(v0.bits(), as<u32_4>{});
-        return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == (std::uint64_t)-1;
-      }
+      // Adapted from https://github.com/dotnet/runtime/pull/75864
+      auto mask = bit_cast(v0.bits(), as<u32_4>{});
+      return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == (std::uint64_t)-1;
     }
   }
   else // chars, no asimd
@@ -100,7 +88,7 @@ all_(EVE_REQUIRES(neon128_),
     auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
     // not the same logic as for uint_32 plain so duplicated.
-    return eve::all[opts](dwords == (std::uint32_t)-1);
+    return eve::all(dwords == (std::uint32_t)-1);
   }
 }
 }
