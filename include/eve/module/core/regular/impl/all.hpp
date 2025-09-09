@@ -17,10 +17,10 @@
 namespace eve::detail
 {
 template <callable_options O, logical_simd_value T>
-EVE_FORCEINLINE T all_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
+EVE_FORCEINLINE T all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   requires (O::contains(splat))
 {
-  return butterfly_reduction(v, eve::logical_and);
+  return T { all[opts.drop(splat)](v) };
 }
 
 template <callable_options O, logical_value T>

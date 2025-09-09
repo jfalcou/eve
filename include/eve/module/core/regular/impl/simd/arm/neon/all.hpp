@@ -13,48 +13,41 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/logical_ornot.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
 
 namespace eve::detail
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T, N>> v0) noexcept
-  requires std::same_as<abi_t<T, N>, arm_64_>
+EVE_FORCEINLINE auto
+all_(EVE_REQUIRES(neon128_),
+    O const           & opts,
+    logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_64_>
 {
   using C = rbr::result::fetch_t<condition_key, O>;
   using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<2>>;
 
-  if constexpr( C::is_complete && !C::is_inverted )
-  {
-    if constexpr (O::contains(splat))                 return logical<wide<T, N>>{ true };
-    else                                              return true;
-  }
-  else if constexpr( !C::is_complete )                return all.behavior(cpu_{}, opts, v0);
+  if      constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v0) };
+  else if constexpr( C::is_complete && !C::is_inverted ) return true;
+  else if constexpr( !C::is_complete ) return all.behavior(cpu_{}, opts, v0);
   else if constexpr( eve::current_api >= eve::asimd ) return all.behavior(cpu_{}, opts, v0);
-  else if constexpr( sizeof(T) * N() <= 4u )          return all.behavior(cpu_{}, opts, v0);
+  else if constexpr( sizeof(T) * N() <= 4u ) return all.behavior(cpu_{}, opts, v0);
   else
   {
     auto dwords = eve::bit_cast(v0.bits(), eve::as<u32_2> {});
     dwords      = vpmin_u32(dwords, dwords);
 
-    if constexpr (O::contains(splat))
-    {
-      return bit_cast(dwords, as<logical<wide<T, N>>>{});
-    }
-    else
-    {
-      std::uint32_t combined = vget_lane_u32(dwords, 0);
+    std::uint32_t combined = vget_lane_u32(dwords, 0);
 
-      if constexpr( sizeof(T) >= 4 ) return (bool)combined;
-      else                           return !~combined;
-    }
+    if constexpr( sizeof(T) >= 4 ) return static_cast<bool>(combined);
+    else                           return static_cast<bool>(!~combined);
   }
 }
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T, N>> v0) noexcept
-  requires std::same_as<abi_t<T, N>, arm_128_>
+EVE_FORCEINLINE auto
+all_(EVE_REQUIRES(neon128_),
+    O const            & opts,
+    logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_128_>
 {
   using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
   using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, eve::fixed<2>>;
@@ -62,11 +55,8 @@ EVE_FORCEINLINE auto all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T,
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];
 
-  if constexpr( C::is_complete && !C::is_inverted )
-  {
-    if constexpr (O::contains(splat)) return logical<wide<T, N>>{ true };
-    else                              return true;
-  }
+  if      constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v0) };
+  else if constexpr( C::is_complete && !C::is_inverted ) return true;
   // we still have to convert down here, so we can do it before ignore.
   else if constexpr( eve::current_api < eve::asimd && sizeof(T) >= 2 )
   {
@@ -84,20 +74,13 @@ EVE_FORCEINLINE auto all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T,
   else if constexpr( !C::is_complete ) return all.behavior(cpu_{}, opts, v0);
   else if constexpr( eve::current_api >= eve::asimd )
   {
-    if constexpr (O::contains(splat))
-    {
-      return butterfly_reduction(v0, eve::logical_and);
-    }
+    if      constexpr( sizeof(T) == 1 ) return static_cast<bool>(vminvq_u8(v0.bits()));
+    else if constexpr( sizeof(T) == 2 ) return static_cast<bool>(vminvq_u16(v0.bits()));
     else
     {
-      if constexpr( sizeof(T) == 1 ) return vminvq_u8(v0.bits());
-      else if constexpr( sizeof(T) == 2 ) return vminvq_u16(v0.bits());
-      else
-      {
-        // Adapted from https://github.com/dotnet/runtime/pull/75864
-        auto mask = bit_cast(v0.bits(), as<u32_4>{});
-        return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == (std::uint64_t)-1;
-      }
+      // Adapted from https://github.com/dotnet/runtime/pull/75864
+      auto mask = bit_cast(v0.bits(), as<u32_4>{});
+      return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == (std::uint64_t)-1;
     }
   }
   else // chars, no asimd
@@ -105,7 +88,7 @@ EVE_FORCEINLINE auto all_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T,
     auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
     // not the same logic as for uint_32 plain so duplicated.
-    return eve::all[opts](dwords == (std::uint32_t)-1);
+    return eve::all(dwords == (std::uint32_t)-1);
   }
 }
 }
