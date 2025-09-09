@@ -128,16 +128,20 @@ namespace eve
       else if constexpr (std::same_as<Callable, tag_t<eve::max>>)         return eve::maximum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::logical_and>>)
       {
-        if constexpr (O::contains(splat))                                 return T { eve::all(v) };
-        else                                                              return eve::all(v);
+        if constexpr (O::contains(splat))                                 return T { eve::all[opts.drop(splat)](v) };
+        else                                                              return eve::all[opts](v);
       }
       else if constexpr (std::same_as<Callable, tag_t<eve::logical_or>>)
       {
-        if constexpr (O::contains(splat))                                 return T { eve::any(v) };
-        else                                                              return eve::any(v);
+        if constexpr (O::contains(splat))                                 return T { eve::any[opts.drop(splat)](v) };
+        else                                                              return eve::any[opts](v);
       }
-      else if constexpr (O::contains(splat))                              return butterfly_reduction(v, f);
-      else                                                                return butterfly_reduction(v, f).get(0);
+      else
+      {
+        static_assert(match_option<condition_key, O, ignore_none_>, "Masking is not supported on generic reductions");
+        if constexpr (O::contains(splat))                                 return butterfly_reduction(v, f);
+        else                                                              return butterfly_reduction(v, f).get(0);
+      }
     }
 
     template<callable_options O, typename T>
