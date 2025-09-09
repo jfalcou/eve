@@ -205,15 +205,15 @@ void arithmetic_reduction_simd_type_test(Callable callable, eve::as<T>)
   using e_t = eve::element_type_t<T>;
   T val{};
 
-  TTS_EXPR_IS((callable(T{})), e_t);
-  TTS_EXPR_IS((callable[eve::ignore_none](T{})), e_t);
-  TTS_EXPR_IS((callable[val > 0](T{})), e_t);
-  TTS_EXPR_IS((callable[true](T{})), e_t);
+  TTS_EXPR_IS((callable(val)), e_t);
+  TTS_EXPR_IS((callable[eve::ignore_none](val)), e_t);
+  TTS_EXPR_IS((callable[val > 0](val)), e_t);
+  TTS_EXPR_IS((callable[true](val)), e_t);
 
-  TTS_EXPR_IS((callable[eve::splat](T{})), T);
-  TTS_EXPR_IS((callable[eve::splat][eve::ignore_none](T{})), T);
-  TTS_EXPR_IS((callable[eve::splat][val > 0](T{})), T);
-  TTS_EXPR_IS((callable[eve::splat][true](T{})), T);
+  TTS_EXPR_IS((callable[eve::splat](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][eve::ignore_none](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][val > 0](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][true](val)), T);
 }
 
 template<typename Callable, eve::arithmetic_scalar_value T>
@@ -221,12 +221,44 @@ void arithmetic_reduction_scalar_type_test(Callable callable, eve::as<T>)
 {
   T val{};
 
-  TTS_EXPR_IS((callable(T{})), T);
-  TTS_EXPR_IS((callable[eve::ignore_none](T{})), T);
-  TTS_EXPR_IS((callable[true](T{})), T);
+  TTS_EXPR_IS((callable(val)), T);
+  TTS_EXPR_IS((callable[eve::ignore_none](val)), T);
+  TTS_EXPR_IS((callable[true](val)), T);
 
   TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat], val); });
   TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][eve::ignore_none], val); });
   TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][val > 0], val); });
   TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][true], val); });
 }
+
+template<typename Callable, eve::logical_simd_value T>
+void logical_reduction_simd_type_test(Callable callable, eve::as<T>)
+{
+  T val{};
+
+  TTS_EXPR_IS((callable(val)), bool);
+  TTS_EXPR_IS((callable[eve::ignore_none](val)), bool);
+  TTS_EXPR_IS((callable[val](val)), bool);
+  TTS_EXPR_IS((callable[true](val)), bool);
+
+  TTS_EXPR_IS((callable[eve::splat](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][eve::ignore_none](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][val](val)), T);
+  TTS_EXPR_IS((callable[eve::splat][true](val)), T);
+}
+
+template<typename Callable, eve::logical_scalar_value T>
+void logical_reduction_scalar_type_test(Callable callable, eve::as<T>)
+{
+  T val{};
+
+  TTS_EXPR_IS((callable(val)), bool);
+  TTS_EXPR_IS((callable[eve::ignore_none](val)), bool);
+  TTS_EXPR_IS((callable[true](val)), bool);
+
+  TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat], val); });
+  TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][eve::ignore_none], val); });
+  TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][val > 0], val); });
+  TTS_EXPECT_NOT_COMPILES(val, { compile_reject_test(callable[eve::splat][true], val); });
+}
+

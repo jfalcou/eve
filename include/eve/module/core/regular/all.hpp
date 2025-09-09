@@ -13,19 +13,28 @@
 namespace eve
 {
   template<typename Options>
-  struct all_t : conditional_callable<all_t, Options>
+  struct all_t : conditional_callable<all_t, Options, splat_option>
   {
     template<relaxed_logical_value T>
     EVE_FORCEINLINE bool operator()(T v) const noexcept
+      requires (!Options::contains(splat))
     {
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
         "[eve::all] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
-      
+
       return EVE_DISPATCH_CALL(v);
     }
 
     template<logical_simd_value T>
     EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
+      requires (!Options::contains(splat))
+    {
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    template<logical_simd_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept
+      requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);
     }
@@ -52,14 +61,18 @@ namespace eve
   //!   {
   //!      // Regular overloads
   //!      template <relaxed_logical_value L>
-  //!      bool all(L x)                                                              noexcept; // 1
+  //!      bool all(L x) requires !Options::contains(splat)                           noexcept; // 1
   //!
   //!      template <logical_simd_value L>
-  //!      bool all(top_bits<L> t)                                                    noexcept; // 1
+  //!      bool all(top_bits<L> t) requires !Options::contains(splat)                 noexcept; // 1
+  //!
+  //!      // Splat overload
+  //!      template <logical_simd_value L>
+  //!      L all[splat](L x) requires Options::contains(splat)                        noexcept; // 2
   //!
   //!      // Lanes masking
-  //!      bool all[conditional_expr auto c](/* any of the above overloads */)        noexcept; // 2
-  //!      bool all[logical_value auto m](/* any of the above overloads */)           noexcept; // 2
+  //!      bool all[conditional_expr auto c](/* any of the above overloads */)        noexcept; // 3
+  //!      bool all[logical_value auto m](/* any of the above overloads */)           noexcept; // 3
   //!   }
   //!   @endcode
   //!
@@ -73,7 +86,8 @@ namespace eve
   //!   **Return value**
   //!
   //!      1. A bool value which is true if and only if every elements of `x` evaluates to true.
-  //!      2. A masked version which ignores the masked elements during the search.
+  //!      2. The result of the reduction is splatted across every lane of the output.
+  //!      3. Same as the above but the masked lanes are ignored during the operation.
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/all.cpp}
