@@ -27,19 +27,20 @@ namespace eve::detail
       // size of the operands to eve::equal
       auto size_splat = wide<T, N> { wide<T> { N::value } };
 
-      if constexpr (C::is_complete)
-      {
-        if constexpr (C::is_inverted) return wide<T, N> { wide<T> { count_true(v) } } == size_splat;
-        else                          return logical<wide<T, N>> { true };
-      }
-      else if constexpr (relative_conditional_expr<C>)
-      {
-        return wide<T, N> { wide<T> { count_true[cx](v) } } == wide<T, N> { wide<T> { cx.count(as(v)) } };
-      }
-      else
-      {
-        return wide<T, N> { wide<T> { count_true(logical_ornot(v, expand_mask(cx, as(v)))) } } == size_splat;
-      }
+      return logical<wide<T, N>> { false };
+      // if constexpr (C::is_complete)
+      // {
+      //   if constexpr (C::is_inverted) return wide<T, N> { wide<T> { count_true(v) } } == size_splat;
+      //   else                          return logical<wide<T, N>> { true };
+      // }
+      // else if constexpr (relative_conditional_expr<C>)
+      // {
+      //   return wide<T, N> { wide<T> { count_true[cx](v) } } == wide<T, N> { wide<T> { cx.count(as(v)) } };
+      // }
+      // else
+      // {
+      //   return wide<T, N> { wide<T> { count_true(logical_ornot(v, expand_mask(cx, as(v)))) } } == size_splat;
+      // }
     }
     else
     {
