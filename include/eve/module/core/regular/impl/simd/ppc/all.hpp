@@ -20,14 +20,15 @@ namespace eve::detail
   {
     const auto m = v.bits();
 
-    if constexpr (match_option<condition_key, O, ignore_none_>)
+    if constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v); }
+    else if constexpr (match_option<condition_key, O, ignore_none_>)
     {
-      return vec_all_eq(remove_garbage(m).storage(), true_(as(m)).storage());
+      return static_cast<bool>(vec_all_eq(remove_garbage(m).storage(), true_(as(m)).storage()));
     }
     else
     {
       const auto mask = expand_mask_no_garbage(opts[condition_key], as(v)).bits();
-      return vec_all_eq((m & mask).storage(), mask.storage());
+      return static_cast<bool>(vec_all_eq((m & mask).storage(), mask.storage()));
     }
   }
 }
