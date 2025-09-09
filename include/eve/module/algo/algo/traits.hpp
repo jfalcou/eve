@@ -514,7 +514,7 @@ namespace eve::algo
   template<typename RorI>
   constexpr auto default_index_type_to_use() {
     using T = eve::value_type_t<RorI>;
-    constexpr std::size_t max_size = kumi::max_flat( T{}, [](auto m) { return sizeof(m); });
+    constexpr std::size_t max_size = max_scalar_size_v<T>;
          if constexpr (max_size <= 2U) return std::type_identity<std::uint16_t>{};
     else if constexpr (max_size == 4U) return std::type_identity<std::uint32_t>{};
     else                               return std::type_identity<std::uint64_t>{};
