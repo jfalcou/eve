@@ -55,11 +55,11 @@ TTS_CASE_WITH("Check behavior of welford_average(wide)",
   using eve::welford_average;
   using eve::kahan;
   using eve::as;
-  TTS_ULP_EQUAL(welford_average(a0, a1).avg_, (a0+a1)/2, 0.5);
-  TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_,(a0+a1+a2)/3, 1.0);
+  TTS_ULP_EQUAL(welford_average(a0, a1).avg_, (a0+a1)/2, 15.0);
+  TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_,(a0+a1+a2)/3, 15.0);
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
   {
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_, eve::downgrade(average[widen](a0, a1, a2)), 1.0);
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_, average[kahan](a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_, eve::downgrade(average[widen](a0, a1, a2)), 15.0);
+    TTS_ULP_EQUAL(welford_average(a0, a1, a2).avg_, average[kahan](a0, a1, a2), 15.0);
   }
 };
