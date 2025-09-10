@@ -16,14 +16,14 @@ int main()
 //   std::cout << "<- wi0                      = " << wi0 << "\n";
 //   std::cout << "<- wu0                      = " << wu0 << "\n";
 
-  std::cout << "-> mean_value(wf0, 2*wf0, 3*wf0)           = " << eve::mean_value(wf0, 2*wf0, 3*wf0) << "\n";
-  std::cout << "-> mean_value[welford](wf0, 2*wf0, 3*wf0)  = " << eve::mean_value[eve::welford](wf0, 2*wf0, 3*wf0).avg_ << "\n";
-  std::cout << "-> mean_value[kahan](wf0, 2*wf0, 3*wf0)    = " << eve::mean_value[eve::kahan](wf0, 2*wf0, 3*wf0) << "\n";
+  std::cout << "-> average(wf0, 2*wf0, 3*wf0)           = " << eve::average(wf0, 2*wf0, 3*wf0) << "\n";
+  std::cout << "-> average[welford](wf0, 2*wf0, 3*wf0)  = " << eve::average[eve::welford](wf0, 2*wf0, 3*wf0).avg_ << "\n";
+  std::cout << "-> average[kahan](wf0, 2*wf0, 3*wf0)    = " << eve::average[eve::kahan](wf0, 2*wf0, 3*wf0) << "\n";
 
-  auto ma = eve::mean_value[eve::welford](wf0, 2*wf0, 3*wf0);
-  auto mb = eve::mean_value[eve::welford](wf1, wf0);
-  auto mab= eve::mean_value(wf0, 2*wf0, 3*wf0, wf1, wf0);
-  auto wmab = eve::mean_value[eve::welford](ma, mb);
+  auto ma = eve::average[eve::welford](wf0, 2*wf0, 3*wf0);
+  auto mb = eve::average[eve::welford](wf1, wf0);
+  auto mab= eve::average(wf0, 2*wf0, 3*wf0, wf1, wf0);
+  auto wmab = eve::average[eve::welford](ma, mb);
   std::cout << "ma     " << t_t(ma) << std::endl;
   std::cout << "mb     " << t_t(mb) << std::endl;
   std::cout << "mab    " << t_t(mab) << std::endl;

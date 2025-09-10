@@ -144,7 +144,7 @@ namespace eve
         {
           // scaling using the algorithm suggested by
           // https://members.loria.fr/PZimmermann/papers/split.pdf
-          auto d = eve::safe_scale(mean_value(eve::abs(r0), eve::abs(r1)));
+          auto d = eve::safe_scale(average(eve::abs(r0), eve::abs(r1)));
           auto id= eve::rec(d);
           auto r0d = r0*id;
           auto r1d = r1*id;

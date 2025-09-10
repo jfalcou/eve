@@ -125,7 +125,7 @@ namespace eve
                              , T(0x1.4795fcp-14f), T(-0x1.f105f8p-11f), T(0x1.15e2e6p-7f), T(-0x1.b3a7e0p-5f)
                              , T(0x1.e4c688p-3f), T(-0x1.438084p-1f), T(0x1.0p0))
           ;
-          return mean_value(rx, xx * num / (denom * x));
+          return average(rx, xx * num / (denom * x));
         }
         else
         {
@@ -141,7 +141,7 @@ namespace eve
                              , T(0x1.15e2e53c1fb60p-7), T(-0x1.b3a7e0ed1122bp-5), T(0x1.e4c6875173c3ep-3)
                              , T(-0x1.438083f2d47c7p-1), T(0x1.0p0))
           ;
-          return mean_value(rx, xx * num / (denom * x));
+          return average(rx, xx * num / (denom * x));
         }
       };
       auto dawson3 = [](auto xx, auto rx, auto x){
@@ -154,7 +154,7 @@ namespace eve
           auto denom =
           eve::reverse_horner(xx, T(-0x1.fe79cap-11f), T(0x1.1a0886p-5f), T(-0x1.932858p-2f)
                              , T(0x1.bb92c0p+0f), T(-0x1.595ea2p+1f), T(0x1.0p0));
-          return mean_value(rx, xx * num / (denom * x));
+          return average(rx, xx * num / (denom * x));
         }
         else
         {
@@ -164,7 +164,7 @@ namespace eve
           auto denom =
           eve::reverse_horner(xx, T(-0x1.fe79cad3d0a8dp-11), T(0x1.1a0885fe44f2dp-5), T(-0x1.932857b438c94p-2)
                              , T(0x1.bb92c0388a954p+0), T(-0x1.595ea2e7576e2p+1), T(0x1.0p0));
-          return mean_value(rx, xx * num / (denom * x));
+          return average(rx, xx * num / (denom * x));
         }
       };
       auto dawson4 = [](auto v) { return v * T(0.5); };

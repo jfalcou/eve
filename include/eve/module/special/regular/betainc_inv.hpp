@@ -105,7 +105,7 @@ namespace eve
         auto al   = (sqr(x) - T(3)) * T(1.0 / 6.0);
         auto r2a1 = rec[pedantic](a + a1);
         auto r2b1 = rec[pedantic](b + b1);
-        auto h    = rec[pedantic](mean_value(r2a1, r2b1));
+        auto h    = rec[pedantic](average(r2a1, r2b1));
         auto w    = (x * sqrt(al + h) / h) - (r2b1 - r2a1) * (al + FiveoSix - T(2.0 / 3.0) / h);
         return a / fma(exp(w + w), b, a);
       };
@@ -140,7 +140,7 @@ namespace eve
         auto m   = eve::min(o, u * (a1 / x - b1 / (oneminus(x))));
         x -= u / inc(-0.5 * m);
         auto tt = inc[x >= o](t);
-        x       = if_else(is_lez(x) && (x >= o), mean_value(x, tt), x);
+        x       = if_else(is_lez(x) && (x >= o), average(x, tt), x);
         if( eve::all(eve::abs(t) <= epsi * x) && j ) break;
       }
       return if_else(is_lez(pp), zero, if_else(pp >= o, one, x));

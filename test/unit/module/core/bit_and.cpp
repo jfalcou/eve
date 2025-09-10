@@ -75,7 +75,7 @@ TTS_CASE_WITH("Check behavior of bit_and on floating types",
           { return bit_cast(bit_cast(e, as(i_t())) & bit_cast(f, as(i_t())), as(v_t())); },
           a0,
           a1));
-  auto test = a3 > eve::mean_value(eve::valmin(as<T>()), eve::valmax(as<T>()));
+  auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_IEEE_EQUAL(bit_and[test](a0, a1), eve::if_else(test, eve::bit_and(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_and[test](a0, a1, a2), eve::if_else(test, eve::bit_and(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(bit_and[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_and(a0, a1), a0));

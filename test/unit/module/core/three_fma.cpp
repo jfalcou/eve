@@ -9,9 +9,9 @@
 #include <eve/module/core.hpp>
 
 //==================================================================================================
-//== mean_value tests
+//== average tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of mean_value(wide)",
+TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::scalar::ieee_reals,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),

@@ -16,72 +16,23 @@
 
 namespace eve
 {
-  namespace detail
-  {
-    template < floating_value T> struct wf
-    {
-      using wf_t = T;
-
-      wf() : avg_(T(0)), n_(1u){}
-      wf(T avg)                                 : avg_(avg), n_(1u){}
-      wf(T avg,  std::size_t n) : avg_(avg), n_(n){}
-      operator T()   const  noexcept {return avg_; };
-      std::size_t n()const  noexcept {return n_; };
-
-      auto up() const noexcept { return wf<upgrade_t<T>>(upgrade(avg_), n_); };
-
-      T avg_;
-      std::size_t n_;
-    };
-
-//    template<floating_value T> wf(T t) -> wf<T>;
-
-    template<typename>    struct is_wf_helper          : public std::false_type{};
-    template<typename T>  struct is_wf_helper<wf<T>>   : public std::true_type{};
-    template<typename T>  struct is_wf                 : public is_wf_helper<std::remove_cv_t<T>>::type{};
-    template<typename T> constexpr auto is_wf_v =  is_wf<T>::value;
-
-    template < typename T> struct internal_welford { using val_t = T;  };
-    template < typename T> struct internal_welford<wf<T>> { using val_t = T;  };
-    template < typename T> using  internal_welford_t = typename internal_welford<T>::val_t;
-  }
 
   template<typename Options>
-  struct average_t : conditional_callable<average_t, Options, upper_option, lower_option, strict_option,
-                                                        widen_option, welford_option, kahan_option>
+  struct average_t : tuple_callable<average_t, Options, upper_option, lower_option, strict_option,
+                                                        widen_option, kahan_option>
   {
 
     template<typename... Ts>
-    requires( (sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
-                                    && !Options::contains(widen) && !Options::contains(welford))
-      EVE_FORCEINLINE common_value_t<detail::internal_welford_t<Ts>...>
+    requires( (sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen) )
+    EVE_FORCEINLINE common_value_t<Ts...>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
     template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
-                                 && Options::contains(widen) && !Options::contains(welford))
-    EVE_FORCEINLINE upgrade_t<common_value_t<detail::internal_welford_t<Ts>...>>
-    operator()(Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
-
-    template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
-             && !Options::contains(widen) && Options::contains(welford))
-      EVE_FORCEINLINE constexpr detail::wf<common_value_t<detail::internal_welford_t<Ts>...>>
-    operator()(Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
-
-    template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
-                                 && Options::contains(widen) && Options::contains(welford))
-      EVE_FORCEINLINE constexpr detail::wf<upgrade_t<common_value_t<detail::internal_welford_t<Ts>...>>>
+    requires( (sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen) )
+    EVE_FORCEINLINE upgrade_t<common_value_t<Ts...>>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
@@ -124,10 +75,6 @@ namespace eve
 //!      constexpr auto average[lower][strict](eve::value auto x, eve::value auto y)                noexcept; // 7
 //!      constexpr auto average[widen](/* any of the above overloads */)                            noexcept; // 8
 //!      constexpr auto average[kahan](/* any of the above overloads */)                            noexcept; // 9
-//!      constexpr auto average[welford] (eve::floating_value auto ... x)                           noexcept; // 10
-//!      constexpr auto average[welford](size_t n,  eve::floating_value auto prevavg,
-//!                                                 eve::floating_value auto ... x)                 noexcept; // 11
-//!
 //!   }
 //!   @endcode
 //!
@@ -168,9 +115,6 @@ namespace eve
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.
 //!     8. The average is computed in the double sized element type (if available).
 //!     9. Kahan like Compensated algorithm for better precision.
-//!     10. Uses the Welford incremental algorithm.
-//!     11. Uses incremental version of welford from a previously computed mean of n elements stored in
-//!         `prevavg` and other new values
 //!
 //!  @note
 //!     1.  with raw option is a spurious overflow can be obtained.
@@ -268,73 +212,6 @@ namespace eve::detail
     }
   }
 
-  template<typename T0, typename ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
-  requires(O::contains(welford))
-  {
-    using r_t =  common_value_t<detail::internal_welford_t<T0>,  detail::internal_welford_t<Ts>...>;
-    using C = rbr::result::fetch_t<condition_key, O>;
-    if constexpr( !std::same_as<C,ignore_none_> )
-    {
-      auto cond = o[condition_key];
-      auto z = average[o.drop(condition_key)](a0, args...);
-      auto n = []<typename T>(T t){
-        if constexpr(value<T>) return  std::size_t(1);
-        else return t.n_;
-      };
-      auto avg = []<typename T>(T t){
-        if constexpr(value<T>) return  r_t(t);
-        else return r_t(t.avg_);
-      };
-
-      return eve::detail::wf<r_t>(eve::if_else(cond, avg(z), avg(a0)), n(z)); //eve::if_else(cond, n(z), n(a0)));
-    }
-    else if constexpr(O::contains(widen))
-    {
-      auto up_it = [](auto a){
-        if constexpr(value<decltype(a)>) return eve::upgrade(a);
-        else                             return a.up();
-      };
-      return average[o.drop(widen)](up_it(a0), up_it(args)...);
-    }
-    else if constexpr(sizeof...(Ts) == 0)
-    {
-      if constexpr(value<T0>)
-        return a0;
-      else
-        return a0.avg_;
-    }
-    else if constexpr(value<T0>)
-    {
-      auto wa0 = wf<r_t>(a0, 1u);
-      return average[o](wa0, args...);
-    }
-    else
-    {
-      auto na0 = wf<r_t>(a0.avg_, a0.n_);
-      auto doit = [&na0](auto... as){
-        auto welfordstep = [&na0](auto a)
-        {
-          if constexpr(value<decltype(a)>)
-          {
-            ++na0.n_;
-            na0.avg_ += (a-na0.avg_)/na0.n_;
-            return na0;
-          }
-          else
-          {
-            auto nab = na0.n_+a.n_;
-            auto avg = sum_of_prod(r_t(na0.n_), na0.avg_, r_t(a.n_), a.avg_)/nab;
-            return  wf<r_t>(avg, nab);
-          }
-        };
-        ((na0 = welfordstep(as)),...);
-        return na0;
-      };
-      return  doit(args...);
-    }
-  }
 
 
 //   template<kumi::non_empty_product_type Tup, callable_options O>

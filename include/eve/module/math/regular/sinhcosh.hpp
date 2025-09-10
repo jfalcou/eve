@@ -106,7 +106,7 @@ namespace eve
         auto inct = inc(t);
         auto u    = t / inct;
         auto s    = h * (fnma(t, u, t) + t);
-        auto c    = (x > T(22.0f)) ? inct * half(eve::as<T>()) : mean_value(inct, rec[pedantic](inct));
+        auto c    = (x > T(22.0f)) ? inct * half(eve::as<T>()) : average(inct, rec[pedantic](inct));
         return eve::zip(s, c);
       }
       else
@@ -118,7 +118,7 @@ namespace eve
         auto z    = fnma(t, u, t);
         auto s    = half(eve::as<T>()) * h * (z + t);
         auto invt = if_else(x > T(22.0f), eve::zero, rec[pedantic](inct));
-        auto c    = mean_value(inct, invt);
+        auto c    = average(inct, invt);
         auto test = x < ovflimit;
         if( eve::all(test) ) return eve::zip(s, c);
 

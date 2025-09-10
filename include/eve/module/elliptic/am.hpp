@@ -135,9 +135,9 @@ namespace eve
           {
             if (eve::all(eve::is_not_greater_equal(abs(c[n]), tol))) break;
             two_n += two_n;
-            a[n+1] = mean_value(a[n], g[n]);
+            a[n+1] = average(a[n], g[n]);
             g[n+1] = sqrt(a[n] * g[n]);
-            c[n+1] = mean_value(a[n], -g[n]);
+            c[n+1] = average(a[n], -g[n]);
           }
 
           // Prepare for the inverse transformation of phi = x * cm.
@@ -146,7 +146,7 @@ namespace eve
           // Perform backward substitution
           for (; n > 0; --n)
           {
-            phi = mean_value(phi, asin(c[n]*sin(phi)/a[n]) );
+            phi = average(phi, asin(c[n]*sin(phi)/a[n]) );
           }
           return if_else(is_infinite(u) && is_eqz(k), u, phi);
         };

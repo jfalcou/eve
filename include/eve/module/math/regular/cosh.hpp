@@ -109,13 +109,13 @@ namespace eve
           return t;
         }
         auto t = exp(x);
-        return (x > 22) ? t * half(eve::as<T>()) : mean_value(t, rec[pedantic](t));
+        return (x > 22) ? t * half(eve::as<T>()) : average(t, rec[pedantic](t));
       }
       else
       {
         auto t    = exp(x);
         auto invt = if_else(x > 22, eve::zero, rec[pedantic](t));
-        auto c    = mean_value(t, invt);
+        auto c    = average(t, invt);
         auto test = x < ovflimitmln2;
         if( eve::all(test) ) return c;
         auto w = exp(x * half(eve::as<T>()));

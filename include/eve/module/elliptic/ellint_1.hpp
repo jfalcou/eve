@@ -118,9 +118,9 @@ namespace eve
       int i = 0;
       while( eve::any((eve::abs(c)>tol)) && (++i < 100))
       {
-        auto an = mean_value(a, b);
+        auto an = average(a, b);
         auto bn = sqrt(a * b);
-        c       = mean_value(a, -b);
+        c       = average(a, -b);
         a       = an;
         b       = bn;
       }

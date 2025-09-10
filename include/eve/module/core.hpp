@@ -67,7 +67,7 @@
 //!       - `raw`: indicates that the operation is performed to gain speed generally at the expanse of some accuracy
 //!           or/and proper treament of limting values.
 //!
-//!           Concerned functions are eve::mean_value, eve::diff_of_prod, eve::exponent, eve::frac, eve::frexp, eve::ifrexp,
+//!           Concerned functions are eve::average, eve::diff_of_prod, eve::exponent, eve::frac, eve::frexp, eve::ifrexp,
 //!           eve::mantissa, eve::modf, eve::next, eve::prev, eve::rec, eve::rsqrt, eve::sqrt, eve::sum_of_prod, eve::trunc,
 //!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
 //!
@@ -104,12 +104,12 @@
 //!      - `strict`: combined with lower or upper option strict ensures that the inequalities obtained are strict.
 //!
 //!      These decorators can be used with the functions
-//!      eve::add, eve::mean_value, eve::dec, eve::div, eve::fma,  eve::fms, eve::inc,
+//!      eve::add, eve::average, eve::dec, eve::div, eve::fma,  eve::fms, eve::inc,
 //!      eve::mul, eve::oneminus, eve::rec, eve::sqr, eve::sqrt, eve::sub.
 //!
 //!      Also `lower` and `upper` (but not `strict`) can be used with all floating point constants.
 //!
-//!      Except for mean_value with integral typed inputs these decocators have no impact on integer calls.
+//!      Except for average with integral typed inputs these decocators have no impact on integer calls.
 //!
 //!    * upgraded computations
 //!
