@@ -24,7 +24,8 @@ any_(EVE_REQUIRES(neon128_),
   using C = rbr::result::fetch_t<condition_key, O>;
   using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<2>>;
 
-  if constexpr( C::is_complete && !C::is_inverted ) return false;
+  if      constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v0) };
+  else if constexpr( C::is_complete && !C::is_inverted ) return false;
   else if constexpr( !C::is_complete ) return any.behavior(cpu_{}, opts, v0);
   else if constexpr( eve::current_api >= eve::asimd ) return any.behavior(cpu_{}, opts, v0);
   else
@@ -48,7 +49,8 @@ any_(EVE_REQUIRES(neon128_),
   using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
   using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, eve::fixed<2>>;
 
-  if constexpr( C::is_complete && !C::is_inverted ) return false;
+  if      constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v0) };
+  else if constexpr( C::is_complete && !C::is_inverted ) return false;
   // we still have to convert down here, so we can do it before ignore.
   else if constexpr( eve::current_api < eve::asimd && sizeof(T) >= 2 )
   {
