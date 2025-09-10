@@ -14,17 +14,16 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of average", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of average", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
+  using eve::welford;
   using v_t = eve::element_type_t<T>;
-
+  using wf_t = eve::detail::wf<T>;
   // regular
   TTS_EXPR_IS(eve::average(T(), T()), T);
   TTS_EXPR_IS(eve::average(T(), v_t()), T);
   TTS_EXPR_IS(eve::average(v_t(), T()), T);
-  TTS_EXPR_IS(eve::average(T(), int()), T);
-  TTS_EXPR_IS(eve::average(int(), T()), T);
   TTS_EXPR_IS(eve::average(v_t(), v_t()), v_t);
 
   // multi
@@ -37,33 +36,50 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::average(v_t(), v_t(), T()), T);
     TTS_EXPR_IS(eve::average(v_t(), T(), v_t()), T);
 
-    TTS_EXPR_IS(eve::average(int(), int()), int);
     TTS_EXPR_IS(eve::average(v_t(), v_t(), v_t()), v_t);
+  }
+
+  // welford
+
+  // regular
+  TTS_EXPR_IS(eve::average[welford](T(), T()), wf_t);
+  TTS_EXPR_IS(eve::average[welford](T(), v_t()), wf_t);
+  TTS_EXPR_IS(eve::average[welford](v_t(), T()), wf_t);
+  TTS_EXPR_IS(eve::average[welford](v_t(), v_t()), eve::detail::wf<v_t>);
+
+  // multi
+  if constexpr( eve::floating_value<T> )
+  {
+    TTS_EXPR_IS(eve::average[welford](T(), T(), T()), wf_t);
+    TTS_EXPR_IS(eve::average[welford](T(), v_t(), T()), wf_t);
+    TTS_EXPR_IS(eve::average[welford](v_t(), T(), T()), wf_t);
+    TTS_EXPR_IS(eve::average[welford](T(), T(), v_t()), wf_t);
+    TTS_EXPR_IS(eve::average[welford](v_t(), v_t(), T()), wf_t);
+    TTS_EXPR_IS(eve::average[welford](v_t(), T(), v_t()), wf_t);
+
+    TTS_EXPR_IS(eve::average[welford](v_t(), v_t(), v_t()), eve::detail::wf<v_t>);
   }
 };
 
 //==================================================================================================
-//== average tests
+//== average[welford] tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of average[welford](wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+<typename T>(T  a0, T  a1, T  a2)
 {
+  using eve::welford;
   using eve::average;
-  using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
-  if constexpr( eve::floating_value<T> )
-  {
-    TTS_ULP_EQUAL(average(a0, a1, a2),
-                  tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  48);
-  }
+  TTS_ULP_EQUAL(average[welford](a0, a1).avg_, (a0+a1)/2, 0.5);
+  TTS_ULP_EQUAL(average[welford](a0, a1, a2).avg_,(a0+a1+a2)/3, 1.0);
+  TTS_ULP_EQUAL(average(a0, a1), (a0+a1)/2, 0.5);
+  TTS_ULP_EQUAL(average(a0, a1, a2),(a0+a1+a2)/3, 1.0);
 };
 
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of average(wide integers)",
               eve::test::simd::integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)
                            , tts::randoms(eve::valmin, eve::valmax)))
@@ -71,48 +87,58 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 {
   using eve::average;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  auto wr = T(average(a0, a1));
+  TTS_ULP_EQUAL(wr, tts::map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  TTS_EXPECT(eve::all(wr <= average[eve::upper](a0, a1)));
+  TTS_EXPECT(eve::all(wr >= average[eve::lower](a0, a1)));
 };
 
 //==================================================================================================
-// //==  conditional average tests
-// //==================================================================================================
-// // TTS_CASE_WITH("Check behavior of  average[cond](wide)",
-// //               eve::test::simd::all_types,
-// //               tts::generate(tts::randoms(0, 127), tts::randoms(0, 127), tts::randoms(0, 127)))
-// // <typename T>(T const& a0, T const& a1, T const& a2)
-// // {
-// //   using eve::average;
-// //   using v_t = eve::element_type_t<T>;
-// //   // values can differ by one on integral types from scalar to simd implementations (intrinsics may
-// //   // be at work)
-// //   TTS_ULP_EQUAL(
-// //       average[a2 > T(64)](a0, a1),
-// //       tts::map([](auto e, auto f, auto g) { return g > v_t(64) ? average(e, f) : e; }, a0, a1, a2),
-// //       2);
-// // };
+//==  conditional average[welford] tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of  average[welford][cond](wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0, 127), tts::randoms(0, 127), tts::randoms(0, 127)))
+  <typename T>(T const& a0, T const& a1, T const& a2)
+{
+  using eve::average;
+  using eve::welford;
+  using eve::kahan;
+  TTS_ULP_EQUAL(
+    average[welford][a2 > T(64)](a0, a1).avg_,
+    average[kahan][a2 > T(64)](a0, a1), 0.5);
+};
 
 
 //==================================================================================================
-//=== Tests for masked average
+//=== Tests for masked average[welford]
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//                             tts::randoms(eve::valmin, eve::valmax),
-//                             tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          T const& a1,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::average[mask](a0, a1),
-//             eve::if_else(mask, eve::average(a0, a1), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::average[welford])(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+//   T a0(25.0);
+//   T a1(35.0);
+//   std::cout <<eve::average[eve::welford](a0, a1).avg_<< std::endl;
+//   std::cout << eve::detail::wf(a0).avg_<< std::endl;
+//   std::cout << a0                 << std::endl;
+//   std::cout <<mask<< std::endl;
+//   std::cout << eve::if_else(mask, eve::average[eve::welford](a0, a1).avg_, a0) << std::endl;
+  TTS_ULP_EQUAL(eve::average[mask][eve::welford](a0, a1).avg_,
+                 eve::if_else(mask, eve::average[eve::kahan](a0, a1), a0), 0.5);
+  TTS_ULP_EQUAL(eve::average[mask](a0, a1),
+                 eve::if_else(mask, eve::average[eve::kahan](a0, a1), a0), 0.5);
+};
 
-// //==================================================================================================
-// //===  Tests for lower upper  average
-// //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
+//==================================================================================================
+//===  Tests for lower upper  average[welford]
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::upper(eve::average[welford])(eve::wide)",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax))
@@ -140,23 +166,23 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
 };
 
 
-TTS_CASE_WITH("Check behavior of average kahan on wide",
+TTS_CASE_WITH("Check behavior of kahan kahan on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
-  using eve::average;
-  using eve::widen;
   using eve::kahan;
+  using eve::widen;
+  using eve::average;
   using eve::welford;
   using eve::as;
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
   {
     TTS_ULP_EQUAL(average[kahan](a0, a1, a2), eve::downgrade(average[widen](a0, a1, a2)), 0.5);
-    TTS_ULP_EQUAL(average[welford](1u, a0, a1, a2), eve::downgrade(average[widen](a0, a1, a2)), 0.5);
-    TTS_ULP_EQUAL(average[welford](a0, a1, a2), eve::downgrade(average[widen](a0, a1, a2)), 0.5);
+    TTS_ULP_EQUAL(average[welford](a0, a1, a2).avg_, eve::downgrade(average[widen](a0, a1, a2)), 0.5);
+    TTS_ULP_EQUAL(average[welford](a0, a1, a2).avg_, average[kahan](a0, a1, a2), 0.5);
   }
 
 };

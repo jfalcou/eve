@@ -2,44 +2,23 @@
 #include <eve/module/core.hpp>
 #include <iostream>
 #include <iomanip>
+#include <tts/tts.hpp>
 
 int main()
 {
-  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, 1.0};
-  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, -eve::smallestposval(eve::as(1.0)), eve::smallestposval(eve::as(1.0))};
-  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
-  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  std::cout << "00 " << eve::average(1.0, 2.0) << std::endl;
+  auto wa0 = eve::detail::wf<double>(1.0, 1);
+  std::cout << "01 " << eve::average(wa0, 2.0) << std::endl;
+  std::cout <<  "  001 " << eve::average(1.0, wa0)<< std::endl;
+  std::cout  << "02 "<< eve::average(wa0, wa0)<< std::endl;
 
-  std::cout << "<- wf0                                        = " << wf0 << "\n";
-  std::cout << "<- wf1                                         = " << wf1 << "\n";
-  std::cout << "<- wi0                                        = " << wi0 << "\n";
-  std::cout << "<- wi1                                        = " << wi1 << "\n";
-  std::cout << std::setprecision(15);
-
-  std::cout << "-> average(wf0, wf1)                          = " << eve::average(wf0, wf1) << "\n";
-  std::cout << "-> average(wi0, wi1)                          = " << eve::average(wi0, wi1) << "\n";
-//  std::cout << "-> average[ignore_last(2)](wi0, wi1)          = " << eve::average[eve::ignore_last(2)](wi0, wi1) << "\n";
-//  std::cout << "-> average[wi0 != 1.0](wf0, wf1)                = " << eve::average[wf0 != 0](wf0, wf1) << "\n";
-  std::cout << "-> average[raw](wi0, wi1)                     = " << eve::average[eve::raw](wi0, wi1) << "\n";
-  std::cout << "-> average[upper](wi0, wi1)                   = " << eve::average[eve::upper](wi0, wi1) << "\n";
-  std::cout << "-> average[lower](wi0, wi1)                   = " << eve::average[eve::lower](wi0, wi1) << "\n";
-  std::cout << "-> average[upper](wf0, wf1)                   = " << eve::average[eve::upper](wf0, wf1) << "\n";
-  std::cout << "-> average[lower](wf0, wf1)                   = " << eve::average[eve::lower](wf0, wf1) << "\n";
-  std::cout << "-> average[lower][strict](wf0, wf1)           = " << eve::average[eve::lower][eve::strict](wf0, wf1) << "\n";
-  std::cout << "-> average[upper][strict](wf0, wf1)           = " << eve::average[eve::upper][eve::strict](wf0, wf1) << "\n";
-  auto eps_2 = eve::eps(eve::as<float>())/2;
-  std::cout << "-> average(1.0f, eps_2, eps_2, eps_2)         = " << eve::average(1.0f, eps_2, eps_2, eps_2) << "\n";
-  std::cout << "-> average[kahan](1.0f, eps_2, eps_2, eps_2)  = " << eve::average[eve::kahan](1.0f, eps_2, eps_2, eps_2) << " // float computation\n";
-  std::cout << "-> average[raw](1.0f, eps_2, eps_2, eps_2)    = " << eve::average[eve::raw](1.0f, eps_2, eps_2, eps_2) << "\n";
-  auto deps_2 = double(eps_2);
-  std::cout << "-> average[kahan](1.0, deps_2, deps_2, eps_2) = " << float(eve::average[eve::kahan](1.0, deps_2, deps_2, deps_2)) << " // double computation converted to float\n";
-  std::cout << "-> average[welford](1.0, deps_2, deps_2, eps_2)  = " << float(eve::average[eve::welford](1.0, deps_2, deps_2, deps_2))<< "\n";
-  auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
-  std::cout << "-> average[kahan](tup)   = " << eve::average[eve::kahan](tup) << "\n";
-
-//  auto m4 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0);
-  auto m5 = eve::average[eve::kahan](1.0, 2.0, 3.0, 4.0, 5.0);
-//  auto m5b= eve::average[eve::welford](4u, m4, 5.0);
-  std::cout << "m5 " << m5 << std::endl;
-//  std::cout << "m5b " << m5b << std::endl;
+  auto ma = eve::average(1.0, 2.0);
+  auto mb = eve::average(3.0, 4.0, 5.0);
+  auto mab = eve::average(ma, mb);
+  std::cout << "03 "<< mab <<  std::endl;
+  std::cout << "04 "<< eve::average(1.0, 2.0, 3.0, 4.0, 5.0)<< std::endl;
+  std::cout << "1 " << eve::detail::is_wf_v<decltype(ma)> << std::endl;
+  std::cout << "2 " << eve::detail::is_wf_v<double> << std::endl;
+  std::cout << "3 " << tts::typename_<eve::detail::internal_welford_t<decltype(ma)>> << std::endl;
+  std::cout << "4 " << tts::typename_<eve::detail::internal_welford_t<double>> << std::endl;
 }

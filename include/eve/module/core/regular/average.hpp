@@ -10,68 +10,81 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 namespace eve
 {
-  template<typename Options>
-  struct average_t : callable<average_t, Options, raw_option, upper_option,
-                                    lower_option, strict_option, kahan_option,
-                                    widen_option, welford_option>
+  namespace detail
   {
-    template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr common_value_t<Ts...>
+    template < floating_value T> struct wf
+    {
+      using wf_t = T;
+
+      wf() : avg_(T(0)), n_(1u){}
+      wf(T avg)                                 : avg_(avg), n_(1u){}
+      wf(T avg,  std::size_t n) : avg_(avg), n_(n){}
+      operator T()   const  noexcept {return avg_; };
+      std::size_t n()const  noexcept {return n_; };
+
+      auto up() const noexcept { return wf<upgrade_t<T>>(upgrade(avg_), n_); };
+
+      T avg_;
+      std::size_t n_;
+    };
+
+//    template<floating_value T> wf(T t) -> wf<T>;
+
+    template<typename>    struct is_wf_helper          : public std::false_type{};
+    template<typename T>  struct is_wf_helper<wf<T>>   : public std::true_type{};
+    template<typename T>  struct is_wf                 : public is_wf_helper<std::remove_cv_t<T>>::type{};
+    template<typename T> constexpr auto is_wf_v =  is_wf<T>::value;
+
+    template < typename T> struct internal_welford { using val_t = T;  };
+    template < typename T> struct internal_welford<wf<T>> { using val_t = T;  };
+    template < typename T> using  internal_welford_t = typename internal_welford<T>::val_t;
+  }
+
+  template<typename Options>
+  struct average_t : conditional_callable<average_t, Options, upper_option, lower_option, strict_option,
+                                                        widen_option, welford_option, kahan_option>
+  {
+
+    template<typename... Ts>
+    requires( (sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
+                                    && !Options::contains(widen) && !Options::contains(welford))
+      EVE_FORCEINLINE common_value_t<detail::internal_welford_t<Ts>...>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr common_value_t<eve::upgrade_t<Ts>...>
+    template<typename... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
+                                 && Options::contains(widen) && !Options::contains(welford))
+    EVE_FORCEINLINE upgrade_t<common_value_t<detail::internal_welford_t<Ts>...>>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<integral_value T0,  integral_value T1>
-    requires(eve::same_lanes_or_scalar<T0, T1>)
-      EVE_FORCEINLINE common_value_t<T0, T1>
-    constexpr operator()(T0 t0, T1 t1)
-      const noexcept
+    template<typename... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
+             && !Options::contains(widen) && Options::contains(welford))
+      EVE_FORCEINLINE constexpr detail::wf<common_value_t<detail::internal_welford_t<Ts>...>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
-
-
-    template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr common_value_t<Ts...>
-    operator()(std::size_t n, Ts...ts) const noexcept
+    template<typename... Ts>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>
+                                 && Options::contains(widen) && Options::contains(welford))
+      EVE_FORCEINLINE constexpr detail::wf<upgrade_t<common_value_t<detail::internal_welford_t<Ts>...>>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(n, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
-
-    template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-    EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>>
-    operator()(std::size_t n, Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(n, ts...);
-    }
-
-//    template<conditional_expr C, typename ...Ts>
-//    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>,C>
-//     operator()(C mask, Ts... ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(mask,ts...);
-//     }
 
     EVE_CALLABLE_OBJECT(average_t, average_);
   };
@@ -159,7 +172,7 @@ namespace eve
 //!         `prevavg` and other new values
 //!
 //!  @note
-//!     1.  with raw option is a spurious overflow can be obtained.
+//!     1.  with raw option is used spurious overflows can be obtained.
 //!     2.  `mean`can be used as an alias to `average`.
 //!
 //!
@@ -170,14 +183,175 @@ namespace eve
 //!  @godbolt{doc/core/average.cpp}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
-  inline constexpr auto mean = functor<average_t>;
+  inline constexpr auto mean       = functor<average_t>;
 //================================================================================================
 //! @}
 //================================================================================================
 
 }
 
-#include <eve/module/core/regular/impl/average.hpp>
+namespace eve::detail
+{
+
+  template<value T0, value ... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
+  requires(!O::contains(welford))
+  {
+    using r_t =  eve::common_value_t<T0, Ts...>;
+    using e_t =  eve::element_type_t<r_t>;
+    using C = rbr::result::fetch_t<condition_key, O>;
+    if constexpr( !std::same_as<C,ignore_none_> )
+    {
+      auto cond = o[condition_key];
+      auto z = average[o.drop(condition_key)](a0, args...);
+      return if_else(cond, z, r_t(a0));
+    }
+    else if constexpr(O::contains(widen))
+    {
+      return average[o.drop(widen)](upgrade(a0), upgrade(args)...);
+    }
+    else if constexpr(sizeof...(Ts) == 0)
+      return a0;
+    else if constexpr(sizeof...(Ts) == 1)
+    {
+      const auto b = r_t(args...);
+      const auto a = r_t(a0);
+      if constexpr(integral_value<r_t>)
+      {
+       if constexpr(O::contains(upper))
+          return (a | b) - ((a ^ b) >> 1);   //compute ceil( (a+b)/2 )
+        else
+          return (a & b) + ((a ^ b) >> 1);   //compute floor( a+b)/2 )  default
+      }
+      else
+      {
+        const auto h = eve::half(eve::as<e_t>());
+        return fma[o][pedantic](a, h, b*h);
+      }
+    }
+    else
+    {
+      constexpr auto N = sizeof...(Ts)+1;
+      constexpr e_t invn = 1/(e_t(N));
+      if constexpr(O::contains(raw))
+      {
+        if constexpr(integral_value<r_t>)
+        {
+          return add[o.drop(raw)](a0, args...)/N;
+        }
+        else
+        {
+          return eve::mul[o](add[o.drop(raw)](a0, args...), invn);
+        }
+      }
+      else if constexpr(O::contains(kahan))
+      {
+        auto pair_add = [invn](auto pair0, auto r1){
+          auto [r, e0] = pair0;
+          auto [s, e1] = eve::two_fma_approx(r1, invn, r);
+          return zip(s, e0+e1);
+        };
+        auto p0 = two_prod(r_t(a0), invn);
+        ((p0 = pair_add(p0,args)),...);
+        auto [r, e] = p0;
+        return r+e;
+      }
+      else
+      {
+        r_t that(a0 * invn);
+        auto lfma = fma[o];
+        auto  next = [invn, lfma](auto avg, auto x) { return lfma(x, invn, avg); };
+        ((that = next(that, r_t(args))), ...);
+        return that;
+      }
+    }
+  }
+
+  template<typename T0, typename ... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
+  requires(O::contains(welford))
+  {
+    using r_t =  common_value_t<detail::internal_welford_t<T0>,  detail::internal_welford_t<Ts>...>;
+    using C = rbr::result::fetch_t<condition_key, O>;
+    if constexpr( !std::same_as<C,ignore_none_> )
+    {
+      auto cond = o[condition_key];
+      auto z = average[o.drop(condition_key)](a0, args...);
+      auto n = []<typename T>(T t){
+        if constexpr(value<T>) return  std::size_t(1);
+        else return t.n_;
+      };
+      auto avg = []<typename T>(T t){
+        if constexpr(value<T>) return  r_t(t);
+        else return r_t(t.avg_);
+      };
+
+      return eve::detail::wf<r_t>(eve::if_else(cond, avg(z), avg(a0)), n(z)); //eve::if_else(cond, n(z), n(a0)));
+    }
+    else if constexpr(O::contains(widen))
+    {
+      auto up_it = [](auto a){
+        if constexpr(value<decltype(a)>) return eve::upgrade(a);
+        else                             return a.up();
+      };
+      return average[o.drop(widen)](up_it(a0), up_it(args)...);
+    }
+    else if constexpr(sizeof...(Ts) == 0)
+    {
+      if constexpr(value<T0>)
+        return a0;
+      else
+        return a0.avg_;
+    }
+    else if constexpr(value<T0>)
+    {
+      auto wa0 = wf<r_t>(a0, 1u);
+      return average[o](wa0, args...);
+    }
+    else
+    {
+      auto na0 = wf<r_t>(a0.avg_, a0.n_);
+      auto doit = [&na0](auto... as){
+        auto welfordstep = [&na0](auto a)
+        {
+          if constexpr(value<decltype(a)>)
+          {
+            ++na0.n_;
+            na0.avg_ += (a-na0.avg_)/na0.n_;
+            return na0;
+          }
+          else
+          {
+            auto nab = na0.n_+a.n_;
+            auto avg = sum_of_prod(r_t(na0.n_), na0.avg_, r_t(a.n_), a.avg_)/nab;
+            return  wf<r_t>(avg, nab);
+          }
+        };
+        ((na0 = welfordstep(as)),...);
+        return na0;
+      };
+      return  doit(args...);
+    }
+  }
+
+
+//   template<kumi::non_empty_product_type Tup, callable_options O>
+//   EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), O const & o, Tup tup) noexcept
+//   requires(!O::contains(welford))
+//   {
+//     return kumi::apply([o](auto...m){return average[o](m...);}, tup);
+//   }
+
+//   template<kumi::non_empty_product_type Tup, callable_options O>
+//   EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(cpu_), O const & o, std::size_t n, Tup tup) noexcept
+//   requires(O::contains(welford))
+//   {
+//     return kumi::apply([n, o](auto...m){return average[o](n, m...);}, tup);
+//   }
+
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/average.hpp>

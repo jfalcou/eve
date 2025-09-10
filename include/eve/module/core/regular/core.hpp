@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/agm.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/any.hpp>
-#include <eve/module/core/regular/mean_value.hpp>
+#include <eve/module/core/regular/average.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_ceil.hpp>
@@ -234,5 +234,3 @@
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/write.hpp>
-
-//#include <eve/module/core/regular/mean_value.hpp> // to merge in average
