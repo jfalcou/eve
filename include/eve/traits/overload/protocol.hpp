@@ -43,6 +43,28 @@ namespace eve
   //====================================================================================================================
   template<typename T, typename...>
   concept callable_object = requires(T const&) { typename T::callable_tag_type; };
+
+
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @var supports_options
+  //!   @brief Checks if a callable function supports given options
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/eve.hpp>
+  //!   @endcode
+  //!
+  //!   This template variable evaluates to `true` if the callable `Func` supports all the specified options.
+  //!
+  //!   @tparam Func  The callable function to check
+  //!   @tparam Opt   The options to check for support
+  //! @}
+  //====================================================================================================================
+  template<auto Func, auto... Opt>
+  inline constexpr bool supports_options = requires{ (Func[Opt], ...); };
 }
 
 //======================================================================================================================

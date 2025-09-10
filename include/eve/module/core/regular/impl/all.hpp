@@ -12,12 +12,21 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 
 namespace eve::detail
 {
+template <callable_options O, logical_simd_value T>
+EVE_FORCEINLINE T all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+  requires (O::contains(splat))
+{
+  return T { all[opts.drop(splat)](v) };
+}
+
 template <callable_options O, logical_value T>
 EVE_FORCEINLINE bool
 all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+  requires (!O::contains(splat))
 {
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];

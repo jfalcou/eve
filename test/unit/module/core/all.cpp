@@ -12,20 +12,13 @@
 TTS_CASE_TPL("Check eve::all return type (wide)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  const T val{};
-
-  TTS_EXPR_IS((eve::all(eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all[eve::ignore_none](eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all[val > 0](eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all[true](eve::logical<T>())), bool);
+  logical_reduction_simd_type_test(eve::all, eve::as<eve::logical<T>>{});
 };
 
 TTS_CASE_TPL("Check eve::all return type (scalar)", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  TTS_EXPR_IS((eve::all(eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all[eve::ignore_none](eve::logical<T>())), bool);
-  TTS_EXPR_IS((eve::all[true](eve::logical<T>())), bool);
+  logical_reduction_scalar_type_test(eve::all, eve::as<eve::logical<T>>{});
 };
 
 TTS_CASE("Check eve::all return type (booleans)")
