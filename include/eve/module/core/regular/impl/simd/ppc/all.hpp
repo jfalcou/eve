@@ -20,7 +20,7 @@ namespace eve::detail
   {
     const auto m = v.bits();
 
-    if constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v); }
+    if constexpr (O::contains(splat)) return logical<wide<T, N>> { all.behavior(current_api, opts.drop(splat), v) };
     else if constexpr (match_option<condition_key, O, ignore_none_>)
     {
       return static_cast<bool>(vec_all_eq(remove_garbage(m).storage(), true_(as(m)).storage()));
