@@ -118,17 +118,17 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::mean_value[welford])(eve::wide
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
-<typename T, typename M>(T const& ,
-                         T const& ,
+<typename T, typename M>(T const& a0,
+                         T const& a1,
                          M const& mask)
 {
-  T a0(25.0);
-  T a1(35.0);
-  std::cout <<eve::mean_value[eve::welford](a0, a1).avg_<< std::endl;
-  std::cout << eve::detail::wf(a0).avg_<< std::endl;
-  std::cout << a0                 << std::endl;
-  std::cout <<mask<< std::endl;
-  std::cout << eve::if_else(mask, eve::mean_value[eve::welford](a0, a1).avg_, a0) << std::endl;
+//   T a0(25.0);
+//   T a1(35.0);
+//   std::cout <<eve::mean_value[eve::welford](a0, a1).avg_<< std::endl;
+//   std::cout << eve::detail::wf(a0).avg_<< std::endl;
+//   std::cout << a0                 << std::endl;
+//   std::cout <<mask<< std::endl;
+//   std::cout << eve::if_else(mask, eve::mean_value[eve::welford](a0, a1).avg_, a0) << std::endl;
   TTS_ULP_EQUAL(eve::mean_value[mask][eve::welford](a0, a1).avg_,
                  eve::if_else(mask, eve::mean_value[eve::kahan](a0, a1), a0), 0.5);
   TTS_ULP_EQUAL(eve::mean_value[mask](a0, a1),
