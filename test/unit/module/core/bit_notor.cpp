@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of bit_notor on integral types",
   using eve::bit_notor;
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL(bit_notor(a0, a1), tts::map([](auto e, auto f) -> v_t { return ~e | f; }, a0, a1));
-  auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
+  auto test = a3 > eve::mean_value(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_EQUAL(bit_notor[test](a0, a1), eve::if_else(test, eve::bit_notor(a0, a1), a0));
   TTS_EQUAL(bit_notor[test](a0, a1, a2),
             eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));
@@ -77,7 +77,7 @@ TTS_CASE_WITH("Check behavior of bit_notor on floating types",
           { return bit_cast(~bit_cast(e, as(i_t())) | bit_cast(f, as(i_t())), as(v_t())); },
           a0,
           a1));
-  auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
+  auto test = a3 > eve::mean_value(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_IEEE_EQUAL(bit_notor[test](a0, a1), eve::if_else(test, eve::bit_notor(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_notor[test](a0, a1, a2),
                  eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));

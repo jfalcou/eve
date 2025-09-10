@@ -10,7 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <iostream>
+#include <eve/module/core/regular/sum_of_prod.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 namespace eve
 {
@@ -207,7 +209,7 @@ namespace eve::detail
     }
     else if constexpr(O::contains(widen))
     {
-      return average[o.drop(widen)](upgrade(a0), upgrade(args)...);
+      return mean_value[o.drop(widen)](upgrade(a0), upgrade(args)...);
     }
     else if constexpr(sizeof...(Ts) == 0)
       return a0;

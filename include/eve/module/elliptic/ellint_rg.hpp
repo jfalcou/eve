@@ -103,7 +103,7 @@ namespace eve
         swap_if(x < z, x, z);
         swap_if(y > z, y, z);
         // now all(x >= z) and all(z >= y)
-        return average(z*ellint_rf(x,y,z)-(x-z)*(y-z)*ellint_rd(x, y, z)*third(as<T>()), sqrt(x*y/z));
+        return mean_value(z*ellint_rf(x,y,z)-(x-z)*(y-z)*ellint_rd(x, y, z)*third(as<T>()), sqrt(x*y/z));
       }
       else
       {

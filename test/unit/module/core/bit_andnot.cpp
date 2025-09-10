@@ -76,7 +76,7 @@ TTS_CASE_WITH("Check behavior of bit_andnot on floating types",
         a0,
         a1));
 
-  auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
+  auto test = a3 > eve::mean_value(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1, a2),
                  eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));

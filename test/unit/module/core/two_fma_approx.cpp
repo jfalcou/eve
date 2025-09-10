@@ -9,7 +9,7 @@
 #include <eve/module/core.hpp>
 
 //==================================================================================================
-//== average tests
+//== mean_value tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of two_fma_approx",
               eve::test::scalar::ieee_reals,

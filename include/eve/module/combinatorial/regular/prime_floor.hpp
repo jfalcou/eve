@@ -98,7 +98,7 @@ namespace eve
       auto last  = T(maxi);
       while( eve::any(inc(first) < last) )
       {
-        auto mid  = average(first, last);
+        auto mid  = mean_value(first, last);
         auto pmid = convert(nth_prime(mid), as<elt_t>());
         auto test = pmid <= n;
         first     = if_else(test, mid, first);

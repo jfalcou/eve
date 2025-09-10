@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/any.hpp>
-#include <eve/module/core/regular/average.hpp>
+#include <eve/module/core/regular/mean_value.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
@@ -96,7 +96,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     agm_(EVE_REQUIRES(cpu_), O const &, T a,  T b) noexcept
     {
-      auto ex = exponent(average(a, b));
+      auto ex = exponent(mean_value(a, b));
       auto r     = nan(as<T>());
       auto null = is_eqz(a)||is_eqz(b);
       r = if_else(null, zero, r);
@@ -108,12 +108,12 @@ namespace eve
       b = if_else(done,  zero, b);
       a =  ldexp(a, -ex);
       b =  ldexp(b, -ex);
-      auto c  = average(a, -b);
+      auto c  = mean_value(a, -b);
       while (eve::any(eve::abs(c) > T(2)*eps(as(c))))
       {
-        auto an=average(a, b);
+        auto an=mean_value(a, b);
         auto bn=sqrt(a*b);
-        c=average(a, -b);
+        c=mean_value(a, -b);
         a=an;
         b=bn;
       }

@@ -234,5 +234,3 @@
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/write.hpp>
-
-//#include <eve/module/core/regular/mean_value.hpp> // to merge in average

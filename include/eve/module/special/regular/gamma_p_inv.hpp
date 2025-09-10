@@ -126,7 +126,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
         xhi = if_else(inl, eve::min(xhi * 2, eve::valmax(as(x))), xhi);
         inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
       }
-      auto xmed = average(xlo, xhi);
+      auto xmed = mean_value(xlo, xhi);
       while( eve::any(notdone) )
       {
         auto gmp  = gamma_p(xmed, k);
@@ -134,7 +134,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
         xlo       = if_else(test, xmed, xlo);
         xhi       = if_else(test, xhi, xmed);
         notdone   = (ulpdist(xlo, xhi) > 1) && gmp != 0;
-        xmed      = average(xlo, xhi);
+        xmed      = mean_value(xlo, xhi);
       }
       xmed = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), xmed));
       return if_else(k == one(as(k)), -eve::log1p(-p), xmed);

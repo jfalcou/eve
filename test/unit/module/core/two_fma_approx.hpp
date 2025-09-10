@@ -9,9 +9,9 @@
 #include <eve/module/core.hpp>
 
 //==================================================================================================
-//== average tests
+//== three_fma_approxe tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of three_fma_approx(wide)",
               eve::test::scalar::ieee_reals,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),

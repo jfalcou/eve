@@ -63,9 +63,9 @@ namespace eve
 //!      constexpr auto lpnorm[logical_value auto m](loating_value auto p, floating_value auto x,floating_value auto... xs)     noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto average[pedantic](/* any of the above overloads */)                                                     noexcept; // 3
-//!      constexpr auto average[widen](/* any of the above overloads */)                                                        noexcept; // 4
-//!      constexpr auto average[kahan](/* any of the above overloads */)                                                        noexcept; // 5
+//!      constexpr auto lpnorm[pedantic](/* any of the above overloads */)                                                     noexcept; // 3
+//!      constexpr auto lpnorm[widen](/* any of the above overloads */)                                                        noexcept; // 4
+//!      constexpr auto lpnorm[kahan](/* any of the above overloads */)                                                        noexcept; // 5
 //!   }
 //!   @endcode
 //!

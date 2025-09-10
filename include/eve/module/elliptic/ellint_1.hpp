@@ -115,12 +115,12 @@ namespace eve
       auto a  = one(as(x));
       auto b  = sqrt(oneminus(sqr(xx)));
       auto c  = xx;
-      int i = 0; 
+      int i = 0;
       while( eve::any((eve::abs(c)>tol)) && (++i < 100))
       {
-        auto an = average(a, b);
+        auto an = mean_value(a, b);
         auto bn = sqrt(a * b);
-        c       = average(a, -b);
+        c       = mean_value(a, -b);
         a       = an;
         b       = bn;
       }

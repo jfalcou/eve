@@ -98,7 +98,7 @@ namespace eve
       n           = if_else(toobig, zero, n);
       while( eve::any(inc(first) < last) )
       {
-        T    mid  = average(first, last);
+        T    mid  = mean_value(first, last);
         auto pmid = nth_prime(mid);
         auto test = pmid >= n;
         last      = if_else(test, mid, last);

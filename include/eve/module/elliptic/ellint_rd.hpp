@@ -114,10 +114,10 @@ namespace eve
           T root_z = eve::sqrt(zn);
           T lambda = root_x * root_y + root_x * root_z + root_y * root_z;
           rd_sum += fn / (root_z * (zn + lambda));
-          an = average(an, lambda) * hf;
-          xn = average(xn, lambda) * hf;
-          yn = average(yn, lambda) * hf;
-          zn = average(zn, lambda) * hf;
+          an = mean_value(an, lambda) * hf;
+          xn = mean_value(xn, lambda) * hf;
+          yn = mean_value(yn, lambda) * hf;
+          zn = mean_value(zn, lambda) * hf;
           q *= T(0.25);
           fn *= T(0.25);
           if( eve::all(q < eve::abs(an)) ) break;

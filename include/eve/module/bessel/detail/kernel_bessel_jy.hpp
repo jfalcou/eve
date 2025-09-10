@@ -107,7 +107,7 @@ requires(scalar_value<T>)
       gampl        = rec[pedantic](tgamma(inc(mmu)));
       gammi        = rec[pedantic](tgamma(oneminus(mmu)));
       gam1         = eve::abs(mmu) < Eps ? gamma_e : (gammi - gampl) / (mmu + mmu);
-      gam2         = average(gammi, gampl);
+      gam2         = mean_value(gammi, gampl);
       return;
     };
 
@@ -294,7 +294,7 @@ requires(simd_value<T>)
       gampl        = rec[pedantic](tgamma(inc(mmu)));
       gammi        = rec[pedantic](tgamma(oneminus(mmu)));
       gam1         = if_else(eve::abs(mmu) < Eps, gamma_e, (gammi - gampl) / (mmu + mmu));
-      gam2         = average(gammi, gampl);
+      gam2         = mean_value(gammi, gampl);
       return;
     };
     gamma_temme(mu);
