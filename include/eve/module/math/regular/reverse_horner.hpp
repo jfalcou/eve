@@ -63,9 +63,14 @@ namespace eve
 //!      constexpr auto reverse_horner(floating_value auto x, value auto ci...)                       noexcept; // 1
 //!      constexpr auto reverse_horner(floating_value auto x, eve::coefficients tci)                  noexcept; // 2
 //!
+//!      // Lanes masking
+//!      constexpr auto reverse_horner[conditional_expr auto c](*any of the above overloads*/)        noexcept; // 3
+//!      constexpr auto reverse_horner[logical_value auto m](*any of the above overloads*/)           noexcept; // 3
+//!
 //!      // Semantic options
-//!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 3
-//!   }
+//!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 4
+//!      constexpr auto reverse_horner[kahan](/*any of the above overloads*/)                         noexcept; // 5
+///!   }
 //!   @endcode
 //!
 //!   1. Polynom is evaluated at x the other inputs are the polynomial coefficients.
@@ -95,6 +100,8 @@ namespace eve
 //!     3.`fma[pedantic]` instead of `fma` is used in internal computations.
 //!        This is intended to insure more accurate computations where needed. This has no cost (and is
 //!        automatically done) if the system has hard wired `fma` but is very expansive if it is not the case.
+//!     4. `fma[pedantic]` instead of `fma` is used in internal computations.
+//!     5. a Kahan like compensated algorithm is used to enhance accuracy.
 //!
 //!    @note If the coefficients are simd values of cardinal N, this means you simultaneously
 //!      compute the values of N polynomials.
