@@ -125,20 +125,17 @@ namespace eve
     horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
     {
       using r_t = common_value_t<X, Cs...>;
-      constexpr auto N =  sizeof...(Cs)+1;
+      constexpr auto N =  sizeof...(Cs);
       if constexpr(N == 0)
         return r_t(c);
       else if constexpr(O::contains(kahan))
       {
-//        std::cout << "N " << N << std::endl;
         using a_t = std::array<r_t, N>;
         a_t err;
-        err[0] = 0;
-        auto i = 1;
+        auto i = 0;
         auto s = r_t(c);
         auto x = r_t(xx);
         auto step = [&s, &err, x, &i]( auto a){
-//          std::cout << i << std::endl;
           auto [pi, epi] = eve::two_prod(s, x);
           auto [si, esi] = eve::two_add(pi, a);
           s = si;
@@ -147,9 +144,9 @@ namespace eve
           return s;
         };
         ((s = step(r_t(cs))), ...);
-//        using tup_t =  kumi::result::generate_t<N, decltype([](std::size_t){return r_t(); })>;
-//        auto t = std::bit_cast<tup_t, a_t>(err);
-        return s+ eve::horner(x, err); //coefficients(t));
+        using tup_t =  kumi::result::generate_t<N, decltype([](std::size_t){return r_t(); })>;
+        auto t = std::bit_cast<tup_t, a_t>(err);
+        return s+ eve::horner(x, coefficients(t));
       }
       else
       {
