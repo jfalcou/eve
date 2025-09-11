@@ -26,10 +26,9 @@ namespace eve
       welford_result(T avg)                 : avg_(avg), n_(1u){}
       welford_result(T avg,  std::size_t n) : avg_(avg), n_(n){}
       operator T()   const  noexcept {return avg_; };
-      std::size_t n()const  noexcept {return n_; };
-
-      auto up()  const noexcept { return welford_result<upgrade_t<T>>(upgrade(avg_), n_); };
-      auto avg() const noexcept { return avg_; };
+      std::size_t count()const  noexcept {return n_; };
+      auto upgrade()     const noexcept { return welford_result<upgrade_t<T>>(upgrade(avg_), n_); };
+      auto average()     const noexcept { return avg_; };
 
       T avg_;
       std::size_t n_;
@@ -100,7 +99,7 @@ namespace eve
 //!      of elements on which the mean was calculated is returned.
 //!
 //!      This struct is convertble to the aveverage floating value and two accessors are available
-//!       to get the average value (`avg`) and the number of values used (`n`).
+//!       to get the average value (`averageg()`) and the number of values used (`count()`).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
