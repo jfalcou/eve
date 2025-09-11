@@ -14,7 +14,7 @@
 #include <eve/module/core.hpp>
 #include <eve/traits/helpers.hpp>
 #include <bit>
-#include <iostream>
+
 namespace eve
 {
   template<typename Options>

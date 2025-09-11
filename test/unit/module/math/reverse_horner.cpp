@@ -45,6 +45,8 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
   using eve::one;
   using eve::pedantic;
   using eve::reverse_horner;
+  using eve::kahan;
+
   //============================================================================
   //== variadic
   //============================================================================
@@ -59,6 +61,10 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
   TTS_EQUAL(reverse_horner[pedantic](a0, 2, 1), fma[pedantic](a0, 1, 2));
   TTS_EQUAL(reverse_horner[pedantic](a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
 
+  TTS_EQUAL(reverse_horner[kahan](a0, 0), T(0));
+  TTS_EQUAL(reverse_horner[kahan](a0, 1), T(1));
+  TTS_EQUAL(reverse_horner[kahan](a0, 2, 1), fma[pedantic](a0, 1, 2));
+  TTS_ULP_EQUAL(reverse_horner[kahan](a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3), 0.5);
 
   {
     //============================================================================

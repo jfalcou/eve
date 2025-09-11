@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option>
+  struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option, kahan_option>
   {
     template<floating_value X, value T, value... Ts>
     requires(eve::same_lanes_or_scalar<X, T, Ts...>)
