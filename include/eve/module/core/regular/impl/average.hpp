@@ -16,47 +16,40 @@
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
 
-
 namespace eve::detail
 {
-  template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  average_(EVE_REQUIRES(cpu_), O const & o, T const &a,  U const &b) noexcept
-  {
-    using e_t = element_type_t<common_value_t<T, U>>;
-    if constexpr(integral_value <T> && integral_value<U>)
-    {
-      if constexpr(O::contains(upper))
-        return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
-      else
-        return (a & b) + ((a ^ b) >> 1);   //compute floor( (x+y)/2 )
-    }
-    else if constexpr(O::contains(widen))
-    {
-      return average[o.drop(widen)](upgrade(a), upgrade(b));
-    }
-    else
-    {
-      const auto h = eve::half(eve::as<e_t>());
-      return fma[o][pedantic](a, h, b*h);
-    }
-  }
 
-  template<typename T0, typename ... Ts, callable_options O>
+  template<value T0, value ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
-  requires(sizeof...(Ts) !=  0)
   {
+    using r_t =  eve::common_value_t<T0, Ts...>;
+    using e_t =  eve::element_type_t<r_t>;
     if constexpr(O::contains(widen))
     {
       return average[o.drop(widen)](upgrade(a0), upgrade(args)...);
     }
     else if constexpr(sizeof...(Ts) == 0)
       return a0;
+    else if constexpr(sizeof...(Ts) == 1)
+    {
+      const auto b = r_t(args...);
+      const auto a = r_t(a0);
+      if constexpr(integral_value<r_t>)
+      {
+       if constexpr(O::contains(upper))
+          return (a | b) - ((a ^ b) >> 1);   //compute ceil( (a+b)/2 )
+        else
+          return (a & b) + ((a ^ b) >> 1);   //compute floor( a+b)/2 )  default
+      }
+      else
+      {
+        const auto h = eve::half(eve::as<e_t>());
+        return fma[o][pedantic](a, h, b*h);
+      }
+    }
     else
     {
-      using r_t =  eve::common_value_t<T0, Ts...>;
-      using e_t =  eve::element_type_t<r_t>;
       constexpr auto N = sizeof...(Ts)+1;
       constexpr e_t invn = 1/(e_t(N));
       if constexpr(O::contains(raw))
