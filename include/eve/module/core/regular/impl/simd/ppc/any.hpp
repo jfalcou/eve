@@ -15,12 +15,13 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> v) noexcept
+  EVE_FORCEINLINE auto any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     auto m = v.bits();
 
-    if constexpr (N::value == 1)
+    if constexpr (O::contains(splat)) return logical<wide<T, N>> { any.behavior(current_api, opts.drop(splat), v) };
+    else if constexpr (N::value == 1)
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
@@ -38,12 +39,12 @@ namespace eve::detail
       {
         m = remove_garbage(m);
       }
-      else 
+      else
       {
         m &= expand_mask_no_garbage(opts[condition_key], as(v)).bits();
       }
 
-      return vec_any_eq(m.storage(), true_(as<logical<wide<T>>>{}).storage());
+      return static_cast<bool>(vec_any_eq(m.storage(), true_(as<logical<wide<T>>>{}).storage()));
     }
   }
 }
