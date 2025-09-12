@@ -43,6 +43,9 @@ TTS_CASE_WITH("Check behavior of horner on wide",
   using eve::fma;
   using eve::horner;
   using eve::pedantic;
+  using eve::kahan;
+  using eve::widen;
+  using eve::upgrade;
 
   {
     TTS_EQUAL(horner(a0, 0), T(0));
@@ -54,7 +57,14 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(horner[pedantic](a0, 1), T(1));
     TTS_EQUAL(horner[pedantic](a0, 1, 2), fma[pedantic](a0, 1, 2));
     TTS_EQUAL(horner[pedantic](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-  }
+
+    TTS_EQUAL(horner[kahan](a0, 0), T(0));
+    TTS_EQUAL(horner[kahan](a0, 1), T(1));
+    TTS_EQUAL(horner[kahan](a0, 1, 2), fma[pedantic](a0, 1, 2));
+    TTS_ULP_EQUAL(horner[kahan](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3), 0.5);
+    TTS_ULP_EQUAL(horner[widen](a0, 1, 2, 3), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
+ }
+
 
   //============================================================================
   //== tuples
@@ -116,6 +126,7 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(horner[pedantic](a0, std::span(arr1)), T(1));
     TTS_EQUAL(horner[pedantic](a0, std::span(arr2)), fma[pedantic](a0, 1, 2));
     TTS_EQUAL(horner[pedantic](a0, std::span(arr3)), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+    TTS_ULP_EQUAL(horner[widen](a0, std::span(arr3)), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
   }
 
 };
