@@ -186,8 +186,8 @@ namespace eve
     {
       using r_t  = common_value_t<X, typename R::value_type>;
       auto up_if = [](auto a){
-        if constexpr(O::contains(widen)) return upgrade(a);
-        else return a;
+        if constexpr(O::contains(widen)) return upgrade(r_t(a));
+        else return r_t(a);
       };
       auto x     = up_if(xx);
       auto cur   = std::rbegin(r);
