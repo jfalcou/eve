@@ -94,7 +94,8 @@ namespace eve
 //!     3. [The operation is performed conditionnaly](@ref conditional)
 //!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
 //!        `(|x| < |y|) ? |y| : |x|` and this behaviour is also ensured on n parameters calls
-//!        as if this scheme is recursively used. Also if any input is infinite the result is infinite.
+//!        as if this scheme was recursively used. If one of the arguments is \f$\pm\infty\f$
+//!        returns \f$\infty\f$ even if some other arguments are NaNs.
 //!        (with no consideration of `Nans`)
 //!     5. `NaNs` are considered less than anything else.
 //!     6. compute the upgraded result if available. This has a real cost impact only if joigned
