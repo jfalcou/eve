@@ -146,7 +146,7 @@ namespace eve
   {
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    horner_(EVE_REQUIRES(cpu_), O const & o, X ) noexcept
+    horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
     {
       if constexpr(O::contains(widen))
         return eve::zero(as<upgrade_t<X>>());
