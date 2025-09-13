@@ -20,26 +20,25 @@ namespace eve
   {
     template<floating_value T> struct welford_result
     {
-      using welford_result_t = T;
+      using type_t = T;
 
-      welford_result() : avg_(T(0)), n_(1u){}
-      welford_result(T avg)                 : avg_(avg), n_(1u){}
-      welford_result(T avg,  std::size_t n) : avg_(avg), n_(n){}
-      operator T()   const  noexcept {return avg_; };
-      std::size_t count()const  noexcept {return n_; };
-      auto upgrade()     const noexcept { return welford_result<upgrade_t<T>>(upgrade(avg_), n_); };
-      auto average()     const noexcept { return avg_; };
+      welford_result(T avg)                 : average(avg), count(1u){}
+      welford_result(T avg,  std::size_t n) : average(avg), count(n){}
+      operator T()   const noexcept { return average; };
+      auto upgrade() const noexcept { return welford_result<upgrade_t<T>>(upgrade(count), count); };
 
-      T avg_;
-      std::size_t n_;
+      T average = 0;
+      std::size_t count = 1;
     };
 
-    template<typename>    struct is_welford_result_helper          : public std::false_type{};
+    template<typename>    struct is_welford_result_helper                      : public std::false_type{};
     template<typename T>  struct is_welford_result_helper<welford_result<T>>   : public std::true_type{};
-    template<typename T>  struct is_welford_result                 : public is_welford_result_helper<std::remove_cv_t<T>>::type{};
+    template<typename T>  struct is_welford_result                             : public is_welford_result_helper<std::remove_cv_t<T>>::type{};
     template<typename T> constexpr auto is_welford_result_v =  is_welford_result<T>::value;
 
-    template < typename T> struct internal_welford { using val_t = T;  };
+    // helper to treat in the same way values and welford results to compute common_value_t
+    // without duplicating code
+    template < typename T> struct internal_welford                    { using val_t = T;  };
     template < typename T> struct internal_welford<welford_result<T>> { using val_t = T;  };
     template < typename T> using  internal_welford_t = typename internal_welford<T>::val_t;
   }
@@ -85,7 +84,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto welford_average(auto x, auto ... xs)        noexcept;
+//!      constexpr auto welford_average(auto x, auto ... xs)        noexcept; /1
+//!
+//!      //Semantic options
+//!      constexpr auto welford_average[widen](auto x, auto ... xs) noexcept; /2
 //!   }
 //!   @endcode
 //!
@@ -95,11 +97,12 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      A struct containing The value of the arithmetic mean and the number
-//!      of elements on which the mean was calculated is returned.
+//!      1.  A struct containing The value of the arithmetic mean and the number
+//!          of elements on which the mean was calculated is returned.
 //!
-//!      This struct is convertble to the aveverage floating value and two accessors are available
-//!       to get the average value (`averageg()`) and the number of values used (`count()`).
+//!         This struct is convertble to the aveverage floating value. and possess two fields average and count.
+//!
+//!      2. The computation and result use the upgraded data type if available
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
@@ -145,20 +148,20 @@ namespace eve::detail
     }
     else
     {
-      auto na0 = welford_result<r_t>(a0.avg_, a0.n_);
+      auto na0 = welford_result<r_t>(a0.average, a0.count);
       auto doit = [&na0](auto... as){
         auto welfordstep = [&na0](auto a)
         {
           if constexpr(value<decltype(a)>)
           {
-            ++na0.n_;
-            na0.avg_ += (a-na0.avg_)/na0.n_;
+            ++na0.count;
+            na0.average += (a-na0.average)/na0.count;
             return na0;
           }
           else
           {
-            auto nab = na0.n_+a.n_;
-            auto avg = sum_of_prod(r_t(na0.n_), na0.avg_, r_t(a.n_), a.avg_)/nab;
+            auto nab = na0.count+a.count;
+            auto avg = sum_of_prod(r_t(na0.count), na0.average, r_t(a.count), a.average)/nab;
             return  welford_result<r_t>(avg, nab);
           }
         };

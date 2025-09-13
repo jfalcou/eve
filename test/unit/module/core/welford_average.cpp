@@ -56,12 +56,12 @@ TTS_CASE_WITH("Check behavior of welford_average(wide)",
 
   using eve::kahan;
   using eve::as;
-  TTS_ULP_EQUAL(welford_average(a0, a1).average(), (a0+a1)/2, 15.0);
-  TTS_ULP_EQUAL(welford_average(a0, a1, a2).average(),(a0+a1+a2)/3, 15.0);
+  TTS_ULP_EQUAL(welford_average(a0, a1).average, (a0+a1)/2, 15.0);
+  TTS_ULP_EQUAL(welford_average(a0, a1, a2).average,(a0+a1+a2)/3, 15.0);
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
   {
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average(), eve::downgrade(average[widen](a0, a1, a2)), 15.0);
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average(), average[kahan](a0, a1, a2), 15.0);
-    TTS_ULP_EQUAL(welford_average[widen](a0, a1, a2).average(), average[kahan][widen](a0, a1, a2), 15.0);
+    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average, eve::downgrade(average[widen](a0, a1, a2)), 15.0);
+    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average, average[kahan](a0, a1, a2), 15.0);
+    TTS_ULP_EQUAL(welford_average[widen](a0, a1, a2).average, average[kahan][widen](a0, a1, a2), 15.0);
  }
 };
