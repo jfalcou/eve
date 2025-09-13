@@ -15,19 +15,34 @@ namespace eve
 {
 
   template<typename Options>
-  struct maxabs_t : tuple_callable<maxabs_t, Options, numeric_option, pedantic_option, saturated_option>
+  struct maxabs_t : tuple_callable<maxabs_t, Options, numeric_option, pedantic_option,
+                                                      saturated_option, widen_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+    EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>> operator()(Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
     EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr  upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(maxabs_t, maxabs_);
   };
@@ -60,6 +75,7 @@ namespace eve
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto maxabs[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!      constexpr auto maxabs[numeric ](/* any of the above overloads */)                noexcept; // 5
+//!      constexpr auto maxabs[widen](/* any of the above overloads */)                   noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -78,8 +94,11 @@ namespace eve
 //!     3. [The operation is performed conditionnaly](@ref conditional)
 //!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
 //!        `(|x| < |y|) ? |y| : |x|` and this behaviour is also ensured on n parameters calls
-//!        as if this scheme is recursively used.
+//!        as if this scheme was recursively used. If one of the arguments is \f$\pm\infty\f$
+//!        returns \f$\infty\f$ even if some other arguments are NaNs.
+//!        (with no consideration of `Nans`)
 //!     5. `NaNs` are considered less than anything else.
+//!     6. compute the upgraded result if available.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/maxabs.cpp}
