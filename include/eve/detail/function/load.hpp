@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/conditional.hpp>
 #include <eve/memory/pointer.hpp>
