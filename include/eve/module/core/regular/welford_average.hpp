@@ -21,9 +21,6 @@ namespace eve
     template<floating_value T> struct welford_result
     {
       using type_t = T;
-
-      welford_result(T avg)                 : average(avg), count(1u){}
-      welford_result(T avg,  std::size_t n) : average(avg), count(n){}
       operator T()   const noexcept { return average; };
       auto upgrade() const noexcept { return welford_result<upgrade_t<T>>(upgrade(count), count); };
 
@@ -100,7 +97,7 @@ namespace eve
 //!      1.  A struct containing The value of the arithmetic mean and the number
 //!          of elements on which the mean was calculated is returned.
 //!
-//!         This struct is convertble to the aveverage floating value. and possess two fields average and count.
+//!         This struct is convertble to the avgerage floating value. and possess two fields average and count.
 //!
 //!      2. The computation and result use the upgraded data type if available
 //!
@@ -129,8 +126,8 @@ namespace eve::detail
     if constexpr(O::contains(widen))
     {
       auto up_it = [](auto a){
-        if constexpr(value<decltype(a)>) return eve::upgrade(a);
-        else                             return a.up();
+        if constexpr(requires { a.up(); }) return a.up();
+        else return eve::upgrade(a);
       };
       return welford_average[o.drop(widen)](up_it(a0), up_it(args)...);
     }
