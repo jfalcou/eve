@@ -20,7 +20,7 @@ namespace eve
   {
     template<floating_value T> struct welford_result
     {
-      using type_t = T;
+      using type = T;
       operator T()   const noexcept { return average; };
       auto upgrade() const noexcept { return welford_result<upgrade_t<T>>(upgrade(count), count); };
 
@@ -35,9 +35,9 @@ namespace eve
 
     // helper to treat in the same way values and welford results to compute common_value_t
     // without duplicating code
-    template < typename T> struct internal_welford                    { using val_t = T;  };
-    template < typename T> struct internal_welford<welford_result<T>> { using val_t = T;  };
-    template < typename T> using  internal_welford_t = typename internal_welford<T>::val_t;
+    template < typename T> struct internal_welford                    { using type = T;  };
+    template < typename T> struct internal_welford<welford_result<T>> { using type = T;  };
+    template < typename T> using  internal_welford_t = typename internal_welford<T>::type;
   }
 
   template<typename Options>
