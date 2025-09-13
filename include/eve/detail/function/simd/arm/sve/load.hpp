@@ -9,6 +9,7 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/as.hpp>
+#include <eve/arch/arm/arm_utils.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/unalign.hpp>
@@ -19,7 +20,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> load_impl(sve_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto ptr = unalign(p);
+    auto ptr = arm_ptr_downcast(unalign(p));
 
     if constexpr (C::has_alternative)
     {

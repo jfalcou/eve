@@ -49,6 +49,9 @@ namespace eve::detail
         else if constexpr( c == category::float32x16                        ) return _mm512_set1_ps(v);
         else if constexpr( c == category::float32x8                         ) return _mm256_set1_ps(v);
         else if constexpr( c == category::float32x4                         ) return _mm_set1_ps(v);
+        else if constexpr( c == category::float16x32                        ) return _mm512_set1_ph(v);
+        else if constexpr( c == category::float16x16                        ) return _mm256_set1_ph(v);
+        else if constexpr( c == category::float16x8                         ) return _mm_set1_ph(v);
         else if constexpr( match(c,category::int8x64 , category::uint8x64)  ) return _mm512_set1_epi8(v);
         else if constexpr( match(c,category::int8x32 , category::uint8x32)  ) return _mm256_set1_epi8(v);
         else if constexpr( match(c,category::int8x16 , category::uint8x16)  ) return _mm_set1_epi8(v);
@@ -85,6 +88,14 @@ namespace eve::detail
           {
             return _mm_setr_ps(v, vs..., (I ? 0 : 0)...);
           }(std::make_index_sequence<4 - sizeof...(vs) - 1>());
+        }
+        else  if constexpr( c == category::float16x8)
+        {
+          return [&]<std::size_t... I>(std::index_sequence<I...> const&)
+          {
+            return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
+                  { return _mm_setr_ph(a0,a1,a2,a3,a4,a5,a6,a7); }(v, vs...);
+          }(std::make_index_sequence<8 - sizeof...(vs) - 1>());
         }
         else  if constexpr( match(c,category::int8x16, category::uint8x16) )
         {
@@ -126,6 +137,13 @@ namespace eve::detail
       {
               if constexpr( c == category::float64x4) return _mm256_setr_pd(v, vs...);
         else  if constexpr( c == category::float32x8) return _mm256_setr_ps(v, vs...);
+        else  if constexpr( c == category::float16x16)
+        {
+          return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                    , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                    )
+                  { return _mm256_setr_ph(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(v, vs...);
+        }
         else  if constexpr( sizeof(T) == 1) return _mm256_setr_epi8(v, vs...);
         else  if constexpr( sizeof(T) == 2) return _mm256_setr_epi16(v, vs...);
         else  if constexpr( sizeof(T) == 4) return _mm256_setr_epi32(v, vs...);
@@ -149,6 +167,15 @@ namespace eve::detail
                     , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
                     )
                   { return _mm512_setr_ps(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(v, vs...);
+        else  if constexpr( c == category::float16x32)
+          return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                    , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                    , auto c0,auto c1,auto c2,auto c3, auto c4,auto c5,auto c6,auto c7
+                    , auto d0,auto d1,auto d2,auto d3, auto d4,auto d5,auto d6,auto d7
+                    )
+                  { return _mm512_set_ph ( d7,d6,d5,d4,d3,d2,d1,d0,c7,c6,c5,c4,c3,c2,c1,c0,b7,
+                                          b6,b5,b4,b3,b2,b1,b0,a7,a6,a5,a4,a3,a2,a1,a0
+                                        ); }(v, vs...);
         else  if constexpr( sizeof(T) == 8)
           return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
               { return _mm512_setr_epi64(a0,a1,a2,a3,a4,a5,a6,a7); }(v, vs...);

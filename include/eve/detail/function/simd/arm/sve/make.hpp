@@ -43,6 +43,7 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
       else if constexpr( match(c, category::uint32) ) return svdup_u32(v);
       else if constexpr( match(c, category::int64) ) return svdup_s64(v);
       else if constexpr( match(c, category::uint64) ) return svdup_u64(v);
+      else if constexpr( match(c, category::float16) ) return svdup_f16(v);
       else if constexpr( match(c, category::float32) ) return svdup_f32(v);
       else if constexpr( match(c, category::float64) ) return svdup_f64(v);
     }

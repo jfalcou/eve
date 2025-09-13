@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/arch/abi_of.hpp>
 
@@ -29,7 +30,10 @@ namespace eve::detail
 
 namespace eve
 {
-  template<typename T> concept arithmetic = std::is_arithmetic_v<T>;
+  namespace
+  {
+    template<typename T> concept arithmetic = std::is_arithmetic_v<T> || std::same_as<T, eve::float16_t>;
+  }
 
   //================================================================================================
   //! @addtogroup traits
@@ -98,5 +102,5 @@ namespace eve
 
   // Type short-cut
   template<typename Type, typename Lanes>
-  using abi_t = typename abi<Type, Lanes>::type;
+  using abi_t = typename abi<translate_t<Type>, Lanes>::type;
 }
