@@ -96,11 +96,10 @@ namespace eve
 //!     3. [The operation is performed conditionnaly](@ref conditional)
 //!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
 //!        `(|x| < |y|) ? |x| : |y|` and this behaviour is also ensured on n parameters calls
-//!        as if this scheme was recursively used. Also if any input is equal to zero the result is zero.
-//!        (with no consideration of `Nans`)
+//!        as if this scheme was recursively used.  If one of the arguments is \f$\pm0\f$
+//!        returns \f$0\f$ even if some other arguments are NaNs.
 //!     5. `NaNs` are considered greater than anything else.
-//!     6. compute the upgraded result if available. This has a real cost impact only if joigned
-//!         by saturated on integral inputs.
+//!     6. compute the upgraded result if available.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minabs.cpp}

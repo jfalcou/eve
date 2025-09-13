@@ -98,8 +98,7 @@ namespace eve
 //!        returns \f$\infty\f$ even if some other arguments are NaNs.
 //!        (with no consideration of `Nans`)
 //!     5. `NaNs` are considered less than anything else.
-//!     6. compute the upgraded result if available. This has a real cost impact only if joigned
-//!         by saturated on integral inputs.
+//!     6. compute the upgraded result if available.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/maxabs.cpp}
