@@ -83,7 +83,7 @@ namespace eve::detail
   }
 
   template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE logical_t<wide<T, N>> is_not_equal_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_not_equal_(EVE_REQUIRES(avx512_),
                                                          C          const &mask,
                                                          O          const &opts,
                                                          wide<T, N> const &v,
