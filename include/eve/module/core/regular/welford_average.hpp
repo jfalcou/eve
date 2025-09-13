@@ -97,7 +97,7 @@ namespace eve
 //!      1.  A struct containing The value of the arithmetic mean and the number
 //!          of elements on which the mean was calculated is returned.
 //!
-//!         This struct is convertble to the avgerage floating value. and possess two fields average and count.
+//!         This struct is convertble to the average floating value. and possess two fields `average` and `count`.
 //!
 //!      2. The computation and result use the upgraded data type if available
 //!
