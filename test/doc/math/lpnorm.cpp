@@ -10,11 +10,15 @@ int main()
   eve::wide z = { eve::inf(eve::as(1.0f)), -2.0f, 1.0f, 15.0f};
   eve::wide p = { 3.2f, 3.0f, 2.0f, eve::inf(eve::as(1.0f))};
 
-  std::cout << std::setprecision(5) << '\n';
-  std::cout << "<- p                            = " << p  << '\n';
-  std::cout << "<- x                            = " << x  << '\n';
-  std::cout << "<- y                            = " << y  << '\n';
-  std::cout << "<- z                            = " << z  << '\n';
-  std::cout << "-> lpnorm(p, x, y, z)           = " << eve::lpnorm(p, x, y, z) << '\n';
-  std::cout << "-> lpnorm[pedantic](p, x, y, z) = " << eve::lpnorm[eve::pedantic](p, x, y, z) << '\n';
+  std::cout << std::setprecision(15) << '\n';
+  std::cout << "<- p                                      = " << p  << '\n';
+  std::cout << "<- x                                      = " << x  << '\n';
+  std::cout << "<- y                                      = " << y  << '\n';
+  std::cout << "<- z                                      = " << z  << '\n';
+  std::cout << "-> lpnorm(p, x, y, z)                     = " << eve::lpnorm(p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[pedantic](p, x, y, z)           = " << eve::lpnorm[eve::pedantic](p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[kahan](p, x, y, z)              = " << eve::lpnorm[eve::kahan](p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[kahan][pedantic](p, x, y, z)    = " << eve::lpnorm[eve::kahan][eve::pedantic](p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[widen](p, x, y, z)              = " << eve::lpnorm[eve::widen](p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[widen][pedantic](p, x, y, z)    = " << eve::lpnorm[eve::widen][eve::pedantic](p, x, y, z) << '\n';
 }

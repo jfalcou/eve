@@ -22,18 +22,32 @@ namespace eve
                                                 kahan_option, widen_option>
   {
     template<value P, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0))
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0) && !Options::contains(widen))
      EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>, P>
     operator()(P p, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(p, ts...);
     }
 
+    template<value P, floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0) && Options::contains(widen))
+     EVE_FORCEINLINE constexpr as_wide_as_t<upgrade_t<common_value_t<Ts...>>, P>
+    operator()(P p, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(p, ts...);
+    }
+
     template<value P, kumi::non_empty_product_type Tup>
+    requires(!Options::contains(widen))
     EVE_FORCEINLINE constexpr
     as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
     operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
 
+    template<value P, kumi::non_empty_product_type Tup>
+    requires(Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    as_wide_as_t<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>, P>
+    operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
     EVE_CALLABLE_OBJECT(lpnorm_t, lpnorm_);
   };
 
@@ -96,13 +110,13 @@ namespace eve
   namespace detail
   {
     template<typename P, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>, P>
+    EVE_FORCEINLINE constexpr auto
     lpnorm_(EVE_REQUIRES(cpu_), O const & o, P p, Ts... args) noexcept
     {
       using c_t = common_value_t<Ts...>;
       using r_t = as_wide_as_t<c_t, P>;
       if constexpr(O::contains(widen))
-        return lpnorm(p, upgrade(args)...);
+        return lpnorm[o.drop(widen)](upgrade(p), upgrade(args)...);
       else if constexpr( integral_value<P> )
       {
         using e_t =  element_type_t<r_t>;
@@ -113,12 +127,11 @@ namespace eve
       {
         if( eve::all(p == P(2)) )                 return hypot[o](r_t(args)...);
         else if( eve::all(p == P(1)) )            return manhattan[o](r_t(args)...);
-        else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(args)...);
+        else if( eve::all(p == eve::inf(as(p))) ) return maxabs[o.drop(kahan)](r_t(args)...);
         else
         {
           if (O::contains(pedantic))
           {
-            std::cout << "pedantic" << std::endl;
             auto rp = r_t(p);
             auto any_is_inf = (is_infinite(r_t(args)) || ...);
             auto e  = -maxmag(exponent(r_t(args))...);
