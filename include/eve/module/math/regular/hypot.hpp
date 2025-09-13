@@ -15,17 +15,28 @@
 namespace eve
 {
   template<typename Options>
-  struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option>
+  struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option, kahan_option, widen_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(t0,  t1, ts...); }
+    template<value... Ts>
+    requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(ts...); }
+
+    template<value... Ts>
+    requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>> operator()(Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(ts...); }
 
     template<kumi::non_empty_product_type Tup>
+    requires(!Options::contains(widen))
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const & t) const noexcept
-    requires(kumi::size_v<Tup> >= 2)
+    { return EVE_DISPATCH_CALL(t); }
+
+     template<kumi::non_empty_product_type Tup>
+    requires(Options::contains(widen))
+    EVE_FORCEINLINE constexpr upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const & t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(hypot_t, hypot_);
@@ -59,6 +70,8 @@ namespace eve
 //!      // Semantic options
 //!      constexpr auto hypot[raw](/*any of the above overloads*/)                      noexcept; // 4
 //!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto hypot[kahan](/*any of the above overloads*/)                    noexcept; // 6
+//!      constexpr auto hypot[widen](/*any of the above overloads*/)                    noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -78,8 +91,10 @@ namespace eve
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!    4. the naive formula is used.
-//!    5. The pedantic option`  computes the result without undue overflow or underflow
+//!    5. The pedantic option` computes the result without undue overflow or underflow
 //!        at intermediate stages of the computation and can be more accurate than the regular call.
+//!    6. A kahan like compensated algorithm  is used internal for more accurate results.
+//!    7. The computation is done in the double sized element type (if available).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
@@ -95,13 +110,25 @@ namespace eve
 
   namespace detail
   {
+    template<typename T0, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    hypot_(EVE_REQUIRES(cpu_), O const &, T0 a0) noexcept
+    {
+      if constexpr(!O::contains(widen))
+        return abs(a0);
+      else
+        return abs(upgrade(a0));
+    }
+
     template<typename T0, typename T1, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+    EVE_FORCEINLINE constexpr auto
     hypot_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       using e_t = element_type_t<r_t>;
-      if constexpr(sizeof...(Ts) == 0) // 2 parameters
+      if constexpr(O::contains(widen))
+        return hypot[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+      else if constexpr(sizeof...(Ts) == 0) // 2 parameters
       {
         if constexpr(O::contains(pedantic))
         {
@@ -159,7 +186,7 @@ namespace eve
         }
         else
         {
-          r_t that = add(sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
+          r_t that = sum_of_squares[o](r_t(r0), r_t(r1), r_t(rs)...);
           return eve::sqrt(that);
         }
       }
