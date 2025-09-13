@@ -89,11 +89,16 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 3
+//!      constexpr auto reverse_horner[kahan](/*any of the above overloads*/)                         noexcept; // 4
+//!      constexpr auto reverse_horner[widen](/*any of the above overloads*/)                         noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   1. Polynom is evaluated at x the other inputs are the polynomial coefficients.
 //!   2. Polynom is evaluated at x the other input is a range or a kumi::tuple containing the coefficients
+//!   3. `fma[pedantic]` instead of `fma` is used in internal computations.
+//!   4. a Kahan like compensated algorithm is used to enhance accuracy.
+//!   5. the computation is applied to upgraded types values when available.
 //!
 //!   **Parameters**
 //!
