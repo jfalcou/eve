@@ -112,7 +112,7 @@ namespace eve
   {
     template<typename T0, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    hypot_(EVE_REQUIRES(cpu_), O const & o, T0 a0) noexcept
+    hypot_(EVE_REQUIRES(cpu_), O const &, T0 a0) noexcept
     {
       if constexpr(!O::contains(widen))
         return abs(a0);
