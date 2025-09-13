@@ -18,10 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept
     requires sve_abi<typename W::abi_type>
   {
-    using N = cardinal_t<W>;
-    using T = element_type_t<as_arithmetic_t<W>>;
-
-    const auto mask = keep_first(N::value).mask(as(a));
+    const auto mask = keep_first(W::size()).mask(as(a));
 
     if      constexpr (logical_simd_value<W>)                return sveor_z(mask, a, b);
     else if constexpr (O::contains_any(definitely, numeric)) return is_not_equal[opts].retarget(cpu_{}, a, b);
