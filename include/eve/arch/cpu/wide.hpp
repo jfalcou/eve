@@ -19,7 +19,6 @@
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -842,36 +841,36 @@ namespace eve
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend EVE_FORCEINLINE auto operator==(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator==(wide a, wide b) noexcept
     {
-      return is_equal(v, w);
+      return is_equal(a, b);
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
     requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept { return is_equal(v, w); }
+    friend EVE_FORCEINLINE auto operator==(wide w, S s) noexcept { return is_equal(w, s); }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept { return is_equal(v, w); }
+    friend EVE_FORCEINLINE auto operator==(S s, wide w) noexcept { return is_equal(w, s); }
 
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_FORCEINLINE auto operator!=(wide v, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator!=(wide a, wide b) noexcept
     {
-      return detail::self_neq(v, w);
+      return is_not_equal(a, b);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
     requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept { return v != wide {w}; }
+    friend EVE_FORCEINLINE auto operator!=(wide w, S s) noexcept { return is_not_equal(w, s); }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept { return w != v; }
+    friend EVE_FORCEINLINE auto operator!=(S s, wide w) noexcept { return is_not_equal(w, s); }
 
     //! @brief Element-wise less-than comparison between eve::wide
     friend EVE_FORCEINLINE auto operator<(wide a, wide b) noexcept

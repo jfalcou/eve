@@ -11,12 +11,12 @@ template<> struct eve::comparisons<udt::point>
 {
   static constexpr auto equal(auto const& a, auto const& b) noexcept
   {
-    return eve::is_equal(get<0>(a),get<0>(b));
+    return eve::is_equal(get<0>(a), get<0>(b));
   }
 
   static constexpr auto not_equal(auto const& a, auto const& b) noexcept
   {
-    return !equal(a, b);
+    return eve::is_not_equal(get<0>(a), get<0>(b));
   }
 };
 

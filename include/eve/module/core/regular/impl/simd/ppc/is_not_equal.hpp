@@ -8,16 +8,15 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_neq(wide<T, N> const &v, wide<T, N> const &w) noexcept
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE logical<wide<T, N>> is_not_equal_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    return logical<wide<T,N>>(vec_cmpne(v.storage(), w.storage()));
+    if constexpr (O::contains_any(definitely, numeric)) return is_not_equal.behavior(cpu_{}, opts, a, b);
+    else return logical<wide<T, N>>(vec_cmpne(a.storage(), b.storage()));
   }
 }
