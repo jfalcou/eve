@@ -8,18 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/dist.hpp>
-#include <eve/module/core/regular/is_not_nan.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/nb_values.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
@@ -100,39 +90,26 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-  namespace detail
-  {
-    template<value T,callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_not_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, T const& b) noexcept
-    {
-      if constexpr(O::contains(definitely))
-      {
-        using w_t = as_logical_t<T>;
-
-        auto tol = o[definitely].value(T{});
-
-        if constexpr(integral_value<decltype(tol)>)
-          return if_else(nb_values(a, b) > tol, true_(as<w_t>()), false_(as<w_t>())) ;
-        else
-          return dist[pedantic](a, b) > tol * max(eve::abs(a), eve::abs(b));
-      }
-      else if constexpr(O::contains(numeric))
-      {
-        auto tmp  = is_not_equal(a, b);
-        if constexpr( floating_value<T> ) return tmp && (is_not_nan(a) || is_not_nan(b));
-        else                              return tmp;
-      }
-      else
-      {
-        if constexpr(scalar_value<T>)  return as_logical_t<T>(a != b);
-        else                           return a != b;
-      }
-    }
-  }
 }
+
+#include <eve/module/core/regular/impl/is_not_equal.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_not_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/is_not_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_not_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/is_not_equal.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/is_not_equal.hpp>
 #endif

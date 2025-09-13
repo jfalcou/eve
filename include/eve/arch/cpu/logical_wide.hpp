@@ -20,7 +20,6 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -439,47 +438,47 @@ namespace eve
     //! @}
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::logical
-    friend EVE_FORCEINLINE logical operator==(logical v, logical w) noexcept
+    friend EVE_FORCEINLINE logical operator==(logical a, logical b) noexcept
     {
-      return detail::self_eq(v,w);
+      return is_equal(a, b);
     }
 
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
     template<scalar_value S>
     requires requires(S s) { logical{s}; }
-    friend EVE_FORCEINLINE logical operator==(logical v, S w) noexcept
+    friend EVE_FORCEINLINE logical operator==(logical w, S s) noexcept
     {
-      return v == logical{w};
+      return is_equal(w, s);
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::logical
     template<scalar_value S>
     requires requires(S s) { logical{s}; }
-    friend EVE_FORCEINLINE logical operator==(S v, logical w) noexcept
+    friend EVE_FORCEINLINE logical operator==(S s, logical w) noexcept
     {
-      return w == v;
+      return is_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of two eve::logical
-    friend EVE_FORCEINLINE logical operator!=(logical v, logical w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(logical a, logical b) noexcept
     {
-      return detail::self_neq(v,w);
+      return is_not_equal(a, b);
     }
 
     //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
     template<scalar_value S>
     requires requires(S s) { logical{s}; }
-    friend EVE_FORCEINLINE logical operator!=(logical v, S w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(logical w, S s) noexcept
     {
-      return v != logical{w};
+      return is_not_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
     template<scalar_value S>
     requires requires(S s) { logical{s}; }
-    friend EVE_FORCEINLINE logical operator!=(S v, logical w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(S s, logical w) noexcept
     {
-      return w != v;
+      return is_not_equal(w, s);
     }
 
     //! Inserts a eve::wide into a output stream

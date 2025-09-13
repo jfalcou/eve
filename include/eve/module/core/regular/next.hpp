@@ -20,6 +20,7 @@
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_normal.hpp>
+#include <eve/module/core/regular/all.hpp>
 
 namespace eve
 {
