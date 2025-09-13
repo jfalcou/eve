@@ -36,7 +36,7 @@ namespace eve
     template<kumi::product_type T>
     consteval auto tuple_lanes_check()
     {
-      if constexpr(sized_product_type<T,0>) return true;
+      if constexpr(kumi::sized_product_type<T,0>) return true;
       else
       {
         return [&]<std::size_t... I>(std::index_sequence<I...>)
