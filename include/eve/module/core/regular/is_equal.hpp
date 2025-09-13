@@ -12,7 +12,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/traits/overload.hpp>
 
 namespace eve

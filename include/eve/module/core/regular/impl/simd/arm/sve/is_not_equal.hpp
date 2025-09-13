@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename W>
-  EVE_FORCEINLINE as_logical_t<W> is_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept
+  EVE_FORCEINLINE as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept
     requires sve_abi<typename W::abi_type>
   {
     using N = cardinal_t<W>;
@@ -23,19 +23,19 @@ namespace eve::detail
 
     const auto mask = keep_first(N::value).mask(as(a));
 
-    if      constexpr (logical_simd_value<W>)            return svnot_z(mask, sveor_z(mask, a, b));
-    else if constexpr (O::contains_any(almost, numeric)) return is_equal[opts].retarget(cpu_{}, a, b);
-    else                                                 return svcmpeq(mask, a, b);
+    if      constexpr (logical_simd_value<W>)                return sveor_z(mask, a, b);
+    else if constexpr (O::contains_any(definitely, numeric)) return is_not_equal[opts].retarget(cpu_{}, a, b);
+    else                                                     return svcmpne(mask, a, b);
   }
 
   template<callable_options O, conditional_expr C, typename W>
-  EVE_FORCEINLINE as_logical_t<W> is_equal_(EVE_REQUIRES(sve_), C const& cx, O const& opts, W a, W b) noexcept
+  EVE_FORCEINLINE as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), C const& cx, O const& opts, W a, W b) noexcept
     requires sve_abi<typename W::abi_type>
   {
     const auto mask = expand_mask(cx, as(a));
 
-    if      constexpr (logical_simd_value<W>)            return svnot_z(mask, sveor_z(mask, a, b));
-    else if constexpr (O::contains_any(almost, numeric)) return is_equal[opts][cx].retarget(cpu_{}, a, b);
-    else                                                 return svcmpeq(mask, a, b);
+    if      constexpr (logical_simd_value<W>)                return sveor_z(mask, a, b);
+    else if constexpr (O::contains_any(definitely, numeric)) return is_not_equal[opts][cx].retarget(cpu_{}, a, b);
+    else                                                     return svcmpne(mask, a, b);
   }
 }

@@ -32,9 +32,10 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto f = to_integer(cmp_flt::eq_oq);
-    if constexpr( O::contains(almost) || O::contains(numeric))
+
+    if constexpr (O::contains_any(almost, numeric))
     {
-      return is_equal[opts].retarget(cpu_{}, v, w);
+      return is_equal.behavior(cpu_{}, opts, v, w);
     }
     else if constexpr( current_api >= avx512 )
     {
@@ -107,7 +108,7 @@ namespace eve::detail
         else if constexpr( c == category::uint32x4 ) return _mm_cmpeq_epi32(v, w);
         else if constexpr( c == category::uint16x8 ) return _mm_cmpeq_epi16(v, w);
         else if constexpr( c == category::uint8x16 ) return _mm_cmpeq_epi8(v, w);
-        else return slice_apply(eq, v, w);
+        else                                         return slice_apply(eq, v, w);
       }
     }
   }
@@ -146,7 +147,7 @@ namespace eve::detail
                                                      wide<T, N> const &w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( C::has_alternative || O::contains(almost) || O::contains(numeric))
+    if constexpr( C::has_alternative || O::contains_any(almost, numeric))
     {
       return is_equal[opts][mask].retarget(cpu_{}, v, w);
     }
