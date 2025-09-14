@@ -17,7 +17,7 @@ int main()
   std::cout << "<- wi1                              = " << wi1 << "\n";
   std::cout << "<- wu0                              = " << wu0 << "\n";
   std::cout << "<- wu1                              = " << wu1 << "\n";
-                                                    
+
   std::cout << "-> maxabs(wf0, wf1)                 = " << eve::maxabs(wf0, wf1) << "\n";
   std::cout << "-> maxabs[ignore_last(2)](wf0, wf1) = " << eve::maxabs[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> maxabs[wf0 != 0](wf0, wf1)       = " << eve::maxabs[wf0 != 0](wf0, wf1) << "\n";
@@ -25,4 +25,6 @@ int main()
   std::cout << "-> maxabs[numeric ](wf0, wf1)       = " << eve::maxabs[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> maxabs(wu0, wu1)                 = " << eve::maxabs(wu0, wu1) << "\n";
   std::cout << "-> maxabs(wi0, wi1)                 = " << eve::maxabs(wi0, wi1) << "\n";
+  std::cout << eve::maxabs(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f) << std::endl;
+
 }

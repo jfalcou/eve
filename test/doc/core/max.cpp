@@ -17,7 +17,7 @@ int main()
   std::cout << "<- wi1                           = " << wi1 << "\n";
   std::cout << "<- wu0                           = " << wu0 << "\n";
   std::cout << "<- wu1                           = " << wu1 << "\n";
-                                                 
+
   std::cout << "-> max(wf0, wf1)                 = " << eve::max(wf0, wf1) << "\n";
   std::cout << "-> max[ignore_last(2)](wf0, wf1) = " << eve::max[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> max[wf0 != 0](wf0, wf1)       = " << eve::max[wf0 != 0](wf0, wf1) << "\n";

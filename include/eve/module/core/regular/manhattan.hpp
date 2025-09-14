@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/detail/force_if_any.hpp>
 #include <eve/module/core/constant/inf.hpp>
+#include <eve/detail/function/reduce.hpp>
 
 namespace eve
 {
@@ -131,11 +132,17 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
+      using r_t = common_value_t<Ts...>;
       if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
+      else if constexpr(scalar_value<r_t> && (sizeof...(Ts) >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(r_t(0), args...);
+        auto s = eve::manhattan[o](head);
+        return sum[o](s); // I don't really know if sum properly use o //reduce(s, eve::add[o]);
+      }
       else
       {
-        using r_t = common_value_t<Ts...>;
         auto l_abs = [](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
           return eve::abs[saturated];

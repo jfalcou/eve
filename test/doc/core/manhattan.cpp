@@ -34,8 +34,12 @@ int main()
   std::cout << "-> manhattan[upper](wf0, wf1)          = " << eve::manhattan[eve::upper](wf0, wf1) << "\n";
   std::cout << "-> manhattan[upper][strict](wf0, wf1)  = " << eve::manhattan[eve::upper][eve::strict](wf0, wf1) << "\n";
 
+  std::cout << std::defaultfloat;
   auto eps_2 = eve::eps(eve::as<float>())/2;
   auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
   std::cout << "-> manhattan[kahan](tup)   = " << eve::manhattan[eve::kahan](tup) << "\n";
+  std::cout << eve::manhattan(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f) << std::endl;
+  std::cout << eve::manhattan[eve::widen](1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f) << std::endl;
+  std::cout << sizeof(eve::add[eve::widen](1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f)) << std::endl;
 
 }

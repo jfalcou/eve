@@ -10,6 +10,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/module/core/regular/maximum.hpp>
 
 namespace eve::detail
 {
@@ -29,12 +30,21 @@ namespace eve::detail
       return abs[o.drop(pedantic,numeric)](r_t(t0));
     else
     {
-      auto abso = abs[o.drop(pedantic,numeric)];
-      auto r = eve::max[o.drop(saturated)](abso(t0), abso(as)...);
-      if constexpr(integral_value<r_t> || !O::contains(pedantic))
-        return r;
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::zero(eve::as<r_t>()), t0, as...);
+        auto s = eve::maxabs[o](head);
+        return eve::maximum[o](s);
+      }
       else
-        return force_if_any(o, r, eve::is_infinite, inf(eve::as(r)), t0, as...);
+      {
+        auto abso = abs[o.drop(pedantic,numeric)];
+        auto r = eve::max[o.drop(saturated)](abso(t0), abso(as)...);
+        if constexpr(integral_value<r_t> || !O::contains(pedantic))
+          return r;
+        else
+          return force_if_any(o, r, eve::is_infinite, inf(eve::as(r)), t0, as...);
+      }
     }
   }
 }

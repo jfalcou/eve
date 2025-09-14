@@ -40,14 +40,14 @@ namespace eve::detail
   EVE_FORCEINLINE std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(cpu_), logical<wide<T, fixed<8>>> mask)
   {
-    int sum = 0;
+    int su = 0;
     sum += mask.get(0);
     sum += mask.get(1);
     sum += 3 * mask.get(2);
     sum += 3 * mask.get(3);
     sum += 9 * mask.get(4);
     sum += 9 * mask.get(5);
-    return std::pair{sum, eve::count_true(mask)};
+    return std::pair{su, eve::count_true(mask)};
   }
 
   template<typename T>

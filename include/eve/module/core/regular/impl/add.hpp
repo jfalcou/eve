@@ -9,6 +9,7 @@
 
 #include <cfenv>
 #include <eve/concept/value.hpp>
+#include <eve/traits/as_wides.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/sub.hpp>
@@ -23,6 +24,8 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/detail/function/sum.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -117,34 +120,43 @@ namespace eve::detail
   requires(sizeof...(Ts) != 0)
   {
     using r_t = eve::common_value_t<Ts...>;
-    //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
-    //      we might want to do this manually
-    if constexpr(O::contains(widen))
-      return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
-    else if constexpr(O::contains(kahan))
+    if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>))
     {
-      // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
-      // Accurate floating-point summation part I: Faithful rounding.
-      // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
-      auto get_fn= [](){
-        if constexpr(O::contains(raw)) return two_add[raw];
-        else return two_add;
-      };
-      auto pair_add = [fn = get_fn()](auto pair0, auto ri){
-        auto [a0, e0] = pair0;
-        auto [s, e1] = fn(a0, ri);
-        return zip(s, e0+e1);
-      };
-      auto p0   = two_add(r_t(r0),r_t(r1));
-      ((p0 = pair_add(p0,r_t(rs))),...);
-      auto [r, e] = p0;
-      return r+e;
+      auto head = eve::as_wides(r_t(0), r0, r1, rs...);
+      auto s = eve::add[o](head);
+      return sum[o](s); // I don't really know if sum properly use o //reduce(s, eve::add[o]);
     }
     else
     {
-      r0   = add[o](r_t(r0),r_t(r1));
-      ((r0 = add[o](r_t(r0),r_t(rs))),...);
-      return r0;
+      //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
+      //      we might want to do this manually
+      if constexpr(O::contains(widen))
+        return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+      else if constexpr(O::contains(kahan))
+      {
+        // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
+        // Accurate floating-point summation part I: Faithful rounding.
+        // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
+        auto get_fn= [](){
+          if constexpr(O::contains(raw)) return two_add[raw];
+          else return two_add;
+        };
+        auto pair_add = [fn = get_fn()](auto pair0, auto ri){
+          auto [a0, e0] = pair0;
+          auto [s, e1] = fn(a0, ri);
+          return zip(s, e0+e1);
+        };
+        auto p0   = two_add(r_t(r0),r_t(r1));
+        ((p0 = pair_add(p0,r_t(rs))),...);
+        auto [r, e] = p0;
+        return r+e;
+      }
+      else
+      {
+        r0   = add[o](r_t(r0),r_t(r1));
+        ((r0 = add[o](r_t(r0),r_t(rs))),...);
+        return r0;
+      }
     }
   }
 }
