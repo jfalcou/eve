@@ -44,7 +44,7 @@ namespace eve::detail
     {
       using w_t = as_logical_t<T>;
 
-      auto tol = o[definitely].value(T{});
+      auto tol = o[definitely].value(as(a));
 
       if constexpr (integral_value<decltype(tol)>)
         return if_else(nb_values(a, b) > tol, true_(as<w_t>()), false_(as<w_t>())) ;

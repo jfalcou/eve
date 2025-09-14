@@ -40,7 +40,7 @@ namespace eve::detail
     else if constexpr(O::contains(almost))
     {
       using l_t = as_logical_t<T>;
-      auto tol = o[almost].value(T{});
+      auto tol = o[almost].value(as(a));
       using t_t = decltype(tol);
 
       if constexpr(integral_value<t_t>) return if_else(nb_values(a, b) <= tol, true_(as<l_t>()), false_(as<l_t>())) ;

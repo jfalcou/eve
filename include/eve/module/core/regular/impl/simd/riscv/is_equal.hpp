@@ -18,9 +18,9 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if      constexpr (O::contains_any(almost, numeric)) return is_equal.behavior(cpu_{}, opts, v, w);
-    else if constexpr (match(c, category::integer_))                return __riscv_vmseq(a, b, N::value);
-    else if constexpr (match(c, category::float_))                  return __riscv_vmfeq(a, b, N::value);
+    if      constexpr (O::contains_any(almost, numeric)) return is_equal.behavior(cpu_{}, opts, a, b);
+    else if constexpr (match(c, category::integer_))     return __riscv_vmseq(a, b, N::value);
+    else if constexpr (match(c, category::float_))       return __riscv_vmfeq(a, b, N::value);
   }
 
   template<callable_options O, typename T, typename N, scalar_value U>

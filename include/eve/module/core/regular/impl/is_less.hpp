@@ -19,7 +19,7 @@ namespace eve::detail
   {
     if constexpr (O::contains(definitely))
     {
-      auto tol = o[definitely].value(T{});
+      auto tol = o[definitely].value(as(a));
 
       if constexpr (integral_value<decltype(tol)>) return a < eve::prev(b, tol);
       else                                         return a < fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
