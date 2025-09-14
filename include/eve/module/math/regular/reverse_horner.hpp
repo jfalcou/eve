@@ -17,23 +17,47 @@
 namespace eve
 {
   template<typename Options>
-  struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option>
+  struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option,
+                                     kahan_option, widen_option>
   {
-    template<floating_value X, value T, value... Ts>
-    requires(eve::same_lanes_or_scalar<X, T, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
-    operator()(X x, T t, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(x, t, ts...); }
+    template<floating_value X, value ... Ts>
+    requires(eve::same_lanes_or_scalar<X, Ts...> && !Options::contains(widen))
+    EVE_FORCEINLINE constexpr common_value_t<X, Ts...>
+    operator()(X x, Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, ts...); }
 
-    template<floating_value X, kumi::non_empty_product_type Tup>
+    template<floating_value X, value ... Ts>
+    requires(eve::same_lanes_or_scalar<X, Ts...> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr upgrade_t<common_value_t<X, Ts...>>
+    operator()(X x, Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, ts...); }
+
+
+    template<floating_value X, kumi::product_type Tup>
+    requires(!Options::contains(widen))
     EVE_FORCEINLINE constexpr
     eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>
     operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
+    template<floating_value X, kumi::product_type Tup>
+    requires(Options::contains(widen))
+    EVE_FORCEINLINE constexpr
+    upgrade_t<eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>>
+    operator()(X x, coefficients<Tup> const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+
     template<floating_value X, eve::detail::range R>
+    requires(!Options::contains(widen))
     EVE_FORCEINLINE constexpr
     eve::common_value_t<typename R::value_type, X>
+    operator()(X x, R const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+
+    template<floating_value X, eve::detail::range R>
+    requires(Options::contains(widen))
+    EVE_FORCEINLINE constexpr
+    upgrade_t<eve::common_value_t<typename R::value_type, X>>
     operator()(X x, R const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
@@ -65,11 +89,16 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)                      noexcept; // 3
+//!      constexpr auto reverse_horner[kahan](/*any of the above overloads*/)                         noexcept; // 4
+//!      constexpr auto reverse_horner[widen](/*any of the above overloads*/)                         noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   1. Polynom is evaluated at x the other inputs are the polynomial coefficients.
 //!   2. Polynom is evaluated at x the other input is a range or a kumi::tuple containing the coefficients
+//!   3. `fma[pedantic]` instead of `fma` is used in internal computations.
+//!   4. a Kahan like compensated algorithm is used to enhance accuracy.
+//!   5. the computation is applied to upgraded types values when available.
 //!
 //!   **Parameters**
 //!
@@ -114,11 +143,26 @@ namespace eve
 
   namespace detail
   {
+    template<value X, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    reverse_horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
+    {
+      if constexpr(O::contains(widen))
+        return eve::zero(as<upgrade_t<X>>());
+      else
+        return eve::zero(as<X>());
+    }
+
     template<typename X, value C, value... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
+    EVE_FORCEINLINE constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
     {
-      if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
+      using r_t          = common_value_t<X, C, Cs...>;
+      if constexpr(O::contains(widen))
+        return reverse_horner(upgrade(xx), upgrade(c0), upgrade(cs)...);
+      else if constexpr( sizeof...(Cs) == 0 )
+        return r_t(c0);
+      else if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
       {
         using e_t = element_type_t<X>;
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
@@ -127,7 +171,6 @@ namespace eve
       }
       else
       {
-        using r_t = common_value_t<X, C, Cs...>;
         auto x = r_t(xx);
         using t_t = kumi::result::fill_t<sizeof...(cs)+1, r_t>;
         t_t c {r_t{c0}, r_t{cs}...};
@@ -147,17 +190,21 @@ namespace eve
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, R const& r) noexcept
     {
       using r_t  = common_value_t<X, typename R::value_type>;
-      auto x     = r_t(xx);
+      auto up_if = [](auto a){
+        if constexpr(O::contains(widen)) return upgrade(r_t(a));
+        else return r_t(a);
+      };
+      auto x     = up_if(xx);
       auto cur   = std::rbegin(r);
       auto first = std::rend(r);
-      if( first == cur ) return r_t(0);
-      else if( std::distance(cur, first) == 1 ) return r_t(*cur);
+      if( first == cur ) return up_if(zero(as<r_t>()));
+      else if( std::distance(cur, first) == 1 ) return up_if(*cur);
       else
       {
         auto dfma = fma[o];
-        auto that = r_t(0);
+        auto that = up_if(zero(as<r_t>()));
         auto step = [&](auto th, auto arg) { return dfma(x, th, arg); };
-        for(; cur != first; ++cur ) that = step(that, *cur);
+        for(; cur != first; ++cur ) that = step(that, up_if(*cur));
         return that;
       }
     }
