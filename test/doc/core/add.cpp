@@ -48,5 +48,6 @@ int main()
   std::cout << eve::add[eve::kahan](1.0, 2.0, 3.0, 4.0, 5.0, 1.0, 2.0, 3.0, 4.0, 5.0) << std::endl;
   std::cout << eve::add[eve::widen](1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f) << std::endl;
   std::cout << sizeof(eve::add[eve::widen](1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f)) << std::endl;
+  std::cout << eve::add(0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4., -6.0) << "\n";
 
 }
