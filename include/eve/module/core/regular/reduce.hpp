@@ -55,6 +55,20 @@ namespace eve
       return EVE_DISPATCH_CALL(v);
     }
 
+    template<simd_value T, typename Callable, typename U>
+    EVE_FORCEINLINE T operator()(T v, Callable f, U neutral) const noexcept
+      requires (Options::contains(splat) && (generator<U> || std::same_as<element_type_t<T>, U>))
+    {
+      return EVE_DISPATCH_CALL(v, f, neutral);
+    }
+
+    template<simd_value T, typename Callable, typename U>
+    EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
+      requires (!Options::contains(splat) && (generator<U> || std::same_as<element_type_t<T>, U>))
+    {
+      return EVE_DISPATCH_CALL(v, f, neutral);
+    }
+
     EVE_CALLABLE_OBJECT(reduce_t, reduce_);
   };
 
@@ -130,9 +144,24 @@ namespace eve
       else if constexpr (std::same_as<Callable, tag_t<eve::logical_or>>)  return eve::any[opts](v);
       else
       {
-        static_assert(match_option<condition_key, O, ignore_none_>, "Masking is not supported on generic reductions");
+        static_assert(match_option<condition_key, O, ignore_none_>,
+          "Masking is not supported on generic reductions without providing a neutral element");
+
         if constexpr (O::contains(splat))                                 return butterfly_reduction(v, f);
         else                                                              return butterfly_reduction(v, f).get(0);
+      }
+    }
+
+    template<callable_options O, simd_value T, typename Callable, typename U>
+    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f, U neutral) noexcept
+    {
+      if constexpr (match_option<condition_key, O, ignore_none_>)
+      {
+        return reduce.behavior(cpu_{}, opts, if_else(opts[condition_key], v, neutral), f);
+      }
+      else
+      {
+        return reduce[opts.drop(condition_key)].retarget(cpu_{}, if_else(opts[condition_key], v, neutral), f);
       }
     }
 
