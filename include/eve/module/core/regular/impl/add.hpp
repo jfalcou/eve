@@ -123,7 +123,7 @@ namespace eve::detail
     {
       auto head = eve::as_wides(r_t(0), r0, r1, rs...);
       auto s = eve::add[o](head);
-      return butterfly_reduction(s, eve::add[o]);
+      return butterfly_reduction(s, eve::add[o]).get(0);
         //     return sum(s); // I don't really know if sum properly use o //reduce(s, eve::add[o]);
     }
     else
