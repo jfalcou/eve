@@ -1,6 +1,5 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <eve/detail/function/max_2.hpp>
 #include <iostream>
 
 int main()
