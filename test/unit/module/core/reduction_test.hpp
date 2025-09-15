@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-
+#include "test.hpp"
 #include <eve/module/core.hpp>
 
 template<typename F, typename T, typename U>
