@@ -9,12 +9,11 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/any.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct none_t : strict_elementwise_callable<none_t, Options, splat_option>
+  struct none_t : conditional_callable<none_t, Options, splat_option>
   {
     template<relaxed_logical_value T>
     EVE_FORCEINLINE bool operator()(T v) const noexcept
@@ -23,22 +22,24 @@ namespace eve
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
          "[eve::none] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
-      return !any[this->options()[condition_key]](v);
+      return EVE_DISPATCH_CALL(v);
     }
 
     template<logical_simd_value T>
     EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
       requires (!Options::contains(splat))
     {
-      return !any[this->options()[condition_key]](v);
+      return EVE_DISPATCH_CALL(v);
     }
 
     template<logical_simd_value T>
     EVE_FORCEINLINE T operator()(T v) const noexcept
       requires (Options::contains(splat))
     {
-      return T { !any[this->options()[condition_key]](v) };
+      return EVE_DISPATCH_CALL(v);
     }
+
+    EVE_CALLABLE_OBJECT(none_t, none_);
   };
 
   //================================================================================================
@@ -96,3 +97,9 @@ namespace eve
   //! @}
   //================================================================================================
 }
+
+#include <eve/module/core/regular/impl/none.hpp>
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/none.hpp>
+#endif
