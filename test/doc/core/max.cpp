@@ -21,7 +21,7 @@ int main()
   std::cout << "-> max(wf0, wf1)                 = " << eve::max(wf0, wf1) << "\n";
   std::cout << "-> max[ignore_last(2)](wf0, wf1) = " << eve::max[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> max[wf0 != 0](wf0, wf1)       = " << eve::max[wf0 != 0](wf0, wf1) << "\n";
-  std::cout << "-> max_2[pedantic](wf0, wf1)     = " << eve::detail::max_2[eve::pedantic](wf0, wf1) << "\n";
+  std::cout << "-> max[pedantic](wf0, wf1)       = " << eve::max[eve::pedantic](wf0, wf1) << "\n";
   std::cout << "-> max[pedantic](wf0, wf1)       = " << eve::max[eve::pedantic](wf0, wf1) << "\n";
   std::cout << "-> max[numeric ](wf0, wf1)       = " << eve::max[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> max(wu0, wu1)                 = " << eve::max(wu0, wu1) << "\n";
