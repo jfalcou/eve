@@ -11,6 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/constant/majorant.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
@@ -22,16 +23,16 @@
 
 namespace eve::detail
 {
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  min_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  template<typename T0, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+  min_(EVE_REQUIRES(cpu_), O const & o, T0 aa0, Ts... as) noexcept
   {
-    using r_t = common_value_t<T0, T1, Ts...>;
-    if constexpr(sizeof...(Ts) == 0) // 2 parameters
+    using r_t = common_value_t<T0, Ts...>;
+    if constexpr(sizeof...(Ts) == 1) // 2 parameters
     {
+      r_t a0(aa0);
+      r_t a1(as...);
       constexpr bool is_scalar = scalar_value<r_t>;
-      auto a0 = r_t(r0);
-      auto a1 = r_t(r1);
       if constexpr(O::contains(pedantic)) //pedantic
       {
         if constexpr( eve::platform::supports_invalids )
@@ -82,10 +83,19 @@ namespace eve::detail
     }
     else // N > 2 parameters
     {
-      auto m = min[o];
-      r_t that(m(r_t(r0), r_t(r1)));
-      ((that = m(that, r_t(rs))), ...);
-      return that;
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::majorant(eve::as<r_t>()), aa0, as...);
+        auto s = eve::min[o](head);
+        return butterfly_reduction(s, eve::min[o]).get(0);
+      }
+      else
+      {
+        auto m = min[o];
+        r_t that(aa0);
+        ((that = m(that, r_t(as))), ...);
+        return that;
+      }
     }
   }
 
