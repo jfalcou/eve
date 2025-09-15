@@ -14,10 +14,11 @@
 namespace eve
 {
   template<typename Options>
-  struct none_t : strict_elementwise_callable<none_t, Options>
+  struct none_t : strict_elementwise_callable<none_t, Options, splat_option>
   {
     template<relaxed_logical_value T>
     EVE_FORCEINLINE bool operator()(T v) const noexcept
+      requires (!Options::contains(splat))
     {
       static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
          "[eve::none] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -27,8 +28,16 @@ namespace eve
 
     template<logical_simd_value T>
     EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
+      requires (!Options::contains(splat))
     {
       return !any[this->options()[condition_key]](v);
+    }
+
+    template<logical_simd_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept
+      requires (Options::contains(splat))
+    {
+      return T { !any[this->options()[condition_key]](v) };
     }
   };
 
@@ -51,14 +60,18 @@ namespace eve
   //!   {
   //!      // Regular overloads
   //!      template <relaxed_logical_value T>
-  //!      bool none(T v)                                                       noexcept; // 1
+  //!      bool none(T v) requires !Options::contains(splat)                    noexcept; // 1
   //!
   //!      template<logical_simd_value T>
-  //!      bool none(top_bits<T> t)                                             noexcept; // 1
+  //!      bool none(top_bits<T> t) requires !Options::contains(splat)          noexcept; // 1
+  //!
+  //!      // Splat overload
+  //!      template<logical_simd_value T>
+  //!      bool none(T t) requires Options::contains(splat)                     noexcept; // 2
   //!
   //!      // Lanes masking
-  //!      bool none[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-  //!      bool none[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!      bool none[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+  //!      bool none[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
   //!   }
   //!   @endcode
   //!
@@ -72,7 +85,8 @@ namespace eve
   //!   **Return value**
   //!
   //!      1. A bool value which is true if and only if all elements of `x` evaluates to false.
-  //!      2. A bool value which is true if and only if all retained elements of `x` evaluates to false.
+  //!      2. The result of the reduction is splatted across every lane of the output.
+  //!      3. Same as the above but the masked lanes are ignored during the operation.
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/none.cpp}
