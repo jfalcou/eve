@@ -93,7 +93,7 @@ namespace eve::detail
       {
         auto head = eve::as_wides(eve::minorant(eve::as<r_t>()), aa0, as...);
         auto s = eve::max[o](head);
-        return butterfly_reduction(s, eve::max[o]);
+        return butterfly_reduction(s, eve::max[o]).get(0);
       }
       else
       {

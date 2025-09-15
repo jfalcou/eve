@@ -25,4 +25,5 @@ int main()
   std::cout << "-> maxmag[numeric ](wf0, wf1)       = " << eve::maxmag[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> maxmag(wu0, wu1)                 = " << eve::maxmag(wu0, wu1) << "\n";
   std::cout << "-> maxmag(wi0, wi1)                 = " << eve::maxmag(wi0, wi1) << "\n";
+  std::cout << "-> maxmag(0.,1.,2.,3.,-3.,-4.,-6.0) = " << eve::maxmag(0.0, 1.0, 2.0, 3.0, -3.0, -4., -6.0) << "\n";
 }

@@ -15,20 +15,21 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/max.hpp>
-
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
+  template<typename T0, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+  maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... as) noexcept
   {
-    using r_t = common_value_t<T0, T1, Ts...>;
+    using r_t = common_value_t<T0, Ts...>;
     auto maxo = max[o.drop(saturated)];
     auto abso =  abs[saturated];
-    if constexpr(sizeof...(Ts) == 0) // 2 parameters
+    auto a = r_t(a0);
+    if constexpr(sizeof...(Ts) == 1) // 2 parameters
     {
+       auto b = r_t(as...);
       if constexpr(O::contains(numeric))
       {
         auto aaa = if_else(is_nan(a), b, a);
@@ -55,9 +56,18 @@ namespace eve::detail
     }
     else // N > 2 parameters
     {
-      r_t that(maxmag[o](r_t(a), r_t(b)));
-      ((that = eve::maxmag[o](that, r_t(cs))), ...);
-      return that;
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::zero(eve::as<r_t>()), a, as...);
+        auto s = eve::maxmag[o](head);
+        return butterfly_reduction(s, eve::maxmag[o]).get(0);
+      }
+      else
+      {
+        r_t that(a);
+        ((that = eve::maxmag[o](that, r_t(as))), ...);
+        return that;
+      }
     }
   }
 }

@@ -17,7 +17,7 @@ int main()
   std::cout << "<- wi1                              = " << wi1 << "\n";
   std::cout << "<- wu0                              = " << wu0 << "\n";
   std::cout << "<- wu1                              = " << wu1 << "\n";
-                                                    
+
   std::cout << "-> minmag(wf0, wf1)                 = " << eve::minmag(wf0, wf1) << "\n";
   std::cout << "-> minmag[ignore_last(2)](wf0, wf1) = " << eve::minmag[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> minmag[wf0 != 0](wf0, wf1)       = " << eve::minmag[wf0 != 0](wf0, wf1) << "\n";
@@ -25,4 +25,5 @@ int main()
   std::cout << "-> minmag[numeric ](wf0, wf1)       = " << eve::minmag[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> minmag(wu0, wu1)                 = " << eve::minmag(wu0, wu1) << "\n";
   std::cout << "-> minmag(wi0, wi1)                 = " << eve::minmag(wi0, wi1) << "\n";
+  std::cout << "-> minmag(1.,2.,3.,-3.,0.,-4.,-6.0) = " << eve::minmag(1.0, 2.0, 3.0, 0., -3.0, -4., -6.0) << "\n";
 }
