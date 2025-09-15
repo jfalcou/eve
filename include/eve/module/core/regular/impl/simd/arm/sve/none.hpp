@@ -39,7 +39,7 @@ namespace eve::detail
       }
       else
       {
-        return wide<T, N> { wide<T> { count_true(logical_ornot(v, expand_mask(cx, as(v)))) } } == zero_splat;
+        return wide<T, N> { wide<T> { count_true(logical_and(v, expand_mask(cx, as(v)))) } } == zero_splat;
       }
     }
     else
