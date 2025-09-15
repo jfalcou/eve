@@ -12,10 +12,10 @@
 
 namespace eve::detail
 {
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  absmax_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  template<typename T0, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+  absmax_(EVE_REQUIRES(cpu_), O const & o, T0 r0, Ts... rs) noexcept
   {
-    return eve::abs[o.drop(pedantic,numeric)](eve::max[o.drop(saturated)](r0, r1, rs...));
+    return eve::abs[o.drop(pedantic,numeric)](eve::max[o.drop(saturated)](r0, rs...));
   }
 }
