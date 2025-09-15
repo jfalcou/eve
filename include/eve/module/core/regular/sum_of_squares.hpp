@@ -130,6 +130,12 @@ namespace eve
         return sum_of_squares[o.drop(widen)](upgrade(args)...);
       else if constexpr(sizeof...(Ts) == 0)
         return eve::sqr[o](a0);
+      else  if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::zero(eve::as<r_t>()), a0, args...);
+        auto s = eve::sum_of_squares[o](head);
+        return butterfly_reduction(s, eve::add[o]).get(0); // TODO sum optimisation for no_options
+      }
       else if constexpr(O::contains(kahan))
       {
         auto pair_sqr_add = [](auto pair0, auto r1){

@@ -46,4 +46,5 @@ int main()
 
   auto tup = kumi::tuple{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
   std::cout << "-> sum_of_squares[kahan](tup)   = " << eve::sum_of_squares[eve::kahan](tup) << "\n";
+  std::cout << "-> sum_of_squares(1.,2.,3.,-3.,0.,-4.,-6.0) = " << eve::sum_of_squares(1.0, 2.0, 3.0, 0., -3.0, -4., -6.0) << "\n";
 }
