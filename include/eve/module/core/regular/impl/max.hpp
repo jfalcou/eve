@@ -23,7 +23,8 @@
 namespace eve::detail
 {
   template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, T0 aa0, Ts... as) noexcept
+  EVE_FORCEINLINE constexpr auto
+  max_(EVE_REQUIRES(cpu_), O const & o, T0 aa0, Ts... as) noexcept
   {
     using r_t = eve::common_value_t<T0, Ts...>;
     if constexpr(sizeof...(Ts) == 1) // 2 parameters
@@ -92,13 +93,13 @@ namespace eve::detail
       {
         auto head = eve::as_wides(eve::minorant(eve::as<r_t>()), aa0, as...);
         auto s = eve::max[o](head);
-        return butterfly_reduction(s, eve::max);
+        return butterfly_reduction(s, eve::max[o]);
       }
       else
       {
         auto m = max[o];
         r_t that(aa0);
-        ((that = m(that, as)), ...);
+        ((that = m(that, r_t(as))), ...);
         return that;
       }
     }
