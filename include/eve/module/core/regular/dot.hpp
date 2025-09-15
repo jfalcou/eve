@@ -133,7 +133,7 @@ namespace eve
                             {
                               auto[s1, e1] = eve::two_fma_approx(a, b, su);
                               error += e1;
-                              sum    = s1;
+                              su    = s1;
                             }, fs, ss
                           );
 
