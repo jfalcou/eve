@@ -16,21 +16,20 @@ namespace eve
   template<typename Options>
   struct bit_and_t : strict_tuple_callable<bit_and_t, Options>
   {
-    template<value T0, value T1>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
-    {
-      return EVE_DISPATCH_CALL(t0, t1);
-    }
+//     template<value T0, value T1>
+//     EVE_FORCEINLINE constexpr bit_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(t0, t1);
+//     }
 
-    template<value T0, value T1, value... Ts>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value... Ts>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
-      requires (kumi::size_v<Tup> >= 2)
     {
       return EVE_DISPATCH_CALL(t);
     }
