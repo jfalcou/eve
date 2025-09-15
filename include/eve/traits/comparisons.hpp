@@ -46,19 +46,20 @@ namespace eve
   struct comparisons<T> : comparisons<element_type_t<T>>
   {};
 
-  template<typename T>
-  concept has_equality_support = requires(T const& a, T const& b)
+  namespace detail
   {
-    { comparisons<element_type_t<T>>::equal(a,b)      };
-    { comparisons<element_type_t<T>>::not_equal(a,b)  };
-  };
+    template <typename T>
+    struct supports_equality {
+      static constexpr bool has_eq = requires(T a, T b) { comparisons<element_type_t<T>>::equal(a, b); };
+      static constexpr bool has_ne = requires(T a, T b) { comparisons<element_type_t<T>>::not_equal(a, b); };
+
+      static_assert(has_eq == has_ne,
+        "Either both or none of eve::comparisons::equal and eve::comparisons::not_equal must be provided");
+
+      static constexpr bool value = has_eq && has_ne;
+    };
+  }
 
   template<typename T>
-  concept has_ordering_support = requires(T const& a, T const& b)
-  {
-    { comparisons<element_type_t<T>>::less(a,b)           };
-    { comparisons<element_type_t<T>>::greater(a,b)        };
-    { comparisons<element_type_t<T>>::less_equal(a,b)     };
-    { comparisons<element_type_t<T>>::greater_equal(a,b)  };
-  };
+  inline constexpr bool has_equality_support = detail::supports_equality<T>::value;
 }
