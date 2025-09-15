@@ -8,13 +8,12 @@
 #pragma once
 
 #include <eve/detail/wide_forward.hpp>
-#include <iostream>
+
 namespace eve
 {
   template<typename T0, typename... T>
   auto as_wides(T0 zero, T... vs)
   {
-    std::cout << "icitte" << std::endl;
     constexpr auto rem = (sizeof...(T)) % eve::wide<T0>::size();
 
     if constexpr(rem != 0)

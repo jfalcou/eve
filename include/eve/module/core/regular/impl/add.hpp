@@ -25,7 +25,6 @@
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/detail/function/sum.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
