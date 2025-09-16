@@ -132,3 +132,13 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::max)(eve::wide)",
   TTS_IEEE_EQUAL(eve::max[mask](a0, a1), eve::if_else(mask, eve::max(a0, a1), a0));
   TTS_IEEE_EQUAL(eve::max[mask][eve::pedantic](a0, a1), eve::if_else(mask, eve::max[eve::pedantic](a0, a1), a0));
 };
+
+//==================================================================================================
+// Tests for chunked max
+//==================================================================================================
+TTS_CASE_TPL("Check values of max chunked", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  TTS_IEEE_EQUAL(eve::max(T(1), T(-3), T(4), T(1.5),T(6), T(-3), T(4), T(1.5), T(2)).get(0), eve::max(v_t(1), v_t(-3), v_t(4), v_t(1.5),v_t(6), v_t(-3), v_t(4), v_t(1.5), v_t(2)));
+};

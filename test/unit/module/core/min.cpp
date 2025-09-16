@@ -125,3 +125,14 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::min)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::min[mask](a0, a1), eve::if_else(mask, eve::min(a0, a1), a0));
 };
+
+
+//==================================================================================================
+// Tests for chunked min
+//==================================================================================================
+TTS_CASE_TPL("Check values of min chunked", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  TTS_IEEE_EQUAL(eve::min(T(1), T(-3), T(4), T(1.5),T(6), T(-3), T(4), T(1.5), T(2)).get(0), eve::min(v_t(1), v_t(-3), v_t(4), v_t(1.5),v_t(6), v_t(-3), v_t(4), v_t(1.5), v_t(2)));
+};
