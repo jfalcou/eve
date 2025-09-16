@@ -104,7 +104,7 @@ jobs:
   riscv:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v8
+      image: ghcr.io/jfalcou/compilers:v9
       options: -u root
     strategy:
       fail-fast: false
