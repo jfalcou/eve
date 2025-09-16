@@ -153,11 +153,11 @@ namespace eve
     }
 
     template<callable_options O, simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f, U neutral) noexcept
+    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f, [[maybe_unused]] U neutral) noexcept
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        return reduce.behavior(cpu_{}, opts, if_else(opts[condition_key], v, neutral), f);
+        return reduce.behavior(cpu_{}, opts, v, f);
       }
       else
       {
