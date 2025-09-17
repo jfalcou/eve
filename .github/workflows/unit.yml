@@ -130,6 +130,31 @@ jobs:
         run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
 
   ##################################################################################################
+  ## ARMv7
+  ##################################################################################################
+  armv7:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v9
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: arm, opts: -Wno-psabi }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 4
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
+
+  ##################################################################################################
   ## Full emulation tests
   ##################################################################################################
   nosimd:
@@ -314,7 +339,6 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: clang , arch: arm     , opts: -Wno-psabi            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
