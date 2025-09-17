@@ -17,12 +17,14 @@ int main()
   std::cout << "<- wi1                           = " << wi1 << "\n";
   std::cout << "<- wu0                           = " << wu0 << "\n";
   std::cout << "<- wu1                           = " << wu1 << "\n";
-                                                 
+
   std::cout << "-> max(wf0, wf1)                 = " << eve::max(wf0, wf1) << "\n";
   std::cout << "-> max[ignore_last(2)](wf0, wf1) = " << eve::max[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> max[wf0 != 0](wf0, wf1)       = " << eve::max[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> max[pedantic](wf0, wf1)       = " << eve::max[eve::pedantic](wf0, wf1) << "\n";
+  std::cout << "-> max[pedantic](wf0, wf1)       = " << eve::max[eve::pedantic](wf0, wf1) << "\n";
   std::cout << "-> max[numeric ](wf0, wf1)       = " << eve::max[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> max(wu0, wu1)                 = " << eve::max(wu0, wu1) << "\n";
   std::cout << "-> max(wi0, wi1)                 = " << eve::max(wi0, wi1) << "\n";
+  std::cout << "-> max(0.,1.,2.,3.,-3.,-4.,-6.0) = " << eve::max(0.0, 1.0, 2.0, 3.0, -3.0, -4., -6.0) << "\n";
 }
