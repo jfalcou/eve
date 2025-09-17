@@ -17,10 +17,12 @@ int main()
   std::cout << "<- wi1                              = " << wi1 << "\n";
   std::cout << "<- wu0                              = " << wu0 << "\n";
   std::cout << "<- wu1                              = " << wu1 << "\n";
-                                                    
+
   std::cout << "-> bit_or(wf0, wf1)                 = " << eve::bit_or(wf0, wf1) << "\n";
   std::cout << "-> bit_or[ignore_last(2)](wf0, wf1) = " << eve::bit_or[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> bit_or[wf0 != 0](wf0, wf1)       = " << eve::bit_or[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> bit_or(wu0, wu1)                 = " << eve::bit_or(wu0, wu1) << "\n";
   std::cout << "-> bit_or(wi0, wi1)                 = " << eve::bit_or(wi0, wi1) << "\n";
+  std::cout << "-> bit_or(2.,1.,2.,3.,-3.,-4.,-6.0) = " << eve::bit_or(2.0, 1.0, 2.0, 3.0, -3.0, -4., -6.0) << "\n";
+  std::cout << "->:bit_or(2.1,2.,2.,2.,2.,2.,2.)    = " << eve::bit_or(2.1,2.,2.,2.,2.,2.,2.) << "\n";
 }
