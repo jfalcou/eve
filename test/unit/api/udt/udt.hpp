@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #include <eve/traits/product_type.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 namespace udt
@@ -77,3 +78,52 @@ namespace udt
 template<>  struct std::tuple_size<udt::label_position>       : std::integral_constant<std::size_t, 2> {};
 template<>  struct std::tuple_element<0,udt::label_position>  { using type = float; };
 template<>  struct std::tuple_element<1,udt::label_position>  { using type = std::uint8_t; };
+
+namespace udt
+{
+  //------------------------------------------------------------------------------------------------
+  // This test UDT is made to be a placeholder for easier case where one just inherits from
+  // kumi::tuple and adapt its interface
+  //------------------------------------------------------------------------------------------------
+  struct mixed_values : kumi::tuple<float, std::uint8_t>
+  {
+    friend auto&& real(eve::like<mixed_values> auto&& self) noexcept
+    {
+      return get<0>(std::forward<decltype(self)>(self));
+    }
+
+    friend auto&& integral(eve::like<mixed_values> auto&& self) noexcept
+    {
+      return get<1>(std::forward<decltype(self)>(self));
+    }
+  };
+
+  // Stream insertion is also on your behalf
+  inline std::ostream& operator<<( std::ostream& os, mixed_values const& p)
+  {
+    return os << "'" << real(p) << "'@( " << integral(p) << " )";
+  }
+}
+
+// Opt-in for eve::product_type + adaptation
+template<>  struct std::tuple_size<udt::mixed_values>       : std::integral_constant<std::size_t, 2> {};
+template<>  struct std::tuple_element<0,udt::mixed_values>  { using type = float; };
+template<>  struct std::tuple_element<1,udt::mixed_values>  { using type = std::uint8_t; };
+
+// opt in for specialized comparisons
+// The conversion is required to return the correct logical type which is not necessarily the same as the computed one
+// for the product type.
+template<> struct eve::comparisons<udt::mixed_values>
+{
+  template <typename T>
+  static constexpr auto equal(T const& a, T const& b) noexcept
+  {
+    return eve::convert(eve::is_equal(get<0>(a), get<0>(b)), eve::as_element<eve::as_logical_t<T>>{});
+  }
+
+  template <typename T>
+  static constexpr auto not_equal(T const& a, T const& b) noexcept
+  {
+    return eve::convert(eve::is_not_equal(get<0>(a), get<0>(b)), eve::as_element<eve::as_logical_t<T>>{});
+  }
+};
