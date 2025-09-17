@@ -54,7 +54,7 @@ TTS_CASE_WITH ( "Check behavior of min on all types full range"
   TTS_ULP_EQUAL(min(a0, a1, a2), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(min[eve::pedantic](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(min[eve::numeric](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
-  auto t = [](auto p){ return (p == T::size()-1) ? v_t(0) : eve::rem(v_t(p/2), v_t(5))); };
+  auto t = [](auto p){ return (p == T::size()-1) ? v_t(0) : eve::rem(v_t(p/2), v_t(5)); };
   constexpr auto s = 3*T::size()/2;
   auto tup = kumi::generate<s>(t);
   TTS_ULP_EQUAL(min(tup), v_t(0), 0.5);
