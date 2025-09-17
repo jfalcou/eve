@@ -15,19 +15,20 @@ namespace eve
   template<typename Options>
   struct bit_notor_t : strict_tuple_callable<bit_notor_t, Options>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<eve::value T0, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, Ts...>)
+    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...>
+    operator()(T0 t0, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::bit_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(bit_notor_t, bit_notor_);
   };

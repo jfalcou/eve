@@ -21,7 +21,7 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
-    
+
     template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {

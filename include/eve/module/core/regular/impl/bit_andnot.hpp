@@ -18,17 +18,26 @@
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/traits/as_wides.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {
+  template<typename T0, callable_options O>
+  EVE_FORCEINLINE auto
+  bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a) noexcept
+  {
+    return a;
+  }
+
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
+  EVE_FORCEINLINE constexpr auto
   bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
     using b_t = as_integer_t<r_t>;
 
-    if constexpr(sizeof...(Ts) == 0)
+    if constexpr(sizeof...(Ts) == 0) //two parameters
     {
       using ra_t = detail::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
       using rb_t = detail::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
@@ -38,9 +47,7 @@ namespace eve::detail
     }
     else
     {
-      auto that = bit_andnot(r_t(a), r_t(b));
-      ((that = bit_andnot(that, r_t(args))), ...);
-      return that;
+      return bit_andnot(a, bit_or(b, args...));
     }
   }
 }
