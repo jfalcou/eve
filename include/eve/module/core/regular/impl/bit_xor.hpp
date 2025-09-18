@@ -13,7 +13,7 @@ namespace eve::detail
 {
 
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto bit_xor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_xor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
     if constexpr (simd_value<T>)
     {
