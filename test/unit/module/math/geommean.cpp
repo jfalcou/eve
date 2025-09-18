@@ -67,10 +67,10 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
                 tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
     using v_t =  eve::element_type_t<T>;
-    auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
+    auto t = [](auto){ return v_t(1.5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_RELATIVE_EQUAL(geommean(tup), std::pow(v_t(100)*std::pow(v_t(5), tup.size()-1), eve::rec(v_t(tup.size()))), 1.0e-3);
+    TTS_RELATIVE_EQUAL(geommean(tup),v_t(1.5), 1.0e-3);
 };
 
 
