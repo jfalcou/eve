@@ -59,7 +59,7 @@ namespace eve::detail
     {
       if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
       {
-        auto head = eve::as_wides(eve::minorant(eve::as<r_t>()), a0, cs...);
+        auto head = eve::as_wides(eve::zero(eve::as<r_t>()), a0, cs...);
         auto s = eve::maxmag[o](head);
         return butterfly_reduction(s, eve::maxmag[o]).get(0);
       }
