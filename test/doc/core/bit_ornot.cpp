@@ -1,7 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
- yy
+
 int main()
 {
   eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
@@ -23,4 +23,6 @@ int main()
   std::cout << "-> bit_ornot[wf0 != 0](wf0, wf1)       = " << eve::bit_ornot[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> bit_ornot(wu0, wu1)                 = " << eve::bit_ornot(wu0, wu1) << "\n";
   std::cout << "-> bit_ornot(wi0, wi1)                 = " << eve::bit_ornot(wi0, wi1) << "\n";
+  std::cout << "-> bit_ornot(2.,1.,2.,3.,-3.,-4.,-6.0) = " << eve::bit_ornot(2.0, 1.0, 2.0, 3.0, -3.0, -4., -6.0) << "\n";
+  std::cout << "->:bit_ornot(2.1,2.,2.,2.,2.,2.,2.)    = " << eve::bit_ornot(2.1,2.,2.,2.,2.,2.,2.) << "\n";
 }

@@ -17,13 +17,15 @@ namespace eve
   struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
   {
     template<value T0, value... Ts>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
+    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...>
+    operator()(T0 t0, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup>
+    operator()(Tup const& t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
     }

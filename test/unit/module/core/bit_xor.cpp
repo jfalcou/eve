@@ -58,7 +58,7 @@ TTS_CASE_WITH("Check behavior of bit_xor on integral types",
   constexpr auto s = T::size();
   auto t = [](auto ){ return v_t(1+2); };
   auto tup = kumi::generate<3*s/2>(t);
-  TTS_ULP_EQUAL(bit_xor(tup), eve::is_odd(s) ? v_t(1+2) : v_t(0), 0.5);
+  TTS_ULP_EQUAL(bit_xor(tup), eve::is_odd(tup.size()) ? v_t(1+2) : v_t(0), 0.5) << "s " << s << " tup " << tup << "\n";
 };
 
 TTS_CASE_WITH("Check behavior of bit_xor on floating types",

@@ -19,8 +19,15 @@
 
 namespace eve::detail
 {
+  template<typename T0, callable_options O>
+  EVE_FORCEINLINE auto
+  bit_notand_(EVE_REQUIRES(cpu_), O const &, T0 a) noexcept
+  {
+    return bit_not(a);
+  }
+
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
+  EVE_FORCEINLINE constexpr auto
   bit_notand_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
@@ -35,8 +42,7 @@ namespace eve::detail
     }
     else
     {
-      auto that = bit_and(r_t(b), r_t(args...));
-      return eve::bit_notand(r_t(a), that);
+      return eve::bit_notand(r_t(a), eve::bit_and(r_t(b), r_t(args)...));
     }
   }
 }

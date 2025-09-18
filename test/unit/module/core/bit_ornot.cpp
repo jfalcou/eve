@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check behavior of bit_ornot on integral types",
   constexpr auto s = T::size();
   auto t = [](auto p){ return p == 0 ? v_t(1+2+16) : ~v_t(1+2); };
   auto tup = kumi::generate<3*s/2>(t);
-  TTS_ULP_EQUAL(bit_and(tup), v_t(1+2+16), 0.5);
+  TTS_ULP_EQUAL(bit_ornot(tup), v_t(1+2+16), 0.5);
 };
 
 TTS_CASE_WITH("Check behavior of bit_ornot on floating types",
