@@ -21,7 +21,7 @@ namespace eve
   template<typename Options>
   struct reduce_t : conditional_callable<reduce_t, Options, splat_option>
   {
-    template<value T, typename Callable>
+    template<arithmetic_value T, typename Callable>
     EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f) const noexcept
       requires (!Options::contains(splat))
     {
@@ -31,7 +31,17 @@ namespace eve
       return EVE_DISPATCH_CALL(v, f);
     }
 
-    template<value T>
+    template<logical_value T, typename Callable>
+    EVE_FORCEINLINE bool operator()(T v, Callable f) const noexcept
+      requires (!Options::contains(splat))
+    {
+      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+        "[eve::reduce] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
+
+      return EVE_DISPATCH_CALL(v, f);
+    }
+
+    template<arithmetic_value T>
     EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
@@ -55,16 +65,30 @@ namespace eve
       return EVE_DISPATCH_CALL(v);
     }
 
-    template<simd_value T, typename Callable, typename U>
+    template<arithmetic_simd_value T, typename Callable, typename U>
     EVE_FORCEINLINE T operator()(T v, Callable f, U neutral) const noexcept
-      requires (Options::contains(splat) && (generator<U> || std::same_as<element_type_t<T>, U>))
+      requires (Options::contains(splat) && (generator<U> || arithmetic_scalar_value<U>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
     }
 
-    template<simd_value T, typename Callable, typename U>
+    template<arithmetic_simd_value T, typename Callable, typename U>
     EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
-      requires (!Options::contains(splat) && (generator<U> || std::same_as<element_type_t<T>, U>))
+      requires (!Options::contains(splat) && (generator<U> || arithmetic_scalar_value<U>))
+    {
+      return EVE_DISPATCH_CALL(v, f, neutral);
+    }
+
+    template<logical_simd_value T, typename Callable, typename U>
+    EVE_FORCEINLINE T operator()(T v, Callable f, U neutral) const noexcept
+      requires (Options::contains(splat) && (generator<U> || std::same_as<U, bool> || std::same_as<U, element_type_t<T>>))
+    {
+      return EVE_DISPATCH_CALL(v, f, neutral);
+    }
+
+    template<logical_simd_value T, typename Callable, typename U>
+    EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
+      requires (!Options::contains(splat) && (generator<U> || std::same_as<U, bool> || std::same_as<U, element_type_t<T>>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
     }
@@ -159,13 +183,17 @@ namespace eve
       {
         return reduce.behavior(cpu_{}, opts, v, f);
       }
+      else if constexpr (std::same_as<U, bool>)
+      {
+        return reduce[opts.drop(condition_key)].retarget(cpu_{}, if_else(opts[condition_key], v, T { neutral }), f);
+      }
       else
       {
         return reduce[opts.drop(condition_key)].retarget(cpu_{}, if_else(opts[condition_key], v, neutral), f);
       }
     }
 
-    template<callable_options O, typename T>
+    template<callable_options O, arithmetic_value T>
     EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
     {
       return eve::detail::sum[opts](v);
