@@ -46,7 +46,7 @@ namespace eve::detail
     else if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
     {
       auto head = eve::as_wides(eve::zero(eve::as<r_t>()), a0, args...);
-      auto s = eve::bit_and(head);
+      auto s = eve::bit_xor(head);
       return butterfly_reduction(s, eve::bit_xor).get(0);
     }
     else
