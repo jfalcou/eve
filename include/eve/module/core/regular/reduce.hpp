@@ -87,7 +87,7 @@ namespace eve
     }
 
     template<logical_simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
+    EVE_FORCEINLINE bool operator()(T v, Callable f, U neutral) const noexcept
       requires (!Options::contains(splat) && (generator<U> || std::same_as<U, bool> || std::same_as<U, element_type_t<T>>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
