@@ -20,15 +20,17 @@
 
 namespace eve::detail
 {
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
+  template<typename T0, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+  maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... cs) noexcept
   {
-    using r_t = common_value_t<T0, T1, Ts...>;
+    using r_t = common_value_t<T0, Ts...>;
     auto maxo = max[o.drop(saturated)];
     auto abso =  abs[saturated];
-    if constexpr(sizeof...(Ts) == 0) // 2 parameters
+    auto a = r_t(a0);
+    if constexpr(sizeof...(Ts) == 1) // 2 parameters
     {
+      auto b = r_t(cs...);
       if constexpr(O::contains(numeric))
       {
         auto aaa = if_else(is_nan(a), b, a);
@@ -37,8 +39,8 @@ namespace eve::detail
       }
       else
       {
-        auto ra = r_t(a);
-        auto rb = r_t(b);
+        auto ra = a;
+        auto rb = b;
         constexpr bool is_scalar = scalar_value<r_t>;
         auto aa = abso(ra);
         auto bb = abso(rb);
@@ -55,9 +57,18 @@ namespace eve::detail
     }
     else // N > 2 parameters
     {
-      r_t that(maxmag[o](r_t(a), r_t(b)));
-      ((that = eve::maxmag[o](that, r_t(cs))), ...);
-      return that;
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::minorant(eve::as<r_t>()), a0, cs...);
+        auto s = eve::maxmag[o](head);
+        return butterfly_reduction(s, eve::maxmag[o]).get(0);
+      }
+      else
+      {
+        auto that(a);
+        ((that = eve::maxmag[o](that, r_t(cs))), ...);
+        return that;
+      }
     }
   }
 }
