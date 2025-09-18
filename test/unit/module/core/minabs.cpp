@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of minabs on all types full range",
                             tts::randoms(vmin, eve::valmax),
                             tts::randoms(vmin, eve::valmax),
                             tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
+<typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& mask)
 {
   using eve::abs;
   using eve::minabs;
@@ -69,7 +69,12 @@ TTS_CASE_WITH("Check behavior of minabs on all types full range",
   TTS_ULP_EQUAL(eve::minabs[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::minabs[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
 
-  TTS_IEEE_EQUAL(minabs[t](a0, a1), eve::if_else(t, minabs(a0, a1), a0));
+  TTS_IEEE_EQUAL(minabs[mask](a0, a1), eve::if_else(mask, minabs(a0, a1), a0));
+  auto k = (eve::unsigned_value<v_t>) ? v_t(0) : v_t(T::size()/2);
+  auto t = [k](auto p){ return (p == T::size()-1) ? v_t(0) : v_t(p/2-k); };
+  constexpr auto s = 3*T::size()/2;
+  auto tup = kumi::generate<s>(t);
+  TTS_ULP_EQUAL(minabs(tup), v_t(0), 0.5);
 };
 
 TTS_CASE_TPL("Check values of minabs", eve::test::simd::ieee_reals)
