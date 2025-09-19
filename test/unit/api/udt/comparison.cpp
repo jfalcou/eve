@@ -12,6 +12,7 @@
 
 using l_t  = eve::as_logical_t<eve::wide<udt::grid2d>>;
 using lp_t = eve::as_logical_t<eve::wide<udt::label_position>>;
+using lm_t = eve::as_logical_t<eve::wide<udt::mixed_values>>;
 
 //==================================================================================================
 // Operator==
@@ -38,6 +39,17 @@ TTS_CASE("Check eve::wide<udt> operator== for kumi::tuple inheritance")
   TTS_EQUAL( eve::is_equal(lhs, rhs), checks );
 };
 
+TTS_CASE("Check eve::wide<udt> operator== for opt-in comparison behaviour")
+{
+  eve::wide<udt::mixed_values> lhs = [](int i, int) { return udt::mixed_values{i/1.5f, std::uint8_t('A'+i)}; };
+  eve::wide<udt::mixed_values> rhs = [](int i, int) { return udt::mixed_values{i/1.5f, std::uint8_t('A'+i)}; };
+
+  lm_t checks = [&](auto i, auto) { return lhs.get(i) == rhs.get(i); };
+
+  TTS_EQUAL( (lhs == rhs)           , checks );
+  TTS_EQUAL( eve::is_equal(lhs, rhs), checks );
+};
+
 //==================================================================================================
 // Operator!=
 //==================================================================================================
@@ -58,6 +70,17 @@ TTS_CASE("Check eve::wide<udt> operator!= for kumi::tuple inheritance")
   eve::wide<udt::label_position> rhs = [](int i, int) { return udt::label_position{i/2.3f, std::uint8_t('A'+i)}; };
 
   lp_t checks = [&](auto i, auto) { return lhs.get(i) != rhs.get(i); };
+
+  TTS_EQUAL( (lhs != rhs)           , checks );
+  TTS_EQUAL( eve::is_not_equal(lhs, rhs), checks );
+};
+
+TTS_CASE("Check eve::wide<udt> operator!= for opt-in comparison behaviour")
+{
+  eve::wide<udt::mixed_values> lhs = [](int i, int) { return udt::mixed_values{i/1.5f, std::uint8_t('A'+i)}; };
+  eve::wide<udt::mixed_values> rhs = [](int i, int) { return udt::mixed_values{i/1.5f, std::uint8_t('A'+i)}; };
+
+  lm_t checks = [&](auto i, auto) { return lhs.get(i) != rhs.get(i); };
 
   TTS_EQUAL( (lhs != rhs)           , checks );
   TTS_EQUAL( eve::is_not_equal(lhs, rhs), checks );

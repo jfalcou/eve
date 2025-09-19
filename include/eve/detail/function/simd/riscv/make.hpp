@@ -14,7 +14,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/simd/riscv/friends.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/traits/as_integer.hpp>

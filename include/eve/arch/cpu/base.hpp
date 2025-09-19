@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/function/friends.hpp>
 #include <eve/detail/pragmas.hpp>
 
 EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA

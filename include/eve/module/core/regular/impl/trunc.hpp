@@ -36,7 +36,7 @@ namespace eve::detail
       }
       else if constexpr(O::contains(almost))
       {
-        auto tol = o[almost].value(a0);
+        auto tol = o[almost].value(as(a0));
         if constexpr(integral_value<decltype(tol)>)
           return copysign(eve::trunc(next(eve::abs(a0), tol)), a0);
         else

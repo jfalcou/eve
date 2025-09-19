@@ -22,7 +22,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(almost))
     {
-      auto tol = o[almost].value(a0);
+      auto tol = o[almost].value(as(a0));
       if constexpr(integral_value<decltype(tol)>)
         return ceil(prev(a0, tol));
       else

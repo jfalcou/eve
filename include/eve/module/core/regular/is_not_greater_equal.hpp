@@ -115,7 +115,7 @@ namespace eve
         auto a = w_t(aa);
         auto b = w_t(bb);
 
-        auto tol = o[definitely].value(w_t{});
+        auto tol = o[definitely].value(as<w_t>{});
         if constexpr(integral_value<decltype(tol)>) return a <  eve::prev(b, tol);
         else              return a < fanm(b, tol, eve::max(eve::abs(a), eve::abs(b)));
       }
