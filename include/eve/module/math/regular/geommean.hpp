@@ -16,7 +16,8 @@
 namespace eve
 {
   template<typename Options>
-  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option, widen_option, kahan_option>
+  struct geommean_t : strict_tuple_callable<geommean_t, Options, pedantic_option, widen_option,
+                                     kahan_option>
   {
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
@@ -141,12 +142,25 @@ namespace eve
       else
       {
         elt_t invn  = rec(elt_t(sz));
-        auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
-        auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
-        auto sgn = sign(p);
-        p = pow_abs(p, invn);
-        p = ldexp[pedantic](p, -e);
-        return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+        auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
+        if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+        {
+          auto head = eve::as_wides(eve::one(as<r_t>()), r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
+          auto s = eve::mul[o](head);
+          auto p = butterfly_reduction(s, eve::mul[o]).get(0);
+          auto sgn = sign(p);
+          p = eve::pow_abs(p, invn);
+          p = ldexp[pedantic](p, -e);
+          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+        }
+        else
+        {
+          auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
+          auto sgn = sign(p);
+          p = pow_abs(p, invn);
+          p = ldexp[pedantic](p, -e);
+          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+        }
       }
     }
   }

@@ -12,6 +12,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
@@ -28,6 +29,7 @@
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/traits/updown.hpp>
+#include <eve/traits/as_wides.hpp>
 
 namespace eve::detail
 {
@@ -226,9 +228,18 @@ namespace eve::detail
     }
     else
     {
-      auto r0 = eve::one(as<r_t>());
-      ((r0 = mul[o](r_t(r0),r_t(rs))),...);
-      return r0;
+      if constexpr(scalar_value<r_t> && (sizeof...(Vs)+1 >= eve::expected_cardinal_v<r_t>))
+      {
+        auto head = eve::as_wides(eve::one(eve::as<r_t>()), rs...);
+        auto s = eve::mul[o](head);
+        return butterfly_reduction(s, eve::mul[o]).get(0);
+      }
+      else
+      {
+        auto r0 = eve::one(as<r_t>());
+        ((r0 = mul[o](r_t(r0),r_t(rs))),...);
+        return r0;
+      }
     }
   }
 }
