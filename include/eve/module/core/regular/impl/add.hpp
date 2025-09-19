@@ -23,7 +23,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
-#include <eve/detail/function/sum.hpp>
+//#include <eve/detail/function/sum.hpp>
 namespace eve::detail
 {
 
@@ -124,17 +124,16 @@ namespace eve::detail
       return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
     else
     {
-//       if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>) && !O::contains(saturated))
-//       {
-//         auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
-//         auto s = eve::add[o](head);
-//         if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>) && !O::contains(saturated))
+      {
+        auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
+        auto s = eve::add[o](head);
+//        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
 //           return sum(s);
 //         else
-//           return butterfly_reduction(s, eve::add[o]).get(0);
-//       }
-//       else
-      if constexpr(O::contains(kahan))
+          return butterfly_reduction(s, eve::add[o]).get(0);
+      }
+      else if constexpr(O::contains(kahan))
       {
         // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
         // Accurate floating-point summation part I: Faithful rounding.
