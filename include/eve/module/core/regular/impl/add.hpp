@@ -23,7 +23,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
-
+#include <eve/detail/function/sum.hpp>
 namespace eve::detail
 {
 
@@ -128,9 +128,9 @@ namespace eve::detail
       {
         auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
         auto s = eve::add[o](head);
-//         if constexpr(O::size() == 1 && O::contains(ignore_none))
-//           return sum(s);
-//         else
+        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
+          return sum(s);
+        else
           return butterfly_reduction(s, eve::add[o]).get(0);
       }
       else if constexpr(O::contains(kahan))
