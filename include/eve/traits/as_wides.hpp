@@ -20,7 +20,7 @@ namespace eve
       return [&]<std::size_t... N>(std::index_sequence<N...>)
       {
         auto z = [&](auto) { return zz; };
-        return as_wides(zero,vs..., z(N)...);
+        return as_wides(zz, vs..., z(N)...);
       }(std::make_index_sequence<eve::wide<T0>::size() - rem>());
     }
     else
