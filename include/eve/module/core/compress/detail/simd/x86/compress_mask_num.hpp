@@ -117,10 +117,10 @@ namespace eve::detail
     else if constexpr ( sizeof(T) == 1 )
     {
       __m128i sad_mask = _mm_set_epi64x(0x8080898983838181, 0x8080898983838181);
-      __m128i sum      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
+      __m128i su      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
 
-      int desc_lo = _mm_cvtsi128_si32(sum);
-      int desc_hi = _mm_extract_epi16(sum, 4);
+      int desc_lo = _mm_cvtsi128_si32(su);
+      int desc_hi = _mm_extract_epi16(su, 4);
 
       struct res {
         int l_num;
