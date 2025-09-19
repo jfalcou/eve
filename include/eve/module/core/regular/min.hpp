@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/majorant.hpp>
 
 namespace eve
 {
@@ -103,6 +104,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(min_t<Options>) noexcept { return eve::majorant; }
 }
 
 #include <eve/module/core/regular/impl/min.hpp>

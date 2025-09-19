@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/modular.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
@@ -124,6 +125,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(mul_t<Options>) noexcept { return eve::one; }
 
 // Required for optimisation detections
   using callable_mul_ = tag_t<mul>;

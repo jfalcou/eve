@@ -87,6 +87,21 @@ struct ManualLogicalReduction
   }
 };
 
+struct ManualProd
+{
+  template<typename T, typename C>
+  eve::element_type_t<T> operator()(T v, C mask) const
+  {
+    auto res = eve::one(eve::as<eve::element_type_t<T>>{});
+
+    for (std::ptrdiff_t i = 0; i < v.size(); ++i)
+      if (mask_at(mask, i))
+        res *= v.get(i);
+
+    return res;
+  }
+};
+
 namespace eve
 {
   template<auto callable, auto neutral>
@@ -109,6 +124,13 @@ namespace eve
       return eve::reduce[this->options()](v, eve::logical_xor, eve::element_type_t<T>{ true });
     }
   };
+
+  template<typename Options>
+  struct reduce_proxy_adv_t : conditional_callable<reduce_proxy_adv_t, Options, splat_option>
+  {
+    template <typename T>
+    EVE_FORCEINLINE auto operator()(T v) const noexcept { return eve::reduce[this->options()](v, eve::mul); }
+  };
 }
 
 TTS_CASE_WITH("Check behavior of eve::reduce on arithmetic values with a neutral element",
@@ -128,4 +150,12 @@ TTS_CASE_TPL("Check behavior of eve::reduce on logical values with a neutral ele
   run(eve::functor<eve::reduce_proxy<eve::logical_xor, eve::true_>::proxy>);
   run(eve::functor<eve::reduce_proxy<eve::logical_xor, true>::proxy>);
   run(eve::functor<eve::reduce_proxy_scalar_logical>);
+};
+
+TTS_CASE_WITH("Check behavior of eve::reduce with a callable advertising a neutral element",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T v)
+{
+  arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v);
 };

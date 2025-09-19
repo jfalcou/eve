@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve
 {
@@ -142,6 +143,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(add_t<Options>) noexcept { return eve::zero; }
 
 // Required for optimisation detections
   using callable_add_ = tag_t<add>;
