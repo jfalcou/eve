@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-
+#include "test.hpp"
 #include <eve/module/core.hpp>
 
 template<typename F, typename T, typename U>
@@ -45,7 +45,7 @@ struct TestRunner
   static void call_cx(Callable callable, T v, C cx);
 };
 
-template<typename TruthFn>
+template<typename TruthFn, bool SupportsTopBits>
 struct LogicalTestRunner : TestRunner<TruthFn>
 {
   template<typename Callable, typename T>
@@ -58,7 +58,7 @@ struct LogicalTestRunner : TestRunner<TruthFn>
 
     if constexpr (eve::simd_value<T>)
     {
-      TTS_EQUAL(callable(eve::top_bits{v}), manual_res);
+      if constexpr (SupportsTopBits) TTS_EQUAL(callable(eve::top_bits{v}), manual_res);
 
       if constexpr (eve::supports_options<callable, eve::splat>)
       {
@@ -81,7 +81,7 @@ struct LogicalTestRunner : TestRunner<TruthFn>
 
     if constexpr (eve::simd_value<T>)
     {
-      TTS_EQUAL(callable[cx](eve::top_bits{v}), manual_res);
+      if constexpr (SupportsTopBits)  TTS_EQUAL(callable[cx](eve::top_bits{v}), manual_res);
 
       if constexpr (eve::supports_options<callable, eve::splat>)
       {
@@ -141,8 +141,8 @@ struct ArithmeticTestRunner : TestRunner<TruthFn>
   }
 };
 
-template<typename TruthFn>
-constexpr LogicalTestRunner<TruthFn> logical_runner{};
+template<typename TruthFn, bool SupportsTopBits = true>
+constexpr LogicalTestRunner<TruthFn, SupportsTopBits> logical_runner{};
 
 template<typename TruthFn>
 constexpr ArithmeticTestRunner<TruthFn> arithmetic_runner{};
@@ -182,11 +182,11 @@ void logical_reduction_test_case(Callable callable, T v)
   reduction_test_case<TruthFn>(callable, v, runner);
 }
 
-template<typename TruthFn, typename Callable, typename T>
-void logical_reduction_simd_test_cases(Callable callable, eve::as<T> typ)
+template<typename TruthFn, typename Callable, typename T, bool SupportsTopBits>
+void logical_reduction_simd_test_cases_inner(Callable callable, eve::as<T> typ)
 {
   constexpr auto cardinal = eve::cardinal_v<T>;
-  constexpr auto runner = logical_runner<TruthFn>;
+  constexpr auto runner = logical_runner<TruthFn, SupportsTopBits>;
 
   reduction_test_case<TruthFn>(callable, eve::true_(typ), runner);
   reduction_test_case<TruthFn>(callable, eve::false_(typ), runner);
@@ -208,6 +208,18 @@ void logical_reduction_simd_test_cases(Callable callable, eve::as<T> typ)
     reduction_test_case<TruthFn>(callable, rhs3, runner);
     reduction_test_case<TruthFn>(callable, rhs4, runner);
   }
+}
+
+template<typename TruthFn, typename Callable, typename T>
+void logical_reduction_simd_test_cases(Callable callable, eve::as<T> typ)
+{
+  logical_reduction_simd_test_cases_inner<TruthFn, Callable, T, true>(callable, typ);
+}
+
+template<typename TruthFn, typename Callable, typename T>
+void logical_reduction_simd_test_cases_ntb(Callable callable, eve::as<T> typ)
+{
+  logical_reduction_simd_test_cases_inner<TruthFn, Callable, T, false>(callable, typ);
 }
 
 template<typename TruthFn, typename Callable, typename T>
