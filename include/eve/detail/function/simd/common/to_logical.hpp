@@ -57,7 +57,7 @@ to_logical(T v) noexcept
 template<relative_conditional_expr C, simd_value T>
 EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
 {
-  using l_t = typename as_logical<T>::type;
+  using l_t = as_logical_t<T>;
 
   // When dealing with large vector of small integer, the size can't be
   // represented. We then use an unsigned version of the index type.
@@ -68,6 +68,19 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
                                  as_integer_t<typename l_t::bits_type, signed>>;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
+  else if constexpr (has_emulated_abi_v<T>)
+  {
+    l_t res;
+    std::ptrdiff_t offset = c.offset(tgt);
+    std::ptrdiff_t count  = c.count(tgt);
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      res.set(i, (i >= offset) && (i < offset + count));
+    }
+
+    return res;
+  }
   else if constexpr( std::same_as<C, ignore_none_> )
   {
     if constexpr (T::size() < fundamental_cardinal_v<element_type_t<as_arithmetic_t<T>>>)
