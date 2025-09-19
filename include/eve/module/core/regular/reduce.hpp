@@ -177,7 +177,7 @@ namespace eve
           else
           {
             static_assert(match_option<condition_key, O, ignore_none_>,
-              "Masking is not supported on generic reductions without providing a neutral element or using a callable"
+              "Masking is not supported on generic reductions without providing a neutral element or using a callable "
               "that advertises a neutral element");
           }
         }
