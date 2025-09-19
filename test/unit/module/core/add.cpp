@@ -85,7 +85,7 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::upper;
   using eve::strict;
 
-  TTS_ULP_EQUAL( add(a0), a0, 0.5); 
+  TTS_ULP_EQUAL( add(a0), a0, 0.5);
   TTS_ULP_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
@@ -109,6 +109,13 @@ TTS_CASE_WITH("Check behavior of add on wide",
     TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <= add[lower](w0, -w1)));
     TTS_EXPECT(eve::all(add[lower](w0, w1) <= add[eve::to_nearest_odd](w0, w1)));
     TTS_EXPECT(eve::all(add[upper](w0, w1) >= add[eve::to_nearest_odd](w0, w1)));
+
+    using v_t = eve::element_type_t<T>;
+    auto k = (eve::unsigned_value<v_t>) ? v_t(0) : v_t(T::size()/2);
+    auto t = [k](auto p){ return (p == T::size()-1) ? v_t(0) : v_t(p/2-k); };
+    constexpr auto s = 3*T::size()/2;
+    auto tup = kumi::generate<s>(t);
+    TTS_ULP_EQUAL(add(tup), v_t(0), 0.5);
   }
 };
 
