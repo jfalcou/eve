@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga915e97f159ed
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59" title="Computes the minimum and maximum of its arguments.">eve::minmax</a>[mask](x, ...)</code> provides a masked version of <code>minmax</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Select value based on conditional mask or values.">if_else(mask, minmax(x, ...), x)</a></code></p>
+<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59" title="Computes the minimum and maximum of its arguments.">eve::minmax</a>[mask](x, ...)</code> provides a masked version of <code>minmax</code> which is equivalent to <code>if_else(mask, <a class="el" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59" title="Computes the minimum and maximum of its arguments.">minmax(x, ...)</a>, <a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="Callable for SoA value constructions.">zip(x, x)</a>)</code></p>
 <p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
