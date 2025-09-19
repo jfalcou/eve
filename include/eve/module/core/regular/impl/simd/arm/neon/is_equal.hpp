@@ -45,6 +45,8 @@ namespace eve::detail
       else if constexpr( cat == category::uint16x4 )   return vceq_u16 (a, b);
       else if constexpr( cat == category::uint8x8  )   return vceq_u8  (a, b);
       else if constexpr( cat == category::float32x2)   return vceq_f32 (a, b);
+      else if constexpr (cat == category::float16x4)   return vceq_f16 (a, b);
+      else if constexpr (cat == category::float16x8)   return vceqq_f16(a, b);
       else if constexpr( current_api >= asimd)
       {
         if      constexpr( cat == category::float64x1) return vceq_f64 (a, b);

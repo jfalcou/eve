@@ -32,7 +32,10 @@ namespace eve::detail
     }
     else if constexpr( current_api >= avx512 )
     {
-      if constexpr( c == category::float32x16 ) return mask16 {_mm512_cmp_ps_mask(v, w, f)};
+      if      constexpr( c == category::float16x32 ) return mask32 {_mm512_cmp_ph_mask(v, w, f)};
+      else if constexpr( c == category::float16x16 ) return mask16 {_mm256_cmp_ph_mask(v, w, f)};
+      else if constexpr( c == category::float16x8 )  return mask8  {_mm_cmp_ph_mask(v, w, f)};
+      else if constexpr( c == category::float32x16 ) return mask16 {_mm512_cmp_ps_mask(v, w, f)};
       else if constexpr( c == category::float32x8 ) return mask8 {_mm256_cmp_ps_mask(v, w, f)};
       else if constexpr( c == category::float32x4 ) return mask8 {_mm_cmp_ps_mask(v, w, f)};
       else if constexpr( c == category::float64x8 ) return mask8 {_mm512_cmp_pd_mask(v, w, f)};
@@ -103,6 +106,9 @@ namespace eve::detail
       constexpr auto        f = to_integer(cmp_flt::neq_uq);
 
       if      constexpr( C::is_complete )            return s;
+      else if constexpr( c == category::float16x32 ) return mask32 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
+      else if constexpr( c == category::float16x16 ) return mask16 {_mm256_mask_cmp_ph_mask(m, v, w, f)};
+      else if constexpr( c == category::float16x8 )  return mask8  {_mm_mask_cmp_ph_mask(m, v, w, f)};
       else if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
       else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
       else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};

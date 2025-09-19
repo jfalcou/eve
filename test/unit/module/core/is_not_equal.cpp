@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_not_equal(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_not_equal(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -97,7 +97,7 @@ void not_equal_masked_test_cases(W a0, W a1, L l0, L l1, M m)
 //==================================================================================================
 TTS_CASE_WITH(
     "Check behavior of eve::is_not_equal(simd)",
-    eve::test::simd::all_types,
+    eve::test::simd::all_types_wf16,
     tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3), tts::logicals(1, 2)))
 <typename T, typename M>(T const& a0, T const& a1, [[maybe_unused]]  M const& l0, [[maybe_unused]] M const& l1)
 {
