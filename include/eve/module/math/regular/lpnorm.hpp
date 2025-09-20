@@ -112,6 +112,7 @@ namespace eve
     template<typename P, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     lpnorm_(EVE_REQUIRES(cpu_), O const & o, P p, Ts... args) noexcept
+    requires(sizeof...(Ts) !=  0)
     {
       using c_t = common_value_t<Ts...>;
       using r_t = as_wide_as_t<c_t, P>;
@@ -162,8 +163,8 @@ namespace eve
       }
     }
 
-    template<typename P, typename T01, typename Tup, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
+    template<typename P, typename Tup, callable_options O>
+    EVE_FORCEINLINE constexpr auto
     lpnorm_(EVE_REQUIRES(cpu_), O const & o, P p, Tup tup) noexcept
     {
       return kumi::apply( [&](auto... m) { return lpnorm[o](p, m...); }, tup);
