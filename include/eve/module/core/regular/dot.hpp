@@ -141,7 +141,7 @@ namespace eve
           }
           else
           {
-            return kumi::sum( kumi::map([](auto a, auto b) { return a*b; }, f, s));
+            return add[o]( kumi::map([](auto a, auto b) { return a*b; }, f, s));
           }
         }
       }
