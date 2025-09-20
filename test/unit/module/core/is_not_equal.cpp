@@ -57,7 +57,7 @@ void run_check_masked(W a, T b, M m)
   auto rm = tts::map([](auto x, auto y) -> eve::as_logical_t<eve::element_type_t<W>> { return x != y; }, a, b);
 
   auto em = [&]() {
-    if constexpr (eve::scalar_value<M> || std::same_as<M, bool>) return W { m };
+    if constexpr (eve::scalar_value<M> || std::same_as<M, bool>) return eve::as_logical_t<W> { m };
     else if constexpr (eve::conditional_expr<M>)                 return eve::detail::expand_mask(m, eve::as(a));
     else                                                         return m;
   }();
