@@ -126,19 +126,6 @@ namespace eve
         return (a_mag < b_mag) ? std::partial_ordering::less : std::partial_ordering::greater;
       }
     }
-
-    struct fp16_supports_info
-    {
-  #if defined(EVE_NO_NATIVE_FP16)
-      static constexpr bool type = false;
-      static constexpr bool scalar_ops = false;
-      static constexpr bool vector_ops = false;
-  #else
-      static constexpr bool type = spy::supports::fp16::type;
-      static constexpr bool scalar_ops = spy::supports::fp16::scalar_ops;
-      static constexpr bool vector_ops = spy::supports::fp16::vector_ops;
-  #endif
-    };
   }
 
   #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)

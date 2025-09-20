@@ -27,8 +27,8 @@ to_logical(wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
 }
 
 template<relative_conditional_expr C, simd_value T>
-auto EVE_FORCEINLINE
-to_logical(C c, eve::as<T>) noexcept requires(current_api >= avx512)
+auto EVE_FORCEINLINE to_logical(C c, eve::as<T>) noexcept
+  requires(x86_abi<typename T::abi_type> && (current_api >= avx512))
 {
   using type = as_logical_t<T>;
   auto value = top_bits<type>(c);

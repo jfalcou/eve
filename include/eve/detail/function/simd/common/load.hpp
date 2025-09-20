@@ -209,7 +209,11 @@ namespace eve::detail
     {
       if constexpr (std::same_as<C, ignore_none_>)
       {
-        if constexpr (aggregated)
+        if constexpr (logical_simd_value<Wide>)
+        {
+          return load_impl(cpu_{}, src, tgt);
+        }
+        else if constexpr (aggregated)
         {
           return aggregate_load(src, tgt);
         }
