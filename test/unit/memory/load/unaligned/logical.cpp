@@ -15,8 +15,8 @@
 //==================================================================================================
 // Load into wide from a (non-contiguous) range
 //==================================================================================================
-TTS_CASE_WITH( "Check load to wides from non-contiguous range"
-        , eve::test::simd::all_types
+TTS_CASE_WITH( "Check load to logical wides from non-contiguous range"
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
 <typename T>(T reference)
@@ -34,8 +34,8 @@ TTS_CASE_WITH( "Check load to wides from non-contiguous range"
 //==================================================================================================
 // Load into wide from an unaligned pointer
 //==================================================================================================
-TTS_CASE_WITH( "Check load to wides from unaligned pointer"
-        , eve::test::simd::all_types
+TTS_CASE_WITH( "Check load to logical wides from unaligned pointer"
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::logicals(1,2))
         )
 <typename T>(T reference)
@@ -56,5 +56,27 @@ TTS_CASE_WITH( "Check load to wides from unaligned pointer"
   {
     TTS_EQUAL(eve::load(ptr)        , reference         );
     TTS_EQUAL(eve::load(const_ptr)  , reference         );
+  }
+};
+
+TTS_CASE_TPL( "Check load to logical wides from unaligned pointer to non-logical elements"
+        , eve::test::simd::all_types_wf16)
+<typename W>(tts::type<W>)
+{
+  using v_t = eve::element_type_t<W>;
+  using LW = eve::logical<W>;
+
+  auto [data  ,idx  ] = arithmetic_logical_page<v_t, eve::fixed<W::size()>>();
+
+  auto* ptr              = &data[idx] - 1;
+  auto const* const_ptr  = ptr;
+
+  LW loaded = eve::load(ptr, eve::as<LW>{});
+  LW const_loaded = eve::load(const_ptr, eve::as<LW>{});
+
+  for (std::ptrdiff_t i = 0; i < LW::size(); ++i)
+  {
+    TTS_EQUAL(loaded.get(i)      , data[idx + i - 1] != 0);
+    TTS_EQUAL(const_loaded.get(i), data[idx + i - 1] != 0);
   }
 };

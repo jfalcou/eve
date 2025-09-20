@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/arch/arm/arm_utils.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
@@ -21,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> load_impl(neon128_, Ptr p, as<wide<T, N>>)
     requires arm_abi<abi_t<T, N>>
   {
-    auto ptr = unalign(p);
+    auto ptr = arm_ptr_downcast(unalign(p));
 
     if constexpr( N::value * sizeof(T) >= arm_64_::bytes )
     {
@@ -45,6 +46,8 @@ namespace eve::detail
       else  if constexpr( c == category::int8x8   )   return vld1_s8(ptr);
       else  if constexpr( c == category::uint8x16 )   return vld1q_u8(ptr);
       else  if constexpr( c == category::uint8x8  )   return vld1_u8(ptr);
+      else  if constexpr (c == category::float16x8)   return vld1q_f16(ptr);
+      else  if constexpr (c == category::float16x4)   return vld1_f16(ptr);
       else if constexpr( current_api >= asimd)
       {
               if constexpr( c == category::float64x2 )  return vld1q_f64(ptr);
@@ -64,7 +67,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> load_impl(neon128_, aligned_ptr<U, Lanes> p, as<wide<T, N>> tgt)
     requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
   {
-    auto ptr = p.get();
+    auto ptr = arm_ptr_downcast(p.get());
 
     if constexpr( aligned_ptr<U, Lanes>::alignment() < 16 )
     {
@@ -94,6 +97,8 @@ namespace eve::detail
         else  if constexpr( c == category::int8x8   )   return vld1_s8_ex(ptr,64);
         else  if constexpr( c == category::uint8x16 )   return vld1q_u8_ex(ptr,128);
         else  if constexpr( c == category::uint8x8  )   return vld1_u8_ex(ptr,64);
+        else  if constexpr (c == category::float16x8)   return vld1q_f16(ptr);
+        else  if constexpr (c == category::float16x4)   return vld1_f16(ptr);
         else if constexpr( current_api >= asimd)
         {
                 if constexpr( c == category::float64x2 )  return vld1q_f64_ex(ptr,128);

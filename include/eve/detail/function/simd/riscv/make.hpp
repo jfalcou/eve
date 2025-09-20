@@ -51,6 +51,15 @@ EVE_FORCEINLINE wide<T, N>
     else if constexpr( lmul == 4 ) return __riscv_vfmv_v_f_f32m4_tu(fill_zero, x, N::value);
     else if constexpr( lmul == 8 ) return __riscv_vfmv_v_f_f32m8_tu(fill_zero, x, N::value);
   }
+  else if constexpr( match(c, category::float16) )
+  {
+    if constexpr( lmul == -4 ) return __riscv_vfmv_v_f_f16mf4_tu(fill_zero, x, N::value);
+    else if constexpr( lmul == -2 ) return __riscv_vfmv_v_f_f16mf2_tu(fill_zero, x, N::value);
+    else if constexpr( lmul == 1 ) return __riscv_vfmv_v_f_f16m1_tu(fill_zero, x, N::value);
+    else if constexpr( lmul == 2 ) return __riscv_vfmv_v_f_f16m2_tu(fill_zero, x, N::value);
+    else if constexpr( lmul == 4 ) return __riscv_vfmv_v_f_f16m4_tu(fill_zero, x, N::value);
+    else if constexpr( lmul == 8 ) return __riscv_vfmv_v_f_f16m8_tu(fill_zero, x, N::value);
+  }
   else if constexpr( match(c, category::int64) )
   {
     if constexpr( lmul == 1 ) return __riscv_vmv_v_x_i64m1_tu(fill_zero, x, N::value);

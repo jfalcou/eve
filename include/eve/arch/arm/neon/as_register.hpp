@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/predef.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
@@ -24,7 +25,11 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::arm_64_)
   {
-    if constexpr (std::same_as<T, float> && (N::value <= 2))
+    if constexpr (std::same_as<T, eve::float16_t> && (N::value <= 4))
+    {
+      return float16x4_t{};
+    }
+    else if constexpr (std::same_as<T, float> && (N::value <= 2))
     {
       return float32x2_t{};
     }
@@ -57,7 +62,11 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::arm_128_)
   {
-    if constexpr (std::same_as<T, float>)
+    if constexpr (std::same_as<T, eve::float16_t>)
+    {
+      return float16x8_t{};
+    }
+    else if constexpr (std::same_as<T, float>)
     {
       return float32x4_t{};
     }
