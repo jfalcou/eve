@@ -55,6 +55,10 @@ TTS_CASE_WITH("Check behavior of bit_xor on integral types",
   TTS_EQUAL(bit_xor(kumi::tuple{a0, a1}), tts::map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
   TTS_EQUAL(bit_xor[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_xor(a0, a1), a0));
   TTS_EQUAL(bit_xor[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_xor(a0, a1, a2), a0));
+  constexpr auto s = T::size();
+  auto t = [](auto ){ return v_t(1+2); };
+  auto tup = kumi::generate<3*s/2>(t);
+  TTS_ULP_EQUAL(bit_xor(tup), eve::is_odd(tup.size()) ? v_t(1+2) : v_t(0), 0.5) << "s " << s << " tup " << tup << "\n";
 };
 
 TTS_CASE_WITH("Check behavior of bit_xor on floating types",

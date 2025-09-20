@@ -54,6 +54,10 @@ TTS_CASE_WITH("Check behavior of bit_andnot on integral types",
   TTS_EQUAL(bit_andnot(kumi::tuple{a0, a1}), tts::map([](auto e, auto f) -> v_t { return e & ~f; }, a0, a1));
   TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
   TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
+  constexpr auto s = T::size();
+  auto t = [](auto p){ return p == 0 ? v_t(1+2) : ~v_t(1+2+16); };
+  auto tup = kumi::generate<3*s/2>(t);
+  TTS_ULP_EQUAL(bit_andnot(tup), v_t(1+2), 0.5);
 };
 
 TTS_CASE_WITH("Check behavior of bit_andnot on floating types",

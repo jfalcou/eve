@@ -55,6 +55,10 @@ TTS_CASE_WITH("Check behavior of bit_or on integral types",
   TTS_EQUAL(bit_or(kumi::tuple{a0, a1}), tts::map([](auto e, auto f) -> v_t { return e | f; }, a0, a1));
   TTS_EQUAL(bit_or[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_or(a0, a1), a0));
   TTS_EQUAL(bit_or[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_or(a0, a1, a2), a0));
+  constexpr auto s = T::size();
+  auto t = [](auto p){ return p == 0 ? v_t(1+2+16) : v_t(1+2); };
+  auto tup = kumi::generate<3*s/2>(t);
+  TTS_ULP_EQUAL(bit_or(tup), v_t(1+2+16), 0.5);
 };
 
 TTS_CASE_WITH("Check behavior of bit_or on floating types",

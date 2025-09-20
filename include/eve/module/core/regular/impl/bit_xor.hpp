@@ -11,6 +11,7 @@
 
 namespace eve::detail
 {
+
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_xor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
@@ -32,16 +33,27 @@ namespace eve::detail
       return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) ^ bit_cast(b, as<i_t>{})), as(a));
     }
   }
-  
+
   //================================================================================================
   // N parameters
   //================================================================================================
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> bit_xor_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
+  template<typename T0, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto bit_xor_(EVE_REQUIRES(cpu_), O const &, T0 a0, Ts... args) noexcept
   {
-    using r_t = bit_value_t<T0, T1, Ts...>;
-    auto that = bit_xor(r_t(a), r_t(b));
-    ((that = bit_xor(that, r_t(args))), ...);
-    return that;
+    using r_t = bit_value_t<T0, Ts...>;
+    if constexpr(sizeof...(Ts) == 0)
+      return r_t(a0);
+    else if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+    {
+      auto head = eve::as_wides(eve::zero(eve::as<r_t>()), a0, args...);
+      auto s = eve::bit_xor(head);
+      return butterfly_reduction(s, eve::bit_xor).get(0);
+    }
+    else
+    {
+      auto that = r_t(a0);
+      ((that = bit_xor(that, r_t(args))), ...);
+      return that;
+    }
   }
 }

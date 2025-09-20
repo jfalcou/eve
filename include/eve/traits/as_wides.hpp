@@ -12,15 +12,15 @@
 namespace eve
 {
   template<typename T0, typename... T>
-  auto as_wides(T0 zero, T... vs)
+  auto as_wides(T0 zz, T... vs)
   {
     constexpr auto rem = (sizeof...(T)) % eve::wide<T0>::size();
     if constexpr(rem != 0)
     {
       return [&]<std::size_t... N>(std::index_sequence<N...>)
       {
-        auto z = [&](auto) { return zero; };
-        return as_wides(zero,vs..., z(N)...);
+        auto z = [&](auto) { return zz; };
+        return as_wides(zz, vs..., z(N)...);
       }(std::make_index_sequence<eve::wide<T0>::size() - rem>());
     }
     else
