@@ -46,6 +46,10 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
   TTS_ULP_EQUAL(manhattan[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(manhattan(kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(manhattan[eve::pedantic](kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
+  auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
+  constexpr auto s = 3*T::size()/2;
+  auto tup = kumi::generate<s>(t);
+  TTS_ULP_EQUAL(manhattan(tup), v_t(100)+v_t(5)*(3*T::size()/2-1), 0.5);
 };
 
 

@@ -48,15 +48,15 @@ namespace eve::algo
       template <typename I, std::size_t size>
       EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
       {
-        sums =  array_map(sums, arr, [&](auto sum, auto i) {
-          return op(sum, load(i));
+        sums =  array_map(sums, arr, [&](auto su, auto i) {
+          return op(su, load(i));
         });
         return false;
       }
 
       EVE_FORCEINLINE auto finish() {
-        auto sum = array_reduce(sums, op);
-        return eve::reduce(sum, op);
+        auto su = array_reduce(sums, op);
+        return eve::reduce(su, op);
       }
     };
 
