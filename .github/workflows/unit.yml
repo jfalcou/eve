@@ -551,18 +551,18 @@ jobs:
         run: cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
-  ## Historic regression test
+  ## C++26 preemptive test
   ##################################################################################################
-  regressions:
+  preemptive:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:historic
+      image: ghcr.io/jfalcou/compilers:v9
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang  , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -570,7 +570,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}" -DCMAKE_CXX_COMPILER=g++
+          cmake ..  -G Ninja -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile Unit Tests
         run:  |
           cd build
