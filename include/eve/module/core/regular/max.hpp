@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/minorant.hpp>
 
 namespace eve
 {
@@ -101,6 +102,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(max_t<Options>) noexcept { return eve::minorant; }
 }
 
 #include <eve/module/core/regular/impl/max.hpp>

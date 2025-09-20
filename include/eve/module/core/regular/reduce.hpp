@@ -168,8 +168,19 @@ namespace eve
       else if constexpr (std::same_as<Callable, tag_t<eve::logical_or>>)  return eve::any[opts](v);
       else
       {
-        static_assert(match_option<condition_key, O, ignore_none_>,
-          "Masking is not supported on generic reductions without providing a neutral element");
+        if constexpr (!match_option<condition_key, O, ignore_none_>)
+        {
+          if constexpr (requires { neutral(f); })
+          {
+            v = if_else(opts[condition_key], v, neutral(f));
+          }
+          else
+          {
+            static_assert(match_option<condition_key, O, ignore_none_>,
+              "Masking is not supported on generic reductions without providing a neutral element or using a callable "
+              "that advertises a neutral element");
+          }
+        }
 
         if constexpr (O::contains(splat))                                 return butterfly_reduction(v, f);
         else                                                              return butterfly_reduction(v, f).get(0);
