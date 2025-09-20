@@ -168,7 +168,6 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(3, )", eve::test::simd::ieee_rea
   auto t = [](auto ){ return v_t(5); };
   constexpr auto s = 3*T::size()/2+1;
   auto tup = kumi::generate<s>(t);
-  std::cout << eve::lpnorm[eve::pedantic](v_t(3), tup) <<  std::endl;
   TTS_ULP_EQUAL(eve::lpnorm(3, tup), eve::nthroot(v_t(125)*s, v_t(3)), 1.5);
 };
 
