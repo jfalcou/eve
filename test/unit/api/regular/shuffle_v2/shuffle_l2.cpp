@@ -35,6 +35,28 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t... I>
+void
+run2_any_api(eve::pattern_t<I...> p)
+{
+  shuffle_test::run2<T, N, 1>(return2, p);
+}
+
+template<typename T, std::ptrdiff_t N>
+void
+run2_any_api(eve::pattern_formula auto formula)
+{
+  run2_any_api<T, N>(eve::fix_pattern<N>(formula));
+}
+
+template<auto api, typename T, std::ptrdiff_t N>
+void
+run2(auto pattern)
+{
+  if constexpr( eve::current_api >= api ) { run2_any_api<T, N>(pattern); }
+  else { TTS_PASS(); }
+}
+
 TTS_CASE("int <<, >>")
 {
   run_any_api<std::uint8_t, 2>(eve::pattern<1, na_>);
@@ -318,6 +340,102 @@ TTS_CASE("_mm512_shuffle_i64x2")
   run<eve::avx512, std::uint64_t, 8>(eve::pattern<6, 7, 2, 3, 2, 3, 0, 1>);
   run<eve::avx512, std::uint64_t, 8>(eve::pattern<2, 3, 6, 7, 2, 3, 4, 5>);
   run<eve::avx512, std::uint64_t, 8>(eve::pattern<4, 5, 0, 1, 6, 7, 2, 3>);
+};
+
+TTS_CASE("_mm_alignr_epi32(x, x) / _mm_alignr_epi64(x, x)")
+{
+  // NOTE: _mm_alignr_epi32 / _mm_alignr_epi64 are not generated,
+  //       _mm_alignr_epi8 is better.
+  //
+  //       _mm256_alignr_epi64 is never generated at the moment,
+  //       _mm256_permute4x64_epi64 is used instead.
+  //       They are equivalent.
+  run<eve::avx512, std::uint32_t, 4>(eve::pattern<1, 2, 3, 0>);
+  run<eve::avx512, std::uint32_t, 4>(eve::pattern<2, 3, 0, 1>);
+  run<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 0, 1, 2>);
+
+  run<eve::avx512, std::uint32_t, 8>(eve::pattern<1, 2, 3, 4, 5, 6, 7, 0>);
+  run<eve::avx512, std::uint32_t, 8>(eve::pattern<2, 3, 4, 5, 6, 7, 0, 1>);
+  run<eve::avx512, std::uint32_t, 8>(eve::pattern<3, 4, 5, 6, 7, 0, 1, 2>);
+  run<eve::avx512, std::uint32_t, 8>(eve::pattern<4, 5, 6, 7, 0, 1, 2, 3>);
+
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 2, 3, 4, 5, 6, 7, 0>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<2, 3, 4, 5, 6, 7, 0, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 4, 5, 6, 7, 0, 1, 2>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<4, 5, 6, 7, 0, 1, 2, 3>);
+
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 1) % size; });
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 3) % size; });
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 5) % size; });
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 7) % size; });
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 9) % size; });
+  run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 11) % size; });
+};
+
+TTS_CASE("_mm_blend_ps / _mm_blend_pd / _mm_mask_blend")
+{
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 1, 2, 7>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 5, 2, 7>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<4, 5, 2, 7>);
+
+  auto blend_every_other = [](int i, int size)
+  {
+    if( i % 2 ) return i + size;
+    return i;
+  };
+
+  run2<eve::avx512, std::uint8_t, 16>(blend_every_other);
+  run2<eve::avx512, std::uint16_t, 8>(blend_every_other);
+  run2<eve::sse4_1, std::uint32_t, 4>(blend_every_other);
+  run2<eve::sse4_1, std::uint64_t, 2>(blend_every_other);
+
+  run2<eve::avx512, std::uint8_t, 32>(blend_every_other);
+  run2<eve::avx512, std::uint16_t, 16>(blend_every_other);
+  run2<eve::avx, std::uint32_t, 8>(blend_every_other);
+  run2<eve::avx, std::uint64_t, 4>(blend_every_other);
+
+  run2<eve::avx512, std::uint8_t, 64>(blend_every_other);
+  run2<eve::avx512, std::uint16_t, 32>(blend_every_other);
+  run2<eve::avx512, std::uint32_t, 16>(blend_every_other);
+  run2<eve::avx512, std::uint64_t, 8>(blend_every_other);
+};
+
+template <int alignment>
+constexpr auto alignr_epi8_pattern = [] (int i, int size) {
+  int lane = i / 16;
+  int offset = i % 16;
+
+  int offset2 = offset + alignment;
+  if (offset2 >= 16) {
+    offset2 %= 16;
+    offset2 += size;
+  }
+
+  return lane * 16 + offset2;
+};
+
+TTS_CASE("_mm_alignr_epi8(x, y)")
+{
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<1>);
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<2>);
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<3>);
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<5>);
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<9>);
+  run2<eve::ssse3, std::uint8_t, 16>(alignr_epi8_pattern<13>);
+
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<1>);
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<2>);
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<3>);
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<5>);
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<9>);
+  run2<eve::avx2, std::uint8_t, 32>(alignr_epi8_pattern<13>);
+
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<1>);
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<2>);
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<3>);
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<5>);
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<9>);
+  run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<13>);
 };
 
 }
