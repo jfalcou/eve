@@ -139,7 +139,8 @@ TTS_CASE("identites and 0s masking integration tests")
   {
     auto tst = tst_for_shuffler(never_native_shuffler);
     tst(T {1, 2, 3, 4}, eve::index<0>, T {1, 2, 3, 4}, eve::lane<1>, eve::pattern<0, 1, 2, 3>);
-    tst(T {1, 2, 3, 4},
+
+    tst(eve::supports_simd  ? T {1, 2, 3, 4} : T{1, 0, 3, 4},
         eve::index<0>,
         T {1, 2, 3, 4},
         eve::lane<1>,
