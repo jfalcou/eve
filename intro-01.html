@@ -194,7 +194,7 @@ Handling eve::wide</h1>
 <p>An important detail is to note that neither the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> type nor any of those constructors requires an <em>a priori</em> knowledge of the actual CPU architecture nor the actual number of lane in the register. This architecture-agnostic style is the main advantage of <b>EVE</b> as it guarantees the portability of the code.</p>
 <p>Let's compile this small test using g++:</p>
 <div class="fragment"><div class="line">g++ intro-01.cpp -O3 -DNDEBUG -I/path/to/<a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p>By default, if you're compiling on a Intel X86_64 machine, the SSE2 SIMD extension set will be used by the compiler. Under SSE2, SIMD register of <code>float</code> have four lanes. So the expected result is:</p>
 <div class="fragment"><div class="line">(4, 4, 4, 4) (1.5, 3, 4.5, 6) =&gt; (4.272, 5, 6.0208, 7.2111)</div>
 <div class="line">(4, 4, 4, 4) (1.5, 3, 4.5, 6) =&gt; (0.358771, 0.643501, 0.844154, 0.982794)</div>
