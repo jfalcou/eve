@@ -223,7 +223,7 @@ shuffle_l2_x86_repeated_256(P p, fixed<G> g, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_u64x2(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::g_size < 16 ) return no_matching_shuffle;
   else if constexpr( P::reg_size == 32 )
@@ -235,15 +235,7 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(P::idxs);
 
-    // TODO(2135): P should not have 0s. However while removing all other if
-    // like this one worked, this specific if lead to tests failing.
-    // Left a followup TODO.
-    if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, x, mm);
-    else
-    {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
-      return _mm512_maskz_shuffle_i64x2(mask, x, x, mm);
-    }
+    return _mm512_shuffle_i64x2(x, x, mm);
   }
 }
 
