@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/detail/has_abi.hpp>
 
 #include <cstddef>
@@ -43,6 +44,14 @@ namespace eve::detail
     float32x4   = float32 | 4  ,
     float32x8   = float32 | 8  ,
     float32x16  = float32 | 16 ,
+
+    // All known native float16
+    float16     = float_  | size16_,
+    float16x2   = float16 | 2  ,
+    float16x4   = float16 | 4  ,
+    float16x8   = float16 | 8  ,
+    float16x16  = float16 | 16 ,
+    float16x32  = float16 | 32 ,
 
     // All known native ?int8
      int8    =  int_   | size8_,
@@ -118,9 +127,12 @@ namespace eve::detail
       category value{};
 
       // Base type
-            if constexpr( std::is_floating_point_v<type>) value = value | category::float_;
-      else  if constexpr( std::is_signed_v<type>        ) value = value | category::int_;
-      else  if constexpr( std::is_unsigned_v<type>      ) value = value | category::uint_;
+      if       constexpr( std::is_floating_point_v<type> || std::is_same_v<type, eve::float16_t>)
+      {
+        value = value | category::float_;
+      }
+      else  if constexpr( std::is_signed_v<type>   ) value = value | category::int_;
+      else  if constexpr( std::is_unsigned_v<type> ) value = value | category::uint_;
 
       // Base type size & Cardinal
       constexpr auto card = static_cast<category>(sizeof(storage_t) / sizeof(type));

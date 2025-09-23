@@ -126,19 +126,6 @@ namespace eve
         return (a_mag < b_mag) ? std::partial_ordering::less : std::partial_ordering::greater;
       }
     }
-
-    struct fp16_supports_info
-    {
-  #if defined(EVE_NO_NATIVE_FP16)
-      static constexpr bool type = false;
-      static constexpr bool scalar_ops = false;
-      static constexpr bool vector_ops = false;
-  #else
-      static constexpr bool type = spy::supports::fp16::type;
-      static constexpr bool scalar_ops = spy::supports::fp16::scalar_ops;
-      static constexpr bool vector_ops = spy::supports::fp16::vector_ops;
-  #endif
-    };
   }
 
   #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)
@@ -170,8 +157,8 @@ namespace eve
 
       public:
         constexpr float16_t() = default;
-        constexpr explicit float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr explicit float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
+        constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
+        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
 
         constexpr EVE_FORCEINLINE explicit operator float()              const noexcept { return into<float>(); }
@@ -267,6 +254,11 @@ namespace eve
         constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16_t const& other) const noexcept
         {
           return detail::emulated_fp16_compare(data, other.data);
+        }
+
+        constexpr EVE_FORCEINLINE bool operator==(float16_t const& other) const noexcept
+        {
+          return data == other.data;
         }
     };
   #endif

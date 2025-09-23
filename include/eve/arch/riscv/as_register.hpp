@@ -53,27 +53,32 @@ namespace eve
     {
       if constexpr (lmul == 1)
       {
-        if      constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m1_t, 1)>{};
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_M(vfloat16m1_t, 1)>{};
+        else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m1_t, 1)>{};
         else if constexpr (element_bit_size == 64) return wrap<EVE_RVV_M(vfloat64m1_t, 1)>{};
       }
       else if constexpr (lmul == 2)
       {
-        if      constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m2_t, 2)>{};
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_M(vfloat16m2_t, 2)>{};
+        else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m2_t, 2)>{};
         else if constexpr (element_bit_size == 64) return wrap<EVE_RVV_M(vfloat64m2_t, 2)>{};
       }
       else if constexpr (lmul == 4)
       {
-        if      constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m4_t, 4)>{};
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_M(vfloat16m4_t, 4)>{};
+        else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m4_t, 4)>{};
         else if constexpr (element_bit_size == 64) return wrap<EVE_RVV_M(vfloat64m4_t, 4)>{};
       }
       else if constexpr (lmul == 8)
       {
-        if      constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m8_t, 8)>{};
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_M(vfloat16m8_t, 8)>{};
+        else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_M(vfloat32m8_t, 8)>{};
         else if constexpr (element_bit_size == 64) return wrap<EVE_RVV_M(vfloat64m8_t, 8)>{};
       }
       else if constexpr (lmul == -2)
       {
-        if      constexpr (element_bit_size == 32) return wrap<EVE_RVV_MF(vfloat32mf2_t, 2)>{};
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_MF(vfloat16mf2_t, 2)>{};
+        else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_MF(vfloat32mf2_t, 2)>{};
       }
       // MF8, MF4 for float not supported.
     }

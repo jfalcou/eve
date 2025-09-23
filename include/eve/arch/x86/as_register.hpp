@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/x86/predef.hpp>
+#include <eve/arch/float16.hpp>
 #include <compare>
 #include <type_traits>
 #include <ostream>
@@ -31,27 +32,30 @@ namespace eve
     {
       if constexpr (width <= 16)
       {
-             if constexpr (std::same_as<T, double>) return __m128d{};
-        else if constexpr (std::same_as<T, float >) return __m128{};
-        else if constexpr (std::is_integral_v<T>  ) return __m128i{};
+             if constexpr (std::same_as<T, double>)         return __m128d{};
+        else if constexpr (std::same_as<T, float >)         return __m128{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return __m128h{};
+        else if constexpr (std::is_integral_v<T>  )         return __m128i{};
       }
     }
     else if constexpr (std::same_as<ABI, x86_256_>)
     {
       if constexpr (width <= 32)
       {
-             if constexpr (std::same_as<T, double>) return __m256d{};
-        else if constexpr (std::same_as<T, float >) return __m256{};
-        else if constexpr (std::is_integral_v<T>  ) return __m256i{};
+             if constexpr (std::same_as<T, double>)         return __m256d{};
+        else if constexpr (std::same_as<T, float >)         return __m256{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return __m256h{};
+        else if constexpr (std::is_integral_v<T>  )         return __m256i{};
       }
     }
     else if constexpr (std::same_as<ABI, x86_512_>)
     {
       if constexpr (width <= 64)
       {
-             if constexpr (std::same_as<T, double>) return __m512d{};
-        else if constexpr (std::same_as<T, float >) return __m512{};
-        else if constexpr (std::is_integral_v<T>  ) return __m512i{};
+        if      constexpr (std::same_as<T, double>)         return __m512d{};
+        else if constexpr (std::same_as<T, float >)         return __m512{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return __m512h{};
+        else if constexpr (std::is_integral_v<T>  )         return __m512i{};
       }
     }
   }

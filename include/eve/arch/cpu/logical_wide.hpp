@@ -139,9 +139,14 @@ namespace eve
     //! Constructs a eve::logical from a SIMD compatible pointer
     template<simd_compatible_ptr<logical> Ptr>
     EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
-                  : storage_base(load(ptr, Cardinal{}))
-    {
-    }
+                  : storage_base(load(ptr, as<logical>{}))
+    { }
+
+    //! Constructs a eve::logical from a non-logical SIMD compatible pointer
+    template<simd_compatible_ptr<mask_type> Ptr>
+    EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
+                  : storage_base(load(ptr, as<logical>{}))
+    { }
 
     //! Construct from a scalar logical
     template<scalar_value U>
