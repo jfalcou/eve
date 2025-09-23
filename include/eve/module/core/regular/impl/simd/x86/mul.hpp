@@ -65,6 +65,27 @@ namespace eve::detail
       else  if constexpr( c == category::float32x8  ) return _mm256_mul_ps(a, b);
       else  if constexpr( c == category::float32x4  ) return _mm_mul_ps(a, b);
       else  if constexpr( c == category::int64x8    ) return _mm512_mullo_epi64(a, b);
+      else  if constexpr( c == category::int64x4 )
+      {
+          const __m256i low_mask = _mm256_set1_epi64x(0xFFFFFFFF);
+
+          __m256i low_a = _mm256_and_si256(a, low_mask);
+          __m256i low_b = _mm256_and_si256(b, low_mask);
+
+          __m256i high_a = _mm256_srli_epi64(a, 32);
+          __m256i high_b = _mm256_srli_epi64(b, 32);
+
+          __m256i mul_low = _mm256_mul_epu32(a, b); 
+
+          __m256i cross_mul_la_hb = _mm256_mul_epu32(low_a, high_b);
+          __m256i cross_mul_lb_ha = _mm256_mul_epu32(high_a, low_b);
+
+          __m256i cross_sum = _mm256_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
+
+          __m256i cross_shifted = _mm256_slli_epi64(cross_sum, 32);
+
+          return _mm256_add_epi64(mul_low, cross_shifted);
+      }
       else  if constexpr( c == category::uint64x8   ) return _mm512_mullo_epi64(a, b);
       else  if constexpr( c == category::int32x16   ) return _mm512_mullo_epi32(a, b);
       else  if constexpr( c == category::uint32x16  ) return _mm512_mullo_epi32(a, b);
