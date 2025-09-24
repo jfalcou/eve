@@ -150,7 +150,7 @@ namespace eve
             auto    psi1 = zero(as(px));
             int32_t maxn = dec(max(1, int32_t(eve::maximum(pn))));
             for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < pn](psi1, rec[pedantic](T(i)));
-            auto euler = ieee_constant<0x1.2788d00p-1f, 0x1.2788cfc6fb619p-1>(eve::as<T>{});
+            auto euler = eve::egamma(eve::as<T>{});
             auto psi   = -euler - log(px) + psi1;
             T    t;
 

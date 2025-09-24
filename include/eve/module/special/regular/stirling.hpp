@@ -98,9 +98,9 @@ namespace eve
           ;
         }
       };
-      const T Stirlingsplitlim = ieee_constant<0x1.ac51ec0p+4f, 0x1.1e083ba3443d4p+7>(eve::as<T>{});
-      const T Stirlinglargelim = ieee_constant<0x1.1851e60p+5f, 0x1.5800000000000p+7>(eve::as<T>{});
-      const T Sqrt_2pi = ieee_constant<0x1.40d9320p+1f, 0x1.40d931ff62704p+1>(eve::as<T>{});
+      const T Stirlingsplitlim = ieee_constant<0x1.1e083ba3443d4p+7, 0x1.ac51ec0p+4f>(eve::as<T>{});
+      const T Stirlinglargelim = ieee_constant<0x1.5800000000000p+7, 0x1.1851e60p+5f>(eve::as<T>{});
+      const T Sqrt_2pi = eve::sqrt_2pi(eve::as<T>{});//ieee_constant<0x1.40d931ff62704p+1, 0x1.40d9320p+1f,  >(eve::as<T>{});
       if constexpr( simd_value<T> )
       {
         a0        = if_else(is_gez(a0), a0, eve::allbits);

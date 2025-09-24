@@ -22,7 +22,8 @@
 namespace eve
 {
   template<typename Options>
-  struct sin_t : elementwise_callable<sin_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
+  struct sin_t : elementwise_callable<sin_t, Options, quarter_circle_option, half_circle_option,
+                                      full_circle_option, medium_option, big_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -113,9 +114,9 @@ namespace eve
       {
         auto reduce = [](auto xx)
           {
-            auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(eve::as<T>{});
-            auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(eve::as<T>{});
-            auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(eve::as<T>{});
+            auto pio2_1 = ieee_constant<0x1.921fb54400000p+0 , 0x1.921f000p+0f >(eve::as<T>{});
+            auto pio2_2 = ieee_constant<0x1.0b4611a600000p-34, 0x1.6a88000p-17f>(eve::as<T>{});
+            auto pio2_3 = ieee_constant<0x1.3198a2e000000p-69, 0x1.0b46000p-34f>(eve::as<T>{});
             T    xr     = xx - pio2_1;
             xr -= pio2_2;
             xr -= pio2_3;

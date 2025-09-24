@@ -76,7 +76,7 @@ namespace eve
     constexpr auto
     veltkamp_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
-      constexpr auto C = ieee_constant<0x1.0p+13f, 0x1.0p+27>(as<eve::element_type_t<T>>());
+      constexpr auto C = ieee_constant<0x1.0p+27, 0x1.0p+13f>(as<eve::element_type_t<T>>());
       constexpr auto Cp1 = C+1;
       T const c  = Cp1 * a;
       if constexpr( spy::supports::fma_)

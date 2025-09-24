@@ -112,7 +112,7 @@ namespace eve
       {
         if constexpr(O::contains(raw))
         {
-          auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as(a));
+          auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
           return fnma[pedantic](s, eve::abs(a), a);
         }
         if (eve::all( eve::is_normal(a))) return prev[raw](a);

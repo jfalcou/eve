@@ -78,7 +78,7 @@ namespace eve
       if constexpr(O::contains(kahan))
       {
         auto pi_h = eve::inv_pi(eve::as<T>());
-        auto pi_l = ieee_constant<1.2841276633451830e-08, -1.96786766751824869411566603270715334e-17>(as<T>());
+        auto pi_l = ieee_constant< -1.96786766751824869411566603270715334e-17, 1.2841276633451830e-08>(as<T>());
         return fma[pedantic](pi_h, a, pi_l*a);
       }
       else

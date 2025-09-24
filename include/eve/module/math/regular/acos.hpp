@@ -93,7 +93,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
       if constexpr(O::contains(raw))
       {
         auto tmp  = pio_2(eve::as(a0))
-          + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
+          + (ieee_constant<0x1.1a62633145c07p-54, -0x1.777a5c0p-25f>(eve::as<T>{}) - asin(a0));
         return if_else(a0 == T(1), eve::zero, tmp);
       }
       else

@@ -30,8 +30,7 @@ TTS_CASE_TPL("Check return types of csch", eve::test::simd::ieee_reals)
 auto maxi = []<typename T>(eve::as<T> const&)
 {
   using v_t = eve::element_type_t<T>;
-  v_t ovl   = eve::ieee_constant<0x1.6181480p+6f, 0x1.62e42fefa39efp+9>(eve::as<v_t>{}); // 88.376251220703125f,
-                                                                             // 709.782712893384
+  v_t ovl   = eve::ieee_constant<0x1.62e42fefa39efp+9, 0x1.6181480p+6f>(eve::as<v_t>{}); // 709.782712893384 // 88.376251220703125f,
   return T(ovl);
 };
 
@@ -59,7 +58,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::csch)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::csch[mask](a0),

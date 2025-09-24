@@ -75,8 +75,8 @@ namespace eve
     template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T radindeg_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      auto radradindeg  = ieee_constant<0x1.ca5dc20p+5f, 0x1.ca5dc1a63c1f8p+5>(eve::as<T>{});
-      auto radradindegr = ieee_constant<0x1.670f800p-21f, 0x1.1e7ab456405f8p-49>(eve::as<T>{});
+      auto radradindeg  = ieee_constant<0x1.ca5dc1a63c1f8p+5 , 0x1.ca5dc20p+5f>(eve::as<T>{});
+      auto radradindegr = ieee_constant<0x1.1e7ab456405f8p-49, 0x1.670f800p-21f>(eve::as<T>{});
       return fma(a, radradindegr, a * radradindeg);
     }
   }
