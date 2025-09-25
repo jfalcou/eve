@@ -9,6 +9,8 @@
 
 #include <eve/arch/x86/predef.hpp>
 #include <eve/arch/float16.hpp>
+#include <eve/as.hpp>
+
 #include <compare>
 #include <type_traits>
 #include <ostream>
@@ -32,30 +34,30 @@ namespace eve
     {
       if constexpr (width <= 16)
       {
-             if constexpr (std::same_as<T, double>)         return __m128d{};
-        else if constexpr (std::same_as<T, float >)         return __m128{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m128h{};
-        else if constexpr (std::is_integral_v<T>  )         return __m128i{};
+        if      constexpr (std::same_as<T, double>)         return as<__m128d>{};
+        else if constexpr (std::same_as<T, float >)         return as<__m128>{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return as<__m128h>{};
+        else if constexpr (std::is_integral_v<T>  )         return as<__m128i>{};
       }
     }
     else if constexpr (std::same_as<ABI, x86_256_>)
     {
       if constexpr (width <= 32)
       {
-             if constexpr (std::same_as<T, double>)         return __m256d{};
-        else if constexpr (std::same_as<T, float >)         return __m256{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m256h{};
-        else if constexpr (std::is_integral_v<T>  )         return __m256i{};
+        if      constexpr (std::same_as<T, double>)         return as<__m256d>{};
+        else if constexpr (std::same_as<T, float >)         return as<__m256>{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return as<__m256h>{};
+        else if constexpr (std::is_integral_v<T>  )         return as<__m256i>{};
       }
     }
     else if constexpr (std::same_as<ABI, x86_512_>)
     {
       if constexpr (width <= 64)
       {
-        if      constexpr (std::same_as<T, double>)         return __m512d{};
-        else if constexpr (std::same_as<T, float >)         return __m512{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m512h{};
-        else if constexpr (std::is_integral_v<T>  )         return __m512i{};
+        if      constexpr (std::same_as<T, double>)         return as<__m512d>{};
+        else if constexpr (std::same_as<T, float >)         return as<__m512>{};
+        else if constexpr (std::same_as<T, eve::float16_t>) return as<__m512h>{};
+        else if constexpr (std::is_integral_v<T>  )         return as<__m512i>{};
       }
     }
   }
@@ -138,18 +140,18 @@ namespace eve
 
     if constexpr (std::same_as<ABI, x86_512_> && (width == 64))
     {
-      return detail::as_mask_t<64 / sizeof(T)>{};
+      return as<detail::as_mask_t<64 / sizeof(T)>>{};
     }
     else if constexpr (std::same_as<ABI, x86_256_> && (width == 32))
     {
-      if constexpr (N::value <= 8 ) return detail::mask8{};
-      if constexpr (N::value == 16) return detail::mask16{};
-      if constexpr (N::value == 32) return detail::mask32{};
+      if constexpr (N::value <= 8 ) return as<detail::mask8>{};
+      if constexpr (N::value == 16) return as<detail::mask16>{};
+      if constexpr (N::value == 32) return as<detail::mask32>{};
     }
     else if constexpr (std::same_as<ABI, x86_128_> && (width <= 16))
     {
-      if constexpr (sizeof(T) == 1) return detail::mask16{};
-      else                          return detail::mask8{};
+      if constexpr (sizeof(T) == 1) return as<detail::mask16>{};
+      else                          return as<detail::mask8>{};
     }
   }
 # else

@@ -10,6 +10,8 @@
 #include <eve/arch/arm/predef.hpp>
 #include <eve/arch/float16.hpp>
 #include <eve/traits/as_integer.hpp>
+#include <eve/as.hpp>
+
 #include <type_traits>
 
 namespace eve
@@ -30,39 +32,39 @@ namespace eve
       if constexpr (std::same_as<T, eve::float16_t>)
       {
         using type = svfloat16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
+        return as<type>{};
       }
       else if constexpr (std::same_as<T, float>)
       {
         using type = svfloat32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
+        return as<type>{};
       }
       else if constexpr (std::same_as<T, double>)
       {
         using type = svfloat64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
+        return as<type>{};
       }
       else if constexpr (std::signed_integral<T>)
       {
         if constexpr (sizeof(T) == 1)
         {
           using type = svint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 2)
         {
           using type = svint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 4)
         {
           using type = svint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 8)
         {
           using type = svint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
       }
       else if constexpr (std::unsigned_integral<T>)
@@ -70,22 +72,22 @@ namespace eve
         if constexpr (sizeof(T) == 1)
         {
           using type = svuint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 2)
         {
           using type = svuint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 4)
         {
           using type = svuint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
         else if constexpr (sizeof(T) == 8)
         {
           using type = svuint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-          return type{};
+          return as<type>{};
         }
       }
     }
@@ -101,7 +103,7 @@ namespace eve
     if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {
       using type = svbool_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-      return type{};
+      return as<type>{};
     }
   }
 }

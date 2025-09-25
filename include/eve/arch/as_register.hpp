@@ -38,7 +38,7 @@ namespace eve
   }
 
   template<typename T, typename N, typename ABI>
-  using as_register_t = decltype(as_register(as<T>{}, N{}, ABI{}));
+  using as_register_t = typename decltype(as_register(as<T>{}, N{}, ABI{}))::type;
 
   template<typename T, typename N, typename ABI>
   consteval auto as_logical_register(as<T> t, N n, ABI abi)
@@ -51,5 +51,5 @@ namespace eve
   }
 
   template<typename T, typename N, typename ABI>
-  using as_logical_register_t = decltype(as_logical_register(as<T>{}, N{}, ABI{}));
+  using as_logical_register_t = typename decltype(as_logical_register(as<T>{}, N{}, ABI{}))::type;
 }

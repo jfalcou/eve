@@ -21,13 +21,13 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::emulated_)
   {
-    return std::array<T, N::value>{};
+    return as<std::array<T, N::value>>{};
   }
 
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, eve::emulated_)
   {
-    return std::array<logical<T>, N::value>{};
+    return as<std::array<logical<T>, N::value>>{};
   }
 
   //================================================================================================
@@ -47,7 +47,7 @@ namespace eve
   consteval auto find_register_type(as<T>, N, eve::bundle_)
     requires (kumi::product_type<T>)
   {
-    return kumi::as_tuple_t<T, detail::apply_as_wide<N>::template type>{};
+    return as<kumi::as_tuple_t<T, detail::apply_as_wide<N>::template type>>{};
   }
 
   namespace detail
@@ -117,13 +117,13 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::aggregated_)
   {
-    return detail::blob<T, N>{};
+    return as<detail::blob<T, N>>{};
   }
 
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, eve::aggregated_)
   {
-    return detail::blob<logical<T>, N>{};
+    return as<detail::blob<logical<T>, N>>{};
   }
 }
 

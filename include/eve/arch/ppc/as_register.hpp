@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/arch/ppc/predef.hpp>
+#include <eve/as.hpp>
+
 #include <type_traits>
 
 namespace eve
@@ -36,40 +38,34 @@ namespace eve
 
     if constexpr (std::same_as<T, float> && (N::value <= 4))
     {
-      return wrap<__vector float>{}; 
+      return as<wrap<__vector float>>{};
     }
     else if constexpr (std::same_as<T, double> && (N::value <= 2))
     {
-      if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector double>{};
-      else                                                  return emulated_{};
+      if constexpr (spy::simd_instruction_set >= spy::vsx_) return as<wrap<__vector double>>{};
+      else                                                  static_assert(false, "unreachable");
     }
     else if constexpr (std::signed_integral<T>)
     {
-      if      constexpr (size_check(1, 16)) return wrap<__vector signed char>{};
-      else if constexpr (size_check(2,  8)) return wrap<__vector signed short>{};
-      else if constexpr (size_check(4,  4)) return wrap<__vector signed int>{};
+      if      constexpr (size_check(1, 16)) return as<wrap<__vector signed char>>{};
+      else if constexpr (size_check(2,  8)) return as<wrap<__vector signed short>>{};
+      else if constexpr (size_check(4,  4)) return as<wrap<__vector signed int>>{};
       else if constexpr (spy::simd_instruction_set >= spy::vsx_)
       {
-        if constexpr (size_check(8, 2)) return wrap<__vector signed long>{};
+        if constexpr (size_check(8, 2))     return as<wrap<__vector signed long>>{};
       }
-      else
-      {
-        if constexpr (size_check(8, 1)) return emulated_{};
-      }
+      else                                  static_assert(false, "unreachable");
     }
     else if constexpr (std::unsigned_integral<T>)
     {
-      if      constexpr (size_check(1, 16)) return wrap<__vector unsigned char>{};
-      else if constexpr (size_check(2,  8)) return wrap<__vector unsigned short>{};
-      else if constexpr (size_check(4,  4)) return wrap<__vector unsigned int>{};
+      if      constexpr (size_check(1, 16)) return as<wrap<__vector unsigned char>>{};
+      else if constexpr (size_check(2,  8)) return as<wrap<__vector unsigned short>>{};
+      else if constexpr (size_check(4,  4)) return as<wrap<__vector unsigned int>>{};
       else if constexpr (spy::simd_instruction_set >= spy::vsx_)
       {
-        if constexpr (size_check(8, 2)) return wrap<__vector unsigned long>{};
+        if constexpr (size_check(8, 2))     return as<wrap<__vector unsigned long>>{};
       }
-      else
-      {
-        if constexpr (size_check(8, 1)) return emulated_{};
-      }
+      else                                  static_assert(false, "unreachable");
     }
   }
 
@@ -85,25 +81,25 @@ namespace eve
 
     if constexpr (std::is_same_v<T, float> && (N::value <= 4))
     {
-      return wrap<__vector __bool int>{};
+      return as<wrap<__vector __bool int>>{};
     }
     else if constexpr (std::is_same_v<T, double> && (N::value <= 2))
     {
-      if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector __bool long>{};
-      else                                                  return emulated_{};
+      if constexpr (spy::simd_instruction_set >= spy::vsx_) return as<wrap<__vector __bool long>>{};
+      else                                                  static_assert(false, "unreachable");
     }
     else if constexpr (std::integral<T>)
     {
-      if      constexpr (size_check(1, 16))  return wrap<__vector __bool char>{};
-      else if constexpr (size_check(2, 8 ))  return wrap<__vector __bool short>{};
-      else if constexpr (size_check(4, 4 ))  return wrap<__vector __bool int>{};
+      if      constexpr (size_check(1, 16))  return as<wrap<__vector __bool char>>{};
+      else if constexpr (size_check(2, 8 ))  return as<wrap<__vector __bool short>>{};
+      else if constexpr (size_check(4, 4 ))  return as<wrap<__vector __bool int>>{};
       else if constexpr (spy::simd_instruction_set >= spy::vsx_)
       {
-        if constexpr (size_check(8,2))  return wrap<__vector __bool long>{};
+        if constexpr (size_check(8,2))  return as<wrap<__vector __bool long>>{};
       }
       else
       {
-        if constexpr (size_check(8, 2)) return emulated_{};
+        if constexpr (size_check(8, 2)) static_assert(false, "unreachable");
       }
     }
   }
