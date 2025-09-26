@@ -67,6 +67,10 @@ namespace eve::detail
       else  if constexpr( c == category::int64x8    ) return _mm512_mullo_epi64(a, b);
       else  if constexpr( c == category::int64x4 )
       {
+        if constexpr( current_api >= avx512 ){
+          return _mm256_mullo_epi64(a, b);
+        } 
+        else if constexpr( current_api == avx2 ){
           const __m256i low_mask = _mm256_set1_epi64x(0xFFFFFFFF);
 
           __m256i low_a = _mm256_and_si256(a, low_mask);
@@ -85,6 +89,39 @@ namespace eve::detail
           __m256i cross_shifted = _mm256_slli_epi64(cross_sum, 32);
 
           return _mm256_add_epi64(mul_low, cross_shifted);
+        } 
+        else 
+          return slice_apply(eve::mul, a, b);
+      }
+      else  if constexpr( c == category::int64x2 )
+      {
+        if constexpr( current_api >= avx512 ){
+          return _mm_mullo_epi64(a, b);
+        }
+
+        if constexpr( current_api >= sse2 ){
+          const __m128i low_mask = _mm_set1_epi64x(0xFFFFFFFF);
+
+          __m128i low_a = _mm_and_si128(a, low_mask);
+          __m128i low_b = _mm_and_si128(b, low_mask);
+
+          __m128i high_a = _mm_srli_epi64(a, 32);
+          __m128i high_b = _mm_srli_epi64(b, 32);
+
+          __m128i mul_low = _mm_mul_epu32(a, b); 
+
+          __m128i cross_mul_la_hb = _mm_mul_epu32(low_a, high_b);
+          __m128i cross_mul_lb_ha = _mm_mul_epu32(high_a, low_b);
+
+          __m128i cross_sum = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
+
+          __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
+
+          return _mm_add_epi64(mul_low, cross_shifted);
+        }
+        else {
+            return slice_apply(eve::mul, a, b);
+        }
       }
       else  if constexpr( c == category::uint64x8   ) return _mm512_mullo_epi64(a, b);
       else  if constexpr( c == category::int32x16   ) return _mm512_mullo_epi32(a, b);
