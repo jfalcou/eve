@@ -438,4 +438,67 @@ TTS_CASE("_mm_alignr_epi8(x, y)")
   run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<13>);
 };
 
+TTS_CASE("_mm_shuffle_ps(x, y)")
+{
+  run2<eve::sse2, std::uint32_t, 4>(eve::pattern<0, 2, 4, 5>);
+  run2<eve::sse2, std::uint32_t, 4>(eve::pattern<1, 0, 4, 5>);
+
+  auto p0 = [](int i, int size) {
+    if (i % 4 == 0) return i + 1;
+    if (i % 4 == 1) return i - 1;
+    if (i % 4 == 2) return i + 1 + size;
+    /*if (i % 4 == 3)*/ return i - 1 + size;
+  };
+
+  auto p1 = [](int i, int size) {
+    if (i % 4 == 0) return i + 2;
+    if (i % 4 == 1) return i + 2;
+    if (i % 4 == 2) return i - 2 + size;
+    /*if (i % 4 == 3)*/ return i - 2 + size;
+  };
+
+  auto p2 = [](int i, int size) {
+    if (i % 4 == 0) return i + 2;
+    if (i % 4 == 1) return i + 2;
+    if (i % 4 == 2) return i + size;
+    /*if (i % 4 == 3)*/ return i + size;
+  };
+
+  auto p3 = [](int i, int size) {
+    if (i % 4 == 0) return i + 1;
+    if (i % 4 == 1) return i;
+    if (i % 4 == 2) return i + size;
+    /*if (i % 4 == 3)*/ return i + size;
+  };
+
+
+  run2<eve::sse2, std::uint32_t, 4>(p0);
+  run2<eve::sse2, std::uint32_t, 4>(p1);
+  run2<eve::sse2, std::uint32_t, 4>(p2);
+  run2<eve::sse2, std::uint32_t, 4>(p3);
+
+  run2<eve::avx, std::uint32_t, 8>(p0);
+  run2<eve::avx, std::uint32_t, 8>(p1);
+  run2<eve::avx, std::uint32_t, 8>(p2);
+  run2<eve::avx, std::uint32_t, 8>(p3);
+
+  run2<eve::avx512, std::uint32_t, 16>(p0);
+  run2<eve::avx512, std::uint32_t, 16>(p1);
+  run2<eve::avx512, std::uint32_t, 16>(p2);
+  run2<eve::avx512, std::uint32_t, 16>(p3);
+};
+
+#if 0
+TTS_CASE("_mm_shuffle_pd(x, y)")
+{
+//  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<0, 2>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<1, 2>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<0, 3>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<1, 3>);
+
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 5, 2, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 5, 3, 7>);
+};
+#endif
+
 }
