@@ -438,4 +438,88 @@ TTS_CASE("_mm_alignr_epi8(x, y)")
   run2<eve::avx512, std::uint8_t, 64>(alignr_epi8_pattern<13>);
 };
 
+TTS_CASE("_mm_shuffle_ps(x, y)")
+{
+  run2<eve::sse2, std::uint32_t, 4>(eve::pattern<0, 2, 4, 5>);
+  run2<eve::sse2, std::uint32_t, 4>(eve::pattern<1, 0, 4, 5>);
+
+  auto p0 = [](int i, int size) {
+    if (i % 4 == 0) return i + 1;
+    if (i % 4 == 1) return i - 1;
+    if (i % 4 == 2) return i + 1 + size;
+    /*if (i % 4 == 3)*/ return i - 1 + size;
+  };
+
+  auto p1 = [](int i, int size) {
+    if (i % 4 == 0) return i + 2;
+    if (i % 4 == 1) return i + 2;
+    if (i % 4 == 2) return i - 2 + size;
+    /*if (i % 4 == 3)*/ return i - 2 + size;
+  };
+
+  auto p2 = [](int i, int size) {
+    if (i % 4 == 0) return i + 2;
+    if (i % 4 == 1) return i + 2;
+    if (i % 4 == 2) return i + size;
+    /*if (i % 4 == 3)*/ return i + size;
+  };
+
+  auto p3 = [](int i, int size) {
+    if (i % 4 == 0) return i + 1;
+    if (i % 4 == 1) return i;
+    if (i % 4 == 2) return i + size;
+    /*if (i % 4 == 3)*/ return i + size;
+  };
+
+
+  run2<eve::sse2, std::uint32_t, 4>(p0);
+  run2<eve::sse2, std::uint32_t, 4>(p1);
+  run2<eve::sse2, std::uint32_t, 4>(p2);
+  run2<eve::sse2, std::uint32_t, 4>(p3);
+
+  run2<eve::avx, std::uint32_t, 8>(p0);
+  run2<eve::avx, std::uint32_t, 8>(p1);
+  run2<eve::avx, std::uint32_t, 8>(p2);
+  run2<eve::avx, std::uint32_t, 8>(p3);
+
+  run2<eve::avx512, std::uint32_t, 16>(p0);
+  run2<eve::avx512, std::uint32_t, 16>(p1);
+  run2<eve::avx512, std::uint32_t, 16>(p2);
+  run2<eve::avx512, std::uint32_t, 16>(p3);
+};
+
+TTS_CASE("_mm_shuffle_pd(x, y)")
+{
+  // avx2:   [0, 1, 2, 3][4, 5, 6, 7]
+  // avx512: [0, 1, 2, 3, 4, 5, 6, 7] [8, 9, 10, 11, 12, 13, 14, 15]
+
+  // These are repeated patterns so they happen to be covered by shuffle_ps.
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<0, 2>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<1, 2>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<0, 3>);
+  run2<eve::sse2, std::uint64_t, 2>(eve::pattern<1, 3>);
+
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 5, 2, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 5, 3, 7>);
+
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 8, 2, 10, 4, 12, 6, 14>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 8, 3, 10, 5, 12, 7, 14>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 9, 2, 11, 4, 13, 6, 15>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 9, 3, 11, 5, 13, 7, 15>);
+
+  // These should proper trigger shuffle_pd
+
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 4, 2, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 4, 2, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 5, 3, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 4, 3, 7>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<1, 5, 2, 6>);
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 5, 3, 6>);
+
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 8, 2, 10, 4, 12, 6, 14>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 8, 2, 11, 4, 12, 6, 15>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 9, 2, 10, 5, 13, 6, 15>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 8, 3, 10, 4, 13, 7, 14>);
+};
+
 }
