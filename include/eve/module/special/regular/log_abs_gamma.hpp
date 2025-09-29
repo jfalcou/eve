@@ -133,7 +133,7 @@ namespace eve
     {
       const T Logsqrt2pi = T(0.91893853320467274178032973640561763986139747363777);
       using elt_t        = element_type_t<T>;
-      const el_t Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<el_t>{});
+      const elt_t Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<el_t>{});
       if constexpr( std::is_same_v<elt_t, float> )
       {
         if constexpr( scalar_value<T> )
