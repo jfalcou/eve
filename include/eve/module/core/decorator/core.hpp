@@ -42,6 +42,7 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
   struct threshold_mode       {};
+  struct unbiased_mode        {};  
 
   struct upper_mode       {static constexpr int value = FE_UPWARD;     };
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
@@ -94,6 +95,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto unsafe2          = ::rbr::flag( unsafe_mode{}          );
   [[maybe_unused]] inline constexpr auto splat            = ::rbr::flag( splat_mode{}           );
   [[maybe_unused]] inline constexpr auto to_nearest_odd   = ::rbr::flag( to_nearest_odd_mode{}  );
+  [[maybe_unused]] inline constexpr auto unbiased         = ::rbr::flag( unbiased_mode{}        );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -127,6 +129,7 @@ namespace eve
   struct unsafe_option          : detail::exact_option<unsafe2>         {};
   struct splat_option           : detail::exact_option<splat>           {};
   struct to_nearest_odd_option  : detail::exact_option<to_nearest_odd>  {};
+  struct unbiased_option        : detail::exact_option<unbiased>        {};
 
   inline constexpr auto as_option(unsafe_type   const&) { return unsafe2; }
 
