@@ -229,7 +229,7 @@ namespace eve::detail
               }, w);
             }, kumi::chunks<expected_card / current_card>(inner));
 
-            if constexpr (kumi::size_v<decltype(chunks)> == 1) return kumi::get<0>(chunks);
+            if constexpr (kumi::size_v<decltype(chunks)> == 1) return expected_wide{ kumi::get<0>(chunks) };
             else                                               return chunks;
           }
           else
