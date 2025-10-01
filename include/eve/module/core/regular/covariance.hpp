@@ -9,7 +9,8 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-
+#include <eve/module/core/regular/dot.hpp>
+#include <eve/module/core/decorator/core.hpp>
 namespace eve
 {
   template<typename Options>
@@ -122,20 +123,26 @@ namespace eve
       if constexpr(siz == 1) return eve::zero(eve::as<r_t>());
       else
       {
-        using r_t =  eve::common_value_t<Ts...>;
         if constexpr(O::contains(widen)) return covariance[o.drop(widen)](upgrade(r_t(args))...);
         else
         {
           auto coeffs = eve::zip(r_t(args)...);
-          auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(Ts)/2>);
-          auto avgf = eve::average[o}(f);
-          auto avgs = eve::average[o}(s);
-          auto cov = kumi::sum( kumi::map([avgf, avgs](auto a, auto b) { return (a-avgs)*(b-avgf); }, f, s));
-          if constexpr(O::contains(unbiased))
-            cov = na0.m2/dec(s);
+          auto[f,s]   = kumi::split(coeffs, kumi::index<siz>);
+          auto avgf = eve::average[o](f);
+          auto avgs = eve::average[o](s);
+          r_t cov{};
+          if constexpr(O::contains(raw))
+            cov = kumi::sum( kumi::map([avgf, avgs](auto a, auto b) { return (a-avgf)*(b-avgs); }, f, s));
           else
-            cov = na0.m2/s;
-          return na0;
+          {
+            auto fc =  kumi::map([avgf](auto a) { return (a-avgf); }, f);
+            auto sc =  kumi::map([avgs](auto a) { return (a-avgs); }, s);
+            cov = eve::dot[o](fc, sc);
+          }
+          if constexpr(O::contains(unbiased))
+            return cov/dec(siz);
+          else
+            return cov/siz;
         }
       }
     }

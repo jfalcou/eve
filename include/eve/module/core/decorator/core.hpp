@@ -42,7 +42,7 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
   struct threshold_mode       {};
-  struct unbiased_mode        {};  
+  struct unbiased_mode        {};
 
   struct upper_mode       {static constexpr int value = FE_UPWARD;     };
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
