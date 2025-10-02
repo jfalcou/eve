@@ -39,7 +39,7 @@ int main()
   std::cout << "uc1c2.mxy " << uc1c2.mxy<<  std::endl;
 
   auto uz = eve::welford_covariance(c1, c2) ;
-  std::cout << "cov c1, c2 " << uz.covariance <<  std::endl;
+  std::cout << "cov uc1, uc2 " << uz.covariance <<  std::endl;
 
 //   std::cout << eve::detail::is_welford_covariance_result_v<decltype(c1)> << std::endl;
 

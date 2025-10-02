@@ -94,15 +94,6 @@ namespace eve
       return EVE_DISPATCH_CALL(t, ts...);
     }
 
-//     template<typename... Ts>
-//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_covariance_t<Ts>...>  &&
-//              Options::contains(widen) && (detail::is_welford_covariance_result_v<Ts> && ...))
-//       EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
-//    operator()(Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
-
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
