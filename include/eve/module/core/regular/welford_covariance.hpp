@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/decorator/core.hpp>
-
+#include <iostream>
 namespace eve
 {
 
@@ -37,16 +37,16 @@ namespace eve
 
     // helper to treat in the same way values and welford_covariance results to compute common_value_t
     // without duplicating code
-    template < typename T> struct internal_welford_covariance                    { using type = T;  };
+    template < typename T> struct internal_welford_covariance                               { using type = T;  };
     template < typename T> struct internal_welford_covariance<welford_covariance_result<T>> { using type = T;  };
     template < typename T> using  internal_welford_covariance_t = typename internal_welford_covariance<T>::type;
   }
 
 
   template<typename Options>
-  struct welford_covariance_t : tuple_callable<welford_covariance_t, Options, kahan_option, widen_option, unbiased_option>
+  struct welford_covariance_t : callable<welford_covariance_t, Options, kahan_option, widen_option, unbiased_option>
   {
-    template<eve::value T0, value T1, value... Ts>
+     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<T0, T1, Ts...>>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
@@ -62,24 +62,30 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
-
-    template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_covariance_t<Ts>...>  &&
-             !Options::contains(widen) && (detail::is_welford_covariance_result_v<Ts> && ...))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
-    operator()(Ts...ts) const noexcept
+    template<typename T, typename... Ts>
+    requires(value<T> && (sizeof...(Ts) !=  0) && !Options::contains(widen))//&& (detail::is_welford_covariance_result_v<T>) )
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<T>
+    operator()(T t, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(ts...);
+      return EVE_DISPATCH_CALL(t, ts...);
     }
 
-    template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_covariance_t<Ts>...>  &&
-             Options::contains(widen) && (detail::is_welford_covariance_result_v<Ts> && ...))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
-   operator()(Ts...ts) const noexcept
+    template<typename T, typename... Ts>
+    requires(detail::is_welford_covariance_result_v<T> /*&& (sizeof...(Ts) !=  0)*/ && !Options::contains(widen))//&& (detail::is_welford_covariance_result_v<T>) )
+      EVE_FORCEINLINE constexpr T
+    operator()(T t, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(ts...);
+      return EVE_DISPATCH_CALL(t, ts...);
     }
+
+//     template<typename... Ts>
+//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_covariance_t<Ts>...>  &&
+//              Options::contains(widen) && (detail::is_welford_covariance_result_v<Ts> && ...))
+//       EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
+//    operator()(Ts...ts) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(ts...);
+//     }
 
 
     template<kumi::non_empty_product_type Tup>
@@ -172,11 +178,12 @@ namespace eve
   namespace detail
   {
     template<typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
-    requires(sizeof...(Ts) > 1 && sizeof...(Ts)%2 == 0 && value<eve::common_value_t<Ts...>>)
+    EVE_FORCEINLINE constexpr auto
+    welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
+    requires( (sizeof...(Ts) > 0)&& (sizeof...(Ts)%2 == 0) && value<eve::common_value_t<Ts...>>)
     {
-      using r_t =  eve::common_value_t<Ts...>;
       constexpr auto siz = sizeof...(Ts)/2;
+      using r_t =  eve::common_value_t<Ts...>;
       if constexpr(O::contains(widen))
       {
         auto up_it = [](auto a){
@@ -215,42 +222,50 @@ namespace eve
       }
     }
 
-    template<typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
-    requires(sizeof...(Ts) >= 1 && (detail::is_welford_covariance_result_v<Ts> && ...))
+
+    template<typename T, typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
+    requires(detail::is_welford_covariance_result_v<T>)
     {
-      using r_t =  common_value_t<detail::internal_welford_covariance_t<Ts>...>;
+      using r_t =  std::remove_cv_t<typename T::type>;
       if constexpr(O::contains(widen))
       {
         auto up_it = [](auto a){
           if constexpr(requires { a.up(); }) return a.up();
           else return eve::upgrade(a);
         };
-        return welford_covariance[o.drop(widen)](up_it(args)...);
+        return welford_covariance[o.drop(widen)](up_it(t), up_it(args)...);
       }
-      else if constexpr(sizeof...(Ts) == 1)
+      else if constexpr(sizeof...(Ts) == 0)
       {
-        return ((args), ...);
+        std::cout << "icitte " << t << std::endl;
+        return t;
       }
       else
       {
-        auto ncov = welford_covariance_result<r_t>();
-        return ncov;
- //        auto doit = [&ncov](auto ... as){
-//           auto welford_covariancestep = [&ncov](auto cov)
-//           {
-//             auto nab = ncov.count+cov.count;
-//             auto avgx = sum_of_prod(r_t(ncov.count), ncov.averagex, r_t(cov.count), cov.averagex)/nab;
-//             auto avgy = sum_of_prod(r_t(ncov.count), ncov.averagey, r_t(cov.count), cov.averagey)/nab;
-//             ncov.mxy += (ncov.averagex-cov.averagex)*(ncov.averagey-cov.averagey)*cov.count*ncov.count;
-//             return welford_covariance_result(avgx, avgy, nab, ncov.mxy);
-//           };
-//           ((ncov = welford_covariancestep(as)),...);
-//           if constexpr(O::contains(unbiased)) ncov.covariance = ncov.mxy/dec(ncov.count);
-//           else                                ncov.covariance = ncov.mxy/ncov.count;
-//           return ncov;
-//         };
-//         return  doit(args...);
+        T ncov = t;
+//        return ncov;
+        auto doit = [ & ](){
+          auto welford_covariancestep = [&](auto cov)
+          {
+            auto nab = ncov.count+cov.count;
+            std::cout << ncov.count << std::endl;
+            std::cout <<  cov.count << std::endl;
+            std::cout <<  nab       << std::endl;
+            auto avgx = sum_of_prod(r_t(ncov.count), ncov.averagex, r_t(cov.count), cov.averagex)/nab;
+            auto avgy = sum_of_prod(r_t(ncov.count), ncov.averagey, r_t(cov.count), cov.averagey)/nab;
+            std::cout <<  avgx       << std::endl;
+            std::cout <<  avgy       << std::endl;
+            auto mxy = cov.mxy+ncov.mxy+((ncov.averagex-cov.averagex)*(ncov.averagey-cov.averagey)*cov.count*ncov.count)/nab;
+            ncov = welford_covariance_result(avgx, avgy, nab, mxy);
+             return ncov;
+          };
+          ((ncov = welford_covariancestep(args)),...);
+          if constexpr(O::contains(unbiased)) ncov.covariance = ncov.mxy/dec(ncov.count);
+          else                                ncov.covariance = ncov.mxy/ncov.count;
+          return ncov;
+        };
+        return  doit();
       }
     }
   }
