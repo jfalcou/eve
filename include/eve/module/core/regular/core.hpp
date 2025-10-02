@@ -232,6 +232,8 @@
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/welford_average.hpp>
+#include <eve/module/core/regular/welford_variance.hpp>
 #include <eve/module/core/regular/write.hpp>
