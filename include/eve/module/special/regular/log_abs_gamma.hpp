@@ -133,12 +133,12 @@ namespace eve
     {
       const T Logsqrt2pi = T(0.91893853320467274178032973640561763986139747363777);
       using elt_t        = element_type_t<T>;
+      const elt_t Maxlog_abs_gamma = ieee_constant<0x1.74c5dd06d2516p+1014, 0x1.87f1d40p+120f>(eve::as<elt_t>{});
       if constexpr( std::is_same_v<elt_t, float> )
       {
         if constexpr( scalar_value<T> )
         {
           if( (is_infinite(a0)) ) return inf(as<T>());
-          const T Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if( x < 6.5f )
@@ -329,8 +329,6 @@ namespace eve
         const T Logpi = T(1.1447298858494001741434273513530587116472948129153);
         if constexpr( scalar_value<T> )
         {
-          const T Maxlog_abs_gamma =
-            ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if( x < 13.0 )

@@ -98,11 +98,13 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T log2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
+      using uiT   = as_integer_t<T, unsigned>;
+      using iT    = as_integer_t<T, signed>;
+      T Invlog_2lo = ieee_constant<0x1.705fc2eefa200p-33, -0x1.7135a80p-13f>(eve::as<T>{});
+      T Invlog_2hi = ieee_constant<0x1.7154765200000p+0 , 0x1.7160000p+0f  >(eve::as<T>{});
       if constexpr(simd_value<T>)
       {
-        using uiT   = as_integer_t<T, unsigned>;
-        using iT    = as_integer_t<T, signed>;
-        constexpr bool is_avx = current_api == avx;
+       constexpr bool is_avx = current_api == avx;
         using TT =  detail::conditional_t<is_avx, T, iT >;
         using elt_t = element_type_t<T>;
         if constexpr( std::is_same_v<elt_t, float> )
@@ -267,8 +269,6 @@ namespace eve
 
           /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-          T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
-          T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
           T hi         = f - hfsq;
           hi           = (hi & (allbits(eve::as<uiT>()) << 32));
           T lo         = fma(s, hfsq + R, f - hi - hfsq);
@@ -294,8 +294,6 @@ namespace eve
       else //scalar case
       {
         auto x = a0;
-        using uiT = as_integer_t<T, unsigned>;
-        using iT  = as_integer_t<T, signed>;
         if constexpr( std::is_same_v<T, float> )
         {
           /* origin: FreeBSD /usr/src/lib/msun/src/e_log2f.c */
@@ -428,8 +426,6 @@ namespace eve
 
           /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-          T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
-          T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
           T hi         = f - hfsq;
           hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
           T lo         = f - hi - hfsq + s * (hfsq + R);

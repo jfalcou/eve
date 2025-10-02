@@ -82,13 +82,13 @@ namespace eve
     constexpr auto
     log1p_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
+      using uiT           = as_integer_t<T, unsigned>;
+      using iT            = as_integer_t<T, signed>;
+      using elt_t =  eve::element_type_t<T>;
+      const elt_t Log_2hi = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<elt_t>{});
+      const elt_t Log_2lo = ieee_constant<0x1.a39ef35793c76p-33, -0x1.bd01060p-13f>(eve::as<elt_t>{});
       if constexpr(simd_value<T>)
       {
-        using elt_t         = element_type_t<T>;
-        using uiT           = as_integer_t<T, unsigned>;
-        using iT            = as_integer_t<T, signed>;
-        const elt_t Log_2hi = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<elt_t>{});
-        const elt_t Log_2lo = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<elt_t>{});
         constexpr bool is_avx = current_api == avx;
         if constexpr(is_avx)
         {
@@ -222,10 +222,6 @@ namespace eve
       else  // scalar case
       {
         auto x = a0;
-        using uiT = as_integer_t<T, unsigned>;
-        using iT  = as_integer_t<T, signed>;
-        T Log_2hi = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-        T Log_2lo = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
         if constexpr( std::is_same_v<T, float> )
         {
           /* origin: FreeBSD /usr/src/lib/msun/src/e_log1pf.c */

@@ -75,8 +75,8 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     deginrad_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      auto ridh = ieee_constant<0x1.1de0000p-6f, 0x1.1df46a0000000p-6>(eve::as<T>{});
-      auto ridl = ieee_constant<0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33>(eve::as<T>{});
+      auto ridh = ieee_constant<0x1.1df46a0000000p-6 , 0x1.1de0000p-6f >(eve::as<T>{});
+      auto ridl = ieee_constant<0x1.294e9c8ae0ec6p-33, 0x1.46a2520p-18f>(eve::as<T>{});
       return fma(a, ridl, a * ridh);
     }
   }

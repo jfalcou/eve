@@ -46,7 +46,7 @@ namespace eve
           // preserve belonging to the interval
         }
         else if constexpr(O::contains(medium))
-          return ieee_constant<0x1.9220e60p+50f, 0x1.6bcc41e900000p+47>(eve::as<T>{}); // 1.76858e+15,  2.0e14
+          return ieee_constant<0x1.6bcc41e900000p+47, 0x1.9220e60p+50f>(eve::as<T>{}); // 1.76858e+15,  2.0e14
         else
           return valmax(eve::as<T>());
       }

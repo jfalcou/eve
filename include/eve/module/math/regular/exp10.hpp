@@ -93,8 +93,8 @@ namespace eve
             return minlog10(as(x));
         };
 
-      const T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(as(x));
-      const T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(as(x));
+      const T Log10_2hi   = ieee_constant<0x1.3440000000000p-2,  0x1.3400000p-2f >(as(x));
+      const T Log10_2lo   = ieee_constant<0x1.3509f79fef312p-18, 0x1.04d4280p-12f>(as(x));
       auto    xltminlog10 = x <= minlogval();
       auto    xgemaxlog10 = x >= maxlog10(as(x));
 
