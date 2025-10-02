@@ -30,14 +30,14 @@ namespace eve
       T variance        = T(0);
     };
 
-    template<typename>    struct is_welford_variance_result_helper                      : public std::false_type{};
-    template<typename T>  struct is_welford_variance_result_helper<welford_variance_result<T>>   : public std::true_type{};
-    template<typename T>  struct is_welford_variance_result                             : public is_welford_variance_result_helper<std::remove_cv_t<T>>::type{};
+    template<typename>    struct is_welford_variance_result_helper                               :  std::false_type{};
+    template<typename T>  struct is_welford_variance_result_helper<welford_variance_result<T>>   :  std::true_type{};
+    template<typename T>  struct is_welford_variance_result                                      :  is_welford_variance_result_helper<std::remove_cv_t<T>>::type{};
     template<typename T> constexpr auto is_welford_variance_result_v =  is_welford_variance_result<T>::value;
 
     // helper to treat in the same way values and welford_variance results to compute common_value_t
     // without duplicating code
-    template < typename T> struct internal_welford_variance                    { using type = T;  };
+    template < typename T> struct internal_welford_variance                             { using type = T;  };
     template < typename T> struct internal_welford_variance<welford_variance_result<T>> { using type = T;  };
     template < typename T> using  internal_welford_variance_t = typename internal_welford_variance<T>::type;
   }
