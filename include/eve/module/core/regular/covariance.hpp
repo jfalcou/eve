@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct covariance_t : tuple_callable<covariance_t, Options, kahan_option, widen_option>
+  struct covariance_t : tuple_callable<covariance_t, Options, kahan_option, widen_option, unbiased_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
