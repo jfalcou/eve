@@ -6,13 +6,15 @@
 
 int main()
 {
-//  kumi::tuple x{4.0f, 3.0f, 2.0f, 1.0f};
-//   kumi::tuple y{1.0f, 4.0f, 9.0f, 16.0f};
-//  std::cout << eve::welford_covariance(x, x) <<  std::endl;
-//   std::cout << eve::welford_covariance(y, y) <<  std::endl;
-//   std::cout << eve::welford_covariance(y, x) <<  std::endl;
-//   auto c1 = eve::welford_covariance(kumi::tuple{4.0f, 3.0f},  kumi::tuple{1.0f, 4.0f});
-//   auto c2 = eve::welford_covariance(kumi::tuple{2.0f, 1.0f},  kumi::tuple{9.0f, 16.0f});
+  kumi::tuple x{4.0f, 3.0f, 2.0f, 1.0f};
+  kumi::tuple y{1.0f, 4.0f, 9.0f, 16.0f};
+  std::cout << eve::welford_covariance(x, x) <<  std::endl;
+  std::cout << eve::welford_covariance(y, y) <<  std::endl;
+  std::cout << eve::welford_covariance(y, x) <<  std::endl;
+  auto cc1 = eve::welford_covariance(kumi::tuple{4.0f, 3.0f},  kumi::tuple{1.0f, 4.0f});
+  auto cc2 = eve::welford_covariance(kumi::tuple{2.0f, 1.0f},  kumi::tuple{9.0f, 16.0f});
+  std::cout << "cc1 " << cc1 <<  std::endl;
+  std::cout << "cc2 " << cc2 <<  std::endl;
 
   auto c1 = eve::welford_covariance(4.0f, 3.0f, 1.0f, 4.0f);
   auto c2 = eve::welford_covariance(2.0f, 1.0f,  9.0f, 16.0f);
