@@ -84,6 +84,7 @@ namespace eve
 //!      constexpr auto variance[raw] (/* any of the above overloads */)                             noexcept; // 4
 //!      constexpr auto variance[widen](/* any of the above overloads */)                            noexcept; // 5
 //!      constexpr auto variance[kahan](/* any of the above overloads */)                            noexcept; // 6
+//!      constexpr auto variance[unbiased](/* any of the above overloads */)                         noexcept; // 7
 //!
 //!   }
 //!   @endcode
@@ -105,6 +106,7 @@ namespace eve
 //!     4. No provision is made to avoid inaccuracies.
 //!     5. The variance is computed in the double sized element type (if available).
 //!     6. Compensated algorithm for better precision.
+//!     7. the normalizing factor N-1 instead of N to get the best unbiased estimate.
 //!
 //!
 //!  @groupheader{External references}
