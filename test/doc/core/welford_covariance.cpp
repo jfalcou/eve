@@ -13,6 +13,7 @@ int main()
 //   std::cout << eve::welford_covariance(y, x) <<  std::endl;
 //   auto c1 = eve::welford_covariance(kumi::tuple{4.0f, 3.0f},  kumi::tuple{1.0f, 4.0f});
 //   auto c2 = eve::welford_covariance(kumi::tuple{2.0f, 1.0f},  kumi::tuple{9.0f, 16.0f});
+
   auto c1 = eve::welford_covariance(4.0f, 3.0f, 1.0f, 4.0f);
   auto c2 = eve::welford_covariance(2.0f, 1.0f,  9.0f, 16.0f);
   auto c1c2 = eve::welford_covariance(4.0f, 3.0f, 2.0f, 1.0f, 1.0f, 4.0f,  9.0f, 16.0f);
@@ -20,14 +21,26 @@ int main()
   std::cout << "c2 " << c2 <<  std::endl;
   std::cout << "c1c2 " << c1c2 <<  std::endl;
   std::cout << "c1c2.mxy " << c1c2.mxy<<  std::endl;
-//  std::cout << "cov c1 " << eve::welford_covariance(c1)       <<  std::endl;
 
 
   auto z = eve::welford_covariance(c1, c2) ;
-   std::cout << "cov c1, c2 " << z.covariance <<  std::endl;
-   std::cout << "meanx      " << z.averagex   <<  std::endl;
-   std::cout << "meany      " << z.averagey   <<  std::endl;
-   std::cout << "mxy        " << z.mxy        <<  std::endl;
+  std::cout << "cov c1, c2 " << z.covariance <<  std::endl;
+  std::cout << "meanx      " << z.averagex   <<  std::endl;
+  std::cout << "meany      " << z.averagey   <<  std::endl;
+  std::cout << "mxy        " << z.mxy        <<  std::endl;
+
+
+  auto uc1 = eve::welford_covariance[eve::widen](4.0f, 3.0f, 1.0f, 4.0f);
+  auto uc2 = eve::welford_covariance[eve::widen](2.0f, 1.0f,  9.0f, 16.0f);
+  auto uc1c2 = eve::welford_covariance[eve::widen](4.0f, 3.0f, 2.0f, 1.0f, 1.0f, 4.0f,  9.0f, 16.0f);
+  std::cout << "uc1 " << uc1 <<  std::endl;
+  std::cout << "uc2 " << uc2 <<  std::endl;
+  std::cout << "uc1c2 " << uc1c2 <<  std::endl;
+  std::cout << "uc1c2.mxy " << uc1c2.mxy<<  std::endl;
+
+  auto uz = eve::welford_covariance(c1, c2) ;
+  std::cout << "cov c1, c2 " << uz.covariance <<  std::endl;
+
 //   std::cout << eve::detail::is_welford_covariance_result_v<decltype(c1)> << std::endl;
 
 

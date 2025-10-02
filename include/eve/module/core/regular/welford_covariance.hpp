@@ -46,24 +46,24 @@ namespace eve
   template<typename Options>
   struct welford_covariance_t : callable<welford_covariance_t, Options, kahan_option, widen_option, unbiased_option>
   {
-     template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<T0, T1, Ts...>>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
-    }
+//      template<eve::value T0, value T1, value... Ts>
+//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
+//       EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<T0, T1, Ts...>>
+//     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(t0, t1, ts...);
+//     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE detail::welford_covariance_result<common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >>
-    constexpr operator()(T0 t0, T1 t1, Ts...ts)  const noexcept
-    {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
-    }
+//     template<eve::value T0, value T1, value... Ts>
+//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
+//       EVE_FORCEINLINE detail::welford_covariance_result<common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >>
+//     constexpr operator()(T0 t0, T1 t1, Ts...ts)  const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(t0, t1, ts...);
+//     }
 
     template<typename T, typename... Ts>
-    requires(value<T> && (sizeof...(Ts) !=  0) && !Options::contains(widen))//&& (detail::is_welford_covariance_result_v<T>) )
+    requires(value<T> && (sizeof...(Ts) !=  0) && !Options::contains(widen))
       EVE_FORCEINLINE constexpr detail::welford_covariance_result<T>
     operator()(T t, Ts...ts) const noexcept
     {
@@ -71,8 +71,24 @@ namespace eve
     }
 
     template<typename T, typename... Ts>
-    requires(detail::is_welford_covariance_result_v<T> /*&& (sizeof...(Ts) !=  0)*/ && !Options::contains(widen))//&& (detail::is_welford_covariance_result_v<T>) )
+    requires(value<T> && (sizeof...(Ts) !=  0) && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<T>>
+    operator()(T t, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t, ts...);
+    }
+
+    template<typename T, typename... Ts>
+    requires(detail::is_welford_covariance_result_v<T> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr T
+    operator()(T t, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t, ts...);
+    }
+
+    template<typename T, typename... Ts>
+    requires(detail::is_welford_covariance_result_v<T> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<typename T::type>>
     operator()(T t, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t, ts...);
