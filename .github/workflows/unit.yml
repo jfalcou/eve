@@ -563,6 +563,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang  , arch: x86    , opts: "-std=c++26"  }
+        - { comp: gcc    , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
