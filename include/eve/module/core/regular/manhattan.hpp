@@ -117,16 +117,6 @@ namespace eve
 
   namespace detail
   {
-//     template<typename T, callable_options O>
-//     EVE_FORCEINLINE constexpr auto
-//     manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
-//     {
-//       if constexpr (!O::contains(saturated) || floating_value<T>)
-//         return eve::abs(a0);
-//       else
-//         return eve::abs[saturated](a0);
-//     }
-
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept

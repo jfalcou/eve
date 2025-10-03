@@ -127,21 +127,21 @@ namespace eve
           {
             auto[f0,fs]       = kumi::split(f, kumi::index<1>);
             auto[s0,ss]       = kumi::split(s, kumi::index<1>);
-            auto [sum,error]  = eve::two_prod(get<0>(f0), get<0>(s0));
+            auto [su,error]  = eve::two_prod(get<0>(f0), get<0>(s0));
 
             kumi::for_each( [&](auto a, auto b)
                             {
-                              auto[s1, e1] = eve::two_fma_approx(a, b, sum);
+                              auto[s1, e1] = eve::two_fma_approx(a, b, su);
                               error += e1;
-                              sum    = s1;
+                              su    = s1;
                             }, fs, ss
                           );
 
-            return sum + error;
+            return su + error;
           }
           else
           {
-            return kumi::sum( kumi::map([](auto a, auto b) { return a*b; }, f, s));
+            return add[o]( kumi::map([](auto a, auto b) { return a*b; }, f, s));
           }
         }
       }

@@ -104,6 +104,7 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(3, )", eve::test::simd::ieee_rea
   TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](3, T(1), T(1)), cbrt2, 1.0);
   TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](3, T(0), T(0)), T(0), 1.0);
   TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](3, cbrt2, cbrt2), cbrt4, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](3, kumi::tuple{cbrt2, cbrt2}), cbrt4, 1.0);
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -163,6 +164,11 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(3, )", eve::test::simd::ieee_rea
   TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](T(3), T(1), T(1), T(1), T(1)), cbrt4, 1.0);
   TTS_ULP_EQUAL(eve::lpnorm[eve::kahan](T(3), T(1), T(1), T(1), T(1)), cbrt4, 1.0);
   TTS_ULP_EQUAL(eve::lpnorm[eve::widen](3.0f, 1.0f, 1.0f, 1.0f, 1.0f), 1.587401051968199, 1.0);
+
+  auto t = [](auto ){ return v_t(5); };
+  constexpr auto s = 3*T::size()/2+1;
+  auto tup = kumi::generate<s>(t);
+  TTS_ULP_EQUAL(eve::lpnorm(3, tup), eve::nthroot(v_t(125)*s, v_t(3)), 1.5);
 };
 
 #endif
