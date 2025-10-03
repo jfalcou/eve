@@ -148,7 +148,7 @@ namespace eve::detail
       if constexpr(O::contains(raw))
         return var;
       else
-        return var - eve::sqr(eve::average(a0-avg, (args-avg)...));
+        return var - eve::sqr(eve::average[o](a0-avg, (args-avg)...));
     }
   }
 }
