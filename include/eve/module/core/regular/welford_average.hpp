@@ -16,22 +16,6 @@
 
 namespace eve
 {
-  template<kumi::product_type Tuple>
-  void print(std::ostream& os, Tuple const& t)
-  {
-    kumi::apply
-      (
-        [&os](auto const&... args)
-        {
-          os << '[';
-          std::size_t n{0};
-          ((os << args << (++n != kumi::size<Tuple>::value ? ", " : "")), ...);
-          os << ']';
-        }, t
-      );
-
-    os << '\n';
-  }
 
   namespace detail
   {

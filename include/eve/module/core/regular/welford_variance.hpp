@@ -43,7 +43,7 @@ namespace eve
   }
 
   template<typename Options>
-  struct welford_variance_t : conditional_callable<welford_variance_t, Options, unbiased_option, widen_option>
+  struct welford_variance_t : callable<welford_variance_t, Options, unbiased_option, widen_option>
   {
 
     template<typename... Ts>
@@ -61,6 +61,20 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(ts...);
     }
+
+   template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    detail::welford_variance_result<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    detail::welford_variance_result<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(welford_variance_t, welford_variance_);
   };
@@ -124,6 +138,33 @@ namespace eve
 namespace eve::detail
 {
 
+  template<scalar_value T0, scalar_value ... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  welford_variance_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
+  requires(sizeof...(Ts)+1 >= wide<common_value_t<T0, Ts...>>::size())
+  {
+    auto scalarize = []<typename T>(T w){
+      using e_t =  element_type_t<typename T::type>;
+      auto getit = [w](auto i){return welford_variance_result<e_t>(w.average.get(i), w.count, w.m2.get(i), w.variance.get(i)); };
+      return kumi::generate<w.average.size()>(getit);
+    };
+
+    using r_t =  common_value_t<T0, Ts...>;
+    auto tup = kumi::make_tuple(a0, args...);
+    constexpr auto siz = sizeof...(Ts)+1;
+    constexpr auto nblanes = wide<r_t>::size();
+    constexpr auto remain = siz % nblanes;
+    auto [car, cdr] = kumi::split(tup,  kumi::index<remain>);
+    auto head = as_wides(eve::zero(eve::as<r_t>()), cdr);
+    auto wv = eve::welford_variance[o](head);
+    auto swv = scalarize(wv);
+    auto wvar1 = kumi::apply([](auto...m){return welford_variance(m...);}, swv);
+    if constexpr(remain != 0)
+      return eve::welford_variance(welford_variance(car), wvar1);
+    else
+      return wvar1;
+  }
+
   template<typename T0, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   welford_variance_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
@@ -180,5 +221,13 @@ namespace eve::detail
       };
       return  doit(args...);
     }
+  }
+
+
+  template< kumi::non_empty_product_type T, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  welford_variance_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
+  {
+    return kumi::apply([o](auto... m){return welford_variance[o](m...); }, t);
   }
 }
