@@ -30,9 +30,9 @@ namespace eve
       T covariance       = T(0);
     };
 
-    template<typename>    struct is_welford_covariance_result_helper                      : public std::false_type{};
-    template<typename T>  struct is_welford_covariance_result_helper<welford_covariance_result<T>>   : public std::true_type{};
-    template<typename T>  struct is_welford_covariance_result                             : public is_welford_covariance_result_helper<std::remove_cv_t<T>>::type{};
+    template<typename>    struct is_welford_covariance_result_helper                               : public std::false_type{};
+    template<typename T>  struct is_welford_covariance_result_helper<welford_covariance_result<T>> : public std::true_type{};
+    template<typename T>  struct is_welford_covariance_result                                      : public is_welford_covariance_result_helper<std::remove_cv_t<T>>::type{};
     template<typename T> constexpr auto is_welford_covariance_result_v =  is_welford_covariance_result<T>::value;
 
     // helper to treat in the same way values and welford_covariance results to compute common_value_t
@@ -44,58 +44,42 @@ namespace eve
 
 
   template<typename Options>
-  struct welford_covariance_t : callable<welford_covariance_t, Options, kahan_option, widen_option, unbiased_option>
+  struct welford_covariance_t : callable<welford_covariance_t, Options, widen_option, unbiased_option>
   {
-//      template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<T0, T1, Ts...>>
-//     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(t0, t1, ts...);
-//     }
 
-//     template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-//       EVE_FORCEINLINE detail::welford_covariance_result<common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >>
-//     constexpr operator()(T0 t0, T1 t1, Ts...ts)  const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(t0, t1, ts...);
-//     }
-
-    template<typename T, typename... Ts>
-    requires(value<T> && (sizeof...(Ts) !=  0) && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<T>
-    operator()(T t, Ts...ts) const noexcept
+    template<typename... Ts>
+    requires(value<common_value_t<Ts...>> && (sizeof...(Ts) !=  0) && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<typename T, typename... Ts>
-    requires(value<T> && (sizeof...(Ts) !=  0) && Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<T>>
-    operator()(T t, Ts...ts) const noexcept
+    template<typename... Ts>
+    requires(value<common_value_t<Ts...>> && (sizeof...(Ts) !=  0) && Options::contains(widen))
+       EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<typename T, typename... Ts>
-    requires(detail::is_welford_covariance_result_v<T> && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr T
-    operator()(T t, Ts...ts) const noexcept
+    template<typename... Ts>
+    requires((detail::is_welford_covariance_result_v<Ts > && ...) && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr  detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<typename T, typename... Ts>
-    requires(detail::is_welford_covariance_result_v<T> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_t<typename T::type>>
-    operator()(T t, Ts...ts) const noexcept
+    template<typename... Ts>
+    requires((detail::is_welford_covariance_result_v<Ts> && ...) && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
+    operator()(Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t, ts...);
+      return EVE_DISPATCH_CALL(ts...);
     }
 
-
-   template<kumi::non_empty_product_type Tup>
+    template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
       EVE_FORCEINLINE constexpr
     detail::welford_covariance_result<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>>
@@ -145,15 +129,12 @@ namespace eve
 //!      // Semantic options
 //!      constexpr auto welford_covariance[unbiased](/*any of the above overloads*/)  noexcept; // 3
 //!      constexpr auto welford_covariance[widen]   (/*any of the above overloads*/)  noexcept; // 4
-//!      constexpr auto welford_covariance[kahan]   (/*any of the above overloads*/)  noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [value arguments](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `xs`, `ys`  :  [value arguments](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -167,6 +148,7 @@ namespace eve
 //!
 //!      2. The computation and result use the upgraded data type if available
 //!      3. with this option the normalisation is done by by the number of elements involved, minus one.
+//!      4. with this option the computation is done in the upgraded element type.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/welford_covariance.cpp}
@@ -178,6 +160,36 @@ namespace eve
 
   namespace detail
   {
+    template<scalar_value ... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    welford_variance_(EVE_REQUIRES(cpu_), O const & o, Ts const &... args) noexcept
+    requires( (sizeof...(Ts) > 0) && (sizeof...(Ts)%2 == 0) && (sizeof...(Ts) >= 2*wide<common_value_t<Ts...>>::size()))
+    {
+      auto scalarize = []<typename T>(T w){
+        using e_t =  element_type_t<typename T::type>;
+        auto getit = [w](auto i){return welford_variance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
+        return kumi::generate<w.averagex.size()>(getit);
+      };
+
+      using r_t =  common_value_t<Ts...>;
+      auto tup = kumi::make_tuple(args...);
+      constexpr auto siz = sizeof...(Ts)/2;
+      constexpr auto nblanes = wide<r_t>::size();
+      constexpr auto remain = siz % nblanes;
+      auto [tup1, tup2] = kumi::split(tup, siz);
+      auto [car1, cdr1] = kumi::split(tup1,  kumi::index<remain>);
+      auto [car2, cdr2] = kumi::split(tup2,  kumi::index<remain>);
+      auto head1 = as_wides(eve::zero(eve::as<r_t>()), cdr1);
+      auto head2 = as_wides(eve::zero(eve::as<r_t>()), cdr2);
+      auto wc = eve::welford_covariance[o](head1, head2);
+      auto swc = scalarize(wc);
+      auto wcov1 = kumi::apply([](auto...m){return welford_covariance(m...);}, swc);
+      if constexpr(remain != 0)
+        return eve::welford_covariance(welford_variance(car1, car2), wcov1);
+      else
+        return wcov1;
+    }
+
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
@@ -228,7 +240,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
     requires(detail::is_welford_covariance_result_v<T>)
     {
-      using r_t =  std::remove_cv_t<typename T::type>;
+      using r_t =  common_value_t<T, Ts...>; //std::remove_cv_t<typename T::type>;
       if constexpr(O::contains(widen))
       {
         auto up_it = [](auto a){
