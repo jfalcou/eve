@@ -30,6 +30,10 @@ namespace eve::detail
     {
       return is_not_equal.behavior(cpu_{}, opts, v, w);
     }
+    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    {
+      return apply_fp16_as_fp32(is_not_equal, v, w);
+    }
     else if constexpr( current_api >= avx512 )
     {
       if      constexpr( c == category::float16x32 ) return mask32 {_mm512_cmp_ph_mask(v, w, f)};
@@ -98,6 +102,10 @@ namespace eve::detail
     if constexpr (C::has_alternative || O::contains_any(definitely, numeric))
     {
       return is_not_equal[opts][mask].retarget(cpu_{}, v, w);
+    }
+    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    {
+      return apply_fp16_as_fp32_masked(is_not_equal, mask, v, w);
     }
     else
     {

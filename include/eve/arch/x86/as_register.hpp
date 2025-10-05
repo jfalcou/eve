@@ -34,7 +34,11 @@ namespace eve
       {
              if constexpr (std::same_as<T, double>)         return __m128d{};
         else if constexpr (std::same_as<T, float >)         return __m128{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m128h{};
+        else if constexpr (std::same_as<T, eve::float16_t>)
+        {
+          if constexpr (detail::supports_fp16_vector_ops)   return __m128h{};
+          else                                              return __m128i{};
+        }
         else if constexpr (std::is_integral_v<T>  )         return __m128i{};
       }
     }
@@ -44,7 +48,11 @@ namespace eve
       {
              if constexpr (std::same_as<T, double>)         return __m256d{};
         else if constexpr (std::same_as<T, float >)         return __m256{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m256h{};
+        else if constexpr (std::same_as<T, eve::float16_t>)
+        {
+          if constexpr (detail::supports_fp16_vector_ops)   return __m256h{};
+          else                                              return __m256i{};
+        }
         else if constexpr (std::is_integral_v<T>  )         return __m256i{};
       }
     }
@@ -54,7 +62,11 @@ namespace eve
       {
         if      constexpr (std::same_as<T, double>)         return __m512d{};
         else if constexpr (std::same_as<T, float >)         return __m512{};
-        else if constexpr (std::same_as<T, eve::float16_t>) return __m512h{};
+        else if constexpr (std::same_as<T, eve::float16_t>)
+        {
+          if constexpr (detail::supports_fp16_vector_ops)   return __m512h{};
+          else                                              return __m512i{};
+        }
         else if constexpr (std::is_integral_v<T>  )         return __m512i{};
       }
     }

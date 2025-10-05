@@ -50,7 +50,7 @@ namespace eve
   //!  - `eve::wide<unsigned int, eve::fixed<1>>`
   //================================================================================================
   template<typename T>
-  concept integral_simd_value = arithmetic_simd_value<T> && std::integral<element_type_t<T>>;
+  concept integral_simd_value = arithmetic_simd_value<T> && std::integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -69,7 +69,7 @@ namespace eve
   //!  - `eve::wide<std::int64_t, eve::fixed<4>>`
   //================================================================================================
   template<typename T>
-  concept signed_simd_value = arithmetic_simd_value<T> && std::is_signed_v<element_type_t<T>>;
+  concept signed_simd_value = arithmetic_simd_value<T> && std::is_signed_v<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -89,7 +89,7 @@ namespace eve
   //================================================================================================
   template<typename T>
   concept unsigned_simd_value =     arithmetic_simd_value<T>
-                                &&  std::unsigned_integral<element_type_t<T>>;
+                                &&  std::unsigned_integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -109,7 +109,7 @@ namespace eve
   //================================================================================================
   template<typename T>
   concept signed_integral_simd_value  =     arithmetic_simd_value<T>
-                                        &&  std::signed_integral<element_type_t<T>>;
+                                        &&  std::signed_integral<translated_element_type_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -128,7 +128,9 @@ namespace eve
   //!  - `eve::wide<std::int16_t, eve::fixed<8>>`
   //================================================================================================
   template<typename T>
-  concept floating_simd_value = arithmetic_simd_value<T> && std::floating_point<element_type_t<T>>;
+  concept floating_simd_value = arithmetic_simd_value<T>
+                                && (std::floating_point<translated_element_type_t<T>>
+                                  || std::same_as<translated_element_type_t<T>, eve::float16_t>);
 
   template<typename T> struct is_simd_value : std::bool_constant<simd_value<T>> {};
   //================================================================================================

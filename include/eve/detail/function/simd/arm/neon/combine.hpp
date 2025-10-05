@@ -20,7 +20,11 @@ namespace eve::detail
 
     if constexpr( N::value * sizeof(T) == eve::arm_64_::bytes )
     {
-      if constexpr( std::is_same_v<T, float> )
+      if constexpr( std::is_same_v<T, eve::float16_t> )
+      {
+        return vcombine_f16(l, h);
+      }
+      else if constexpr( std::is_same_v<T, float> )
       {
         return vcombine_f32(l, h);
       }

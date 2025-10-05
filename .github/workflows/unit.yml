@@ -110,7 +110,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128 -O3" }
+        - { comp: clang , arch: riscv, runner: "run_rvv128", opts: "-mrvv-vector-bits=128 -march=rv64gcv -O3" }
+        - { comp: clang , arch: riscv, runner: "run_rvv256", opts: "-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3" }
     steps:
       - name: Print Runner Info
         run: |
@@ -121,13 +122,13 @@ jobs:
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
-          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+          cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=${{ matrix.cfg.runner }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.meta.exe unit.arch.exe  unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 4
       - name: Compiling Big Unit Tests
         run:  cd build && ninja unit.api.compress.exe -j 2
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
+        run:  cd build && ctest --output-on-failure -j 4 -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
 
   ##################################################################################################
   ## ARMv7
@@ -190,8 +191,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: 'clang' }
-        - { comp: 'gcc'   }
+        - { comp: 'clang', opts: "-Wno-psabi -march=armv8.7-a+fp16" }
+        - { comp: 'gcc',   opts: "-Wno-psabi -march=armv8.2-a+nofp16" }
     steps:
       - name: Print Runner Info
         run: |
@@ -201,7 +202,7 @@ jobs:
       - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
-          cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/riscv/rvv_common_masks.hpp>
+#include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
 {
@@ -17,7 +18,7 @@ extract_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
   auto on_first_needed = __riscv_vslidedown_tu(v, v, i, N::value);
-  if constexpr( std::is_floating_point_v<T> ) return __riscv_vfmv_f(on_first_needed);
+  if constexpr( floating_scalar_value<T> ) return __riscv_vfmv_f(on_first_needed);
   else return __riscv_vmv_x(on_first_needed);
 }
 

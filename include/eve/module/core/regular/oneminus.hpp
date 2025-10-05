@@ -107,7 +107,7 @@ namespace eve
     oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
     {
       using elt_t = element_type_t<T>;
-      if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
+      if constexpr( floating_scalar_value<elt_t> || !O::contains(saturated) )
       {
         if constexpr(O::contains(mod))
         {

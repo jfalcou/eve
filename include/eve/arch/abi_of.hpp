@@ -21,7 +21,8 @@ namespace eve
   {
     static constexpr auto find()
     {
-      constexpr bool is_fp16_no_support = std::same_as<Type, eve::float16_t> && !detail::supports_fp16_vector_ops;
+      constexpr bool is_fp16_no_support = std::same_as<Type, eve::float16_t>
+                                          && !detail::supports_fp16_vector_conversion;
 
       if constexpr(supports_simd && !is_fp16_no_support)
       {

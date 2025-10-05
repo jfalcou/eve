@@ -155,7 +155,7 @@ template<typename T, typename N, std::ptrdiff_t G>
     // 16 bytes
     if constexpr( g_sz == 1 ) return _mm_unpacklo_epi8(v0, v1);
     else if constexpr( g_sz == 2 ) return _mm_unpacklo_epi16(v0, v1);
-    else if constexpr( g_sz == 4 && std::floating_point<T> ) return _mm_unpacklo_ps(v0, v1);
+    else if constexpr( g_sz == 4 && std::same_as<float, T> ) return _mm_unpacklo_ps(v0, v1);
     else if constexpr( g_sz == 4 ) return _mm_unpacklo_epi32(v0, v1);
     else if constexpr( g_sz == 8 && std::same_as<float, T> )
       return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);

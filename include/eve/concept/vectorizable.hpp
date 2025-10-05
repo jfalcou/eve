@@ -25,7 +25,7 @@ namespace eve
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<translated_element_type_t<T>>;
+  concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<translate_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -43,7 +43,7 @@ namespace eve
   //! - `float`
   //================================================================================================
   template<typename T>
-  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<translated_element_type_t<T>>;
+  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<translate_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -60,7 +60,7 @@ namespace eve
   //! - `std::uint32_t`
   //================================================================================================
   template<typename T>
-  concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<translated_element_type_t<T>>;
+  concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<translate_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -77,7 +77,7 @@ namespace eve
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<translated_element_type_t<T>>;
+  concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<translate_t<T>>;
   //================================================================================================
   //! @}
   //================================================================================================
@@ -95,7 +95,9 @@ namespace eve
   //! - `double`
   //================================================================================================
   template<typename T>
-  concept floating_scalar_value = arithmetic_scalar_value<T> && std::floating_point<translated_element_type_t<T>>;
+  concept floating_scalar_value = eve::arithmetic_scalar_value<T>
+                                    && (std::floating_point<translate_t<T>>
+                                        || std::same_as<translate_t<T>, eve::float16_t>);
   //================================================================================================
   //! @}
   //================================================================================================

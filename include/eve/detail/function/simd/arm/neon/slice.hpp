@@ -23,6 +23,7 @@ namespace eve::detail
     if constexpr( Slice::value )
     {
       if constexpr( c == category::float32x4 )  return type{vget_high_f32(a)};
+      else  if constexpr( c == category::float16x8 )  return type{vget_high_f16(a)};
       else  if constexpr( c == category::int32x4  )   return type{vget_high_s32(a)};
       else  if constexpr( c == category::int64x2  )   return type{vget_high_s64(a)};
       else  if constexpr( c == category::int16x8  )   return type{vget_high_s16(a)};
@@ -52,6 +53,7 @@ namespace eve::detail
     else
     {
             if constexpr( c == category::float32x4 )  return type{vget_low_f32(a)};
+      else  if constexpr( c == category::float16x8 )  return type{vget_low_f16(a)};
       else  if constexpr( c == category::int64x2  )   return type{vget_low_s64(a)};
       else  if constexpr( c == category::int32x4  )   return type{vget_low_s32(a)};
       else  if constexpr( c == category::int16x8  )   return type{vget_low_s16(a)};

@@ -262,7 +262,7 @@ namespace eve::detail
   struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
 
   template <typename T, template <typename ...> class Templ>
-  concept instance_of = instance_of_impl<T, Templ>::value;
+  concept instance_of = instance_of_impl<std::remove_cvref_t<T>, Templ>::value;
 
   // one_of concept
   template<typename T, typename... Ts>

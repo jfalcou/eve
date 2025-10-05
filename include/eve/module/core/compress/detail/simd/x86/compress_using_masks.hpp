@@ -93,7 +93,7 @@ namespace eve::detail
   wide<T, N> compress_using_masks_to_left_(EVE_SUPPORTS(avx_), wide<T, N> v)
     requires ( std::same_as<abi_t<T, N>, x86_256_> && sizeof(T) <= 4 )
   {
-         if constexpr ( std::floating_point<T>                ) return _mm256_permute_ps   (v, _MM_SHUFFLE(0, 3, 2, 1));
+         if constexpr ( std::same_as<T, float>                ) return _mm256_permute_ps   (v, _MM_SHUFFLE(0, 3, 2, 1));
     else if constexpr ( sizeof(T) == 4                        ) return _mm256_shuffle_epi32(v, _MM_SHUFFLE(0, 3, 2, 1));
     else if constexpr ( sizeof(T) == 2 && current_api == avx2 )
     {

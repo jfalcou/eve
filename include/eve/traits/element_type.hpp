@@ -53,7 +53,7 @@ namespace eve
   struct element_type<logical<T>>     { using type = logical<typename element_type<T>::type>; };
 
   template<typename T>
-  using element_type_t = typename element_type<T>::type;
+  using element_type_t = typename element_type<std::remove_cvref_t<T>>::type;
 
   // Translate an element_type directly
   template <typename T>

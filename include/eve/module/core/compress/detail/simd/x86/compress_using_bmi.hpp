@@ -105,7 +105,7 @@ namespace eve::detail
         std::uint64_t compressed_idxes = _pext_u64(0x0706050403020100, m_expanded);
         u32x8 to_qwords = _mm256_cvtepu8_epi32(_mm_cvtsi64_si128(compressed_idxes));
 
-        if constexpr ( !std::floating_point<T> ) return _mm256_permutevar8x32_epi32(v, to_qwords);
+        if constexpr ( !floating_scalar_value<T> ) return _mm256_permutevar8x32_epi32(v, to_qwords);
         else {
           using f32x8 = typename wide<T,N>::template rebind <float, fixed<8>>;
           f32x8 v_floats = bit_cast(v, as<f32x8>{});

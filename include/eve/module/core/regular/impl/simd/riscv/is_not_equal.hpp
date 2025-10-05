@@ -17,13 +17,18 @@ namespace eve::detail
   is_not_equal_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
   requires(rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>))
   {
+    constexpr auto c = categorize<wide<T, N>>();
+
     if constexpr (O::contains_any(definitely, numeric))
     {
       return is_not_equal.behavior(cpu_{}, opts, a, wide<T, N>{ b });
     }
+    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    {
+      return detail::apply_fp16_as_f32(is_not_equal, a, b);
+    }
     else
     {
-      constexpr auto c = categorize<wide<T, N>>();
       if      constexpr( match(c, category::integer_) ) return __riscv_vmsne(a, b, N::value);
       else if constexpr( match(c, category::float_)   ) return __riscv_vmfne(a, b, N::value);
     }

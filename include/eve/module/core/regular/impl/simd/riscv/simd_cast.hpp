@@ -30,7 +30,7 @@ requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>
         in_lmul == 1,
         "[riscv eve] sanity check. Can not cast wide to logical for not m1 vector register");
   }
-  else if constexpr( std::is_floating_point_v<T> )
+  else if constexpr( floating_scalar_value<T> )
     return simd_cast(simd_cast(x, as<wide<as_integer_t<T>, N>> {}), tgt);
   else
   {

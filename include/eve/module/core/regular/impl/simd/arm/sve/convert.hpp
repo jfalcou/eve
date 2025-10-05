@@ -9,6 +9,7 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/as.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>

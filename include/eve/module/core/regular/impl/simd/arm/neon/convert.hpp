@@ -8,7 +8,9 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/combine.hpp>
@@ -26,11 +28,13 @@ namespace eve::detail
   {
     constexpr auto c_i = categorize<wide<double, N>>();
     constexpr auto c_o = categorize<wide<U, N>>();
+    constexpr auto co_f16 = match(c_o, category::float16);
 
     if constexpr( c_i == category::float64x1 && c_o == category::int64x1   ) return vcvt_s64_f64(v);
     else if constexpr( c_i == category::float64x1 && c_o == category::uint64x1  ) return vcvt_u64_f64(v);
     else if constexpr( c_i == category::float64x1                               ) return map(convert, v, tgt);
     else if constexpr( c_i == category::float64x2 && c_o == category::float32x2 ) return vcvt_f32_f64(v);
+    else if constexpr( c_i == category::float64x2 && co_f16                     ) return convert(convert(v, as<float>{}), tgt);
     else if constexpr( c_i == category::float64x2 && c_o == category::int64x2   ) return vcvtq_s64_f64(v);
     else if constexpr( c_i == category::float64x2 && c_o == category::uint64x2  ) return vcvtq_u64_f64(v);
     else if constexpr( c_i == category::float64x2 && c_o == category::int32x2   ) return vmovn_s64(vcvtq_s64_f64(v));
@@ -49,6 +53,7 @@ namespace eve::detail
     constexpr auto api64 = current_api >= asimd;
     constexpr auto t_i32 = as<std::int32_t> {};
     constexpr auto t_u32 = as<std::uint32_t> {};
+    constexpr auto co_f16 = match(c_o, category::float16);
 
     if constexpr( N {} <= 2 )
     {
@@ -57,7 +62,8 @@ namespace eve::detail
       else if constexpr( c_o == category::uint64x2  && api64 ) return convert(convert(v, as<double> {}), tgt);
       else if constexpr( c_o == category::int32x2            ) return vcvt_s32_f32(v);
       else if constexpr( c_o == category::uint32x2           ) return vcvt_u32_f32(v);
-      else if constexpr( sizeof(U) == 8                      ) return map(convert, v, tgt);
+      else if constexpr( co_f16 && (N{} == 2)                ) return vcvt_f16_f32(simd_cast(v, as<wide<float>>{}));
+      else if constexpr( sizeof(U) == 8 || co_f16            ) return map(convert, v, tgt);
       else if constexpr( match(c_o, category::signed_   )    ) return convert(convert(v, t_i32), tgt);
       else if constexpr( match(c_o, category::unsigned_ )    ) return convert(convert(v, t_u32), tgt);
     }
@@ -68,11 +74,33 @@ namespace eve::detail
 
       if constexpr( c_o == category::int32x4  ) return vcvtq_s32_f32(v);
       else if constexpr( c_o == category::uint32x4 ) return vcvtq_u32_f32(v);
+      else if constexpr( c_o == category::float16x4 ) return vcvt_f16_f32(v);
       else if constexpr( c_o == category::int16x4  ) return convert(convert(v, t_i32), tgt);
       else if constexpr( c_o == category::uint16x4 ) return convert(convert(v, t_u32), tgt);
       else if constexpr( c_o == category::int8x8   ) return convert(convert(v, t_i16), tgt);
       else if constexpr( c_o == category::uint8x8  ) return convert(convert(v, t_u16), tgt);
       else if constexpr( sizeof(U) == 8            ) return convert_slice(v, tgt);
+    }
+  }
+
+  //================================================================================================
+  // convert: float16 -> U
+  //================================================================================================
+  template<typename N, arithmetic_scalar_value U>
+  EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<eve::float16_t, N> v, as<U> tgt) noexcept
+    requires arm_abi<abi_t<eve::float16_t, N>>
+  {
+    constexpr auto c_o  = categorize<wide<U, N>>();
+    constexpr auto c_i  = categorize<wide<eve::float16_t, N>>();
+    constexpr auto of   = std::same_as<U, float>;
+
+    if constexpr (N{} <= 4)
+    {
+      if constexpr (c_o == category::float32x4) return vcvt_f32_f16(v);
+    }
+    else if constexpr (N{} == 8)
+    {
+      if constexpr ((c_i == category::float16x8) && of) return convert_slice(v, tgt);
     }
   }
 
@@ -88,16 +116,18 @@ namespace eve::detail
     constexpr auto api_a64 = current_api >= asimd;
     using i32_t            = as<std::int32_t>;
     using u32_t            = as<std::uint32_t>;
+    using f32_t            = as<float>;
 
     if constexpr ( c_i == category::int64x2  && c_o == category::int32x2              ) return vmovn_s64(v);
     else if constexpr ( c_i == category::uint64x2 && c_o == category::uint32x2             ) return vmovn_u64(v);
     else if constexpr ( c_i == category::int64x2  && c_o == category::float32x2            ) return convert(convert(v, i32_t {}), tgt);
     else if constexpr ( c_i == category::uint64x2 && c_o == category::float32x2            ) return convert(convert(v, u32_t {}), tgt);
+    else if constexpr ( c_o == category::float16x2                                         ) return convert(convert(v, f32_t {}), tgt);
     else if constexpr ( c_i == category::int64x2  && c_o == category::float64x2 && api_a64 ) return vcvtq_f64_s64(v);
     else if constexpr ( c_i == category::uint64x2 && c_o == category::float64x2 && api_a64 ) return vcvtq_f64_u64(v);
     else if constexpr ( c_i == category::int64x1  && c_o == category::float64x1 && api_a64 ) return vcvt_f64_s64(v);
     else if constexpr ( c_i == category::uint64x1 && c_o == category::float64x1 && api_a64 ) return vcvt_f64_u64(v);
-    else if constexpr ( std::is_floating_point_v<U>                                        ) return map(convert, v, tgt);
+    else if constexpr ( floating_scalar_value<U>                                           ) return map(convert, v, tgt);
     else                                                                                     return convert_integers_chain(v, tgt);
   }
 
@@ -119,6 +149,7 @@ namespace eve::detail
     else if constexpr( c_i == category::int32x2  && c_o == category::float32x2 ) return vcvt_f32_s32(v);
     else if constexpr( c_i == category::uint32x4 && c_o == category::float32x4 ) return vcvtq_f32_u32(v);
     else if constexpr( c_i == category::uint32x2 && c_o == category::float32x2 ) return vcvt_f32_u32(v);
+    else if constexpr( match(c_o, category::float16)                           ) return convert(convert(v, as<float>{}), tgt);
     else if constexpr( c_i == category::int32x4  && c_o == category::int16x4   ) return vmovn_s32(v);
     else if constexpr( c_i == category::uint32x4 && c_o == category::uint16x4  ) return vmovn_u32(v);
     else if constexpr( sizeof(U) == 2                                          ) return convert_integers_shuffle(v, tgt);
@@ -144,6 +175,11 @@ namespace eve::detail
     else if constexpr ( N {} == 8 && sizeof(U) == 4                             ) return convert_slice(v, tgt);
     else if constexpr ( c_i == category::int16x4  && c_o == category::float32x4 ) return convert(convert(v, i32_t {}), tgt);
     else if constexpr ( c_i == category::uint16x4 && c_o == category::float32x4 ) return convert(convert(v, u32_t {}), tgt);
+    else if constexpr ( c_i == category::int16x4  && c_o == category::float16x4 ) return vcvt_f16_s16(v);
+    else if constexpr ( c_i == category::uint16x4 && c_o == category::float16x4 ) return vcvt_f16_u16(v);
+    else if constexpr ( c_i == category::int16x8  && c_o == category::float16x8 ) return vcvtq_f16_s16(v);
+    else if constexpr ( c_i == category::uint16x8 && c_o == category::float16x8 ) return vcvtq_f16_u16(v);
+    else if constexpr ( c_o == category::float16x8                              ) return convert_slice(v, tgt);
     else if constexpr ( c_i == category::int16x8  && c_o == category::int8x8    ) return vmovn_s16(v);
     else if constexpr ( c_i == category::int16x4  && c_o == category::int32x4   ) return vmovl_s16(v);
     else if constexpr ( c_i == category::uint16x8 && c_o == category::uint8x8   ) return vmovn_u16(v);
