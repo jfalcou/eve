@@ -127,6 +127,7 @@ namespace eve
 //!     9. Compensated algorithm for better precision.
 //!
 //!  @note unless raw option is used no spurious overflow can be obtained.
+//!  @see [`welford_average`](@ref welford_average) for incremental or parallel average computations.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)

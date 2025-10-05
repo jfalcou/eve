@@ -65,9 +65,7 @@ namespace eve
 //! @{
 //!   @var covariance
 //!   @brief `elementwise_callable` object computing the elementwise  covariance product
-//!     of the vector of the first half parameter by thevector of the last half.
-//!
-//!   @warning This is not a reduction ! For reals the covariance product is the product
+//!     of the vector of the first half parameters by the vector of the last half.
 //!
 //!   @groupheader{Header file}
 //!
@@ -93,16 +91,16 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [value arguments](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `xs`, `ys`  :  [floating value arguments](@ref eve::value) or tuples of floating value arguments.
 //!
 //!    **Return value**
 //!
 //!    1. covariance product. \f$\frac1N\sum_s (x_s-\bar{x_s})*(y_s-\bar{y_s})\f$.
 //!       where N is the number of `x_s` (minus 1 if `unbiased` option is used).
 //!    2. use the content of the tuples
-//!    3. Uses a compensated kahan-like algorithm to compute the result more accurately
+//!    3. see 1.
+//!    4. Uses a compensated kahan-like algorithm to compute the result more accurately
+//!    5. Uses the upgraded type for computations and result
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/covariance.cpp}

@@ -96,25 +96,34 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto welford_average(auto x, auto ... xs)        noexcept; /1
+//!      constexpr auto welford_average(auto ... xs)                        noexcept; //1
+//!      constexpr auto welford_average(non_empty_product_type xs)          noexcept; //2
 //!
 //!      //Semantic options
-//!      constexpr auto welford_average[widen](auto x, auto ... xs) noexcept; /2
+//!      constexpr auto welford_average[widen](/*any previous overload*/)   noexcept; //3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...`:the parameters can be a mix of floating values or previous results of calls to `welford_average`
+//!     * ``xs...`:the parameters can be a mix of floating values and previous results of calls to `welford_average`
 //!
 //!    **Return value**
 //!
-//!      1.  A struct containing The value of the arithmetic mean and the number
+//!       1. A struct containing The value of the arithmetic mean and the number
 //!          of elements on which the mean was calculated is returned.
 //!
-//!         This struct is convertble to the average floating value. and possess two fields `average` and `count`.
+//!          This struct is convertible to the average floating value. and possess two fields `average` and `count`.
+//!       2. The computation on the tuple elements
+//!       3. The computation and result use the upgraded data type if available
 //!
-//!      2. The computation and result use the upgraded data type if available
+//!  @note The Welford algorithm does not provides as much option as the [`average`](@ref average)function, but is a quite stable algorithm
+//!        that have the advantage to allow spliting the computation of the average in
+//!        multiple calls.  For instance: the call with two tuples:<br/>
+//!        &nbsp;   `welford_average(kumi::cat(xs, ys))`<br/>
+//!        is equivalent to the sequence:<br/>
+//!        &nbsp;  `wxs =  welford_average(xs);  wys = welford_average(xs); welford_average(wxs, wys);`<br/>
+//!        But the first two instructions can easily be executed in parallel.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
