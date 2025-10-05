@@ -174,7 +174,7 @@ namespace eve
   {
     template<scalar_value ... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    welford_variance_(EVE_REQUIRES(cpu_), O const & o, Ts const &... args) noexcept
+    welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts const &... args) noexcept
     requires( (sizeof...(Ts) > 0) && (sizeof...(Ts)%2 == 0) && (sizeof...(Ts) >= 2*wide<common_value_t<Ts...>>::size()))
     {
       auto scalarize = []<typename T>(T w){
@@ -269,7 +269,7 @@ namespace eve
           return kumi::generate<w.averagex.size()>(getit);
         };
         if constexpr(simd_value<typename T::type>)
-          return t; 
+          return t;
         else
           return welford_covariance(scalarize(t));
       }
@@ -306,5 +306,11 @@ namespace eve
     {
       return kumi::apply([o](auto... m){return welford_covariance[o](m...); }, t);
     }
-  }
+
+    template< kumi::non_empty_product_type T1,  kumi::non_empty_product_type T2, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T1 t1, T2 t2) noexcept
+    {
+      return kumi::apply([o](auto... m){return welford_covariance[o](m...); }, kumi::cat(t1, t2));
+    }  }
 }

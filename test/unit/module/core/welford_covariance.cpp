@@ -60,15 +60,16 @@ TTS_CASE_WITH("Check behavior of welford_covariance kahan on wide",
 {
   using eve::welford_covariance;
   using eve::welford_variance;
-  using eve::widen;
-  using eve::kahan;
-  using eve::as;
   TTS_ULP_EQUAL(welford_covariance(a0, a1, a2, a0, a1, a2).covariance, eve::variance(a0, a1, a2), 1.5);
   TTS_ULP_EQUAL(welford_covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f).covariance,
                    eve::covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f), 1.0f);
-  TTS_ULP_EQUAL(welford_covariance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f), eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)).covariance,
-                   eve::covariance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f), eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)), 1.0f);
-  TTS_ULP_EQUAL(welford_covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f).covariance,
-                   eve::covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f), 1.0f);
-
+  TTS_ULP_EQUAL(welford_covariance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f),
+                                   eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)).covariance,
+                eve::covariance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f),
+                                eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)), 1.0f);
+  TTS_ULP_EQUAL(welford_covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f).covariance,
+                eve::covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f), 1.0f);
+   auto a = kumi::make_tuple(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f);
+   auto b = kumi::make_tuple(6.0f, 7.0f, -0.0f, 4.0f, 5.0f, 3.0f,-7.0f, 48.0f, -3.0f, 2.9f);
+   TTS_ULP_EQUAL(welford_covariance(a, b).covariance,  eve::covariance(a, b), 1.0);
 };
