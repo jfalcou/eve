@@ -236,6 +236,5 @@
 #include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/welford_average.hpp>
-#include <eve/module/core/regular/welford_covariance.hpp>
 #include <eve/module/core/regular/welford_variance.hpp>
 #include <eve/module/core/regular/write.hpp>
