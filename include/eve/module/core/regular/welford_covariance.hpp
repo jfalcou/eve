@@ -83,21 +83,22 @@ namespace eve
     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
       EVE_FORCEINLINE constexpr
     detail::welford_covariance_result<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
+    operator()(Tup const& t) const noexcept //requires(kumi::size_v<Tup> >= 2)
     { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr
     detail::welford_covariance_result<kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
+    operator()(Tup const& t) const noexcept //requires(kumi::size_v<Tup> >= 2)
     { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr
     detail::welford_covariance_result<kumi::apply_traits_t<eve::common_value, Tup1>>
-    operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
+    operator()(Tup1 const& t1, Tup2 const& t2) const noexcept
+    { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
 
     EVE_CALLABLE_OBJECT(welford_covariance_t, welford_covariance_);
   };
@@ -108,8 +109,6 @@ namespace eve
 //!   @var welford_covariance
 //!   @brief `elementwise_callable` object computing the elementwise  welford_covariance product
 //!     of the vector of the first half parameter by thevector of the last half.
-//!
-//!   @warning This is not a reduction ! For reals the welford_covariance product is the product
 //!
 //!   @groupheader{Header file}
 //!
@@ -123,32 +122,45 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto welford_covariance(auto value... xs, auto value... ys)        noexcept; // 1
+//!      constexpr auto welford_covariance(auto value ... xs, auto value ... ys)      noexcept; // 1
 //!      constexpr auto welford_covariance(kumi::tuple xs, kumi::tuple ys)            noexcept; // 2
+//!      constexpr auto welford_covariance(auto wcs...)                               noexcept; // 3
+//!      constexpr auto welford_covariance(kumi;::tuple wcs)                          noexcept; // 4
 //!
 //!      // Semantic options
-//!      constexpr auto welford_covariance[unbiased](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto welford_covariance[widen]   (/*any of the above overloads*/)  noexcept; // 4
+//!      constexpr auto welford_covariance[widen]   (/*any of the above overloads*/)  noexcept; // 5
+//!      constexpr auto welford_covariance[unbiased](/*any of the above overloads*/)  noexcept; // 6
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs`, `ys`  :  [value arguments](@ref eve::value).
-//!
+//!     * `xs`, `ys`  : [arguments](@ref eve::value) or tuple of them.
+//!     * `wcs`       : [arguments](@ref eve::value) or tuple of them. The arguments must all be results
+//!                      of previous `welford_covariance` calls,
 //!    **Return value**
 //!
 //!      1. A struct containing The value of the arithmetic means (`averagex` and `averagey` ),
 //!         the centered cross moment of order 2 (`mxy`), the (sample) covariance value
-//!         normalized by the number of elements involved (`covariance)
-//!         and the number of elements (`count`) involved is returned.
-//!
-//!         This struct is convertble to the covariance floating value. and possess four fields `covariance`,
+//!         normalized by the number of elements involved (`covariance`)
+//!         and the number of elements (`count`) involved is returned.<br/>
+//!         This struct is convertible to the covariance floating value. and possess four fields `covariance`,
 //!          `averagex`, `averagey`, `mxy` and `count`.
+//!      2. The computation is made on the tuples elements.
+//!      3. The parameters are composed in a unique covariance struct as if the covariance was  computed on the whole original data set.
+//!         Moreover if only one covariance result simd parameter is present, the the lanes individual corariance are grouped in an unique
+//!         scalar covariance result, computed from all the datas of all the lanes.
+//!      4. same as 3. on the tuple elements.
+//!      5. the computation is done in the upgraded element type.
+//!      6. with this option the normalisation is done by the number of elements involved, minus one.
 //!
-//!      2. The computation and result use the upgraded data type if available
-//!      3. with this option the normalisation is done by by the number of elements involved, minus one.
-//!      4. with this option the computation is done in the upgraded element type.
+//!  @note The Welford algorithm does not provides as much option as the [`covariance`](@ref covariance) function, but is a quite stable algorithm
+//!        that have the advantage to allow spliting the computation of the covariance in
+//!        multiple calls.  For instance: the call with four tuples:<br/>
+//!        &nbsp;   `cwv = welford_corariance(kumi::cat(xs, ys), kumi::cat(ws, zs))`<br/>
+//!        is equivalent to the sequence:<br/>
+//!        &nbsp;  `cwxs =  welford_covariance(xs, ws);  cwys = welford_covariance(ys, zs)); cwv = welford_covariance(wxs, wys);`<br/>
+//!        But the first two instructions can easily be executed in parallel.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/welford_covariance.cpp}
@@ -185,7 +197,7 @@ namespace eve
       auto swc = scalarize(wc);
       auto wcov1 = kumi::apply([](auto...m){return welford_covariance(m...);}, swc);
       if constexpr(remain != 0)
-        return eve::welford_covariance(welford_variance(car1, car2), wcov1);
+        return eve::welford_covariance(welford_covariance(car1, car2), wcov1);
       else
         return wcov1;
     }
@@ -240,7 +252,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
     requires(detail::is_welford_covariance_result_v<T>)
     {
-      using r_t =  common_value_t<T, Ts...>; //std::remove_cv_t<typename T::type>;
+      using r_t =  common_value_t<T, Ts...>;
       if constexpr(O::contains(widen))
       {
         auto up_it = [](auto a){
@@ -251,7 +263,15 @@ namespace eve
       }
       else if constexpr(sizeof...(Ts) == 0)
       {
-        return t;
+        auto scalarize = []<typename U>(U w){
+          using e_t =  element_type_t<typename U::type>;
+          auto getit = [w](auto i){return welford_covariance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
+          return kumi::generate<w.averagex.size()>(getit);
+        };
+        if constexpr(simd_value<typename T::type>)
+          return t; 
+        else
+          return welford_covariance(scalarize(t));
       }
       else
       {

@@ -102,6 +102,8 @@ namespace eve
 //!    4. Uses a compensated kahan-like algorithm to compute the result more accurately
 //!    5. Uses the upgraded type for computations and result
 //!
+//!  @see [`welford_covariance`](@ref welford_variance) for incremental or parallel covariance and averages computations.
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/covariance.cpp}
 //================================================================================================
