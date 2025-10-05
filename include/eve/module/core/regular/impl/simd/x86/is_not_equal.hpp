@@ -13,6 +13,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 #include <type_traits>
 

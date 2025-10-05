@@ -28,28 +28,29 @@ namespace eve::detail
     constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
     constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
     constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
+    constexpr bool has_fp16 = detail::supports_fp16_vector_ops;
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
       if constexpr( isfull512 )
       {
-              if constexpr( cat == category::float64x8 )   return _mm512_load_pd(p.get());
-        else  if constexpr( cat == category::float32x16 )  return _mm512_load_ps(p.get());
-        else  if constexpr( cat == category::float16x32 )  return _mm512_load_ph(p.get());
+              if constexpr( cat == category::float64x8               ) return _mm512_load_pd(p.get());
+        else  if constexpr( cat == category::float32x16              ) return _mm512_load_ps(p.get());
+        else  if constexpr( cat == category::float16x32 && has_fp16  ) return _mm512_load_ph(p.get());
         else return _mm512_load_si512((__m512i *)p.get());
       }
       else if constexpr( isfull256 )
       {
-              if constexpr( cat == category::float64x4 )  return _mm256_load_pd(p.get());
-        else  if constexpr( cat == category::float32x8 )  return _mm256_load_ps(p.get());
-        else  if constexpr( cat == category::float16x16 ) return _mm256_load_ph(p.get());
+              if constexpr( cat == category::float64x4               ) return _mm256_load_pd(p.get());
+        else  if constexpr( cat == category::float32x8               ) return _mm256_load_ps(p.get());
+        else  if constexpr( cat == category::float16x16 && has_fp16  ) return _mm256_load_ph(p.get());
         else return _mm256_load_si256((__m256i *)p.get());
       }
       else if constexpr( isfull128 )
       {
-              if constexpr( cat == category::float64x2 )  return _mm_load_pd(p.get());
-        else  if constexpr( cat == category::float32x4 )  return _mm_load_ps(p.get());
-        else  if constexpr( cat == category::float16x8 )  return _mm_load_ph(p.get());
+              if constexpr( cat == category::float64x2               ) return _mm_load_pd(p.get());
+        else  if constexpr( cat == category::float32x4               ) return _mm_load_ps(p.get());
+        else  if constexpr( cat == category::float16x8 && has_fp16   ) return _mm_load_ph(p.get());
         else  return _mm_load_si128((__m128i *)p.get());
       }
       else
@@ -63,23 +64,23 @@ namespace eve::detail
     {
       if constexpr( isfull512 )
       {
-              if constexpr( cat == category::float64x8 )   return _mm512_loadu_pd(p);
-        else  if constexpr( cat == category::float32x16 )  return _mm512_loadu_ps(p);
-        else  if constexpr( cat == category::float16x32 )  return _mm512_loadu_ph(p);
+              if constexpr( cat == category::float64x8               ) return _mm512_loadu_pd(p);
+        else  if constexpr( cat == category::float32x16              ) return _mm512_loadu_ps(p);
+        else  if constexpr( cat == category::float16x32 && has_fp16  ) return _mm512_loadu_ph(p);
         else return _mm512_loadu_si512((__m512i *)p);
       }
       else if constexpr( isfull256 )
       {
-              if constexpr( cat == category::float64x4 )  return _mm256_loadu_pd(p);
-        else  if constexpr( cat == category::float32x8 )  return _mm256_loadu_ps(p);
-        else  if constexpr( cat == category::float16x16 ) return _mm256_loadu_ph(p);
+              if constexpr( cat == category::float64x4               ) return _mm256_loadu_pd(p);
+        else  if constexpr( cat == category::float32x8               ) return _mm256_loadu_ps(p);
+        else  if constexpr( cat == category::float16x16 && has_fp16  ) return _mm256_loadu_ph(p);
         else return _mm256_loadu_si256((__m256i *)p);
       }
       else if constexpr( isfull128 )
       {
-              if constexpr( cat == category::float64x2 )  return _mm_loadu_pd(p);
-        else  if constexpr( cat == category::float32x4 )  return _mm_loadu_ps(p);
-        else  if constexpr( cat == category::float16x8 )  return _mm_loadu_ph(p);
+              if constexpr( cat == category::float64x2               ) return _mm_loadu_pd(p);
+        else  if constexpr( cat == category::float32x4               ) return _mm_loadu_ps(p);
+        else  if constexpr( cat == category::float16x8 && has_fp16   ) return _mm_loadu_ph(p);
         else  return _mm_loadu_si128((__m128i *)p);
       }
       else
@@ -99,6 +100,7 @@ namespace eve::detail
     requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
   {
     using r_t = wide<T, N>;
+    constexpr bool has_fp16 = detail::supports_fp16_vector_ops;
 
     if constexpr (C::is_complete)
     {
@@ -124,11 +126,20 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return _mm256_mask_loadu_ps(src(that), mask, p);
       else if constexpr( c == category::float32x4 ) return _mm_mask_loadu_ps(src(that), mask, p);
       else if constexpr( c == category::float16x32 )
-        return _mm512_castsi512_ph(_mm512_mask_loadu_epi16(src(that), mask, p));
+      {
+        if constexpr (has_fp16) return _mm512_castsi512_ph(_mm512_mask_loadu_epi16(src(that), mask, p));
+        else                    return _mm512_mask_loadu_epi16(src(that), mask, p);
+      }
       else if constexpr( c == category::float16x16 )
-        return _mm256_castsi256_ph(_mm256_mask_loadu_epi16(src(that), mask, p));
+      {
+        if constexpr (has_fp16) return _mm256_castsi256_ph(_mm256_mask_loadu_epi16(src(that), mask, p));
+        else                    return _mm256_mask_loadu_epi16(src(that), mask, p);
+      }
       else if constexpr( c == category::float16x8 )
-        return _mm_castsi128_ph(_mm_mask_loadu_epi16(src(that), mask, p));
+      {
+        if constexpr (has_fp16) return _mm_castsi128_ph(_mm_mask_loadu_epi16(src(that), mask, p));
+        else                    return _mm_mask_loadu_epi16(src(that), mask, p);
+      }
       else if constexpr( c == category::int64x8 ) return _mm512_mask_loadu_epi64(src(that), mask, p);
       else if constexpr( c == category::int64x4 ) return _mm256_mask_loadu_epi64(src(that), mask, p);
       else if constexpr( c == category::int64x2 ) return _mm_mask_loadu_epi64(src(that), mask, p);

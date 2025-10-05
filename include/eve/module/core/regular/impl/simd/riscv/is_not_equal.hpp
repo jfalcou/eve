@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
