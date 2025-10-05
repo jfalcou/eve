@@ -107,6 +107,7 @@ namespace eve
 //!     6. Compensated algorithm for better precision.
 //!     7. the normalizing factor N-1 instead of N to get the best unbiased estimate.
 //!
+//!  @see [`welford_variance`](@ref welford_variance) for incremental or parallel variance and average computations.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Variance](https://en.wikipedia.org/wiki/Variance)

@@ -97,28 +97,36 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto welford_variance(auto x, auto ... xs)        noexcept; /1
+//!      constexpr auto welford_variance(auto x, auto ... xs)                  noexcept; /1
+//!      constexpr auto welford_average(non_empty_product_type xs)             noexcept; /2
 //!
 //!      //Semantic options
-//!      constexpr auto welford_variance[widen](auto x, auto ... xs) noexcept; /2
-//!      constexpr auto welford_variance[unbiased](auto x, auto ... xs) noexcept; /3
+//!      constexpr auto welford_variance[widen](/*any previous overloads*/)    noexcept; /3
+//!      constexpr auto welford_variance[unbiased](/*any previous overloads*/) noexcept; /4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...`:the parameters can be a mix of floating values or previous results of calls to `welford_variance`
+//!     * `xs`:the parameters can be a mix of floating values or previous results of calls to `welford_variance` or a tuple of them
 //!
 //!    **Return value**
 //!
-//!      1.  A struct containing The value of the arithmetic mean (`average`), the centered  moment of order 2 (`m2`), the (sample) variance value
-//!          normalized by the number of elements involved (`variance)  and the number of elements (`count`) involved is returned.
-//!
+//!      1. A struct containing The value of the arithmetic mean (`average`), the centered  moment of order 2 (`m2`), the (sample) variance value
+//!         normalized by the number of elements involved (`variance`)  and the number of elements (`count`) involved is returned.<br/>
 //!         This struct is convertble to the variance floating value. and possess four fields `variance`, `average` `m2` and `count`.
-//!
-//!      2. The computation and result use the upgraded data type if available
-//!      3. with this option the normalisation is done by by the number of elements involved, minus one. This provides the
+//!      2. The computation is made on the tuples elements
+//!      3. The computation and result use the upgraded data type if available
+//!      4. with this option the normalisation is done by by the number of elements involved, minus one. This provides the
 //!         best unbiased estimator of the variance (population variance).
+//!
+//!  @note The Welford algorithm does not provides as much option as the [`variance`](@ref variance) function, but is a quite stable algorithm
+//!        that have the advantage to allow spliting the computation of the variance in
+//!        multiple calls.  For instance: the call with two tuples:<br/>
+//!        &nbsp;   `wv = welford_corariance(kumi::cat(xs, ys))`<br/>
+//!        is equivalent to the sequence:<br/>
+//!        &nbsp;  `wxs =  welford_variance(xs);  wys = welford_variance(xs); wv = welford_variance(wxs, wys);`<br/>
+//!        But the first two instructions can easily be executed in parallel.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
