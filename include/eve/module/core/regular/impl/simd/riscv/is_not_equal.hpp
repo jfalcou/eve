@@ -25,7 +25,7 @@ namespace eve::detail
     }
     else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
     {
-      return detail::apply_fp16_as_f32(is_not_equal, a, b);
+      return detail::apply_fp16_as_fp32(is_not_equal, a, b);
     }
     else
     {

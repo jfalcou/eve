@@ -22,7 +22,7 @@ namespace eve::detail
     if      constexpr (O::contains_any(almost, numeric)) return is_equal.behavior(cpu_{}, opts, a, b);
     else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
     {
-      return detail::apply_fp16_as_f32(is_equal, a, b);
+      return detail::apply_fp16_as_fp32(is_equal, a, b);
     }
     else if constexpr (match(c, category::integer_))     return __riscv_vmseq(a, b, N::value);
     else if constexpr (match(c, category::float_))       return __riscv_vmfeq(a, b, N::value);
