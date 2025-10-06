@@ -82,7 +82,11 @@ namespace eve::detail
         }
         else
         {
-          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
+          if constexpr (has_emulated_abi_v<In> || has_emulated_abi_v<out_t>)
+          {
+            return map([&](auto m) { return convert(m, tgt); }, v0);
+          }
+          else if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
           {
             return bit_cast(v0, as<out_t> {});
           }
