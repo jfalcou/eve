@@ -23,14 +23,14 @@ namespace eve
       operator T()   const noexcept { return covariance; };
       auto upgrade() const noexcept { return welford_covariance_result<upgrade_t<T>>(upgrade(count), count); };
       auto print(std::string s){
-        std::cout << s << std::endl; 
+        std::cout << s << std::endl;
         std::cout << "averagex   " << averagex << std::endl;
         std::cout << "averagey   " << averagey << std::endl;
         std::cout << "mxy        " << mxy      << std::endl;
         std::cout << "covariance " << covariance  << std::endl;
         std::cout << "count      " << count       << std::endl << std::endl;
       };
-      
+
       T averagex         = T(0);
       T averagey         = T(0);
       std::size_t count  = 0;
@@ -84,6 +84,22 @@ namespace eve
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
+    }
+
+    template<typename T>
+    requires(detail::is_welford_covariance_result_v<T> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<element_type_t<detail::internal_welford_covariance_t<T>>>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    template<typename T>
+    requires(detail::is_welford_covariance_result_v<T> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<detail::internal_welford_covariance_t<element_type_t<upgrade_t<T>>>>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
     }
 
     EVE_CALLABLE_OBJECT(welford_covariance_t, welford_covariance_);
@@ -158,6 +174,8 @@ namespace eve
 
   namespace detail
   {
+
+    // this call compute the welford covariance from a sequence of floating values xs then ys parameters
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
@@ -201,9 +219,10 @@ namespace eve
       }
     }
 
+    // This call compute the join covariance from previously computed welford covariances
     template<typename T, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
-    requires(detail::is_welford_covariance_result_v<T> && (detail::is_welford_covariance_result_v<Ts> && ...))
+    requires((sizeof...(Ts)!= 0) && detail::is_welford_covariance_result_v<T> && (detail::is_welford_covariance_result_v<Ts> && ...))
     {
       std::cout << "iciitte 1" << std::endl;
       using r_t =  common_value_t<detail::internal_welford_covariance_t<T>, detail::internal_welford_covariance_t<Ts>...>;
@@ -215,23 +234,6 @@ namespace eve
         };
         return welford_covariance[o.drop(widen)](up_it(t), up_it(args)...);
       }
-//       else
-//       {
-//         std::cout << "r_t() " << r_t(0)<< std::endl;
-//         return detail::welford_covariance_result<r_t>();
-//       }
-//       else if constexpr(sizeof...(Ts) == 0)
-//       {
-//         auto scalarize = []<typename U>(U w){
-//           using e_t =  element_type_t<typename U::type>;
-//           auto getit = [w](auto i){return welford_covariance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
-//           return kumi::generate<w.averagex.size()>(getit);
-//         };
-//         if constexpr(simd_value<typename T::type>)
-//           return t;
-//         else
-//           return welford_covariance(scalarize(t));
-//       }
       else
       {
         T ncov = t;
@@ -259,5 +261,24 @@ namespace eve
       }
     }
 
+    // This call 'scalarize' a welford covariance
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
+    requires(detail::is_welford_covariance_result_v<T>)
+    {
+      std::cout << "iciitte s1" << std::endl;
+      auto scalarize = []<typename U>(U w){
+        using e_t =  element_type_t<typename U::type>;
+        auto getit = [w](auto i){return welford_covariance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
+        return kumi::generate<w.averagex.size()>(getit);
+      };
+      if constexpr(scalar_value<typename T::type>)
+        return t;
+      else
+      {
+        auto tpsc =  scalarize(t);
+        return kumi::apply([o](auto... m){return welford_covariance[o](m...); }, tpsc);
+      }
+    }
   }
-}
+  }
