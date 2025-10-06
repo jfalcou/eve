@@ -165,6 +165,7 @@ namespace eve::test
         case 256: return {0,7,6,0,5,0,0,0,4};
         case 512: return {0,8,7,0,6,0,0,0,5};
         case 1024: return {0, 9, 8, 0, 7, 0, 0, 0, 6};
+        case 2048: return {0, 10, 9, 0, 8, 0, 0, 0, 7};
         default : return {};
       };
     };
