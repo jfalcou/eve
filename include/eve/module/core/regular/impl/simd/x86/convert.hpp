@@ -305,7 +305,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, a
     }
     else
     {
-      constexpr auto round = _MM_FROUND_TO_ZERO;
+      constexpr auto round = _MM_FROUND_TO_NEAREST_INT;
       if      constexpr( c_i == category::float32x4 && f16c)                            return _mm_cvtps_ph(v, round);
       else if constexpr( c_i == category::float32x8 && f16c)                            return _mm256_cvtps_ph(v, round);
       else if constexpr( c_i == category::float32x16 && a512)                           return _mm512_cvtps_ph(v, round);
@@ -583,7 +583,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
       else if constexpr (c_i == category::uint16x16 && c_o == category::float16x16)    return _mm256_cvtepu16_ph(v);
       else if constexpr (c_i == category::uint16x32 && c_o == category::float16x32)    return _mm512_cvtepu16_ph(v);
     }
-    else if constexpr (detail::supports_fp16_vector_conversion) return convert(convert(v, as<float>{}), tgt);
+    else if constexpr (detail::supports_fp16_vector_conversion) return convert(convert(v, as<upgrade_t<element_type_t<T>>>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   }
   else if constexpr( mi16x8 && floating_scalar_value<U>          ) return convert(convert(v, as<upgrade_t<element_type_t<T>>> {}), tgt);
