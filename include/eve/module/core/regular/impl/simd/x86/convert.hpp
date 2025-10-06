@@ -253,11 +253,15 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, 
   else if constexpr( c_i == category::float64x8 && c_o == category::int32x8          ) return _mm512_cvttpd_epi32(v);
   else if constexpr( c_i == category::float64x2 && c_o == category::uint32x4 && a512 ) return _mm_cvttpd_epu32(v);
   else if constexpr( c_i == category::float64x8 && c_o == category::uint32x8         ) return _mm512_cvttpd_epu32(v);
-  else if constexpr( match(c_o, category::float16) && eve::detail::supports_fp16_vector_ops )
+  else if constexpr( std::same_as<U, eve::float16_t> )
   {
-    if      constexpr (c_i == category::float64x2)                                     return _mm_cvtpd_ph(v);
-    else if constexpr (c_i == category::float64x4)                                     return _mm256_cvtpd_ph(v);
-    else if constexpr (c_i == category::float64x8)                                     return _mm512_cvtpd_ph(v);
+    if constexpr (eve::detail::supports_fp16_vector_ops)
+    {
+      if      constexpr (c_i == category::float64x2)                                   return _mm_cvtpd_ph(v);
+      else if constexpr (c_i == category::float64x4)                                   return _mm256_cvtpd_ph(v);
+      else if constexpr (c_i == category::float64x8)                                   return _mm512_cvtpd_ph(v);
+    }
+    else                                                                               return convert(convert(v, as<float>{}), tgt);
   }
   else if constexpr( sizeof(U) <= 2                                                  ) return convert(convert(v, t_t {}), tgt);
   else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
@@ -291,7 +295,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, a
   else if constexpr( c_i == category::float32x4  && c_o == category::uint32x4 && a512 ) return _mm_cvttps_epu32(v);
   else if constexpr( c_i == category::float32x8  && c_o == category::uint32x8 && a512 ) return _mm256_cvttps_epu32(v);
   else if constexpr( c_i == category::float32x16 && c_o == category::uint32x16        ) return _mm512_cvttps_epu32(v);
-  else if constexpr (match(c_o, category::float16) && f16c)
+  else if constexpr (std::same_as<U, eve::float16_t>)
   {
     if constexpr (eve::detail::supports_fp16_vector_ops)
     {
@@ -302,10 +306,10 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, a
     else
     {
       constexpr auto round = _MM_FROUND_TO_ZERO;
-      if      constexpr( c_i == category::float32x4)                                    return _mm_cvtps_ph(v, round);
-      else if constexpr( c_i == category::float32x8)                                    return _mm256_cvtps_ph(v, round);
+      if      constexpr( c_i == category::float32x4 && f16c)                            return _mm_cvtps_ph(v, round);
+      else if constexpr( c_i == category::float32x8 && f16c)                            return _mm256_cvtps_ph(v, round);
       else if constexpr( c_i == category::float32x16 && a512)                           return _mm512_cvtps_ph(v, round);
-      else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
+      else                                                                              return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
   }
   else if constexpr( sizeof(U) <= 2                                                   ) return convert(convert(v, i32_t {}), tgt);
@@ -321,7 +325,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<eve::float16_t
   constexpr auto c_i  = categorize<wide<eve::float16_t, N>>();
   constexpr auto c_o  = categorize<wide<U, N>>();
   constexpr bool f16c = detail::supports_fp16_vector_conversion;
-  constexpr bool a512 = f16c && (current_api >= avx512);
+  constexpr bool a512 = current_api >= avx512;
 
   if constexpr (eve::detail::supports_fp16_vector_ops)
   {
@@ -380,7 +384,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr( c_i == category::uint64x2 && c_o == category::float64x2 && a512 ) return _mm_cvtepu64_pd(v);
   else if constexpr( c_i == category::int64x2  && c_o == category::float32x4 && a512 ) return _mm_cvtepi64_ps(v);
   else if constexpr( c_i == category::uint64x2 && c_o == category::float32x4 && a512 ) return _mm_cvtepu64_ps(v);
-  else if constexpr( match(c_o, category::float16))
+  else if constexpr( std::same_as<U, eve::float16_t> )
   {
     if constexpr (detail::supports_fp16_vector_ops)
     {
@@ -484,7 +488,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr( c_i == category::uint32x8  && c_o == category::float32x8         ) return convert_slice(v, tgt);
   else if constexpr( c_i == category::int32x16  && c_o == category::float32x16        ) return _mm512_cvtepi32_ps(v);
   else if constexpr( c_i == category::uint32x16 && c_o == category::float32x16        ) return _mm512_cvtepu32_ps(v);
-  else if constexpr (match(c_o, category::float16))
+  else if constexpr (std::same_as<U, eve::float16_t>)
   {
     if constexpr (detail::supports_fp16_vector_ops)
     {
@@ -568,7 +572,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr( c_i == category::uint16x8 && mo64x8 && a512  ) return _mm512_cvtepu16_epi64(v);
   else if constexpr( c_i == category::int16x8  && c_o == category::float64x8 && a512 ) return convert(convert(v, as<std::int64_t> {}), tgt);
   else if constexpr( c_i == category::uint16x8 && c_o == category::float64x8 && a512 ) return convert(convert(v, as<std::int64_t> {}), tgt);
-  else if constexpr (match(c_o, category::float16))
+  else if constexpr (std::same_as<U, eve::float16_t>)
   {
     if constexpr (detail::supports_fp16_vector_ops)
     {

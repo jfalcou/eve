@@ -251,9 +251,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86, opts: -msse4.2 }
-        - { comp: clang , arch: x86, opts: -mavx    }
-        - { comp: clang , arch: x86, opts: -mavx2   }
+        - { comp: clang , arch: x86, opts: -msse4.2     }
+        - { comp: clang , arch: x86, opts: -mavx -mf16c }
+        - { comp: clang , arch: x86, opts: -mavx2       }
 
     steps:
       - name: Fetch current branch
@@ -310,9 +310,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc , arch: x86, opts: -msse4.2  }
-        - { comp: gcc , arch: x86, opts: -mavx     }
-        - { comp: gcc , arch: x86, opts: -mavx2    }
+        - { comp: gcc , arch: x86, opts: -msse4.2      }
+        - { comp: gcc , arch: x86, opts: -mavx         }
+        - { comp: gcc , arch: x86, opts: -mavx2 -mf16c }
 
     steps:
       - name: Fetch current branch
