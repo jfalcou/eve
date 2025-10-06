@@ -110,8 +110,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: riscv, runner: "run_rvv128", opts: "-mrvv-vector-bits=128 -march=rv64gcv -O3" }
-        - { comp: clang , arch: riscv, runner: "run_rvv256", opts: "-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3" }
+        - { comp: clang , arch: riscv, runner: "run_rvv128",       opts: "-mrvv-vector-bits=128 -march=rv64gcv -O3" }
+        - { comp: clang , arch: riscv, runner: "run_rvv128_fhmin", opts: "-mrvv-vector-bits=256 -march=rv64gcv_zfhmin_zvfhmin -O3" }
+        - { comp: clang , arch: riscv, runner: "run_rvv256",       opts: "-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3" }
     steps:
       - name: Print Runner Info
         run: |

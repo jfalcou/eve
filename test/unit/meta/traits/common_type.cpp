@@ -37,7 +37,7 @@ TTS_CASE("eve::common_type, half_c integrals")
   TTS_TYPE_IS((eve::common_type_t<std::int16_t, std::uint16_t>), std::uint16_t);
 };
 
-TTS_CASE_TPL("eve::common_type for two types computes", eve::test::scalar::all_types )
+TTS_CASE_TPL("eve::common_type for two types computes", eve::test::scalar::all_types_wf16 )
 <typename T>(tts::type<T>)
 {
   auto one_type = []<typename U> (eve::as<U>) {
@@ -46,10 +46,10 @@ TTS_CASE_TPL("eve::common_type for two types computes", eve::test::scalar::all_t
 
   [&]<typename ...Us> (tts::types<Us...>) {
     (one_type(eve::as<Us>{}), ...);
-  }(eve::test::scalar::all_types{});
+  }(eve::test::scalar::all_types_wf16{});
 };
 
-TTS_CASE_TPL("eve::common_type matches std::common_type", eve::test::scalar::all_types )
+TTS_CASE_TPL("eve::common_type matches std::common_type", eve::test::scalar::all_types_wf16 )
 <typename T>(tts::type<T>)
 {
   auto one_type = []<typename U> (eve::as<U>) {

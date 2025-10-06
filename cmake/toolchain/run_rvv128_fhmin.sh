@@ -1,0 +1,8 @@
+#!/bin/sh
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+##==================================================================================================
+
+qemu-riscv64 --cpu rv64,v=true,vlen=128,zfhmin=true,x-zvfhmin=true $@
