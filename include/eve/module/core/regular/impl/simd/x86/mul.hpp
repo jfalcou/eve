@@ -65,62 +65,105 @@ namespace eve::detail
       else  if constexpr( c == category::float32x8  ) return _mm256_mul_ps(a, b);
       else  if constexpr( c == category::float32x4  ) return _mm_mul_ps(a, b);
       else  if constexpr( c == category::int64x8    ) return _mm512_mullo_epi64(a, b);
-      else  if constexpr( c == category::int64x4 )
+      else if constexpr( c == category::int64x4 )
       {
+        // If AVX-512; use its direct 64-bit multiplication instruction
         if constexpr( current_api >= avx512 ){
           return _mm256_mullo_epi64(a, b);
-        } 
-        else if constexpr( current_api == avx2 ){
-          const __m256i low_mask = _mm256_set1_epi64x(0xFFFFFFFF);
+        }
+        // If AVX2 
+        else if constexpr( current_api == avx2 )
+        { 
+          // Split 256-bit registers into two 128-bit halves
+          auto a_low = _mm256_castsi256_si128(a);
+          auto a_high = _mm256_extracti128_si256(a, 1);
+          auto b_low = _mm256_castsi256_si128(b);
+          auto b_high = _mm256_extracti128_si256(b, 1);
 
-          __m256i low_a = _mm256_and_si256(a, low_mask);
-          __m256i low_b = _mm256_and_si256(b, low_mask);
+          // Split each 64-bit integer into low 32 bits and high 32 bits
+          auto [al_low, ah_low] = eve::hilo(a_low);
+          auto [bl_low, bh_low] = eve::hilo(b_low);
+          auto [al_high, ah_high] = eve::hilo(a_high);
+          auto [bl_high, bh_high] = eve::hilo(b_high);
 
-          __m256i high_a = _mm256_srli_epi64(a, 32);
-          __m256i high_b = _mm256_srli_epi64(b, 32);
+          __m128i mul_low_low, cross_low_1, cross_low_2;
+          __m128i mul_high_low, cross_high_1, cross_high_2;
 
-          __m256i mul_low = _mm256_mul_epu32(a, b); 
+          // Perform the actual 64-bit multiplication via 32-bit partial products
+          if constexpr (std::is_signed_v<T>)
+          {
+            // Signed Multiplication
+            mul_low_low  = _mm_mul_epi32(a_low, b_low);
+            cross_low_1  = _mm_mul_epi32(al_low, bh_low);
+            cross_low_2  = _mm_mul_epi32(ah_low, bl_low);
 
-          __m256i cross_mul_la_hb = _mm256_mul_epu32(low_a, high_b);
-          __m256i cross_mul_lb_ha = _mm256_mul_epu32(high_a, low_b);
+            mul_high_low  = _mm_mul_epi32(a_high, b_high);
+            cross_high_1  = _mm_mul_epi32(al_high, bh_high);
+            cross_high_2  = _mm_mul_epi32(ah_high, bl_high);
+          }
+          else
+          {
+            // Unsigned Multiplication
+            mul_low_low  = _mm_mul_epu32(a_low, b_low);
+            cross_low_1  = _mm_mul_epu32(al_low, bh_low);
+            cross_low_2  = _mm_mul_epu32(ah_low, bl_low);
 
-          __m256i cross_sum = _mm256_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
+            mul_high_low  = _mm_mul_epu32(a_high, b_high);
+            cross_high_1  = _mm_mul_epu32(al_high, bh_high);
+            cross_high_2  = _mm_mul_epu32(ah_high, bl_high);
+          }
+          // Combine cross terms for both halves
+          __m128i cross_low_sum = _mm_add_epi64(cross_low_1, cross_low_2);
+          __m128i cross_high_sum = _mm_add_epi64(cross_high_1, cross_high_2);
 
-          __m256i cross_shifted = _mm256_slli_epi64(cross_sum, 32);
+          // Cross products contribute to the upper 32 bits of the result
+          __m128i cross_low_shifted = _mm_slli_epi64(cross_low_sum, 32);
+          __m128i cross_high_shifted = _mm_slli_epi64(cross_high_sum, 32);
 
-          return _mm256_add_epi64(mul_low, cross_shifted);
-        } 
-        else 
+          // Add the base product and cross terms
+          __m128i result_low = _mm_add_epi64(mul_low_low, cross_low_shifted);
+          __m128i result_high = _mm_add_epi64(mul_high_low, cross_high_shifted);
+
+          // Combine both 128-bit halves back into a 256-bit result
+          return _mm256_setr_m128i(result_high, result_low); 
+        }
+        else
+        {
+          // Fallback for lower SIMD multiplication process
           return slice_apply(eve::mul, a, b);
+        }
       }
-      else  if constexpr( c == category::int64x2 )
+      else if constexpr( c == category::int64x2 )
       {
+        // If AVX-512; use its direct 64-bit multiplication instruction
         if constexpr( current_api >= avx512 ){
           return _mm_mullo_epi64(a, b);
-        }
+        } 
+        else { 
+          // Split 64-bit integers into 32-bit low and high parts
+          auto [low_a, high_a] = eve::hilo(a);
+          auto [low_b, high_b] = eve::hilo(b);
 
-        if constexpr( current_api >= sse2 ){
-          const __m128i low_mask = _mm_set1_epi64x(0xFFFFFFFF);
+          __m128i mul_low;
+          __m128i cross_mul_la_hb, cross_mul_lb_ha; 
 
-          __m128i low_a = _mm_and_si128(a, low_mask);
-          __m128i low_b = _mm_and_si128(b, low_mask);
+          if constexpr (std::is_signed_v<T>) {
+            // Signed base and cross multiplications
+            mul_low = _mm_mul_epi32(a, b);
+            cross_mul_la_hb = _mm_mul_epi32(low_a, high_b);
+            cross_mul_lb_ha = _mm_mul_epi32(high_a, low_b);
+          } else {
+            // Unsigned base and cross multiplications
+            mul_low = _mm_mul_epu32(a, b);
+            cross_mul_la_hb = _mm_mul_epu32(low_a, high_b);
+            cross_mul_lb_ha = _mm_mul_epu32(high_a, low_b);
+          }
 
-          __m128i high_a = _mm_srli_epi64(a, 32);
-          __m128i high_b = _mm_srli_epi64(b, 32);
-
-          __m128i mul_low = _mm_mul_epu32(a, b); 
-
-          __m128i cross_mul_la_hb = _mm_mul_epu32(low_a, high_b);
-          __m128i cross_mul_lb_ha = _mm_mul_epu32(high_a, low_b);
-
+          // Combine cross terms and shift them to upper 32 bits
           __m128i cross_sum = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
-
           __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
 
           return _mm_add_epi64(mul_low, cross_shifted);
-        }
-        else {
-            return slice_apply(eve::mul, a, b);
         }
       }
       else  if constexpr( c == category::uint64x8   ) return _mm512_mullo_epi64(a, b);
