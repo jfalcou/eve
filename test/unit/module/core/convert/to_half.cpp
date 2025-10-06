@@ -33,15 +33,15 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
   using v_t          = eve::element_type_t<T>;
   constexpr auto tgt = eve::as<eve::float16_t>();
 
-  TTS_EQUAL(eve::convert((T(0)), tgt), static_cast<t_t>(0));
-  TTS_EQUAL(eve::convert((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
+  TTS_EQUAL(eve::convert((T(0)), tgt), t_t { static_cast<eve::float16_t>(0) });
+  TTS_EQUAL(eve::convert((T(42.69)), tgt), t_t { static_cast<eve::float16_t>(42.69) });
 
   if constexpr( sizeof(v_t) <= sizeof(eve::float16_t) )
   {
     TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt),
-              static_cast<t_t>(eve::valmin(eve::as<v_t>())));
+      t_t{ static_cast<eve::float16_t>(eve::valmin(eve::as<v_t>())) });
     TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt),
-              static_cast<t_t>(eve::valmax(eve::as<v_t>())));
+      t_t{ static_cast<eve::float16_t>(eve::valmax(eve::as<v_t>())) });
   }
 };
 

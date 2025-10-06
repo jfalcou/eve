@@ -5,4 +5,4 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 
-qemu-riscv64 --cpu rv64,v=true,vlen=256,zvfh=true $@
+qemu-riscv64 --cpu rv64,v=true,vlen=256,zfh=true,x-zvfhmin=true,x-zvfh=true $@
