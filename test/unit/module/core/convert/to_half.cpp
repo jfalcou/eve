@@ -19,8 +19,8 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 {
   using t_t = eve::wide<eve::float16_t, eve::cardinal_t<T>>;
 
-  TTS_EXPR_IS(eve::convert(T(), eve::as<eve::float16_t>()), t_t);
-  TTS_EXPR_IS(eve::convert[eve::saturated](T(), eve::as<eve::float16_t>()), t_t);
+  TTS_EXPR_IS(eve::convert(T{}, eve::as<eve::float16_t>{}), t_t);
+  TTS_EXPR_IS(eve::convert[eve::saturated](T{}, eve::as<eve::float16_t>{}), t_t);
 };
 
 //==================================================================================================
@@ -31,17 +31,17 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
 {
   using t_t          = eve::wide<eve::float16_t, eve::cardinal_t<T>>;
   using v_t          = eve::element_type_t<T>;
-  constexpr auto tgt = eve::as<eve::float16_t>();
+  constexpr auto tgt = eve::as<eve::float16_t>{};
 
-  TTS_EQUAL(eve::convert((T(0)), tgt), t_t { static_cast<eve::float16_t>(0) });
-  TTS_EQUAL(eve::convert((T(42.69)), tgt), t_t { static_cast<eve::float16_t>(42.69) });
+  TTS_EQUAL(eve::convert(T{ static_cast<v_t>(0) }, tgt), t_t { static_cast<eve::float16_t>(0) });
+  TTS_EQUAL(eve::convert(T{ static_cast<v_t>(42.69) }, tgt), t_t { static_cast<eve::float16_t>(static_cast<v_t>(42.69)) });
 
   if constexpr( sizeof(v_t) <= sizeof(eve::float16_t) )
   {
-    TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt),
-      t_t{ static_cast<eve::float16_t>(eve::valmin(eve::as<v_t>())) });
-    TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt),
-      t_t{ static_cast<eve::float16_t>(eve::valmax(eve::as<v_t>())) });
+    TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>{}), tgt),
+      t_t{ static_cast<eve::float16_t>(eve::valmin(eve::as<v_t>{})) });
+    TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>{}), tgt),
+      t_t{ static_cast<eve::float16_t>(eve::valmax(eve::as<v_t>{})) });
   }
 };
 

@@ -94,14 +94,9 @@ namespace eve::detail
     constexpr auto c_i  = categorize<wide<eve::float16_t, N>>();
     constexpr auto of   = std::same_as<U, float>;
 
-    if constexpr (N{} <= 4)
-    {
-      if constexpr (c_o == category::float32x4) return vcvt_f32_f16(v);
-    }
-    else if constexpr (N{} == 8)
-    {
-      if constexpr ((c_i == category::float16x8) && of) return convert_slice(v, tgt);
-    }
+    if      constexpr ((N{} <= 4) && of) return vcvt_f32_f16(v);
+    else if constexpr (of)               return convert_slice(v, tgt);
+    else                                 return convert(convert(v, as<float>{}), tgt);
   }
 
 //================================================================================================
