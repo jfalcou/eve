@@ -81,7 +81,10 @@ namespace eve
         if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_MF(vfloat16mf2_t, 2)>{};
         else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_MF(vfloat32mf2_t, 2)>{};
       }
-      // MF8, MF4 for float not supported.
+      else if constexpr (lmul == -4)
+      {
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_MF(vfloat16mf4_t, 4)>{};
+      }
     }
     else if constexpr (std::signed_integral<T>)
     {
