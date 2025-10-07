@@ -103,7 +103,7 @@ TTS_CASE_WITH("Check behavior of welford_covariance  on wide",
                                 eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)), 1.0f);
   TTS_ULP_EQUAL(welford_covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f).covariance,
                 eve::covariance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f), 1.0f);
- //   auto aa = kumi::make_tuple(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f);
-//    auto bb = kumi::make_tuple(6.0f, 7.0f, -0.0f, 4.0f, 5.0f, 3.0f,-7.0f, 48.0f, -3.0f, 2.9f);
-//    TTS_ULP_EQUAL(welford_covariance(aa, bb).covariance,  eve::covariance(aa, bb), 1.0);
+  auto aa = kumi::make_tuple(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, -3.0f, 2.9f);
+  auto bb = kumi::make_tuple(6.0f, 7.0f, -0.0f, 4.0f, 5.0f, 3.0f,-7.0f, 48.0f, -3.0f, 2.9f);
+  TTS_ULP_EQUAL(welford_covariance(aa, bb).covariance,  eve::covariance(aa, bb), 1.0);
 };
