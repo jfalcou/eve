@@ -52,17 +52,24 @@ TTS_CASE_TPL("eve::common_type for two types computes", eve::test::scalar::all_t
 TTS_CASE_TPL("eve::common_type matches std::common_type", eve::test::scalar::all_types_wf16 )
 <typename T>(tts::type<T>)
 {
-  auto one_type = []<typename U> (eve::as<U>) {
-    TTS_TYPE_IS((eve::common_type_t<T, U>), (std::common_type_t<T, U>));
-  };
+  if constexpr (std::same_as<T, eve::float16_t> && !eve::detail::supports_fp16_native_type)
+  {
+    TTS_PASS();
+  }
+  else
+  {
+    auto one_type = []<typename U> (eve::as<U>) {
+      TTS_TYPE_IS((eve::common_type_t<T, U>), (std::common_type_t<T, U>));
+    };
 
-  [&]<typename ...Us> (tts::types<Us...>) {
-    (one_type(eve::as<Us>{}), ...);
-  }(tts::types<
-    std::int32_t, std::uint32_t,
-    std::int64_t, std::uint64_t,
-    float       , double
-  >{});
+    [&]<typename ...Us> (tts::types<Us...>) {
+      (one_type(eve::as<Us>{}), ...);
+    }(tts::types<
+      std::int32_t, std::uint32_t,
+      std::int64_t, std::uint64_t,
+      float       , double
+    >{});
+  }
 };
 
 using i32_u32_f64 = kumi::tuple<std::int32_t, std::uint32_t, double>;
