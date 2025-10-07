@@ -13,6 +13,18 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/lohi.hpp>
+#include <cstdint>
+
+// Defining a helper for a clean code 
+template<typename T>
+auto split_lohi(__m128i v)
+{
+  // Converting into eve::lohi compatible type 
+  using w64x2 = eve::wide<T, eve::fixed<2>>;
+  auto wide_v = eve::bit_cast(v, eve::as<w64x2>());
+
+  return eve::lohi(wide_v);
+}
 
 namespace eve::detail
 {
@@ -81,11 +93,6 @@ namespace eve::detail
           auto b_low = _mm256_castsi256_si128(b);
           auto b_high = _mm256_extracti128_si256(b, 1);
 
-          // Split each 64-bit integer into low 32 bits and high 32 bits
-          auto [al_low, ah_low] = eve::lohi(a_low);
-          auto [bl_low, bh_low] = eve::lohi(b_low);
-          auto [al_high, ah_high] = eve::lohi(a_high);
-          auto [bl_high, bh_high] = eve::lohi(b_high);
 
           __m128i mul_low_low, cross_low_1, cross_low_2;
           __m128i mul_high_low, cross_high_1, cross_high_2;
@@ -94,6 +101,13 @@ namespace eve::detail
           if constexpr (std::is_signed_v<T>)
           {
             // Signed Multiplication
+            //
+            // Split each 64-bit integer into low 32 bits and high 32 bits
+            auto [al_low, ah_low] = split_lohi<std::int64_t>(a_low);
+            auto [bl_low, bh_low] = split_lohi<std::int64_t>(b_low);
+            auto [al_high, ah_high] = split_lohi<std::int64_t>(a_high);
+            auto [bl_high, bh_high] = split_lohi<std::int64_t>(b_high);
+
             mul_low_low  = _mm_mul_epi32(a_low, b_low);
             cross_low_1  = _mm_mul_epi32(al_low, bh_low);
             cross_low_2  = _mm_mul_epi32(ah_low, bl_low);
@@ -105,6 +119,13 @@ namespace eve::detail
           else
           {
             // Unsigned Multiplication
+            //
+            // Split each 64-bit integer into low 32 bits and high 32 bits
+            auto [al_low, ah_low] = split_lohi<std::uint64_t>(a_low);
+            auto [bl_low, bh_low] = split_lohi<std::uint64_t>(b_low);
+            auto [al_high, ah_high] = split_lohi<std::uint64_t>(a_high);
+            auto [bl_high, bh_high] = split_lohi<std::uint64_t>(b_high);
+
             mul_low_low  = _mm_mul_epu32(a_low, b_low);
             cross_low_1  = _mm_mul_epu32(al_low, bh_low);
             cross_low_2  = _mm_mul_epu32(ah_low, bl_low);
@@ -141,20 +162,25 @@ namespace eve::detail
           return _mm_mullo_epi64(a, b);
         } 
         else { 
-          // Split 64-bit integers into 32-bit low and high parts
-          auto [low_a, high_a] = eve::lohi(a);
-          auto [low_b, high_b] = eve::lohi(b);
-
           __m128i mul_low;
           __m128i cross_mul_la_hb, cross_mul_lb_ha; 
 
           if constexpr (std::is_signed_v<T>) {
             // Signed base and cross multiplications
+            //
+            // Split 64-bit integers into 32-bit low and high parts
+            auto [low_a, high_a] = split_lohi<std::int64_t>(a);
+            auto [low_b, high_b] = split_lohi<std::int64_t>(b);
+
             mul_low = _mm_mul_epi32(a, b);
             cross_mul_la_hb = _mm_mul_epi32(low_a, high_b);
             cross_mul_lb_ha = _mm_mul_epi32(high_a, low_b);
           } else {
             // Unsigned base and cross multiplications
+            //
+            // Split 64-bit integers into 32-bit low and high parts
+            auto [low_a, high_a] = split_lohi<std::uint64_t>(a);
+            auto [low_b, high_b] = split_lohi<std::uint64_t>(b);
             mul_low = _mm_mul_epu32(a, b);
             cross_mul_la_hb = _mm_mul_epu32(low_a, high_b);
             cross_mul_lb_ha = _mm_mul_epu32(high_a, low_b);
