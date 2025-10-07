@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
-#include <eve/module/core.hpp>
+#include <eve/module/core/regular/lohi.hpp>
 
 namespace eve::detail
 {
@@ -82,10 +82,10 @@ namespace eve::detail
           auto b_high = _mm256_extracti128_si256(b, 1);
 
           // Split each 64-bit integer into low 32 bits and high 32 bits
-          auto [al_low, ah_low] = eve::hilo(a_low);
-          auto [bl_low, bh_low] = eve::hilo(b_low);
-          auto [al_high, ah_high] = eve::hilo(a_high);
-          auto [bl_high, bh_high] = eve::hilo(b_high);
+          auto [al_low, ah_low] = eve::lohi(a_low);
+          auto [bl_low, bh_low] = eve::lohi(b_low);
+          auto [al_high, ah_high] = eve::lohi(a_high);
+          auto [bl_high, bh_high] = eve::lohi(b_high);
 
           __m128i mul_low_low, cross_low_1, cross_low_2;
           __m128i mul_high_low, cross_high_1, cross_high_2;
@@ -142,8 +142,8 @@ namespace eve::detail
         } 
         else { 
           // Split 64-bit integers into 32-bit low and high parts
-          auto [low_a, high_a] = eve::hilo(a);
-          auto [low_b, high_b] = eve::hilo(b);
+          auto [low_a, high_a] = eve::lohi(a);
+          auto [low_b, high_b] = eve::lohi(b);
 
           __m128i mul_low;
           __m128i cross_mul_la_hb, cross_mul_lb_ha; 
