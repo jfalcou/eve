@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
