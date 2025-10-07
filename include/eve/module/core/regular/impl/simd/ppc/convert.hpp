@@ -57,6 +57,7 @@ requires ppc_abi<abi_t<T, N>>
     // otherwise, go down convert chains
     else return convert_integers_chain(v, tgt);
   }
+  else return map(convert, v, tgt); // fp16
 }
 
 }

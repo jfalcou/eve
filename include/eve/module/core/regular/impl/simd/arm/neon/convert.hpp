@@ -101,8 +101,8 @@ namespace eve::detail
 
     if      constexpr (of && (N{} <= 2))
     {
-      using tmp_t = typename wide<float, N>::combined_type;
-      tmp_t tmp = vcvt_f32_f16(simd_cast(v, as<wide<eve::float16_t, fixed<4>>>{}));
+      using tmp_t = typename wide<eve::float16_t, N>::template rebind<float>;
+      auto tmp = tmp_t { vcvt_f32_f16(simd_cast(v, as<wide<eve::float16_t, fixed<4>>>{})) };
       return slice(tmp, lower_).storage();
     }
     else if constexpr (of && (N{} <= 4)) return vcvt_f32_f16(v);
