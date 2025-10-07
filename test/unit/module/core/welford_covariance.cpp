@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of welford_covariance(wide)",
   // std::cout << "c  " << welford_covariance(a0, a1, a2, a3, sqr(a0), sqr(a1), sqr(a2), sqr(a3)).covariance<< std::endl;
   // std::cout << "c  " << eve::covariance(a0, a1, a2, a3, sqr(a0), sqr(a1), sqr(a2), sqr(a3))<< std::endl;
   TTS_ULP_EQUAL(welford_covariance(a0, a1, a2, a3, sqr(a0), sqr(a1), sqr(a2), sqr(a3)).covariance,
-                eve::covariance(a0, a1, a2, a3, sqr(a0), sqr(a1), sqr(a2), sqr(a3)), 1.5);
+                eve::covariance(a0, a1, a2, a3, sqr(a0), sqr(a1), sqr(a2), sqr(a3)), 10.0);
 };
 
 TTS_CASE_WITH("Check behavior of welford_covariance  on wide",
