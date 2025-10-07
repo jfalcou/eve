@@ -13,7 +13,10 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/lohi.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <cstdint>
+#include <immintrin.h> 
+#include <type_traits> 
 
 // Defining a helper for a clean code 
 template<typename T>
@@ -147,7 +150,7 @@ namespace eve::detail
           __m128i result_high = _mm_add_epi64(mul_high_low, cross_high_shifted);
 
           // Combine both 128-bit halves back into a 256-bit result
-          return _mm256_setr_m128i(result_high, result_low); 
+          return _mm256_setr_m128i(result_low, result_high); 
         }
         else
         {
@@ -181,6 +184,7 @@ namespace eve::detail
             // Split 64-bit integers into 32-bit low and high parts
             auto [low_a, high_a] = split_lohi<std::uint64_t>(a);
             auto [low_b, high_b] = split_lohi<std::uint64_t>(b);
+
             mul_low = _mm_mul_epu32(a, b);
             cross_mul_la_hb = _mm_mul_epu32(low_a, high_b);
             cross_mul_lb_ha = _mm_mul_epu32(high_a, low_b);
