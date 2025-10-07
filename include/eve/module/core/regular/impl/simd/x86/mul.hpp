@@ -20,7 +20,7 @@
 
 // Defining a helper for a clean code 
 template<typename T>
-auto split_lohi(__m128i v)
+auto split_lohi(T v)
 {
   // Converting into eve::lohi compatible type 
   using w64x2 = eve::wide<T, eve::fixed<2>>;
