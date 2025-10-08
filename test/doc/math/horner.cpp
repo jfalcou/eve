@@ -26,5 +26,7 @@ int main()
   std::cout << "-> horner(x, wv)                    = " << eve::horner(x, eve::coefficients(wv)) << '\n';
   std::cout << "-> horner(0.5f, wv)                 = " << eve::horner(0.5, eve::coefficients(wv)) << '\n';
   std::cout << "-> horner(xd, wv)                   = " << eve::horner(xd, eve::coefficients(wv)) << '\n';
-  std::cout << "-> horner(1.0, t)                   = " << eve::horner(1.0, eve::coefficients(t)) << '\n';
+  std::cout << "-> horner(2.0, t)                   = " << eve::horner(1.0, eve::coefficients(t)) << '\n';
+  std::cout << "-> horner(2.0,1.5,4.0,8.0)          = " << eve::horner(2.0, 1.5,4.0,8.0) << '\n';
+  std::cout << "-> horner(w_t(2.0),1.5,4.0,8.0)     = " << eve::horner(w_t(2.0), 1.5,4.0,8.0) << '\n';
 }

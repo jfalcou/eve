@@ -12,7 +12,9 @@
 #include <eve/concept/range.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/detail/generic/chunked_reverse_horner.hpp>
 #include <eve/traits/helpers.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -143,6 +145,23 @@ namespace eve
 
   namespace detail
   {
+   template<kumi::product_type Tuple>
+    void print(std::string s, Tuple const& t)
+    {
+      kumi::apply
+        (
+          [s](auto const&... args)
+          {
+            std::cout << s << " = [";
+            std::size_t n{0};
+            ((std::cout << args << (++n != kumi::size<Tuple>::value ? ", " : "")), ...);
+            std::cout << ']';
+          }, t
+        );
+
+      std::cout << '\n';
+    }
+
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
@@ -164,10 +183,17 @@ namespace eve
         return r_t(c0);
       else if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
       {
-        using e_t = element_type_t<X>;
-        using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
-        t_t c{e_t(c0), e_t(cs)...};
-        return reverse_horner[o](xx, coefficients<t_t>(c));
+        if constexpr(simd_value<X>)
+        {
+          using e_t = element_type_t<X>;
+          using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
+          t_t c{e_t(c0), e_t(cs)...};
+          return reverse_horner[o](xx, coefficients<t_t>(c));
+        }
+        else
+        {
+          return chunked_reverse_horner(o, xx, c0, cs...);
+        }
       }
       else
       {

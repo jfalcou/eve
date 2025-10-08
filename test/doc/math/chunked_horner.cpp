@@ -21,6 +21,19 @@ void print(std::string s, Tuple const& t)
   std::cout << '\n';
 }
 
+
+auto process(auto const& t, auto xx, auto xn)
+{
+  return kumi::get<1>(kumi::fold_right( [&](auto acc, auto e)
+  {
+    auto[x,r] = acc;
+    return kumi::tuple{x*xn,kumi::push_back(r, x*e)};
+  }
+  , t
+  , kumi::tuple{xx,kumi::tuple<>{}}
+  ));
+}
+
 template<eve::scalar_value T, eve::scalar_value ... Ts>
 auto reverse_horner(T x, Ts const &... coefs) noexcept
 {
@@ -41,10 +54,14 @@ auto reverse_horner(T x, Ts const &... coefs) noexcept
   std::cout << "xn " << xn << std::endl;
   xx =  eve::reverse(xx);
   std::cout << "xx " << xx << std::endl;
-  auto res = kumi::map([&xx, &xn](auto tt){auto fac = xx; xx*= xn; return tt*fac;  }, head);
+//  auto res = kumi::map([&xx, &xn](auto tt){auto fac = xx; xx*= xn; return tt*fac;  }, head);
+  auto res =  process(head, xx, xn);
+
   print("head ", head);
   print("res ", res);
-  return x;
+  auto r =  eve::detail::sum(eve::add(process(head, xx, xn)));
+
+  return r;
 
 //   auto [car, cdr] = kumi::split(tup,  kumi::index<remain>);
 //   auto head = eve::as_wides(eve::zero(eve::as<e_t>()), cdr);
@@ -81,12 +98,13 @@ int main()
 {
   auto a = reverse_horner(2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
   std::cout << "a " << a << std::endl;
-
-  kumi::tuple t{1, 2, 3, 4};
-  auto xx = 1;
-  auto xn = 2;
-  auto res = kumi::reverse(kumi::map([&xx, &xn](auto tt){auto fac = xx; xx*= xn; return tt*fac;  }, kumi::reverse(t)));
-  print("t", t);
-  print("res", res);
+  std::cout << "revh " << eve::reverse_horner(2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f) << std::endl;
+//  print("res", res);
+//   kumi::tuple t{1, 2, 3, 4};
+//   auto xx = 1;
+//   auto xn = 2;
+//   auto res = kumi::reverse(kumi::map([&xx, &xn](auto tt){auto fac = xx; xx*= xn; return tt*fac;  }, kumi::reverse(t)));
+//   print("t", t);
+//  print("res", res);
 
 }

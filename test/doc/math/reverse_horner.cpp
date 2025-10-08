@@ -26,5 +26,7 @@ int main()
   std::cout << "-> reverse_horner(x, wv)                    = " << eve::reverse_horner(x, eve::coefficients(wv)) << '\n';
   std::cout << "-> reverse_horner(0.5f, wv)                 = " << eve::reverse_horner(0.5, eve::coefficients(wv)) << '\n';
   std::cout << "-> reverse_horner(xd, wv)                   = " << eve::reverse_horner(xd, eve::coefficients(wv)) << '\n';
-  std::cout << "-> reverse_horner(1.0, t)                   = " << eve::reverse_horner(1.0, eve::coefficients(t)) << '\n';
+  std::cout << "-> reverse_horner(2.0, t)                   = " << eve::reverse_horner(2.0, eve::coefficients(t)) << '\n';
+  std::cout << "-> reverse_horner(2.0, 1.5,4.0,8.0)         = " << eve::reverse_horner(2.0, 1.5,4.0,8.0) << '\n';
+  std::cout << "-> reverse_horner                           = " << eve::reverse_horner(w_t(2.0),  1.5,4.0,8.0) << '\n';
 }
