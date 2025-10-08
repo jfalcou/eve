@@ -11,31 +11,20 @@
 namespace eve::detail
 {
 
-    auto process(auto const& t, auto xx, auto xn)
-    {
-      return kumi::get<1>(kumi::fold_right( [&](auto acc, auto e)
-                                            {
-                                              auto[x,r] = acc;
-                                              return kumi::tuple{x*xn,kumi::push_back(r, x*e)};
-                                            }
-                                          , t
-                                          , kumi::tuple{xx,kumi::tuple<>{}}
-                                          ));
-    }
-
   template<scalar_value X,  scalar_value C, scalar_value... Cs, callable_options O>
   auto chunked_reverse_horner(O const & o, X xx, C c0, Cs... cs)
   {
-//     auto process = [](auto const& t, auto y, auto xn){
-//       return kumi::get<1>(kumi::fold_right( [&](auto acc, auto e)
-//                                             {
-//                                               auto[y,r] = acc;
-//                                               return kumi::tuple{y*xn,kumi::push_back(r, y*e)};
-//                                             }
-//                                           , t
-//                                           , kumi::tuple{xx,kumi::tuple<>{}}
-//                                           ));
-//     };
+    auto process = [](auto const& t, auto y, auto xn){
+      return kumi::get<1>(kumi::fold_right( [&](auto acc, auto e)
+                                            {
+                                              auto[yy,r] = acc;
+                                              return kumi::tuple{yy*xn,kumi::push_back(r, yy*e)};
+                                            }
+                                          , t
+                                          , kumi::tuple{y, kumi::tuple<>{}}
+                                          )
+                         );
+    };
     using e_t =  eve::common_value_t<X, C, Cs...>;
     using w_t = eve::wide<e_t>;
     auto t = kumi::make_tuple(c0, cs...);
