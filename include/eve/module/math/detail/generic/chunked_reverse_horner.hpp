@@ -29,10 +29,12 @@ namespace eve::detail
     using w_t = eve::wide<e_t>;
     auto t = kumi::make_tuple(c0, cs...);
     constexpr auto nblanes = w_t::size();
+    auto small_pow = [](auto z){ auto n = nblanes; while (n-1){ z*= z;  n >>= 1; }; return z; };
+
     auto head = eve::as_wides(eve::zero(eve::as<e_t>()), t);
     w_t zz([xx](auto i, auto){return i == 0 ? e_t(1) : e_t(xx); });
     auto xxx =  eve::scan(zz, eve::mul[o], e_t(1));
-    e_t xn = std::pow(xx, nblanes);
+    e_t xn = small_pow(xx);
     auto res =  process(head, xxx, xn);
     return eve::detail::sum(eve::add[o](res));
   }
