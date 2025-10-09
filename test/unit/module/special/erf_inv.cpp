@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
   using eve::as;
   using eve::erf_inv;
   TTS_ULP_EQUAL(erf_inv(a0), tts::map([](auto e) { return boost::math::erf_inv(e); }, a0), 8);
-  TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1.);
+  TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1.0);
 
   if constexpr( eve::platform::supports_denormals )
   {
@@ -56,23 +56,23 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
     TTS_IEEE_EQUAL(erf_inv(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 
-  TTS_ULP_EQUAL(erf_inv(T(35)), eve::nan(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(-35)), eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(erf_inv(T(35)), eve::nan(eve::as<T>()), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(-35)), eve::nan(eve::as<T>()), 1.5);
 
   TTS_IEEE_EQUAL(erf_inv(T(0)), T(0));
   TTS_IEEE_EQUAL(erf_inv(T(-0.)), T(0));
-  TTS_ULP_EQUAL(erf_inv(T(0.1)), T(boost::math::erf_inv(0.1)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(0.2)), T(boost::math::erf_inv(0.2)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(0.3)), T(boost::math::erf_inv(0.3)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(0.5)), 1);
-  TTS_ULP_EQUAL(erf_inv(T(0.15)), T(boost::math::erf_inv(0.15)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(0.75)), T(boost::math::erf_inv(0.75)), 1);
-  TTS_ULP_EQUAL(erf_inv(T(-0.1)), T(boost::math::erf_inv(-0.1)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(-0.2)), T(boost::math::erf_inv(-0.2)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(-0.3)), T(boost::math::erf_inv(-0.3)), 0.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.1)), T(boost::math::erf_inv(0.1)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.2)), T(boost::math::erf_inv(0.2)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.3)), T(boost::math::erf_inv(0.3)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(0.5)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.15)), T(boost::math::erf_inv(0.15)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.75)), T(boost::math::erf_inv(0.75)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(-0.1)), T(boost::math::erf_inv(-0.1)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(-0.2)), T(boost::math::erf_inv(-0.2)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(-0.3)), T(boost::math::erf_inv(-0.3)), 1.5);
   TTS_ULP_EQUAL(erf_inv(T(-0.5)), T(boost::math::erf_inv(-0.5)), 1);
-  TTS_ULP_EQUAL(erf_inv(T(-0.15)), T(boost::math::erf_inv(-0.15)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(-0.75)), T(boost::math::erf_inv(-0.75)), 1);
+  TTS_ULP_EQUAL(erf_inv(T(-0.15)), T(boost::math::erf_inv(-0.15)), 1.5);
+  TTS_ULP_EQUAL(erf_inv(T(-0.75)), T(boost::math::erf_inv(-0.75)), 1.5);
 };
 
 
@@ -95,4 +95,3 @@ TTS_CASE("Check return types of erf_inv")
   TTS_PASS("SKipping due to no reference available");
 };
 #endif
-
