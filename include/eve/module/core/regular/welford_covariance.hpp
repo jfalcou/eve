@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <iostream>
+
 namespace eve
 {
 
@@ -22,14 +22,6 @@ namespace eve
       using type = T;
       operator T()   const noexcept { return covariance; };
       auto upgrade() const noexcept { return welford_covariance_result<upgrade_t<T>>(upgrade(count), count); };
-      auto print(std::string s){
-        std::cout << s << std::endl;
-        std::cout << "averagex   " << averagex << std::endl;
-        std::cout << "averagey   " << averagey << std::endl;
-        std::cout << "mxy        " << mxy      << std::endl;
-        std::cout << "covariance " << covariance  << std::endl;
-        std::cout << "count      " << count       << std::endl << std::endl;
-      };
 
       T averagex         = T(0);
       T averagey         = T(0);
@@ -218,7 +210,6 @@ namespace eve
               )
             )
     {
-//      std::cout << "iciitte 0" << std::endl;
       constexpr auto siz = sizeof...(Ts)/2;
       using r_t =  eve::common_value_t<Ts...>;
       if constexpr(O::contains(widen))
@@ -260,7 +251,6 @@ namespace eve
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
     requires((sizeof...(Ts)!= 0) && detail::is_welford_covariance_result_v<T> && (detail::is_welford_covariance_result_v<Ts> && ...))
     {
-//      std::cout << "iciitte 1" << std::endl;
       using r_t =  common_value_t<detail::internal_welford_covariance_t<T>, detail::internal_welford_covariance_t<Ts>...>;
       if constexpr(O::contains(widen))
       {
@@ -297,7 +287,6 @@ namespace eve
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
     requires(detail::is_welford_covariance_result_v<T>)
     {
-//      std::cout << "iciitte s1" << std::endl;
       auto scalarize = []<typename U>(U w){
         using e_t =  element_type_t<typename U::type>;
         auto getit = [w](auto i){return welford_covariance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
@@ -318,7 +307,6 @@ namespace eve
     welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts const &... args) noexcept
     requires( (sizeof...(Ts) > 0) && (sizeof...(Ts)%2 == 0) && (sizeof...(Ts) >= 2*wide<common_value_t<Ts...>>::size()))
     {
-//      std::cout << "iciitte s2" << std::endl;
       auto scalarize = []<typename T>(T w){
         using e_t  =  element_type_t<typename T::type>;
         auto getit = [w](auto i){return welford_covariance_result<e_t>(w.averagex.get(i), w.averagey.get(i), w.count, w.mxy.get(i), w.covariance.get(i)); };
