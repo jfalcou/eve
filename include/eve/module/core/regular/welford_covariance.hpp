@@ -280,13 +280,8 @@ namespace eve
           auto welford_covariancestep = [&](auto cov)
           {
             auto nab = ncov.count+cov.count;
-            std::cout << ncov.count << std::endl;
-            std::cout <<  cov.count << std::endl;
-            std::cout <<  nab       << std::endl;
             auto avgx = sum_of_prod(r_t(ncov.count), ncov.averagex, r_t(cov.count), cov.averagex)/nab;
             auto avgy = sum_of_prod(r_t(ncov.count), ncov.averagey, r_t(cov.count), cov.averagey)/nab;
-            std::cout <<  avgx       << std::endl;
-            std::cout <<  avgy       << std::endl;
             auto mxy = cov.mxy+ncov.mxy+((ncov.averagex-cov.averagex)*(ncov.averagey-cov.averagey)*cov.count*ncov.count)/nab;
             ncov = welford_covariance_result(avgx, avgy, nab, mxy);
              return ncov;
