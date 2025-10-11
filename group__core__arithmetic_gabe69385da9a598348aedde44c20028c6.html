@@ -145,25 +145,32 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gabe69385da9a5
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overloads</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">welford_average</a>(<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <span class="keyword">auto</span> ... <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">xs</a>)        <span class="keyword">noexcept</span>; /1</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">welford_average</a>(<span class="keyword">auto</span> ... <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">xs</a>)                        <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">welford_average</a>(non_empty_product_type <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">xs</a>)          <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">//Semantic options</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">welford_average</a>[widen](<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>, <span class="keyword">auto</span> ... <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">xs</a>) <span class="keyword">noexcept</span>; /2</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">welford_average</a>[widen](<span class="comment">/*any previous overload*/</span>)   <span class="keyword">noexcept</span>; <span class="comment">//3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gabe69385da9a598348aedde44c20028c6_html_gabe69385da9a598348aedde44c20028c6"><div class="ttname"><a href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">eve::welford_average</a></div><div class="ttdeci">constexpr auto welford_average</div><div class="ttdoc">tuple_callable computing the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition</b> welford_average.hpp:111</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gabe69385da9a598348aedde44c20028c6_html_gabe69385da9a598348aedde44c20028c6"><div class="ttname"><a href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6">eve::welford_average</a></div><div class="ttdeci">constexpr auto welford_average</div><div class="ttdoc">tuple_callable computing the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition</b> welford_average.hpp:135</div></div>
 <div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>xs...</code>:the parameters can be a mix of floating values or previous results of calls to <code>welford_average</code></li>
+<li>`<code>xs...</code>:the parameters can be a mix of floating values and previous results of calls to <code>welford_average</code></li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
 <li><p class="startli">A struct containing The value of the arithmetic mean and the number of elements on which the mean was calculated is returned.</p>
-<p class="startli">This struct is convertble to the average floating value. and possess two fields <code>average</code> and <code>count</code>.</p>
+<p class="startli">This struct is convertible to the average floating value. and possess two fields <code>average</code> and <code>count</code>.</p>
 </li>
+<li>The computation on the tuple elements</li>
 <li>The computation and result use the upgraded data type if available</li>
 </ol>
+<dl class="section note"><dt>Note</dt><dd>The Welford algorithm does not provides as much option as the <a class="el" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">`average`</a> function, but is a quite stable algorithm that have the advantage to allow spliting the computation of the average in multiple calls. For instance: the call with two tuples:<br  />
+ &#160; <code>wavg = <a class="el" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6" title="tuple_callable computing the arithmetic mean of its arguments.">welford_average(kumi::cat(xs, ys))</a></code><br  />
+ is equivalent to the sequence:<br  />
+ &#160; <code>wxs = <a class="el" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6" title="tuple_callable computing the arithmetic mean of its arguments.">welford_average(xs)</a>; wys = <a class="el" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6" title="tuple_callable computing the arithmetic mean of its arguments.">welford_average(xs)</a>; wavg = <a class="el" href="group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6" title="tuple_callable computing the arithmetic mean of its arguments.">welford_average(wxs, wys)</a>;</code><br  />
+ But the first two instructions can easily be executed in parallel.</dd></dl>
 <h2 class="groupheader">External references </h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Mean">Wikipedia Mean</a></li>
@@ -195,7 +202,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gabe69385da9a5
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::welford_average(ma, mb)              = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">t_t</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wmab</a>) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">tuple_callable computing the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition</b> average.hpp:137</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">tuple_callable computing the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition</b> average.hpp:138</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
