@@ -14,7 +14,6 @@
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math/detail/generic/chunked_reverse_horner.hpp>
 #include <eve/traits/helpers.hpp>
-#include <iostream>
 
 namespace eve
 {
