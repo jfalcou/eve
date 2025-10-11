@@ -145,22 +145,6 @@ namespace eve
 
   namespace detail
   {
-   template<kumi::product_type Tuple>
-    void print(std::string s, Tuple const& t)
-    {
-      kumi::apply
-        (
-          [s](auto const&... args)
-          {
-            std::cout << s << " = [";
-            std::size_t n{0};
-            ((std::cout << args << (++n != kumi::size<Tuple>::value ? ", " : "")), ...);
-            std::cout << ']';
-          }, t
-        );
-
-      std::cout << '\n';
-    }
 
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto
