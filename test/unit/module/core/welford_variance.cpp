@@ -56,7 +56,7 @@ TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1,  T const&a2)
+<typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::welford_variance;
   using eve::widen;
@@ -64,5 +64,11 @@ TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
   using eve::as;
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
     TTS_ULP_EQUAL(welford_variance(a0, a1, a2), eve::downgrade(welford_variance[widen](a0, a1, a2).variance), 1.5);
+  TTS_ULP_EQUAL(welford_variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f).variance,
+                   eve::variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f), 1.0f);
+  TTS_ULP_EQUAL(welford_variance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f), eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)).variance,
+                   eve::variance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f), eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)), 1.0f);
+  TTS_ULP_EQUAL(welford_variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f).variance,
+                   eve::variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f), 1.0f);
 
 };

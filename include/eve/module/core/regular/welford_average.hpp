@@ -16,6 +16,7 @@
 
 namespace eve
 {
+
   namespace detail
   {
     template<floating_value T> struct welford_result
@@ -41,7 +42,7 @@ namespace eve
   }
 
   template<typename Options>
-  struct welford_average_t : conditional_callable<welford_average_t, Options, widen_option>
+  struct welford_average_t : callable<welford_average_t, Options, widen_option>
   {
 
     template<typename... Ts>
@@ -59,6 +60,20 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(ts...);
     }
+
+   template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    detail::welford_result<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    detail::welford_result<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(welford_average_t, welford_average_);
   };
@@ -81,25 +96,34 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto welford_average(auto x, auto ... xs)        noexcept; /1
+//!      constexpr auto welford_average(auto ... xs)                        noexcept; //1
+//!      constexpr auto welford_average(non_empty_product_type xs)          noexcept; //2
 //!
 //!      //Semantic options
-//!      constexpr auto welford_average[widen](auto x, auto ... xs) noexcept; /2
+//!      constexpr auto welford_average[widen](/*any previous overload*/)   noexcept; //3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...`:the parameters can be a mix of floating values or previous results of calls to `welford_average`
+//!     * ``xs...`:the parameters can be a mix of floating values and previous results of calls to `welford_average`
 //!
 //!    **Return value**
 //!
-//!      1.  A struct containing The value of the arithmetic mean and the number
+//!       1. A struct containing The value of the arithmetic mean and the number
 //!          of elements on which the mean was calculated is returned.
 //!
-//!         This struct is convertble to the average floating value. and possess two fields `average` and `count`.
+//!          This struct is convertible to the average floating value. and possess two fields `average` and `count`.
+//!       2. The computation on the tuple elements
+//!       3. The computation and result use the upgraded data type if available
 //!
-//!      2. The computation and result use the upgraded data type if available
+//!  @note The Welford algorithm does not provides as much option as the [`average`](@ref average) function, but is a quite stable algorithm
+//!        that have the advantage to allow spliting the computation of the average in
+//!        multiple calls.  For instance: the call with two tuples:<br/>
+//!        &nbsp;   `wavg = welford_average(kumi::cat(xs, ys))`<br/>
+//!        is equivalent to the sequence:<br/>
+//!        &nbsp;  `wxs =  welford_average(xs);  wys = welford_average(xs); wavg = welford_average(wxs, wys);`<br/>
+//!        But the first two instructions can easily be executed in parallel.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Mean](https://en.wikipedia.org/wiki/Mean)
@@ -118,6 +142,27 @@ namespace eve
 namespace eve::detail
 {
 
+  template<scalar_value T0, scalar_value ... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  welford_average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
+  requires(sizeof...(Ts)+1 >= wide<common_value_t<T0, Ts...>>::size())
+  {
+    using r_t =  common_value_t<T0, Ts...>;
+    auto tup = kumi::make_tuple(a0, args...);
+    constexpr auto siz = sizeof...(Ts)+1;
+    constexpr auto nblanes = wide<r_t>::size();
+    constexpr auto remain = siz % nblanes;
+    auto [car, cdr] = kumi::split(tup,  kumi::index<remain>);
+    auto head = as_wides(eve::zero(eve::as<r_t>()), cdr);
+    auto s = eve::welford_average[o](head);
+    auto wavg1 = welford_result(sum(s.average)/nblanes, s.count*nblanes);
+    if constexpr(remain != 0)
+      return eve::welford_average(welford_average(car), wavg1);
+    else
+      return wavg1;
+  }
+
+
   template<typename T0, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   welford_average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
@@ -131,41 +176,51 @@ namespace eve::detail
       };
       return welford_average[o.drop(widen)](up_it(a0), up_it(args)...);
     }
-    else if constexpr(sizeof...(Ts) == 0)
-    {
-      if constexpr(value<T0>)
-        return welford_result<r_t>(a0);
-      else
-        return a0;
-    }
-    else if constexpr(value<T0>)
-    {
-      auto wa0 = welford_result<r_t>(a0, 1u);
-      return welford_average[o](wa0, args...);
-    }
     else
     {
-      auto na0 = welford_result<r_t>(a0.average, a0.count);
-      auto doit = [&na0](auto... as){
-        auto welfordstep = [&na0](auto a)
-        {
-          if constexpr(value<decltype(a)>)
+      if constexpr(sizeof...(Ts) == 0)
+      {
+        if constexpr(value<T0>)
+          return welford_result<r_t>(a0);
+        else
+          return a0;
+      }
+      else if constexpr(value<T0>)
+      {
+        auto wa0 = welford_result<r_t>(a0, 1u);
+        return welford_average[o](wa0, args...);
+      }
+      else
+      {
+        auto na0 = welford_result<r_t>(a0.average, a0.count);
+        auto doit = [&na0](auto... as){
+          auto welfordstep = [&na0](auto a)
           {
-            ++na0.count;
-            na0.average += (a-na0.average)/na0.count;
-            return na0;
-          }
-          else
-          {
-            auto nab = na0.count+a.count;
-            auto avg = sum_of_prod(r_t(na0.count), na0.average, r_t(a.count), a.average)/nab;
-            return  welford_result<r_t>(avg, nab);
-          }
+            if constexpr(value<decltype(a)>)
+            {
+              ++na0.count;
+              na0.average += (a-na0.average)/na0.count;
+              return na0;
+            }
+            else
+            {
+              auto nab = na0.count+a.count;
+              auto avg = sum_of_prod(r_t(na0.count), na0.average, r_t(a.count), a.average)/nab;
+              return  welford_result<r_t>(avg, nab);
+            }
+          };
+          ((na0 = welfordstep(as)),...);
+          return na0;
         };
-        ((na0 = welfordstep(as)),...);
-        return na0;
-      };
-      return  doit(args...);
+        return  doit(args...);
+      }
     }
+  }
+
+  template< kumi::non_empty_product_type T, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  welford_average_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
+  {
+    return kumi::apply([o](auto... m){return welford_average[o](m...); }, t);
   }
 }

@@ -73,8 +73,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto variance(eve::floating_value auto x, eve::floating_value auto ... xs)        noexcept; // 1
-//!      constexpr auto variance(kumi::non_empty_product_type auto const& tup)                       noexcept; // 2
+//!      constexpr auto variance(eve::floating_value auto ... xs)                                    noexcept; // 1
+//!      constexpr auto variance(kumi::non_empty_product_type auto const& xs)                        noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto variance[conditional_expr auto c](/* any of the above overloads */)          noexcept; // 3
@@ -91,8 +91,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `xs...`: [floating value](@ref eve::floating_value) arguments or tuple of floating values.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -101,13 +100,14 @@ namespace eve
 //!    The value of the variance of the arguments is returned.
 //!
 //!     1. the  computation of the variance of its arguments.
-//!     2. the  computation of  the tuple arguments.
+//!     2. the  computation is made on  the tuple values.
 //!     3. [The operation is performed conditionnaly](@ref conditional)
 //!     4. No provision is made to avoid inaccuracies.
 //!     5. The variance is computed in the double sized element type (if available).
 //!     6. Compensated algorithm for better precision.
 //!     7. the normalizing factor N-1 instead of N to get the best unbiased estimate.
 //!
+//!  @see [`welford_variance`](@ref welford_variance) for incremental or parallel variance and average computations.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia Variance](https://en.wikipedia.org/wiki/Variance)
@@ -148,7 +148,7 @@ namespace eve::detail
       if constexpr(O::contains(raw))
         return var;
       else
-        return var - eve::sqr(eve::average(a0-avg, (args-avg)...));
+        return var - eve::sqr(eve::average[o](a0-avg, (args-avg)...));
     }
   }
 }
