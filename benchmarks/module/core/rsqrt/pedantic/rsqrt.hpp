@@ -24,6 +24,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__rsqrt) , xp, std__rsqrt, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::pedantic(eve::rsqrt)) , xp, eve::pedantic(eve::rsqrt), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::pedantic(eve::rsqrt)) , xp, eve::pedantic(eve::rsqrt), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::rsqrt[eve::pedantic]) , xp, eve::rsqrt[eve::pedantic], arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::rsqrt[eve::pedantic]) , xp, eve::rsqrt[eve::pedantic], arg0);
 }

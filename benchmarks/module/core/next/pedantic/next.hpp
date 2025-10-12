@@ -22,9 +22,9 @@ int main()
   auto arg1 = eve::bench::random_<I_VALUE>(smin,smax);
 
   eve::bench::experiment xp;
-  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(eve::pedantic(eve::next)) , xp, eve::pedantic(eve::next), arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(eve::pedantic(eve::next)) , xp, eve::pedantic(eve::next), arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(eve::pedantic(eve::next)) , xp, eve::pedantic(eve::next), arg0, arg1);
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(eve::next[eve::pedantic]) , xp, eve::next[eve::pedantic], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(eve::next[eve::pedantic]) , xp, eve::next[eve::pedantic], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(eve::next[eve::pedantic]) , xp, eve::next[eve::pedantic], arg0, arg1);
 
 
 }
