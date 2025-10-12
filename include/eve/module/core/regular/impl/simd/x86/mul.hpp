@@ -126,11 +126,11 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         auto [bl_high, bh_high] = split_lohi(b_hi);
 
         // Perform the actual 64-bit multiplication via 32-bit partial products
-        mul_low_low = mul32x32<T>(a_low, b_low);
+        mul_low_low = mul32x32<T>(a_lo, b_lo);
         cross_low_1 = mul32x32<T>(al_low, bh_low);
         cross_low_2 = mul32x32<T>(ah_low, bl_low);
 
-        mul_high_low = mul32x32<T>(a_high, b_high);
+        mul_high_low = mul32x32<T>(a_hi, b_hi);
         cross_high_1 = mul32x32<T>(al_high, bh_high);
         cross_high_2 = mul32x32<T>(ah_high, bl_high);
 
