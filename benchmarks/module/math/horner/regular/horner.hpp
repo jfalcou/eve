@@ -21,7 +21,7 @@ int main()
       7.222973196770240E+000,
       -1.544842782180211E+000,
     };
-    return eve::horner(z, coefficients(a));
+    return eve::horner(z, eve::coefficients(a));
   };
   auto lmin = EVE_VALUE(-1);
   auto lmax = EVE_VALUE(1);
