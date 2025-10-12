@@ -120,10 +120,10 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         __m128i mul_high_low, cross_high_1, cross_high_2;
 
         // Split each 64-bit integer into low 32 bits and high 32 bits
-        auto [al_low, ah_low]   = split_lohi(a_low);
-        auto [bl_low, bh_low]   = split_lohi(b_low);
-        auto [al_high, ah_high] = split_lohi(a_high);
-        auto [bl_high, bh_high] = split_lohi(b_high);
+        auto [al_low, ah_low]   = split_lohi(a_lo);
+        auto [bl_low, bh_low]   = split_lohi(b_lo);
+        auto [al_high, ah_high] = split_lohi(a_hi);
+        auto [bl_high, bh_high] = split_lohi(b_hi);
 
         // Perform the actual 64-bit multiplication via 32-bit partial products
         mul_low_low = mul32x32<T>(a_low, b_low);
