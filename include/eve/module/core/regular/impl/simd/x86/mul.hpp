@@ -13,6 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/lohi.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/wide.hpp>
 
 #include <cstdint>
@@ -31,22 +32,27 @@ struct M128iPair
 M128iPair
 split_lohi(__m128i v)
 {
-  // Extract low and high 32-bit parts from each 64-bit + masking to get the low 32 bits
-  __m128i lo = _mm_and_si128(v, _mm_set1_epi64x(0x00000000FFFFFFFFULL));
+  using w64 = wide<uint64_t, fixed<2>>;
 
-  // Shift to the right to get the high 32 bits
-  __m128i hi = _mm_srli_epi64(v, 32);
+  w64 vec = bit_cast(v, eve::as<w64>());
 
-  // Returning both halves
-  return {lo, hi};
+  w64 lo = vec & 0x00000000FFFFFFFFULL;
+  w64 hi = vec >> 32;
+
+  return {
+    bit_cast(lo, eve::as<__m128i>()),
+    bit_cast(hi, eve::as<__m128i>())
+  };
 }
 
 template<typename T>
 EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
-  if constexpr( std::is_signed_v<T> ) return _mm_mul_epi32(a, b);
-  else return _mm_mul_epu32(a, b);
+  if constexpr( std::is_signed_v<T> ) 
+  return bit_cast(mul(bit_cast(a, as<int64<>>()), bit_cast(b, as<int64<>>())), as<__m128i>());
+  else
+    return bit_cast(mul(bit_cast(a, as<uint64<>>()), bit_cast(b, as<uint64<>>())), as<__m128i>());
 }
 
 namespace eve::detail
