@@ -29,14 +29,16 @@ struct M128iPair
 };
 
 // Defining a helper for a clean code
-M128iPair
-split_lohi(__m128i v)
+M128iPair split_lohi(__m128i v)
 {
-  using w64 = eve::wide<uint64_t, eve::fixed<2>>;
+  using w64 = eve::wide<std::uint64_t, eve::fixed<2>>;
 
   w64 vec = eve::bit_cast(v, eve::as<w64>());
 
-  w64 lo = vec & 0x00000000FFFFFFFFULL;
+  // Mask out the low 32 bits of each 64-bit lane
+  w64 lo = vec & w64(0x00000000FFFFFFFFULL);
+
+  // Shift high 32 bits to lower
   w64 hi = vec >> 32;
 
   return {
@@ -49,15 +51,30 @@ template<typename T>
 EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
-  using w64 = eve::wide<std::int64_t, eve::fixed<2>>; 
-  using wu64 = eve::wide<std::uint64_t, eve::fixed<2>>; 
+  using w64  = eve::wide<std::int64_t, eve::fixed<2>>;
+  using wu64 = eve::wide<std::uint64_t, eve::fixed<2>>;
 
-  if constexpr( std::is_signed_v<T> ) 
-  return eve::bit_cast(mul(eve::bit_cast(a, eve::as<w64>()), eve::bit_cast(b, eve::as<w64>())), eve::as<__m128i>());
+  if constexpr(std::is_signed_v<T>)
+  {
+    return eve::bit_cast(
+      eve::mul(
+        eve::bit_cast(a, eve::as<w64>()),
+        eve::bit_cast(b, eve::as<w64>())
+      ),
+      eve::as<__m128i>()
+    );
+  }
   else
-    return eve::bit_cast(mul(eve::bit_cast(a, eve::as<wu64>()), eve::bit_cast(b, eve::as<wu64>())), eve::as<__m128i>());
+  {
+    return eve::bit_cast(
+      eve::mul(
+        eve::bit_cast(a, eve::as<wu64>()),
+        eve::bit_cast(b, eve::as<wu64>())
+      ),
+      eve::as<__m128i>()
+    );
+  }
 }
-
 namespace eve::detail
 {
 template<callable_options O, typename T, typename N>
