@@ -49,10 +49,13 @@ template<typename T>
 EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
+  using w64 = eve::wide<std::int64_t, eve::fixed<2>>; 
+  using wu64 = eve::wide<std::uint64_t, eve::fixed<2>>; 
+
   if constexpr( std::is_signed_v<T> ) 
-  return eve::bit_cast(mul(eve::bit_cast(a, eve::as<int64<>>()), eve::bit_cast(b, eve::as<int64<>>())), eve::as<__m128i>());
+  return eve::bit_cast(mul(eve::bit_cast(a, eve::as<w64>()), eve::bit_cast(b, eve::as<w64>())), eve::as<__m128i>());
   else
-    return eve::bit_cast(mul(eve::bit_cast(a, eve::as<uint64<>>()), eve::bit_cast(b, eve::as<uint64<>>())), eve::as<__m128i>());
+    return eve::bit_cast(mul(eve::bit_cast(a, eve::as<wu64>()), eve::bit_cast(b, eve::as<wu64>())), eve::as<__m128i>());
 }
 
 namespace eve::detail
