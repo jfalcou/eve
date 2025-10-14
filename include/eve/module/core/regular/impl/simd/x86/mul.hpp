@@ -31,15 +31,15 @@ struct M128iPair
 // Defining a helper for a clean code
 M128iPair split_lohi(__m128i v)
 {
-  using w64 = eve::wide<std::uint64_t, eve::fixed<2>>;
+  using w64unsigned = eve::wide<std::uint64_t, eve::fixed<2>>;
 
-  w64 vec = eve::bit_cast(v, eve::as<w64>());
+  w64unsigned vec = eve::bit_cast(v, eve::as<w64unsigned>());
 
   // Mask out the low 32 bits of each 64-bit lane
-  w64 lo = vec & w64(0x00000000FFFFFFFFULL);
+  w64unsigned lo = vec & w64unsigned(0x00000000FFFFFFFFULL);
 
   // Shift high 32 bits to lower
-  w64 hi = vec >> 32;
+  w64unsigned hi = vec >> 32;
 
   return {
     eve::bit_cast(lo, eve::as<__m128i>()),
