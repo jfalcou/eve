@@ -52,7 +52,7 @@ EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
   using w64  = eve::wide<std::int64_t, eve::fixed<2>>;
-  using wu64 = eve::wide<std::uint64_t, eve::fixed<2>>;
+  using w64unsigned = eve::wide<std::uint64_t, eve::fixed<2>>;
 
   if constexpr(std::is_signed_v<T>)
   {
@@ -68,8 +68,8 @@ mul32x32(__m128i a, __m128i b)
   {
     return eve::bit_cast(
       eve::mul(
-        eve::bit_cast(a, eve::as<wu64>()),
-        eve::bit_cast(b, eve::as<wu64>())
+        eve::bit_cast(a, eve::as<w64unsigned>()),
+        eve::bit_cast(b, eve::as<w64unsigned>())
       ),
       eve::as<__m128i>()
     );
