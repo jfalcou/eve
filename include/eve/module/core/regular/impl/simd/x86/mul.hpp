@@ -32,16 +32,16 @@ struct M128iPair
 M128iPair
 split_lohi(__m128i v)
 {
-  using w64 = wide<uint64_t, fixed<2>>;
+  using w64 = eve::wide<uint64_t, eve::fixed<2>>;
 
-  w64 vec = bit_cast(v, eve::as<w64>());
+  w64 vec = eve::bit_cast(v, eve::as<w64>());
 
   w64 lo = vec & 0x00000000FFFFFFFFULL;
   w64 hi = vec >> 32;
 
   return {
-    bit_cast(lo, eve::as<__m128i>()),
-    bit_cast(hi, eve::as<__m128i>())
+    eve::bit_cast(lo, eve::as<__m128i>()),
+    eve::bit_cast(hi, eve::as<__m128i>())
   };
 }
 
@@ -50,9 +50,9 @@ EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
   if constexpr( std::is_signed_v<T> ) 
-  return bit_cast(mul(bit_cast(a, as<int64<>>()), bit_cast(b, as<int64<>>())), as<__m128i>());
+  return eve::bit_cast(mul(eve::bit_cast(a, eve::as<int64<>>()), eve::bit_cast(b, eve::as<int64<>>())), eve::as<__m128i>());
   else
-    return bit_cast(mul(bit_cast(a, as<uint64<>>()), bit_cast(b, as<uint64<>>())), as<__m128i>());
+    return eve::bit_cast(mul(eve::bit_cast(a, eve::as<uint64<>>()), eve::bit_cast(b, eve::as<uint64<>>())), eve::as<__m128i>());
 }
 
 namespace eve::detail
