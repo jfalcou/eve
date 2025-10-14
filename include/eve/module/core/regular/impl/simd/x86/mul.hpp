@@ -31,7 +31,7 @@ struct M128iPair
 // Defining a helper for a clean code
 M128iPair split_lohi(__m128i v)
 {
-  using w64unsigned = eve::wide<std::uint64_t, eve::fixed<2>>;
+  using w64unsigned = wide<std::uint64_t, fixed<2>>;
 
   w64unsigned vec = eve::bit_cast(v, eve::as<w64unsigned>());
 
@@ -51,8 +51,8 @@ template<typename T>
 EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
-  using w64  = eve::wide<std::int64_t, eve::fixed<2>>;
-  using w64unsigned = eve::wide<std::uint64_t, eve::fixed<2>>;
+  using w64 = wide<std::int64_t, fixed<2>>;
+  using w64unsigned = wide<std::uint64_t, fixed<2>>;
 
   if constexpr(std::is_signed_v<T>)
   {
