@@ -7,10 +7,10 @@ include(test)
 
 add_subdirectory(doc)
 add_subdirectory(unit)
+##add_subdirectory(intel_trials)
 
 # add_subdirectory(exhaustive)
 
 if( EVE_BUILD_RANDOM )
   add_subdirectory(random)
 endif()
-

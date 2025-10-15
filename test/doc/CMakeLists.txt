@@ -71,3 +71,11 @@ glob_unit("doc" ${doc_root} "special/*.cpp"  )
 add_custom_target(doc.traits.exe        )
 add_dependencies(doc.exe doc.traits.exe )
 glob_unit("doc" ${doc_root} "traits/*.cpp")
+
+
+##==================================================================================================
+## GLOB and process intel_trials doc tests
+##==================================================================================================
+add_custom_target(doc.intel_trials.exe        )
+add_dependencies(doc.exe doc.intel_trials.exe )
+glob_unit("doc" ${doc_root} "intel_trials/*.cpp")
