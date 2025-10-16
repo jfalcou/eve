@@ -237,15 +237,27 @@ int main() {
 
     print("result", result);
 
-    auto quadratic2 = [](  auto const& aaa, auto const& bbb, auto const& ccc){
-      auto delta = eve::fnma(4*aaa, ccc, eve::sqr(bbb));
-      auto rmax = eve::fam(-bbb, -eve::sign(bbb), eve::sqrt(delta))/(2*aaa);
-      auto rmin = eve::if_else(eve::is_eqz(rmax), eve::zero, ccc/(rmax*aaa));
-      return kumi::tuple{rmin, rmax};
+    auto quadratic2 = [](auto & result,  auto const& aa, auto const& bb, auto const& cc){
+      // result will be a zip of two arrays of float
+      auto quad_it = [](auto e){
+        auto [aaa, bbb, ccc] = e;                                              // get the coefficients
+        auto delta = eve::fnma(4*aaa, ccc, eve::sqr(bbb));                     // compute delta
+        auto rmax = eve::fam(-bbb, -eve::sign(bbb), eve::sqrt(delta))/(2*aaa); // compute the root with maximal abslute value
+        auto rmin = eve::if_else(eve::is_eqz(rmax), eve::zero, ccc/(rmax*aaa));// compute the other root
+        eve::swap_if(rmin > rmax, rmin, rmax);                                 // order by increasing values
+        return eve::zip(rmin, rmax);                                           // return properly typed values
+      };
+      // the algo transform_to takes care of using simd chunks
+      // the input vector size need not be a multiple of (the automagically chosen) best SIMD vector size
+      eve::algo::transform_to(eve::algo::views::zip(aa, bb, cc), result, quad_it);
     };
+    using a_t = std::array<float, N>;
 
-    auto r = quadratic2(a[0], b[0], c[0]);
-    std::cout << r << std::endl;
+    a_t result1, result2;
+    auto r = eve::views::zip(result1, result2);
+    quadratic2(r, a, b, c);
+    print("result1", result1);
+    print("result2", result2);
 
   }
   return 0;

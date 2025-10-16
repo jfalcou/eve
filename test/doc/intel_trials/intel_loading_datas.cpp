@@ -234,7 +234,7 @@ int main() {
     // Performance comparison
     detail::Timer timer("Aligned vs. Unaligned Load Performance");
 
-    // Benchmark aligned load
+    // Benchmark aligned load 
     auto aligned_load = [&]() {
       w8_t result;
       for (int i = 0; i < TEST_ITERATIONS; ++i) {
