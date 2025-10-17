@@ -13,7 +13,7 @@ int main()
 {
 //   auto lmin = EVE_VALUE(eve::valmin(eve::as<EVE_VALUE>()));
 //   auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
-  auto lmax = 100*eve::Rempio2_limit[eve::medium2](eve::as<EVE_VALUE>());
+  auto lmax = 100*eve::Rempio2_limit[eve::medium](eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

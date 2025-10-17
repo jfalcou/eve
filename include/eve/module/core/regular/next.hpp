@@ -161,7 +161,7 @@ namespace eve
         if constexpr(O::contains(pedantic))
         {
           using i_t = as_integer_t<T>;
-          i_t vz   = bitinteger(a) + convert(n, as<element_type_t<i_t>>(n));
+          i_t vz   = bitinteger(a) + convert(n, eve::as<element_type_t<i_t>>(n));
           auto pz   = vz - one(as(vz));
           auto z    = bitfloating(pz+one(as(pz)));
           auto test = is_negative(a) && is_positive(z);

@@ -20,6 +20,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__oneminus) , xp, std__oneminus, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::saturated(eve::oneminus)) , xp, eve::saturated(eve::oneminus), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::saturated(eve::oneminus)) , xp, eve::saturated(eve::oneminus), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::oneminus[eve::saturated]) , xp, eve::oneminus[eve::saturated], arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::oneminus[eve::saturated]) , xp, eve::oneminus[eve::saturated], arg0);
 }

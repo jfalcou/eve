@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #include <eve/module/core.hpp>
+#include <eve/as_element.hpp>
 #include <eve/module/combinatorial.hpp>
 #include <numeric>
 
@@ -17,7 +18,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  auto std__gcd =  [](auto x,  auto y){return std::gcd(eve::convert(x, int_from<decltype(x)), eve::convert(y, int_from<decltype(y))); };
+  auto std__gcd =  [](auto x,  auto y){return std::gcd(eve::convert(x, eve::int_from<decltype(x)>()), eve::convert(y, eve::int_from<decltype(y)>())); };
   auto eve__gcd =  [](auto x,  auto y){return eve::gcd(eve::trunc(x), eve::trunc(y)); };
 
   eve::bench::experiment xp;

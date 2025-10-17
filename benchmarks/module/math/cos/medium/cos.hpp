@@ -11,7 +11,7 @@
 
 int main()
 {
-  auto lmax = eve::Rempio2_limit[eve::medium2](eve::as<EVE_VALUE>());
+  auto lmax = eve::Rempio2_limit[eve::medium](eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin, lmax);
@@ -19,8 +19,8 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(scalar std::cos)     , xp, std__cos              , arg0);
-  run<EVE_VALUE>(EVE_NAME(cos[eve::medium2])   , xp, eve::cos[eve::medium2], arg0);
-  run<EVE_TYPE >(EVE_NAME(cos[eve::medium2])   , xp, eve::cos[eve::medium2], arg0);
+  run<EVE_VALUE>(EVE_NAME(cos[eve::medium])   , xp, eve::cos[eve::medium], arg0);
+  run<EVE_TYPE >(EVE_NAME(cos[eve::medium])   , xp, eve::cos[eve::medium], arg0);
   run<EVE_VALUE>(EVE_NAME(cos)                 , xp, eve::cos              , arg0);
   run<EVE_TYPE >(EVE_NAME(cos)                 , xp, eve::cos              , arg0);
 }
