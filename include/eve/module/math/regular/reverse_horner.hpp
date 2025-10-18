@@ -12,6 +12,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/detail/generic/chunked_reverse_horner.hpp>
 #include <eve/traits/helpers.hpp>
 
 namespace eve
@@ -143,6 +144,7 @@ namespace eve
 
   namespace detail
   {
+
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
@@ -164,10 +166,17 @@ namespace eve
         return r_t(c0);
       else if constexpr((scalar_value<C> && ... && scalar_value<Cs>))
       {
-        using e_t = element_type_t<X>;
-        using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
-        t_t c{e_t(c0), e_t(cs)...};
-        return reverse_horner[o](xx, coefficients<t_t>(c));
+        if constexpr(simd_value<X>)
+        {
+          using e_t = element_type_t<X>;
+          using t_t = kumi::result::fill_t<sizeof...(cs)+1, e_t>;
+          t_t c{e_t(c0), e_t(cs)...};
+          return reverse_horner[o](xx, coefficients<t_t>(c));
+        }
+        else
+        {
+          return chunked_reverse_horner(o, xx, c0, cs...);
+        }
       }
       else
       {

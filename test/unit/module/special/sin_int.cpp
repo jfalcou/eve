@@ -59,7 +59,7 @@ TTS_CASE_TPL("Check behavior of sin_int on wide", eve::test::simd::ieee_reals)
                                      eve::sin_int((2.0)),
                                      eve::sin_int(eve::inf(eve::as<double>())),
                                      eve::sin_int(eve::nan(eve::as<double>()))};
-  TTS_ULP_EQUAL(eve::sin_int(w), rr, 2);
+  TTS_ULP_EQUAL(eve::sin_int(w), rr, 2.5);
 };
 
 

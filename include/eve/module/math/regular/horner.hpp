@@ -12,6 +12,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
+#include <eve/module/math/detail/generic/chunked_reverse_horner.hpp>
 #include <eve/traits/helpers.hpp>
 
 namespace eve
@@ -202,6 +203,8 @@ namespace eve
     {
       if constexpr(Tuple::size() == 0)
         return eve::zero(as(x));
+      else if constexpr(scalar_value<kumi::apply_traits_t<common_value, Tuple>> && scalar_value<X>)
+        return kumi::apply( [&](auto... m) { return chunked_reverse_horner(o, x, m...); }, kumi::reverse(tup));
       else
         return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
     }

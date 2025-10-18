@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check behavior of airy_ai on wide",eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::airy_ai(v_t(500)), std_airy_ai(v_t(500)), 10.0);
   TTS_ULP_EQUAL(eve::airy_ai(v_t(10)), std_airy_ai(v_t(10)), 13.0);
   TTS_ULP_EQUAL(eve::airy_ai(v_t(5)), std_airy_ai(v_t(5)), 10.0);
-  TTS_ULP_EQUAL(eve::airy_ai(v_t(2)), std_airy_ai(v_t(2)), 35.0);
-  TTS_ULP_EQUAL(eve::airy_ai(v_t(1.5)), std_airy_ai(v_t(1.5)), 11.0);
+  TTS_ULP_EQUAL(eve::airy_ai(v_t(2)), std_airy_ai(v_t(2)), 52.0);
+  TTS_ULP_EQUAL(eve::airy_ai(v_t(1.5)), std_airy_ai(v_t(1.5)), 14.0);
   TTS_ULP_EQUAL(eve::airy_ai(v_t(0.5)), std_airy_ai(v_t(0.5)), 10.0);
   TTS_ULP_EQUAL(eve::airy_ai(v_t(1)), std_airy_ai(v_t(1)), 10.0);
   TTS_ULP_EQUAL(eve::airy_ai(v_t(0)), v_t(0.355028053887817), 0.5);

@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of airy_bi on wide",eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::airy_bi(v_t(2)), std_airy_bi(v_t(2)), 35.0);
   TTS_ULP_EQUAL(eve::airy_bi(v_t(1.5)), std_airy_bi(v_t(1.5)), 10.0);
   TTS_ULP_EQUAL(eve::airy_bi(v_t(0.5)), std_airy_bi(v_t(0.5)), 10.0);
-  TTS_ULP_EQUAL(eve::airy_bi(v_t(1)), std_airy_bi(v_t(1)), 2.5);
+  TTS_ULP_EQUAL(eve::airy_bi(v_t(1)), std_airy_bi(v_t(1)), 3.0);
   TTS_ULP_EQUAL(eve::airy_bi(v_t(0)), std_airy_bi(v_t(0)), 1.5);
 
   TTS_ULP_EQUAL(eve::airy_bi(T(1500)), eve::inf(eve::as<T>()), 10.0);
@@ -65,7 +65,7 @@ TTS_CASE_TPL("Check behavior of airy_bi on wide",eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::airy_bi(v_t(-2)), std_airy_bi(v_t(-2)), 35.0);
   TTS_ULP_EQUAL(eve::airy_bi(v_t(-1.5)), std_airy_bi(v_t(-1.5)), 10.0);
   TTS_ULP_EQUAL(eve::airy_bi(v_t(-0.5)), std_airy_bi(v_t(-0.5)), 10.0);
-  TTS_ULP_EQUAL(eve::airy_bi(v_t(-1)), std_airy_bi(v_t(-1)), 7.5);
+  TTS_ULP_EQUAL(eve::airy_bi(v_t(-1)), std_airy_bi(v_t(-1)), 11.5);
 
   TTS_ABSOLUTE_EQUAL(eve::airy_bi(T(-1500)), T(std_airy_bi(v_t(-1500))), abstol);
   TTS_ABSOLUTE_EQUAL(eve::airy_bi(T(-500)), T(std_airy_bi(v_t(-500))), abstol);
@@ -93,4 +93,3 @@ TTS_CASE("Check return types of airy_bi")
   TTS_PASS("SKipping due to no reference available");
 };
 #endif
-

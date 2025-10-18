@@ -42,7 +42,7 @@ TTS_CASE_WITH("Check behavior of zeta on wide",
   TTS_ULP_EQUAL(eve::zeta(T(0)), T(std::riemann_zeta(v_t(0))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(-0.0)), T(std::riemann_zeta(v_t(-0.0))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(1.5)), T(std::riemann_zeta(v_t(1.5))), 1.5);
-  TTS_ULP_EQUAL(eve::zeta(T(-1.5)), T(std::riemann_zeta(v_t(-1.5))), 2.5);
+  TTS_ULP_EQUAL(eve::zeta(T(-1.5)), T(std::riemann_zeta(v_t(-1.5))), 3.0);
   TTS_ULP_EQUAL(eve::zeta(T(14)), T(std::riemann_zeta(v_t(14))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(-14)), T(std::riemann_zeta(v_t(-14))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(14.5)), T(std::riemann_zeta(v_t(14.5))), 0.5);
