@@ -11,11 +11,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/lohi.hpp>
-#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core.hpp>
 
 #include <cstdint>
 #include <emmintrin.h>
@@ -29,52 +29,30 @@ struct M128iPair
   __m128i hi;
 };
 
-// Defining a helper for a clean code
-M128iPair split_lohi(__m128i v)
-{
-  using w64u = eve::wide<std::uint64_t, eve::fixed<2>>;
+// Helper to split 64-bit lanes into 32-bit low and high parts
+M128iPair split_lohi(__m128i v) {
 
-  w64u vec = eve::bit_cast(v, eve::as<w64u>());
+  using w64u = eve::wide<std::uint64_t, eve::fixed<2>, eve::sse2_>;
 
-  // Mask out the low 32 bits of each 64-bit lane
+  w64u vec = eve::bit_cast(v, eve::as<w64u>{});
   w64u lo = vec & w64u(0x00000000FFFFFFFFULL);
-
-  // Shift high 32 bits to lower
   w64u hi = vec >> 32;
 
   return {
-    eve::bit_cast(lo, eve::as<__m128i>()),
-    eve::bit_cast(hi, eve::as<__m128i>())
+      eve::bit_cast(lo, eve::as<__m128i>{}),
+      eve::bit_cast(hi, eve::as<__m128i>{})
   };
 }
+// Multiply two 128-bit vectors with 32-bit integers template
+template <typename T>
+EVE_FORCEINLINE __m128i mul32x32(__m128i a, __m128i b) {
+  using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>, eve::fixed<4>, eve::sse2_>;
 
-template<typename T>
-EVE_FORCEINLINE __m128i
-mul32x32(__m128i a, __m128i b)
-{
-  using w64 = wide<std::int64_t, fixed<2>>;
-  using w64unsigned = eve::wide<std::uint64_t, fixed<2>>;
-
-  if constexpr(std::is_signed_v<T>)
-  {
-    return eve::bit_cast(
+  return eve::bit_cast(
       eve::mul(
-        eve::bit_cast(a, eve::as<w64>()),
-        eve::bit_cast(b, eve::as<w64>())
-      ),
-      eve::as<__m128i>()
-    );
-  }
-  else
-  {
-    return eve::bit_cast(
-      eve::mul(
-        eve::bit_cast(a, eve::as<w64unsigned>()),
-        eve::bit_cast(b, eve::as<w64unsigned>())
-      ),
-      eve::as<__m128i>()
-    );
-  }
+          eve::bit_cast(a, eve::as<w32>{}),
+          eve::bit_cast(b, eve::as<w32>{})),
+      eve::as<__m128i>{});
 }
 namespace eve::detail
 {
@@ -132,146 +110,137 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
     else if constexpr( c == category::int64x4 )
     {
       // If AVX-512; use its direct 64-bit multiplication instruction
-      if constexpr( current_api >= avx512 ) { return _mm256_mullo_epi64(a, b); }
-      // If AVX2
-      else if constexpr( current_api == avx2 )
+      if constexpr( eve::current_api >= eve::avx512 ) { return _mm256_mullo_epi64(a, b); }
+      else if constexpr( eve::current_api == eve::avx2 )
       {
-        // Split 256-bit registers into two 128-bit halves
+        // Split 256-bit vectors into 128-bit halves
         auto a_lo = a.slice(eve::lower_);
         auto a_hi = a.slice(eve::upper_);
-
         auto b_lo = b.slice(eve::lower_);
         auto b_hi = b.slice(eve::upper_);
 
-        __m128i mul_low_low, cross_low_1, cross_low_2;
-        __m128i mul_high_low, cross_high_1, cross_high_2;
-
-        // Split each 64-bit integer into low 32 bits and high 32 bits
+        // Split each 64-bit integer into 32-bit low and high parts
         auto [al_low, ah_low]   = split_lohi(a_lo);
         auto [bl_low, bh_low]   = split_lohi(b_lo);
         auto [al_high, ah_high] = split_lohi(a_hi);
         auto [bl_high, bh_high] = split_lohi(b_hi);
 
-        // Perform the actual 64-bit multiplication via 32-bit partial products
-        mul_low_low = mul32x32<T>(a_lo, b_lo);
-        cross_low_1 = mul32x32<T>(al_low, bh_low);
-        cross_low_2 = mul32x32<T>(ah_low, bl_low);
+        // 32-bit multiplications
+        __m128i mul_low_low  = mul32x32<T>(al_low, bl_low);
+        __m128i cross_low_1  = mul32x32<T>(al_low, bh_low);
+        __m128i cross_low_2  = mul32x32<T>(ah_low, bl_low);
+        __m128i mul_high_low = mul32x32<T>(al_high, bl_high);
+        __m128i cross_high_1 = mul32x32<T>(al_high, bh_high);
+        __m128i cross_high_2 = mul32x32<T>(ah_high, bl_high);
 
-        mul_high_low = mul32x32<T>(a_hi, b_hi);
-        cross_high_1 = mul32x32<T>(al_high, bh_high);
-        cross_high_2 = mul32x32<T>(ah_high, bl_high);
-
-        // Combine cross terms for both halves
+        // Combine cross terms
         __m128i cross_low_sum  = _mm_add_epi64(cross_low_1, cross_low_2);
         __m128i cross_high_sum = _mm_add_epi64(cross_high_1, cross_high_2);
 
-        // Cross products contribute to the upper 32 bits of the result
+        // Shift cross terms to align with bits 32–63
         __m128i cross_low_shifted  = _mm_slli_epi64(cross_low_sum, 32);
         __m128i cross_high_shifted = _mm_slli_epi64(cross_high_sum, 32);
 
-        // Add the base product and cross terms
+        // Add to low-low product
         __m128i result_low  = _mm_add_epi64(mul_low_low, cross_low_shifted);
         __m128i result_high = _mm_add_epi64(mul_high_low, cross_high_shifted);
 
-        // Combine both 128-bit halves back into a 256-bit result
+        // Combine results into 256-bit vector
         return _mm256_setr_m128i(result_low, result_high);
       }
-      else
-      {
-        // Fallback for lower SIMD multiplication process
-        return slice_apply(eve::mul, a, b);
-      }
+      else { return slice_apply(eve::mul, a, b); }
     }
-    else if constexpr( c == category::int64x2 )
+    else
     {
-      // If AVX-512; use its direct 64-bit multiplication instruction
-      if constexpr( current_api >= avx512 ) { return _mm_mullo_epi64(a, b); }
-      else
-      {
-        __m128i mul_low;
-        __m128i cross_mul_la_hb, cross_mul_lb_ha;
-
-        // Split 64-bit integers into 32-bit low and high parts
-        auto [low_a, high_a] = split_lohi(a);
-        auto [low_b, high_b] = split_lohi(b);
-
-        // Perform the actual 64-bit multiplication via 32-bit partial products
-        mul_low         = mul32x32<T>(a, b);
-        cross_mul_la_hb = mul32x32<T>(low_a, high_b);
-        cross_mul_lb_ha = mul32x32<T>(high_a, low_b);
-
-        mul_low         = _mm_mul_epu32(a, b);
-        cross_mul_la_hb = mul32x32<T>(low_a, high_b);
-        cross_mul_lb_ha = mul32x32<T>(high_a, low_b);
-
-        // Combine cross terms and shift them to upper 32 bits
-        __m128i cross_sum     = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
-        __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
-
-        return _mm_add_epi64(mul_low, cross_shifted);
-      }
+      // Handle the other cases
+      return eve::mul(a, b);
     }
-    else if constexpr( c == category::uint64x8 ) return _mm512_mullo_epi64(a, b);
-    else if constexpr( c == category::int32x16 ) return _mm512_mullo_epi32(a, b);
-    else if constexpr( c == category::uint32x16 ) return _mm512_mullo_epi32(a, b);
-    else if constexpr( ((c == category::int32x8) || (c == category::uint32x8))
-                       && (current_api >= avx2) )
+  }
+  else if constexpr( c == category::int64x2 )
+  {
+    // If AVX-512; use its direct 64-bit multiplication instruction
+    if constexpr( current_api >= eve::avx512 ) { return _mm_mullo_epi64(a, b); }
+    else
     {
-      return _mm256_mullo_epi32(a, b);
-    }
-    else if constexpr( (c == category::int32x4) || (c == category::uint32x4) )
-    {
-      if constexpr( current_api >= sse4_1 ) { return _mm_mullo_epi32(a, b); }
-      else {
-        static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
-        using htype                     = wide<std::int64_t, fixed<half_size>>;
+      // Split 64-bit integers into 32-bit low and high parts
+      auto [a_low, a_high] = split_lohi(a);
+      auto [b_low, b_high] = split_lohi(b);
 
-        htype mhi = _mm_setr_epi32(-1, 0, -1, 0);
-        htype mlo = mhi;
-        auto  la  = _mm_srli_si128(a, 4);
-        auto  lb  = _mm_srli_si128(b, 4);
+      // 32-bit multiplications
+      __m128i mul_low         = mul32x32<T>(a_low, b_low);  
+      __m128i cross_mul_la_hb = mul32x32<T>(a_low, b_high); 
+      __m128i cross_mul_lb_ha = mul32x32<T>(a_high, b_low); 
 
-        mhi &= htype {_mm_mul_epu32(a, b)};
-        mlo &= htype {_mm_mul_epu32(la, lb)};
-        mhi |= htype {_mm_slli_si128(mlo, 4)};
+      // Combine cross terms and shift to align with bits 32–63
+      __m128i cross_sum     = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
+      __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
 
-        return mhi.storage();
-      }
+      // Add low-low product and shifted cross terms
+      return _mm_add_epi64(mul_low, cross_shifted);
     }
-    else if constexpr( (c == category::int16x16 || c == category::uint16x16)
-                       && current_api >= avx2 )
-    {
-      return _mm256_mullo_epi16(a, b);
-    }
-    else if constexpr( c == category::int16x32 ) return _mm512_mullo_epi16(a, b);
-    else if constexpr( c == category::uint16x32 ) return _mm512_mullo_epi16(a, b);
-    else if constexpr( c == category::int16x8 ) return _mm_mullo_epi16(a, b);
-    else if constexpr( c == category::uint16x8 ) return _mm_mullo_epi16(a, b);
-    else if constexpr( (c == category::int8x16) || (c == category::uint8x16) )
+  }
+  else if constexpr( c == category::uint64x8 ) return _mm512_mullo_epi64(a, b);
+  else if constexpr( c == category::int32x16 ) return _mm512_mullo_epi32(a, b);
+  else if constexpr( c == category::uint32x16 ) return _mm512_mullo_epi32(a, b);
+  else if constexpr( ((c == category::int32x8) || (c == category::uint32x8))
+                     && (current_api >= avx2) )
+  {
+    return _mm256_mullo_epi32(a, b);
+  }
+  else if constexpr( (c == category::int32x4) || (c == category::uint32x4) )
+  {
+    if constexpr( current_api >= sse4_1 ) { return _mm_mullo_epi32(a, b); }
+    else
     {
       static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
+      using htype                     = wide<std::int64_t, fixed<half_size>>;
 
-      using htype = wide<std::int16_t, fixed<half_size>>;
-
-      htype mhi = _mm_set1_epi16(0x00FF);
+      htype mhi = _mm_setr_epi32(-1, 0, -1, 0);
       htype mlo = mhi;
-      auto  la  = _mm_srli_epi16(a, 8);
-      auto  lb  = _mm_srli_epi16(b, 8);
+      auto  la  = _mm_srli_si128(a, 4);
+      auto  lb  = _mm_srli_si128(b, 4);
 
-      mhi &= htype {_mm_mullo_epi16(a, b)};
-      mlo &= htype {_mm_mullo_epi16(la, lb)};
-      mhi |= htype {_mm_slli_epi16(mlo, 8)};
+      mhi &= htype {_mm_mul_epu32(a, b)};
+      mlo &= htype {_mm_mul_epu32(la, lb)};
+      mhi |= htype {_mm_slli_si128(mlo, 4)};
 
       return mhi.storage();
     }
-    else {
-      auto           s    = a;
-      constexpr auto smul = [](auto va, auto vb) { return va * vb; };
-
-      if constexpr( N::value >= 2 ) return slice_apply(smul, s, b);
-      else return map(smul, s, b);
-    }
   }
+  else if constexpr( (c == category::int16x16 || c == category::uint16x16) && current_api >= avx2 )
+  {
+    return _mm256_mullo_epi16(a, b);
+  }
+  else if constexpr( c == category::int16x32 ) return _mm512_mullo_epi16(a, b);
+  else if constexpr( c == category::uint16x32 ) return _mm512_mullo_epi16(a, b);
+  else if constexpr( c == category::int16x8 ) return _mm_mullo_epi16(a, b);
+  else if constexpr( c == category::uint16x8 ) return _mm_mullo_epi16(a, b);
+  else if constexpr( (c == category::int8x16) || (c == category::uint8x16) )
+  {
+    static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
+
+    using htype = wide<std::int16_t, fixed<half_size>>;
+
+    htype mhi = _mm_set1_epi16(0x00FF);
+    htype mlo = mhi;
+    auto  la  = _mm_srli_epi16(a, 8);
+    auto  lb  = _mm_srli_epi16(b, 8);
+
+    mhi &= htype {_mm_mullo_epi16(a, b)};
+    mlo &= htype {_mm_mullo_epi16(la, lb)};
+    mhi |= htype {_mm_slli_epi16(mlo, 8)};
+
+    return mhi.storage();
+  }
+  else
+  {
+    auto           s    = a;
+    constexpr auto smul = [](auto va, auto vb) { return va * vb; };
+
+    if constexpr( N::value >= 2 ) return slice_apply(smul, s, b);
+    else return map(smul, s, b);
+  }
+}
 }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
