@@ -21,7 +21,6 @@
 #include <cstdint>
 #include <emmintrin.h>
 #include <immintrin.h>
-
 struct M128iPair
 {
   __m128i lo;
@@ -44,26 +43,26 @@ mul32x32(__m128i a, __m128i b)
 {
   using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>,
                         eve::fixed<4>>;
-  return bit_cast(
-      eve::mul(bit_cast(a, eve::as<w32> {}), bit_cast(b, eve::as<w32> {})),
-      eve::as<__m128i> {});
+  return bit_cast(eve::mul(bit_cast(a, eve::as<w32> {}), bit_cast(b, eve::as<w32> {})),
+                  eve::as<__m128i> {});
 }
+
 namespace eve::detail
 {
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE upgrade_t<eve::wide<T, N>>
-                mul_(EVE_REQUIRES(sse2_), O const& opts, eve::wide<T, N> v, eve::wide<T, N> w) noexcept
+EVE_FORCEINLINE upgrade_t<wide<T, N>>
+                mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
 requires(x86_abi<abi_t<T, N>> && O::contains(widen))
 {
   return mul.behavior(cpu_ {}, opts, v, w);
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE eve::wide<T, N>
-                mul_(EVE_REQUIRES(sse2_), O const& opts, eve::wide<T, N> a, eve::wide<T, N> b) noexcept
+EVE_FORCEINLINE wide<T, N>
+                mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
 requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
 {
-  constexpr auto c = categorize<eve::wide<T, N>>();
+  constexpr auto c = categorize<wide<T, N>>();
   if constexpr( floating_value<T> && (O::contains(lower) || O::contains(upper)) )
   {
     if constexpr( O::contains(strict) || (current_api < avx512) )
@@ -140,102 +139,101 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
       }
       else { return slice_apply(eve::mul, a, b); }
     }
-    else { return eve::mul(cx, opts, a, b); }
-  }
-  else if constexpr( c == category::int64x2 )
-  {
-    if constexpr( eve::current_api >= eve::avx512 )
+    else if constexpr( c == category::int64x2 )
     {
-      return _mm_mullo_epi64(a.storage(), b.storage());
+      if constexpr( eve::current_api >= eve::avx512 )
+      {
+        return _mm_mullo_epi64(a.storage(), b.storage());
+      }
+      else
+      {
+        auto [a_low, a_high] = split_lohi(a.storage());
+        auto [b_low, b_high] = split_lohi(b.storage());
+
+        __m128i mul_low         = mul32x32<typename T::value_type>(a_low, b_low);
+        __m128i cross_mul_la_hb = mul32x32<typename T::value_type>(a_low, b_high);
+        __m128i cross_mul_lb_ha = mul32x32<typename T::value_type>(a_high, b_low);
+
+        __m128i cross_sum     = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
+        __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
+
+        return eve::wide<typename T::value_type, typename T::cardinal_type> {
+            _mm_add_epi64(mul_low, cross_shifted)};
+      }
     }
-    else
+    else if constexpr( c == category::uint64x8 ) return _mm512_mullo_epi64(a, b);
+    else if constexpr( c == category::int32x16 ) return _mm512_mullo_epi32(a, b);
+    else if constexpr( c == category::uint32x16 ) return _mm512_mullo_epi32(a, b);
+    else if constexpr( ((c == category::int32x8) || (c == category::uint32x8))
+                       && (current_api >= avx2) )
     {
-      auto [a_low, a_high] = split_lohi(a.storage());
-      auto [b_low, b_high] = split_lohi(b.storage());
-
-      __m128i mul_low         = mul32x32<typename T::value_type>(a_low, b_low);
-      __m128i cross_mul_la_hb = mul32x32<typename T::value_type>(a_low, b_high);
-      __m128i cross_mul_lb_ha = mul32x32<typename T::value_type>(a_high, b_low);
-
-      __m128i cross_sum     = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
-      __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
-
-      return eve::wide<typename T::value_type, typename T::cardinal_type> {
-          _mm_add_epi64(mul_low, cross_shifted)};
+      return _mm256_mullo_epi32(a, b);
     }
-  }
-  else if constexpr( c == category::uint64x8 ) return _mm512_mullo_epi64(a, b);
-  else if constexpr( c == category::int32x16 ) return _mm512_mullo_epi32(a, b);
-  else if constexpr( c == category::uint32x16 ) return _mm512_mullo_epi32(a, b);
-  else if constexpr( ((c == category::int32x8) || (c == category::uint32x8))
-                     && (current_api >= avx2) )
-  {
-    return _mm256_mullo_epi32(a, b);
-  }
-  else if constexpr( (c == category::int32x4) || (c == category::uint32x4) )
-  {
-    if constexpr( current_api >= sse4_1 ) { return _mm_mullo_epi32(a, b); }
-    else
+    else if constexpr( (c == category::int32x4) || (c == category::uint32x4) )
+    {
+      if constexpr( current_api >= sse4_1 ) { return _mm_mullo_epi32(a, b); }
+      else
+      {
+        static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
+        using htype                     = wide<std::int64_t, fixed<half_size>>;
+
+        htype mhi = _mm_setr_epi32(-1, 0, -1, 0);
+        htype mlo = mhi;
+        auto  la  = _mm_srli_si128(a, 4);
+        auto  lb  = _mm_srli_si128(b, 4);
+
+        mhi &= htype {_mm_mul_epu32(a, b)};
+        mlo &= htype {_mm_mul_epu32(la, lb)};
+        mhi |= htype {_mm_slli_si128(mlo, 4)};
+
+        return mhi.storage();
+      }
+    }
+    else if constexpr( (c == category::int16x16 || c == category::uint16x16)
+                       && current_api >= avx2 )
+    {
+      return _mm256_mullo_epi16(a, b);
+    }
+    else if constexpr( c == category::int16x32 ) return _mm512_mullo_epi16(a, b);
+    else if constexpr( c == category::uint16x32 ) return _mm512_mullo_epi16(a, b);
+    else if constexpr( c == category::int16x8 ) return _mm_mullo_epi16(a, b);
+    else if constexpr( c == category::uint16x8 ) return _mm_mullo_epi16(a, b);
+    else if constexpr( (c == category::int8x16) || (c == category::uint8x16) )
     {
       static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
-      using htype                     = eve::wide<std::int64_t, fixed<half_size>>;
 
-      htype mhi = _mm_setr_epi32(-1, 0, -1, 0);
+      using htype = wide<std::int16_t, fixed<half_size>>;
+
+      htype mhi = _mm_set1_epi16(0x00FF);
       htype mlo = mhi;
-      auto  la  = _mm_srli_si128(a, 4);
-      auto  lb  = _mm_srli_si128(b, 4);
+      auto  la  = _mm_srli_epi16(a, 8);
+      auto  lb  = _mm_srli_epi16(b, 8);
 
-      mhi &= htype {_mm_mul_epu32(a, b)};
-      mlo &= htype {_mm_mul_epu32(la, lb)};
-      mhi |= htype {_mm_slli_si128(mlo, 4)};
+      mhi &= htype {_mm_mullo_epi16(a, b)};
+      mlo &= htype {_mm_mullo_epi16(la, lb)};
+      mhi |= htype {_mm_slli_epi16(mlo, 8)};
 
       return mhi.storage();
     }
+    else
+    {
+      auto           s    = a;
+      constexpr auto smul = [](auto va, auto vb) { return va * vb; };
+
+      if constexpr( N::value >= 2 ) return slice_apply(smul, s, b);
+      else return map(smul, s, b);
+    }
   }
-  else if constexpr( (c == category::int16x16 || c == category::uint16x16) && current_api >= avx2 )
-  {
-    return _mm256_mullo_epi16(a, b);
-  }
-  else if constexpr( c == category::int16x32 ) return _mm512_mullo_epi16(a, b);
-  else if constexpr( c == category::uint16x32 ) return _mm512_mullo_epi16(a, b);
-  else if constexpr( c == category::int16x8 ) return _mm_mullo_epi16(a, b);
-  else if constexpr( c == category::uint16x8 ) return _mm_mullo_epi16(a, b);
-  else if constexpr( (c == category::int8x16) || (c == category::uint8x16) )
-  {
-    static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
-
-    using htype = eve::wide<std::int16_t, fixed<half_size>>;
-
-    htype mhi = _mm_set1_epi16(0x00FF);
-    htype mlo = mhi;
-    auto  la  = _mm_srli_epi16(a, 8);
-    auto  lb  = _mm_srli_epi16(b, 8);
-
-    mhi &= htype {_mm_mullo_epi16(a, b)};
-    mlo &= htype {_mm_mullo_epi16(la, lb)};
-    mhi |= htype {_mm_slli_epi16(mlo, 8)};
-
-    return mhi.storage();
-  }
-  else
-  {
-    auto           s    = a;
-    constexpr auto smul = [](auto va, auto vb) { return va * vb; };
-
-    if constexpr( N::value >= 2 ) return slice_apply(smul, s, b);
-    else return map(smul, s, b);
-  }
-}
 }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE eve::wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, eve::wide<T, N> a, eve::wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {
-    constexpr auto c = categorize<eve::wide<T, N>>();
+    constexpr auto c = categorize<wide<T, N>>();
 
-    auto src = alternative(cx, a, as<eve::wide<T, N>> {});
-    auto m   = expand_mask(cx, as<eve::wide<T, N>> {}).storage().value;
+    auto src = alternative(cx, a, as<wide<T, N>> {});
+    auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
     if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
