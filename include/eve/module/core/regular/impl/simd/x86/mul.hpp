@@ -32,10 +32,10 @@ M128iPair
 split_lohi(__m128i v)
 {
   using w64u = eve::wide<std::uint64_t, eve::fixed<2>>;
-  w64u vec   = eve::bit_cast(v, eve::as<w64u> {});
+  w64u vec   = bit_cast(v, eve::as<w64u> {});
   w64u lo    = vec & w64u(0x00000000FFFFFFFFULL);
   w64u hi    = vec >> 32;
-  return {eve::bit_cast(lo, eve::as<__m128i> {}), eve::bit_cast(hi, eve::as<__m128i> {})};
+  return {bit_cast(lo, eve::as<__m128i> {}), bit_cast(hi, eve::as<__m128i> {})};
 }
 
 template<typename T>
@@ -44,26 +44,26 @@ mul32x32(__m128i a, __m128i b)
 {
   using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>,
                         eve::fixed<4>>;
-  return eve::bit_cast(
-      eve::mul(eve::bit_cast(a, eve::as<w32> {}), eve::bit_cast(b, eve::as<w32> {})),
+  return bit_cast(
+      eve::mul(bit_cast(a, eve::as<w32> {}), bit_cast(b, eve::as<w32> {})),
       eve::as<__m128i> {});
 }
 namespace eve::detail
 {
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE upgrade_t<wide<T, N>>
-                mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+EVE_FORCEINLINE upgrade_t<eve::wide<T, N>>
+                mul_(EVE_REQUIRES(sse2_), O const& opts, eve::wide<T, N> v, eve::wide<T, N> w) noexcept
 requires(x86_abi<abi_t<T, N>> && O::contains(widen))
 {
   return mul.behavior(cpu_ {}, opts, v, w);
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+EVE_FORCEINLINE eve::wide<T, N>
+                mul_(EVE_REQUIRES(sse2_), O const& opts, eve::wide<T, N> a, eve::wide<T, N> b) noexcept
 requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
 {
-  constexpr auto c = categorize<wide<T, N>>();
+  constexpr auto c = categorize<eve::wide<T, N>>();
   if constexpr( floating_value<T> && (O::contains(lower) || O::contains(upper)) )
   {
     if constexpr( O::contains(strict) || (current_api < avx512) )
@@ -138,7 +138,7 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         return eve::wide<typename T::value_type, typename T::cardinal_type> {
             _mm256_setr_m128i(result_low, result_high)};
       }
-      else { return eve::slice_apply(eve::mul, a, b); }
+      else { return slice_apply(eve::mul, a, b); }
     }
     else { return eve::mul(cx, opts, a, b); }
   }
@@ -178,7 +178,7 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
     else
     {
       static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
-      using htype                     = wide<std::int64_t, fixed<half_size>>;
+      using htype                     = eve::wide<std::int64_t, fixed<half_size>>;
 
       htype mhi = _mm_setr_epi32(-1, 0, -1, 0);
       htype mlo = mhi;
@@ -204,7 +204,7 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
     static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
 
-    using htype = wide<std::int16_t, fixed<half_size>>;
+    using htype = eve::wide<std::int16_t, fixed<half_size>>;
 
     htype mhi = _mm_set1_epi16(0x00FF);
     htype mlo = mhi;
@@ -229,13 +229,13 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
 }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE eve::wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, eve::wide<T, N> a, eve::wide<T, N> b) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {
-    constexpr auto c = categorize<wide<T, N>>();
+    constexpr auto c = categorize<eve::wide<T, N>>();
 
-    auto src = alternative(cx, a, as<wide<T, N>> {});
-    auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+    auto src = alternative(cx, a, as<eve::wide<T, N>> {});
+    auto m   = expand_mask(cx, as<eve::wide<T, N>> {}).storage().value;
 
     if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
