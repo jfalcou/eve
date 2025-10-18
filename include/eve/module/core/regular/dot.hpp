@@ -123,7 +123,17 @@ namespace eve
         {
           auto coeffs = eve::zip(r_t(args)...);
           auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(Ts)/2>);
-          if constexpr(O::contains(kahan))
+          if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>) && !O::contains(saturated))
+          {
+            auto fsimd = eve::as_wides(eve::zero(eve::as<r_t>()), f);
+            auto ssimd = eve::as_wides(eve::zero(eve::as<r_t>()), s);
+            auto d = dot(fsimd, ssimd);
+//        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
+//           return sum(s);
+//         else
+            return butterfly_reduction(d, eve::add[o]).get(0);
+          }
+          else if constexpr(O::contains(kahan))
           {
             auto[f0,fs]       = kumi::split(f, kumi::index<1>);
             auto[s0,ss]       = kumi::split(s, kumi::index<1>);
