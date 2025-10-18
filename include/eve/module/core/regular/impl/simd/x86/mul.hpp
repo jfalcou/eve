@@ -32,7 +32,7 @@ struct M128iPair
 // Helper to split 64-bit lanes into 32-bit low and high parts
 M128iPair split_lohi(__m128i v) {
 
-  using w64u = eve::wide<std::uint64_t, eve::fixed<2>, eve::sse2_>;
+  using w64u = eve::wide<std::uint64_t, eve::fixed<2>>;
 
   w64u vec = eve::bit_cast(v, eve::as<w64u>{});
   w64u lo = vec & w64u(0x00000000FFFFFFFFULL);
@@ -46,7 +46,7 @@ M128iPair split_lohi(__m128i v) {
 // Multiply two 128-bit vectors with 32-bit integers template
 template <typename T>
 EVE_FORCEINLINE __m128i mul32x32(__m128i a, __m128i b) {
-  using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>, eve::fixed<4>, eve::sse2_>;
+  using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>, eve::fixed<4>>;
 
   return eve::bit_cast(
       eve::mul(
