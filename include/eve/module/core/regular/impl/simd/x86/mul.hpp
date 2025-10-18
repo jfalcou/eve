@@ -31,11 +31,10 @@ struct M128iPair
 M128iPair
 split_lohi(__m128i v)
 {
-  using w64u = eve::wide<std::uint64_t, eve::fixed<2>>;
-  w64u vec   = eve::bit_cast(v, eve::as<w64u> {});
-  w64u lo    = vec & w64u(0x00000000FFFFFFFFULL);
-  w64u hi    = vec >> 32;
-  return {eve::bit_cast(lo, eve::as<__m128i> {}), eve::bit_cast(hi, eve::as<__m128i> {})};
+  __m128i mask = _mm_set1_epi64x(0x00000000FFFFFFFFULL);
+  __m128i lo   = _mm_and_si128(v, mask);
+  __m128i hi   = _mm_srli_epi64(v, 32);
+  return {lo, hi};
 }
 
 template<typename T>
@@ -43,7 +42,7 @@ EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
   using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>,
-                        eve::fixed<4>>; 
+                        eve::fixed<4>>;
   return eve::bit_cast(
       eve::mul(eve::bit_cast(a, eve::as<w32> {}), eve::bit_cast(b, eve::as<w32> {})),
       eve::as<__m128i> {});
