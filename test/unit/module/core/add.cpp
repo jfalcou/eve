@@ -110,6 +110,7 @@ TTS_CASE_WITH("Check behavior of add on wide",
     TTS_EXPECT(eve::all(add[lower](w0, w1) <= add[eve::to_nearest_odd](w0, w1)));
     TTS_EXPECT(eve::all(add[upper](w0, w1) >= add[eve::to_nearest_odd](w0, w1)));
 
+    //test scalar chunking
     using v_t = eve::element_type_t<T>;
     auto t = [](auto p){ return v_t(p+1); };
     constexpr auto s = 3*T::size()/2;
@@ -234,3 +235,4 @@ TTS_CASE_WITH("Check behavior of add kahan on wide",
     TTS_ULP_EQUAL(add[kahan](a0, a1, a2), eve::downgrade(add[widen](a0, a1, a2)), 0.5);
 
 };
+ 

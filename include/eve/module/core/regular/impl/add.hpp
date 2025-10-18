@@ -24,6 +24,8 @@
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 //#include <eve/detail/function/sum.hpp>
+#include <iostream>
+
 namespace eve::detail
 {
 
@@ -126,6 +128,7 @@ namespace eve::detail
     {
       if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>) && !O::contains(saturated))
       {
+        std::cout << "icitte" << std::endl;
         auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
         auto s = eve::add[o](head);
 //        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)

@@ -9,11 +9,14 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-
+#include <eve/module/core/regular/dot.hpp>
+#include <eve/module/core/regular/sum_of_squares.hpp>
+#include <eve/module/core/regular/rsqrt.hpp>
+#include <eve/module/core/decorator/core.hpp>
 namespace eve
 {
   template<typename Options>
-  struct dot_t : tuple_callable<dot_t, Options, kahan_option, widen_option>
+  struct cosine_similarity_t : tuple_callable<cosine_similarity_t, Options, kahan_option, widen_option, unbiased_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -56,17 +59,15 @@ namespace eve
     kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
 
-    EVE_CALLABLE_OBJECT(dot_t, dot_);
+    EVE_CALLABLE_OBJECT(cosine_similarity_t, cosine_similarity_);
   };
 
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var dot
-//!   @brief `elementwise_callable` object computing the elementwise  dot product
-//!     of the vector of the first half parameter by thevector of the last half.
-//!
-//!   @warning This is not a reduction ! For reals the dot product is the product
+//!   @var cosine_similarity
+//!   @brief `elementwise_callable` object computing the elementwise  cosine_similarity
+//!     of the vector of the first half parameters by the vector of the last half.
 //!
 //!   @groupheader{Header file}
 //!
@@ -80,30 +81,32 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto dot(auto value... xs, auto value... ys)        noexcept; // 1
-//!      constexpr auto dot(kumi::tuple xs, kumi::tuple ys)            noexcept; // 2
+//!      constexpr auto cosine_similarity(auto value... xs, auto value... ys)        noexcept; // 1
+//!      constexpr auto cosine_similarity(kumi::tuple xs, kumi::tuple ys)            noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto dot[kahan](/*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto cosine_similarity[widen]   (/*any of the above overloads*/)  noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [value arguments](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `xs`, `ys`  :  [floating value arguments](@ref eve::value) or tuples of floating value arguments.
 //!
 //!    **Return value**
 //!
-//!    1. dot product. \f$\sum_s x_s*y_s\f$.
+//!    1. cosine_similarity product. \f$\frac{\sum_s (x_s*y_s)}{\sqrt{\sum_s (x_s^2)*\sum_s (y_s^2)}}\f$.
+//!       It is the cosine of the angle between the two vectors. One or minus one means thaat the vectors are proportionnal,
+//!       zero that they are orthogonal.
 //!    2. use the content of the tuples
-//!    3. Uses a compensated kahan-like algorithm to compute the result more accurately
+//!    3. Uses the upgraded type for computations and result
+//!
+//!  @see [`welford_cosine_similarity`](@ref welford_variance) for incremental or parallel cosine_similarity and averages computations.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/dot.cpp}
+//!  @godbolt{doc/core/cosine_similarity.cpp}
 //================================================================================================
-  inline constexpr auto dot = functor<dot_t>;
+  inline constexpr auto cosine_similarity = functor<cosine_similarity_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -111,49 +114,44 @@ namespace eve
   namespace detail
   {
     template<typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto dot_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
+    EVE_FORCEINLINE constexpr auto cosine_similarity_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     requires(sizeof...(Ts) > 1  && sizeof...(Ts)%2 == 0)
     {
-      if constexpr(sizeof...(Ts) == 2) return eve::mul[o](args...);
+      using r_t =  eve::common_value_t<Ts...>;
+      constexpr auto siz = sizeof...(Ts)/2;
+      if constexpr(O::contains(widen)) return cosine_similarity[o.drop(widen)](upgrade(r_t(args))...);
+      else if constexpr(siz == 1) return (eve::sign(args) * ...);
       else
       {
-        using r_t =  eve::common_value_t<Ts...>;
-        if constexpr(O::contains(widen)) return dot[o.drop(widen)](upgrade(r_t(args))...);
+        auto sums_comp = [o](auto ff, auto ss){
+          auto sa2 = eve::sum_of_squares[o](ff);
+          auto sb2 = eve::sum_of_squares[o](ss);
+          auto sab = eve::dot[o](ff, ss);
+          return eve::zip(sa2, sb2, sab);
+        };
+        if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>)) //chunk it
+        {
+          auto coeffs = eve::zip(r_t(args)...);
+          auto[f,s]   = kumi::split(coeffs, kumi::index<siz>);
+          auto simdf = eve::as_wides(eve::zero(eve::as<r_t>()), f);
+          auto simds = eve::as_wides(eve::zero(eve::as<r_t>()), s);
+          auto [sa2, sb2, sab] = sums_comp(simdf, simds);
+          auto a2 = butterfly_reduction(sa2, eve::add[o]).get(0);
+          if(is_eqz(a2)) return eve::one(eve::as(a2));
+          auto b2 = butterfly_reduction(sb2, eve::add[o]).get(0);
+          if(is_eqz(b2)) return eve::one(eve::as(b2));
+          auto ab = butterfly_reduction(sab, eve::add[o]).get(0);
+          if(is_eqz(ab)) return ab;
+          auto r = ab*eve::rsqrt(a2*b2);
+          return if_else(is_eqz(ab), zero, if_else(is_eqz(a2)||is_eqz(b2), a2*b2, r));
+        }
         else
         {
           auto coeffs = eve::zip(r_t(args)...);
-          auto[f,s]   = kumi::split(coeffs, kumi::index<sizeof...(Ts)/2>);
-//           if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>) && !O::contains(saturated))
-//           {
-//             auto fsimd = eve::as_wides(eve::zero(eve::as<r_t>()), f);
-//             auto ssimd = eve::as_wides(eve::zero(eve::as<r_t>()), s);
-//             auto d = dot[o](fsimd, ssimd);
-// //        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
-// //           return sum(s);
-// //         else
-//             return butterfly_reduction(d, eve::add[o]).get(0);
-//           }
-//           else
-          if constexpr(O::contains(kahan))
-          {
-            auto[f0,fs]       = kumi::split(f, kumi::index<1>);
-            auto[s0,ss]       = kumi::split(s, kumi::index<1>);
-            auto [su,error]  = eve::two_prod(get<0>(f0), get<0>(s0));
-
-            kumi::for_each( [&](auto a, auto b)
-                            {
-                              auto[s1, e1] = eve::two_fma_approx(a, b, su);
-                              error += e1;
-                              su    = s1;
-                            }, fs, ss
-                          );
-
-            return su + error;
-          }
-          else
-          {
-            return add[o]( kumi::map([](auto a, auto b) { return a*b; }, f, s));
-          }
+          auto[f,s]   = kumi::split(coeffs, kumi::index<siz>);
+          auto [sa2, sb2, sab] = sums_comp(f, s);
+          auto r = sab*eve::rsqrt(sa2*sb2);
+          return if_else(is_eqz(sab), zero, if_else(is_eqz(sa2)||is_eqz(sb2), sa2*sb2, r));
         }
       }
     }
