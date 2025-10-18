@@ -21,6 +21,7 @@
 #include <cstdint>
 #include <emmintrin.h>
 #include <immintrin.h>
+
 struct M128iPair
 {
   __m128i lo;
@@ -30,11 +31,11 @@ struct M128iPair
 M128iPair
 split_lohi(__m128i v)
 {
-  using w64u = eve::wide<std::uint64_t, eve::fixed<2>>;
-  w64u vec   = bit_cast(v, eve::as<w64u> {});
+  using w64u = eve::wide<std::uint64_t, eve::fixed<2>, eve::sse2_>;
+  w64u vec   = eve::bit_cast(v, eve::as<w64u> {});
   w64u lo    = vec & w64u(0x00000000FFFFFFFFULL);
   w64u hi    = vec >> 32;
-  return {bit_cast(lo, eve::as<__m128i> {}), bit_cast(hi, eve::as<__m128i> {})};
+  return {eve::bit_cast(lo, eve::as<__m128i> {}), eve::bit_cast(hi, eve::as<__m128i> {})};
 }
 
 template<typename T>
@@ -42,13 +43,15 @@ EVE_FORCEINLINE __m128i
 mul32x32(__m128i a, __m128i b)
 {
   using w32 = eve::wide<std::conditional_t<std::is_signed_v<T>, std::int32_t, std::uint32_t>,
-                        eve::fixed<4>>;
-  return bit_cast(eve::mul(bit_cast(a, eve::as<w32> {}), bit_cast(b, eve::as<w32> {})),
-                  eve::as<__m128i> {});
+                        eve::fixed<4>,
+                        eve::sse2_>;
+  return eve::bit_cast(
+      eve::mul(eve::bit_cast(a, eve::as<w32> {}), eve::bit_cast(b, eve::as<w32> {})),
+      eve::as<__m128i> {});
 }
-
 namespace eve::detail
 {
+
 template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE upgrade_t<wide<T, N>>
                 mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
@@ -118,12 +121,12 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         auto [al_high, ah_high] = split_lohi(a_hi.storage());
         auto [bl_high, bh_high] = split_lohi(b_hi.storage());
 
-        __m128i mul_low_low  = mul32x32<typename T::value_type>(al_low, bl_low);
-        __m128i cross_low_1  = mul32x32<typename T::value_type>(al_low, bh_low);
-        __m128i cross_low_2  = mul32x32<typename T::value_type>(ah_low, bl_low);
-        __m128i mul_high_low = mul32x32<typename T::value_type>(al_high, bl_high);
-        __m128i cross_high_1 = mul32x32<typename T::value_type>(al_high, bh_high);
-        __m128i cross_high_2 = mul32x32<typename T::value_type>(ah_high, bl_high);
+        __m128i mul_low_low  = mul32x32<T>(al_low, bl_low);
+        __m128i cross_low_1  = mul32x32<T>(al_low, bh_low);
+        __m128i cross_low_2  = mul32x32<T>(ah_low, bl_low);
+        __m128i mul_high_low = mul32x32<T>(al_high, bl_high);
+        __m128i cross_high_1 = mul32x32<T>(al_high, bh_high);
+        __m128i cross_high_2 = mul32x32<T>(ah_high, bl_high);
 
         __m128i cross_low_sum  = _mm_add_epi64(cross_low_1, cross_low_2);
         __m128i cross_high_sum = _mm_add_epi64(cross_high_1, cross_high_2);
@@ -134,10 +137,9 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         __m128i result_low  = _mm_add_epi64(mul_low_low, cross_low_shifted);
         __m128i result_high = _mm_add_epi64(mul_high_low, cross_high_shifted);
 
-        return eve::wide<typename T::value_type, typename T::cardinal_type> {
-            _mm256_setr_m128i(result_low, result_high)};
+        return eve::wide<T, N> {_mm256_setr_m128i(result_low, result_high)};
       }
-      else { return slice_apply(eve::mul, a, b); }
+      else { return eve::slice_apply(eve::mul, a, b); }
     }
     else if constexpr( c == category::int64x2 )
     {
@@ -150,15 +152,14 @@ requires(x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
         auto [a_low, a_high] = split_lohi(a.storage());
         auto [b_low, b_high] = split_lohi(b.storage());
 
-        __m128i mul_low         = mul32x32<typename T::value_type>(a_low, b_low);
-        __m128i cross_mul_la_hb = mul32x32<typename T::value_type>(a_low, b_high);
-        __m128i cross_mul_lb_ha = mul32x32<typename T::value_type>(a_high, b_low);
+        __m128i mul_low         = mul32x32<T>(a_low, b_low);
+        __m128i cross_mul_la_hb = mul32x32<T>(a_low, b_high);
+        __m128i cross_mul_lb_ha = mul32x32<T>(a_high, b_low);
 
         __m128i cross_sum     = _mm_add_epi64(cross_mul_la_hb, cross_mul_lb_ha);
         __m128i cross_shifted = _mm_slli_epi64(cross_sum, 32);
 
-        return eve::wide<typename T::value_type, typename T::cardinal_type> {
-            _mm_add_epi64(mul_low, cross_shifted)};
+        return eve::wide<T, N> {_mm_add_epi64(mul_low, cross_shifted)};
       }
     }
     else if constexpr( c == category::uint64x8 ) return _mm512_mullo_epi64(a, b);
