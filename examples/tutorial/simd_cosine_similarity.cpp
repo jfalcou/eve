@@ -1,50 +1,87 @@
 //! [simd-function]
 #include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/algo.hpp>
 #include <iostream>
 #include <array>
+#include <bit>
+#include <tts/tts.hpp>
+
+template < typename T>
+struct vec3
+{
+  T x, y, z;
+};
+
+template<std::size_t I, typename T>
+decltype(auto) get(vec3<T> const& v) noexcept
+{
+  if constexpr(I==0) return v.x;
+  if constexpr(I==1) return v.y;
+  if constexpr(I==2) return v.z;
+}
+
+template<std::size_t I, typename T>
+decltype(auto) get(vec3<T>& v) noexcept
+{
+  if constexpr(I==0) return v.x;
+  if constexpr(I==1) return v.y;
+  if constexpr(I==2) return v.z;
+}
+
+template < typename T>
+std::ostream& operator << (std::ostream& os, vec3<T> const & v){
+  os << '[' << v.x << ",  " << v.y << ", " << v.z << "]";
+  return os;
+}
+
+// Opt-in for Product Type semantic
+template<typename T>
+struct kumi::is_product_type<vec3<T>> : std::true_type
+{};
+
+
+// Adapt as structured bindable type
+template<typename T>
+struct  std::tuple_size<vec3<T>>
+      : std::integral_constant<std::size_t,3> {};
+
+template<std::size_t I, typename T> struct std::tuple_element<I,vec3<T>> { using type = T; };
+
 
 int main()
 {
-  auto print = [](std::string name, auto v){ //utility to print the results
-    std::cout << name << " =  {";
-    for(std::size_t i=0; i <  v.size(); ++i) std::cout << v[i] << ((i != v.size()-1) ? ", ":"}");
-    std::cout << std::endl;
-  };
 
-  auto quadratics = [](auto & result,  auto const& aa, auto const& bb, auto const& cc){
-    // result will be a zip of two arrays
-    auto quad_it = [](auto e){                                               //this is the EVE version of the scalar resolution algorithm above
-      auto [aaa, bbb, ccc] = e;                                              // get the coefficients
-      auto delta = eve::fnma(4*aaa, ccc, eve::sqr(bbb));                     // compute delta (fnma is the fma version of -a*b+c
-      auto rmax = eve::fam(-bbb, -eve::sign(bbb), eve::sqrt(delta))/(2*aaa); // compute the root with maximal abslute value
-      auto rmin = eve::if_else(eve::is_eqz(rmax), eve::zero, ccc/(rmax*aaa));// compute the other root (is_eqz(rmax) test for zeroes. Could be `rmax == 0`)
-      eve::swap_if(rmin > rmax, rmin, rmax);                                 // order by increasing values
-      auto iseqza = eve::is_eqz(aaa);
-      if (eve::any(iseqza))                                                  // dont do if no element is zero
-      {
-        rmin = eve::if_else(eve::is_eqz(aaa), -ccc/bbb, rmin);               // first degree aaa is zero first root is -ccc/bbb
-        rmax = eve::if_else(eve::is_eqz(aaa), eve::nan, rmax);               // first degree aaa is zero second root is nan
-      }
-      return eve::zip(rmin, rmax);                                           // return properly typed values (always use zip to return multiple values)
-    };
-    // the algo transform_to takes care of using simd chunks to use quad_it
-    // the input vector size need not be a multiple of (the automagically chosen) best SIMD vector size
-    eve::algo::transform_to(eve::algo::views::zip(aa, bb, cc), result, quad_it);
-  };
+  vec3<float> a(1.0, 2.0, 3.0);
+  vec3<float> b(-3.0, -4.0, -6.0);
+  std::cout <<  "a " << a << std::endl;
+  std::cout <<  "b " << b << std::endl;
+  std::cout << "eve::cosine_similarity(a, b) = "<< eve::cosine_similarity(a, b) << std::endl;
+  std::cout << "eve::cosine_similarity(a, a) = " << eve::cosine_similarity(a, a) << std::endl;
+  std::cout << "eve::cosine_similarity(b, a) = " << eve::cosine_similarity(b, a) << std::endl;
+  std::cout << "eve::cosine_similarity(b, b) = " << eve::cosine_similarity(b, b) << std::endl;
 
-  using a_t = std::array<double, 11>;
+  using wv3_t = eve::wide<vec3<float>, eve::fixed<4>>;
+  auto wa = wv3_t(a, a, b, b);
+  auto wb = wv3_t(b, a, a, b);
+  std::cout << "eve::cosine_similarity(wa, wb) = "<< eve::cosine_similarity(wa, wb) << std::endl;
+  std::cout << "wa " << wa << std::endl;
+  std::cout << "wb " << wb << std::endl;
 
-  a_t a{5.0,  12.0,  6.0,  7.0, 1.0, 1.0,   1.0,   1.0, 1.0e-20, 0.0, 1.0};
-  a_t b{3.0,   1.0,  4.0, -2.0, 2.0, 1.0,   1.0,   1.0, 1.0e20,  1.0, 2.0};
-  a_t c{-1.0, -5.0, -6.0, -6.0, 5.0, 30.0, 35.0, -40.0, -1.0,   -1.0, 1.0};
-  a_t rmin, rmax;
-  auto r = eve::views::zip(rmin, rmax); //prepare container view for the results
-  quadratics(r, a, b, c);
-  print("a   ", a);
-  print("b   ", b);
-  print("c   ", c);
-  print("rmin", rmin);
-  print("rmax", rmax);
+  using w_t = eve::wide<float, eve::fixed<4>>;
+  w_t vx0{1.0, 1.0, -3.0, -3.0};
+  w_t vx1{2.0, 2.0, -4.0,-4.0,};
+  w_t vx2{3.0, 3.0, -6.0,-6.0,};
+
+  w_t vy0{ -3.0, 1.0, 1.0, -3.0};
+  w_t vy1{ -4.0, 2.0, 2.0, -4.0};
+  w_t vy2{ -6.0, 3.0, 3.0, -6.0};
+
+
+  auto z1 = kumi::tuple{vx0, vx1, vx2};
+  auto z2 = kumi::tuple{vy0, vy1, vy2};
+  std::cout << "eve::cosine_similarity(z1, z2) = "<< eve::cosine_similarity(z1, z2) << std::endl;
+  std::cout << "z1 " << z1 << std::endl;
+  std::cout << "z2 " << z2 << std::endl;
+
 }
-//! [simd-function]

@@ -45,7 +45,7 @@ Therefore, we can write such a code:
 
 The key element is the type of the return value of the function: `eve::wide<kumi::tuple<float,float>>`.
 By design, [**kumi::tuple**](https://jfalcou.github.io/kumi/) is able to be used as a template parameter for
-eve::wide. How do we interpret this type ? It logically behaves a SIMD register where each lane is
+eve::wide. How do we interpret this type ? It logically behaves as a SIMD register where each lane is
 an instance of the [**kumi::tuple**](https://jfalcou.github.io/kumi/). Internally, it is stored as
 a [**kumi::tuple**](https://jfalcou.github.io/kumi/) of eve::wide of each tuple's element. In other
 words, it performs automatic Array of Structure to Structure of Array conversion.
