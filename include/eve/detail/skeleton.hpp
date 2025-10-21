@@ -195,12 +195,12 @@ namespace eve::detail
         // Handle the case where the returned type's storage is itself a product type.
         // Functions returning zipped values need an extra level of storage wrapping.
         // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
-        if constexpr (product_type<storage_t> && !instance_of<storage_t, blob>)
+        // The check on range is used due to arrays now being considered `product types`
+        if constexpr (!range<storage_t> && product_type<storage_t> && !instance_of<storage_t, blob>)
         {
           return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
             {
               using inner_wide_t = typename kumi::element_t<i, storage_t>;
-
               // Whether we should re-wrap the inner storage into the proper product type.
               if constexpr (has_aggregated_abi_v<inner_wide_t> || product_type<kumi::element_t<0, decltype(inner)>>)
               {
