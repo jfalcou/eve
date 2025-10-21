@@ -53,6 +53,4 @@ TTS_CASE_WITH("Check behavior of covariance(wide)",
   TTS_ULP_EQUAL(eve::covariance(wa, wb), cw, 0.5);
   f4_t cw3{-1, -1, 14.0/9.0, 14.0/9.0};
   TTS_ULP_EQUAL(eve::covariance(wa, b), cw3, 0.5);
-
-
 };
