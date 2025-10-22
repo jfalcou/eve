@@ -28,12 +28,8 @@ TTS_CASE_TPL("Check return types of welford_covariance", eve::test::simd::ieee_r
 //==================================================================================================
 //== welford_covariance tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of welford_covariance(wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
-<typename T>(T const&,  T const& , T const& )
+TTS_CASE_TPL("Check behavior of welford_covariance", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using  v3_t =  vec3<v_t>;
@@ -42,32 +38,25 @@ TTS_CASE_WITH("Check behavior of welford_covariance(wide)",
   TTS_ULP_EQUAL(eve::welford_covariance[eve::unbiased](a, b).covariance, v_t(-1.5), 0.5);
   TTS_ULP_EQUAL(eve::welford_covariance(a, b).covariance, v_t(-1), 0.5);
 
-//   using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
-//   using  f4_t =  eve::wide<v_t, eve::fixed<4>>;
-//   auto wa = wv3_t(a, a, b, b);
-//   auto wb = wv3_t(b, a, a, b);
-//   f4_t cwu{-1.5, 1, -1.5, 7.0/3.0};
-//   TTS_ULP_EQUAL(eve::welford_covariance[eve::unbiased](wa, wb).covariance, cwu, 1.0);
-//   f4_t cw{-1, 2.0/3.0, -1, 14.0/9.0};
-//   TTS_ULP_EQUAL(eve::welford_covariance(wa, wb).covariance, cw, 1.0);
-//   f4_t cw3{-1, -1, 14.0/9.0, 14.0/9.0};
-//   TTS_ULP_EQUAL(eve::welford_covariance(wa, b).covariance, cw3, 1.0);
+  using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
+  using f4_t =  eve::wide<v_t, eve::fixed<4>>;
+  auto wa = wv3_t(a, a, b, b);
+  auto wb = wv3_t(b, a, a, b);
+  f4_t cwu{-1.5, 1, -1.5, 7.0/3.0};
+  TTS_ULP_EQUAL(eve::welford_covariance[eve::unbiased](wa, wb).covariance, cwu, 1.0);
+  f4_t cw{-1, 2.0/3.0, -1, 14.0/9.0};
+  TTS_ULP_EQUAL(eve::welford_covariance(wa, wb).covariance, cw, 1.0);
+  f4_t cw3{-1, -1, 14.0/9.0, 14.0/9.0};
+  TTS_ULP_EQUAL(eve::welford_covariance(wa, b).covariance, cw3, 1.0);
 
-//   auto wcab = eve::welford_covariance[eve::unbiased](wa, wb);
-//   auto wcaa = eve::welford_covariance[eve::unbiased](wa, wa);
-//   auto wcbb = eve::welford_covariance[eve::unbiased](wb, wb);
-//   auto r  = eve::welford_covariance(wcab, wcaa, wcbb);
-//   std::cout << r << std::endl;
-//   std::cout << eve::welford_covariance(eve::welford_covariance(wcab, wcaa), wcbb)  << std::endl;
+  auto t1 = kumi::generate<11>([](auto p){return float(p); });
+  auto t2 = kumi::generate<11>([](auto p){return float(p*p); });
+  TTS_ULP_EQUAL(eve::welford_covariance(t1, t2).covariance, 100.0f, 1.0);
 
-//   std::cout << eve::welford_covariance(r) << std::endl;
-
-  auto cab = eve::welford_covariance[eve::unbiased](a, b);
-  std::cout << eve::welford_covariance[eve::unbiased](cab) << std::endl;
-//   auto caa = eve::welford_covariance[eve::unbiased](a, a);
-//   auto cbb = eve::welford_covariance[eve::unbiased](b, b);
-//   std::cout << tts::typename_<decltype(cab)> << std::endl;
-//   std::cout << eve::welford_covariance(cab, caa, cbb) << std::endl;
-//   std::cout << eve::welford_covariance(eve::welford_covariance(cab, caa), cbb)  << std::endl;
-
+  using w_t = eve::wide<float, eve::fixed<4>>;
+  auto wt1 = kumi::generate<11>([](auto p){return w_t([p](auto q, auto){return float(p+q); }); });
+  auto wt2 = kumi::generate<11>([](auto p){return w_t([p](auto q, auto){return p*p/float((q+1)); }); });
+  auto z = eve::welford_covariance(wt1, wt2);
+  TTS_ULP_EQUAL(z.covariance, w_t(100.0f, 50.0f, 100/3.0f, 25.0f), 1.0);
+  TTS_ULP_EQUAL(eve::welford_covariance(z).covariance, 41.5104179382324f, 1.0); //scalarization
 };
