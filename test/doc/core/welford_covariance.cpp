@@ -1,7 +1,7 @@
 // revision 0
 // revision 0
 #include <eve/module/core.hpp>
-#include <eve/detail/vec3.hpp>
+#include "../../vec3.hpp"
 #include <iostream>
 #include <iomanip>
 #include <tts/tts.hpp>
