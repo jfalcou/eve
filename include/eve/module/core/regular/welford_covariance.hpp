@@ -202,15 +202,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
     {
-      using Tup1 = kumi::as_tuple_t<PT1>;
-      using Tup2 = kumi::as_tuple_t<PT2>;
-      constexpr auto siz = Tup1::size();
-      constexpr auto fac = O::contains(unbiased) ? siz-1 : siz;
-      using r1_t = kumi::apply_traits_t<eve::common_value, Tup1>;
-      using r2_t = kumi::apply_traits_t<eve::common_value, Tup2>;
-
-      using r_t =  eve::common_value_t<r1_t, r2_t>;
-      if constexpr(O::contains(widen)) {
+     if constexpr(O::contains(widen)) {
         auto up = [](auto tup){
           auto upg = [](auto t){return eve::upgrade(t); };
           return kumi::map(upg, tup);
@@ -219,6 +211,14 @@ namespace eve
       }
       else
       {
+        using Tup1 = kumi::as_tuple_t<PT1>;
+        using Tup2 = kumi::as_tuple_t<PT2>;
+        constexpr auto siz = Tup1::size();
+        constexpr auto fac = O::contains(unbiased) ? siz-1 : siz;
+        using r1_t = kumi::apply_traits_t<eve::common_value, Tup1>;
+        using r2_t = kumi::apply_traits_t<eve::common_value, Tup2>;
+
+        using r_t =  eve::common_value_t<r1_t, r2_t>;
         welford_covariance_result<r_t> ncov{};
         auto doit = [&ncov, &f, &s](){
           auto welford_covariancestep = [&ncov](auto xnyn)

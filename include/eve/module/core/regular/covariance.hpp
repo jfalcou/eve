@@ -87,38 +87,40 @@ namespace eve
     EVE_FORCEINLINE constexpr auto covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
     {
-      using Tup1 = kumi::as_tuple_t<PT1>;
-      using Tup2 = kumi::as_tuple_t<PT2>;
-      constexpr auto siz = Tup1::size();
-      constexpr auto fac = O::contains(unbiased) ? siz-1 : siz;
-      using r1_t = kumi::apply_traits_t<eve::common_value, Tup1>;
-      using r2_t = kumi::apply_traits_t<eve::common_value, Tup2>;
-
-      using r_t =  eve::common_value_t<r1_t, r2_t>;
-      if constexpr(siz == 1) return eve::zero(eve::as<r_t>());
-      else
-      {
-        if constexpr(O::contains(widen)) {
-          auto up = [](auto tup){
-            auto upg = [](auto t){return eve::upgrade(t); };
-            return kumi::map(upg, tup);
-          };
-          return covariance[o.drop(widen)](up(f), up(s));
-        }
-        else
-        {
-          auto avgf = eve::average[o](f);
-          auto avgs = eve::average[o](s);
-          if constexpr(O::contains(raw))
-            auto cov = kumi::sum( kumi::map([avgf, avgs](auto a, auto b) { return (a-avgf)*(b-avgs); }, f, s))/fac;
-          else
-          {
-            auto fc =  kumi::map([avgf](auto a) { return (a-avgf); }, f);
-            auto sc =  kumi::map([avgs](auto a) { return (a-avgs); }, s);
-            return eve::dot[o](fc, sc)/fac;
-          }
-        }
+     if constexpr(O::contains(widen)) {
+        auto up = [](auto tup){
+          auto upg = [](auto t){return eve::upgrade(t); };
+          return kumi::map(upg, tup);
+        };
+        return covariance[o.drop(widen)](up(f), up(s));
       }
+     else
+     {
+       using Tup1 = kumi::as_tuple_t<PT1>;
+       using Tup2 = kumi::as_tuple_t<PT2>;
+       constexpr auto siz = Tup1::size();
+       constexpr auto fac = O::contains(unbiased) ? siz-1 : siz;
+       using r1_t = kumi::apply_traits_t<eve::common_value, Tup1>;
+       using r2_t = kumi::apply_traits_t<eve::common_value, Tup2>;
+
+       using r_t =  eve::common_value_t<r1_t, r2_t>;
+
+       if constexpr(siz == 1)
+         return eve::zero(eve::as<r_t>());
+       else
+       {
+         auto avgf = eve::average[o](f);
+         auto avgs = eve::average[o](s);
+         if constexpr(O::contains(raw))
+           auto cov = kumi::sum( kumi::map([avgf, avgs](auto a, auto b) { return (a-avgf)*(b-avgs); }, f, s))/fac;
+         else
+         {
+           auto fc =  kumi::map([avgf](auto a) { return (a-avgf); }, f);
+           auto sc =  kumi::map([avgs](auto a) { return (a-avgs); }, s);
+           return eve::dot[o](fc, sc)/fac;
+         }
+       }
+     }
     }
   }
 }

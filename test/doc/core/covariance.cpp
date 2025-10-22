@@ -21,7 +21,7 @@ int main()
   using wv3_t = eve::wide<vec3<float>, eve::fixed<4>>;
   auto wa = wv3_t(a, a, b, b);
   auto wb = wv3_t(b, a, a, b);
-  std::cout << "eve::covariance[eve::unbiased](wa, wb) = "<< eve::covariance[eve::widen][eve::unbiased](wa, wb) << std::endl;
+  std::cout << "eve::covariance[eve::widen][eve::unbiased](wa, wb) = "<< eve::covariance[eve::widen][eve::unbiased](wa, wb) << std::endl;
   std::cout << "wa " << wa << std::endl;
   std::cout << "wb " << wb << std::endl;
 
