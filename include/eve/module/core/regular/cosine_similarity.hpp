@@ -132,7 +132,7 @@ namespace eve
           auto upg = [](auto t){return eve::upgrade(t); };
           return kumi::map(upg, tup);
         };
-        return cosine_similarity[o.drop(widen)](up(f), up(s));
+        return cosine_similarity[o.drop(widen)](up(kumi::as_tuple(f)), up(kumi::as_tuple(s)));
       }
       else
       {

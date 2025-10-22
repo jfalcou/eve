@@ -29,7 +29,7 @@ int main()
   auto wb = wv3_t(b, a, a, b);
    std::cout << "wa " << wa << std::endl;
    std::cout << "wb " << wb << std::endl;
-   std::cout << "eve::cosine_similarity[eve::widen](wa, wb) = "<< eve::cosine_similarity[eve::widen](wa, wb) << std::endl;
+   std::cout << "eve::cosine_similarity[eve::widen](wa, wb) = "<< eve::cosine_similarity(wa, wb) << std::endl;
 
 
   kumi::tuple x{4.0f, 3.0f, 2.0f, 1.0f};
