@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#define KUMI_NO_STD_ADAPTORS
 #if __has_include(<kumi/kumi.hpp>)
 # include <kumi/kumi.hpp>
 #else

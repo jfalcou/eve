@@ -54,7 +54,7 @@ an instance of Docker.
 # .bashrc
 dockhere()
 {
-  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v6
+  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
 }
 @endverbatim
 

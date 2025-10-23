@@ -12,6 +12,7 @@
 #include <eve/traits/translation.hpp>
 #include <eve/concept/translation.hpp>
 #include <eve/arch/float16.hpp>
+#include <eve/concept/range.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -78,6 +79,7 @@ constexpr bool
 scalar_tuple() noexcept
 {
   if constexpr( !kumi::product_type<T> ) return false;
+  else if constexpr( range<T> )          return false;
   else
   {
     constexpr auto f = []<typename M>(M)
