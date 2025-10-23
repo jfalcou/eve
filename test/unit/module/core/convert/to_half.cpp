@@ -45,6 +45,9 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
   }
 };
 
+/*
+  The following test is currently disabled because some callables are to be updated to support fp16s values first.
+*/
 // TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 // <typename T>(tts::type<T>)
 // {
