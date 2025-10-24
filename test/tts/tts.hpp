@@ -905,14 +905,14 @@ namespace tts
   auto produce(type<T> const&, auto g, auto& rng, auto... args)
   {
     using elmt_type   = std::remove_cvref_t<decltype(*std::begin(std::declval<T>()))>;
-    using value_type  = decltype(g(tts::type<elmt_type>{},rng,0,0ULL,args...));
+    using value_type  = decltype(produce(tts::type<elmt_type>{},g,rng,args...));
     typename rebuild<T,value_type>::type that;
     auto b = std::begin(that);
     auto e = std::end(that);
     auto sz = e - b;
     for(std::ptrdiff_t i=0;i<sz;++i)
     {
-      *b++ = as_value<value_type>(g(tts::type<value_type>{},rng,i,sz,args...));
+      *b++ = produce(tts::type<value_type>{},g,rng,i,sz,args...);
     }
     return that;
   }

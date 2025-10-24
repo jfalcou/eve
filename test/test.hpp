@@ -355,8 +355,15 @@ namespace tts
 
   auto produce(type<eve::float16_t> const&, auto g, auto& rng, auto... args)
   {
-    float data = produce(type<float>{}, g, rng, args...);
-    return static_cast<eve::float16_t>(data);
+    auto data = produce(type<float>{}, g, rng, args...);
+    if constexpr (eve::logical_value<decltype(data)>)
+    {
+      return static_cast<eve::logical<eve::float16_t>>(data);
+    }
+    else
+    {
+      return static_cast<eve::float16_t>(data);
+    }
   }
 
   template<std::ptrdiff_t N>
