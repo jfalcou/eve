@@ -106,7 +106,7 @@ var searchData=
   ['callable_3c_20countl_5fzero_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_103',['callable&lt; countl_zero_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20countr_5fone_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_104',['callable&lt; countr_one_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20countr_5fzero_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_105',['callable&lt; countr_zero_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
-  ['callable_3c_20covariance_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_106',['callable&lt; covariance_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
+  ['callable_3c_20covariance_5ft_2c_20options_2c_20kahan_5foption_2c_20widen_5foption_2c_20unbiased_5foption_20_3e_106',['callable&lt; covariance_t, Options, kahan_option, widen_option, unbiased_option &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20csc_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_107',['callable&lt; csc_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20cscd_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_108',['callable&lt; cscd_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20csch_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_109',['callable&lt; csch_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
