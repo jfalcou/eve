@@ -23,13 +23,6 @@
 
 namespace eve::detail
 {
-  template<typename T0, callable_options O>
-  EVE_FORCEINLINE auto
-  bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a) noexcept
-  {
-    return a;
-  }
-
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
