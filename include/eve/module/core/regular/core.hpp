@@ -50,11 +50,13 @@
 #include <eve/module/core/regular/compare_absolute.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/copysign.hpp>
+#include <eve/module/core/regular/cosine_similarity.hpp>
 #include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/countl_one.hpp>
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
+#include <eve/module/core/regular/cosine_similarity.hpp>
 #include <eve/module/core/regular/covariance.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
@@ -236,6 +238,7 @@
 #include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/welford_average.hpp>
+#include <eve/module/core/regular/welford_cosine_similarity.hpp>
 #include <eve/module/core/regular/welford_covariance.hpp>
 #include <eve/module/core/regular/welford_variance.hpp>
 #include <eve/module/core/regular/write.hpp>
