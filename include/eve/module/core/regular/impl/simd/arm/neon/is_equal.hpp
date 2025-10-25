@@ -11,6 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +32,11 @@ namespace eve::detail
                                               return as_logical_t<E>(e == f);
                                             };
 
-           if constexpr( cat == category::int32x4  )   return vceqq_s32(a, b);
+      if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
+      {
+        return apply_fp16_as_fp32(is_equal, a, b);
+      }
+      else if constexpr( cat == category::int32x4  )   return vceqq_s32(a, b);
       else if constexpr( cat == category::int16x8  )   return vceqq_s16(a, b);
       else if constexpr( cat == category::int8x16  )   return vceqq_s8 (a, b);
       else if constexpr( cat == category::uint32x4 )   return vceqq_u32(a, b);

@@ -10,7 +10,6 @@
 #include <eve/as.hpp>
 #include <eve/arch/spec.hpp>
 
-#include <eve/arch/cpu/as_register.hpp>
 
 #if !defined(EVE_NO_SIMD)
 #  if defined(EVE_INCLUDE_X86_HEADER)
@@ -26,12 +25,17 @@
 #  endif
 #endif
 
+#include <eve/arch/cpu/as_register.hpp>
+
 namespace eve
 {
+  template<typename T> consteval auto unpack_register(T)     { return T{}; }
+  template<typename T> consteval auto unpack_register(as<T>) { return T{}; }
+
   template<typename T, typename N, typename ABI>
   consteval auto as_register(as<T> t, N n, ABI abi)
   {
-    using found_type = decltype(find_register_type(t, n, abi));
+    using found_type = decltype(unpack_register(find_register_type(t, n, abi)));
     static_assert(!std::same_as<found_type, void>, "[EVE] - Type is not usable in a SIMD register");
 
     return found_type{};

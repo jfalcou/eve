@@ -134,6 +134,7 @@ namespace eve
       static constexpr bool supports_fp16_native_type = spy::supports::fp16::type;
       static constexpr bool supports_fp16_scalar_ops = spy::supports::fp16::scalar_ops;
       static constexpr bool supports_fp16_vector_ops = spy::supports::fp16::vector_ops;
+      static constexpr bool supports_fp16_vector_conversion = spy::supports::fp16::vector_conversion;
     }
 
     using float16_t = _Float16;
@@ -143,6 +144,7 @@ namespace eve
       static constexpr bool supports_fp16_native_type = false;
       static constexpr bool supports_fp16_scalar_ops = false;
       static constexpr bool supports_fp16_vector_ops = false;
+      static constexpr bool supports_fp16_vector_conversion = false;
     }
 
     struct float16_t {

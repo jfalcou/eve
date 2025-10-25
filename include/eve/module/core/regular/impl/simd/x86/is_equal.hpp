@@ -16,6 +16,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/traits/as_floating_point.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -36,6 +37,10 @@ namespace eve::detail
     if constexpr (O::contains_any(almost, numeric))
     {
       return is_equal.behavior(cpu_{}, opts, v, w);
+    }
+    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    {
+      return apply_fp16_as_fp32(is_equal, v, w);
     }
     else if constexpr( current_api >= avx512 )
     {
@@ -150,14 +155,19 @@ namespace eve::detail
                                                      wide<T, N> const &w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    constexpr auto c = categorize<wide<T, N>>();
+
     if constexpr( C::has_alternative || O::contains_any(almost, numeric))
     {
       return is_equal[opts][mask].retarget(cpu_{}, v, w);
     }
+    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    {
+      return apply_fp16_as_fp32_masked(is_equal, mask, v, w);
+    }
     else
     {
       auto const            s = alternative(mask, v, as(to_logical(v)));
-      constexpr        auto c = categorize<wide<T, N>>();
       [[maybe_unused]] auto m = expand_mask(mask, as<wide<T, N>> {}).storage().value;
       constexpr auto        f = to_integer(cmp_flt::eq_oq);
 

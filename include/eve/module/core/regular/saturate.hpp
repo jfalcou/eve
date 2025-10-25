@@ -84,21 +84,21 @@ namespace eve
     EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
                                                O const &,
                                                U const & a0,
-                                               as<Target>) noexcept
+                                               as<Target> tgt) noexcept
     {
       if constexpr( scalar_value<U>)
       {
         if constexpr( std::same_as<U, Target> )
           return a0;
-        else if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
+        else if constexpr( floating_scalar_value<Target> ) // saturating to floating point
         {
-          if constexpr( std::is_floating_point_v<U> ) // from a floating point
+          if constexpr( floating_scalar_value<U> ) // from a floating point
           {
             if constexpr( sizeof(Target) >= sizeof(U) ) { return a0; }
             else
             {
-              auto mn = static_cast<double>(valmin(eve::as<float>()));
-              auto mx = static_cast<double>(valmax(eve::as<float>()));
+              auto mn = static_cast<double>(valmin(tgt));
+              auto mx = static_cast<double>(valmax(tgt));
               return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
             }
           }
@@ -111,7 +111,7 @@ namespace eve
         {
           if constexpr( std::is_signed_v<Target> ) // saturating to signed integer
           {
-            if constexpr( std::is_floating_point_v<U> )
+            if constexpr( floating_scalar_value<U> )
             {
               return clamp(a0,
                            static_cast<U>(valmin(eve::as<Target>())),
@@ -134,7 +134,7 @@ namespace eve
           }
           else // saturating to unsigned integer
           {
-            if constexpr( std::is_floating_point_v<U> )
+            if constexpr( floating_scalar_value<U> )
             {
               return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(eve::as<Target>())));
             }
@@ -162,15 +162,15 @@ namespace eve
           return a0;
         else
         {
-          if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
+          if constexpr( floating_scalar_value<Target> ) // saturating to floating point
           {
-            if constexpr( std::is_floating_point_v<elt_u> ) // from a floating point
+            if constexpr( floating_scalar_value<elt_u> ) // from a floating point
             {
               if constexpr( sizeof(Target) >= sizeof(elt_u) ) return a0;
               else
               {
-                auto mn = U(valmin(eve::as<float>()));
-                auto mx = U(valmax(eve::as<float>()));
+                auto mn = U(valmin(tgt));
+                auto mx = U(valmax(tgt));
                 return clamp[is_not_infinite(a0)](a0, mn, mx);
               }
             }
@@ -181,7 +181,7 @@ namespace eve
           {
             if constexpr( std::is_signed_v<Target> ) // saturating to signed integer
             {
-              if constexpr( std::is_floating_point_v<elt_u> )
+              if constexpr( floating_scalar_value<elt_u> )
               {
                 return clamp(a0,
                              static_cast<U>(valmin(eve::as<Target>())),
@@ -199,7 +199,7 @@ namespace eve
             }
             else // saturating to unsigned integer
             {
-              if constexpr( std::is_floating_point_v<elt_u> )
+              if constexpr( floating_scalar_value<elt_u> )
               {
                 return clamp(a0,
                              static_cast<U>(zero(eve::as<Target>())),

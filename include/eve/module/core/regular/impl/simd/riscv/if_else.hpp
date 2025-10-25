@@ -27,7 +27,7 @@ if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> v
 requires rvv_abi<abi_t<T, N>>
 {
   if constexpr( !std::same_as<T, U> ) return if_else(c, static_cast<T>(vt), vf);
-  else if constexpr( std::is_floating_point_v<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
+  else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
   else return __riscv_vmerge(vf, vt, c, N::value);
 }
 

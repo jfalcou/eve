@@ -101,11 +101,12 @@ namespace eve::detail
       common_type_reduction<U> other{};
 
            if constexpr ( std::same_as<T, U>                                 ) return self;
-      else if constexpr ( std::is_arithmetic_v<T> && std::is_arithmetic_v<U> )
+      else if constexpr ( (std::is_arithmetic_v<T> || std::same_as<T, eve::float16_t>)
+                       && (std::is_arithmetic_v<U> || std::same_as<U, eve::float16_t>) )
       {
              if constexpr ( sizeof(U) < sizeof(T)                             ) return other + as<T>{};
-        else if constexpr ( std::floating_point<T> && !std::floating_point<U> ) return self;
-        else if constexpr ( std::floating_point<U> || sizeof(T) < sizeof(U)   ) return other;
+        else if constexpr ( floating_scalar_value<T> && !floating_scalar_value<U> ) return self;
+        else if constexpr ( floating_scalar_value<U> || sizeof(T) < sizeof(U)   ) return other;
         else if constexpr ( std::unsigned_integral<U>                         ) return other;
         else                                                                    return self;
       }

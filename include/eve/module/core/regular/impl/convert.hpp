@@ -82,16 +82,20 @@ namespace eve::detail
         }
         else
         {
-          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
+          if constexpr (has_emulated_abi_v<In> || has_emulated_abi_v<out_t>)
+          {
+            return map([&](auto m) { return convert(m, tgt); }, v0);
+          }
+          else if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
           {
             return bit_cast(v0, as<out_t> {});
           }
-          else if constexpr (std::is_unsigned_v<in_ea_t> || std::is_floating_point_v<in_ea_t>)
+          else if constexpr (std::is_unsigned_v<in_ea_t> || floating_scalar_value<in_ea_t>)
           {
             using i_t = as<logical<wide<as_integer_t<in_ea_t, signed>, cardinal_t<In>>>>;
             return convert(bit_cast(v0, i_t {}), tgt);
           }
-          else if constexpr (std::is_unsigned_v<out_ae_t> || std::is_floating_point_v<out_ae_t>)
+          else if constexpr (std::is_unsigned_v<out_ae_t> || floating_scalar_value<out_ae_t>)
           {
             using i_t = as<logical<as_integer_t<out_ae_t, signed>>>;
             return bit_cast(convert(v0, i_t {}), as<out_t> {});

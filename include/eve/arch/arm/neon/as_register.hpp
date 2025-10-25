@@ -27,7 +27,11 @@ namespace eve
   {
     if constexpr (std::same_as<T, eve::float16_t> && (N::value <= 4))
     {
+#ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
       return float16x4_t{};
+#else
+      static_assert(false, "Unreachable: no fp16 vector support");
+#endif
     }
     else if constexpr (std::same_as<T, float> && (N::value <= 2))
     {
@@ -64,7 +68,11 @@ namespace eve
   {
     if constexpr (std::same_as<T, eve::float16_t>)
     {
+#ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
       return float16x8_t{};
+#else
+      static_assert(false, "Unreachable: no fp16 vector support");
+#endif
     }
     else if constexpr (std::same_as<T, float>)
     {

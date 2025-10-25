@@ -10,6 +10,7 @@
 #include <eve/arch/riscv/predef.hpp>
 #include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/traits/as_integer.hpp>
+#include <eve/concept/vectorizable.hpp>
 
 #include <type_traits>
 
@@ -49,7 +50,7 @@ namespace eve
     static_assert((element_bit_size * N::value) <= (__riscv_v_fixed_vlen * ABI::max_lmul),
       "[eve riscv] Type is not usable in SIMD register (too big)");
 
-    if constexpr (std::floating_point<T>)
+    if constexpr (floating_scalar_value<T>)
     {
       if constexpr (lmul == 1)
       {
@@ -80,7 +81,10 @@ namespace eve
         if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_MF(vfloat16mf2_t, 2)>{};
         else if constexpr (element_bit_size == 32) return wrap<EVE_RVV_MF(vfloat32mf2_t, 2)>{};
       }
-      // MF8, MF4 for float not supported.
+      else if constexpr (lmul == -4)
+      {
+        if      constexpr (element_bit_size == 16) return wrap<EVE_RVV_MF(vfloat16mf4_t, 4)>{};
+      }
     }
     else if constexpr (std::signed_integral<T>)
     {

@@ -120,7 +120,7 @@ namespace eve::detail
       else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
-    else if constexpr (simd_value<T> || std::floating_point<T>)
+    else if constexpr (simd_value<T> || floating_scalar_value<T>)
     {
       return a * b - c;
     }
