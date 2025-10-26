@@ -21,7 +21,7 @@ namespace eve
     template<floating_value T> struct welford_cosine_similarity_result
     {
       using type = T;
-      operator T()   const noexcept { return cosine_similarity; };
+//      operator T()   const noexcept { return cosine_similarity; };
       auto upgrade() const noexcept { return welford_cosine_similarity_result<upgrade_t<T>>(); };
 
       T sumx2         = T(0);
@@ -65,13 +65,13 @@ namespace eve
       return EVE_DISPATCH_CALL(ts...);
     }
 
- //    template<typename... Ts>
-//     requires((detail::is_welford_cosine_similarity_result_v<Ts> && ...) && Options::contains(widen))
-//       EVE_FORCEINLINE constexpr detail::welford_cosine_similarity_result<common_value_t<detail::internal_welford_cosine_similarity_t<Ts>...>>
-//     operator()(Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
+   template<typename... Ts>
+    requires((detail::is_welford_cosine_similarity_result_v<Ts> && ...) && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_cosine_similarity_result<common_value_t<detail::internal_welford_cosine_similarity_t<Ts>...>>
+    operator()(Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(ts...);
+    }
 
     // tuples of floating_value
     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
@@ -87,6 +87,23 @@ namespace eve
     detail::welford_cosine_similarity_result<upgrade_t<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept
     { return EVE_DISPATCH_CALL(t1, t2); }
+
+    //scalarization
+    template<typename T>
+    requires(detail::is_welford_cosine_similarity_result_v<T> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_cosine_similarity_result<element_type_t<typename T::type>>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    template<typename T>
+    requires(detail::is_welford_cosine_similarity_result_v<T> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr detail::welford_cosine_similarity_result<upgrade_t<element_type_t<typename T::type>> >
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
 
     EVE_CALLABLE_OBJECT(welford_cosine_similarity_t, welford_cosine_similarity_);
   };
@@ -231,8 +248,30 @@ namespace eve
         return  doit();
       }
     }
+
+    // This call 'scalarize' a welford cosine_similarity
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto welford_cosine_similarity_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
+    requires(detail::is_welford_cosine_similarity_result_v<T>)
+    {
+      auto scalarize = []<typename U>(U w){
+        using e_t =  element_type_t<typename U::type>;
+        auto getit = [w](auto i){return welford_cosine_similarity_result<e_t>(w.sumx2.get(i), w.sumy2.get(i), w.sumxy.get(i), w.cosine_similarity.get(i)); };
+        return kumi::generate<w.sumxy.size()>(getit);
+      };
+      if constexpr(scalar_value<typename T::type>)
+        return t;
+      else
+      {
+        auto tpsc =  scalarize(t);
+        return kumi::apply([o](auto... m){return welford_cosine_similarity[o](m...); }, tpsc);
+      }
+    }
   }
 }
+
+
+
 //         using r_t = eve::common_value_t<detail::internal_welford_cosine_similarity_t<Ts>, ...> > ;
 
 //         auto nsim = welford_cosine_similarity_result<r_t>();
