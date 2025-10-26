@@ -15,18 +15,29 @@ namespace eve
   template<typename Options>
   struct bit_ornot_t : strict_tuple_callable<bit_ornot_t, Options>
   {
-    template<eve::value T0, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...>)
-    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...>
-    operator()(T0 t0, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(t0, ts...); }
+    template<value T0, value... Ts>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
+    {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar<T0, Ts...>,
+          "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
+      }
+
+      return EVE_DISPATCH_CALL(t0, ts...);
+    }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::bit_value,Tup>
-    operator()(Tup const& t) const noexcept
-    { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
+    {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar_tuple<Tup>,
+          "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
+      }
+
+      return EVE_DISPATCH_CALL(t);
+    }
 
     EVE_CALLABLE_OBJECT(bit_ornot_t, bit_ornot_);
   };
@@ -70,7 +81,8 @@ namespace eve
 //!           - For two parameters it computes the  bitwise ORNOT of the two parameters
 //!           - For more than two parameters the call is  semantically equivalent to
 //!            `bit_ornot(a0, bit_and(xs...))`
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!         share the same number of lanes or are scalars.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_ornot.cpp}

@@ -19,12 +19,24 @@ namespace eve
     template<value T0, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar<T0, Ts...>,
+          "[eve::bit_and] - Masking is not supported for inputs of different lane count");
+      }
+
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar_tuple<Tup>,
+          "[eve::bit_and] - Masking is not supported for inputs of different lane count");
+      }
+
       return EVE_DISPATCH_CALL(t);
     }
 
@@ -70,7 +82,8 @@ namespace eve
 //!
 //!     1. The value of the bitwise AND of its arguments converted to the common `bit_value` of the arguments
 //!     2. equivalent to the call on the elements of the tuple.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!         share the same number of lanes or are scalars.
 //!
 //!    @note
 //!      Although the infix notation with `&` is supported for two parameters, the `&` operator on

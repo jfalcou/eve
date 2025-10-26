@@ -17,16 +17,26 @@ namespace eve
   struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
   {
     template<value T0, value... Ts>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...>
-    operator()(T0 t0, Ts...ts) const noexcept
+    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar<T0, Ts...>,
+          "[eve::bit_xor] - Masking is not supported for inputs of different lane count");
+      }
+
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup>
-    operator()(Tup const& t) const noexcept
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
+      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
+      {
+        static_assert(same_lanes_or_scalar_tuple<Tup>,
+          "[eve::bit_xor] - Masking is not supported for inputs of different lane count");
+      }
+
       return EVE_DISPATCH_CALL(t);
     }
 
@@ -73,7 +83,8 @@ namespace eve
 //!      1. The value of the bitwise XOR of its arguments converted to their  common `bit_value`
 //!        is returned.
 //!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!         share the same number of lanes or are scalars.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_xor.cpp}
