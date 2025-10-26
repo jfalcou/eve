@@ -22,7 +22,7 @@ namespace eve
       if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
       {
         static_assert(same_lanes_or_scalar<T0, Ts...>,
-          "[eve::bit_notand] - Masking is not supported for inputs of different cardinalities");
+          "[eve::bit_notand] - Masking is not supported for inputs of different lane count");
       }
 
       return EVE_DISPATCH_CALL(t0, ts...);
@@ -34,7 +34,7 @@ namespace eve
       if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
       {
         static_assert(same_lanes_or_scalar_tuple<Tup>,
-          "[eve::bit_notand] - Masking is not supported for inputs of different cardinalities");
+          "[eve::bit_notand] - Masking is not supported for inputs of different lane count");
       }
 
       return EVE_DISPATCH_CALL(t);
