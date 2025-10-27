@@ -107,15 +107,13 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T bitonic_merge_impl(T x, Less less, fixed<Full> full, fixed<G> g) noexcept
     {
-      if constexpr ( G == 0 ) return x;
-      else
-      {
-        T ab = x;
-        T ba = eve::swap_adjacent(ab, g);
-        auto [aa, bb] = minmax(less)(ab, ba);
-        x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
-        return bitonic_merge_impl(x, less, full, lane<G / 2>);
-      }
+      T ab = x;
+      T ba = eve::swap_adjacent(ab, g);
+      auto [aa, bb] = eve::minmax(less)(ab, ba);
+      x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
+
+      if constexpr (G > 1) return bitonic_merge_impl(x, less, full, lane<G / 2>);
+      else                 return x;
     }
 
     // G is the length of the monotonic sequence
@@ -131,7 +129,7 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T make_bitonic(T x, Less less, fixed<G>) noexcept
     {
-      if constexpr (G < 1)
+      if constexpr (G == 1)
         return x;
       else
       {
