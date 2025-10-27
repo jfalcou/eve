@@ -16,7 +16,7 @@
 //==================================================================================================
 // Conditionally load into wide from an aligned pointer
 //==================================================================================================
-TTS_CASE_TPL( "Check load to wides from aligned pointer", eve::test::simd::all_types)
+TTS_CASE_TPL( "Check load to wides from aligned pointer", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t     = eve::element_type_t<T>;
@@ -119,7 +119,7 @@ TTS_CASE_TPL( "Check load to wides from aligned pointer", eve::test::simd::all_t
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test::simd::all_types)
+TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::logical<eve::element_type_t<T>>;

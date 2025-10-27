@@ -33,6 +33,21 @@ requires x86_abi<abi_t<T,N>>
     else if constexpr( c == category::float32x16) return _mm512_mask_blend_ps(msk, s2, s1);
     else if constexpr( c == category::float32x8 ) return _mm256_mask_blend_ps(msk, s2, s1);
     else if constexpr( c == category::float32x4 ) return _mm_mask_blend_ps(msk, s2, s1);
+    else if constexpr( match(c, category::float16) )
+    {
+      if constexpr (eve::detail::supports_fp16_vector_ops)
+      {
+        if      constexpr( c == category::float16x32) return _mm512_mask_blend_ph(msk, s2, s1);
+        else if constexpr( c == category::float16x16) return _mm256_mask_blend_ph(msk, s2, s1);
+        else if constexpr( c == category::float16x8 ) return _mm_mask_blend_ph(msk, s2, s1);
+      }
+      else
+      {
+        if      constexpr( c == category::float16x32) return _mm512_mask_blend_epi16(msk, s2, s1);
+        else if constexpr( c == category::float16x16) return _mm256_mask_blend_epi16(msk, s2, s1);
+        else if constexpr( c == category::float16x8 ) return _mm_mask_blend_epi16(msk, s2, s1);
+      }
+    }
     else if constexpr( c == category::int64x8   ) return _mm512_mask_blend_epi64(msk, s2, s1);
     else if constexpr( c == category::uint64x8  ) return _mm512_mask_blend_epi64(msk, s2, s1);
     else if constexpr( c == category::int64x4   ) return _mm256_mask_blend_epi64(msk, s2, s1);
