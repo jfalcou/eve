@@ -38,7 +38,7 @@ namespace eve
   struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
   {
     static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
-    static_assert(is_pow2(Cardinal), "Cardinal must be a power of 2");
+    static_assert((Cardinal > 0) && is_pow2(Cardinal), "Cardinal must be a non-zero power of 2");
 
     using type          = fixed<Cardinal>;
     using split_type    = fixed<Cardinal / 2>;
