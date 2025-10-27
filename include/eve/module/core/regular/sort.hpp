@@ -119,22 +119,22 @@ namespace eve
     // G is the length of the monotonic sequence
     template <typename T, typename Less, std::ptrdiff_t G>
     constexpr EVE_FORCEINLINE
-    T bitonic_merge(T x, Less less, fixed<G>) noexcept
+    T bitonic_merge(T x, Less less, index_t<G>) noexcept
     {
-      return bitonic_merge_impl(x, less, lane<G * 2>, eve::lane<G>);
+      return bitonic_merge_impl(x, less, lane<G * 2>, lane<G>);
     }
 
     // G - length of monotonic sequence
     template <simd_value T, typename Less, std::ptrdiff_t G>
     constexpr EVE_FORCEINLINE
-    T make_bitonic(T x, Less less, fixed<G>) noexcept
+    T make_bitonic(T x, Less less, index_t<G>) noexcept
     {
       if constexpr (G == 1)
         return x;
       else
       {
-        x = make_bitonic(x, less, lane<G / 2>);
-        return bitonic_merge(x, less, lane<G / 2>);
+        x = make_bitonic(x, less, index<G / 2>);
+        return bitonic_merge(x, less, index<G / 2>);
       }
     }
 
@@ -142,7 +142,7 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T sort_(EVE_REQUIRES(cpu_), O const &, T x, Less less) noexcept
     {
-      return make_bitonic(x, less, eve::lane<T::size()>);
+      return make_bitonic(x, less, index<T::size()>);
     }
 
     template <typename T, callable_options O>
