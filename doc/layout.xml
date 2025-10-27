@@ -10,6 +10,7 @@
         <tab type="user" url="@ref intro-02" title="Algorithms"/>
         <tab type="user" url="@ref intro-03" title="Tuples"/>
         <tab type="user" url="@ref intro-04" title="Data Structures"/>
+        <tab type="user" url="@ref intro-05" title="Quadratics resolution"/>
       </tab>
       <tab type="usergroup" visible="yes" title="Specific Idioms">
         <tab type="user" url="@ref conditional" title="Conditional Operations"/>
