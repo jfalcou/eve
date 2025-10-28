@@ -10,6 +10,8 @@
 #include "test.hpp"
 
 #include <eve/module/core.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 
 using namespace eve;
 
