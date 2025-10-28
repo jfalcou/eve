@@ -77,25 +77,4 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
-
-template<simd_value Src, simd_value Tgt>
-constexpr EVE_FORCEINLINE Tgt inner_bit_cast(Src const& src, as<Tgt>) noexcept
-  requires (sizeof(element_type_t<Src>) * Src::size() == sizeof(element_type_t<Tgt>) * Tgt::size())
-{
-  if constexpr (has_emulated_abi_v<Src> || has_emulated_abi_v<Tgt>)
-  {
-    if constexpr (sizeof(element_type_t<Src>) == sizeof(element_type_t<Tgt>)) return map(bit_cast, src, as_element<Tgt>{});
-    else
-    {
-      Tgt res;
-
-      std::memcpy(reinterpret_cast<unsigned char*>(&res.storage()),
-                  reinterpret_cast<unsigned char const*>(&src.storage()),
-                  std::min(sizeof(src.storage()), sizeof(res.storage())));
-
-      return res;
-    }
-  }
-  else return bit_cast(src, as<Tgt>{});
-}
 }

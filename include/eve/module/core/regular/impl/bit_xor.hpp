@@ -24,7 +24,7 @@ namespace eve::detail
       if constexpr (simd_value<U>)
       {
         if constexpr (std::same_as<T, U>) return map(bit_xor, a, b);
-        else                              return bit_xor(a, inner_bit_cast(b, as<T>{}));
+        else                              return bit_xor(a, simd_cast(b, as<T>{}));
       }
       else                                return bit_xor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }

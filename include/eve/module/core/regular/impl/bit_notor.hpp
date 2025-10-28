@@ -24,7 +24,7 @@ namespace eve::detail
       if constexpr (simd_value<U>)
       {
         if constexpr (std::same_as<T, U>) return bit_or(bit_not(a), b);
-        else                              return bit_notor(a, inner_bit_cast(b, as<T>{}));
+        else                              return bit_notor(a, simd_cast(b, as<T>{}));
       }
       else                                return bit_notor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }
