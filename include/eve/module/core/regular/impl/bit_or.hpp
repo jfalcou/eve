@@ -56,8 +56,8 @@ namespace eve::detail
     }
     else
     {
-      auto that = bit_or(r_t(a0), r_t(a1));
-      ((that = bit_or(that, r_t(args))), ...);
+      auto that = bit_or(a0, a1);
+      ((that = bit_or(that, args)), ...);
       return that;
     }
   }

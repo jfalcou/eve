@@ -20,6 +20,9 @@ void test_with_types(F f)
   TTS_TYPE_IS(decltype(f(kumi::make_tuple(T{}, U{}))), (eve::as_wide_as_t<T, U>));
   TTS_TYPE_IS(decltype(f(U{}, T{})), (eve::as_wide_as_t<U, T>));
   TTS_TYPE_IS(decltype(f(kumi::make_tuple(U{}, T{}))), (eve::as_wide_as_t<U, T>));
+
+  TTS_TYPE_IS(decltype(f(T{}, U{}, T{})), (eve::as_wide_as_t<T, U>));
+  TTS_TYPE_IS(decltype(f(kumi::make_tuple(T{}, U{}, T{}))), (eve::as_wide_as_t<T, U>));
 }
 
 template<typename T, typename F>
@@ -91,17 +94,18 @@ void bit_test_simd_return_type(F f)
   }
 }
 
+//TODO: move to TTS
 template<typename T>
-void check_bit_equal(T a, T b)
+auto check_bit_equal(T a, T b)
 {
   using u_t = eve::as_uinteger_t<T>;
-  TTS_EQUAL(inner_bit_cast(a, as<u_t>{}), inner_bit_cast(b, as<u_t>{}));
+  return TTS_EQUAL(inner_bit_cast(a, as<u_t>{}), inner_bit_cast(b, as<u_t>{}));
 }
 
 template<typename T, typename F, typename TruthFn>
-void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b)
+void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
 {
-  const auto invoke_truth_fn = [&](auto va, auto vb)
+  const auto invoke_truth_fn = [&](auto va, auto vb, simd_value auto... vc)
   {
     using a_t = decltype(va);
     using b_t = decltype(vb);
@@ -114,21 +118,32 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b)
     const auto inA = inner_bit_cast(ra_t { va }, as<u_t>{});
     const auto inB = inner_bit_cast(rb_t { vb }, as<u_t>{});
 
-    return inner_bit_cast(eve::detail::map(truthFn, inA, inB), as<ra_t>{});
+    return inner_bit_cast(eve::detail::map(truthFn, inA, inB, inner_bit_cast(vc, as<u_t>{})...), as<ra_t>{});
   };
 
-  const auto run_case = [&](auto va, auto vb)
+  const auto run_case = [&](auto va, auto vb, auto vc)
   {
+    // 2-arg version
     const auto res = invoke_truth_fn(va, vb);
     const auto resi = invoke_truth_fn(vb, va);
 
     check_bit_equal(fn(va, vb), res);
     check_bit_equal(fn(vb, va), resi);
     check_bit_equal(fn(kumi::make_tuple(va, vb)), res);
+
+    // 3-arg version
+    const auto res3 = invoke_truth_fn(va, vb, vc);
+    const auto res3i = invoke_truth_fn(vb, va, vc);
+
+    auto rr = fn(va, vb, vc);
+
+    check_bit_equal(rr, res3);
+    check_bit_equal(fn(vb, va, vc), res3i);
+    check_bit_equal(fn(kumi::make_tuple(va, vb, vc)), res3);
   };
 
-  run_case(a, b);
-  run_case(a, b.get(0));
+  run_case(a, b, c);
+  run_case(a, b.get(0), c);
 
   // downgraded
   using v_t  = eve::element_type_t<T>;
@@ -137,7 +152,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b)
   {
     using DT = eve::as_wide_as_t<d_t, typename T::combined_type>;
     auto db  = tts::poison(inner_bit_cast(a, eve::as<DT>{}));
-    run_case(a, db);
+    run_case(a, db, c);
   }
 
   // mixed types
@@ -145,8 +160,8 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b)
   {
     using u_t = eve::as_uinteger_t<T>;
     auto ub  = tts::poison(inner_bit_cast(b, eve::as<u_t>{}));
-    run_case(a, ub);
-    run_case(a, ub.get(0));
+    run_case(a, ub, c);
+    run_case(a, ub.get(0), c);
 
     // mixed + downgraded
     if constexpr (sizeof(T) >= 2)
@@ -154,13 +169,13 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b)
       using du_t = eve::downgrade_t<u_t>;
       using cdu_t = eve::as_wide_as_t<eve::element_type_t<du_t>, typename T::combined_type>;
       auto dub  = tts::poison(inner_bit_cast(b, eve::as<cdu_t>{}));
-      run_case(a, dub);
+      run_case(a, dub, c);
     }
   }
 }
 
 template<typename T, typename Mask, typename F>
-void bit_test_simd_inner_cx(F fn, T a, T b, Mask mask)
+void bit_test_simd_inner_cx(F fn, T a, T b, [[maybe_unused]] T c, Mask mask)
 {
   const auto run_case = [&](auto va, auto vb)
   {
@@ -198,25 +213,25 @@ void bit_test_simd_inner_cx(F fn, T a, T b, Mask mask)
 }
 
 template<typename T, typename F, typename TruthFn>
-void bit_test_simd(F fn, TruthFn truthFn, T a, T b)
+void bit_test_simd(F fn, TruthFn truthFn, T a, T b, T c)
 {
-  bit_test_simd_inner(fn, truthFn, a, b);
+  bit_test_simd_inner(fn, truthFn, a, b, c);
 
-  bit_test_simd_inner_cx(fn, a, b, eve::ignore_none);
-  bit_test_simd_inner_cx(fn, a, b, eve::ignore_all);
-  bit_test_simd_inner_cx(fn, a, b, true);
-  bit_test_simd_inner_cx(fn, a, b, false);
+  bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_none);
+  bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_all);
+  bit_test_simd_inner_cx(fn, a, b, c, true);
+  bit_test_simd_inner_cx(fn, a, b, c, false);
 
   eve::logical<T> m = tts::poison(eve::logical<T>{ [](auto i, auto) { return i % 2 == 0; } });
-  bit_test_simd_inner_cx(fn, a, b, m);
-  bit_test_simd_inner_cx(fn, a, b, if_(m).else_(24));
+  bit_test_simd_inner_cx(fn, a, b, c, m);
+  bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(24));
 
   constexpr auto cardinal = eve::cardinal_v<T>;
 
   if constexpr (cardinal >= 2)
   {
-    bit_test_simd_inner_cx(fn, a, b, eve::ignore_extrema(1, 1));
-    bit_test_simd_inner_cx(fn, a, b, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-    bit_test_simd_inner_cx(fn, a, b, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(1, 1));
+    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(cardinal / 2, cardinal / 2));
+    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(cardinal / 4, cardinal / 4));
   }
 }

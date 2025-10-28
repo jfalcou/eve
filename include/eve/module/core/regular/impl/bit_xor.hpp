@@ -55,8 +55,8 @@ namespace eve::detail
     }
     else
     {
-      auto that = bit_xor(r_t(a0), r_t(a1));
-      ((that = bit_xor(that, r_t(args))), ...);
+      auto that = bit_xor(a0, a1);
+      ((that = bit_xor(that, args)), ...);
       return that;
     }
   }

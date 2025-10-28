@@ -28,8 +28,9 @@ TTS_CASE_TPL("Check return types of eve::bit_notand(simd)", eve::test::simd::all
 TTS_CASE_WITH("Check behavior of eve::bit_notand",
               eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T a, T b)
+<typename T>(T a, T b, T c)
 {
-  bit_test_simd(eve::bit_notand, [](auto e, auto f) -> decltype(e) { return ~e & f; }, a, b);
+  bit_test_simd(eve::bit_notand, [](auto e, auto f, auto... g) -> decltype(e) { return ~e & (f & ... & g); }, a, b, c);
 };
