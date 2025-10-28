@@ -128,9 +128,9 @@ namespace eve
     EVE_FORCEINLINE constexpr operator bool()   const noexcept { return !!value_; }
     EVE_FORCEINLINE constexpr bool value()      const noexcept { return !!value_; }
     EVE_FORCEINLINE constexpr auto bitmap()     const noexcept { return std::bitset<1>(value_ & 1); }
-    EVE_FORCEINLINE constexpr auto bits()       const noexcept { return value_; }
+    EVE_FORCEINLINE constexpr bits_type bits()       const noexcept { return value_; }
 
-    EVE_FORCEINLINE constexpr auto mask() const noexcept
+    EVE_FORCEINLINE constexpr mask_type mask() const noexcept
     {
       return std::bit_cast<mask_type>(value_);
     }
