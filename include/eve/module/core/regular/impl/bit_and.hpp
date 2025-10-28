@@ -9,6 +9,8 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_wides.hpp>
+#include <eve/detail/function/reduce.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 
 namespace eve::detail
@@ -49,7 +51,11 @@ namespace eve::detail
 
     if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>))
     {
-      auto head = eve::as_wides(eve::allbits(eve::as<r_t>()), a0, a1, args...);
+      auto head = eve::as_wides(eve::allbits(as<r_t>{}),
+                                bit_cast(a0, as<r_t>{}),
+                                bit_cast(a1, as<r_t>{}),
+                                bit_cast(args, as<r_t>{})...);
+
       auto s = eve::bit_and(head);
       return butterfly_reduction(s, eve::bit_and).get(0);
     }

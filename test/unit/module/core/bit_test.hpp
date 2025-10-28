@@ -135,9 +135,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
     const auto res3 = invoke_truth_fn(va, vb, vc);
     const auto res3i = invoke_truth_fn(vb, va, vc);
 
-    auto rr = fn(va, vb, vc);
-
-    check_bit_equal(rr, res3);
+    check_bit_equal(fn(va, vb, vc), res3);
     check_bit_equal(fn(vb, va, vc), res3i);
     check_bit_equal(fn(kumi::make_tuple(va, vb, vc)), res3);
   };
@@ -151,7 +149,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
   if constexpr (!std::same_as<d_t, v_t>)
   {
     using DT = eve::as_wide_as_t<d_t, typename T::combined_type>;
-    auto db  = tts::poison(inner_bit_cast(a, eve::as<DT>{}));
+    auto db  = tts::poison(inner_bit_cast(b, eve::as<DT>{}));
     run_case(a, db, c);
   }
 

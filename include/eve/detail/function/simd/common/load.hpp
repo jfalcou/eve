@@ -12,6 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
