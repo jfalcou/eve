@@ -22,30 +22,33 @@
 
 namespace eve::detail
 {
-  template<typename T0, callable_options O>
-  EVE_FORCEINLINE auto
-  bit_ornot_(EVE_REQUIRES(cpu_), O const &, T0 a) noexcept
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_ornot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
-    return a;
+    if constexpr (simd_value<T>)
+    {
+      if constexpr (simd_value<U>)
+      {
+        if constexpr (std::same_as<T, U>) return map(bit_ornot, a, b);
+        else                              return bit_ornot(a, inner_bit_cast(b, as<T>{}));
+      }
+      else                                return bit_ornot(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+    }
+    else if constexpr (simd_value<U>)
+    {
+      return bit_ornot(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
+    }
+    else
+    {
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) | ~bit_cast(b, as<i_t>{})), as(a));
+    }
   }
 
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
   bit_ornot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
-    using r_t = bit_value_t<T0, T1, Ts...>;
-    using b_t = as_integer_t<r_t>;
-    if constexpr(sizeof...(Ts) == 0) //two parameters
-    {
-      using ra_t = detail::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
-      using rb_t = detail::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
-      auto ba = bit_cast(a, as<ra_t>{});
-      auto bb = bit_cast(b, as<rb_t>{});
-      return bit_cast( bit_or(b_t(ba),bit_not(b_t(bb))), as<r_t>());
-    }
-    else
-    {
-      return eve::bit_ornot(a, bit_and(b, args...));
-    }
+    return bit_ornot(a, bit_and(b, args...));
   }
 }

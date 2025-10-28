@@ -19,7 +19,7 @@
 namespace eve ::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> bit_and_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_and_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c    = categorize<wide<T, N>>();
@@ -31,11 +31,7 @@ namespace eve ::detail
     else  if constexpr( c == category::float32x16       ) return _mm512_and_ps(a, b);
     else  if constexpr( c == category::float32x8        ) return _mm256_and_ps(a, b);
     else  if constexpr( c == category::float32x4        ) return _mm_and_ps   (a, b);
-    else  if constexpr ( match(c, category::float16) )
-    {
-      constexpr auto tgt = as<as_uinteger_t<wide<T, N>>>{};
-      return bit_cast(bit_and.behavior(current_api, opts, bit_cast(a, tgt), bit_cast(b, tgt)), as<wide<T, N>>{});
-    }
+    else  if constexpr( match(c, category::float16)     ) return apply_fp16_as_u16(bit_and, a, b);
     else  if constexpr( i && std::same_as<abi_t<T, N>,x86_512_> ) return _mm512_and_si512(a, b);
     else  if constexpr( i && std::same_as<abi_t<T, N>,x86_256_> )
     {

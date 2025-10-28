@@ -20,7 +20,7 @@ namespace eve ::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_andnot_(EVE_REQUIRES(sse2_),
-                                         O const          &opts,
+                                         O const          &,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -34,11 +34,7 @@ namespace eve ::detail
     else if constexpr( c == category::float32x16 ) return _mm512_andnot_ps(v1, v0);
     else if constexpr( c == category::float32x8 ) return _mm256_andnot_ps(v1, v0);
     else if constexpr( c == category::float32x4 ) return _mm_andnot_ps(v1, v0);
-    else if constexpr ( match(c, category::float16) )
-    {
-      constexpr auto tgt = as<as_uinteger_t<wide<T, N>>>{};
-      return bit_cast(bit_andnot.behavior(current_api, opts, bit_cast(v1, tgt), bit_cast(v0, tgt)), as<wide<T, N>>{});
-    }
+    else if constexpr( match(c, category::float16) ) return apply_fp16_as_u16(bit_andnot, v0, v1);
     else if constexpr( i && std::same_as<abi_t<T, N>, x86_128_> ) return _mm_andnot_si128(v1, v0);
     else if constexpr( i && std::same_as<abi_t<T, N>, x86_256_> )
     {
