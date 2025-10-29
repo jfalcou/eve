@@ -84,13 +84,13 @@ namespace eve
 //!      constexpr auto dot(kumi::tuple xs, kumi::tuple ys)            noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto dot[kahan](/*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto dot[widen](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [value arguments](@ref eve::value).
+//!     * `xs`, `ys`  :  [floating value arguments](@ref eve::value) or tuples of them.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -98,8 +98,9 @@ namespace eve
 //!
 //!    1. dot product. \f$\sum_s x_s*y_s\f$.
 //!    2. use the content of the tuples
-//!    3. Uses a compensated kahan-like algorithm to compute the result more accurately
-//!
+//!    3. The summation is computed in the double sized element type (if available).
+//!       This decorator has no effect on double and  64 bits integrals.
+///!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dot.cpp}
 //================================================================================================

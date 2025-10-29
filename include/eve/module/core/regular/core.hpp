@@ -224,6 +224,7 @@
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>
 #include <eve/module/core/regular/three_fma.hpp>
+#include <eve/module/core/regular/trapz.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
 #include <eve/module/core/regular/two_add.hpp>
