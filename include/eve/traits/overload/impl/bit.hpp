@@ -24,8 +24,8 @@ namespace eve
     template<typename T>
     constexpr static EVE_FORCEINLINE auto process_input(T v) noexcept
     {
-      if constexpr (has_emulated_abi_v<as_wide<T>>) return detail::inner_bit_cast(v, as<as_uinteger_t<T>>{});
-      else                                          return v;
+      if constexpr (has_emulated_abi_v<wide<element_type_t<T>>>) return detail::inner_bit_cast(v, as<as_uinteger_t<T>>{});
+      else                                                       return v;
     }
 
     template<callable_options O, kumi::product_type T>
