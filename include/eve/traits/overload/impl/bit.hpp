@@ -21,18 +21,20 @@ namespace eve
   {
     using base_t = strict_tuple_callable<Func, OptionsValues, Options...>;
 
-    template<typename T>
-    constexpr static EVE_FORCEINLINE auto process_input(T v) noexcept
+    template<typename T, typename Tgt>
+    constexpr static EVE_FORCEINLINE auto process_input(T v, as<Tgt>) noexcept
     {
-      if constexpr (has_emulated_abi_v<wide<element_type_t<T>>>) return detail::inner_bit_cast(v, as<as_uinteger_t<T>>{});
-      else                                                       return v;
+      using expected_t = as_wide_as_t<element_type_t<T>, Tgt>;
+      if constexpr (has_emulated_abi_v<expected_t>) return detail::inner_bit_cast(v, as<as_uinteger_t<T>>{});
+      else                                          return v;
     }
 
     template<callable_options O, kumi::product_type T>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
     {
       return kumi::apply([&](auto... xs) {
-        const auto res = static_cast<base_t const&>(*this).behavior(arch, opts, process_input(xs)...);
+        constexpr auto tgt = as<bit_value_t<std::remove_cvref_t<decltype(xs)>...>>{};
+        const auto res = static_cast<base_t const&>(*this).behavior(arch, opts, process_input(xs, tgt)...);
         return detail::inner_bit_cast(res, as<bit_value_t<decltype(xs)...>>{});
       }, x);
     }
@@ -41,7 +43,7 @@ namespace eve
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, Ts... xs) const
     {
       constexpr auto tgt = as<bit_value_t<Ts...>>{};
-      return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs)...), tgt);
+      return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs, tgt)...), tgt);
     }
   };
 }
