@@ -21,12 +21,9 @@ namespace eve::detail
   {
     if constexpr (simd_value<T>)
     {
-      if constexpr (simd_value<U>)
-      {
-        if constexpr (std::same_as<T, U>) return map(bit_or, a, b);
-        else                              return bit_or(a, simd_cast(b, as<T>{}));
-      }
-      else                                return bit_or(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+      // assume T != U
+      if constexpr (simd_value<U>) return bit_or(a, bit_cast(b, as<T>{}));
+      else                         return bit_or(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }
     else if constexpr (simd_value<U>)
     {

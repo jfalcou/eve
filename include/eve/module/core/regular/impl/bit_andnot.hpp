@@ -12,7 +12,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 
 namespace eve::detail
@@ -24,8 +23,8 @@ namespace eve::detail
     {
       if constexpr (simd_value<U>)
       {
-        if constexpr (std::same_as<T, U>) return bit_and(a, bit_not(b));
-        else                              return bit_andnot(a, simd_cast(b, as<T>{}));
+        if constexpr (std::same_as<T, U>) return bit_and(bit_not(a), b);
+        else                              return bit_andnot(a, bit_cast(b, as<T>{}));
       }
       else                                return bit_andnot(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }

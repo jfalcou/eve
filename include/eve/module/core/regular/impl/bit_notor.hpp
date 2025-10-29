@@ -11,7 +11,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 
@@ -25,7 +24,7 @@ namespace eve::detail
       if constexpr (simd_value<U>)
       {
         if constexpr (std::same_as<T, U>) return bit_or(bit_not(a), b);
-        else                              return bit_notor(a, simd_cast(b, as<T>{}));
+        else                              return bit_notor(a, bit_cast(b, as<T>{}));
       }
       else                                return bit_notor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }

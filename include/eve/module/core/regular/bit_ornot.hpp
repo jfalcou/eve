@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_ornot_t : strict_tuple_callable<bit_ornot_t, Options>
+  struct bit_ornot_t : bit_callable<bit_ornot_t, Options>
   {
     template<value T0, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
@@ -46,7 +46,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ornot
-//!   @brief  `strict_tuple_callable` object Computing the bitwise ORNOT of its arguments.
+//!   @brief  `bit_callable` object Computing the bitwise ORNOT of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_notor_t : strict_tuple_callable<bit_notor_t, Options>
+  struct bit_notor_t : bit_callable<bit_notor_t, Options>
   {
     template<value T0, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
@@ -46,7 +46,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_notor
-//!   @brief `strict_tuple_callable` object computing the bitwise NOTOR of its arguments.
+//!   @brief `bit_callable` object computing the bitwise NOTOR of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

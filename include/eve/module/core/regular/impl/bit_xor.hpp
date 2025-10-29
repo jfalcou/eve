@@ -16,18 +16,14 @@
 
 namespace eve::detail
 {
-
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_xor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
     if constexpr (simd_value<T>)
     {
-      if constexpr (simd_value<U>)
-      {
-        if constexpr (std::same_as<T, U>) return map(bit_xor, a, b);
-        else                              return bit_xor(a, simd_cast(b, as<T>{}));
-      }
-      else                                return bit_xor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+      // assume T != U
+      if constexpr (simd_value<U>) return bit_xor(a, bit_cast(b, as<T>{}));
+      else                         return bit_xor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }
     else if constexpr (simd_value<U>)
     {

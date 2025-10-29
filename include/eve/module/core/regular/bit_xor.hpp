@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
+  struct bit_xor_t : bit_callable<bit_xor_t, Options>
   {
     template<value T0, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
@@ -47,7 +47,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_xor
-//!   @brief `strict_tuple_callable` object computing the bitwise XOR of its arguments.
+//!   @brief `bit_callable` object computing the bitwise XOR of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/detail/function/slice.hpp>
 
 #include <functional>
 

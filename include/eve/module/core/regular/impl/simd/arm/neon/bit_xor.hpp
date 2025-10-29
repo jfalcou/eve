@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto bit_xor_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
 

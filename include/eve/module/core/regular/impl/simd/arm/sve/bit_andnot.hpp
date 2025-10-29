@@ -15,10 +15,10 @@
 namespace eve::detail
 {
 template<scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE auto bit_andnot_(EVE_REQUIRES(sve_),
-                                 O const         &,
-                                 wide<T, N> const& v0,
-                                 wide<T, N> const& v1) noexcept -> wide<T, N>
+EVE_FORCEINLINE wide<T, N> bit_andnot_(EVE_REQUIRES(sve_),
+                                       O const         &,
+                                       wide<T, N> const& v0,
+                                       wide<T, N> const& v1) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   using i_t = typename wide<T, N>::template rebind<as_integer_t<T>,N>;
