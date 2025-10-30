@@ -150,15 +150,15 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga747bad78fe38
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c">dot</a>(kumi::tuple <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">xs</a>, kumi::tuple <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">ys</a>)            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Semantic options</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c">dot</a>[kahan](<span class="comment">/*any of the above overloads*/</span>)     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c">dot</a>[widen](<span class="comment">/*any of the above overloads*/</span>)     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
-<div class="ttc" id="agroup__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c_html_ga747bad78fe38220bf5fd9ca81edaf80c"><div class="ttname"><a href="group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c">eve::dot</a></div><div class="ttdeci">constexpr auto dot</div><div class="ttdoc">elementwise_callable object computing the elementwise dot product of the vector of the first half par...</div><div class="ttdef"><b>Definition</b> dot.hpp:106</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c_html_ga747bad78fe38220bf5fd9ca81edaf80c"><div class="ttname"><a href="group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c">eve::dot</a></div><div class="ttdeci">constexpr auto dot</div><div class="ttdoc">elementwise_callable object computing the elementwise dot product of the vector of the first half par...</div><div class="ttdef"><b>Definition</b> dot.hpp:107</div></div>
 <div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code> : <a class="el" href="concepteve_1_1value.html">value arguments</a>.</li>
+<li><code>xs</code>, <code>ys</code> : <a class="el" href="concepteve_1_1value.html">floating value arguments</a> or tuples of them.</li>
 <li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
 <li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
 </ul>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga747bad78fe38
 <ol type="1">
 <li>dot product. \(\sum_s x_s*y_s\).</li>
 <li>use the content of the tuples</li>
-<li>Uses a compensated kahan-like algorithm to compute the result more accurately</li>
+<li>The summation is computed in the double sized element type (if available). This decorator has no effect on double and 64 bits integrals.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
