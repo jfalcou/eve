@@ -29,6 +29,7 @@ int main()
     std::cout << " -> trapz(2.0, tt1)                                    = " << eve::trapz(2.0, tt1) << std::endl;
     std::cout << " -> trapz(h, tt1)                                      = " << eve::trapz(h, tt1) << std::endl;
     std::cout << " -> trapz(x   tt1)                                     = " << eve::trapz(x, tt1) << std::endl;
+    std::cout << " -> trapz[widen](x   tt1)                              = " << eve::trapz[eve::widen](x, tt1) << std::endl;
   }
 
 }

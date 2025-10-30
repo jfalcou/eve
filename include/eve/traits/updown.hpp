@@ -81,8 +81,11 @@ namespace eve
   template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
   template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
 
-  template < typename O, typename T> struct upgrade_if {
-    using type = std::conditional_t<O::contains(eve::widen), eve::upgrade_t<T>, T>;
+  template < typename O, typename T>
+  struct upgrade_if
+  {
+    using base = std::conditional_t<O::contains(eve::widen), detail::up<T>, eve::detail::always<T>>;
+    using type = typename base::type;
   };
 
   template< typename O, typename T> using upgrade_if_t = upgrade_if<O, T>::type;
