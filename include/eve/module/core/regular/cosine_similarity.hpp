@@ -18,46 +18,6 @@ namespace eve
   template<typename Options>
   struct cosine_similarity_t : tuple_callable<cosine_similarity_t, Options, kahan_option, widen_option, unbiased_option>
   {
-//     template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
-//     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(t0, t1, ts...);
-//     }
-
-//     template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-//     EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... >
-//     constexpr operator()(T0 t0, T1 t1, Ts...ts)  const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(t0, t1, ts...);
-//     }
-
-//     template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
-//       EVE_FORCEINLINE constexpr
-//     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-//     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-//     { return EVE_DISPATCH_CALL(t); }
-
-//     template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value,Tup>
-//     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-//     { return EVE_DISPATCH_CALL(t); }
-
-//     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && Options::contains(widen))
-//       EVE_FORCEINLINE constexpr
-//     eve::upgrade_t<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
-//     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
-
-//     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
-//     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
 
     template<value Tup1, value Tup2>
     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>> && Options::contains(widen))
