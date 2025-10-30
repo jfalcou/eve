@@ -21,28 +21,81 @@ namespace eve
   {
 
     template<floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
-      EVE_FORCEINLINE eve::upgrade_if_t<Options, common_value_t<Ts...>>
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1) && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<Ts...>
     constexpr operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
       EVE_FORCEINLINE constexpr
-    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
+
+    template<floating_value... Ts, eve::invocable F>
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1) && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<Ts...>
+    constexpr operator()(F f, Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(f, ts...); }
+
+    template<kumi::non_empty_product_type Tup, eve::invocable F>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(F f, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(f, t); }
+
+    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
+    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
+    operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
+
+    template< floating_value H, kumi::non_empty_product_type Tup2>
+    requires(!Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    common_value_t<H, kumi::apply_traits_t<eve::common_value,  Tup2>>
+    operator()(H const& h, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(h, t2); }
+
+    template<typename F, kumi::non_empty_product_type Tup2>
+    requires(!value<F> && !kumi::non_empty_product_type<F> && !Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,  Tup2>
+    operator()(F const& f, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(f, t2); }
+
+    /////////////////////////////////////
+
+    template<floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1) && Options::contains(widen))
+      EVE_FORCEINLINE upgrade_t<common_value_t<Ts...>>
+    constexpr operator()(Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(ts...); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
+    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && Options::contains(widen))
       EVE_FORCEINLINE constexpr
-    eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
+    upgrade_t<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
     template<floating_value H, kumi::non_empty_product_type Tup2>
+    requires(Options::contains(widen))
       EVE_FORCEINLINE constexpr
-    eve::upgrade_if_t<Options, common_value_t<H, kumi::apply_traits_t<eve::common_value,  Tup2>>>
+    upgrade_t<common_value_t<H, kumi::apply_traits_t<eve::common_value,  Tup2>>>
     operator()(H const& h, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(h, t2); }
+
+    template<typename F, kumi::non_empty_product_type Tup2>
+    requires(!value<F> && !kumi::non_empty_product_type<F> && Options::contains(widen))
+      EVE_FORCEINLINE constexpr
+    upgrade_t<kumi::apply_traits_t<eve::common_value,  Tup2>>
+    operator()(F const& f, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(f, t2); }
 
     EVE_CALLABLE_OBJECT(trapz_t, trapz_);
   };
@@ -65,31 +118,39 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto trapz(floating_value auto ... ys)                               noexcept; // 1
-//!      constexpr auto trapz(kumi::non_empty_product_type auto const& y)               noexcept; // 1
-//!      constexpr auto trapz(floating_value h,
-//!                           kumi::non_empty_product_type auto const& y)               noexcept; // 2
 //!      constexpr auto trapz(kumi::non_empty_product_type auto const& x,
-//                            kumi::non_empty_product_type auto const& y)               noexcept; // 2
+//!                           kumi::non_empty_product_type auto const& y)                   noexcept; // 1
+//!      constexpr auto trapz(floating_value auto ... ys)                                   noexcept; // 2
+//!      constexpr auto trapz(kumi::non_empty_product_type auto const& y)                   noexcept; // 2
+//!      constexpr auto trapz(floating_value h,
+//!                           kumi::non_empty_product_type auto const& y)                   noexcept; // 2
+//!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                 noexcept; // 4
+//!      constexpr auto trapz(eve::invocable f, kumi::non_empty_product_type auto const& x) noexcept; // 4
 //!
 //!      // Semantic options
-//!      constexpr auto trapz[widen](/*any of the above overloads*/)                    noexcept; // 3
+//!      constexpr auto trapz[widen](/*any of the above overloads*/)                        noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `ys ...` : [real](@ref eve::floating values) ordered arguments in increasing order.
+//!     * `xs ...` : [real](@ref eve::floating values) ordered arguments in increasing order.
 //!     * `x`,     : [tuple of real](@ref eve::floating values) ordered arguments in increasing order.
-//!     * `y`      : tuples of real arguments
+//!     * `y`      : tuple of real arguments
+//!     * `h`      : floating value scaling the abscissas
+//!     * `f`      : invocable
 //!
 //!    **Return value**
 //!
-//!      Computes elementwise the integral of the piecewise linear function defined by \$f(x_i) = y_i\f$ (trapezoidal rule)
-//!
-//!      * 1. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference 1.
-//!      * 2. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference `h`.
+//!      * 1. Computes elementwise the integral of the piecewise linear function defined by \$f(x_i) = y_i\f$ (trapezoidal rule)
+//!      * 2. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference h (1 if h is omitted).
+//!      * 3. the missing `y` parameter is assumed equal to the call of f applied to the x elements
 //!      * 3. the tuple `x` must have its elements sorted in increasing order.
+//!
+//!  @note definition of `f` or of `y` ?
+//!      - If `f` is a paramater the `y` values are defined by  \$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
+//!      - If `y` (or `ys...`) is a parameter `f` is defined by  \$f(x_i) = y_i\f$. and the values of \f$x_i\f$ are not needed
+//!        as thet are equally spaced with space `h` (defaulted to one).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia taxicab norm](https://en.wikipedia.org/wiki/Norm_(mathematics))
@@ -103,7 +164,6 @@ namespace eve
 
   namespace detail
   {
-
     template<kumi::non_empty_product_type PT , callable_options O>
      EVE_FORCEINLINE constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
@@ -136,7 +196,7 @@ namespace eve
         else
           return x*trapz[o](y);
       }
-      else
+      else if constexpr(kumi::is_product_type<HPT1>::value)
       {
        if constexpr(O::contains(widen))
          return trapz[o.drop(widen)](kumi::map(upgrade, x), kumi::map(upgrade, y));
@@ -147,7 +207,10 @@ namespace eve
           return eve::dot[o](adjsum, adjdiff)/2;
         }
       }
+      else
+      {
+        return trapz[o](y, kumi::map(x, y));
+      }
     }
-
   }
 }

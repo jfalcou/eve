@@ -46,11 +46,18 @@ TTS_CASE_WITH("Check behavior of trapz on all types full range",
   TTS_ULP_EQUAL(trapz((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), 2);
   TTS_ULP_EQUAL(trapz(kumi::tuple{a0, a1, a2, a3}), trapz(y), 5);
   TTS_ULP_EQUAL(trapz(a0, y), a0*trapz(y), 0.5);
+  auto f = [](auto x) {return eve::sqr(x); };
+  auto x = kumi::generate<8>([](auto p){return v_t(p); });
+  std::cout << kumi::map(f, x) << std::endl;
+  std::cout << eve::is_product_type<decltype(x)>::value << std::endl;
+  std::cout << trapz(x, kumi::map(f, x)) << std::endl;
+  std::cout << trapz(f, x)               << std::endl;
+//  TTS_ULP_EQUAL(trapz(f, x), trapz(x, kumi::map(f, x)), 0.5);
 };
 
 
 
-TTS_CASE_WITH("Check behavior of trapz kahan on wide",
+TTS_CASE_WITH("Check behavior of trapz widen on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
@@ -60,12 +67,9 @@ TTS_CASE_WITH("Check behavior of trapz kahan on wide",
 {
   using eve::trapz;
   using eve::widen;
-  using eve::kahan;
   using eve::as;
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
   {
-//     auto a = trapz[widen](a0, a1, a2, a3);
-//     std::cout << a << std::endl;
     TTS_ULP_EQUAL(trapz(a0, a1, a2, a3), eve::downgrade(trapz[widen](a0, a1, a2, a3)), 25);
   }
 
