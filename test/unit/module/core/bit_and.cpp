@@ -10,17 +10,17 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// TTS_CASE_TPL("Check return types of eve::bit_and(scalar)", eve::test::scalar::all_types_wf16)
-// <typename T>(tts::type<T>)
-// {
-//   bit_test_scalar_return_type<T>(eve::bit_and);
-// };
+TTS_CASE_TPL("Check return types of eve::bit_and(scalar)", eve::test::scalar::all_types_wf16)
+<typename T>(tts::type<T>)
+{
+  bit_test_scalar_return_type<T>(eve::bit_and);
+};
 
-// TTS_CASE_TPL("Check return types of eve::bit_and(simd)", eve::test::simd::all_types_wf16)
-// <typename T>(tts::type<T>)
-// {
-//   bit_test_simd_return_type<T>(eve::bit_and);
-// };
+TTS_CASE_TPL("Check return types of eve::bit_and(simd)", eve::test::simd::all_types_wf16)
+<typename T>(tts::type<T>)
+{
+  bit_test_simd_return_type<T>(eve::bit_and);
+};
 
 //==================================================================================================
 //  bit_and tests

@@ -34,17 +34,19 @@ namespace eve
     constexpr static EVE_FORCEINLINE auto process_alternative(T v, as<Tgt>) noexcept
     {
       using utgt_t = as_uinteger_t<Tgt>;
-      using utgt_et = element_type_t<utgt_t>;
       using inner_tgt_t = std::conditional_t<has_emulated_abi_v<Tgt>, utgt_t, Tgt>;
-      using inner_tgt_et = element_type_t<inner_tgt_t>;
 
       if constexpr (scalar_value<T>)
       {
-        const auto uv = std::bit_cast<as_uinteger_t<T>>(v);
+        using utgt_et      = element_type_t<utgt_t>;
+        using inner_tgt_et = element_type_t<inner_tgt_t>;
+        using ut_t         = as_uinteger_t<T>;
 
-        if constexpr (sizeof(T) > sizeof(utgt_et))
+        const auto uv = std::bit_cast<ut_t>(v);
+
+        if constexpr (sizeof(ut_t) > sizeof(utgt_et))
         {
-          EVE_ASSERT((v >> ((sizeof(T) - sizeof(utgt_et)) * 8)) == T{ 0 }, "[eve::bit_callable] Alternative value has non-zero truncated bits");
+          EVE_ASSERT((uv >> (sizeof(utgt_et) * 8)) == ut_t{ 0 }, "[eve::bit_callable] Alternative value has non-zero truncated bits");
           return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
         }
         else

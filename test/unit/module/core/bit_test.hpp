@@ -190,12 +190,14 @@ EVE_FORCEINLINE Tgt bit_compatible_alternative(C const& c, Arg a0, as<Tgt>)
 
     if constexpr (scalar_value<T>)
     {
-      const auto uv = bit_cast(v, as<as_uinteger_t<T>>{});
+      using ut_t = as_uinteger_t<T>;
       using utgt_et = element_type_t<as_uinteger_t<Tgt>>;
+
+      const auto uv = bit_cast(v, as<ut_t>{});
 
       if constexpr (sizeof(T) > sizeof(utgt_et))
       {
-        EVE_ASSERT((v >> ((sizeof(T) - sizeof(utgt_et)) * 8)) == T{ 0 },
+        EVE_ASSERT((uv >> (sizeof(utgt_et) * 8)) == ut_t{ 0 },
           "[eve::bit_compatible_alternative] Alternative value has non-zero truncated bits");
         return bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
       }
