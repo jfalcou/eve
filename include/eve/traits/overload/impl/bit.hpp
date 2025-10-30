@@ -9,7 +9,9 @@
 
 #include <eve/traits/overload/impl/tuple.hpp>
 #include <eve/detail/function/inner_bit_cast.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/bit_value.hpp>
+#include <eve/conditional.hpp>
 
 namespace eve
 {
@@ -29,21 +31,76 @@ namespace eve
       else                                          return v;
     }
 
-    template<callable_options O, kumi::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
+    template<typename T, typename Tgt>
+    constexpr static EVE_FORCEINLINE auto process_alternative(T v, as<Tgt>) noexcept
     {
+      using utgt_t = as_uinteger_t<Tgt>;
+      using utgt_et = element_type_t<utgt_t>;
+      using inner_tgt_t = std::conditional_t<has_emulated_abi_v<Tgt>, utgt_t, Tgt>;
+      using inner_tgt_et = element_type_t<inner_tgt_t>;
+
+      if constexpr (scalar_value<T>)
+      {
+        const auto uv = bit_cast(v, as<as_uinteger_t<T>>{});
+
+        if constexpr (sizeof(T) > sizeof(utgt_et))
+        {
+          EVE_ASSERT((v >> ((sizeof(T) - sizeof(utgt_et)) * 8)) == T{ 0 }, "[eve::bit_callable] Alternative value has non-zero truncated bits");
+          return bit_cast(static_cast<utgt_et>(uv), as<inner_tgt_et>{});
+        }
+        else
+        {
+          return bit_cast(static_cast<utgt_et>(uv), as<inner_tgt_et>{});
+        }
+      }
+      else
+      {
+        return inner_bit_cast(v, as<inner_tgt_t>{});
+      }
+    }
+
+    template<callable_options O, kumi::product_type Tup>
+    constexpr EVE_FORCEINLINE kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
+    {
+      using C = rbr::result::fetch_t<condition_key, O>;
+
       return kumi::apply([&](auto... xs) {
-        constexpr auto tgt = as<bit_value_t<std::remove_cvref_t<decltype(xs)>...>>{};
-        const auto res = static_cast<base_t const&>(*this).behavior(arch, opts, process_input(xs, tgt)...);
-        return detail::inner_bit_cast(res, as<bit_value_t<decltype(xs)...>>{});
+        using tgt_t = bit_value_t<std::remove_cvref_t<decltype(xs)>...>;
+
+        if constexpr (conditional_expr<C> && C::has_alternative)
+        {
+          const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
+          const auto new_cl = (*this)[new_cx];
+          const auto res = static_cast<decltype(new_cl)::base_t const&>(new_cl).behavior(arch, new_cl.options(), process_input(xs, as<tgt_t>{})...);
+
+          return detail::inner_bit_cast(res, as<tgt_t>{});
+        }
+        else
+        {
+          const auto res = base_t::behavior(arch, opts, process_input(xs, as<tgt_t>{})...);
+          return detail::inner_bit_cast(res, as<tgt_t>{});
+        }
       }, x);
     }
 
     template<callable_options O, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, Ts... xs) const
+    constexpr EVE_FORCEINLINE bit_value_t<Ts...> behavior(auto arch, O const& opts, Ts... xs) const
     {
-      constexpr auto tgt = as<bit_value_t<Ts...>>{};
-      return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs, tgt)...), tgt);
+      using C = rbr::result::fetch_t<condition_key, O>;
+      using tgt_t = bit_value_t<Ts...>;
+
+      if constexpr (conditional_expr<C> && C::has_alternative)
+      {
+        const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
+        const auto new_cl = (*this)[new_cx];
+        const auto res = static_cast<decltype(new_cl)::base_t const&>(new_cl).behavior(arch, new_cl.options(), process_input(xs, as<tgt_t>{})...);
+
+        return detail::inner_bit_cast(res, as<tgt_t>{});
+      }
+      else
+      {
+        return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs, as<tgt_t>{})...), as<tgt_t>{});
+      }
     }
   };
 }

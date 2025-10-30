@@ -56,7 +56,7 @@ namespace eve
   //!
   //!  @brief Checks that all types `Ts` are either scalar or share a common number of lanes.
   //!
-  //!  **Required header:** `#include <eve/traits.hpp>`
+  //!  **Required header:** `#include <eve/concept/same_lanes.hpp>`
   //! @}
   //================================================================================================
   template<typename... Ts>
@@ -71,7 +71,7 @@ namespace eve
   //!
   //!  @brief Checks that all types within a product type are either scalar or share a common number of lanes.
   //!
-  //!  **Required header:** `#include <eve/traits.hpp>`
+  //!  **Required header:** `#include <eve/concept/same_lanes.hpp>`
   //! @}
   //================================================================================================
   template<typename T>
@@ -87,7 +87,7 @@ namespace eve
   //!
   //!  @brief Checks that all SIMD types `Ts` share a common number of lanes.
   //!
-  //!  **Required header:** `#include <eve/traits.hpp>`
+  //!  **Required header:** `#include <eve/concept/same_lanes.hpp>`
   //! @}
   //================================================================================================
   template<typename T0, typename... Ts>

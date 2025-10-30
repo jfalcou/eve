@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_wides.hpp>
+#include <eve/detail/validate_mask.hpp>
 #include <eve/detail/function/reduce.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>

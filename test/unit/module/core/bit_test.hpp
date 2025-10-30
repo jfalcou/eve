@@ -12,6 +12,8 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/function/inner_bit_cast.hpp>
 
+#include <type_traits>
+
 using namespace eve;
 
 template<typename F, typename T, typename U>
@@ -173,41 +175,96 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
   }
 }
 
-template<typename T, typename Mask, typename F>
-void bit_test_simd_inner_cx(F fn, T a, T b, [[maybe_unused]] T c, Mask mask)
+template<typename T>
+constexpr bool bit_test_has_alternative() noexcept
 {
-  const auto run_case = [&](auto va, auto vb)
+  if constexpr (eve::conditional_expr<T>) return T::has_alternative;
+  else                                    return false;
+}
+
+template<conditional_expr C, typename Tgt, typename Arg>
+EVE_FORCEINLINE Tgt bit_compatible_alternative(C const& c, Arg a0, as<Tgt>)
+{
+  auto cast = [](auto v) {
+    using T = std::remove_cvref_t<decltype(v)>;
+
+    if constexpr (scalar_value<T>)
+    {
+      const auto uv = bit_cast(v, as<as_uinteger_t<T>>{});
+      using utgt_et = element_type_t<as_uinteger_t<Tgt>>;
+
+      if constexpr (sizeof(T) > sizeof(utgt_et))
+      {
+        EVE_ASSERT((v >> ((sizeof(T) - sizeof(utgt_et)) * 8)) == T{ 0 },
+          "[eve::bit_compatible_alternative] Alternative value has non-zero truncated bits");
+        return bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
+      }
+      else
+      {
+        return bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
+      }
+    }
+    else
+    {
+      return inner_bit_cast(v, as<Tgt>{});
+    }
+  };
+
+  if constexpr( C::has_alternative )          return Tgt{ cast(c.alternative) };
+  else
+  {
+    if      constexpr(logical_value<Tgt>)                                     return false_(as<Tgt>());
+    else if constexpr(std::same_as<element_type_t<Arg>, element_type_t<Tgt>>) return Tgt { a0 };
+    else                                                                      return Tgt{ cast(a0) };
+  }
+}
+
+template<typename T, typename Mask, typename F>
+void bit_test_simd_inner_cx(F fn, T a, T b, T c, Mask mask)
+{
+  const auto run_case = [&](auto va, auto vb, auto vc)
   {
     const auto res = fn(va, vb);
     const auto resi = fn(vb, va);
 
+    const auto res3 = fn(va, vb, vc);
+    const auto res3i = fn(vb, va, vc);
+
     if constexpr (eve::conditional_expr<Mask>)
     {
-      const auto alt = eve::detail::alternative(mask, va, as(res));
-      const auto alti = eve::detail::alternative(mask, vb, as(resi));
+      const auto alt = bit_compatible_alternative(mask, va, as(res));
+      const auto alti = bit_compatible_alternative(mask, vb, as(resi));
 
       check_bit_equal(fn[mask](va, vb), eve::if_else(mask, res, alt));
       check_bit_equal(fn[mask](vb, va), eve::if_else(mask, resi, alti));
       check_bit_equal(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, alt));
+
+      check_bit_equal(fn[mask](va, vb, vc), eve::if_else(mask, res3, alt));
+      check_bit_equal(fn[mask](vb, va, vc), eve::if_else(mask, res3i, alti));
+      check_bit_equal(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, alt));
     }
     else
     {
       check_bit_equal(fn[mask](va, vb), eve::if_else(mask, res, va));
       check_bit_equal(fn[mask](vb, va), eve::if_else(mask, resi, vb));
       check_bit_equal(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, va));
+
+      check_bit_equal(fn[mask](va, vb, vc), eve::if_else(mask, res3, va));
+      check_bit_equal(fn[mask](vb, va, vc), eve::if_else(mask, res3i, vb));
+      check_bit_equal(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, va));
     }
   };
 
-  run_case(a, b);
-  run_case(a, b.get(0));
+  run_case(a, b, c);
+  run_case(a, b.get(0), c);
 
   // mixed types
-  if constexpr (eve::floating_value<T>)
+  if constexpr (eve::floating_value<T> && !bit_test_has_alternative<Mask>())
   {
     using u_t = eve::as_uinteger_t<T>;
     auto ub  = tts::poison(inner_bit_cast(b, eve::as<u_t>{}));
-    run_case(a, ub);
-    run_case(a, ub.get(0));
+    run_case(a, ub, c);
+    run_case(a, ub.get(0), c);
   }
 }
 
@@ -224,6 +281,7 @@ void bit_test_simd(F fn, TruthFn truthFn, T a, T b, T c)
   eve::logical<T> m = tts::poison(eve::logical<T>{ [](auto i, auto) { return i % 2 == 0; } });
   bit_test_simd_inner_cx(fn, a, b, c, m);
   bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(24));
+  bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(T{ 30 }));
 
   constexpr auto cardinal = eve::cardinal_v<T>;
 
