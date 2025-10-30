@@ -1,0 +1,56 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <eve/module/core.hpp>
+#include "../../../vec3.hpp"
+
+//==================================================================================================
+//== Types tests
+//==================================================================================================
+TTS_CASE_TPL("Check return types of cosine_similarity", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using v3_t =      vec3<v_t>;
+  using wv3_t = eve::wide<v3_t>;
+  using r_t =   eve::wide<v_t, eve::fixed<wv3_t::size()>>;
+  TTS_EXPR_IS(eve::cosine_similarity(wv3_t(), wv3_t()), r_t);
+  TTS_EXPR_IS(eve::cosine_similarity(wv3_t(), v3_t()),  r_t);
+  TTS_EXPR_IS(eve::cosine_similarity( v3_t(),wv3_t()),  r_t);
+  TTS_EXPR_IS(eve::cosine_similarity(v3_t(),  v3_t()),  v_t);
+};
+
+//==================================================================================================
+//== cosine_similarity tests
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of cosine_similarity(wide)", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using  v3_t =  vec3<v_t>;
+  v3_t a(1.0, 2.0, 3.0);
+  v3_t b(-3.0, -4.0, -6.0);
+
+  TTS_ULP_EQUAL(eve::cosine_similarity(a, b), v_t(-0.9923595707022745), 0.5);
+
+  std::cout << std::setprecision(16);
+  using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
+  using  f4_t =  eve::wide<v_t, eve::fixed<4>>;
+
+  auto wa = wv3_t(a, a, b, b);
+  auto wb = wv3_t(b, a, a, b);
+
+  f4_t cwu{-0.9923595707022745, 1.0, -0.9923595707022745, 1.0};
+  TTS_ULP_EQUAL(eve::cosine_similarity(wa, wb), cwu, 0.5);
+  f4_t cw{-0.9923595707022745, 1, 1, -0.9923595707022745};
+  TTS_ULP_EQUAL(eve::cosine_similarity(a, wb), cw, 0.5);
+  f4_t cw3{-0.9923595707022745, -0.9923595707022745, 1.0, 1.0};
+  TTS_ULP_EQUAL(eve::cosine_similarity(wa, b), cw3, 0.5);
+
+
+};
