@@ -64,6 +64,7 @@ var NAVTREEINDEX0 =
 "intro-02.html":[1,1,1],
 "intro-03.html":[1,1,2],
 "intro-04.html":[1,1,3],
+"intro-05.html":[1,1,4],
 "licence.html":[3,4],
 "multiarch.html":[1,3,1],
 "namespaceeve.html":[2,0],

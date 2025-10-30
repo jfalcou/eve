@@ -17,7 +17,7 @@ var searchData=
   ['hi_14',['hi',['../group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524',1,'eve']]],
   ['higher_20order_20decorator_15',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
   ['horner_16',['horner',['../group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb',1,'eve']]],
-  ['hub_17',['Writing the dynamic function hub',['../multiarch.html#autotoc_md116',1,'']]],
+  ['hub_17',['Writing the dynamic function hub',['../multiarch.html#autotoc_md117',1,'']]],
   ['hurwitz_18',['hurwitz',['../group__special_gacecdd79be09bdeca614b2bc8c5f5a8fc.html#gacecdd79be09bdeca614b2bc8c5f5a8fc',1,'eve']]],
   ['hyperbolic_19',['hyperbolic',['../group__math__hyper.html',1,'Hyperbolic'],['../group__math__invhyper.html',1,'Inverse hyperbolic']]],
   ['hypot_20',['hypot',['../group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9',1,'eve']]]

@@ -1,0 +1,273 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Solving quadratic equations</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('intro-05.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Solving quadratic equations</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>This example demonstrates solving multiple quadratic equations in parallel using EVE.</p>
+<p>For each quadratic equation \(ax^2 + bx + c = 0\), we compute the discriminant \(b^2 - 4ac\) and then calculate the solution using the maximal absolute value root by the usual quadratic formula: \( x_1 = \frac{-b -\mathbf{sign}(b)\sqrt{b^2 - 4ac}}{2a}\) and the second root \( x_2\), using the fact that \(\frac ca\) is equal to \(x_1*x_2\).</p>
+<p>This is the stable way for computing the roots that respects the relative errors and is ok even if \(b^2 - 4ac \approx b^2\).</p>
+<p>The computation must returns two Nans if the roots are not real or all coefficients are zero and one Nan if the first parameter is zero. (For complex roots use kyosu library which is fit to complex numbers scalar or SIMD computations and more).</p>
+<p>We'll solve 11 different quadratic equations simultaneously. (11 just to show that the number of equations need not be a multiple of the SIMD current harware vector size).</p>
+<p>But first let us see the scalar case:</p>
+<p>We suppose that the quadratic coefficients are given in variables <code>a</code>, <code>b</code> and <code>c</code> having a floating type float or double;</p>
+<p>The scalar code (without EVE) can look like this:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> print = [](std::string name, <span class="keyword">auto</span> v){ <span class="comment">//utility to print the results</span></div>
+<div class="line">    std::cout &lt;&lt; name &lt;&lt; <span class="stringliteral">&quot; =  {&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span>(std::size_t i=0; i &lt;  v.size(); ++i) std::cout &lt;&lt; v[i] &lt;&lt; ((i != v.size()-1) ? <span class="stringliteral">&quot;, &quot;</span>:<span class="stringliteral">&quot;}&quot;</span>);</div>
+<div class="line">    std::cout &lt;&lt; std::endl;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> quadratic = [](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; a, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; b, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; c){</div>
+<div class="line">    <span class="keywordflow">if</span> (a == 0) <span class="keywordflow">return</span> std::pair(-c/b, a/a);                 <span class="comment">// second root is nan</span></div>
+<div class="line">    <span class="keyword">auto</span> delta = b*b-4*a*c;                                  <span class="comment">// compute delta</span></div>
+<div class="line">    <span class="keyword">auto</span> rmax = (-b-(b &gt; 0 ? 1 : 0)*std::sqrt(delta))/(2*a); <span class="comment">// compute the root with maximal absolute value</span></div>
+<div class="line">    <span class="keyword">auto</span> rmin = (rmax == 0 ? 0 : c/(rmax*a));                <span class="comment">// compute the other root</span></div>
+<div class="line">    <span class="keywordflow">if</span> (rmin &gt; rmax) std::swap(rmin, rmax);                  <span class="comment">// order by increasing values</span></div>
+<div class="line">    <span class="keywordflow">return</span> std::pair(rmin, rmax);                            <span class="comment">// return properly typed values</span></div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>a_t = std::array&lt;double, 11&gt;;</div>
+<div class="line"> </div>
+<div class="line">  a_t a{5.0,  12.0,  6.0,  7.0, 1.0, 1.0,   1.0,   1.0, 1.0e-20, 0.0, 1.0};</div>
+<div class="line">  a_t b{3.0,   1.0,  4.0, -2.0, 2.0, 1.0,   1.0,   1.0, 1.0e20,  1.0, 2.0};</div>
+<div class="line">  a_t c{-1.0, -5.0, -6.0, -6.0, 5.0, 30.0, 35.0, -40.0, -1.0,   -1.0, 1.0};</div>
+<div class="line">  a_t rmin, rmax;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">for</span>(std::size_t i=0; i &lt; 11; ++i){</div>
+<div class="line">    <span class="keyword">auto</span> p =  quadratic(a[i], b[i], c[i]);</div>
+<div class="line">    rmin[i] = p.first;</div>
+<div class="line">    rmax[i] = p.second;</div>
+<div class="line">  }</div>
+<div class="line">  print(<span class="stringliteral">&quot;a   &quot;</span>, a);</div>
+<div class="line">  print(<span class="stringliteral">&quot;b   &quot;</span>, b);</div>
+<div class="line">  print(<span class="stringliteral">&quot;c   &quot;</span>, c);</div>
+<div class="line">  print(<span class="stringliteral">&quot;rmin&quot;</span>, rmin);</div>
+<div class="line">  print(<span class="stringliteral">&quot;rmax&quot;</span>, rmax);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>What have we to do for allowing treatment of multiple quadratic equations in an SIMD fashion?</p>
+<p>Let us give the complete program and comment the steps later.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> print = [](std::string name, <span class="keyword">auto</span> v){ <span class="comment">//utility to print the results</span></div>
+<div class="line">    std::cout &lt;&lt; name &lt;&lt; <span class="stringliteral">&quot; =  {&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span>(std::size_t i=0; i &lt;  v.size(); ++i) std::cout &lt;&lt; v[i] &lt;&lt; ((i != v.size()-1) ? <span class="stringliteral">&quot;, &quot;</span>:<span class="stringliteral">&quot;}&quot;</span>);</div>
+<div class="line">    std::cout &lt;&lt; std::endl;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> quadratics = [](<span class="keyword">auto</span> &amp; result,  <span class="keyword">auto</span> <span class="keyword">const</span>&amp; aa, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; bb, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; cc){</div>
+<div class="line">    <span class="comment">// result will be a zip of two arrays</span></div>
+<div class="line">    <span class="keyword">auto</span> quad_it = [](<span class="keyword">auto</span> e){                                               <span class="comment">//this is the EVE version of the scalar resolution algorithm above</span></div>
+<div class="line">      <span class="keyword">auto</span> [aaa, bbb, ccc] = e;                                              <span class="comment">// get the coefficients</span></div>
+<div class="line">      <span class="keyword">auto</span> delta = <a class="code hl_variable" href="group__core__fnma__family_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5">eve::fnma</a>(4*aaa, ccc, <a class="code hl_variable" href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a>(bbb));                     <span class="comment">// compute delta (fnma is the fma version of -a*b+c</span></div>
+<div class="line">      <span class="keyword">auto</span> rmax = <a class="code hl_variable" href="group__core__fma__family_ga2d39b164847cc7f9beaf56659102ed94.html#ga2d39b164847cc7f9beaf56659102ed94">eve::fam</a>(-bbb, -<a class="code hl_variable" href="group__core__arithmetic_ga51432e6f8f1e6386e37b58e32183bcc4.html#ga51432e6f8f1e6386e37b58e32183bcc4">eve::sign</a>(bbb), <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(delta))/(2*aaa); <span class="comment">// compute the root with maximal abslute value</span></div>
+<div class="line">      <span class="keyword">auto</span> rmin = <a class="code hl_variable" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>(<a class="code hl_variable" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>(rmax), <a class="code hl_variable" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">eve::zero</a>, ccc/(rmax*aaa));<span class="comment">// compute the other root (is_eqz(rmax) test for zeroes. Could be `rmax == 0`)</span></div>
+<div class="line">      <a class="code hl_function" href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">eve::swap_if</a>(rmin &gt; rmax, rmin, rmax);                                 <span class="comment">// order by increasing values</span></div>
+<div class="line">      <span class="keyword">auto</span> iseqza = <a class="code hl_variable" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>(aaa);</div>
+<div class="line">      <span class="keywordflow">if</span> (<a class="code hl_variable" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def">eve::any</a>(iseqza))                                                  <span class="comment">// dont do if no element is zero</span></div>
+<div class="line">      {</div>
+<div class="line">        rmin = <a class="code hl_variable" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>(<a class="code hl_variable" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>(aaa), -ccc/bbb, rmin);               <span class="comment">// first degree aaa is zero first root is -ccc/bbb</span></div>
+<div class="line">        rmax = <a class="code hl_variable" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>(<a class="code hl_variable" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>(aaa), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>, rmax);               <span class="comment">// first degree aaa is zero second root is nan</span></div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(rmin, rmax);                                           <span class="comment">// return properly typed values (always use zip to return multiple values)</span></div>
+<div class="line">    };</div>
+<div class="line">    <span class="comment">// the algo transform_to takes care of using simd chunks to use quad_it</span></div>
+<div class="line">    <span class="comment">// the input vector size need not be a multiple of (the automagically chosen) best SIMD vector size</span></div>
+<div class="line">    eve::algo::transform_to(eve::algo::views::zip(aa, bb, cc), result, quad_it);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>a_t = std::array&lt;double, 11&gt;;</div>
+<div class="line"> </div>
+<div class="line">  a_t a{5.0,  12.0,  6.0,  7.0, 1.0, 1.0,   1.0,   1.0, 1.0e-20, 0.0, 1.0};</div>
+<div class="line">  a_t b{3.0,   1.0,  4.0, -2.0, 2.0, 1.0,   1.0,   1.0, 1.0e20,  1.0, 2.0};</div>
+<div class="line">  a_t c{-1.0, -5.0, -6.0, -6.0, 5.0, 30.0, 35.0, -40.0, -1.0,   -1.0, 1.0};</div>
+<div class="line">  a_t rmin, rmax;</div>
+<div class="line">  <span class="keyword">auto</span> r = eve::views::zip(rmin, rmax); <span class="comment">//prepare container view for the results</span></div>
+<div class="line">  quadratics(r, a, b, c);</div>
+<div class="line">  print(<span class="stringliteral">&quot;a   &quot;</span>, a);</div>
+<div class="line">  print(<span class="stringliteral">&quot;b   &quot;</span>, b);</div>
+<div class="line">  print(<span class="stringliteral">&quot;c   &quot;</span>, c);</div>
+<div class="line">  print(<span class="stringliteral">&quot;rmin&quot;</span>, rmin);</div>
+<div class="line">  print(<span class="stringliteral">&quot;rmax&quot;</span>, rmax);</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__arithmetic_ga51432e6f8f1e6386e37b58e32183bcc4_html_ga51432e6f8f1e6386e37b58e32183bcc4"><div class="ttname"><a href="group__core__arithmetic_ga51432e6f8f1e6386e37b58e32183bcc4.html#ga51432e6f8f1e6386e37b58e32183bcc4">eve::sign</a></div><div class="ttdeci">constexpr auto sign</div><div class="ttdoc">elementwise_callable object computing the sign of the parameter.</div><div class="ttdef"><b>Definition</b> sign.hpp:76</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:81</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf_html_gacb015917b1a95c38dab29df14695c1bf"><div class="ttname"><a href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition</b> sqr.hpp:97</div></div>
+<div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition</b> nan.hpp:67</div></div>
+<div class="ttc" id="agroup__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85_html_gaa2beec5955f6701b64b3a2e2ef1a6b85"><div class="ttname"><a href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
+<div class="ttc" id="agroup__core__fma__family_ga2d39b164847cc7f9beaf56659102ed94_html_ga2d39b164847cc7f9beaf56659102ed94"><div class="ttname"><a href="group__core__fma__family_ga2d39b164847cc7f9beaf56659102ed94.html#ga2d39b164847cc7f9beaf56659102ed94">eve::fam</a></div><div class="ttdeci">constexpr auto fam</div><div class="ttdoc">strict_elementwise_callable computing the fused add multiply of its three parameters.</div><div class="ttdef"><b>Definition</b> fam.hpp:86</div></div>
+<div class="ttc" id="agroup__core__fnma__family_ga074ab3f337c7af4c8d8cb430ac4e1cc5_html_ga074ab3f337c7af4c8d8cb430ac4e1cc5"><div class="ttname"><a href="group__core__fnma__family_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5">eve::fnma</a></div><div class="ttdeci">constexpr auto fnma</div><div class="ttdoc">strict_elementwise_callable computing the fused multiply add of its three parameters.</div><div class="ttdef"><b>Definition</b> fnma.hpp:89</div></div>
+<div class="ttc" id="agroup__core__logical_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr auto if_else</div><div class="ttdoc">Select value based on conditional mask or values.</div><div class="ttdef"><b>Definition</b> if_else.hpp:197</div></div>
+<div class="ttc" id="agroup__core__logical_gae07cec0ceff676cedb02884af507fd2c_html_gae07cec0ceff676cedb02884af507fd2c"><div class="ttname"><a href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">eve::swap_if</a></div><div class="ttdeci">void swap_if(Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</div><div class="ttdoc">Conditional swap.</div><div class="ttdef"><b>Definition</b> swap_if.hpp:39</div></div>
+<div class="ttc" id="agroup__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8_html_ga6deb0e67d130c1f8417f3de5b54273d8"><div class="ttname"><a href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a></div><div class="ttdeci">constexpr auto is_eqz</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is zero.</div><div class="ttdef"><b>Definition</b> is_eqz.hpp:72</div></div>
+<div class="ttc" id="agroup__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def_html_ga66505398697cefc9ea7b11b0ee2c7def"><div class="ttname"><a href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def">eve::any</a></div><div class="ttdeci">constexpr auto any</div><div class="ttdoc">Computes a bool value which is true if and only if one or more elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> any.hpp:96</div></div>
+<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition</b> zip.hpp:85</div></div>
+</div><!-- fragment --><p>If we suppose that the coefficients are still given in three <code>std::array</code> (any contiguous range type can do the job) <code>a</code>, <code>b</code> and <code>c</code>. We must read the three arrays by chunks in simd vectors, apply to the triple of simd vectors a resolution algorithm then store the results.</p><ul>
+<li><em><b>EVE</b></em> core has the material to write the simd resolution.</li>
+<li><em><b>EVE</b></em> algo has the material to iterate on scalar datas in an SIMD way using the SIMD resolution.</li>
+<li>The delicate pass is to transmit the input datas and recover the results in a proper way: this is mainly the <code><a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="Callable for SoA value constructions.">eve::zip</a></code> work, that allow to jump from aos to soa.<ul>
+<li><code>r</code> is a view to the pair of arrays containing the results (<code>zip</code> is mandatory to define it)</li>
+<li>We give as input the <code>zip(aa, bb, cc)</code> triple of datas arrays</li>
+</ul>
+</li>
+</ul>
+<p>Now the lambda quad_it do the same kind of work as the primary scalar version, but in an simd way. Differences are:</p><ul>
+<li>The lambda must have an unique paramater to fit the transform_to requirements. This parameter is bound to the three simd vectors by  <code>auto [aaa, bbb, ccc] = e;</code></li>
+<li>The routine to solve the equation is also to be a bit changed :<ul>
+<li>we slightly optimize the computations by using <code>fnma</code> and <code>fma</code> (which turn to normal computations using *+- if SIMD intrinsics are not available), but this is not mandatory.</li>
+<li>The use of <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Select value based on conditional mask or values.">eve::if_else</a></code> is necessary because we have to compute the two branches has the zero equality can arise in some but not all lanes of <code>rmax</code>.</li>
+<li>the <code>swap_if</code> line is only necessary if we want roots ordered by increasing order.</li>
+<li>The case where some <code>aaa</code>are zero is deported at the end and treated differently.</li>
+<li>To return the appropriate data to be used by <code>eve::transform_to</code> the call to <code><a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="Callable for SoA value constructions.">eve::zip</a></code> is required.</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md113"></a>
+Conclusion</h1>
+<p>We have solved using SIMD parallelism a bunch of quadratic equation, without explicit knowledge of the current architecture. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

@@ -48,7 +48,7 @@ var searchData=
   ['and_20depreciation_45',['Removal and Depreciation',['../changelog.html#autotoc_md37',1,'']]],
   ['and_20helpers_46',['Architecture related Types and Helpers',['../group__arch.html',1,'']]],
   ['and_20processing_47',['Storage and Processing',['../intro-04.html#autotoc_md111',1,'']]],
-  ['and_20using_20dynamic_20kernels_48',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md117',1,'']]],
+  ['and_20using_20dynamic_20kernels_48',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md118',1,'']]],
   ['and_20views_49',['Algorithms and Views',['../group__algorithms.html',1,'']]],
   ['any_50',['any',['../group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def',1,'eve::any'],['../group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#autotoc_md23',1,'Should you check for any?'],['../group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#autotoc_md21',1,'Should you check for any?']]],
   ['api_51',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],

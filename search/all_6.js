@@ -19,7 +19,7 @@ var searchData=
   ['development_20environment_16',['Development Environment',['../dev_environment.html',1,'']]],
   ['diff_5fof_5fprod_17',['diff_of_prod',['../group__core__accuracy_ga31d9230d4fa8d9adf0308f7ce820848c.html#ga31d9230d4fa8d9adf0308f7ce820848c',1,'eve']]],
   ['digamma_18',['digamma',['../group__special_ga9eae818e09cb161b0209418f0b1166f0.html#ga9eae818e09cb161b0209418f0b1166f0',1,'eve']]],
-  ['dispatch_19',['From static to dynamic dispatch',['../multiarch.html#autotoc_md114',1,'']]],
+  ['dispatch_19',['From static to dynamic dispatch',['../multiarch.html#autotoc_md115',1,'']]],
   ['dist_20',['dist',['../group__core__arithmetic_gaeff40f4fe2a2e24a0b2337002530c452.html#gaeff40f4fe2a2e24a0b2337002530c452',1,'eve']]],
   ['div_21',['div',['../group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5',1,'eve']]],
   ['div_5f180_22',['div_180',['../group__math__trig_ga2a2f713e2f715e4d1199076cb26194a0.html#ga2a2f713e2f715e4d1199076cb26194a0',1,'eve']]],
@@ -29,7 +29,7 @@ var searchData=
   ['dot_26',['dot',['../group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c',1,'eve']]],
   ['double_5ffactorial_27',['double_factorial',['../group__special_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58',1,'eve']]],
   ['drop_5falternative_28',['drop_alternative',['../group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b',1,'eve']]],
-  ['dynamic_20dispatch_29',['From static to dynamic dispatch',['../multiarch.html#autotoc_md114',1,'']]],
-  ['dynamic_20function_20hub_30',['Writing the dynamic function hub',['../multiarch.html#autotoc_md116',1,'']]],
-  ['dynamic_20kernels_31',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md117',1,'']]]
+  ['dynamic_20dispatch_29',['From static to dynamic dispatch',['../multiarch.html#autotoc_md115',1,'']]],
+  ['dynamic_20function_20hub_30',['Writing the dynamic function hub',['../multiarch.html#autotoc_md117',1,'']]],
+  ['dynamic_20kernels_31',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md118',1,'']]]
 ];

@@ -11,7 +11,7 @@ var searchData=
   ['unit_20tests_8',['Compiling EVE Unit Tests',['../dev_cmake.html#autotoc_md64',1,'']]],
   ['up_20the_20library_9',['Setting up the Library',['../setup.html#autotoc_md82',1,'']]],
   ['use_20with_20cmake_10',['Use with CMake',['../setup.html#autotoc_md88',1,'']]],
-  ['using_20dynamic_20kernels_11',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md117',1,'']]],
+  ['using_20dynamic_20kernels_11',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md118',1,'']]],
   ['using_20eve_3a_3awide_12',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md98',1,'']]],
   ['using_20the_20library_13',['Using the library',['../setup.html#autotoc_md84',1,'']]]
 ];

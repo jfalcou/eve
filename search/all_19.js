@@ -15,6 +15,6 @@ var searchData=
   ['with_20cmake_12',['Use with CMake',['../setup.html#autotoc_md88',1,'']]],
   ['with_20native_20code_13',['Interaction with native code.',['../inter-with-native.html',1,'']]],
   ['write_14',['write',['../group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d',1,'eve']]],
-  ['writing_20the_20dynamic_20function_20hub_15',['Writing the dynamic function hub',['../multiarch.html#autotoc_md116',1,'']]],
-  ['writing_20the_20kernel_16',['Writing the kernel',['../multiarch.html#autotoc_md115',1,'']]]
+  ['writing_20the_20dynamic_20function_20hub_15',['Writing the dynamic function hub',['../multiarch.html#autotoc_md117',1,'']]],
+  ['writing_20the_20kernel_16',['Writing the kernel',['../multiarch.html#autotoc_md116',1,'']]]
 ];
