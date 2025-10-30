@@ -9,7 +9,6 @@
 
 #include <eve/traits/overload/impl/tuple.hpp>
 #include <eve/detail/function/inner_bit_cast.hpp>
-#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/bit_value.hpp>
 #include <eve/conditional.hpp>
 
@@ -41,16 +40,16 @@ namespace eve
 
       if constexpr (scalar_value<T>)
       {
-        const auto uv = bit_cast(v, as<as_uinteger_t<T>>{});
+        const auto uv = std::bit_cast<as_uinteger_t<T>>(v);
 
         if constexpr (sizeof(T) > sizeof(utgt_et))
         {
           EVE_ASSERT((v >> ((sizeof(T) - sizeof(utgt_et)) * 8)) == T{ 0 }, "[eve::bit_callable] Alternative value has non-zero truncated bits");
-          return bit_cast(static_cast<utgt_et>(uv), as<inner_tgt_et>{});
+          return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
         }
         else
         {
-          return bit_cast(static_cast<utgt_et>(uv), as<inner_tgt_et>{});
+          return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
         }
       }
       else
@@ -59,27 +58,31 @@ namespace eve
       }
     }
 
+    template<callable_options O, typename... Ts>
+    constexpr EVE_FORCEINLINE bit_value_t<Ts...> execute(auto arch, O const& opts, Ts... xs) const
+    {
+      using r_t = bit_value_t<Ts...>;
+      return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs, as<r_t>{})...), as<bit_value_t<Ts...>>{});
+    }
+
     template<callable_options O, kumi::product_type Tup>
     constexpr EVE_FORCEINLINE kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
     {
       using C = rbr::result::fetch_t<condition_key, O>;
 
       return kumi::apply([&](auto... xs) {
-        using tgt_t = bit_value_t<std::remove_cvref_t<decltype(xs)>...>;
-
-        if constexpr (conditional_expr<C> && C::has_alternative)
+        if constexpr (conditional_expr<C>)
         {
-          const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
-          const auto new_cl = (*this)[new_cx];
-          const auto res = static_cast<decltype(new_cl)::base_t const&>(new_cl).behavior(arch, new_cl.options(), process_input(xs, as<tgt_t>{})...);
-
-          return detail::inner_bit_cast(res, as<tgt_t>{});
+          if constexpr (C::has_alternative)
+          {
+            using tgt_t = bit_value_t<std::remove_cvref_t<decltype(xs)>...>;
+            const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
+            const auto new_cl = (*this)[new_cx];
+            return new_cl.execute(arch, new_cl.options(), xs...);
+          }
+          else return execute(arch, opts, xs...);
         }
-        else
-        {
-          const auto res = base_t::behavior(arch, opts, process_input(xs, as<tgt_t>{})...);
-          return detail::inner_bit_cast(res, as<tgt_t>{});
-        }
+        else return execute(arch, opts, xs...);
       }, x);
     }
 
@@ -87,20 +90,19 @@ namespace eve
     constexpr EVE_FORCEINLINE bit_value_t<Ts...> behavior(auto arch, O const& opts, Ts... xs) const
     {
       using C = rbr::result::fetch_t<condition_key, O>;
-      using tgt_t = bit_value_t<Ts...>;
 
-      if constexpr (conditional_expr<C> && C::has_alternative)
+      if constexpr (conditional_expr<C>)
       {
-        const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
-        const auto new_cl = (*this)[new_cx];
-        const auto res = static_cast<decltype(new_cl)::base_t const&>(new_cl).behavior(arch, new_cl.options(), process_input(xs, as<tgt_t>{})...);
-
-        return detail::inner_bit_cast(res, as<tgt_t>{});
+        if constexpr (C::has_alternative)
+        {
+          using tgt_t = bit_value_t<Ts...>;
+          const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
+          const auto new_cl = (*this)[new_cx];
+          return new_cl.execute(arch, new_cl.options(), xs...);
+        }
+        else return execute(arch, opts, xs...);
       }
-      else
-      {
-        return detail::inner_bit_cast(base_t::behavior(arch, opts, process_input(xs, as<tgt_t>{})...), as<tgt_t>{});
-      }
+      else return execute(arch, opts, xs...);
     }
   };
 }
