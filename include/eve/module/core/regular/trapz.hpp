@@ -12,14 +12,13 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
 
-#include <iostream>
 namespace eve
 {
 
   template<typename Options>
   struct trapz_t : callable<trapz_t, Options, widen_option, kahan_option>
   {
-    
+
     template<floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
       EVE_FORCEINLINE eve::upgrade_if_t<Options, common_value_t<Ts...>>

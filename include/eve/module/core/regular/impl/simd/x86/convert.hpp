@@ -11,6 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/interleave_shuffle.hpp>
+#include <eve/module/core/regular/combine.hpp>
 #include <type_traits>
 #include <eve/traits/updown.hpp>
 
@@ -362,6 +363,14 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<eve::float16_t
   else if constexpr (c_i == category::float16x8  && c_o == category::float32x4  && f16c) return _mm_cvtph_ps(v);
   else if constexpr (c_i == category::float16x8  && c_o == category::float32x8  && f16c) return _mm256_cvtph_ps(v);
   else if constexpr (c_i == category::float16x16 && c_o == category::float32x16 && a512) return _mm512_cvtph_ps(v);
+  else if constexpr (c_i == category::float16x32 && std::same_as<U, float> && a512)
+  {
+    const auto [low, high] = v.slice();
+    return eve::combine(
+      convert_impl(EVE_TARGETS(current_api_type), low, tgt),
+      convert_impl(EVE_TARGETS(current_api_type), high, tgt)
+    );
+  }
   else                                                                                   return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 

@@ -11,7 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/true.hpp>
-
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 
 namespace eve
 {
@@ -85,24 +86,10 @@ namespace eve
       return true_(as<r_t>());
     }
 
-
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    is_ordered_(EVE_REQUIRES(cpu_),
-                  O const & ,
-                  T const& aa, U const& bb) noexcept
+    EVE_FORCEINLINE constexpr auto is_ordered_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
-      using w_t =  common_value_t<T, U>;
-      {
-        if constexpr(integral_value<T> )
-          return true_(as<w_t>());
-        else
-        {
-          auto a = w_t(aa);
-          auto b = w_t(bb);
-          return (a == a) && (b == b);
-        }
-      }
+      return logical_not(is_unordered(a, b));
     }
   }
 }

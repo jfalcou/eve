@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_unordered(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::is_unordered(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of eve::is_unordered(simd)", eve::test::simd::i
 //== Tests for eve::is_unordered
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_unordered(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3)))
 <typename T, typename M>(T a0, T const& a1, M const& t)
 {
@@ -46,7 +46,7 @@ TTS_CASE_WITH("Check behavior of eve::is_unordered(simd)",
 //==================================================================================================
 //== Tests for eve::is_unordered corner cases for floating
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of eve::is_unordered(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of eve::is_unordered(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> tgt)
 {
   using v_t = eve::element_type_t<T>;
