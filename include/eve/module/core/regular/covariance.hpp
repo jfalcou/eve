@@ -16,6 +16,12 @@ namespace eve
   template<typename Options>
   struct covariance_t : callable<covariance_t, Options, kahan_option, widen_option, unbiased_option>
   {
+//     template<value Tup1, value Tup2>
+//     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>>)// && Options::contains(widen))
+//     EVE_FORCEINLINE constexpr
+//     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
+//     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
+
     template<value Tup1, value Tup2>
     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>> && Options::contains(widen))
     EVE_FORCEINLINE constexpr
@@ -88,11 +94,11 @@ namespace eve
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
     {
      if constexpr(O::contains(widen)) {
-        auto up = [](auto tup){
+        auto up1 = [](auto tup){
           auto upg = [](auto t){return eve::upgrade(t); };
           return kumi::map(upg, tup);
         };
-        return covariance[o.drop(widen)](up(f), up(s));
+        return covariance[o.drop(widen)](up1(f), up1(s));
       }
      else
      {
