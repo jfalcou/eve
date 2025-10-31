@@ -91,7 +91,7 @@ namespace eve
         using u_t = as_uinteger_t<T>;
         auto uv = bit_cast(a, as<u_t>());
 
-        return bit_cast((uv == bit_cast(zero(as(a)), as(uv))) || (uv == bit_cast(mzero(as(a)), as(uv))), as<as_logical_t<T>>());
+        return bit_cast((uv << 1) == 0, as<as_logical_t<T>>());
       }
       else
       {
