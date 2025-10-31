@@ -26,6 +26,11 @@ namespace eve::detail
     {
       constexpr auto cat = categorize<wide<T, N>>();
       if      constexpr( cat == category::float32x4) return vceqzq_f32(v);
+      if constexpr (match(cat, category::float16) && detail::supports_fp16_vector_ops)
+      {
+        if      constexpr( cat == category::float16x8) return vceqzq_f16(v);
+        else if constexpr( cat == category::float16x4) return vceqz_f16(v);
+      }
       else if constexpr( cat == category::int32x4  ) return vceqzq_s32(v);
       else if constexpr( cat == category::int16x8  ) return vceqzq_s16(v);
       else if constexpr( cat == category::int8x16  ) return vceqzq_s8(v);

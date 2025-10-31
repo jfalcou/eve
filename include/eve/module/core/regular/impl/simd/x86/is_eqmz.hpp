@@ -16,7 +16,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_eqmz_(EVE_REQUIRES(avx512_),
-                                                   O          const &,
+                                                   O          const &opts,
                                                    wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -32,12 +32,18 @@ namespace eve::detail
     else if constexpr( c == category::float32x16 )return s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return s_t {_mm256_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, f)};
-
+    else if constexpr( match(c, category::float16) )
+    {
+      if      constexpr( !detail::supports_fp16_vector_ops ) return is_eqmz.behavior(cpu_{}, opts, a);
+      else if constexpr( c == category::float16x32 )         return s_t {_mm512_fpclass_ph_mask(a, f)};
+      else if constexpr( c == category::float16x16 )         return s_t {_mm256_fpclass_ph_mask(a, f)};
+      else if constexpr( c == category::float16x8  )         return s_t {_mm_fpclass_ph_mask(a, f)};
+    }
   }
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto is_eqmz_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,
@@ -61,6 +67,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return mask8 {_mm256_mask_fpclass_pd_mask(m, v, f)};
       else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_fpclass_ps_mask(m, v, f)};
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_fpclass_pd_mask(m, v, f)};
+      else if constexpr( match(c, category::float16) )
+      {
+        if      constexpr( !detail::supports_fp16_vector_ops ) return is_eqmz[o][cx].retarget(cpu_{}, v);
+        else if constexpr( c == category::float16x32 )         return mask32 {_mm512_mask_fpclass_ph_mask(m, v, f)};
+        else if constexpr( c == category::float16x16 )         return mask16 {_mm256_mask_fpclass_ph_mask(m, v, f)};
+        else if constexpr( c == category::float16x8  )         return mask8  {_mm_mask_fpclass_ph_mask(m, v, f)};
+      }
     }
   }
 }

@@ -9,9 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/logical_andnot.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_eqpz.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
 
 namespace eve
 {
@@ -83,7 +81,8 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_eqmz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return logical_andnot(is_eqz(a), is_eqpz(a));
+      using u_t = as_uinteger_t<T>;
+      return bit_cast(is_equal(bit_cast(a, as<u_t>()), bit_cast(mzero(as(a)), as<u_t>())), as<as_logical_t<T>>());
     }
   }
 }
