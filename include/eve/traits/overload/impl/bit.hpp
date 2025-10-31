@@ -47,12 +47,9 @@ namespace eve
         if constexpr (sizeof(ut_t) > sizeof(utgt_et))
         {
           EVE_ASSERT((uv >> (sizeof(utgt_et) * 8)) == ut_t{ 0 }, "[eve::bit_callable] Alternative value has non-zero truncated bits");
-          return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
         }
-        else
-        {
-          return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
-        }
+
+        return std::bit_cast<inner_tgt_et>(static_cast<utgt_et>(uv));
       }
       else
       {
@@ -70,22 +67,7 @@ namespace eve
     template<callable_options O, kumi::product_type Tup>
     constexpr EVE_FORCEINLINE kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
     {
-      using C = rbr::result::fetch_t<condition_key, O>;
-
-      return kumi::apply([&](auto... xs) {
-        if constexpr (conditional_expr<C>)
-        {
-          if constexpr (C::has_alternative)
-          {
-            using tgt_t = bit_value_t<std::remove_cvref_t<decltype(xs)>...>;
-            const auto new_cx = opts[condition_key].rebase(process_alternative(opts[condition_key].alternative, as<tgt_t>{}));
-            const auto new_cl = (*this)[new_cx];
-            return new_cl.execute(arch, new_cl.options(), xs...);
-          }
-          else return execute(arch, opts, xs...);
-        }
-        else return execute(arch, opts, xs...);
-      }, x);
+      return kumi::apply([&](auto... xs) { return behavior(arch, opts, xs...); }, x);
     }
 
     template<callable_options O, typename... Ts>
