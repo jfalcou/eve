@@ -22,32 +22,17 @@ namespace eve
                                                 kahan_option, widen_option>
   {
     template<value P, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0) && !Options::contains(widen))
-     EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<Ts...>, P>
+    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0))
+      EVE_FORCEINLINE constexpr as_wide_as_t<upgrade_if_t<Options, common_value_t<Ts...>>, P>
     operator()(P p, Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(p, ts...);
-    }
-
-    template<value P, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0) && Options::contains(widen))
-     EVE_FORCEINLINE constexpr as_wide_as_t<upgrade_t<common_value_t<Ts...>>, P>
-    operator()(P p, Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(p, ts...);
-    }
+    { return EVE_DISPATCH_CALL(p, ts...); }
 
     template<value P, kumi::non_empty_product_type Tup>
-    requires(!Options::contains(widen))
     EVE_FORCEINLINE constexpr
-    as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
-    operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
+    as_wide_as_t<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>, P>
+    operator()(P p, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(p, t); }
 
-    template<value P, kumi::non_empty_product_type Tup>
-    requires(Options::contains(widen))
-      EVE_FORCEINLINE constexpr
-    as_wide_as_t<upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>, P>
-    operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
     EVE_CALLABLE_OBJECT(lpnorm_t, lpnorm_);
   };
 
