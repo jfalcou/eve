@@ -27,13 +27,7 @@ namespace eve
     consteval auto tuple_type_check()
     {
       if constexpr(kumi::sized_product_type<T, 0>) return true;
-      else
-      {
-        return [&]<std::size_t... I>(std::index_sequence<I...>)
-        {
-          return type_check<kumi::element_t<I, T>...>();
-        }(std::make_index_sequence<kumi::size_v<T>>());
-      }
+      else                                         return kumi::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
     }
   }
 
