@@ -23,7 +23,7 @@ namespace eve::detail
   template<conditional_expr C, typename Target, typename Arg>
   EVE_FORCEINLINE Target alternative(C const& c, Arg a0, as<Target> const&)
   {
-    if constexpr( C::has_alternative )  return Target{c.alternative};
+    if constexpr( C::has_alternative ) return Target{ convert(c.alternative, as_element<Target>{}) };
     else
     {
       if      constexpr(logical_value<Target>)    return false_(as<Target>());

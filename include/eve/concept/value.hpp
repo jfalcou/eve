@@ -65,7 +65,7 @@ namespace eve
   //! - `float`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_value          = value<T> && std::is_signed_v<translated_element_type_t<T>>;
+  template<typename T> concept signed_value          = value<T> && (std::is_signed_v<translated_element_type_t<T>> || std::same_as<translated_element_type_t<T>, eve::float16_t>);
   //================================================================================================
   //! @}
   //================================================================================================

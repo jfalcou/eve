@@ -265,11 +265,11 @@ namespace eve
     //==============================================================================================
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of unsigned integral.
-    EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(eve::current_api,*this); }
+    EVE_FORCEINLINE bits_type bits()   const noexcept { return detail::to_bits(eve::current_api,*this); }
 
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of `Type`.
-    EVE_FORCEINLINE auto mask()   const noexcept { return detail::to_mask(eve::current_api,*this); }
+    EVE_FORCEINLINE mask_type mask()   const noexcept { return detail::to_mask(eve::current_api,*this); }
 
     //! Returns a bitset corresponding to the current logical values.
     EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(eve::current_api,*this); }

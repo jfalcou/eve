@@ -46,10 +46,10 @@ namespace eve::detail
   constexpr EVE_FORCEINLINE auto apply_fp16_as_u16(Func&& f, Arg0&& arg0, Args&&... args)
     requires (same_lanes<Arg0, Args...> && std::same_as<element_type_t<Arg0>, eve::float16_t> && (std::same_as<element_type_t<Args>, eve::float16_t> && ...))
   {
-    auto r = f(convert(EVE_FWD(arg0), as<uint16_t>{}), convert(EVE_FWD(args), as<uint16_t>{})...);
+    auto r = f(bit_cast(EVE_FWD(arg0), as<as_wide_as_t<uint16_t, Arg0>>{}), bit_cast(EVE_FWD(args), as<as_wide_as_t<uint16_t, Args>>{})...);
 
-    if constexpr (logical_value<decltype(r)>) return convert(r, as<logical<eve::float16_t>>{});
-    else                                      return convert(r, as<eve::float16_t>{});
+    if constexpr (logical_value<decltype(r)>) return bit_cast(r, as<as_wide_as_t<logical<eve::float16_t>, decltype(r)>>{});
+    else                                      return bit_cast(r, as<as_wide_as_t<eve::float16_t, decltype(r)>>{});
   }
 }
 

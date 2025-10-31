@@ -10,23 +10,20 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 
 namespace eve::detail
 {
 template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> bit_notor_(EVE_REQUIRES(neon128_),
-                                      O const          &,
+                                      O const          &opts,
                                       wide<T, N> const &v0,
                                       wide<T, N> const &v1) noexcept
 requires arm_abi<abi_t<T, N>>
 {
   constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( cat == category::float32x4 )
-    return vreinterpretq_f32_u32(vornq_u32(vreinterpretq_u32_f32(v1), vreinterpretq_u32_f32(v0)));
-  else if constexpr( cat == category::float32x2 )
-    return vreinterpret_f32_u32(vorn_u32(vreinterpret_u32_f32(v1), vreinterpret_u32_f32(v0)));
-  else if constexpr( cat == category::int64x1 ) return vorn_s64(v1, v0);
+  if constexpr( cat == category::int64x1 ) return vorn_s64(v1, v0);
   else if constexpr( cat == category::int32x2 ) return vorn_s32(v1, v0);
   else if constexpr( cat == category::int16x4 ) return vorn_s16(v1, v0);
   else if constexpr( cat == category::int8x8 ) return vorn_s8(v1, v0);
@@ -42,12 +39,10 @@ requires arm_abi<abi_t<T, N>>
   else if constexpr( cat == category::uint32x4 ) return vornq_u32(v1, v0);
   else if constexpr( cat == category::uint16x8 ) return vornq_u16(v1, v0);
   else if constexpr( cat == category::uint8x16 ) return vornq_u8(v1, v0);
-  else if constexpr( current_api >= asimd )
+  else  if constexpr( match(cat, category::float_) )
   {
-    if constexpr( cat == category::float64x1 )
-      return vreinterpret_f64_u64(vorn_u64(vreinterpret_u64_f64(v1), vreinterpret_u64_f64(v0)));
-    else if constexpr( cat == category::float64x2 )
-      return vreinterpretq_f64_u64(vornq_u64(vreinterpretq_u64_f64(v1), vreinterpretq_u64_f64(v0)));
+    constexpr auto tgt = as<as_uinteger_t<wide<T, N>>>{};
+    return bit_cast(bit_notor.behavior(current_api, opts, bit_cast(v0, tgt), bit_cast(v1, tgt)), as<wide<T, N>>{});
   }
 }
 }

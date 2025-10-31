@@ -9,38 +9,45 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
-#include <eve/module/core/regular/bit_or.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/traits/as_wides.hpp>
-#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_andnot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+  {
+    if constexpr (simd_value<T>)
+    {
+      if constexpr (simd_value<U>)
+      {
+        if constexpr (std::same_as<T, U>) return bit_and(a, bit_not(b));
+        else                              return bit_andnot(a, bit_cast(b, as<T>{}));
+      }
+      else                                return bit_andnot(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+    }
+    else if constexpr (simd_value<U>)
+    {
+      // T scalar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      return bit_andnot(bit_value_t<T, U>{ a }, bit_cast(b, as<bit_value_t<T, U>>{}));
+    }
+    else
+    {
+      // both scalar, maybe floating, roundtrip to integer
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) & ~bit_cast(b, as<i_t>{})), as(a));
+    }
+  }
+
+  //================================================================================================
+  // N parameters
+  //================================================================================================
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
-    using r_t = bit_value_t<T0, T1, Ts...>;
-    using b_t = as_integer_t<r_t>;
-
-    if constexpr(sizeof...(Ts) == 0) //two parameters
-    {
-      using ra_t = detail::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
-      using rb_t = detail::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
-      auto ba = bit_cast(a, as<ra_t>{});
-      auto bb = bit_cast(b, as<rb_t>{});
-      return bit_cast( bit_and(b_t(ba),bit_not(b_t(bb)) ), as<r_t>());
-    }
-    else
-    {
-      return bit_andnot(a, bit_or(b, args...));
-    }
+    return bit_andnot(a, bit_and(b, args...));
   }
 }

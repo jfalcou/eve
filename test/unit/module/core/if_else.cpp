@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::if_else", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::if_else", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using sT = eve::element_type_t<T>;
@@ -61,7 +61,7 @@ TTS_CASE_TPL("Check return types of eve::if_else", eve::test::simd::all_types)
 
 TTS_CASE_WITH(
     "Check behavior of eve::if_else(logical,logical,logical) and eve::if_else(logical,wide,wide)",
-    eve::test::simd::all_types,
+    eve::test::simd::all_types_wf16,
     tts::generate(tts::randoms(eve::valmin, eve::valmax),
                   tts::randoms(eve::valmin, eve::valmax),
                   tts::logicals(0, 3),

@@ -9,33 +9,42 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 
 namespace eve::detail
 {
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_notor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+  {
+    if constexpr (simd_value<T>)
+    {
+      if constexpr (simd_value<U>)
+      {
+        if constexpr (std::same_as<T, U>) return bit_or(bit_not(a), b);
+        else                              return bit_notor(a, bit_cast(b, as<T>{}));
+      }
+      else                                return bit_notor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+    }
+    else if constexpr (simd_value<U>)
+    {
+      // T scalar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      return bit_notor(bit_value_t<T, U>{ a }, bit_cast(b, as<bit_value_t<T, U>>{}));
+    }
+    else
+    {
+      // both scalar, maybe floating, roundtrip to integer
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>((~bit_cast(a, as<i_t>{})) | bit_cast(b, as<i_t>{})), as(a));
+    }
+  }
+
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
   bit_notor_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
-    using r_t = bit_value_t<T0, T1, Ts...>;
-    using b_t = as_integer_t<r_t>;
-    if constexpr(sizeof...(Ts) == 0)
-    {
-      using ra_t = detail::conditional_t<scalar_value<T0>,element_type_t<b_t>,b_t>;
-      using rb_t = detail::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
-      auto ba = bit_cast(a, as<ra_t>{});
-      auto bb = bit_cast(b, as<rb_t>{});
-      return bit_cast( bit_or(bit_not(b_t(ba)),b_t(bb)), as<r_t>());
-    }
-    else
-    {
-      return eve::bit_notor(r_t(a), bit_or(r_t(b), r_t(args)...));
-    }
+    return bit_notor(a, bit_or(b, args...));
   }
 }

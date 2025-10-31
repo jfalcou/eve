@@ -9,6 +9,9 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_wides.hpp>
+#include <eve/detail/function/reduce.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 
 namespace eve::detail
@@ -24,7 +27,7 @@ namespace eve::detail
     }
     else if constexpr (simd_value<U>)
     {
-      // T sclar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      // T scalar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
       return bit_and(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
     }
     else
@@ -38,22 +41,26 @@ namespace eve::detail
   //================================================================================================
   // N parameters
   //================================================================================================
-  template<callable_options O, typename T0, typename... Ts>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> bit_and_(EVE_REQUIRES(cpu_), O const&, T0 a0, Ts... args) noexcept
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
+  bit_and_(EVE_REQUIRES(cpu_), O const&, T0 a0, T1 a1, Ts... args) noexcept
   {
-    using r_t = bit_value_t<T0, Ts...>;
-    if constexpr(sizeof...(Ts) == 0)
-      return r_t(a0);
-    else if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+    using r_t = bit_value_t<T0, T1, Ts...>;
+
+    if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>))
     {
-      auto head = eve::as_wides(eve::allbits(eve::as<r_t>()), a0, args...);
+      auto head = eve::as_wides(eve::allbits(as<r_t>{}),
+                                bit_cast(a0, as<r_t>{}),
+                                bit_cast(a1, as<r_t>{}),
+                                bit_cast(args, as<r_t>{})...);
+
       auto s = eve::bit_and(head);
       return butterfly_reduction(s, eve::bit_and).get(0);
     }
     else
     {
-      auto that = r_t(a0);
-      ((that = bit_and(that, r_t(args))), ...);
+      auto that = bit_and(a0, a1);
+      ((that = bit_and(that, args)), ...);
       return that;
     }
   }

@@ -13,3 +13,4 @@
 #include <eve/traits/overload/impl/elementwise.hpp>
 #include <eve/traits/overload/impl/tuple.hpp>
 #include <eve/traits/overload/impl/constant.hpp>
+#include <eve/traits/overload/impl/bit.hpp>

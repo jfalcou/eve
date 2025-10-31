@@ -13,16 +13,13 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_ornot_t : strict_tuple_callable<bit_ornot_t, Options>
+  struct bit_ornot_t : bit_callable<bit_ornot_t, Options>
   {
     template<value T0, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
-      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
-      {
-        static_assert(same_lanes_or_scalar<T0, Ts...>,
-          "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
-      }
+      static_assert(detail::bit_validate_mask_for<decltype(this->options()), T0, Ts...>(),
+        "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
 
       return EVE_DISPATCH_CALL(t0, ts...);
     }
@@ -30,11 +27,8 @@ namespace eve
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
-      if constexpr (!match_option<condition_key, decltype(this->options()), ignore_none_>)
-      {
-        static_assert(same_lanes_or_scalar_tuple<Tup>,
-          "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
-      }
+      static_assert(detail::bit_validate_mask_for<decltype(this->options()), Tup>(),
+        "[eve::bit_ornot] - Masking is not supported for inputs of different lane count");
 
       return EVE_DISPATCH_CALL(t);
     }
@@ -46,7 +40,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ornot
-//!   @brief  `strict_tuple_callable` object Computing the bitwise ORNOT of its arguments.
+//!   @brief  `bit_callable` object Computing the bitwise ORNOT of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

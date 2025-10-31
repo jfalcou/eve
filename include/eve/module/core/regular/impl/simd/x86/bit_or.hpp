@@ -12,6 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 
 #include <type_traits>
 
@@ -30,6 +31,7 @@ namespace eve ::detail
     else  if constexpr  ( c == category::float32x16 ) return _mm512_or_ps(a, b);
     else  if constexpr  ( c == category::float32x8  ) return _mm256_or_ps(a, b);
     else  if constexpr  ( c == category::float32x4  ) return _mm_or_ps   (a, b);
+    else  if constexpr  ( match(c, category::float16) ) return apply_fp16_as_u16(bit_or, a, b);
     else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_512_> ) return _mm512_or_si512(a, b);
     else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_256_> )
     {

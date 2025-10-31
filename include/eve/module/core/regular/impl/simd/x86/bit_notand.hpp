@@ -12,6 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
 
 #include <type_traits>
 
@@ -19,49 +20,12 @@ namespace eve ::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sse2_),
-                                         O const          &,
+                                         O const          &opts,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept
-  requires std::same_as<abi_t<T, N>, x86_128_>
+  requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( std::is_same_v<T, float> ) return _mm_andnot_ps(v0, v1);
-    else if constexpr( std::is_same_v<T, double> ) return _mm_andnot_pd(v0, v1);
-    else if constexpr( std::is_integral_v<T> ) return _mm_andnot_si128(v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx_),
-                                         O const          &,
-                                         wide<T, N> const &v0,
-                                         wide<T, N> const &v1) noexcept
-  requires std::same_as<abi_t<T, N>, x86_256_>
-  {
-    if constexpr( std::is_same_v<T, float> ) return _mm256_andnot_ps(v0, v1);
-    else if constexpr( std::is_same_v<T, double> ) return _mm256_andnot_pd(v0, v1);
-    else if constexpr( std::is_integral_v<T> )
-    {
-      if constexpr( current_api >= avx2 ) return _mm256_andnot_si256(v0, v1);
-      else
-        return _mm256_castps_si256(
-          _mm256_andnot_ps(_mm256_castsi256_ps(v0), _mm256_castsi256_ps(v1)));
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 512 bits implementation
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
-                                         O const          &,
-                                         wide<T, N> const &v0,
-                                         wide<T, N> const &v1) noexcept requires std::same_as<abi_t<T, N>, x86_512_>
-  {
-    if constexpr( std::is_same_v<T, double> ) return _mm512_andnot_pd(v0, v1);
-    else if constexpr( std::is_same_v<T, float> ) return _mm512_andnot_ps(v0, v1);
-    else if constexpr( sizeof(T) == 8 ) return _mm512_andnot_epi64(v0, v1);
-    else if constexpr( sizeof(T) == 4 ) return _mm512_andnot_epi32(v0, v1);
-    else return _mm512_andnot_si512(v0, v1);
+    return bit_andnot.behavior(current_api, opts, v1, v0);
   }
 
   // -----------------------------------------------------------------------------------------------
