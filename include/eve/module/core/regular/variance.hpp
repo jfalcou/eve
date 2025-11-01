@@ -19,38 +19,28 @@
 namespace eve
 {
   template<typename Options>
-  struct variance_t : tuple_callable<variance_t, Options, raw_option, kahan_option, widen_option, unbiased_option>
+  struct variance_t : tuple_callable<variance_t, Options, raw_option, kahan_option,
+                                     widen_option, unbiased_option>
   {
-    template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr common_value_t<Ts...>
-    operator()(Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
 
     template<value... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr common_value_t<eve::upgrade_t<Ts>...>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...>)
+      EVE_FORCEINLINE constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
     operator()(Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
+    { return EVE_DISPATCH_CALL(ts...); }
 
     template<integral_value T0,  integral_value T1>
     requires(eve::same_lanes_or_scalar<T0, T1>)
-      EVE_FORCEINLINE common_value_t<T0, T1>
-    constexpr operator()(T0 t0, T1 t1)
-      const noexcept
-    {
-      return EVE_DISPATCH_CALL(t0, t1);
-    }
+      EVE_FORCEINLINE eve::upgrade_if_t<Options, common_value_t<T0, T1>>
+    constexpr operator()(T0 t0, T1 t1) const noexcept
+    { return EVE_DISPATCH_CALL(t0, t1); }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(variance_t, variance_);
   };
