@@ -92,7 +92,6 @@ TTS_CASE_TPL("Check conversion behavior", eve::test::simd::integers)
 <typename T>(tts::type<T>)
 {
    using v_t  = eve::element_type_t<T>;
-//   using fl_t = eve::as_floating_point_t<T>;
    if constexpr( eve::scalar_value<T> )
    {
      TTS_EXPR_IS(eve::exp2(T(), eve::as<double>()), double);
