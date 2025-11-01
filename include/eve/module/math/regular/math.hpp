@@ -57,6 +57,7 @@
 #include <eve/module/math/regular/expx2.hpp>
 #include <eve/module/math/regular/gd.hpp>
 #include <eve/module/math/regular/geommean.hpp>
+#include <eve/module/math/regular/harmmean.hpp>
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/agd.hpp>
