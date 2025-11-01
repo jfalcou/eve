@@ -15,6 +15,10 @@ TTS_CASE("Check as_floating_point on scalar")
 {
   using eve::as_floating_point_t;
 
+  TTS_TYPE_IS((as_floating_point_t<eve::float16_t>) , eve::float16_t );
+  TTS_TYPE_IS((as_floating_point_t<std::int16_t>  ) , eve::float16_t );
+  TTS_TYPE_IS((as_floating_point_t<std::uint16_t> ) , eve::float16_t );
+
   TTS_TYPE_IS((as_floating_point_t<float>         ) , float );
   TTS_TYPE_IS((as_floating_point_t<std::int32_t>  ) , float );
   TTS_TYPE_IS((as_floating_point_t<std::uint32_t> ) , float );
@@ -28,6 +32,10 @@ TTS_CASE("Check as_floating_point on logical scalar")
 {
   using eve::as_floating_point_t;
   using eve::logical;
+
+  TTS_TYPE_IS((as_floating_point_t<logical<eve::float16_t>>) , logical<eve::float16_t> );
+  TTS_TYPE_IS((as_floating_point_t<logical<std::int16_t>>  ) , logical<eve::float16_t> );
+  TTS_TYPE_IS((as_floating_point_t<logical<std::uint16_t>> ) , logical<eve::float16_t> );
 
   TTS_TYPE_IS((as_floating_point_t<logical<float>>        ) , logical<float> );
   TTS_TYPE_IS((as_floating_point_t<logical<std::int32_t>> ) , logical<float> );
@@ -43,6 +51,10 @@ TTS_CASE("Check as_floating_point on wide")
   using eve::as_floating_point_t;
   using eve::wide;
 
+  TTS_TYPE_IS((as_floating_point_t<wide<eve::float16_t>>) , wide<eve::float16_t> );
+  TTS_TYPE_IS((as_floating_point_t<wide<std::int16_t>>  ) , wide<eve::float16_t> );
+  TTS_TYPE_IS((as_floating_point_t<wide<std::uint16_t>> ) , wide<eve::float16_t> );
+
   TTS_TYPE_IS((as_floating_point_t<wide<float>>        ) , wide<float> );
   TTS_TYPE_IS((as_floating_point_t<wide<std::int32_t>> ) , wide<float> );
   TTS_TYPE_IS((as_floating_point_t<wide<std::uint32_t>>) , wide<float> );
@@ -57,6 +69,10 @@ TTS_CASE("Check as_floating_point on logical wide")
   using eve::as_floating_point_t;
   using eve::logical;
   using eve::wide;
+
+  TTS_TYPE_IS((as_floating_point_t<logical<wide<eve::float16_t>>>) , logical<wide<eve::float16_t>> );
+  TTS_TYPE_IS((as_floating_point_t<logical<wide<std::int16_t>>>  ) , logical<wide<eve::float16_t>> );
+  TTS_TYPE_IS((as_floating_point_t<logical<wide<std::uint16_t>>> ) , logical<wide<eve::float16_t>> );
 
   TTS_TYPE_IS((as_floating_point_t<logical<wide<float>>>        ) , logical<wide<float>> );
   TTS_TYPE_IS((as_floating_point_t<logical<wide<std::int32_t>>> ) , logical<wide<float>> );
