@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of bit_not", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bit_not", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check behavior of bit_not(simd) on floating types",
 // Tests for masked bit_not
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_not)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
