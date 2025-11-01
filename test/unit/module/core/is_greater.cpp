@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of eve::is_greater(simd)",
 //==================================================================================================
 //== Tests for eve::is_greater corner cases for floating
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of eve::is_greater(simd)", eve::test::simd::ieee_reals_wf16)
+TTS_CASE_TPL("Check behavior of eve::is_greater(simd)", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
