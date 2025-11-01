@@ -32,7 +32,14 @@ namespace eve::detail
       constexpr auto c = categorize<wide<T, N>>();
       constexpr auto f = to_integer(cmp_flt::le_oq);
 
-      if constexpr (current_api >= avx512)
+      if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_less_equal, a, b);
+        else if constexpr (c == category::float16x8)          return mask8 { _mm_cmp_ph_mask(a, b, f) };
+        else if constexpr (c == category::float16x16)         return mask16 { _mm256_cmp_ph_mask(a, b, f) };
+        else if constexpr (c == category::float16x32)         return mask32 { _mm512_cmp_ph_mask(a, b, f) };
+      }
+      else if constexpr (current_api >= avx512)
       {
         if      constexpr (c == category::float32x16) return mask16 {_mm512_cmp_ps_mask(a, b, f)};
         else if constexpr (c == category::float32x8)  return mask8 {_mm256_cmp_ps_mask(a, b, f)};
@@ -101,6 +108,13 @@ namespace eve::detail
       constexpr auto        f = to_integer(cmp_flt::le_oq);
 
       if      constexpr (C::is_complete)            return s;
+      else if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_less_equal, mask, a, b);
+        else if constexpr (c == category::float16x8)          return mask8 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
+        else if constexpr (c == category::float16x16)         return mask16 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
+        else if constexpr (c == category::float16x32)         return mask32 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
+      }
       else if constexpr (c == category::float32x16) return mask16 {_mm512_mask_cmp_ps_mask(m, a, b, f)};
       else if constexpr (c == category::float64x8)  return mask8 {_mm512_mask_cmp_pd_mask(m, a, b, f)};
       else if constexpr (c == category::float32x8)  return mask8 {_mm256_mask_cmp_ps_mask(m, a, b, f)};

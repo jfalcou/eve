@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -26,6 +27,10 @@ namespace eve::detail
 
       if      constexpr (match(c, category::int_))   return __riscv_vmslt(a, b, N::value);
       else if constexpr (match(c, category::uint_))  return __riscv_vmsltu(a, b, N::value);
+      else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+      {
+        return apply_fp16_as_fp32(is_less, a, b);
+      }
       else if constexpr (match(c, category::float_)) return __riscv_vmflt(a, b, N::value);
     }
   }

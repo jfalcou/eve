@@ -19,7 +19,7 @@ void test_with_types(F f)
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_less(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_less(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of eve::is_less(simd)", eve::test::simd::all_ty
   }
 };
 
-TTS_CASE_TPL("Check return types of eve::is_less(simd) with mixed types", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_less(simd) with mixed types", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using D = eve::downgrade_t<T>;
@@ -51,7 +51,7 @@ TTS_CASE_TPL("Check return types of eve::is_less(simd) with mixed types", eve::t
 //== Tests for eve::is_less
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_less(simd)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
