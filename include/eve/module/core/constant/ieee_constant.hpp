@@ -79,7 +79,7 @@ namespace eve
   {
     using e_t = eve::element_type_t<T>;
          if constexpr(std::same_as<double,e_t>) return T(BD.value);
-    else if constexpr(std::same_as<float,e_t>)  return T(BF.value);
+         else /*if constexpr(std::same_as<float,e_t>)*/  return T(BF.value);
 
   }
 //================================================================================================
