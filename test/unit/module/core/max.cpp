@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check return types of max", eve::test::simd::all_types_wf16)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of max on all types full range",
-              eve::test::simd::all_types_wf16,
+              eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)

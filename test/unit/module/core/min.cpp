@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of min", eve::test::simd::all_types_wf16)
 // min tests
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of min on all types full range"
-              , eve::test::simd::all_types_wf16
+              , eve::test::simd::all_types
               , tts::generate ( tts::randoms(eve::valmin, eve::valmin)
                               , tts::randoms(eve::valmin, eve::valmin)
                               , tts::randoms(eve::valmin, eve::valmin)
