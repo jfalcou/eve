@@ -85,7 +85,6 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia quasi-arithmetic mean](https://en.wikipedia.org/wiki/Quasi-arithmetic_mean)
-
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/kolmmean.cpp}
 //================================================================================================

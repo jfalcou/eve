@@ -41,8 +41,7 @@ namespace eve
 //! @{
 //! @var harmmean
 //!
-//! @brief Callable object computing the geometric mean of the inputs.\f$ \left(\prod_{i = 1}^n
-//! x_i\right)^{1/n} \f$.
+//! @brief Callable object computing the harmonic mean of the inputs.\f$ \fracn{\sum \frac1/xs} \f$.
 //!
 //!
 //!   @groupheader{Header file}
@@ -57,7 +56,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto harmmean(floating_value auto x, floating_value auto ... xs)        noexcept; // 1
+//!      constexpr auto harmmean(floating_value auto ... xs)                               noexcept; // 1
 //!      constexpr auto harmmean(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
@@ -71,7 +70,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    * `x`, `...xs`: [real](@ref eve::value) arguments.
+//!    * `xs`: [real](@ref eve::value) arguments.
 //!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
@@ -86,7 +85,6 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia Geometric mean](https://en.wikipedia.org/wiki/Geometric_mean)
-
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/harmmean.cpp}
 //================================================================================================
