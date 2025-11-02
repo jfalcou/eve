@@ -10,6 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/mzero.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 
@@ -32,7 +33,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_eqz
-//!   @brief `elementwise callable` returning a logical true  if and only if the element value is zero.
+//!   @brief `elementwise callable` returning a logical true if and only if the element value is zero. This includes
+//!          both positive and negative zero for floating point values.
 //!
 //!   @groupheader{Header file}
 //!
@@ -81,9 +83,20 @@ namespace eve
     is_eqz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( scalar_value<T> || is_logical_v<T> )
+      {
         return !a;
+      }
+      else if constexpr (std::same_as<element_type_t<T>, float16_t> && !detail::supports_fp16_vector_ops)
+      {
+        using u_t = as_uinteger_t<T>;
+        auto uv = bit_cast(a, as<u_t>());
+
+        return bit_cast((uv << 1) == 0, as<as_logical_t<T>>());
+      }
       else
+      {
         return (a == zero(eve::as(a)));
+      }
     }
   }
 }

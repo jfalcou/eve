@@ -156,7 +156,14 @@ namespace eve
         template <typename T>
         constexpr T into() const noexcept
         {
-          return static_cast<T>(detail::emulated_fp16_to_fp32(data));
+          if constexpr (std::same_as<T, bool>)
+          {
+            return (data != 0) && (data != 0x8000);
+          }
+          else
+          {
+            return static_cast<T>(detail::emulated_fp16_to_fp32(data));
+          }
         }
 
       public:
@@ -164,6 +171,7 @@ namespace eve
         constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
         constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
 
+        constexpr EVE_FORCEINLINE explicit operator bool()               const noexcept { return into<bool>(); }
 
         constexpr EVE_FORCEINLINE explicit operator float()              const noexcept { return into<float>(); }
         constexpr EVE_FORCEINLINE explicit operator double()             const noexcept { return into<double>(); }
