@@ -10,7 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
 
 namespace eve
 {
@@ -78,14 +78,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_nan_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      if constexpr( is_logical_v<T> || integral_value<T>)
-        return false_(eve::as(a));
-      else
-        return a != a;
+      return is_unordered(a, a);
     }
   }
 }
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#include <eve/module/core/regular/impl/simd/x86/is_nan.hpp>
-#endif
