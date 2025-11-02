@@ -17,6 +17,8 @@
 #include <cstdint>
 #include <compare>
 #include <limits>
+#include <iostream>
+
 
 namespace eve
 {
@@ -260,7 +262,7 @@ namespace eve
 
         constexpr EVE_FORCEINLINE bool operator==(float16_t const& other) const noexcept
         {
-          return data == other.data;
+          return detail::emulated_fp16_compare(data, other.data) == std::partial_ordering::equivalent;
         }
     };
   #endif
