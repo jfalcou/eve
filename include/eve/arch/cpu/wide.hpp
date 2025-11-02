@@ -180,6 +180,14 @@ namespace eve
         : storage_base(detail::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
     {}
 
+    //! Constructs a eve::wide by splatting a scalar value in all lanes
+    // Specialization for float16_t as `std::constructible_from<_Float16, float>` returns `false`
+    template<std::floating_point S>
+    requires std::same_as<Type, eve::float16_t>
+    EVE_FORCEINLINE explicit wide(S const& v) noexcept
+        : storage_base(detail::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
+    {}
+
     //! Constructs a eve::wide from a sequence of scalar values of proper size
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept

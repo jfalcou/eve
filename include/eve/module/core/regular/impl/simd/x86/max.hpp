@@ -109,7 +109,7 @@ namespace eve::detail
       else if constexpr( c == category::uint8x16 ) return _mm_max_epu8(v0, v1);
       else if constexpr( match(c, category::float16 ))
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(max, v0, v1);
+        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
         else if constexpr( c == category::float16x8 )          return _mm_max_ph(v0, v1);
         else if constexpr( c == category::float16x16 )         return _mm256_max_ph(v0, v1);
         else if constexpr( c == category::float16x32 )         return _mm512_max_ph(v0, v1);
