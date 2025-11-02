@@ -45,7 +45,7 @@ namespace eve::detail
       else if constexpr( cat == category::float32x2 ) return vmax_f32(v0, v1);
       else if constexpr( match(cat, category::float16) )
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(max, v0, v1);
+        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
         else if constexpr( cat == category::float16x8 )        return vmaxq_f16(v0, v1);
         else if constexpr( cat == category::float16x4 )        return vmax_f16(v0, v1);
       }

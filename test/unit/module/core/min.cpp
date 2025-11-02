@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of min", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of min", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of min", eve::test::simd::all_types)
 // min tests
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of min on all types full range"
-              , eve::test::simd::all_types
+              , eve::test::simd::all_types_wf16
               , tts::generate ( tts::randoms(eve::valmin, eve::valmin)
                               , tts::randoms(eve::valmin, eve::valmin)
                               , tts::randoms(eve::valmin, eve::valmin)
@@ -60,7 +60,7 @@ TTS_CASE_WITH ( "Check behavior of min on all types full range"
   TTS_ULP_EQUAL(min(tup), v_t(0), 0.5);
 };
 
-TTS_CASE_TPL("Check values of min", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of min", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -120,8 +120,8 @@ TTS_CASE_WITH("Check predicate version of min",
 //==================================================================================================
 // Tests for masked min
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::min)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::min[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))

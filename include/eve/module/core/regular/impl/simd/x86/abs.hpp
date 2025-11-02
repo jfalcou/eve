@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/mzero.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/bit_notand.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
 namespace eve::detail
@@ -32,9 +32,7 @@ namespace eve::detail
       constexpr auto c = categorize<wide<T, N>>();
 
       if      constexpr( match(c, category::unsigned_)  ) return v;
-      else if constexpr( c == category::float32x16      ) return _mm512_abs_ps(v);
-      else if constexpr( c == category::float64x8       ) return _mm512_abs_pd(v);
-      else if constexpr( match(c, category::float_)     ) return bit_notand(mzero(as(v)), v);
+      else if constexpr( match(c, category::float_)     ) return bit_andnot(v, mzero(as(v)));
       else if constexpr( c == category::int64x8         ) return _mm512_abs_epi64(v);
       else if constexpr( match(c, category::size64_)    ) return map(eve::abs, v);
       else if constexpr( c == category::int32x16        ) return _mm512_abs_epi32(v);
@@ -83,9 +81,7 @@ namespace eve::detail
 
     if      constexpr( C::is_complete )               return s;
     else if constexpr( match(c, category::unsigned_)) return if_else(mask, v, s);
-    else if constexpr( c == category::float32x16    ) return _mm512_mask_abs_ps(s, m, v);
-    else if constexpr( c == category::float64x8     ) return _mm512_mask_abs_pd(s, m, v);
-    else if constexpr( match(c, category::float_)   ) return if_else(mask, eve::abs(v), s);
+    else if constexpr( match(c, category::float_)   ) return bit_andnot[mask].retarget(current_api, v, mzero(as(v)));
     else if constexpr( c == category::int64x8       ) return _mm512_mask_abs_epi64(s, m, v);
     else if constexpr( c == category::int64x4       ) return _mm256_mask_abs_epi64(s, m, v);
     else if constexpr( c == category::int64x2       ) return _mm_mask_abs_epi64   (s, m, v);

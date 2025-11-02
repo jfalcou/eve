@@ -12,6 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 #include <type_traits>
 
@@ -132,7 +133,14 @@ namespace eve::detail
       auto           src  = alternative(cx, v, as<wide<T, N>> {});
       auto           m    = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-      if      constexpr( c == category::float32x16) return _mm512_mask_max_ps    (src, m, v, w);
+      if constexpr (match(c, category::float16))
+      {
+        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(eve::max, cx, v, w);
+        else if constexpr( c == category::float16x32 )         return _mm512_mask_max_ph(src, m, v, w);
+        else if constexpr( c == category::float16x16 )         return _mm256_mask_max_ph(src, m, v, w);
+        else if constexpr( c == category::float16x8  )         return _mm_mask_max_ph(src, m, v, w);
+      }
+      else if constexpr( c == category::float32x16) return _mm512_mask_max_ps    (src, m, v, w);
       else if constexpr( c == category::float32x8 ) return _mm256_mask_max_ps    (src, m, v, w);
       else if constexpr( c == category::float32x4 ) return _mm_mask_max_ps       (src, m, v, w);
 

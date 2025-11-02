@@ -94,7 +94,7 @@ TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals_wf16)
 };
 
 TTS_CASE_WITH("Check predicate version of max",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmin),
                             tts::randoms(eve::valmin, eve::valmin)))
 <typename T>(T const& a0, T const& a1)
@@ -126,7 +126,7 @@ TTS_CASE_WITH("Check predicate version of max",
 //==================================================================================================
 // Tests for masked max
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::max)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::max[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
