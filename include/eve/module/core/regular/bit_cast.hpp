@@ -21,6 +21,13 @@ namespace eve
       return detail::bit_cast_impl(current_api, a, tgt);
     }
 
+    template<simd_value T, simd_value Target>
+    requires ((sizeof(T) != sizeof(Target)) && ((sizeof(element_type_t<T>) * T::size()) == (sizeof(element_type_t<Target>) * T::size())))
+    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> tgt) const noexcept
+    {
+      return detail::bit_cast_impl(current_api, a, tgt);
+    }
+
     EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
   };
 

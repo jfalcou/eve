@@ -10,7 +10,6 @@
 #include "test.hpp"
 
 #include <eve/module/core.hpp>
-#include <eve/detail/function/inner_bit_cast.hpp>
 
 #include <type_traits>
 
@@ -102,7 +101,7 @@ template<typename T>
 auto check_bit_equal(T a, T b)
 {
   using u_t = eve::as_uinteger_t<T>;
-  return TTS_EQUAL(inner_bit_cast(a, as<u_t>{}), inner_bit_cast(b, as<u_t>{}));
+  return TTS_EQUAL(eve::bit_cast(a, as<u_t>{}), eve::bit_cast(b, as<u_t>{}));
 }
 
 template<typename T, typename F, typename TruthFn>
@@ -118,10 +117,10 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
 
     using u_t = eve::as_uinteger_t<ra_t>;
 
-    const auto inA = inner_bit_cast(ra_t { va }, as<u_t>{});
-    const auto inB = inner_bit_cast(rb_t { vb }, as<u_t>{});
+    const auto inA = eve::bit_cast(ra_t { va }, as<u_t>{});
+    const auto inB = eve::bit_cast(rb_t { vb }, as<u_t>{});
 
-    return inner_bit_cast(eve::detail::map(truthFn, inA, inB, inner_bit_cast(vc, as<u_t>{})...), as<ra_t>{});
+    return eve::bit_cast(eve::detail::map(truthFn, inA, inB, eve::bit_cast(vc, as<u_t>{})...), as<ra_t>{});
   };
 
   const auto run_case = [&](auto va, auto vb, auto vc)
@@ -152,7 +151,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
   if constexpr (!std::same_as<d_t, v_t>)
   {
     using DT = eve::as_wide_as_t<d_t, typename T::combined_type>;
-    auto db  = tts::poison(inner_bit_cast(b, eve::as<DT>{}));
+    auto db  = tts::poison(eve::bit_cast(b, eve::as<DT>{}));
     run_case(a, db, c);
   }
 
@@ -160,7 +159,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
   if constexpr (eve::floating_value<T>)
   {
     using u_t = eve::as_uinteger_t<T>;
-    auto ub  = tts::poison(inner_bit_cast(b, eve::as<u_t>{}));
+    auto ub  = tts::poison(eve::bit_cast(b, eve::as<u_t>{}));
     run_case(a, ub, c);
     run_case(a, ub.get(0), c);
 
@@ -169,7 +168,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
     {
       using du_t = eve::downgrade_t<u_t>;
       using cdu_t = eve::as_wide_as_t<eve::element_type_t<du_t>, typename T::combined_type>;
-      auto dub  = tts::poison(inner_bit_cast(b, eve::as<cdu_t>{}));
+      auto dub  = tts::poison(eve::bit_cast(b, eve::as<cdu_t>{}));
       run_case(a, dub, c);
     }
   }
@@ -193,22 +192,22 @@ EVE_FORCEINLINE Tgt bit_compatible_alternative(C const& c, Arg a0, as<Tgt>)
       using ut_t = as_uinteger_t<T>;
       using utgt_et = element_type_t<as_uinteger_t<Tgt>>;
 
-      const auto uv = bit_cast(v, as<ut_t>{});
+      const auto uv = eve::bit_cast(v, as<ut_t>{});
 
       if constexpr (sizeof(T) > sizeof(utgt_et))
       {
         EVE_ASSERT((uv >> (sizeof(utgt_et) * 8)) == ut_t{ 0 },
           "[eve::bit_compatible_alternative] Alternative value has non-zero truncated bits");
-        return bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
+        return eve::bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
       }
       else
       {
-        return bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
+        return eve::bit_cast(static_cast<utgt_et>(uv), as_element<Tgt>{});
       }
     }
     else
     {
-      return inner_bit_cast(v, as<Tgt>{});
+      return eve::bit_cast(v, as<Tgt>{});
     }
   };
 
@@ -264,7 +263,7 @@ void bit_test_simd_inner_cx(F fn, T a, T b, T c, Mask mask)
   if constexpr (eve::floating_value<T> && !bit_test_has_alternative<Mask>())
   {
     using u_t = eve::as_uinteger_t<T>;
-    auto ub  = tts::poison(inner_bit_cast(b, eve::as<u_t>{}));
+    auto ub  = tts::poison(eve::bit_cast(b, eve::as<u_t>{}));
     run_case(a, ub, c);
     run_case(a, ub.get(0), c);
   }
