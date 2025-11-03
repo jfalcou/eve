@@ -149,20 +149,26 @@ TTS_CASE_TPL("Translatable wide ctor - generator", eve::test::simd::all_types)
     enum class E: T { };
 
     eve::as_wide_as_t<E, W> wt = [](auto i, auto) { return static_cast<E>(i * 3); };
+    eve::as_wide_as_t<E, W> wt2 = [](auto i) { return static_cast<E>(i * 3); };
 
     TTS_EQUAL(eve::translate(wt), wr);
+    TTS_EQUAL(eve::translate(wt2), wr);
     for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), static_cast<E>(i * 3));
+      TTS_EQUAL(wt2.get(i), static_cast<E>(i * 3));
     }
   }
 
   eve::as_wide_as_t<trans_t, W> wt = [](auto i, auto) { return trans_t { static_cast<T>(i * 3) }; };
+  eve::as_wide_as_t<trans_t, W> wt2 = [](auto i) { return trans_t { static_cast<T>(i * 3) }; };
 
   TTS_EQUAL(eve::translate(wt), wr);
+  TTS_EQUAL(eve::translate(wt2), wr);
   for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i * 3) });
+    TTS_EQUAL(wt2.get(i), trans_t { static_cast<T>(i * 3) });
   }
 };
 

@@ -194,14 +194,51 @@ namespace eve
     //!
     //! int main()
     //! {
-    //!   // Generates the wide [true false true .. ]
-    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   // Generates the logical wide [ false false true true ]
+    //!   eve::logical<eve::wide<int, fixed<4>>> r = [](auto i, auto c) { return i < (c / 2) ? 0 : 1; };
     //!   std::cout << r << "\n";
     //! }
     //! @endcode
     //!
     //==============================================================================================
     template<eve::invocable<size_type,size_type> Generator>
+    EVE_FORCEINLINE logical(Generator &&g) noexcept
+                  : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
+    {}
+
+    //==============================================================================================
+    //! @brief Constructs a eve::logical from a @callable.
+    //!
+    //! The @callable must satisfy the following prototype:
+    //!
+    //! @code
+    //! T generator(std::ptrdiff_t index);
+    //! @endcode
+    //! <br/>
+    //!
+    //! and is supposed to return the value computed from the current index to store at said index.
+    //!
+    //! @param g  The @callable to use as a value generator
+    //!
+    //! **Example:**
+    //!
+    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/aWa385hKb)
+    //!
+    //! @code
+    //! #include <eve/logical.hpp>
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the logical wide [true false true .. ]
+    //!   eve::logical<eve::wide<int>> r = [](auto i) { return i%2 == 0; };
+    //!   std::cout << r << "\n";
+    //! }
+    //! @endcode
+    //!
+    //==============================================================================================
+    template<eve::invocable<size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                   : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}

@@ -248,6 +248,40 @@ namespace eve
         : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
     {}
 
+    //==============================================================================================
+    //! @brief Constructs a eve::wide from a @callable.
+    //!
+    //! The @callable must satisfy the following prototype:
+    //!
+    //! @code
+    //! T generator(std::ptrdiff_t index);
+    //! @endcode
+    //! <br/>
+    //!
+    //! and is supposed to return the value computed from the current index to store at said index.
+    //!
+    //! @param g  The @callable to use as a value generator
+    //!
+    //! **Example:**
+    //!
+    //! @code
+    //! #include <eve/wide.hpp>
+    //! #include <iostream>
+    //!
+    //! int main()
+    //! {
+    //!   // Generates the wide [0 2 4 ... ]
+    //!   eve::wide<int> r = [](auto i) { return i * 2; };
+    //!   std::cout << r << "\n";
+    //! }
+    //! @endcode
+    //!
+    //==============================================================================================
+    template<eve::invocable<size_type> Generator>
+    EVE_FORCEINLINE wide(Generator&& g) noexcept
+        : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
+    {}
+
     //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
     //!        to the current cardinal.
     template<arithmetic_simd_value W0, arithmetic_simd_value W1, arithmetic_simd_value... Ws>
