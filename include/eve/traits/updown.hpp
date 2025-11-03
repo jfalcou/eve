@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/traits/as_wide.hpp>
-#include <eve/arch/float16.hpp>
 
 namespace eve
 {
@@ -25,11 +24,7 @@ namespace eve
         {
           return float();
         }
-        else if constexpr (std::same_as<v_t, float>)
-        {
-          return eve::float16_t{};
-        }
-        else if constexpr( (sizeof(v_t) == 1) || (floating_scalar_value<v_t> && (sizeof(v_t) <= 2)))
+        else if constexpr( (sizeof(v_t) == 1) || (floating_scalar_value<v_t> && (sizeof(v_t) <= 4)))
         {
           return v_t();
         }
@@ -56,11 +51,7 @@ namespace eve
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto ud = [](){
-        if constexpr ( std::same_as<v_t, eve::float16_t>)
-        {
-          return float();
-        }
-        else if constexpr( std::same_as<v_t, float>)
+        if constexpr( std::same_as<v_t, float>)
         {
           return double();
         }
