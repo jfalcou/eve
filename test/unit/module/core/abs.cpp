@@ -72,7 +72,7 @@ TTS_CASE_WITH("Check behavior of eve::abs[eve::saturated](eve::wide)",
 {
   using v_t = eve::element_type_t<T>;
 
-  if constexpr( std::is_signed_v<v_t> )
+  if constexpr( eve::signed_value<v_t> )
   {
     TTS_EQUAL(eve::abs[eve::saturated](a0),
               tts::map([](auto e)
