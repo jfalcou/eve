@@ -27,13 +27,19 @@ namespace eve::detail
     else                                      return convert(r, as<eve::float16_t>{});
   }
 
-  template <typename Func, typename C, typename Arg0, typename... Args>
+  template <typename Func, conditional_expr C, typename Arg0, typename... Args>
   constexpr EVE_FORCEINLINE auto apply_fp16_as_fp32_masked(Func&& f, C const& cx, Arg0&& arg0, Args&&... args)
     requires (same_lanes<Arg0, Args...> && std::same_as<element_type_t<Arg0>, eve::float16_t> && (std::same_as<element_type_t<Args>, eve::float16_t> && ...))
   {
     if constexpr (relative_conditional_expr<C>)
     {
       return apply_fp16_as_fp32(f[cx], arg0, args...);
+    }
+    else if constexpr (C::has_alternative)
+    {
+      const auto nc = convert(expand_mask(cx, as(arg0)), as<logical<float>>{});
+      const auto na = convert(cx.alternative, as<float>{});
+      return apply_fp16_as_fp32(f[if_(nc).else_(na)], arg0, args...);
     }
     else
     {

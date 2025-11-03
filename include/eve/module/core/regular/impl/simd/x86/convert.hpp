@@ -303,6 +303,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, a
       if      constexpr( c_i == category::float32x4)                                    return _mm_cvtxps_ph(v);
       else if constexpr( c_i == category::float32x8)                                    return _mm256_cvtxps_ph(v);
       else if constexpr( c_i == category::float32x16)                                   return _mm512_cvtxps_ph(v);
+      else                                                                              return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else
     {
