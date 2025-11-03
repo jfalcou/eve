@@ -39,20 +39,25 @@
  <typename T, typename M>(T const& a0, M const& )
  {
    ;
-   using v_t = eve::element_type_t<T>;
-   using i_t = eve::as_integer_t<T,  unsigned>;
    if constexpr(sizeof(v_t) == 2)
    {
-   std::cout << tts::typename_<v_t> << std::endl;
+     using v_t = eve::element_type_t<T>;
+     using i_t = eve::as_integer_t<T,  signed>;
+     std::cout << "v_t -> " << tts::typename_<v_t> << std::endl;
+
+
+   
    std::cout << tts::typename_<i_t> << std::endl;
    // auto n = [](auto e) -> v_t { return std::nextafter(e, eve::valmax(eve::as(e))); };
 //     TTS_EXPECT(eve::all(eve::next(a0) > a0));
-//      std::cout << " a0            " << a0  << std::endl;
-//      std::cout << " eve::next(a0) " << eve::next(a0) << std::endl;
-     std::cout << " eve::bit_cast(a0, as<i_t>() " <<  eve::bit_cast(a0, eve::as<i_t>()) << std::endl;
-//     std::cout << " bitinteger(a0)" << eve::detail::bitinteger(a0) << std::endl;
+     std::cout << " a0            " << a0  << std::endl;
+     std::cout << " eve::next(a0) " << eve::next(a0) << std::endl;
+//      std::cout << " eve::bit_cast(a0, as<i_t>() " <<  eve::bit_cast(a0, eve::as<i_t>()) << std::endl;
+//      std::cout << " bitinteger(a0)" << eve::detail::bitinteger(a0) << std::endl;
 //     std::cout << eve::signmask(eve::as<v_t>()) << std::endl;
      std::cout << sizeof(eve::signmask(eve::as<v_t>())) << std::endl;
+     std::cout << tts::typename_<decltype(eve::signmask(eve::as<v_t>()))> << std::endl;
+//     std::cout << std::hex << " sm " << eve::signmask(eve::as<v_t>()) << std::endl;
      //std::cout <<
    }
  };

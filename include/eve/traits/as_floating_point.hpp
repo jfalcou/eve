@@ -15,8 +15,20 @@ namespace eve
 {
   template<typename T>
   struct  as_floating_point
-        : detail::make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
+        : detail::make_floating_point<(sizeof(T) <= 2) ? 2: sizeof(T)>
   {};
+
+  template<>
+  struct as_floating_point<short>
+  {
+    using type = _Float16;
+  };
+
+  template<>
+  struct as_floating_point<unsigned short>
+  {
+    using type = eve::float16_t;
+  };
 
   template<typename T, typename N>
   struct as_floating_point<wide<T,N>>

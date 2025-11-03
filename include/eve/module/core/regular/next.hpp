@@ -106,37 +106,40 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr( floating_value<T>)
       {
- //        if constexpr(O::contains(raw))
-//         {
-//           auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
-//           return fma(s, eve::abs(a), a);
-//         }
-//         if (eve::all( eve::is_normal(a))) return next[raw](a);
-//         if constexpr(O::contains(pedantic))
-//         {
-//           auto pz   = bitinteger(a);
-//           auto z    = bitfloating(pz+one(as(pz)));
-//           auto test = is_negative(a) && is_positive(z);
-//           auto nxt = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
-//           if  constexpr(O::contains(saturated))
-//           {
-//             nxt = if_else(a == inf(as(a)), a, nxt);
-//             if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-//           }
-//           return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), nxt);
-//         }
-//         else if  constexpr(O::contains(saturated))
-//         {
-//           auto z = if_else(a == inf(as(a)), a, next(a));
-//           if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-//           else return z;
-//         }
-//       else
+        if  constexpr(sizeof(element_type_t<T>) >= 4)
+        {
+          if constexpr(O::contains(raw))
+          {
+            auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
+            return fma(s, eve::abs(a), a);
+          }
+          if (eve::all( eve::is_normal(a))) return next[raw](a);
+          if constexpr(O::contains(pedantic))
+          {
+            auto pz   = bitinteger(a);
+            auto z    = bitfloating(pz+one(as(pz)));
+            auto test = is_negative(a) && is_positive(z);
+            auto nxt = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
+            if  constexpr(O::contains(saturated))
+            {
+              nxt = if_else(a == inf(as(a)), a, nxt);
+              if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+            }
+            return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), nxt);
+          }
+          else if  constexpr(O::contains(saturated))
+          {
+            auto z = if_else(a == inf(as(a)), a, next(a));
+            if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+            else return z;
+          }
+        }
+        else
         {
           auto bi = bitinteger(a);
-          return bitfloating(bi+one(as(bi)));
+          return bitfloating(eve::add(bi, one(as(bi))));
         }
       }
       else

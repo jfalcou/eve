@@ -17,7 +17,7 @@ namespace eve
   struct exponentmask_t : constant_callable<exponentmask_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
       using i_t = as_integer_t<T>;
       if      constexpr(std::same_as<T, eve::float16_t>) return i_t(0x7C00);
