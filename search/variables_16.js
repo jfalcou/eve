@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['zero_0',['zero',['../group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85',1,'eve']]],
-  ['zeta_1',['zeta',['../group__special_gaa1a8a239d3a2f132dbcedd15c848fafb.html#gaa1a8a239d3a2f132dbcedd15c848fafb',1,'eve']]],
-  ['zip_2',['zip',['../group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94',1,'eve']]]
+  ['we_5f_0',['we_',['../group__simd__types.html#gab6c3c30138d82ef45b1bbcf9e65145d4',1,'eve']]],
+  ['welford_5faverage_1',['welford_average',['../group__core__arithmetic_gabe69385da9a598348aedde44c20028c6.html#gabe69385da9a598348aedde44c20028c6',1,'eve']]],
+  ['welford_5fcovariance_2',['welford_covariance',['../group__core__arithmetic_ga3261f954348fe2feeac39f709ecf71e3.html#ga3261f954348fe2feeac39f709ecf71e3',1,'eve']]],
+  ['welford_5fvariance_3',['welford_variance',['../group__core__arithmetic_ga16a8a401bb9324cc48550d6454cdaeaf.html#ga16a8a401bb9324cc48550d6454cdaeaf',1,'eve']]],
+  ['write_4',['write',['../group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d',1,'eve']]]
 ];

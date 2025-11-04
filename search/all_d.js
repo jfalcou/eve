@@ -5,5 +5,6 @@ var searchData=
   ['keep_5flast_2',['keep_last',['../structeve_1_1keep__last.html',1,'eve']]],
   ['kernel_3',['Writing the kernel',['../multiarch.html#autotoc_md116',1,'']]],
   ['kernels_4',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md118',1,'']]],
-  ['know_20there_20is_20a_20match_5',['know there is a match',['../group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#autotoc_md22',1,'What if I know there is a match?'],['../group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#autotoc_md24',1,'What if I know there is a match?']]]
+  ['know_20there_20is_20a_20match_5',['know there is a match',['../group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#autotoc_md22',1,'What if I know there is a match?'],['../group__core__reduction_ga2d2fb7dc69f1ce7f4660b5bbc452dfac.html#autotoc_md24',1,'What if I know there is a match?']]],
+  ['kolmmean_6',['kolmmean',['../group__math__exp_ga04c5d58853121a8301f0040c54f8765f.html#ga04c5d58853121a8301f0040c54f8765f',1,'eve']]]
 ];
