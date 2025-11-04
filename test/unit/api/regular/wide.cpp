@@ -48,6 +48,28 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
   }
 };
 
+TTS_CASE_WITH( "Check eve::wide generator constructor"
+        , eve::test::simd::all_types
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        )
+<typename T, typename L>(T ref, L logical_ref)
+{
+  T w1 = [&](auto i) { return static_cast<typename T::value_type>(1 + i); };
+  L l1 = [&](auto i) { return ((1 + i) % 2) == 0; };
+
+  TTS_EQUAL(w1, ref);
+  TTS_EQUAL(l1, logical_ref);
+
+  T w2 = [&](auto i, auto c) { return static_cast<typename T::value_type>(c - i - 1); };
+  L l2 = [&](auto i, auto c) { return i < (c / 2) ? true : false; };
+
+  for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+  {
+    TTS_EQUAL(w2.get(i), static_cast<typename T::value_type>(T::size() - i - 1));
+    TTS_EQUAL(l2.get(i), i < (L::size() / 2) ? true : false);
+  }
+};
+
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
