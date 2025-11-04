@@ -156,49 +156,85 @@ slide_2_left_in_16_pattern(std::ptrdiff_t g_size, std::ptrdiff_t slide)
 }
 
 template<std::ptrdiff_t g_size, std::size_t N>
+constexpr std::optional<int> x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N>& repeated_part,
+                                              std::ptrdiff_t                       reg_groups);
+
+template<std::ptrdiff_t g_size, std::size_t N>
 constexpr std::optional<int>
-x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> idxs_)
+x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> repeated_part, std::ptrdiff_t reg_groups)
 {
-  auto           idxs = expand_group<g_size / 4>(idxs_);
-  std::ptrdiff_t size = std::ssize(idxs);
-  std::ptrdiff_t res  = 0;
-
-  for( std::ptrdiff_t i = 0; i != size; ++i )
+  if constexpr( g_size != 4 )
   {
-    if( idxs[i] < 0 ) { continue; }
-
-    // 2 indexes from x, 2 indexes from y
-    std::ptrdiff_t active_register_offset = (i & 2) * size / 2;
-    std::ptrdiff_t within_register_offset = i / 4;
-    std::ptrdiff_t offset                 = active_register_offset + within_register_offset;
-
-    std::ptrdiff_t selected = idxs[i] - offset;
-
-    if( selected < 0 || selected >= 4 ) { return std::nullopt; }
-
-    res |= selected << (i * 2);
+    return x86_shuffle_ps_2<4>(expand_group<g_size / 4>(repeated_part), reg_groups * g_size / 4);
   }
+  else
+  {
+    if( std::ssize(repeated_part) != 4 ) return std::nullopt;
 
-  return static_cast<int>(res);
+    int res = 0;
+
+    for( std::ptrdiff_t i = 0; i != 4; ++i )
+    {
+      std::ptrdiff_t idx = repeated_part[i];
+
+      if( idx < 0 ) { continue; }
+
+      if( i < 2 )
+      {
+        if( idx >= reg_groups ) return std::nullopt;
+      }
+      else
+      {
+        if( idx < reg_groups ) return std::nullopt;
+        idx -= reg_groups;
+      }
+
+      res |= idx << (i + i);
+    }
+
+    return res;
+  }
 }
 
 template<std::ptrdiff_t g_size, std::size_t N>
 constexpr std::optional<int>
-x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N> idxs)
+x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N>& repeated_part, std::ptrdiff_t reg_groups)
 {
-  return x86_shuffle_ps_2<g_size>(std::span<const std::ptrdiff_t, N>(idxs));
+  return x86_shuffle_ps_2<g_size>(std::span<const std::ptrdiff_t, N>(repeated_part), reg_groups);
 }
 
-constexpr int x86_permute_pd(std::span<const std::ptrdiff_t> idxs) {
+constexpr int
+x86_permute_pd(std::span<const std::ptrdiff_t> idxs)
+{
   int res = 0;
 
   // Shuffles in pairs. For each pair 2 bits.
   // bit == 0 - take 0s element, 1 - take first.
-  for (std::ptrdiff_t i = 0; i != std::ssize(idxs); i += 2) {
-    if (idxs[i] == i + 1) res = res | (1 << i);
-    if (idxs[i + 1] == i + 1) res = res | (1 << (i + 1));
+  for( std::ptrdiff_t i = 0; i != std::ssize(idxs); i += 2 )
+  {
+    if( idxs[i] == i + 1 ) res = res | (1 << i);
+    if( idxs[i + 1] == i + 1 ) res = res | (1 << (i + 1));
   }
 
+  return res;
+}
+
+constexpr std::optional<int>
+x86_shuffle_pd_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
+{
+  int res = 0;
+  for( std::ptrdiff_t i = 0; i != std::ssize(idxs); i += 2 )
+  {
+    std::ptrdiff_t a_pos = i;
+    if( idxs[i] == a_pos ) { /*put 0 that's there*/ }
+    else if ( idxs[i] == a_pos + 1 ) res = res | (1 << i);
+    else return std::nullopt;
+
+    std::ptrdiff_t b_pos = reg_groups + i;
+    if (idxs[i + 1] == b_pos) { /*put 0 that's there*/ }
+    else if (idxs[i + 1] == b_pos + 1 ) res = res | (1 << (i + 1));
+    else return std::nullopt;
+  }
   return res;
 }
 
