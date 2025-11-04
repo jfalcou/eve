@@ -21,7 +21,7 @@ namespace eve
   template<>
   struct as_floating_point<short>
   {
-    using type = _Float16;
+    using type =  eve::float16_t;;
   };
 
   template<>
