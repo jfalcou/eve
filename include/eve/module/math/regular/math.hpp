@@ -19,6 +19,7 @@
 #include <eve/module/math/regular/acscd.hpp>
 #include <eve/module/math/regular/acsch.hpp>
 #include <eve/module/math/regular/acscpi.hpp>
+#include <eve/module/math/regular/agd.hpp>
 #include <eve/module/math/regular/arg.hpp>
 #include <eve/module/math/regular/asec.hpp>
 #include <eve/module/math/regular/asecd.hpp>
@@ -57,9 +58,10 @@
 #include <eve/module/math/regular/expx2.hpp>
 #include <eve/module/math/regular/gd.hpp>
 #include <eve/module/math/regular/geommean.hpp>
+#include <eve/module/math/regular/harmmean.hpp>
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math/regular/hypot.hpp>
-#include <eve/module/math/regular/agd.hpp>
+#include <eve/module/math/regular/kolmmean.hpp>
 #include <eve/module/math/regular/lentz_a.hpp>
 #include <eve/module/math/regular/lentz_b.hpp>
 #include <eve/module/math/regular/log.hpp>
