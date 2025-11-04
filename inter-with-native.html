@@ -160,7 +160,7 @@ sve, powerpc: ....
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#endif  </span><span class="comment">// __SSSE3__</span></div>
 <div class="line"> </div>
-<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:102</div></div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md96"></a>
 What about non-native sizes?</h1>
 <p>If the number is less than the one that can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can be garbage.</p>
