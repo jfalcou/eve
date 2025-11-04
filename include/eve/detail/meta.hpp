@@ -9,7 +9,9 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/arch/float16.hpp>
 #include <eve/as.hpp>
+
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -159,6 +161,12 @@ namespace eve::detail
   // Generate integral types from sign + size
   template<std::size_t Size>
   struct make_floating_point;
+
+  template<>
+  struct make_floating_point<2>
+  {
+    using type = eve::float16_t;
+  };
 
   template<>
   struct make_floating_point<4>

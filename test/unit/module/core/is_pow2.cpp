@@ -32,11 +32,12 @@ TTS_CASE_WITH("Check behavior of is_pow2(wide) on unsigned integral ",
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  using f_t = eve::as_floating_point_t<v_t>;
   TTS_EQUAL(eve::is_pow2(a0),
-            tts::map([](auto e) -> eve::logical<v_t>
-                { return std::exp2(std::trunc(std::log2(f_t(e)))) == f_t(e); },
-                a0));
+            tts::map([](auto e) -> eve::logical<v_t> {
+              const auto de = static_cast<double>(e);
+              return std::exp2(std::trunc(std::log2(de))) == de;
+            },
+            a0));
 };
 
 
@@ -49,10 +50,10 @@ TTS_CASE_WITH("Check behavior of is_pow2(wide) on unsigned integral ",
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  using f_t = eve::as_floating_point_t<v_t>;
-
   TTS_EQUAL(eve::is_pow2(a0),
-            tts::map([](auto e) -> eve::logical<v_t>
-                { return std::exp2(std::trunc(std::log2(f_t(e)))) == f_t(e); },
-                a0));
+            tts::map([](auto e) -> eve::logical<v_t> {
+              const auto de = static_cast<double>(e);
+              return std::exp2(std::trunc(std::log2(de))) == de;
+            },
+            a0));
 };
