@@ -175,7 +175,7 @@ namespace eve
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<typename S>
-    requires std::constructible_from<Type,S>
+    requires (std::constructible_from<Type, S> || (std::floating_point<S> && std::same_as<Type, eve::float16_t>))
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
         : storage_base(detail::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
     {}

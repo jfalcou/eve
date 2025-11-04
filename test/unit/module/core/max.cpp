@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of max", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of max", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -65,7 +65,7 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
 
 };
 
-TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -126,8 +126,8 @@ TTS_CASE_WITH("Check predicate version of max",
 //==================================================================================================
 // Tests for masked max
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::max)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::max[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))

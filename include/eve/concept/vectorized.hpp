@@ -69,7 +69,8 @@ namespace eve
   //!  - `eve::wide<std::int64_t, eve::fixed<4>>`
   //================================================================================================
   template<typename T>
-  concept signed_simd_value = arithmetic_simd_value<T> && std::is_signed_v<translated_element_type_t<T>>;
+  concept signed_simd_value = arithmetic_simd_value<T> && (std::is_signed_v<translated_element_type_t<T>>
+                                                          || std::same_as<translated_element_type_t<T>, eve::float16_t>);
   //================================================================================================
   //! @}
   //================================================================================================

@@ -24,7 +24,7 @@ auto minimal = tts::constant(
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types)
 // Tests for eve::abs
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::abs(eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
@@ -66,13 +66,13 @@ TTS_CASE_WITH("Check behavior of eve::abs(eve::wide)",
 // Tests for eve::abs[eve::saturated]
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::abs[eve::saturated](eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using v_t = eve::element_type_t<T>;
 
-  if constexpr( std::is_signed_v<v_t> )
+  if constexpr( eve::signed_value<v_t> )
   {
     TTS_EQUAL(eve::abs[eve::saturated](a0),
               tts::map([](auto e)
@@ -87,7 +87,7 @@ TTS_CASE_WITH("Check behavior of eve::abs[eve::saturated](eve::wide)",
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-TTS_CASE_TPL("Check corner-cases behavior of eve::abs variants on wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Check corner-cases behavior of eve::abs variants on wide", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);

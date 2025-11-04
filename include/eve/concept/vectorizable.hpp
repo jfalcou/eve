@@ -43,7 +43,8 @@ namespace eve
   //! - `float`
   //================================================================================================
   template<typename T>
-  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<translate_t<T>>;
+  concept signed_scalar_value  = arithmetic_scalar_value<T> && (std::is_signed_v<translate_t<T>>
+                                                                || std::same_as<translate_t<T>, eve::float16_t>);
   //================================================================================================
   //! @}
   //================================================================================================

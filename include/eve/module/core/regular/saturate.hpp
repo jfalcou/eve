@@ -109,7 +109,7 @@ namespace eve
         }
         else // saturating to integer
         {
-          if constexpr( std::is_signed_v<Target> ) // saturating to signed integer
+          if constexpr( signed_scalar_value<Target> ) // saturating to signed integer
           {
             if constexpr( floating_scalar_value<U> )
             {

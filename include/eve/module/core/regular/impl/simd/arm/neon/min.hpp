@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -40,6 +41,12 @@ namespace eve::detail
       else if constexpr( cat == category::uint16x4 ) return vmin_u16(v0, v1);
       else if constexpr( cat == category::uint8x8 ) return vmin_u8(v0, v1);
       else if constexpr( cat == category::float32x2 ) return vmin_f32(v0, v1);
+      else if constexpr (match(cat, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::min, v0, v1);
+        else if constexpr (cat == category::float16x4)        return vmin_f16(v0, v1);
+        else if constexpr (cat == category::float16x8)        return vminq_f16(v0, v1);
+      }
       else if constexpr( current_api >= asimd )
       {
         if constexpr( cat == category::float64x1 ) return vmin_f64(v0, v1);
