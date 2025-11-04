@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -109,43 +109,46 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     prev_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr( floating_value<T>)
       {
-        if constexpr(O::contains(raw))
+        if constexpr(sizeof(element_type_t<T>) >= 4)
         {
-          auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
-          return fnma[pedantic](s, eve::abs(a), a);
-        }
-        if (eve::all( eve::is_normal(a))) return prev[raw](a);
-        if constexpr(O::contains(pedantic))
-        {
-          auto pz   = bitinteger(a);
-          auto z    = bitfloating(call_sub(pz, one(as(pz))));
-          auto test = is_negative(z) && is_positive(a);
-          auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
-          prv =  if_else(is_nan(a), eve::allbits, prv);
-          if  constexpr(O::contains(saturated))
+          if constexpr(O::contains(raw))
           {
-            prv = if_else(a == minf(as(a)), a, prv);
-            if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
+            auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
+            return fnma[pedantic](s, eve::abs(a), a);
           }
-          return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), prv);
-        }
-        else if  constexpr(O::contains(saturated))
-        {
-          auto prv = prev(a);
-          auto z = if_else(a == minf(as(a)), a, prv);
-          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-          else return z;
+          if (eve::all( eve::is_normal(a))) return prev[raw](a);
+          if constexpr(O::contains(pedantic))
+          {
+            auto pz   = bitinteger(a);
+            auto z    = bitfloating(pz-one(as(pz)));
+            auto test = is_negative(z) && is_positive(a);
+            auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
+            prv =  if_else(is_nan(a), eve::allbits, prv);
+            if  constexpr(O::contains(saturated))
+            {
+              prv = if_else(a == minf(as(a)), a, prv);
+              if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
+            }
+            return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), prv);
+          }
+          else if  constexpr(O::contains(saturated))
+          {
+            auto prv = prev(a);
+            auto z = if_else(a == minf(as(a)), a, prv);
+            if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+            else return z;
+          }
         }
         else
         {
           auto bi = bitinteger(a);
-          return bitfloating(eve::detail::call_sub(bi, one(as(bi))));
+          return bitfloating(eve::add(bi, mone(as(bi))));
         }
       }
       else
-      {
+       {
         if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
           return if_else(a == valmin(as(a)), a, call_sub(a, one(as(a))));
