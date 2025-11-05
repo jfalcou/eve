@@ -11,7 +11,7 @@ int main()
   std::cout << "<- wf0                      = " << wf0 << "\n";
   std::cout << "<- wi0                      = " << wi0 << "\n";
   std::cout << "<- wu0                      = " << wu0 << "\n";
-                                            
+
   std::cout << "-> abs(wf0)                 = " << eve::abs(wf0) << "\n";
   std::cout << "-> abs[ignore_last(2)](wf0) = " << eve::abs[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> abs[wf0 != 0](wf0)       = " << eve::abs[wf0 != 0](wf0) << "\n";

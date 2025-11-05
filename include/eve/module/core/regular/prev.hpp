@@ -144,7 +144,15 @@ namespace eve
         else
         {
           auto bi = bitinteger(a);
-          return bitfloating(eve::add(bi, mone(as(bi))));
+           if constexpr(scalar_value<T>)
+          {
+            using v_t = eve::as_integer_t<T, signed>;
+            return bitfloating(  v_t(bi+ mone(as(bi))));
+          }
+          else
+            return bitfloating(  bi+ mone(as(bi)));
+         //         return bitfloating(eve::add(bi, mone(as(bi))));
+         // return bitfloating(         bi+ mone(as(bi)));
         }
       }
       else
