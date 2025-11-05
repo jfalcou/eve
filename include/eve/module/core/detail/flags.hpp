@@ -15,6 +15,9 @@ namespace eve
     static constexpr std::uint8_t value = I;
     template<std::uint8_t J>
     friend constexpr fp_class<I|J> operator|(fp_class, fp_class<J>) { return {}; }
+
+    template<std::uint8_t J>
+    constexpr bool operator==(fp_class<J>) const noexcept { return I == J; }
   };
 
   inline constexpr fp_class<1>   qnan    = {};

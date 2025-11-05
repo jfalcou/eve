@@ -18,9 +18,9 @@ namespace eve::detail
 
   template<std::uint8_t I, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> of_class_(EVE_REQUIRES(avx512_),
-                                                  O          const &,
-                                                  fp_class<I> cls,
-                                                  wide<T, N> const &a) noexcept
+                                                  O const& opts,
+                                                  wide<T, N> a,
+                                                  fp_class<I> cls) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;
@@ -36,13 +36,15 @@ namespace eve::detail
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, I)};
     else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
     {
-      if constexpr (I == eve::poszero.value || I == eve::negzero.value)
+      constexpr auto using_bit_manip = (eve::poszero | eve::negzero | eve::posinf | eve::neginf).value;
+
+      if constexpr ((I & ~using_bit_manip) == 0)
       {
-        return of_class.behavior(cpu_{}, cls, a);
+        return of_class.behavior(cpu_{}, opts, a, cls);
       }
       else
       {
-        return apply_fp16_as_fp32(of_class, cls, a);
+        return apply_fp16_as_fp32(of_class, a, cls);
       }
     }
     else if constexpr( c == category::float16x32) return s_t {_mm512_fpclass_ph_mask(a, I)};

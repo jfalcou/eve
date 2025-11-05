@@ -82,9 +82,14 @@ namespace eve
     is_minf_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( integral_value<T> )
+      {
         return false_(eve::as(a));
+      }
       else
-        return (a == minf(eve::as(a)));
+      {
+        using u_t = as_uinteger_t<T>;
+        return bit_cast(bit_cast(a, as<u_t>{}) == bit_cast(minf(as(a)), as<u_t>{}), as<as_logical_t<T>>{});
+      }
     }
   }
 }
