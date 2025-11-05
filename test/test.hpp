@@ -374,6 +374,16 @@ namespace tts
     return poison(eve::load(arr.data(), eve::fixed<N>{}));
   }
 
+  template<typename Mx, typename Mn>
+  auto produce(type<eve::float16_t> const&, randoms<Mx, Mn> g, auto& rng, auto...)
+  {
+    tts::realistic_distribution<float> dist(
+      static_cast<float>(as_value<eve::float16_t>(g.mini)),
+      static_cast<float>(as_value<eve::float16_t>(g.maxi))
+    );
+    return static_cast<eve::float16_t>(dist(rng));
+  }
+
   //================================================================================================
   // logical ramp - generate (v+1) % k == 0, (v+2) % k ==  0, ... (v+N) % k == 0
   //================================================================================================
