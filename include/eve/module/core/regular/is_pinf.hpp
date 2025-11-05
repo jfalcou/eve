@@ -81,10 +81,8 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_pinf_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      if constexpr( integral_value<T> )
-      {
-        return false_(eve::as(a));
-      }
+      if constexpr (integral_value<T>) return false_(eve::as(a));
+      else if constexpr (scalar_value<T>) return a == inf(as(a));
       else
       {
         using u_t = as_uinteger_t<T>;
