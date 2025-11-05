@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_finite(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_finite(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of eve::is_finite(simd)", eve::test::simd::all_
 // Tests for eve::is_finite
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_finite(simd) for IEEE",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T a0, M const& t)
 {
@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of eve::is_finite(simd) for IEEE",
 };
 
 TTS_CASE_WITH("Check behavior of eve::is_finite(simd) for integer",
-              eve::test::simd::integers,
+              eve::test::simd::integers_wf16,
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T a0, M const& t)
 {
@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of eve::is_finite(simd) for integer",
 //==================================================================================================
 // Test cases values
 //==================================================================================================
-TTS_CASE_TPL("Check corner-cases behavior of eve::is_finite on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check corner-cases behavior of eve::is_finite on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> tgt)
 {
   using eve::as;

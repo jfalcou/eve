@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/module/core/detail/flags.hpp>
 
 namespace eve::detail
@@ -32,5 +33,12 @@ namespace eve::detail
     else if constexpr( c == category::float32x16) return ~s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return ~s_t {_mm256_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};
+    else if constexpr( match(c, category::float16) )
+    {
+      if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(is_finite, a);
+      else if constexpr( c == category::float16x32 )         return s_t {_mm512_mask_fpclass_ph_mask(m, v, f)};
+      else if constexpr( c == category::float16x16 )         return s_t {_mm256_mask_fpclass_ph_mask(m, v, f)};
+      else if constexpr( c == category::float16x8 )          return s_t {_mm_mask_fpclass_ph_mask(m, v, f)};
+    }
   }
 }
