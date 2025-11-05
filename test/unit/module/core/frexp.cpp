@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals_wf16)
+TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -78,7 +78,7 @@ TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
 // Test for corner-cases values pedantic !
 //==================================================================================================
 TTS_CASE_TPL("Check corner-cases behavior of eve::frexp[eve::pedantic] variants on wide",
-             eve::test::simd::ieee_reals_wf16)
+             eve::test::simd::ieee_reals)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
