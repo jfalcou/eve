@@ -15,6 +15,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
