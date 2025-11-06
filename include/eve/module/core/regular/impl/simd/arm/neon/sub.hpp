@@ -85,7 +85,7 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4  ) return vsubq_f32(a, b);
       else  if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sub, opts, a, b);
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sub, a, b);
         else if constexpr (c == category::float16x4)          return vsub_f16(a, b);
         else if constexpr (c == category::float16x8)          return vsubq_f16(a, b);
       }

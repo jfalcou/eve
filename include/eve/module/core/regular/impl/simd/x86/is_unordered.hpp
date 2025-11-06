@@ -62,7 +62,7 @@ namespace eve::detail
 
     if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
     {
-      return apply_fp16_as_fp32(is_unordered[o][cx], v, w);
+      return apply_fp16_as_fp32_masked(is_unordered, cx, v, w);
     }
     else if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
