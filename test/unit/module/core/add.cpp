@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -72,7 +72,7 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
 //==  add simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of add on wide",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -94,7 +94,9 @@ TTS_CASE_WITH("Check behavior of add on wide",
   TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
   TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
-  if constexpr (eve::floating_value<T> && sizeof(eve::element_type_t<T>) == 4)
+
+  //TODO: enable for float16 once support is more complete
+  if constexpr (eve::floating_value<T> && sizeof(eve::element_type_t<T>) == 4 && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
     TTS_ULP_EQUAL( add[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[lower](add[lower](e, f), g); }, a0, a1, a2), 1.0);
     TTS_ULP_EQUAL( add[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[upper](add[upper](e, f), g); }, a0, a1, a2), 1.0);
@@ -171,7 +173,7 @@ auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; });
 
 TTS_CASE_WITH("Check behavior of add on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::signed_types_wf16,
               tts::generate(tts::randoms(mini, 127),
                             tts::randoms(mini, 127),
                             tts::randoms(mini, 127)))
@@ -195,7 +197,7 @@ TTS_CASE_WITH("Check behavior of add on signed types",
 //==================================================================================================
 //== Tests for masked add
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
@@ -209,13 +211,16 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
   TTS_IEEE_EQUAL(eve::add[mask][eve::lower](a0, a1),
                  eve::if_else(mask, eve::add[eve::lower](a0, a1), a0));
 
-  using eve::lower;
-  using eve::if_;
-  TTS_IEEE_EQUAL(eve::add[mask][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), a0));
-  TTS_IEEE_EQUAL(eve::add[if_(mask).else_(100)][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), 100));
-  TTS_IEEE_EQUAL(eve::add[eve::ignore_all][lower](a0, a1), a0);
-  TTS_IEEE_EQUAL(eve::add[eve::ignore_all.else_(42)][lower](a0, a1), T{42});
-
+  //TODO: enable for float16 once support is more complete
+  if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
+  {
+    using eve::lower;
+    using eve::if_;
+    TTS_IEEE_EQUAL(eve::add[mask][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), a0));
+    TTS_IEEE_EQUAL(eve::add[if_(mask).else_(100)][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), 100));
+    TTS_IEEE_EQUAL(eve::add[eve::ignore_all][lower](a0, a1), a0);
+    TTS_IEEE_EQUAL(eve::add[eve::ignore_all.else_(42)][lower](a0, a1), T{42});
+  }
 };
 
 
