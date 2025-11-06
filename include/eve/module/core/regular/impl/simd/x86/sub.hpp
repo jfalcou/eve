@@ -24,7 +24,7 @@ namespace eve::detail
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-  requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
+  requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen) && sizeof(T) >= 4)
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(O::contains(left))
