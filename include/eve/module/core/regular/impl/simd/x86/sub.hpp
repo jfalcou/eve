@@ -121,7 +121,7 @@ namespace eve::detail
   template<conditional_expr C, typename T, typename N, callable_options O>
   EVE_FORCEINLINE
   wide<T, N> sub_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-  requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
+  requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen) && (sizeof(T) >= 4))
   {
     if (O::contains(left))
     {
