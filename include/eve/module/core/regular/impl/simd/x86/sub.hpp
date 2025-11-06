@@ -98,6 +98,13 @@ namespace eve::detail
       else  if constexpr  ( c == category::uint8x16   ) return _mm_sub_epi8(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_sub_pd(a, b);
       else  if constexpr  ( c == category::float32x8  ) return _mm256_sub_ps(a, b);
+      else  if constexpr ( match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sub, a, b);
+        else if constexpr (c == category::float16x32)         return _mm512_sub_ph(a, b);
+        else if constexpr (c == category::float16x16)         return _mm256_sub_ph(a, b);
+        else if constexpr (c == category::float16x8)          return _mm_sub_ph(a, b);
+      }
       else  if constexpr  ( current_api >= avx2 )
       {
               if constexpr  ( c == category::int64x4  ) return _mm256_sub_epi64(a, b);
@@ -185,6 +192,13 @@ namespace eve::detail
         else if constexpr( c == category::float64x8 ) return _mm512_mask_sub_pd   (src, m, v, w);
         else if constexpr( c == category::float64x4 ) return _mm256_mask_sub_pd   (src, m, v, w);
         else if constexpr( c == category::float64x2 ) return _mm_mask_sub_pd      (src, m, v, w);
+        else  if constexpr ( match(c, category::float16))
+        {
+          if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(sub, cx, v, w);
+          else if constexpr (c == category::float16x32)         return _mm512_mask_sub_ph(src, m, v, w);
+          else if constexpr (c == category::float16x16)         return _mm256_mask_sub_ph(src, m, v, w);
+          else if constexpr (c == category::float16x8)          return _mm_mask_sub_ph(src, m, v, w);
+        }
         else if constexpr( match(c,category::int64x8 , category::uint64x8)  ) return _mm512_mask_sub_epi64(src, m, v, w);
         else if constexpr( match(c,category::int64x4 , category::uint64x4)  ) return _mm256_mask_sub_epi64(src, m, v, w);
         else if constexpr( match(c,category::int64x2 , category::uint64x2)  ) return _mm_mask_sub_epi64   (src, m, v, w);

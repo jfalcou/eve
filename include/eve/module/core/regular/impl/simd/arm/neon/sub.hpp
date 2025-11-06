@@ -83,6 +83,12 @@ namespace eve::detail
       else  if constexpr( c == category::uint8x16   ) return vsubq_u8 (a, b);
       else  if constexpr( c == category::float32x2  ) return vsub_f32 (a, b);
       else  if constexpr( c == category::float32x4  ) return vsubq_f32(a, b);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sub, a, b);
+        else if constexpr (c == category::float16x4)          return vsub_f16(a, b);
+        else if constexpr (c == category::float16x8)          return vsubq_f16(a, b);
+      }
       else if constexpr( current_api >= asimd )
       {
         if constexpr( c == category::float64x1 ) return vsub_f64  (a, b);
