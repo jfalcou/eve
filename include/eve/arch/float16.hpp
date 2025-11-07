@@ -272,6 +272,34 @@ namespace eve
           return detail::emulated_fp16_compare(data, other.data) == std::partial_ordering::equivalent;
         }
     };
+
+    template <typename T>
+    constexpr EVE_FORCEINLINE float16_t operator+(T const& lhs, float16_t const& rhs) noexcept
+      requires (std::integral<T> || std::floating_point<T>)
+    {
+      return float16_t{ static_cast<float>(lhs) + static_cast<float>(rhs) };
+    }
+
+    template <typename T>
+    constexpr EVE_FORCEINLINE float16_t operator-(T const& lhs, float16_t const& rhs) noexcept
+      requires (std::integral<T> || std::floating_point<T>)
+    {
+      return float16_t{ static_cast<float>(lhs) - static_cast<float>(rhs) };
+    }
+
+    template <typename T>
+    constexpr EVE_FORCEINLINE float16_t operator*(T const& lhs, float16_t const& rhs) noexcept
+      requires (std::integral<T> || std::floating_point<T>)
+    {
+      return float16_t{ static_cast<float>(lhs) * static_cast<float>(rhs) };
+    }
+
+    template <typename T>
+    constexpr EVE_FORCEINLINE float16_t operator/(T const& lhs, float16_t const& rhs) noexcept
+      requires (std::integral<T> || std::floating_point<T>)
+    {
+      return float16_t{ static_cast<float>(lhs) / static_cast<float>(rhs) };
+    }
   #endif
 
   namespace detail

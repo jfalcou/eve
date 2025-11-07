@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of absmin", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of absmin", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -48,7 +48,7 @@ auto vmin = tts::constant(
     });
 
 TTS_CASE_WITH("Check behavior of absmin on all types full range",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(vmin, eve::valmax),
                             tts::randoms(vmin, eve::valmax),
                             tts::randoms(vmin, eve::valmax),
@@ -75,7 +75,7 @@ TTS_CASE_WITH("Check behavior of absmin on all types full range",
   auto tup = kumi::generate<s>(t);
   TTS_ULP_EQUAL(absmin(tup), v_t(0), 0.5);};
 
-TTS_CASE_TPL("Check values of absmin", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of absmin", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -108,8 +108,8 @@ TTS_CASE_TPL("Check values of absmin", eve::test::simd::ieee_reals)
 //==================================================================================================
 //==  Tests for masked absmin
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::absmin)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::absmin[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
