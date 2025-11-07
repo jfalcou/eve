@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
@@ -50,7 +51,6 @@ namespace eve::detail
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-
     else
     {
       if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
@@ -71,6 +71,12 @@ namespace eve::detail
       else if constexpr( c == category::uint8x16   ) return vaddq_u8 (v, w);
       else if constexpr( c == category::float32x2  ) return vadd_f32 (v, w);
       else if constexpr( c == category::float32x4  ) return vaddq_f32(v, w);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
+        else if constexpr (c == category::float16x4)          return vadd_f16(v, w);
+        else if constexpr (c == category::float16x8)          return vaddq_f16(v, w);
+      }
       else if constexpr( current_api >= asimd )
       {
         if constexpr( c == category::float64x1 ) return vadd_f64  (v, w);

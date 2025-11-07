@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
@@ -72,7 +73,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr  ( c == category::float64x8  ) return _mm512_add_pd(v, w);
+      if       constexpr  ( c == category::float64x8  ) return _mm512_add_pd(v, w);
       else  if constexpr  ( c == category::float32x16 ) return _mm512_add_ps(v, w);
       else  if constexpr  ( c == category::int64x8    ) return _mm512_add_epi64(v, w);
       else  if constexpr  ( c == category::int32x16   ) return _mm512_add_epi32(v, w);
@@ -94,6 +95,13 @@ namespace eve::detail
       else  if constexpr  ( c == category::uint8x16   ) return _mm_add_epi8(v, w);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_add_pd(v, w);
       else  if constexpr  ( c == category::float32x8  ) return _mm256_add_ps(v, w);
+      else  if constexpr ( match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
+        else if constexpr (c == category::float16x32)         return _mm512_add_ph(v, w);
+        else if constexpr (c == category::float16x16)         return _mm256_add_ph(v, w);
+        else if constexpr (c == category::float16x8)          return _mm_add_ph(v, w);
+      }
       else  if constexpr  ( current_api >= avx2 )
       {
         if constexpr  ( c == category::int64x4  ) return _mm256_add_epi64(v, w);
@@ -177,6 +185,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_add_pd   (src, m, v, w);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_add_pd   (src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_add_pd      (src, m, v, w);
+      else  if constexpr ( match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(add, cx, v, w);
+        else if constexpr (c == category::float16x32)         return _mm512_mask_add_ph(src, m, v, w);
+        else if constexpr (c == category::float16x16)         return _mm256_mask_add_ph(src, m, v, w);
+        else if constexpr (c == category::float16x8)          return _mm_mask_add_ph(src, m, v, w);
+      }
       else if constexpr( match(c,category::int64x8 , category::uint64x8)  ) return _mm512_mask_add_epi64(src, m, v, w);
       else if constexpr( match(c,category::int64x4 , category::uint64x4)  ) return _mm256_mask_add_epi64(src, m, v, w);
       else if constexpr( match(c,category::int64x2 , category::uint64x2)  ) return _mm_mask_add_epi64   (src, m, v, w);
