@@ -11,7 +11,7 @@ consteval auto constexpr_catalan() { return eve::catalan(eve::as<T>{}); }
 
 int main()
 {
-  wide_ft wxf([](auto i, auto){return eve::is_odd(i)?-1.f:1.f; ; });
+  wide_ft wxf([](auto i){return eve::is_odd(i)?-1.f:1.f; ; });
   wide_dt wxd;
 
   std::cout << "---- simd"  << std::setprecision(9) << std::endl

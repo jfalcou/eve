@@ -22,7 +22,7 @@ namespace eve::detail
   {
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {
-      return wide<U, N>{ [=](auto i, auto) { return ptr[v.get(i)]; } };
+      return wide<U, N>{ [=](auto i) { return ptr[v.get(i)]; } };
     }
     else
     {
@@ -36,7 +36,7 @@ namespace eve::detail
       else
       {
         auto m = expand_mask(cx, as<wide<U, N>>{});
-        return wide<U, N>{ [=](auto i, auto) { return m.get(i) ? ptr[v.get(i)] : src.get(i); } };
+        return wide<U, N>{ [=](auto i) { return m.get(i) ? ptr[v.get(i)] : src.get(i); } };
       }
     }
   }

@@ -39,8 +39,8 @@ int main()
   std::cout << eve::cosine_similarity(y, x) <<  std::endl;
 
   using w_t = eve::wide<float, eve::fixed<4>>;
-  auto wt1 = kumi::generate<11>([](auto p){return w_t([p](auto q, auto){return float(p+q); }); });
-  auto wt2 = kumi::generate<11>([](auto p){return w_t([p](auto q, auto){return p*p/float((q+1)); }); });
+  auto wt1 = kumi::generate<11>([](auto p){return w_t([p](auto q){return float(p+q); }); });
+  auto wt2 = kumi::generate<11>([](auto p){return w_t([p](auto q){return p*p/float((q+1)); }); });
   std::cout << wt1 << std::endl;
   std::cout << wt2 << std::endl;
 

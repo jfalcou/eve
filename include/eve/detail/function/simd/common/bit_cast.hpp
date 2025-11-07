@@ -21,7 +21,7 @@ namespace eve::detail
     // assume simd_value from there
     else if constexpr (T::size() == Target::size())
     {
-      return Target{ [a](auto i, auto) { return std::bit_cast<element_type_t<Target>>(a.get(i)); } };
+      return Target{ [a](auto i) { return std::bit_cast<element_type_t<Target>>(a.get(i)); } };
     }
     else
     {

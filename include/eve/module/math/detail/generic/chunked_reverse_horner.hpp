@@ -32,7 +32,7 @@ namespace eve::detail
     auto small_pow = [](auto z){ auto n = nblanes; while (n-1){ z*= z;  n >>= 1; }; return z; };
 
     auto head = eve::as_wides(eve::zero(eve::as<e_t>()), t);
-    w_t zz([xx](auto i, auto){return i == 0 ? e_t(1) : e_t(xx); });
+    w_t zz([xx](auto i){ return i == 0 ? e_t(1) : e_t(xx); });
     auto xxx =  eve::scan(zz, eve::mul[o], e_t(1));
     e_t xn = small_pow(xx);
     auto res =  process(head, xxx, xn);

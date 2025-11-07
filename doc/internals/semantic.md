@@ -56,7 +56,7 @@ returning a [value](@ref eve::value) of type `R` is said to be **Element-wise** 
 
   - if `R` models @ref eve::simd_value :
     @code{.cpp}
-    R r = [](auto i, auto) { return f(get(x1,i),  ..., get(xn,i)); };
+    R r = [](auto i) { return f(get(x1,i),  ..., get(xn,i)); };
     @endcode
 
   - if `R` models @ref eve::scalar_value :
@@ -86,7 +86,7 @@ an **Arithmetic Function** if the expression `C r = f(x1, ...,xn)` is semantical
 
   - if `C` models eve::simd_value:
     @code{.cpp}
-    C r = [](auto i, auto) { return f(get(C(x1),i),  ..., get(C(xn),i)); };
+    C r = [](auto i) { return f(get(C(x1),i),  ..., get(C(xn),i)); };
     @endcode
 
   - if `C` models eve::scalar_value:
