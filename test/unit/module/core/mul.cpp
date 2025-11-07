@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types_wf16)
   <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -70,7 +70,7 @@ TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types)
 //==  mul simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mul on wide",
-              eve::test::simd::integers,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -89,7 +89,9 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
-  if constexpr (eve::floating_value<T>)
+
+  //TODO: enable for float16 once support is more complete
+  if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
     TTS_ULP_EQUAL( mul[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[lower](mul[lower](e, f), g); }, a0, a1, a2), 1.0);
     TTS_ULP_EQUAL( mul[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[upper](mul[upper](e, f), g); }, a0, a1, a2), 1.0);
@@ -202,8 +204,8 @@ TTS_CASE_WITH("Check behavior of mul on signed types",
 //==================================================================================================
 // Tests for masked mul
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::mul)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
