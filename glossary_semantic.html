@@ -164,7 +164,7 @@ Generalized Element Access</h2>
 Element-wise Operations</h2>
 <p>For any <a class="el" href="concepteve_1_1value.html">values</a> <code>x1, ..., xn</code> of types <code>T1, ..., Tn</code> , a Callable Object <code>f</code> returning a <a class="el" href="concepteve_1_1value.html">value</a> of type <code>R</code> is said to be <b>Element-wise</b> if the expression <code>R r = f(x1, ...,xn)</code> is semantically equivalent to:</p>
 <ul>
-<li>if <code>R</code> models <a class="el" href="concepteve_1_1simd__value.html">eve::simd_value</a> : <div class="fragment"><div class="line">R r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> f(get(x1,i),  ..., get(xn,i)); };</div>
+<li>if <code>R</code> models <a class="el" href="concepteve_1_1simd__value.html">eve::simd_value</a> : <div class="fragment"><div class="line">R r = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> f(get(x1,i),  ..., get(xn,i)); };</div>
 </div><!-- fragment --></li>
 <li>if <code>R</code> models <a class="el" href="concepteve_1_1scalar__value.html">eve::scalar_value</a> : <div class="fragment"><div class="line">R r = f(x1,  ..., xn);</div>
 </div><!-- fragment --></li>
@@ -180,7 +180,7 @@ Function Semantic</h1>
 Arithmetic Functions</h2>
 <p>For any <a class="el" href="concepteve_1_1value.html">values</a> <code>x1, ..., xn</code> of types <code>T1, ..., Tn</code> so that the expression <code>using C = eve::common_compatible_t&lt;T1,...,Tn&gt;</code> is valid, a Callable Object <code>f</code> is said to be an <b>Arithmetic Function</b> if the expression <code>C r = f(x1, ...,xn)</code> is semantically equivalent to:</p>
 <ul>
-<li>if <code>C</code> models <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::simd_value:</a> <div class="fragment"><div class="line">C r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> f(get(C(x1),i),  ..., get(C(xn),i)); };</div>
+<li>if <code>C</code> models <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::simd_value:</a> <div class="fragment"><div class="line">C r = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> f(get(C(x1),i),  ..., get(C(xn),i)); };</div>
 </div><!-- fragment --></li>
 <li>if <code>C</code> models <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">eve::scalar_value:</a> <div class="fragment"><div class="line">C r = f(C(x1),  ..., C(xn));</div>
 </div><!-- fragment --></li>
