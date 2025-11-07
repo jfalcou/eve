@@ -10,6 +10,8 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_eqpz.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 
 namespace eve
 {
@@ -30,7 +32,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_nepz
-//!   @brief `elementwise callable` returning a logical true  if and only if "positive" zero.
+//!   @brief `elementwise callable` returning a logical true unless the element value is a floating
+//!          zero with its sign bit unset.
 //!
 //!   @groupheader{Header file}
 //!
@@ -60,7 +63,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. `is_nepz(x)` is true if and only if all bits of the representation of `x` are zero.
+//!     1. `is_nepz(x)` is semantically equivalent to `!is_eqpz(x)`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
@@ -74,10 +77,9 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_nepz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_nepz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return !is_eqpz(a);
+      return logical_not(is_eqpz(a));
     }
   }
 }

@@ -30,8 +30,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_eqmz
-//!   @brief `elementwise callable` returning a logical true  if and only if the element
-//!    value is a floating zero with sign bit set.
+//!   @brief `elementwise callable` returning a logical true if and only if the element
+//!    value is a floating zero with its sign bit set (`mzero`).
 //!
 //!   @groupheader{Header file}
 //!

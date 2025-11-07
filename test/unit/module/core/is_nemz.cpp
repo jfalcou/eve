@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_nemz(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::is_nemz(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -25,13 +25,27 @@ TTS_CASE_TPL("Check return types of eve::is_nemz(simd)", eve::test::simd::ieee_r
 // Tests for eve::is_nemz
 //==================================================================================================
 
+TTS_CASE_TPL("Check behavior of eve::is_nemz (corner cases)", eve::test::simd::ieee_reals_wf16)
+<typename T>(tts::type<T> tgt)
+{
+  const auto cases = tts::limits(tgt);
+
+  TTS_EQUAL(eve::is_nemz(cases.nan), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.inf), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.minf), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.mzero), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.zero), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.valmin), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nemz(cases.valmax), eve::true_(eve::as<T>()));
+};
+
 TTS_CASE_WITH("Check behavior of eve::is_nemz(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_nemz(a0), tts::map([](auto e) -> eve::logical<v_t> { return eve::is_ltz(e) || eve::is_positive(e); }, a0));
+  TTS_EQUAL(eve::is_nemz(a0), tts::map([](auto e) -> eve::logical<v_t> { return !eve::is_eqmz(e); }, a0));
   TTS_EQUAL(eve::is_nemz[t](a0), eve::if_else(t, eve::is_nemz(a0), eve::false_(eve::as(a0))));
 };
