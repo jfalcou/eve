@@ -16,9 +16,9 @@ int main()
     std::cout << " -> trapz(tt)                                          = " << eve::trapz(tt) << std::endl;
     std::cout << " -> trapz(x, tt)                                       = " << eve::trapz(x, tt) << std::endl;
     using w_t = eve::wide<double>;
-    auto f = [](auto p){return w_t([p](auto q, auto){return p*p+q*3; }); };
+    auto f = [](auto p){return w_t([p](auto q){return p*p+q*3; }); };
     auto g = [](auto p){return 2*(p+1); };
-    w_t h([](auto p, auto){return p+1; });
+    w_t h([](auto p){return p+1; });
     kumi::tuple tt1(kumi::generate<8>(f));
     kumi::tuple xx(kumi::generate<8>(g));
     std::cout << " <- xx                                                 = " << xx << std::endl;

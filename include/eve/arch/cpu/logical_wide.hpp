@@ -419,7 +419,7 @@ namespace eve
     //! int main()
     //! {
     //!   // Generates the logical<wide> [true false true .. ]
-    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   eve::logical<eve::wide<int>> r = [](auto i) { return i%2 == 0;};
     //!   std::cout << r << "\n";
     //!
     //!   auto[lo,hi] = r.slice();
@@ -457,7 +457,7 @@ namespace eve
     //! int main()
     //! {
     //!   // Generates the logical<wide> [true false true .. ]
-    //!   eve::logical<eve::wide<int>> r = [](auto i, auto) { return i%2 == 0;};
+    //!   eve::logical<eve::wide<int>> r = [](auto i) { return i%2 == 0;};
     //!   std::cout << r << "\n";
     //!
     //!   auto lo = r.slice(eve::lower_);

@@ -33,7 +33,7 @@ requires rvv_abi<abi_t<T, N>>
     constexpr size_t combined_vl    = N::combined_type::value;
     that_t         wider_h_placed = __riscv_vslideup(wider_h, wider_h, shift_size, combined_vl);
     // TODO: can be optimized when simd_cast will support conversions wide<->logical
-    logical<that_t> mask([shift_size](auto i, auto) { return i < shift_size; });
+    logical<that_t> mask([shift_size](auto i) { return i < shift_size; });
     return __riscv_vmerge(wider_h_placed, wider_l, mask, combined_vl);
   }
 }

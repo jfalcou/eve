@@ -44,7 +44,7 @@ requires sve_abi<abi_t<float, N>>
       // As the data end up in the lower level of the register, we use it directly without
       // needing an extra svext.
       using idx_t = wide<std::uint32_t, N>;
-      auto const ll = svtbl(w, idx_t {[](auto i, auto) { return i / 2; }});
+      auto const ll = svtbl(w, idx_t {[](auto i) { return i / 2; }});
       auto const hh = svtbl(w, idx_t {[](auto i, auto c) { return i / 2 + c / 2; }});
 
       using t_t = wide<U, typename N::split_type>;

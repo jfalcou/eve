@@ -21,7 +21,7 @@ inline constexpr auto shift = []()
 
 // generator for byte index shuffling for large integer
 template<typename T, typename I, bool isLittleEndian = true>
-inline constexpr auto repeater = [](auto i, auto)
+inline constexpr auto repeater = [](auto i)
 {
   auto space = (i / sizeof(T)) + !isLittleEndian;
   return (sizeof(I) * space) - !isLittleEndian;

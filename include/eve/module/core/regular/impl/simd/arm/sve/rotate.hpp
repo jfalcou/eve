@@ -24,7 +24,7 @@ namespace eve::detail
     else
     {
       wide<make_integer_t<sizeof(T), unsigned>, fundamental_cardinal_t<T>> indices{
-        [](auto i, auto) { return (i + M) % N::value; }
+        [](auto i) { return (i + M) % N::value; }
       };
       return svtbl(x, indices);
     }
