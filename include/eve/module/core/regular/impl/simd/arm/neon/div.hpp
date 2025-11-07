@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +30,13 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-      if constexpr (current_api >= asimd)
+      if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(div, a, b);
+        else if constexpr (c == category::float16x4)          return vdiv_f16(a, b);
+        else if constexpr (c == category::float16x8)          return vdivq_f16(a, b);
+      }
+      else if constexpr (current_api >= asimd)
       {
         if constexpr( c == category::float64x1 ) return vdiv_f64 (a, b);
         else  if constexpr( c == category::float64x2 ) return vdivq_f64(a, b);

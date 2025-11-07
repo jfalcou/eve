@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -59,16 +59,13 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::div[eve::saturated](v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::div[eve::saturated](v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::div[eve::saturated](v_t(), v_t(), v_t()), v_t);
-
-  if constexpr( eve::floating_value<T> ) {}
 };
 
 //==================================================================================================
 //==  div simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of div on wide",
-              eve::test::simd::ieee_reals
-              ,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(0, 100), tts::randoms(1, 11), tts::randoms(1, 11)))
 <typename T>(T a0, T a1, T a2)
 {
@@ -88,7 +85,9 @@ TTS_CASE_WITH("Check behavior of div on wide",
   TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
   TTS_IEEE_EQUAL(eve::div[eve::left](a0, a2), eve::div(a2, a0));
   TTS_IEEE_EQUAL(eve::div[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::div(a2, a0), a0));
-  if constexpr (eve::floating_value<T>)
+
+  //TODO: enable for float16 once support is more complete
+  if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
     TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 2.0);
     TTS_ULP_EQUAL( div[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[upper](div[upper](e, f), g); }, a0, a1, a2), 2.0);
@@ -128,7 +127,7 @@ auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of div on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127)))
