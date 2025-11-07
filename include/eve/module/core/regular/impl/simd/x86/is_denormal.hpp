@@ -10,14 +10,13 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/traits/apply_fp16.hpp>
 #include <eve/module/core/detail/flags.hpp>
 
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_denormal_(EVE_REQUIRES(avx512_),
-                                                   O          const &,
+                                                   O          const &opts,
                                                    wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -35,7 +34,7 @@ namespace eve::detail
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, f)};
     else if constexpr( match(c, category::float16) )
     {
-      if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(is_denormal, a);
+      if      constexpr( !detail::supports_fp16_vector_ops ) return is_denormal.behavior(cpu_{}, opts, a);
       else if constexpr( c == category::float16x32 )         return s_t {_mm512_fpclass_ph_mask(a, f)};
       else if constexpr( c == category::float16x16 )         return s_t {_mm256_fpclass_ph_mask(a, f)};
       else if constexpr( c == category::float16x8  )         return s_t {_mm_fpclass_ph_mask(a, f)};
@@ -70,7 +69,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_fpclass_pd_mask(m, v, f)};
       else if constexpr( match(c, category::float16) )
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(is_denormal, cx, v);
+        if      constexpr( !detail::supports_fp16_vector_ops ) return is_denormal[o][cx].retarget(cpu_{}, v);
         else if constexpr( c == category::float16x32 )         return mask32 {_mm512_mask_fpclass_ph_mask(m, v, f)};
         else if constexpr( c == category::float16x16 )         return mask16 {_mm256_mask_fpclass_ph_mask(m, v, f)};
         else if constexpr( c == category::float16x8 )          return mask8 {_mm_mask_fpclass_ph_mask(m, v, f)};
