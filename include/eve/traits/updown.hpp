@@ -82,7 +82,11 @@ namespace eve
   template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
 
   template < typename O, typename T>
-  struct upgrade_if
+  struct upgrade_if;
+
+  template < typename O, typename T>
+  requires( requires{typename detail::up<T>::type;} )
+  struct upgrade_if<O,T>
   {
     using base = std::conditional_t<O::contains(eve::widen), detail::up<T>, eve::detail::always<T>>;
     using type = typename base::type;
