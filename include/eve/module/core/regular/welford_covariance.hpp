@@ -53,48 +53,24 @@ namespace eve
   {
 
     template<typename... Ts>
-    requires((detail::is_welford_covariance_result_v<Ts > && ...) && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
+    requires((detail::is_welford_covariance_result_v<Ts> && ...))
+      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_if_t<Options, common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
     operator()(Ts...ts) const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
-
-    template<typename... Ts>
-    requires((detail::is_welford_covariance_result_v<Ts> && ...) && Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<common_value_t<detail::internal_welford_covariance_t<Ts>...>>
-    operator()(Ts...ts) const noexcept
-     {
-      return EVE_DISPATCH_CALL(ts...);
-    }
+    { return EVE_DISPATCH_CALL(ts...); }
 
     template<typename T>
-    requires(detail::is_welford_covariance_result_v<T> && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<element_type_t<detail::internal_welford_covariance_t<T>>>
-    operator()(T t) const noexcept
-    { return EVE_DISPATCH_CALL(t); }
-
-    template<typename T>
-    requires(detail::is_welford_covariance_result_v<T> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<detail::internal_welford_covariance_t<element_type_t<upgrade_t<T>>>>
+    requires(detail::is_welford_covariance_result_v<T>)
+      EVE_FORCEINLINE constexpr
+    detail::welford_covariance_result<upgrade_if_t<Options, element_type_t<detail::internal_welford_covariance_t<T>>>>
     operator()(T t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && !Options::contains(widen))
+    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
       EVE_FORCEINLINE constexpr
-    detail::welford_covariance_result<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
+    detail::welford_covariance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept
     { return EVE_DISPATCH_CALL(t1, t2); }
-
-    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
-    requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr
-    detail::welford_covariance_result<upgrade_t<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
-    operator()(Tup1 const& t1, Tup2 const& t2) const noexcept
-    { return EVE_DISPATCH_CALL(t1, t2); }
-
-
 
     EVE_CALLABLE_OBJECT(welford_covariance_t, welford_covariance_);
   };

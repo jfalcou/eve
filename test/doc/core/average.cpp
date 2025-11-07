@@ -10,7 +10,7 @@ int main()
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
 
-  std::cout << "<- wf0                                        = " << wf0 << "\n";
+  std::cout << "<- wf0                                        = " << wf0 << "\n"; 
   std::cout << "<- wf1                                        = " << wf1 << "\n";
   std::cout << "<- wi0                                        = " << wi0 << "\n";
   std::cout << "<- wi1                                        = " << wi1 << "\n";

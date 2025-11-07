@@ -21,43 +21,22 @@ namespace eve
   struct horner_t : callable<horner_t, Options, pedantic_option, kahan_option, widen_option>
   {
     template<floating_value X, value ... Ts>
-    requires(eve::same_lanes_or_scalar<X, Ts...> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr common_value_t<X, Ts...>
+    requires(eve::same_lanes_or_scalar<X, Ts...>)// && Options::contains(widen))
+    EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<X, Ts...>>
     operator()(X x, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, ts...); }
 
-    template<floating_value X, value ... Ts>
-    requires(eve::same_lanes_or_scalar<X, Ts...> && Options::contains(widen))
-    EVE_FORCEINLINE constexpr upgrade_t<common_value_t<X, Ts...>>
-    operator()(X x, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(x, ts...); }
-
-
     template<floating_value X, kumi::product_type Tup>
-    requires(!Options::contains(widen))
+    //    requires(Options::contains(widen))
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>
-    operator()(X x, coefficients<Tup> const& t) const noexcept
-    { return EVE_DISPATCH_CALL(x, t); }
-
-    template<floating_value X, kumi::product_type Tup>
-    requires(Options::contains(widen))
-    EVE_FORCEINLINE constexpr
-    upgrade_t<eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>>
+    upgrade_if_t<Options, eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>>
     operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
     template<floating_value X, eve::detail::range R>
-    requires(!Options::contains(widen))
+    //    requires(Options::contains(widen))
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<typename R::value_type, X>
-    operator()(X x, R const& t) const noexcept
-    { return EVE_DISPATCH_CALL(x, t); }
-
-    template<floating_value X, eve::detail::range R>
-    requires(Options::contains(widen))
-    EVE_FORCEINLINE constexpr
-    upgrade_t<eve::common_value_t<typename R::value_type, X>>
+    upgrade_if_t<Options, eve::common_value_t<typename R::value_type, X>>
     operator()(X x, R const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 

@@ -21,33 +21,15 @@ namespace eve
                                 widen_option, mod_option, kahan_option>
   {
     template<value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()( Ts...ts)
-      const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
-
-    template<value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
-    constexpr operator()(Ts...ts)
-      const noexcept
-    {
-      return EVE_DISPATCH_CALL(ts...);
-    }
+    requires(eve::same_lanes_or_scalar<Ts...>)
+      EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
+    constexpr operator()(Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(ts...); }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
       EVE_FORCEINLINE constexpr
-    upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept
-    { return EVE_DISPATCH_CALL(t); }
-
-    template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
+    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 

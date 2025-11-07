@@ -17,25 +17,14 @@ namespace eve
   template<typename Options>
   struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option, kahan_option, widen_option>
   {
-    template<value... Ts>
-    requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-      EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(ts...); }
 
     template<value... Ts>
-    requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>> operator()(Ts...ts) const noexcept
+    requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...>)
+      EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<Ts...>> operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<kumi::non_empty_product_type Tup>
-    requires(!Options::contains(widen))
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const & t) const noexcept
-    { return EVE_DISPATCH_CALL(t); }
-
-     template<kumi::non_empty_product_type Tup>
-    requires(Options::contains(widen))
-    EVE_FORCEINLINE constexpr upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const & t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
