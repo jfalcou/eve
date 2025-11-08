@@ -15,7 +15,7 @@ namespace eve::detail
 {
 template<floating_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(neon128_),
-                                    O const&,
+                                    O const& o,
                                     wide<T, N> const& v) noexcept
 requires arm_abi<abi_t<T, N>>
 {
@@ -23,7 +23,7 @@ requires arm_abi<abi_t<T, N>>
 
   if  constexpr (match(cat, category::float16))
   {
-    return floor.behavior(cpu_{}, o, a0);
+    return floor.behavior(cpu_{}, o, v);
   }
   else if constexpr( current_api >= asimd )
   {

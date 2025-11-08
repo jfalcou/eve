@@ -18,7 +18,7 @@ namespace eve::detail
 
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
-                                      O           const& ,
+                                      O           const&o,
                                       wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
