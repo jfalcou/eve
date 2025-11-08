@@ -29,6 +29,7 @@ namespace eve::detail
         else if constexpr( cat == category::float64x2 ) return vrndq_f64(v);
         else if constexpr( cat == category::float32x2 ) return vrnd_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndq_f32(v);
+        else return trunc.behavior(cpu_{}, o, v);
       }
       else return map(trunc, v);
     }
