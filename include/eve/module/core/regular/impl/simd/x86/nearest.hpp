@@ -15,36 +15,45 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
-                                    O           const& ,
-                                    wide<T, N> a0) noexcept
-requires x86_abi<abi_t<T, N>>
-{
-  if constexpr( std::is_same_v<T, double> )
+
+  template<floating_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
+                                      O           const& ,
+                                      wide<T, N> a0) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
-      return _mm512_roundscale_pd(a0, _MM_FROUND_TO_NEAREST_INT);
-    else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
-      return _mm256_round_pd(a0, _MM_FROUND_TO_NEAREST_INT);
-    else return _mm_round_pd(a0, _MM_FROUND_TO_NEAREST_INT);
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
+    {
+      return trunc.behavior(cpu_{}, o, v);
+    }
+    else
+    {
+      if constexpr( std::is_same_v<T, double> )
+      {
+        if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
+          return _mm512_roundscale_pd(a0, _MM_FROUND_TO_NEAREST_INT);
+        else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
+          return _mm256_round_pd(a0, _MM_FROUND_TO_NEAREST_INT);
+        else return _mm_round_pd(a0, _MM_FROUND_TO_NEAREST_INT);
+      }
+      else
+      {
+        if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
+          return _mm512_roundscale_ps(a0, _MM_FROUND_TO_NEAREST_INT);
+        else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
+          return _mm256_round_ps(a0, _MM_FROUND_TO_NEAREST_INT);
+        else return _mm_round_ps(a0, _MM_FROUND_TO_NEAREST_INT);
+      }
+    }
   }
-  else
-  {
-    if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
-      return _mm512_roundscale_ps(a0, _MM_FROUND_TO_NEAREST_INT);
-    else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
-      return _mm256_round_ps(a0, _MM_FROUND_TO_NEAREST_INT);
-    else return _mm_round_ps(a0, _MM_FROUND_TO_NEAREST_INT);
-  }
-}
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(avx512_),
                                       C          const &cx,
-                                      O          const &,
+                                      O          const &o,
                                       wide<T, N> const &v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -65,5 +74,6 @@ requires x86_abi<abi_t<T, N>>
       return _mm_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float64x2 )
       return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
+    else return round[o][cx].retarget(cpu_{}, v);
   }
 }

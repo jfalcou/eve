@@ -26,10 +26,13 @@ namespace eve::detail
                                     wide<T, N>  const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
     {
-      constexpr auto c = categorize<wide<T, N>>();
-
+      return trunc.behavior(cpu_{}, o, a0);
+    }
+    else if constexpr(!O::contains(almost))
+    {
       if constexpr( c == category::float64x8 ) return _mm512_roundscale_pd(a0, _MM_FROUND_FLOOR);
       else if constexpr( c == category::float32x16 ) return _mm512_roundscale_ps(a0, _MM_FROUND_FLOOR);
       else if constexpr( c == category::float64x4 ) return _mm256_round_pd(a0, _MM_FROUND_FLOOR);
@@ -50,9 +53,13 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
     {
-      constexpr auto c = categorize<wide<T, N>>();
+      return  floor[o][cx].retarget(cpu_{}, v);
+    }
+    else if constexpr(!O::contains(almost))
+    {
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 

@@ -19,9 +19,13 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
     {
-      constexpr auto cat = categorize<wide<T, N>>();
+      return trunc.behavior(cpu_{}, o, a0);
+    }
+    else if constexpr(!O::contains(almost))
+    {
       if constexpr( current_api >= asimd )
       {
              if constexpr( cat == category::float64x1 ) return vrndm_f64(v);
@@ -31,7 +35,6 @@ namespace eve::detail
       }
       else return map(floor, v);
     }
-    else
-      return floor_(EVE_TARGETS(cpu_), o, v);
+    else return floor.behavior(cpu_{}, o, v);
   }
 }

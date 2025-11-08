@@ -21,7 +21,11 @@ requires arm_abi<abi_t<T, N>>
 {
   constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( current_api >= asimd )
+  if  constexpr (match(cat, category::float16))
+  {
+    return floor.behavior(cpu_{}, o, a0);
+  }
+  else if constexpr( current_api >= asimd )
   {
     if constexpr( cat == category::float64x1 ) return vrndn_f64(v);
     else if constexpr( cat == category::float64x2 ) return vrndnq_f64(v);

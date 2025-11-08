@@ -19,7 +19,12 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
+    {
+      return ceil.behavior(cpu_{}, o, a0);
+    }
+    else if constexpr(!O::contains(almost))
     {
       constexpr auto cat = categorize<wide<T, N>>();
       if constexpr( current_api >= asimd )
@@ -32,6 +37,6 @@ namespace eve::detail
       else return map(ceil, v);
     }
     else
-      return ceil_(EVE_TARGETS(cpu_), o, v);
+      return ceil.behavior(cpu_{}, o, v);
   }
 }
