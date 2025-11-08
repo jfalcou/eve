@@ -19,10 +19,10 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N>>();
-    if  constexpr (match(c, category::float16))
+    constexpr auto cat = categorize<wide<T, N>>();
+    if  constexpr (match(cat, category::float16))
     {
-      return trunc.behavior(cpu_{}, o, a0);
+      return floor.behavior(cpu_{}, o, a0);
     }
     else if constexpr(!O::contains(almost))
     {
