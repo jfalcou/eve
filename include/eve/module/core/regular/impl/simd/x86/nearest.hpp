@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     if  constexpr (match(c, category::float16))
     {
-      return trunc.behavior(cpu_{}, o, v);
+      return trunc.behavior(cpu_{}, o, a0);
     }
     else
     {
