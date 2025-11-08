@@ -22,7 +22,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
     if  constexpr (match(cat, category::float16))
     {
-      return floor.behavior(cpu_{}, o, a0);
+      return floor.behavior(cpu_{}, o, v);
     }
     else if constexpr(!O::contains(almost))
     {
