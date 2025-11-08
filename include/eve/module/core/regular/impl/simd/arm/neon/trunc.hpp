@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(neon128_),
                                     O          const& o,
                                     wide<T, N> const& v) noexcept
-  requires (arm_abi<abi_t<T, N>> && (izeof(T) >= 4))
+  requires (arm_abi<abi_t<T, N>> && (sizeof(T) >= 4))
   {
     constexpr auto c = categorize<wide<T, N>>();
     if  constexpr (match(c, category::float16))
