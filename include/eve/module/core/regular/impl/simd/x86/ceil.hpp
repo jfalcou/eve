@@ -52,14 +52,13 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-     constexpr auto c = categorize<wide<T, N>>();
+    constexpr auto c = categorize<wide<T, N>>();
     if  constexpr (match(c, category::float16))
     {
       return ceil[o][cx].retarget(cpu_{}, v);
     }
     else if constexpr(!O::contains(almost))
     {
-      constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
       if constexpr( C::is_complete )              return src;
