@@ -715,5 +715,16 @@ TTS_CASE("vext(x, y)")
   run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<14>);
 };
 
+// arm-sve --------------------------------------------
+
+// power-pc -------------------------------------------
+
+TTS_CASE("vec_splat")
+{
+  run<eve::neon, std::uint8_t, 16>([](int, int) { return 3; });
+  run<eve::neon, std::uint16_t, 8>([](int, int) { return 4; });
+  run<eve::neon, std::uint32_t, 4>([](int, int) { return 0; });
+  run<eve::neon, std::uint64_t, 2>([](int, int) { return 1; });
+};
 
 }
