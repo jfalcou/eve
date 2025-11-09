@@ -26,8 +26,8 @@ TTS_CASE_TPL("Check return types of ceil", eve::test::simd::all_types_wf16)
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EXPR_IS(eve::ceil(T(), eve::as<int>()), eve::as_integer_t<T, signed>);
-    TTS_EXPR_IS(eve::ceil(v_t(), eve::as<int>()), eve::as_integer_t<v_t, signed>);
+    TTS_EXPR_IS(eve::ceil(T(), eve::as<int>()), (eve::as_integer_t<T, signed>));
+    TTS_EXPR_IS(eve::ceil(v_t(), eve::as<int>()), (eve::as_integer_t<v_t, signed>));
     TTS_EXPR_IS(eve::ceil(T(), eve::as<unsigned int>()), (eve::as_integer_t<T, unsigned>));
     TTS_EXPR_IS(eve::ceil(v_t(), eve::as<unsigned int>()), (eve::as_integer_t<v_t, unsigned>));
     TTS_EXPR_IS(eve::ceil[eve::almost](T()), T);
