@@ -94,7 +94,7 @@ TTS_CASE_WITH("Check behavior of ceil(wide))",
     TTS_EQUAL(eve::ceil(a0, eve::as<int>()),
               wi_t([&](auto i, auto) { return i_t(eve::ceil(a0.get(i))); }));
     TTS_EQUAL(eve::ceil(eve::abs(a0), eve::as<unsigned int>()),
-              uwi_t([&](auto i, auto) { return ui_t(std::ceil(eve::abs(a0.get(i)))); }));
+              uwi_t([&](auto i, auto) { return ui_t(eve::ceil(eve::abs(a0.get(i)))); }));
   }
   else { TTS_EQUAL(eve::ceil(a0), a0); }
 };
