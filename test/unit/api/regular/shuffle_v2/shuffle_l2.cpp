@@ -775,6 +775,22 @@ TTS_CASE("svrevb/svrevh/svrevw")
   run_expected_cardinal<eve::sve, std::uint32_t>(reverse_in_group<2>);
 };
 
+TTS_CASE("svext(x, x)")
+{
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<1>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<2>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<3>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<4>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<7>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<8>);
+
+  constexpr int size = eve::expected_cardinal_v<std::uint8_t>;
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size - 3>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size / 2>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size - size / 4>);
+
+};
+
 // power-pc -------------------------------------------
 
 TTS_CASE("vec_splat")
