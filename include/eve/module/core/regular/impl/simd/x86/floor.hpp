@@ -26,6 +26,11 @@ namespace eve::detail
                                     wide<T, N>  const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
+    {
+      return floor.behavior(cpu_{}, o, a0);
+    }
     if constexpr(!O::contains(almost))
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -50,7 +55,12 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
+    {
+      return ceil[o][cx].retarget(cpu_{}, v);
+    }
+    else if constexpr(!O::contains(almost))
     {
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});
