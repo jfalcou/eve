@@ -574,4 +574,27 @@ TTS_CASE("_mm_alignr_epi32(x, y), _mm_alignr_epi64(x, y)")
 
 // arm-neon -------------------------------------------
 
+template <int by>
+constexpr auto rotate_pattern = [](int i, int size) {
+  return (i + by) % size;
+};
+
+TTS_CASE("vext(x, x)")
+{
+  run<eve::neon, std::uint8_t, 8>(rotate_pattern<1>);
+  run<eve::neon, std::uint8_t, 8>(rotate_pattern<2>);
+  run<eve::neon, std::uint8_t, 8>(rotate_pattern<3>);
+  run<eve::neon, std::uint8_t, 8>(rotate_pattern<4>);
+
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<1>);
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<2>);
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<3>);
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<4>);
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<7>);
+  run<eve::neon, std::uint8_t, 16>(rotate_pattern<8>);
+
+  run<eve::neon, std::uint32_t, 4>(eve::pattern<3, 0, 1, 2>);
+  run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 0>);
+};
+
 }
