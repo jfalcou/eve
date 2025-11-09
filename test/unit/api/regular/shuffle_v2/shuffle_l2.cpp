@@ -35,9 +35,9 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
-
 template <auto api, typename T, std::ptrdiff_t G = 1>
-void run_expected_cardinal(auto pattern) {
+void run_expected_cardinal(auto pattern)
+{
   run<api, T, eve::expected_cardinal_v<T>, G>(pattern);
 }
 
@@ -63,6 +63,12 @@ run2(auto pattern)
   else { TTS_PASS(); }
 }
 
+template <auto api, typename T, std::ptrdiff_t G = 1>
+void run2_expected_cardinal(auto pattern)
+{
+  run2<api, T, eve::expected_cardinal_v<T>, G>(pattern);
+}
+
 // named common patterns ------------------------------
 
 template <int by>
@@ -85,6 +91,13 @@ constexpr auto reverse_in_group = [](int i, int) {
   int in_group = i % g_size;
   return group_offset + g_size - in_group - 1;
 };
+
+auto blend_every_other = [](int i, int size)
+{
+  if( i % 2 ) return i + size;
+  return i;
+};
+
 
 // any api --------------------------------------------
 
@@ -410,12 +423,6 @@ TTS_CASE("_mm_blend_ps / _mm_blend_pd / _mm_mask_blend")
   run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 1, 2, 7>);
   run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 5, 2, 7>);
   run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<4, 5, 2, 7>);
-
-  auto blend_every_other = [](int i, int size)
-  {
-    if( i % 2 ) return i + size;
-    return i;
-  };
 
   run2<eve::avx512, std::uint8_t, 16>(blend_every_other);
   run2<eve::avx512, std::uint16_t, 8>(blend_every_other);
@@ -788,7 +795,29 @@ TTS_CASE("svext(x, x)")
   run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size - 3>);
   run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size / 2>);
   run_expected_cardinal<eve::sve, std::uint8_t>(rotate_pattern<size - size / 4>);
+};
 
+TTS_CASE("svsel")
+{
+  run2_expected_cardinal<eve::sve, std::uint8_t>(blend_every_other);
+  run2_expected_cardinal<eve::sve, std::uint16_t>(blend_every_other);
+  run2_expected_cardinal<eve::sve, std::uint32_t>(blend_every_other);
+  run2_expected_cardinal<eve::sve, std::uint64_t>(blend_every_other);
+};
+
+TTS_CASE("svext(x, y)")
+{
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<1>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<2>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<3>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<4>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<8>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<9>);
+
+  constexpr int size = eve::expected_cardinal_v<std::uint8_t>;
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<size - 3>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<size / 2>);
+  run2_expected_cardinal<eve::sve, std::uint8_t>(shift_2_pattern<size - size / 4>);
 };
 
 // power-pc -------------------------------------------
