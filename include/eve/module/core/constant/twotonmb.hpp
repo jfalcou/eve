@@ -16,12 +16,12 @@ namespace eve
   template<typename Options>
   struct twotonmb_t : constant_callable<twotonmb_t, Options, lower_option, upper_option>
   {
-    template<typename T, typename Opts>
+    template<floating_value T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      if      constexpr(std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x549e);
-      else if constexpr(std::same_as<T, float>)  return T(0x1p+23f);
-      else                                  return T(0x1p+52);
+      if      constexpr(std::same_as<T, eve::float16_t>) return detail::float16_from_bits(0x6400);
+      else if constexpr(std::same_as<T, float>)          return T(0x1p+23f);
+      else                                               return T(0x1p+52);
     }
 
     template<floating_value T>
