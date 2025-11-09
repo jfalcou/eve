@@ -33,8 +33,6 @@ namespace eve::detail
     }
     if constexpr(!O::contains(almost))
     {
-      constexpr auto c = categorize<wide<T, N>>();
-
       if constexpr( c == category::float64x8 ) return _mm512_roundscale_pd(a0, _MM_FROUND_FLOOR);
       else if constexpr( c == category::float32x16 ) return _mm512_roundscale_ps(a0, _MM_FROUND_FLOOR);
       else if constexpr( c == category::float64x4 ) return _mm256_round_pd(a0, _MM_FROUND_FLOOR);
