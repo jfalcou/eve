@@ -625,16 +625,16 @@ TTS_CASE("vext(x, x)")
 
 TTS_CASE("vcopy_lane(x, x)")
 {
-  run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 4, 2, 3, 4, 5, 6, 7>);
-  run<eve::neon, std::uint8_t, 16>([](int i, int) { return (i == 7) ? 2 : i; });
+  run<eve::asimd, std::uint8_t, 8>(eve::pattern<0, 4, 2, 3, 4, 5, 6, 7>);
+  run<eve::asimd, std::uint8_t, 16>([](int i, int) { return (i == 7) ? 2 : i; });
 
-  run<eve::neon, std::uint16_t, 4>(eve::pattern<3, 1, 2, 3>);
-  run<eve::neon, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, 4, 5, 5, 7>);
+  run<eve::asimd, std::uint16_t, 4>(eve::pattern<3, 1, 2, 3>);
+  run<eve::asimd, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, 4, 5, 5, 7>);
 
-  run<eve::neon, std::uint32_t, 2>(eve::pattern<1, 1>);
-  run<eve::neon, std::uint32_t, 4>(eve::pattern<2, 1, 2, 3>);
+  run<eve::asimd, std::uint32_t, 2>(eve::pattern<1, 1>);
+  run<eve::asimd, std::uint32_t, 4>(eve::pattern<2, 1, 2, 3>);
 
-  run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 1>);
+  run<eve::asimd, std::uint64_t, 2>(eve::pattern<1, 1>);
 };
 
 TTS_CASE("vset_lane(0)")
@@ -693,29 +693,29 @@ TTS_CASE("vdup_lane")
 {
   run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 0, 0, 0, 0, 0, 0, 0>);
   run<eve::neon, std::uint8_t, 8>(eve::pattern<5, 5, 5, 5, 5, 5, 5, 5>);
-  run<eve::neon, std::uint8_t, 16>([](int, int) { return 3; });
+  run<eve::asimd, std::uint8_t, 16>([](int, int) { return 3; });
 
   run<eve::neon, std::uint16_t, 4>(eve::pattern<1, 1, 1, 1>);
-  run<eve::neon, std::uint16_t, 8>(eve::pattern<2, 2, 2, 2, 2, 2, 2, 2>);
+  run<eve::asimd, std::uint16_t, 8>(eve::pattern<2, 2, 2, 2, 2, 2, 2, 2>);
 
   run<eve::neon, std::uint32_t, 2>(eve::pattern<1, 1>);
-  run<eve::neon, std::uint32_t, 4>(eve::pattern<3, 3, 3, 3>);
+  run<eve::asimd, std::uint32_t, 4>(eve::pattern<3, 3, 3, 3>);
 
-  run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 1>);
+  run<eve::asimd, std::uint64_t, 2>(eve::pattern<1, 1>);
 };
 
 TTS_CASE("vcopy_lane(x, y)")
 {
-  run2<eve::neon, std::uint8_t, 8>(eve::pattern<0, 1, 2, 3, 4, 13, 6, 7>);
-  run2<eve::neon, std::uint8_t, 16>([](int i, int size) { return (i == 2) ? i + size : i; });
+  run2<eve::asimd, std::uint8_t, 8>(eve::pattern<0, 1, 2, 3, 4, 13, 6, 7>);
+  run2<eve::asimd, std::uint8_t, 16>([](int i, int size) { return (i == 2) ? i + size : i; });
 
-  run2<eve::neon, std::uint16_t, 4>(eve::pattern<0, 1, 2, 7>);
-  run2<eve::neon, std::uint16_t, 8>(eve::pattern<0, 9, 2, 3, 4, 5, 6, 7>);
+  run2<eve::asimd, std::uint16_t, 4>(eve::pattern<0, 1, 2, 7>);
+  run2<eve::asimd, std::uint16_t, 8>(eve::pattern<0, 9, 2, 3, 4, 5, 6, 7>);
 
-  run2<eve::neon, std::uint32_t, 2>(eve::pattern<0, 3>);
-  run2<eve::neon, std::uint32_t, 4>(eve::pattern<4, 1, 2, 3>);
+  run2<eve::asimd, std::uint32_t, 2>(eve::pattern<0, 3>);
+  run2<eve::asimd, std::uint32_t, 4>(eve::pattern<4, 1, 2, 3>);
 
-  run2<eve::neon, std::uint64_t, 2>(eve::pattern<2, 1>);
+  run2<eve::asimd, std::uint64_t, 2>(eve::pattern<2, 1>);
 };
 
 TTS_CASE("vext(x, y)")
@@ -824,10 +824,10 @@ TTS_CASE("svext(x, y)")
 
 TTS_CASE("vec_splat")
 {
-  run<eve::neon, std::uint8_t, 16>([](int, int) { return 3; });
-  run<eve::neon, std::uint16_t, 8>([](int, int) { return 4; });
-  run<eve::neon, std::uint32_t, 4>([](int, int) { return 0; });
-  run<eve::neon, std::uint64_t, 2>([](int, int) { return 1; });
+  run<eve::vmx, std::uint8_t, 16>([](int, int) { return 3; });
+  run<eve::vmx, std::uint16_t, 8>([](int, int) { return 4; });
+  run<eve::vmx, std::uint32_t, 4>([](int, int) { return 0; });
+  run<eve::vmx, std::uint64_t, 2>([](int, int) { return 1; });
 };
 
 }
