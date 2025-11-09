@@ -10,8 +10,8 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/is_ltz.hpp>
-#include <eve/module/core/regular/is_positive.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
+#include <eve/module/core/regular/is_eqmz.hpp>
 
 namespace eve
 {
@@ -32,7 +32,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_nemz
-//!   @brief `elementwise callable` returning a logical true  if and only if a "negative" zero.
+//!   @brief `elementwise callable` returning a logical true unless the element value is a floating
+//!          zero with its sign bit set (`mzero`) or a NaN.
 //!
 //!   @groupheader{Header file}
 //!
@@ -62,7 +63,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. `is_nemz(x)` is semantically equivalent to bitwise equality to `mzero(as(x))`.
+//!     1. `is_nemz(x)` is semantically equivalent to `is_nan(x) || !is_eqmz(x)`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
@@ -76,13 +77,9 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_nemz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_nemz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      if constexpr(integral_value<T>)
-        return false_(as<T>());
-      else
-        return logical_or(is_positive(a), is_ltz(a));
+      return logical_not(is_eqmz(a));
     }
   }
 }

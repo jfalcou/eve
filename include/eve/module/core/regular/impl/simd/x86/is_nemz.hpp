@@ -10,14 +10,13 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/detail/flags.hpp>
 
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_nemz_(EVE_REQUIRES(avx512_),
-                                               O          const &,
+                                               O          const &opts,
                                                wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -33,5 +32,12 @@ namespace eve::detail
     else if constexpr( c == category::float32x16) return ~s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return ~s_t {_mm256_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};
+    else if constexpr (match(c, category::float16))
+    {
+      if      constexpr(!detail::supports_fp16_vector_ops) return is_nemz.behavior(cpu_{}, opts, a);
+      else if constexpr( c == category::float16x32 )       return ~s_t {_mm512_fpclass_ph_mask(a, f)};
+      else if constexpr( c == category::float16x16 )       return ~s_t {_mm256_fpclass_ph_mask(a, f)};
+      else if constexpr( c == category::float16x8  )       return ~s_t {_mm_fpclass_ph_mask(a, f)};
+    }
   }
 }

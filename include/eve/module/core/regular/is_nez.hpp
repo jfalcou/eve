@@ -10,6 +10,8 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 
 namespace eve
 {
@@ -77,7 +79,8 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_nez_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return detail::to_logical(a);
+      if constexpr (std::same_as<element_type_t<T>, eve::float16_t>) return logical_not(is_eqz(a));
+      else                                                           return detail::to_logical(a);
     }
   }
 }

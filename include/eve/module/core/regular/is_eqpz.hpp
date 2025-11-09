@@ -34,8 +34,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_eqpz
-//!   @brief `elementwise callable` returning a logical true  if and only if the element value
-//!    is a floating zero with signbit unset.
+//!   @brief `elementwise callable` returning a logical true if and only if the element value
+//!    is a floating zero with its sign bit unset.
 //!
 //!   @groupheader{Header file}
 //!
