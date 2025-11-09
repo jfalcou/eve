@@ -611,4 +611,18 @@ TTS_CASE("vcopy_lane(x, x)")
   run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 1>);
 };
 
+TTS_CASE("vset_lane(0)")
+{
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 1, 2, 3, 4, na_, 6, 7>);
+  run<eve::neon, std::uint8_t, 16>([](int i, int) { return (i == 4) ? na_ : i; });
+
+  run<eve::neon, std::uint16_t, 4>(eve::pattern<0, 1, 2, na_>);
+  run<eve::neon, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, 4, 5, na_, 7>);
+
+  run<eve::neon, std::uint32_t, 2>(eve::pattern<0, na_>);
+  run<eve::neon, std::uint32_t, 4>(eve::pattern<na_, 1, 2, 3>);
+
+  run<eve::neon, std::uint64_t, 2>(eve::pattern<na_, 1>);
+};
+
 }
