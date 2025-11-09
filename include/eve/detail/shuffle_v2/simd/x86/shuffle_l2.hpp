@@ -495,7 +495,7 @@ shuffle_l2_x86_alignr_epi32(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::g_size < 4 ) return no_matching_shuffle;
   else if constexpr( current_api < avx512 ) return no_matching_shuffle;
-  else if constexpr( constexpr auto starts_from = idxm::is_in_order(P::idxs_no_na); !starts_from )
+  else if constexpr( constexpr auto starts_from = idxm::is_in_order(P::idxs); !starts_from )
   {
     return no_matching_shuffle;
   }
@@ -509,7 +509,7 @@ shuffle_l2_x86_alignr_epi32(P, fixed<G>, wide<T, N> x, wide<T, N> y)
     if constexpr( P::reg_size == 32 )
     {
       if constexpr( P::g_size >= 8 ) return _mm256_alignr_epi64(y, x, shift_epi64);
-      else return _mm256_alignr_epi64(y, x, shift_epi32);
+      else return _mm256_alignr_epi32(y, x, shift_epi32);
     }
     else
     {

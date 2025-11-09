@@ -47,7 +47,7 @@ verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
     return false;
   }();
 
-  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p
+  TTS_EXPECT(!has_failures) << "sizeof(wide): " << sizeof(T) << " G: " << G << "\npattern: " << p
                             << "\nactual:  " << shuffled;
 }
 
