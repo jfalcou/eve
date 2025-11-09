@@ -48,9 +48,9 @@ template<typename P, typename T, typename N, std::ptrdiff_t G>
 auto
 shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
 {
-  constexpr std::ptrdiff_t reverse_size = P::most_repeated_no_zeroes.size() * P::g_size;
+  constexpr std::ptrdiff_t reverse_size = P::most_repeated.size() * P::g_size;
   if constexpr( reverse_size > 8 ) return no_matching_shuffle;
-  else if constexpr( !idxm::is_reverse(P::most_repeated_no_zeroes) ) return no_matching_shuffle;
+  else if constexpr( !idxm::is_reverse(P::most_repeated) ) return no_matching_shuffle;
   else
   {
     auto x  = up_element_size_to(_x, eve::lane<reverse_size>);

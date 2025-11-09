@@ -75,6 +75,16 @@ constexpr auto rotate_pattern = [](int i, int size) {
   return (i + by) % size;
 };
 
+constexpr auto reverse_everithing = [](int i, int size) {
+  return size - i - 1;
+};
+
+template <int g_size>
+constexpr auto reverse_in_group = [](int i, int) {
+  int group_offset = i / g_size * g_size;
+  int in_group = i % g_size;
+  return group_offset + g_size - in_group - 1;
+};
 
 // any api --------------------------------------------
 
@@ -738,28 +748,32 @@ TTS_CASE("svdup_lane")
   run_expected_cardinal<eve::sve, std::uint64_t>([](int, int size) { return size - 1; });
 };
 
-template <int g_size>
-constexpr auto reverse_in_group = [](int i, int) {
-  int group_offset = i / g_size * g_size;
-  int in_group = i % g_size;
-  return group_offset + g_size - in_group - 1;
+TTS_CASE("svrev/svrev_b")
+{
+  run_expected_cardinal<eve::sve, std::uint8_t>(reverse_everithing);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_everithing);
+
+  run_expected_cardinal<eve::sve, std::uint16_t>(reverse_everithing);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint16_t>>(reverse_everithing);
+
+  run_expected_cardinal<eve::sve, std::uint32_t>(reverse_everithing);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint32_t>>(reverse_everithing);
+
+  run_expected_cardinal<eve::sve, std::uint64_t>(reverse_everithing);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint64_t>>(reverse_everithing);
 };
 
-TTS_CASE("svrev")
+TTS_CASE("svrevb/svrevh/svrevw")
 {
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<8>);
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<4>);
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<2>);
-  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<8>);
-  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<4>);
-  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<2>);
 
   run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<4>);
   run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<2>);
 
   run_expected_cardinal<eve::sve, std::uint32_t>(reverse_in_group<2>);
 };
-
 
 // power-pc -------------------------------------------
 

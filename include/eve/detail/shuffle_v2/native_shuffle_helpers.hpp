@@ -82,7 +82,6 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr bool has_zeroes = idxm::has_zeroes(idxs);
 
   static constexpr std::array most_repeated           = idxm::most_repeated_pattern<I...>;
-  static constexpr std::array most_repeated_no_zeroes = idxm::replace_na(most_repeated, we_);
 
   static constexpr auto repeated_8  = idxm::repeated_pattern_of_size<8 / g_size, I...>;
   static constexpr auto repeated_16 = idxm::repeated_pattern_of_size<16 / g_size, I...>;
