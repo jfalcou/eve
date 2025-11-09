@@ -57,6 +57,19 @@ run2(auto pattern)
   else { TTS_PASS(); }
 }
 
+// named common patterns ------------------------------
+
+template <int by>
+constexpr auto shift_2_pattern = [](int i, int) {
+  return i + by;
+};
+
+template <int by>
+constexpr auto rotate_pattern = [](int i, int size) {
+  return (i + by) % size;
+};
+
+
 // any api --------------------------------------------
 
 TTS_CASE("int <<, >>")
@@ -542,11 +555,6 @@ TTS_CASE("_mm_permute2f128_si256(x, y) / _mm_shuffle_i64x2(x, y)")
   run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<3, 1, 5, 6>);
 };
 
-template <int by>
-constexpr auto shift_2_pattern = [](int i, int) {
-  return i + by;
-};
-
 TTS_CASE("_mm_alignr_epi32(x, y), _mm_alignr_epi64(x, y)")
 {
   // [0, 1, 2, 3][4, 5, 6, 7]
@@ -573,11 +581,6 @@ TTS_CASE("_mm_alignr_epi32(x, y), _mm_alignr_epi64(x, y)")
 };
 
 // arm-neon -------------------------------------------
-
-template <int by>
-constexpr auto rotate_pattern = [](int i, int size) {
-  return (i + by) % size;
-};
 
 TTS_CASE("vext(x, x)")
 {
@@ -690,6 +693,26 @@ TTS_CASE("vcopy_lane(x, y)")
   run2<eve::neon, std::uint32_t, 4>(eve::pattern<4, 1, 2, 3>);
 
   run2<eve::neon, std::uint64_t, 2>(eve::pattern<2, 1>);
+};
+
+TTS_CASE("vext(x, y)")
+{
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<1>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<2>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<3>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<4>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<5>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<6>);
+  run2<eve::neon, std::uint8_t, 8>(shift_2_pattern<7>);
+
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<1>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<2>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<3>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<4>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<5>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<8>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<13>);
+  run2<eve::neon, std::uint8_t, 16>(shift_2_pattern<14>);
 };
 
 
