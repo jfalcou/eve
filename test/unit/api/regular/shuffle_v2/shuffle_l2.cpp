@@ -678,5 +678,19 @@ TTS_CASE("vdup_lane")
   run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 1>);
 };
 
+TTS_CASE("vcopy_lane(x, y)")
+{
+  run2<eve::neon, std::uint8_t, 8>(eve::pattern<0, 1, 2, 3, 4, 13, 6, 7>);
+  run2<eve::neon, std::uint8_t, 16>([](int i, int size) { return (i == 2) ? i + size : i; });
+
+  run2<eve::neon, std::uint16_t, 4>(eve::pattern<0, 1, 2, 7>);
+  run2<eve::neon, std::uint16_t, 8>(eve::pattern<0, 9, 2, 3, 4, 5, 6, 7>);
+
+  run2<eve::neon, std::uint32_t, 2>(eve::pattern<0, 3>);
+  run2<eve::neon, std::uint32_t, 4>(eve::pattern<4, 1, 2, 3>);
+
+  run2<eve::neon, std::uint64_t, 2>(eve::pattern<2, 1>);
+};
+
 
 }
