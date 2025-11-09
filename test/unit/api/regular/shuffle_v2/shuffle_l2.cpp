@@ -738,6 +738,26 @@ TTS_CASE("svdup_lane")
   run_expected_cardinal<eve::sve, std::uint64_t>([](int, int size) { return size - 1; });
 };
 
+template <int g_size>
+constexpr auto reverse_in_group = [](int i, int) {
+  int group_offset = i / g_size * g_size;
+  int in_group = i % g_size;
+  return group_offset + g_size - in_group - 1;
+};
+
+TTS_CASE("svrev")
+{
+  run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<8>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<4>);
+  run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<2>);
+
+  run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<4>);
+  run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<2>);
+
+  run_expected_cardinal<eve::sve, std::uint32_t>(reverse_in_group<2>);
+};
+
+
 // power-pc -------------------------------------------
 
 TTS_CASE("vec_splat")
