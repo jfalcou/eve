@@ -35,6 +35,12 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
+
+template <auto api, typename T, std::ptrdiff_t G = 1>
+void run_expected_cardinal(auto pattern) {
+  run<api, T, eve::expected_cardinal_v<T>, G>(pattern);
+}
+
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
 void
 run2_any_api(eve::pattern_t<I...> p)
@@ -716,6 +722,21 @@ TTS_CASE("vext(x, y)")
 };
 
 // arm-sve --------------------------------------------
+
+TTS_CASE("svdup_lane")
+{
+  run_expected_cardinal<eve::sve, std::uint8_t>([](int, int) { return 3; });
+  run_expected_cardinal<eve::sve, std::uint8_t>([](int, int size) { return size - 5; });
+
+  run_expected_cardinal<eve::sve, std::uint16_t>([](int, int) { return 2; });
+  run_expected_cardinal<eve::sve, std::uint16_t>([](int, int size) { return size - 1; });
+
+  run_expected_cardinal<eve::sve, std::uint32_t>([](int, int) { return 0; });
+  run_expected_cardinal<eve::sve, std::uint32_t>([](int, int size) { return size - 4; });
+
+  run_expected_cardinal<eve::sve, std::uint64_t>([](int, int) { return 1; });
+  run_expected_cardinal<eve::sve, std::uint64_t>([](int, int size) { return size - 1; });
+};
 
 // power-pc -------------------------------------------
 
