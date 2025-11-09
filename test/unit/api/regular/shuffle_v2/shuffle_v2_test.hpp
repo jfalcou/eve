@@ -48,7 +48,8 @@ verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
   }();
 
   TTS_EXPECT(!has_failures) << "sizeof(wide): " << sizeof(T) << " G: " << G << "\npattern: " << p
-                            << "\nactual:  " << shuffled;
+                            << "\nactual:  " << shuffled
+                            << "\ninput: " << x;
 }
 
 template<typename T, std::ptrdiff_t... I>
@@ -100,9 +101,16 @@ template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::wide<T, eve::fixed<N>>;
+  using Wide = eve::as_wide_t<T, eve::fixed<N>>;
 
-  Wide input {[](int i, int) { return i + 1; }};
+  Wide input;
+
+  if constexpr (eve::logical_value<T>) {
+    input = Wide{[](int i, int) { return std::countl_zero((unsigned)i) & 1; }};
+  } else {
+    input = Wide{[](int i, int) { return i + 1; }};
+  }
+
   run_one_case(expected_level(std::array {I...}), input, eve::lane<G>, p);
 }
 
@@ -110,9 +118,16 @@ template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run2(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::wide<T, eve::fixed<N * 2>>;
+  using Wide = eve::as_wide_t<T, eve::fixed<N * 2>>;
 
-  Wide input {[](int i, int) { return i + 1; }};
+  Wide input;
+
+  if constexpr (eve::logical_value<T>) {
+    input = Wide{[](int i, int) { return std::countl_zero((unsigned)i) & 1; }};
+  } else {
+    input = Wide{[](int i, int) { return i + 1; }};
+  }
+
   auto xy = input.slice();
   auto x  = get<0>(xy);
   auto y  = get<1>(xy);

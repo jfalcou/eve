@@ -750,6 +750,9 @@ TTS_CASE("svrev")
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<8>);
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<4>);
   run_expected_cardinal<eve::sve, std::uint8_t>(reverse_in_group<2>);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<8>);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<4>);
+  run_expected_cardinal<eve::sve, eve::logical<std::uint8_t>>(reverse_in_group<2>);
 
   run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<4>);
   run_expected_cardinal<eve::sve, std::uint16_t>(reverse_in_group<2>);
