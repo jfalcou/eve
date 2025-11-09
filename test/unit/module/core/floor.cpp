@@ -47,7 +47,7 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals_wf16)
   TTS_EQUAL(eve::floor(static_cast<T>(1.5)), T(1));
   TTS_EQUAL(eve::floor(static_cast<T>(1.6)), T(1));
 
-  if constexpr(sizeof(eve::element_type_t<T>) == 2)
+  if constexpr(sizeof(eve::element_type_t<T>) >  2)
   {
     TTS_EQUAL(eve::floor[eve::almost](static_cast<T>(-1.3)), T(-2));
     TTS_EQUAL(eve::floor[eve::almost](static_cast<T>(-1.5)), T(-2));
