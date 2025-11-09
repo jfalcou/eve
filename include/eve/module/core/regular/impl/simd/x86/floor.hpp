@@ -60,7 +60,6 @@ namespace eve::detail
     }
     else if constexpr(!O::contains(almost))
     {
-      constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
