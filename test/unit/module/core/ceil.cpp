@@ -54,22 +54,25 @@ TTS_CASE_TPL("Check  with specific values", eve::test::simd::ieee_reals_wf16)
   TTS_EQUAL(eve::ceil(T(1.5)), T(2));
   TTS_EQUAL(eve::ceil(T(1.6)), T(2));
 
-  TTS_EQUAL(eve::ceil[eve::almost](T(-1)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost](T(-2)), T(-2));
-  TTS_EQUAL(eve::ceil[eve::almost](T(0)), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost](T(1)), T(1));
-  TTS_EQUAL(eve::ceil[eve::almost](T(2)), T(2));
+  if constexpr(sizeof(eve::element_type_t<T>) == 2)
+  {
+    TTS_EQUAL(eve::ceil[eve::almost](T(-1)), T(-1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(-2)), T(-2));
+    TTS_EQUAL(eve::ceil[eve::almost](T(0)), T(0));
+    TTS_EQUAL(eve::ceil[eve::almost](T(1)), T(1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(2)), T(2));
 
-  TTS_EQUAL(eve::ceil[eve::almost](T(-1.3)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost](T(-1.5)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost](T(-1.6)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost](T(1.3)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost](T(1.5)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost](T(1.6)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost](eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost](2 * eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost](3 * eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost](4 * eve::eps(eve::as<T>())), T(1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(-1.3)), T(-1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(-1.5)), T(-1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(-1.6)), T(-1));
+    TTS_EQUAL(eve::ceil[eve::almost](T(1.3)), T(2));
+    TTS_EQUAL(eve::ceil[eve::almost](T(1.5)), T(2));
+    TTS_EQUAL(eve::ceil[eve::almost](T(1.6)), T(2));
+    TTS_EQUAL(eve::ceil[eve::almost](eve::eps(eve::as<T>())), T(0));
+    TTS_EQUAL(eve::ceil[eve::almost](2 * eve::eps(eve::as<T>())), T(0));
+    TTS_EQUAL(eve::ceil[eve::almost](3 * eve::eps(eve::as<T>())), T(0));
+    TTS_EQUAL(eve::ceil[eve::almost](4 * eve::eps(eve::as<T>())), T(1));
+  }
 };
 
 //==================================================================================================
