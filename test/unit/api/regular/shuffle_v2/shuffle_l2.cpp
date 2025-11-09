@@ -625,7 +625,7 @@ TTS_CASE("vset_lane(0)")
   run<eve::neon, std::uint64_t, 2>(eve::pattern<na_, 1>);
 };
 
-TTS_CASE("vrev(x)")
+TTS_CASE("vrev")
 {
   // 8 bytes
   run<eve::neon, std::uint8_t, 8>(eve::pattern<7, 6, 5, 4, 3, 2, 1, 0>);
@@ -662,5 +662,21 @@ TTS_CASE("vrev(x)")
 
   run<eve::neon, std::uint32_t, 4>(eve::pattern<1, 0, 3, 2>);
 };
+
+TTS_CASE("vdup_lane")
+{
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 0, 0, 0, 0, 0, 0, 0>);
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<5, 5, 5, 5, 5, 5, 5, 5>);
+  run<eve::neon, std::uint8_t, 16>([](int, int) { return 3; });
+
+  run<eve::neon, std::uint16_t, 4>(eve::pattern<1, 1, 1, 1>);
+  run<eve::neon, std::uint16_t, 8>(eve::pattern<2, 2, 2, 2, 2, 2, 2, 2>);
+
+  run<eve::neon, std::uint32_t, 2>(eve::pattern<1, 1>);
+  run<eve::neon, std::uint32_t, 4>(eve::pattern<3, 3, 3, 3>);
+
+  run<eve::neon, std::uint64_t, 2>(eve::pattern<1, 1>);
+};
+
 
 }
