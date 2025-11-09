@@ -13,47 +13,47 @@ using eve::na_;
 
 auto return2 = [](auto...) { return 2; };
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t... I>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
 void
 run_any_api(eve::pattern_t<I...> p)
 {
-  shuffle_test::run<T, N, 1>(return2, p);
+  shuffle_test::run<T, N, G>(return2, p);
 }
 
-template<typename T, std::ptrdiff_t N>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
 void
 run_any_api(eve::pattern_formula auto formula)
 {
-  run_any_api<T, N>(eve::fix_pattern<N>(formula));
+  run_any_api<T, N, G>(eve::fix_pattern<N>(formula));
 }
 
-template<auto api, typename T, std::ptrdiff_t N>
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
 void
 run(auto pattern)
 {
-  if constexpr( eve::current_api >= api ) { run_any_api<T, N>(pattern); }
+  if constexpr( eve::current_api >= api ) { run_any_api<T, N, G>(pattern); }
   else { TTS_PASS(); }
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t... I>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
 void
 run2_any_api(eve::pattern_t<I...> p)
 {
-  shuffle_test::run2<T, N, 1>(return2, p);
+  shuffle_test::run2<T, N, G>(return2, p);
 }
 
-template<typename T, std::ptrdiff_t N>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
 void
 run2_any_api(eve::pattern_formula auto formula)
 {
-  run2_any_api<T, N>(eve::fix_pattern<N>(formula));
+  run2_any_api<T, N, G>(eve::fix_pattern<N>(formula));
 }
 
-template<auto api, typename T, std::ptrdiff_t N>
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
 void
 run2(auto pattern)
 {
-  if constexpr( eve::current_api >= api ) { run2_any_api<T, N>(pattern); }
+  if constexpr( eve::current_api >= api ) { run2_any_api<T, N, G>(pattern); }
   else { TTS_PASS(); }
 }
 
@@ -520,6 +520,22 @@ TTS_CASE("_mm_shuffle_pd(x, y)")
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 8, 2, 11, 4, 12, 6, 15>);
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 9, 2, 10, 5, 13, 6, 15>);
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 8, 3, 10, 4, 13, 7, 14>);
+};
+
+TTS_CASE("_mm256_permute2f128_si256(x, y) / _mm512_shuffle_i64x2(x, y)")
+{
+  // [0, 1] [2, 3]
+  run2<eve::avx, std::uint64_t, 4, /*G*/ 2>(eve::pattern<0, 2>);
+  run2<eve::avx, std::uint64_t, 4, /*G*/ 2>(eve::pattern<1, 2>);
+  run2<eve::avx, std::uint64_t, 4, /*G*/ 2>(eve::pattern<0, 3>);
+  run2<eve::avx, std::uint64_t, 4, /*G*/ 2>(eve::pattern<1, 3>);
+
+  // [0, 1, 2, 3][4, 5, 6, 7] -> first half from x, second half is from y
+  run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<0, 0, 4, 5>);
+  run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<2, 2, 4, 5>);
+  run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<1, 2, 7, 4>);
+  run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<3, 0, 6, 5>);
+  run2<eve::avx512, std::uint64_t, 8, /*G*/ 2>(eve::pattern<3, 1, 5, 6>);
 };
 
 }

@@ -461,7 +461,6 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_shuffle_i32x4(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
-  // the _mm256_maskz_shuffle_i32x4 is not supported yet.
   if constexpr( sizeof(T) < 4 || P::reg_size < 64 ) return no_matching_shuffle;
   else if constexpr( constexpr auto m = idxm::mm512_shuffle_i64x2_idx(P::idxs); !m )
   {
