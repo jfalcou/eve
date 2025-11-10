@@ -33,6 +33,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
       else if constexpr( c == category::float64x2 ) return _mm_round_pd(a0, _MM_FROUND_TO_ZERO);
       else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
+      else return trunc.behavior(cpu_{}, o, a0);
     }
     else
       return trunc.behavior(cpu_{}, o, a0);
@@ -53,6 +54,10 @@ namespace eve::detail
 
     if constexpr( C::is_complete )
       return src;
+    else if constexpr (match(c, category::float16))
+    {
+      return trunc[o][mask].retarget(cpu_{}, v);
+    }
     else if  constexpr(!O::contains(almost))
     {
       if constexpr( c == category::float32x16 )
