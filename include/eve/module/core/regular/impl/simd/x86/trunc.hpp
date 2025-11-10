@@ -56,7 +56,7 @@ namespace eve::detail
       return src;
     else if constexpr (match(c, category::float16))
     {
-      return trunc[o][mask].retarget(cpu_{}, v);
+      return trunc[o][cx].retarget(cpu_{}, v);
     }
     else if  constexpr(!O::contains(almost))
     {
