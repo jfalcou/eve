@@ -30,6 +30,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x16) return _mm512_scalef_ps(a0, a1);
       else if constexpr( c == category::float32x8 ) return _mm256_scalef_ps(a0, a1);
       else if constexpr( c == category::float32x4 ) return _mm_scalef_ps(a0, a1);
+      else return ldexp.behavior(cpu_{}, opts, a0, a1);
     }
   }
 
@@ -51,6 +52,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x16) return _mm512_mask_scalef_ps(src, m, a0, a1);
       else if constexpr( c == category::float32x8 ) return _mm256_mask_scalef_ps(src, m, a0, a1);
       else if constexpr( c == category::float32x4 ) return _mm_mask_scalef_ps   (src, m, a0, a1);
+      else return ldexp.behavior(cpu_{}, opts, a0, a1);
     }
   }
 }
