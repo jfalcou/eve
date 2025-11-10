@@ -247,6 +247,7 @@ namespace eve::test::scalar
   using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
+  using integers_wf16     = ::tts::concatenate_t<::tts::integral_types, ::tts::types<eve::float16_t>>;
   using all_types         = ::tts::arithmetic_types;
   using all_types_wf16    = ::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
 }
@@ -261,6 +262,7 @@ namespace eve::test::simd
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
+  using integers_wf16     = eve::test::wides<eve::test::scalar::integers_wf16>::type;
   using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
   using all_types_wf16    = eve::test::wides<eve::test::scalar::all_types_wf16>::type;
 }
