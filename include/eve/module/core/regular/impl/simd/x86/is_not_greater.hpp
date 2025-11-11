@@ -14,6 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 #include <type_traits>
 
@@ -36,10 +37,17 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( current_api >= eve::avx512 )
-      {
-        using s_t = typename l_t::storage_type;
+      using s_t = typename l_t::storage_type;
 
+      if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_not_greater, a, b);
+        else if constexpr (c == category::float16x8)  return s_t{ _mm_cmp_ph_mask(a, b, m) };
+        else if constexpr (c == category::float16x16) return s_t{ _mm256_cmp_ph_mask(a, b, m) };
+        else if constexpr (c == category::float16x32) return s_t{ _mm512_cmp_ph_mask(a, b, m) };
+      }
+      else if constexpr( current_api >= eve::avx512 )
+      {
         if      constexpr( c == category::float64x8 ) return s_t {_mm512_cmp_pd_mask(a, b, m)};
         else if constexpr( c == category::float64x4 ) return s_t {_mm256_cmp_pd_mask(a, b, m)};
         else if constexpr( c == category::float64x2 ) return s_t {_mm_cmp_pd_mask(a, b, m)};
@@ -76,6 +84,13 @@ namespace eve::detail
       constexpr auto        f = to_integer(cmp_flt::ngt_uq);
 
       if      constexpr( C::is_complete )            return s;
+      else if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_not_greater, mask, v, w);
+        else if constexpr (c == category::float16x8)          return mask8 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
+        else if constexpr (c == category::float16x16)         return mask16 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
+        else if constexpr (c == category::float16x32)         return mask32 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
+      }
       else if constexpr( c == category::float32x16)  return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
       else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
       else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
