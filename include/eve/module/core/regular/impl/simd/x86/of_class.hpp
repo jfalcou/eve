@@ -37,8 +37,10 @@ namespace eve::detail
     else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
     {
       constexpr auto using_bit_manip = (eve::poszero | eve::negzero | eve::posinf | eve::neginf).value;
+      constexpr auto only_bit_manip = (I & ~using_bit_manip) == 0;
+      constexpr auto prevents_upscale = (I & eve::denorm.value) != 0;
 
-      if constexpr ((I & ~using_bit_manip) == 0)
+      if constexpr (only_bit_manip || prevents_upscale)
       {
         return of_class.behavior(cpu_{}, opts, a, cls);
       }
