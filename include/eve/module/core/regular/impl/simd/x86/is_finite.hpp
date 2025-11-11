@@ -17,7 +17,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_finite_(EVE_REQUIRES(avx512_),
-                                                 O          const & o,
+                                                 O          const &o,
                                                  wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -40,5 +40,6 @@ namespace eve::detail
       else if constexpr( c == category::float16x16 )         return ~s_t {_mm256_fpclass_ph_mask(a, f)};
       else if constexpr( c == category::float16x8  )         return ~s_t {_mm_fpclass_ph_mask(a, f)};
     }
+    else return is_finite.behavior(cpu_{}, o, a);
   }
 }
