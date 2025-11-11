@@ -14,26 +14,6 @@ namespace eve::detail
 
 template<typename T, typename N, std::ptrdiff_t S>
 EVE_FORCEINLINE auto
-vshl_n(eve::wide<T, N> x, eve::index_t<S>)
-{
-  if constexpr( sizeof(T) == 8 && N() == 1 ) return vshl_n_u64(x, S);
-  else if constexpr( sizeof(T) == 4 && N() == 2 ) return vshl_n_u32(x, S);
-  else if constexpr( sizeof(T) == 2 && N() == 4 ) return vshl_n_u16(x, S);
-  else if constexpr( sizeof(T) == 1 && N() == 8 ) return vshl_n_u8(x, S);
-}
-
-template<typename T, typename N, std::ptrdiff_t S>
-EVE_FORCEINLINE auto
-vshr_n(eve::wide<T, N> x, eve::index_t<S>)
-{
-  if constexpr( sizeof(T) == 8 && N() == 1 ) return vshr_n_u64(x, S);
-  else if constexpr( sizeof(T) == 4 && N() == 2 ) return vshr_n_u32(x, S);
-  else if constexpr( sizeof(T) == 2 && N() == 4 ) return vshr_n_u16(x, S);
-  else if constexpr( sizeof(T) == 1 && N() == 8 ) return vshr_n_u8(x, S);
-}
-
-template<typename T, typename N, std::ptrdiff_t S>
-EVE_FORCEINLINE auto
 vext(eve::wide<T, N> x, eve::wide<T, N> y, eve::index_t<S>)
 {
   if constexpr( sizeof(T) * N() == 8 )
@@ -72,14 +52,6 @@ vcopy_lane(eve::wide<T, N> x, eve::index_t<To>, eve::wide<T, N> y, eve::index_t<
   }
 }
 
-// struct
-// {
-//   template<std::ptrdiff_t S> EVE_FORCEINLINE auto operator()(auto x, eve::index_t<S>) const
-//   {
-//     if constexpr( S < 0 ) return vshr_n(x, eve::index<-S>);
-//     else return vshl_n(x, eve::index<S>);
-//   }
-// } inline constexpr neon_shift_by_const;
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
