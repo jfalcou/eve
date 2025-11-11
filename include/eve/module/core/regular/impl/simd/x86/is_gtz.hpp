@@ -16,7 +16,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_gtz_(EVE_REQUIRES(avx512_),
-                                              O          const &opts,
+                                              O          const &,
                                               wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
