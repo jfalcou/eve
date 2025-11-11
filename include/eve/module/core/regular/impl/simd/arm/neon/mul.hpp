@@ -11,6 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {

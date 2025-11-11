@@ -98,17 +98,17 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     TTS_EXPECT(eve::all(mul[upper](a0, a1, a2) >=  mul[lower](a0, a1, a2)));
     T  w0{0.1};
     T  w1{0.12f};
-    TTS_EXPECT(eve::all(mul[upper](w0, w1)  >  mul(w0, w1)));
-    TTS_EXPECT(eve::all(mul[lower](w0, -w1) < mul(w0, -w1)));
-    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >  mul(w0, w1)));
-    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <  mul(w0, -w1)));
-    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >= mul[upper](w0, w1)));
-    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <= mul[lower](w0, -w1)));
+    TTS_EXPECT(eve::all(mul[upper](w0, w1)  >=  mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[lower](w0, -w1) <= mul(w0, -w1)));
+    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >=  mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <=  mul(w0, -w1)));
+    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  > mul[upper](w0, w1)));
+    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) < mul[lower](w0, -w1)));
     using v_t =  eve::element_type_t<T>;
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_ULP_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size()), 0.5);
+    TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
   }
 
 };

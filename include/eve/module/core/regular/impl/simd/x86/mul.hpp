@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
