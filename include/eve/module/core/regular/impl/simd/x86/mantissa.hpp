@@ -22,7 +22,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> mantissa_(EVE_REQUIRES(avx512_),
-                                       O          const&,
+                                       O          const&o,
                                        wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -30,18 +30,18 @@ namespace eve::detail
     constexpr auto        c = categorize<r_t>();
     constexpr auto interval = _MM_MANT_NORM_1_2;
     constexpr auto sign     = _MM_MANT_SIGN_src;
-
-    r_t r;
-    if      constexpr( c == category::float32x16) r = _mm512_getmant_ps(a0, interval, sign);
-    else if constexpr( c == category::float64x8 ) r = _mm512_getmant_pd(a0, interval, sign);
-    else if constexpr( c == category::float64x4 ) r = _mm256_getmant_pd(a0, interval, sign);
-    else if constexpr( c == category::float32x8 ) r = _mm256_getmant_ps(a0, interval, sign);
-    else if constexpr( c == category::float64x2 ) r = _mm_getmant_pd(a0, interval, sign);
-    else if constexpr( c == category::float32x4 ) r = _mm_getmant_ps(a0, interval, sign);
-    if constexpr(O::contains(raw))
-      return r;
+    auto gl = [a0](auto aa0){return if_else(is_nan(a0)||is_eqz(a0), a0, aa0);};
+    if      constexpr( c == category::float32x16) return gl(r_t(_mm512_getmant_ps(a0, interval, sign)));
+    else if constexpr( c == category::float64x8 ) return gl(r_t(_mm512_getmant_pd(a0, interval, sign)));
+    else if constexpr( c == category::float64x4 ) return gl(r_t(_mm256_getmant_pd(a0, interval, sign)));
+    else if constexpr( c == category::float32x8 ) return gl(r_t(_mm256_getmant_ps(a0, interval, sign)));
+    else if constexpr( c == category::float64x2 ) return gl(r_t(_mm_getmant_pd(a0, interval, sign)));
+    else if constexpr( c == category::float32x4 ) return gl(r_t(_mm_getmant_ps(a0, interval, sign)));
+     else if constexpr(O::contains(raw))
+       return mantissa[o].retarget(cpu_{}, a0);
     else
-      return if_else(is_nan(a0)||is_eqz(a0), a0, r);
+      return if_else(is_nan(a0)||is_eqz(a0), a0, mantissa.behavior(cpu_{}, o, a0));
+
   }
 
 // -----------------------------------------------------------------------------------------------
@@ -72,6 +72,7 @@ namespace eve::detail
         else if constexpr( c == category::float32x8 ) return _mm256_mask_getmant_ps(src, m, v, interval, sign);
         else if constexpr( c == category::float64x2 ) return _mm_mask_getmant_pd(src, m, v, interval, sign);
         else if constexpr( c == category::float32x4 ) return _mm_mask_getmant_ps(src, m, v, interval, sign);
+        else return mantissa[o][cx].retarget(cpu_{}, v);
       }
     }
     else
