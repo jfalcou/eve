@@ -11,6 +11,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/detail/flags.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -32,6 +33,13 @@ namespace eve::detail
     else if constexpr( c == category::float32x16) return s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return s_t {_mm256_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, f)};
+    else if constexpr (match(c, category::float16))
+    {
+      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_ngez, a);
+      else if constexpr (c == category::float16x32)         return s_t {_mm512_fpclass_ph_mask(a, f)};
+      else if constexpr (c == category::float16x16)         return s_t {_mm256_fpclass_ph_mask(a, f)};
+      else if constexpr (c == category::float16x8)          return s_t {_mm_fpclass_ph_mask(a, f)};
+    }
   }
 
 
@@ -61,6 +69,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return mask8 {_mm256_mask_fpclass_pd_mask(m, v, f)};
       else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_fpclass_ps_mask(m, v, f)};
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_fpclass_pd_mask(m, v, f)};
+      else if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_ngez, cx, v);
+        else if constexpr (c == category::float16x32)         return mask32 {_mm512_mask_fpclass_ph_mask(m, v, f)};
+        else if constexpr (c == category::float16x16)         return mask16 {_mm256_mask_fpclass_ph_mask(m, v, f)};
+        else if constexpr (c == category::float16x8)          return mask8  {_mm_mask_fpclass_ph_mask(m, v, f)};
+      }
     }
   }
 }

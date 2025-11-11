@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_nlez(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_nlez(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::is_nlez(simd)", eve::test::simd::all_ty
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of eve::is_nlez(simd)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::ramp(-1.0), tts::ramp(1.0, -1.0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
