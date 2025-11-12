@@ -65,6 +65,9 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
     TTS_ULP_EQUAL(eve::inc[eve::upper][eve::strict](a0), eve::next(eve::inc(a0)), 0.5);
     TTS_ULP_EQUAL(eve::inc[eve::upper][m][eve::strict](a0), eve::next[m](eve::inc[m](a0)), 0.5);
   }
+
+  TTS_EQUAL(eve::inc[eve::if_(m).else_(102)](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : v_t{ 102 }; }, a0, m));
+  TTS_EQUAL(eve::inc[eve::saturated][eve::if_(m).else_(102)](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : v_t{ 102 }; }, a0, m));
 };
 
 TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types",
@@ -83,6 +86,9 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types
   TTS_EQUAL(eve::inc[m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
   TTS_EQUAL(eve::inc[m][eve::saturated](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
   TTS_EQUAL(eve::inc[eve::saturated][m](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : e; }, a0, m));
+
+  TTS_EQUAL(eve::inc[eve::if_(m).else_(102)](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : v_t{ 102 }; }, a0, m));
+  TTS_EQUAL(eve::inc[eve::saturated][eve::if_(m).else_(102)](a0), tts::map([](auto e, auto me) -> v_t { return me ? static_cast<v_t>(e + 1) : v_t{ 102 }; }, a0, m));
 };
 
 //==================================================================================================
@@ -100,6 +106,11 @@ TTS_CASE_WITH("Check behavior of inc mod on wide",
   using e_t =  eve::element_type_t<T>;
   e_t p = 97;
   TTS_ULP_EQUAL(inc[mod = p](a0), eve::if_else(a0 == p-1, 0, a0+1), 0.5);
+
+  using l_t = eve::as_logical_t<T>;
+  l_t m = [](auto i, auto) { return i % 2 == 0; };
+
+  TTS_ULP_EQUAL(inc[mod = p][eve::if_(m).else_(-1)](a0), eve::if_else(m, eve::if_else(a0 == p - 1, 0, a0 + 1), -1), 0.5);
 };
 
 TTS_CASE_TPL("Check corner-cases behavior of inc(wide) and inc[mask](wide)", eve::test::simd::all_types)

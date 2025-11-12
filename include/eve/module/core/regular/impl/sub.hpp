@@ -139,7 +139,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T x, T y ) noexcept
   requires(O::contains(mod))
   {
-    auto p = o[mod].value(T());
+    auto p = o[mod].value(as(x));
     auto s = x-y;
     return add[eve::is_ltz(s)](s, p);
   }

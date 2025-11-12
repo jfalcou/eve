@@ -51,7 +51,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(sve_), O const& o, T x, T y ) noexcept
   requires(sve_abi<abi_t<T, N>> && O::contains(mod))
   {
-    auto p = o[mod].value(T());
+    auto p = o[mod].value(as(x));
     auto s = x-y;
     return add[eve::is_ltz(s)](s, p);
   }
