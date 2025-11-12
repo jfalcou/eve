@@ -11,8 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/maxrepint.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/convert.hpp>
@@ -33,13 +32,9 @@ namespace eve
         static_assert(!(O::contains(saturated) || O::contains(lower) || O::contains(upper)),
                       "[eve::dec] The mod option cannot be combined with saturated, lower or upper");
 
-        auto modulus = this->options()[mod].value(T{});
+        auto modulus = this->options()[mod].value(as(v));
 
-        if constexpr (integral_value<T>)
-          EVE_ASSERT((modulus > 0) && (modulus < valmax(as(modulus))), "[eve::dec] Modulus value out of range");
-        else
-          EVE_ASSERT((modulus > 0) && (modulus < maxflint(as(modulus))), "[eve::dec] Modulus value out of range");
-
+        EVE_ASSERT((modulus > 0) && (modulus <= maxrepint(as(modulus))), "[eve::dec] Modulus value out of range");
         EVE_ASSERT(eve::all((v >= 0) && (v < modulus)),
                   "[eve::dec] Input values must be in the range [0, modulus[ when using the mod option");
       }
@@ -119,7 +114,7 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
-      if constexpr(O::contains(mod) )
+      if constexpr (O::contains(mod))
       {
         auto p = o[mod].value(as(a));
         return eve::if_else(eve::is_eqz(a), eve::dec(p), eve::dec(a));

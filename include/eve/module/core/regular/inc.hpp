@@ -11,8 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/maxrepint.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/detail/modular.hpp>
@@ -34,11 +33,7 @@ namespace eve
 
         auto modulus = this->options()[mod].value(as(v));
 
-        if constexpr (integral_value<T>)
-          EVE_ASSERT((modulus > 0) && (modulus < valmax(as(modulus))), "[eve::inc] Modulus value out of range");
-        else
-          EVE_ASSERT((modulus > 0) && (modulus < maxflint(as(modulus))), "[eve::inc] Modulus value out of range");
-
+        EVE_ASSERT((modulus > 0) && (modulus <= maxrepint(as(modulus))), "[eve::inc] Modulus value out of range");
         EVE_ASSERT(eve::all((v >= 0) && (v < modulus)),
                   "[eve::inc] Input values must be in the range [0, modulus[ when using the mod option");
       }
