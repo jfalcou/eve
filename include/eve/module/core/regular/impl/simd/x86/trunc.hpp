@@ -68,9 +68,6 @@ namespace eve::detail
     }
     else
     {
-      auto src = alternative(cx, v, as<wide<T, N>> {});
-      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
       if constexpr( C::is_complete )
         return src;
       else if  constexpr(!O::contains(almost))
