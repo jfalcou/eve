@@ -158,7 +158,7 @@ namespace eve
         }
         else if constexpr(integral_value<T> && iwl)
         {
-          auto m = expand_mask(cond, as<m_t>{});
+          auto m = cond.mask(as<m_t>{});
 
           if constexpr (C::has_alternative)
           {
