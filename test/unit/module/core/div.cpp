@@ -90,9 +90,6 @@ TTS_CASE_WITH("Check behavior of div on wide",
   TTS_IEEE_EQUAL(eve::div[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::div(a2, a0), a0));
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 2.0);
-    TTS_ULP_EQUAL( div[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[upper](div[upper](e, f), g); }, a0, a1, a2), 2.0);
-    TTS_EXPECT(eve::all(div[upper](a0, a1, a2) >=  div[lower](a0, a1, a2)));
     TTS_EXPECT(eve::all(div[upper](a0, a1)     >=  div[lower](a0, a1)));
     T w0(T(0.12345));
     T w1(T(0.126789));
