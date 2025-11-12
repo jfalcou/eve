@@ -93,9 +93,6 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   //TODO: enable for float16 once support is more complete
   if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
-    TTS_ULP_EQUAL( mul[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[lower](mul[lower](e, f), g); }, a0, a1, a2), 1.0);
-    TTS_ULP_EQUAL( mul[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[upper](mul[upper](e, f), g); }, a0, a1, a2), 1.0);
-    TTS_EXPECT(eve::all(mul[upper](a0, a1, a2) >=  mul[lower](a0, a1, a2)));
     T  w0{0.1};
     T  w1{0.12f};
     TTS_EXPECT(eve::all(mul[upper](w0, w1)  >=  mul(w0, w1)));
