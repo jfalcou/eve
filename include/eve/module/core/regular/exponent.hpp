@@ -15,11 +15,13 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
+#include <eve/module/core/regular/sub.hpp>
 #include <eve/arch/platform.hpp>
 
 namespace eve
@@ -29,7 +31,7 @@ namespace eve
   struct exponent_t : elementwise_callable<exponent_t, Options, raw_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
+    constexpr EVE_FORCEINLINE as_integer_t<T, signed> operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exponent_t, exponent_);
@@ -85,10 +87,11 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    constexpr as_integer_t<T>  exponent_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    constexpr as_integer_t<T, signed>  exponent_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto z = bit_and(exponentmask(as<T>()), a);
-      auto x = (z >> nbmantissabits(eve::as<T>()));
+      using i_t =  as_integer_t<T>;
+      i_t z = bit_and(exponentmask(as<T>()), a);
+      i_t x = eve::bit_shr(z, nbmantissabits(eve::as<T>()));
       return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
     }
   }
