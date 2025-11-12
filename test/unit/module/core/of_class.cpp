@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::of_class(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::of_class(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::of_class(simd)", eve::test::simd::ieee_
 // Test for corner-cases values
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of of_class on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax))
              )
   <typename T>(T const& a0)

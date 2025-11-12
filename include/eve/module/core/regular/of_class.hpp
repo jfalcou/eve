@@ -101,14 +101,13 @@ namespace eve
       using li_t = logical<T>;
       li_t r{false};
       constexpr std::uint8_t o(1);
-      if constexpr((I       &o) == o) r = is_nan(x);
+      if constexpr(((I      &o) == o) || (((I >> 7)&o) == o)) r = is_nan(x);
       if constexpr(((I >> 1)&o) == o) r = r || is_eqpz(x);
       if constexpr(((I >> 2)&o) == o) r = r || is_eqmz(x);
       if constexpr(((I >> 3)&o) == o) r = r || is_pinf(x);
       if constexpr(((I >> 4)&o) == o) r = r || is_minf(x);
       if constexpr(((I >> 5)&o) == o) r = r || is_denormal(x);
       if constexpr(((I >> 6)&o) == o) r = r || (is_finite(x) && is_ltz(x));
-      if constexpr(((I >> 7)&o) == o) r = r || is_nan(x);
       return r;
     }
   }
