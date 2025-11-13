@@ -30,7 +30,7 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_infinite
-//!   @brief `elementwise callable` returning a logical true  if and only if the element is not an infinite value
+//!   @brief `elementwise callable` returning a logical true if and only if the element is not an infinite value
 //!
 //!   @groupheader{Header file}
 //!
@@ -44,11 +44,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_not_infinite(value auto x) noexcept;                          // 1
+//!      constexpr auto is_not_infinite(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_infinite(integral_value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_not_infinite[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_not_infinite[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_not_infinite[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_not_infinite[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
@@ -60,8 +61,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. The call `is_not_infinite(x)` is semantically  equivalent to `is_finite(x) || is_nan(x)`
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. The call `is_not_infinite(x)` is semantically equivalent to `is_finite(x) || is_nan(x)`
+//!      2. Always returns `true`.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_infinite.cpp}

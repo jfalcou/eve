@@ -42,7 +42,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_not_nan(value auto x) noexcept;                          // 1
+//!      constexpr auto is_not_nan(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_nan(integral_value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto is_not_nan[conditional_expr auto c](value auto x) noexcept; // 2
@@ -58,9 +59,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. `is_not_nan(x)`  is semantically  equivalent to:
-//!        `is_equal(x, x)` in particular this is always true for integral types.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. `is_not_nan(x)`  is semantically  equivalent to: `is_equal(x, x)`.
+//!      2. Always returns `true`.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_nan.cpp}

@@ -34,7 +34,7 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_finite
-//!   @brief `elementwise callable` returning a logical true  if and only if the element is not a finite value
+//!   @brief `elementwise callable` returning a logical true if and only if the element is not a finite value
 //!
 
 //!   @groupheader{Header file}
@@ -66,7 +66,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. `is_not_finite(x)` is semantically  equivalent to `is_nan(x-x)`.
+//!      1. `is_not_finite(x)` is semantically equivalent to `is_nan(x-x)`.
 //!      2. Always returns false.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!

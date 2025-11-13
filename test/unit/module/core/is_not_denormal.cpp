@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_not_denormal(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::is_not_denormal(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::is_not_denormal(simd)", eve::test::simd
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-TTS_CASE_TPL("Check corner-cases behavior of is_not_denormal on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check corner-cases behavior of is_not_denormal on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> const& tgt)
 {
   using eve::as;
