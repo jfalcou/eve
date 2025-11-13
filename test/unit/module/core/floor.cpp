@@ -73,23 +73,27 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals_wf16)
   TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 3 * epsi)), T(45));
   TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 4 * epsi)), T(44));
 
-  TTS_EQUAL(eve::floor[eve::almost](T(1)), T(1));
-  TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 1)), T(1));
-  TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 2)), T(1));
-  TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 3)), T(1));
-  TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 10)), T(0));
+  //TODO: enable for float16 once prev is supported
+  if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
+  {
+    TTS_EQUAL(eve::floor[eve::almost](T(1)), T(1));
+    TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 1)), T(1));
+    TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 2)), T(1));
+    TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 3)), T(1));
+    TTS_EQUAL(eve::floor[eve::almost](eve::prev(T(1), 10)), T(0));
 
-  TTS_EQUAL(eve::floor[eve::almost = 3](T(45)), T(45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 1)), T(45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 2)), T(45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 3)), T(45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 4)), T(44));
+    TTS_EQUAL(eve::floor[eve::almost = 3](T(45)), T(45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 1)), T(45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 2)), T(45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 3)), T(45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(45), 4)), T(44));
 
-  TTS_EQUAL(eve::floor[eve::almost = 3](T(-45)), T(-45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 1)), T(-45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 2)), T(-45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 3)), T(-45));
-  TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 4)), T(-46));
+    TTS_EQUAL(eve::floor[eve::almost = 3](T(-45)), T(-45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 1)), T(-45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 2)), T(-45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 3)), T(-45));
+    TTS_EQUAL(eve::floor[eve::almost = 3](eve::prev(T(-45), 4)), T(-46));
+  }
 };
 
 //==================================================================================================
