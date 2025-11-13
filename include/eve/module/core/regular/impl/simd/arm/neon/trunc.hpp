@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +24,13 @@ namespace eve::detail
     {
       constexpr auto cat = categorize<wide<T, N>>();
 
-      if constexpr( current_api >= asimd )
+      if constexpr (match(cat, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(floor, v);
+        else if constexpr (cat == category::float16x4)        return vrnd_f16(v);
+        else if constexpr (cat == category::float16x8)        return vrndq_f16(v);
+      }
+      else if constexpr( current_api >= asimd )
       {
         if constexpr( cat == category::float64x1 ) return vrnd_f64(v);
         else if constexpr( cat == category::float64x2 ) return vrndq_f64(v);

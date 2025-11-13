@@ -16,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of round", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of round", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of round", eve::test::simd::all_types)
 //==================================================================================================
 // round(simd)  tests
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of round(wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check behavior of round(wide)", eve::test::simd::all_types_wf16)
   <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::round[eve::upward](T(1.7)), eve::ceil(T(1.7)));
@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check behavior of round(wide)", eve::test::simd::all_types)
 // Tests for masked round
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked round(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

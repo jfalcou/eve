@@ -33,6 +33,20 @@ constexpr T std_ceil(T x)
 }
 
 template <typename T>
+constexpr T std_trunc(T x)
+{
+  if constexpr (std::same_as<T, eve::float16_t>) return std::trunc(static_cast<float>(x));
+  else                                           return std::trunc(x);
+}
+
+template <typename T>
+constexpr T std_nearbyint(T x)
+{
+  if constexpr (std::same_as<T, eve::float16_t>) return std::nearbyint(static_cast<float>(x));
+  else                                           return std::nearbyint(x);
+}
+
+template <typename T>
 constexpr T std_abs(T x)
 {
   if constexpr (std::same_as<T, eve::float16_t>) return std::abs(static_cast<float>(x));
