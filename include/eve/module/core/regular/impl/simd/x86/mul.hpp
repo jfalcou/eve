@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -68,6 +69,13 @@ namespace eve::detail
       else  if constexpr( c == category::uint64x8   ) return _mm512_mullo_epi64(a, b);
       else  if constexpr( c == category::int32x16   ) return _mm512_mullo_epi32(a, b);
       else  if constexpr( c == category::uint32x16  ) return _mm512_mullo_epi32(a, b);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(mul, a, b);
+        else if constexpr (c == category::float16x32)         return _mm512_mul_ph(a, b);
+        else if constexpr (c == category::float16x16)         return _mm256_mul_ph(a, b);
+        else if constexpr (c == category::float16x8)          return _mm_mul_ph(a, b);
+      }
       else  if constexpr(((c == category::int32x8) || (c == category::uint32x8)) && (current_api >= avx2))
       {
         return _mm256_mullo_epi32(a, b);
@@ -178,6 +186,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(mul, cx, a, b);
+        else if constexpr (c == category::float16x32)         return _mm512_mask_mul_ph(src, m, a, b);
+        else if constexpr (c == category::float16x16)         return _mm256_mask_mul_ph(src, m, a, b);
+        else if constexpr (c == category::float16x8)          return _mm_mask_mul_ph(src, m, a, b);
+      }
       else                                          return mul[opts][cx].retarget(cpu_{}, a, b);
     }
   }

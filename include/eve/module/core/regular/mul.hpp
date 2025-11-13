@@ -20,47 +20,35 @@ namespace eve
                                 upper_option, strict_option, widen_option,
                                 mod_option, kahan_option>
   {
-//     template<value... Ts>
-//     requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-//       EVE_FORCEINLINE common_value_t<Ts...> constexpr operator()(Ts...ts)
-//       const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
-
-//     template<value... Ts>
-//     requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-//       EVE_FORCEINLINE common_value_t<upgrade_t<Ts>... >
-//     constexpr operator()(Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
+    template<value T0, value... Ts>
+    EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<T0, Ts...>> constexpr operator()(T0 v0, Ts... vs) const noexcept
+      requires (eve::same_lanes_or_scalar<T0, Ts...> && (sizeof...(Ts) < 2))
+    {
+      return EVE_DISPATCH_CALL(v0, vs...);
+    }
 
     template<value... Ts>
-    requires(eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
-    constexpr operator()(Ts...ts) const noexcept
+    EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>> constexpr operator()(Ts...ts) const noexcept
+      requires (eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 2) && !Options::contains(lower) && !Options::contains(upper))
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
-//     template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
-//     EVE_FORCEINLINE constexpr
-//     upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-//     operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
-
-//     template<kumi::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-//     EVE_FORCEINLINE constexpr
-//     kumi::apply_traits_t<eve::common_value,Tup>
-//     operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+      requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() <= 2))
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept
+      requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() > 2) && !Options::contains(lower) && !Options::contains(upper))
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
 
     EVE_CALLABLE_OBJECT(mul_t, mul_);
   };

@@ -231,10 +231,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   requires(!O::contains(left) && (sizeof...(Ts) != 0) )
   {
-    auto that = r1;
-    if (O::contains(upper))  that = mul[o.drop(upper)][lower](r1, rs...);
-    else if  (O::contains(lower))  that = mul[o.drop(lower)][upper](r1, rs...);
-    else that = mul[o](r1, rs...);
+    auto that = mul[o](r1, rs...);
     if constexpr(std::is_integral_v<eve::element_type_t<T>>)
       EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
     return div[o](r0,that);
