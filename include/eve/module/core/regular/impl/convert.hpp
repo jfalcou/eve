@@ -53,18 +53,6 @@ namespace eve::detail
     }
     else if constexpr (plain_scalar_value<In>)
     {
-      if constexpr (floating_scalar_value<In> && integral_scalar_value<Out>)
-      {
-        // promote to a common type to perform the bound checking safely
-        using c_t = common_type_t<In, Out>;
-
-        constexpr c_t max_val = static_cast<c_t>(valmax(as<Out>{}));
-        constexpr c_t min_val = static_cast<c_t>(valmin(as<Out>{}));
-        const c_t vc          = static_cast<c_t>(v0);
-
-        if (is_not_finite(v0) || (!O::contains(saturated) && ((vc > max_val) || (vc < min_val)))) return allbits(as<Out>{});
-      }
-
       return static_cast<Out>(maybe_saturate(v0));
     }
     else // simd_value
