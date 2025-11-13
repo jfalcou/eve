@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of copysign", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of copysign", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of copysign", eve::test::simd::ieee_reals)
 // copysign  simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of copysign on wide and scalar",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1)
@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of copysign on wide and scalar",
 // Tests for masked copysign
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::copysign)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))

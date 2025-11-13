@@ -26,7 +26,11 @@ namespace eve::detail
                                     wide<T, N>  const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost))
+    if constexpr (O::contains(almost))
+    {
+      return floor.behavior(cpu_{}, o, a0);
+    }
+    else
     {
       constexpr int mode = _MM_FROUND_TO_NEG_INF | _MM_FROUND_NO_EXC;
       constexpr auto c   = categorize<wide<T, N>>();
@@ -44,8 +48,8 @@ namespace eve::detail
         else if constexpr (c == category::float16x16)         return _mm256_roundscale_ph(a0, mode);
         else if constexpr (c == category::float16x32)         return _mm512_roundscale_ph(a0, mode);
       }
+      else                                                    return floor.behavior(cpu_{}, o, a0);
     }
-    else                                                      return floor.behavior(cpu_{}, o, a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -57,7 +61,7 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(almost))
+    if constexpr (O::contains(almost))
     {
       return floor[o][cx].retarget(cpu_{}, v);
     }
@@ -67,7 +71,6 @@ namespace eve::detail
       constexpr auto c   = categorize<wide<T, N>>();
       auto src           = alternative(cx, v, as<wide<T, N>> {});
       auto m             = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
 
       if      constexpr( C::is_complete)                      return src;
       else if constexpr( match(c, category::integer_) )       return if_else(cx, v, src);
