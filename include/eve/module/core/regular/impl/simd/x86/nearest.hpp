@@ -17,13 +17,13 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
-                                      O           const& ,
+                                      O           const& opts,
                                       wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(almost))
     {
-      return nearest.behavior(cpu_{}, o, a0);
+      return nearest.behavior(cpu_{}, opts, a0);
     }
     else
     {
@@ -43,7 +43,7 @@ namespace eve::detail
         else if constexpr (c == category::float16x16)         return _mm256_roundscale_ph(a0, mode);
         else if constexpr (c == category::float16x32)         return _mm512_roundscale_ph(a0, mode);
       }
-      else                                                    return nearest.behavior(cpu_{}, o, a0);
+      else                                                    return nearest.behavior(cpu_{}, opts, a0);
     }
   }
 
@@ -52,13 +52,13 @@ namespace eve::detail
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(avx512_),
                                       C          const &cx,
-                                      O          const &,
+                                      O          const &opts,
                                       wide<T, N> const &v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(almost))
     {
-      return nearest[o][cx].retarget(cpu_{}, v);
+      return nearest[opts][cx].retarget(cpu_{}, v);
     }
     else
     {
@@ -82,7 +82,7 @@ namespace eve::detail
         else if constexpr (c == category::float16x16)         return _mm256_mask_roundscale_ph(src, m, v, mode);
         else if constexpr (c == category::float16x8)          return _mm_mask_roundscale_ph(src, m, v, mode);
       }
-      else                                                    return nearest[o][cx].retarget(cpu_{}, v);
+      else                                                    return nearest[opts][cx].retarget(cpu_{}, v);
     }
   }
 }
