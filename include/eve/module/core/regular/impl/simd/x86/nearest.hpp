@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 #include <type_traits>
 

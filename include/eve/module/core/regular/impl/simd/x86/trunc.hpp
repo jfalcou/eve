@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
