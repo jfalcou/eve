@@ -69,7 +69,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return _mm_mask_roundscale_pd(src, m, a0, spv);
       else if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(roundscale, cx, v);
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(roundscale, cx, a0);
         else if constexpr (c == category::float16x32)         return _mm512_mask_roundscale_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x16)         return _mm256_mask_roundscale_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x8)          return _mm_mask_roundscale_ph(src, m, a0, spv);
