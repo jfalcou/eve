@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
@@ -22,13 +23,20 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;
+    using s_t = typename l_t::storage_type;
+
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_NEQ_OQ;
 
-    if constexpr( current_api >= eve::avx512 )
+    if constexpr (match(c, category::float16))
     {
-      using s_t = typename l_t::storage_type;
-
+      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_lessgreater, a, b);
+      else if constexpr (c == category::float16x32)         return s_t {_mm512_cmp_ph_ph_mask(a, b, m)};
+      else if constexpr (c == category::float16x16)         return s_t {_mm256_cmp_ph_mask(a, b, m)};
+      else if constexpr (c == category::float16x8)          return s_t {_mm_cmp_ph_mask(a, b, m)};
+    }
+    else if constexpr( current_api >= eve::avx512 )
+    {
       if constexpr( c == category::float64x8 ) return s_t {_mm512_cmp_pd_mask(a, b, m)};
       else if constexpr( c == category::float64x4 ) return s_t {_mm256_cmp_pd_mask(a, b, m)};
       else if constexpr( c == category::float64x2 ) return s_t {_mm_cmp_pd_mask(a, b, m)};
@@ -61,14 +69,22 @@ namespace eve::detail
     {
       auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
       constexpr auto f = to_integer(cmp_flt::neq_oq);
+      using s_t        = typename logical<wide<T, N>>::storage_type;
 
-      if      constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
-      else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
-      else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-      else                                           return is_not_equal[cx](v, w);
+      if      constexpr( c == category::float32x16 ) return s_t {_mm512_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x8 )  return s_t {_mm512_mask_cmp_pd_mask(m, v, w, f)};
+      else if constexpr( c == category::float32x8 )  return s_t {_mm256_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x4 )  return s_t {_mm256_mask_cmp_pd_mask(m, v, w, f)};
+      else if constexpr( c == category::float32x4 )  return s_t {_mm_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x2 )  return s_t {_mm_mask_cmp_pd_mask(m, v, w, f)};
+      else if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_lessgreater, cx, v, w);
+        else if constexpr (c == category::float16x32)         return s_t {_mm512_mask_cmp_ph_ph_mask(m, v, w, f)};
+        else if constexpr (c == category::float16x16)         return s_t {_mm256_mask_cmp_ph_mask(m, v, w, f)};
+        else if constexpr (c == category::float16x8)          return s_t {_mm_mask_cmp_ph_mask(m, v, w, f)};
+      }
+      else                                                    return is_lessgreater[o][cx].retarget(cpu_{}, v, w);
     }
   }
 }
