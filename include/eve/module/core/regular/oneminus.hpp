@@ -111,7 +111,7 @@ namespace eve
       {
         if constexpr(O::contains(mod))
         {
-          auto p = o[mod].value(T());
+          auto p = o[mod].value(as(v));
           auto z = oneminus(v);
           return eve::if_else(z < 0, z+p, z);
         }

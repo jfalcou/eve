@@ -90,7 +90,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(cpu_), O const& o, T a ) noexcept
   requires(O::contains(mod))
   {
-    auto p = o[mod].value(T());
+    auto p = o[mod].value(as(a));
     auto base(a);
     auto expo(p-2);
 

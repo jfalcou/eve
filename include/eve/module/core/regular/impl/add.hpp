@@ -35,7 +35,7 @@ namespace eve::detail
     auto b = r_t(b0);
     if constexpr(O::contains(mod))
     {
-      auto p = o[mod].value(r_t());
+      auto p = o[mod].value(as<r_t>{});
       auto s = a+b;
       return eve::if_else(s >= p, s-p, p);
     }

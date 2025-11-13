@@ -160,7 +160,7 @@ namespace eve
       using r_t =  common_value_t<T, U>;
       if constexpr(O::contains(mod))
       {
-        auto p = o[mod].value(r_t());
+        auto p = o[mod].value(as<r_t>{});
         auto base(a0);
         r_t expo(a1);
 

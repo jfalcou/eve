@@ -98,7 +98,7 @@ namespace eve
     {
       if constexpr (O::contains(mod))
       {
-        return eve::if_else(eve::is_eqz(v), v, o[mod].value(T())-v);
+        return eve::if_else(eve::is_eqz(v), v, o[mod].value(as(v))-v);
       }
       else if      constexpr (floating_value<T>)
       {

@@ -54,7 +54,7 @@ namespace eve
 
     constexpr auto operator()(keyword_type const&) const noexcept { return *this; }
 
-    template<typename T> constexpr auto value(T const&) const
+    template<typename T> constexpr element_type_t<T> value(as<T>) const noexcept
     {
       using type = element_type_t<T>;
       if constexpr(std::same_as<Value,default_mod>) return eve::one(as<type>{});

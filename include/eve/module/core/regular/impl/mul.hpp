@@ -45,7 +45,7 @@ namespace eve::detail
       using r_t =  eve::common_value_t<T, U>;
       auto x = r_t(a);
       auto y = r_t(b);
-      auto p = opts[mod].value(r_t());
+      auto p = opts[mod].value(as<r_t>{});
       auto [h, l] = eve::two_prod(x, y);
       auto bb = h/p;
       auto cc = eve::floor(bb);
