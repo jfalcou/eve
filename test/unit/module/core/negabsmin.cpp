@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of negabsmin", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of negabsmin", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -64,7 +64,7 @@ TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
   TTS_IEEE_EQUAL(negabsmin[t](a0, a1), eve::if_else(t, negabsmin(a0, a1), a0));
 };
 
-TTS_CASE_TPL("Check values of negabsmin", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of negabsmin", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;

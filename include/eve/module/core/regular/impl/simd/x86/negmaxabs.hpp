@@ -11,6 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -35,6 +36,13 @@ namespace eve::detail
       else if constexpr( cat == category::float64x2 ) return _mm_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x4 ) return _mm256_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x8 ) return _mm512_range_pd(v0, v1, ctrl);
+      else if constexpr (match(cat, category::float16))
+      {
+        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(negmaxabs, v0, v1);
+        else if constexpr( cat == category::float16x32 )       return _mm512_range_ph(v0, v1, ctrl);
+        else if constexpr( cat == category::float16x16 )       return _mm256_range_ph(v0, v1, ctrl);
+        else if constexpr( cat == category::float16x8  )       return _mm_range_ph(v0, v1, ctrl);
+      }
       else return negmaxabs.behavior(cpu_{}, opts, v0, v1);
     }
   }
@@ -63,6 +71,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_range_pd(src, m, v, w, ctrl);
       else if constexpr( c == category::float32x4 ) return _mm_mask_range_ps(src, m, v, w, ctrl);
       else if constexpr( c == category::float64x2 ) return _mm_mask_range_pd(src, m, v, w, ctrl);
+      else if constexpr (match(c, category::float16))
+      {
+        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(negmaxabs, cx, v, w);
+        else if constexpr( c == category::float16x32 )         return _mm512_mask_range_ph(src, m, v, w, ctrl);
+        else if constexpr( c == category::float16x16 )         return _mm256_mask_range_ph(src, m, v, w, ctrl);
+        else if constexpr( c == category::float16x8  )         return _mm_mask_range_ph(src, m, v, w, ctrl);
+      }
       else return negmaxabs[opts][cx].retarget(cpu_{}, v, w);
     }
   }
