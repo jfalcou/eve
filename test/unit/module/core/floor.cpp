@@ -70,7 +70,15 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals_wf16)
 
   TTS_EQUAL(eve::floor[eve::almost](T(45)), T(45));
   TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 2 * epsi)), T(45));
-  TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 3 * epsi)), T(45));
+  if constexpr (std::same_as<eve::element_type_t<T>, eve::float16_t> && !eve::detail::supports_fp16_native_type)
+  {
+    // computed as 45.0f16 * (1.0f16 - 3.0f16 * (std::nextafter(1.0f16, 2.0f16) - 1.0f16))
+    TTS_EQUAL(eve::floor[eve::almost](T{ 0x1.67p+5 }), T(45));
+  }
+  else
+  {
+    TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 3 * epsi)), T(45));
+  }
   TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 4 * epsi)), T(44));
 
   //TODO: enable for float16 once prev is supported
