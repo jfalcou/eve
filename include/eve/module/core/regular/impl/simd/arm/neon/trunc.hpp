@@ -26,7 +26,7 @@ namespace eve::detail
 
       if constexpr (match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(floor, v);
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(trunc, v);
         else if constexpr (cat == category::float16x4)        return vrnd_f16(v);
         else if constexpr (cat == category::float16x8)        return vrndq_f16(v);
       }
