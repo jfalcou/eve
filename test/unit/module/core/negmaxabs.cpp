@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of negmaxabs", eve::test::simd::signed_types)
+TTS_CASE_TPL("Check return types of negmaxabs", eve::test::simd::signed_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -62,7 +62,7 @@ TTS_CASE_WITH("Check behavior of negmaxabs on all types full range",
   TTS_IEEE_EQUAL(negmaxabs[t](a0, a1), eve::if_else(t, negmaxabs(a0, a1), a0));
 };
 
-TTS_CASE_TPL("Check values of negmaxabs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of negmaxabs", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
