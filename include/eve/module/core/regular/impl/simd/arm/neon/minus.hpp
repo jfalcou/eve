@@ -34,6 +34,11 @@ namespace eve::detail
       else if constexpr( cat == category::int32x2 )   return vneg_s32(v);
       else if constexpr( cat == category::int16x4 )   return vneg_s16(v);
       else if constexpr( cat == category::int8x8 )    return vneg_s8(v);
+      else if constexpr( match(cat, category::float16) && detail::supports_fp16_vector_ops)
+      {
+        if      constexpr( cat == category::float16x4 )  return vneg_f16(v);
+        else if constexpr ( cat == category::float16x8 ) return vnegq_f16(v);
+      }
       else if constexpr( current_api >= asimd )
       {
         if constexpr( cat == category::float64x2 )      return vnegq_f64(v);
