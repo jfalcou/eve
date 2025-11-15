@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fanm", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of fanm", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -46,7 +46,7 @@ auto onemmileps =
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fanm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -69,7 +69,7 @@ TTS_CASE_WITH("Check behavior of fanm lower upper on real types",
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
              )
-  <typename T>(T const& a0, T const& a1, T const& a2 )
+  <typename T>(T const& a0, T const& a1, T const& a2 )// TO DO fp16
 {
   using eve::as;
   using eve::fanm;
@@ -89,7 +89,7 @@ TTS_CASE_WITH("Check behavior of fanm lower upper on real types",
 // fanm tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fanm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -106,7 +106,7 @@ TTS_CASE_WITH("Check precision behavior of fanm on real types",
 // fanm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fanm[promote] on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1 )
@@ -144,7 +144,7 @@ TTS_CASE_WITH("Check behavior of fanm[promote] on all types",
 //  fanm masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fanm on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),
