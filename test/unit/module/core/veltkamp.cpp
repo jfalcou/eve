@@ -12,7 +12,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of add", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of add", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::ieee_reals)
 //==  veltkamp simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of veltkamp on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0, 10))
              )
   <typename T>(T const& a0)
