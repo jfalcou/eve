@@ -53,9 +53,8 @@ namespace eve::detail
       else
       {
         using elt_t = element_type_t<T>;
-        using i_t   = as_integer_t<elt_t>;
+        using i_t   = as_integer_t<elt_t, signed>;
         auto z = convert(convert(a0, as<i_t>()), as<elt_t>());
-
         auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
 
              if constexpr( scalar_value<T> ) z = already_integral ? a0 : z;

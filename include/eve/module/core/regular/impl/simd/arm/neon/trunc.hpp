@@ -17,9 +17,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(neon128_),
                                     O          const& o,
                                     wide<T, N> const& v) noexcept
-  requires arm_abi<abi_t<T, N>>
+  requires (arm_abi<abi_t<T, N>> && (sizeof(T) >= 4))
   {
-    if  constexpr(!O::contains(almost))
+    constexpr auto c = categorize<wide<T, N>>();
+    if  constexpr (match(c, category::float16))
+    {
+      return trunc.behavior(cpu_{}, o, v);
+    }
+    else if  constexpr(!O::contains(almost))
     {
       constexpr auto cat = categorize<wide<T, N>>();
 
@@ -29,10 +34,11 @@ namespace eve::detail
         else if constexpr( cat == category::float64x2 ) return vrndq_f64(v);
         else if constexpr( cat == category::float32x2 ) return vrnd_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndq_f32(v);
+        else return trunc.behavior(cpu_{}, o, v);
       }
       else return map(trunc, v);
     }
     else
-      return trunc_(EVE_TARGETS(cpu_), o, v);
+      return trunc.behavior(cpu_{}, o, v);
   }
 }

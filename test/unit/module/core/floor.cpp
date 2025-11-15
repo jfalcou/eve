@@ -16,19 +16,19 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of floor", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of floor", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
   TTS_EXPR_IS(eve::floor(T()), T);
   TTS_EXPR_IS(eve::floor(v_t()), v_t);
+  TTS_EXPR_IS(eve::floor(T(), eve::as<signed>()), (eve::as_integer_t<T, signed>));
+  TTS_EXPR_IS(eve::floor(v_t(), eve::as<signed>()), (eve::as_integer_t<v_t, signed>));
+  TTS_EXPR_IS(eve::floor(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
+  TTS_EXPR_IS(eve::floor(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EXPR_IS(eve::floor(T(), eve::as<signed>()), (eve::as_integer_t<T, signed>));
-    TTS_EXPR_IS(eve::floor(v_t(), eve::as<signed>()), (eve::as_integer_t<v_t, signed>));
-    TTS_EXPR_IS(eve::floor(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
-    TTS_EXPR_IS(eve::floor(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
     TTS_EXPR_IS(eve::floor[eve::almost](T()), T);
     TTS_EXPR_IS(eve::floor[eve::almost](v_t()), v_t);
   }
@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of floor", eve::test::simd::all_types)
 //==================================================================================================
 // almost tests
 //==================================================================================================
-TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals) //TO DO fp16 ?
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::floor(static_cast<T>(-1.3)), T(-2));
@@ -65,7 +65,7 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::floor[eve::almost]((T(1) - epsi)), T(1));
   TTS_EQUAL(eve::floor[eve::almost]((T(1) - 2 * epsi)), T(1));
   TTS_EQUAL(eve::floor[eve::almost]((T(1) - 3 * epsi)), T(1));
-  TTS_EQUAL(eve::floor[eve::almost]((T(1) - 4 * epsi)), T(0));
+   TTS_EQUAL(eve::floor[eve::almost]((T(1) - 4 * epsi)), T(0));
 
   TTS_EQUAL(eve::floor[eve::almost](T(45)), T(45));
   TTS_EQUAL(eve::floor[eve::almost](45 * (T(1) - 2 * epsi)), T(45));
@@ -97,7 +97,7 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals)
 auto mini = tts::constant([]<typename T>(eve::as<T>) { return eve::signed_value<T> ? -50 : 0; });
 
 TTS_CASE_WITH("Check behavior of floor(wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(mini, +50)))
 <typename T>(T const& a0)
 {
@@ -108,22 +108,22 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::floor(a0), tts::map([&](auto e) -> v_t { return v_t(std::floor(e)); }, a0));
+    TTS_EQUAL(eve::floor(a0), tts::map([&](auto e) -> v_t { return v_t(std::floor(float(e))); }, a0));
 
     TTS_EQUAL(eve::floor(a0, eve::as<int>()),
-              wi_t([&](auto i, auto) { return i_t(std::floor(a0.get(i))); }));
+              wi_t([&](auto i, auto) { return i_t(eve::floor(a0.get(i))); }));
     TTS_EQUAL(eve::floor(eve::abs(a0), eve::as<unsigned int>()),
-              uwi_t([&](auto i, auto) { return ui_t(std::floor(std::abs(a0.get(i)))); }));
+              uwi_t([&](auto i, auto) { return ui_t(eve::floor(eve::abs(a0.get(i)))); }));
   }
   else { TTS_EQUAL(eve::floor(a0), a0); }
 };
 
 
 //==================================================================================================
-// Tests for masked floor
+//  Tests for masked floor
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::floor)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

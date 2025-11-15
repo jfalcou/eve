@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::trunc(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
   TTS_EXPR_IS(eve::trunc(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
 
-  if constexpr( eve::floating_value<T> )
+  if constexpr( eve::floating_value<T>)
   {
     TTS_EXPR_IS(eve::trunc[eve::almost](T()), T);
     TTS_EXPR_IS(eve::trunc[eve::almost](v_t()), v_t);
@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
 //==================================================================================================
 // almost tests
 //==================================================================================================
-TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals) //TO DO fp16 ?
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::trunc[eve::almost](eve::inc(-eve::eps(eve::as<T>()))), T(1));
@@ -55,26 +55,25 @@ TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
 auto mini = []<typename T>(eve::as<T> const&) { return eve::signed_value<T> ? -50 : 0; };
 
 TTS_CASE_WITH("Check behavior of trunc on wide",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(tts::constant(mini), +50)))
 <typename T>(T const& a0)
 {
-   using wi_t  = eve::as_integer_t<T, signed>;
- using uwi_t = eve::as_integer_t<T, unsigned>;
-   using v_t   = eve::element_type_t<T>;
-   using i_t   = eve::as_integer_t<v_t, signed>;
+  using wi_t  = eve::as_integer_t<T, signed>;
+  using uwi_t = eve::as_integer_t<T, unsigned>;
+  using v_t   = eve::element_type_t<T>;
+  using i_t   = eve::as_integer_t<v_t, signed>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
+    TTS_EQUAL(eve::trunc(a0), T([&](auto i, auto) { return v_t(eve::trunc(a0.get(i))); }));
     TTS_EQUAL(eve::trunc(a0, eve::as<signed>()), wi_t([&](auto i, auto) { return i_t(a0.get(i)); }));
-    TTS_EQUAL(eve::trunc(eve::abs(a0), eve::as<unsigned>()), uwi_t([&](auto i, auto) { return ui_t(std::abs(a0.get(i))); }));
+    TTS_EQUAL(eve::trunc(eve::abs(a0), eve::as<unsigned>()), uwi_t([&](auto i, auto) { return ui_t(eve::abs(a0.get(i))); }));
   }
   else { TTS_EQUAL(eve::trunc(a0), a0); }
-
 };
 
-TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
+TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals) //TO DO fp16 ?
 <typename T>(tts::type<T>)
 {
   using elt_t = eve::element_type_t<T>;
@@ -91,14 +90,13 @@ TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
   T erb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
   TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](ea), era);
   TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](eb), erb);
-
 };
 
 //==================================================================================================
 // Tests for masked trunc
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::trunc)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10000.0, 10000.0),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
