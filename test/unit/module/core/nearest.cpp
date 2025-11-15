@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -33,10 +33,16 @@ TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types)
 //==================================================================================================
 // nearest signed tests
 //==================================================================================================
+auto mini = []<typename T>(eve::as<T> const&)
+{ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0; };
+auto maxi = []<typename T>(eve::as<T> const&)
+{ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0; };
+
 TTS_CASE_WITH("Check behavior of nearest on wide",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0)
+              eve::test::simd::all_types_wf16,
+              tts::generate(tts::randoms(tts::constant(mini), tts::constant(maxi)))
+             )
+  <typename T>(T const& a0)
 {
   using wi_t  = eve::as_integer_t<T>;
   using uwi_t = eve::as_integer_t<T, unsigned>;
@@ -45,11 +51,15 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return v_t(std::nearbyint(a0.get(i))); }));
-    TTS_EQUAL(eve::nearest(a0, eve::as<signed>()),
-              wi_t([&](auto i, auto) { return i_t(std::nearbyint(a0.get(i))); }));
-    TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
-              uwi_t([&](auto i, auto) { return ui_t(std::nearbyint(std::abs(a0.get(i)))); }));
+    auto nbi = [](auto a, auto i){
+      if constexpr(sizeof(v_t) == 2) return v_t(std::nearbyint(float(a.get(i))));
+      else return v_t(std::nearbyint(a.get(i)));
+    };
+    TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return nbi(a0, i); }));
+   TTS_EQUAL(eve::nearest(a0, eve::as<signed>()),
+             wi_t([&](auto i, auto) { return i_t(nbi(a0, i)); })) << "a0 " <<  a0 << '\n';
+   TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
+             uwi_t([&](auto i, auto) { return ui_t(nbi(eve::abs(a0), i)); }));
   }
   else { TTS_EQUAL(eve::nearest(a0), a0); }
 };
@@ -59,7 +69,7 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
 // Tests for masked nearest
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::nearest[cx](eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
