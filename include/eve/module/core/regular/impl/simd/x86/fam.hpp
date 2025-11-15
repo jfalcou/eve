@@ -42,6 +42,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask3_fmadd_pd(w, x, v, m);
       else if constexpr( c == category::float32x8 ) return _mm128_mask3_fmadd_ps(w, x, v, m);
       else if constexpr( c == category::float64x4 ) return _mm128_mask3_fmadd_pd(w, x, v, m);
+      else if constexpr ( match(c, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fam, mask, v, w, x);
+        else if constexpr (c == category::float16x32)        return _mm512_mask3_fmadd_ph(w,x,v,m);
+        else if constexpr (c == category::float16x16)        return _mm256_mask3_fmadd_ph(w,x,v,m);
+        else if constexpr (c == category::float16x8)         return _mm_mask3_fmadd_ph(w,x,v,m);
+      }
       // No rounding issue with integers, so we just mask over regular FMA
       else                                          return if_else(mask, eve::fam(v, w, x), v);
     }
