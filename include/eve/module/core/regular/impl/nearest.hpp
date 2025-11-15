@@ -16,16 +16,22 @@
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/sign.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
-
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
   nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
     if constexpr(integral_value<T>)
+    {
       return a0;
+    }
+    else if constexpr (detail::fp16_should_apply<T>)
+    {
+      return apply_fp16_as_fp32(nearest, a0);
+    }
     else
     {
       auto s   = bitofsign(a0);

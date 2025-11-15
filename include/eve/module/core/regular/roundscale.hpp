@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var roundscale
-//!   @brief `strict_elementwise_callable` object computing the  scaled input rounding.
+//!   @brief `strict_elementwise_callable` object computing the scaled input rounding.
 //!
 //!   @groupheader{Header file}
 //!
