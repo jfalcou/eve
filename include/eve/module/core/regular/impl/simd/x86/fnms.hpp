@@ -65,6 +65,13 @@ namespace eve::detail
 
       if      constexpr( cat == category::float64x8  )  return _mm512_fnmsub_pd(a, b, c);
       else if constexpr( cat == category::float32x16 )  return _mm512_fnmsub_ps(a, b, c);
+      else  if constexpr ( match(cat, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(fnms, a, b, c);
+        else if constexpr (cat == category::float16x32)       return _mm512_fmnsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x16)       return _mm256_fmnsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x8)        return _mm_fmnsub_ph(a, b, c);
+      }
       else if constexpr( supports_fma3)
       {
         if      constexpr( cat == category::float64x4 ) return _mm256_fnmsub_pd(a, b, c);
@@ -129,7 +136,14 @@ namespace eve::detail
       else if constexpr( cx == category::float64x4  ) return _mm256_mask_fnmsub_pd(a, m, b, c);
       else if constexpr( cx == category::float32x4  ) return _mm_mask_fnmsub_ps   (a, m, b, c);
       else if constexpr( cx == category::float64x2  ) return _mm_mask_fnmsub_pd   (a, m, b, c);
-      // No rounding issue with integers, so we just mask over regular FMA
+      else if constexpr ( match(cx, category::float16))
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fnms, mask, a, b, c);
+        else if constexpr (cx == category::float16x32)        return _mm512_mask_fnmsub_ph(a,m,b,c);
+        else if constexpr (cx == category::float16x16)        return _mm256_mask_fnmsub_ph(a,m,b,c);
+        else if constexpr (cx == category::float16x8)         return _mm_mask_fnmsub_ph(a,m,b,c);
+      }
+       // No rounding issue with integers, so we just mask over regular FMA
       else                                            return if_else(mask, eve::fnms(a, b, c), a);
     }
     else                                              return if_else(mask, eve::fnms[opts](a, b, c), alternative(mask, a, as(a)));

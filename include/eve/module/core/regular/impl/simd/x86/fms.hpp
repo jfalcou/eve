@@ -140,7 +140,7 @@ namespace eve::detail
       else if constexpr( cx == category::float64x2 ) return _mm_mask_fmsub_pd(v, m, w, x);
       else if constexpr ( match(cx, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(sub, v, m, w, x);
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fms, mask, v, w, x);
         else if constexpr (cx == category::float16x32)        return _mm512_mask_fmsub_ph(v, m, w, x);
         else if constexpr (cx == category::float16x16)        return _mm256_mask_fmsub_ph(v, m, w, x);
         else if constexpr (cx == category::float16x8)         return _mm_mask_fmsub_ph(v, m, w, x);

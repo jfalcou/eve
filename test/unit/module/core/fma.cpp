@@ -82,10 +82,10 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
 //==  fma upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma[promote] on all types",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000))
+                            tts::randoms(-1000, 1000)) //wf16 TODO
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
@@ -141,7 +141,7 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
 };
 
 //==================================================================================================
-//  fma masked
+// fma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fma on all types",
               eve::test::simd::ieee_reals_wf16,
