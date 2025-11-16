@@ -147,6 +147,7 @@ namespace eve
           }
           return result;
         };
+        if constexpr (!O::contains(raw)) yi = if_else(is_not_finite(yi), eve::zero, yi);
         z *= russian(ax, convert(yi, uint_from<T>()));
         z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
         z = if_else(iseqzx && ylt0, zero, z);

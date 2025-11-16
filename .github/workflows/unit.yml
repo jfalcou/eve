@@ -59,8 +59,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-mavx2 -O3"           }
-        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -mf16c"    }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -mf16c" }
+        - { comp: gcc  , arch: x86    , opts: "-msse2 -O3"        }
     steps:
       - name: Install KUMI
         run: |

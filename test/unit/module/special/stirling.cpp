@@ -35,10 +35,10 @@ TTS_CASE_TPL("Check behavior of stirling on wide", eve::test::simd::ieee_reals)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(stirling(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(stirling(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(stirling(eve::mone(eve::as<T>())), eve::nan(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(stirling(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0.5);
+    TTS_IEEE_EQUAL(stirling(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(stirling(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(stirling(eve::mone(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(stirling(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 
   TTS_ULP_EQUAL(eve::round(stirling(T(1))), T(1), 0.5);
@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::stirling)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(10.0, 100.0),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::stirling[mask](a0),

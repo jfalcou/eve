@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/impl/convert_helpers.hpp>
-#include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/detail/category.hpp>
 
@@ -55,7 +55,7 @@ namespace eve::detail
     {
       if constexpr (floating_scalar_value<In> && integral_scalar_value<Out>)
       {
-        EVE_ASSERT(is_finite(v0), "[EVE] - convert to integral from floating point called on non finite value");
+        EVE_ASSERT(is_finite(v0), "[EVE] - Convert to integral from floating point called on non finite value");
       }
 
       return static_cast<Out>(maybe_saturate(v0));
