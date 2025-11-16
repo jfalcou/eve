@@ -111,6 +111,15 @@ namespace eve
 //! @}
 //================================================================================================
 
+  namespace detail
+  {
+    // This function is forward declared limited wrapper around add, so that internally we can call it anywhere.
+    template<typename T, typename U>
+    EVE_FORCEINLINE auto call_sub(T a, U b)
+    {
+      return sub(a, b);
+    }
+  }
 }
 
 #include <eve/module/core/regular/impl/sub.hpp>
