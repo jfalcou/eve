@@ -66,7 +66,7 @@ namespace eve::detail
       else
       {
         const auto finite_mask = is_finite(a0);
-        return if_else(finite_mask, floor(if_else(finite_mask, a0, zero(as(a0)))), a0);
+        return if_else(finite_mask, floor[raw](if_else(finite_mask, a0, zero(as(a0)))), a0);
       }
     }
   }
