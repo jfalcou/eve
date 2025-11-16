@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
 //==================================================================================================
 // almost tests
 //==================================================================================================
-TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check with almost", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::trunc[eve::almost](eve::inc(-eve::eps(eve::as<T>()))), T(1));
@@ -47,6 +47,16 @@ TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::trunc[eve::almost](eve::dec(2 * eve::eps(eve::as<T>()))), T(-1));
   TTS_EQUAL(eve::trunc[eve::almost](eve::dec(3 * eve::eps(eve::as<T>()))), T(-1));
   TTS_EQUAL(eve::trunc[eve::almost](eve::dec(4 * eve::eps(eve::as<T>()))), T(0));
+};
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_IEEE_EQUAL(eve::trunc(cases.nan), cases.nan);
+  TTS_EQUAL(eve::trunc(cases.inf), cases.inf);
+  TTS_EQUAL(eve::trunc(cases.minf), cases.minf);
 };
 
 //==================================================================================================

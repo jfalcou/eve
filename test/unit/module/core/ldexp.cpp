@@ -154,3 +154,13 @@ TTS_CASE_WITH ( "Check behavior of eve::masked(eve::ldexp)(eve::wide)"
 {
   TTS_IEEE_EQUAL(eve::ldexp[mask](a0, 4), eve::if_else(mask, eve::ldexp(a0, 4), a0));
 };
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_IEEE_EQUAL(eve::ldexp(T{ 1.0f }, cases.nan), cases.nan);
+  TTS_IEEE_EQUAL(eve::ldexp(1.0f, cases.inf), eve::inf(eve::as<eve::as_wide_as_t<float, T>>{}));
+  TTS_IEEE_EQUAL(eve::ldexp(eve::element_type_t<T>{ 1.0f }, cases.minf), T{ 0 });
+};

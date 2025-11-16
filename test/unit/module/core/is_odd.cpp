@@ -48,3 +48,13 @@ TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
   TTS_EQUAL(eve::is_odd(a0), tts::map([](auto e) -> eve::logical<v_t> { return (e & 1) != 0; }, a0));
   TTS_EQUAL(eve::is_odd[t](a0), eve::if_else(t, eve::is_odd(a0), eve::false_(eve::as(a0))));
 };
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_EQUAL(eve::is_odd(cases.nan), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(cases.inf), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(cases.minf), eve::logical<T>{ false });
+};

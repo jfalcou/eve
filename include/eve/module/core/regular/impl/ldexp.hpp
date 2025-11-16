@@ -15,23 +15,55 @@
 #include <eve/module/core/constant/maxexponent.hpp>
 #include <eve/module/core/constant/minexponent.hpp>
 #include <eve/module/core/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/is_pinf.hpp>
+#include <eve/module/core/regular/is_minf.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_not_finite.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
 template<typename T, floating_value U, callable_options O>
-constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
-requires(std::same_as<element_type_t<T>, element_type_t<U>>)
+constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
 {
-  return ldexp[o](a, convert(trunc(b), as_element<as_integer_t<T>>{}));
+  if constexpr (O::contains(raw))
+  {
+    return ldexp[o](a, convert(trunc(b), as_element<as_integer_t<T>>{}));
+  }
+  else
+  {
+    const auto mask = is_not_finite(b);
+    if (any(mask))
+    {
+      const auto tgt = as<as_wide_as_t<T, U>>{};
+      auto res = ldexp[o][raw](a, if_else(mask, zero(as(b)), b));
+
+      res = if_else(is_nan(b), nan(tgt), res);
+      res = if_else(is_pinf(b), inf(tgt), res);
+      res = if_else(is_minf(b), zero(tgt), res);
+      return res;
+    }
+    else
+    {
+      return ldexp[o][raw](a, b);
+    }
+  }
 }
 
 template<typename T, integral_value U, callable_options O>
-constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
+constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
 {
-  if constexpr(O::contains(pedantic))
+  if constexpr (scalar_value<T> && simd_value<U>)
+  {
+    return ldexp[o](as_wide_as_t<T, U>{ a }, b);
+  }
+  else if constexpr(O::contains(pedantic))
   {
     // No denormal supported at platform level means pedantic is no-op
     if constexpr( !eve::platform::supports_denormals ) return ldexp(a,b);

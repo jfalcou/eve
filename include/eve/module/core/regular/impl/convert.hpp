@@ -55,14 +55,7 @@ namespace eve::detail
     {
       if constexpr (floating_scalar_value<In> && integral_scalar_value<Out>)
       {
-        // promote to a common type to perform the bound checking safely
-        using c_t = common_type_t<In, Out>;
-
-        constexpr c_t max_val = static_cast<c_t>(valmax(as<Out>{}));
-        constexpr c_t min_val = static_cast<c_t>(valmin(as<Out>{}));
-        const c_t vc          = static_cast<c_t>(v0);
-
-        if (is_not_finite(v0) || (!O::contains(saturated) && ((vc > max_val) || (vc < min_val)))) return allbits(as<Out>{});
+        EVE_ASSERT(is_finite(v0), "[EVE] - convert to integral from floating point called on non finite value");
       }
 
       return static_cast<Out>(maybe_saturate(v0));

@@ -27,8 +27,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -msse2    }
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: "-msse2 -O3"    }
+        - { comp: gcc  , arch: x86    , opts: "-msse2 -O3"    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1

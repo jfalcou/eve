@@ -31,7 +31,7 @@ namespace eve
         static_assert(!(O::contains(saturated) || O::contains(lower) || O::contains(upper)),
                       "[eve::inc] The mod option cannot be combined with saturated, lower or upper");
 
-        auto modulus = this->options()[mod].value(as(v));
+        [[maybe_unused]] auto modulus = this->options()[mod].value(as(v));
 
         EVE_ASSERT((modulus > 0) && (modulus <= maxrepint(as(modulus))), "[eve::inc] Modulus value out of range");
         EVE_ASSERT(eve::all((v >= 0) && (v < modulus)),
