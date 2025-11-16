@@ -27,8 +27,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-msse2 -O3"    }
-        - { comp: gcc  , arch: x86    , opts: "-msse2 -O3"    }
+        - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: gcc  , arch: x86    , opts: -msse2    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -59,8 +59,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -msse2    }
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -O3"           }
+        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -mf16c"    }
     steps:
       - name: Install KUMI
         run: |
