@@ -22,7 +22,7 @@
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
-#include <eve/module/core/detail/scalops.hpp>
+//#include <eve/module/core/detail/scalops.hpp>
 
 namespace eve
 {
@@ -120,7 +120,7 @@ namespace eve
         if constexpr(O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
-          auto z    = bitfloating(pz-one(as(pz)));
+          auto z    = bitfloating(call_sub(pz, one(as(pz))));
           auto test = is_negative(z) && is_positive(a);
           auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
           prv =  if_else(is_nan(a), eve::allbits, prv);
@@ -141,21 +141,18 @@ namespace eve
         else
         {
           auto bi = bitinteger(a);
- //          if constexpr(scalar_value<T> && (sizeof(T) == 2))
-//             return  bitfloating((eve::operator-)(bi, one(as(bi)))); //std::int8_t(bi - one(as(bi))));
-//           else
-          return bitfloating(eve::detail::opsub(bi, one(as(bi))));
+          return bitfloating(eve::detail::call_sub(bi, one(as(bi))));
         }
       }
       else
       {
         if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
-          return if_else(a == valmin(as(a)), a, T(a-one(as(a))));
+          return if_else(a == valmin(as(a)), a, call_sub(a, one(as(a))));
         }
         else
         {
-          return T(a-one(as(a)));
+          return call_sub(a, one(as(a)));
         }
       }
     }
@@ -169,9 +166,9 @@ namespace eve
         if constexpr(O::contains(pedantic))
         {
           using i_t = as_integer_t<T>;
-          auto vz   = bitinteger(a) - convert(n, as<element_type_t<i_t>>());
+          auto vz   = call_sub(bitinteger(a), convert(n, as<element_type_t<i_t>>()));
           auto pz   = vz + one(as(vz));
-          auto z    = bitfloating(pz-one(as(pz)));
+          auto z    = bitfloating(call_sub(pz, one(as(pz))));
           auto test = is_negative(z) && is_positive(a);
           if constexpr( scalar_value<T> && scalar_value<N> )
           {
@@ -190,7 +187,7 @@ namespace eve
         else
         {
           using i_t =as_integer_t<element_type_t<T>>;
-          return bitfloating(bitinteger(a) - convert(n, as<i_t>()));
+          return bitfloating(call_sub(bitinteger(a), convert(n, as<i_t>())));
         }
       }
       else
@@ -202,7 +199,7 @@ namespace eve
         }
         else
         {
-          return a-convert(n, as<element_type_t<T>>());
+          return call_sub(a, convert(n, as<element_type_t<T>>()));
         }
       }
     }

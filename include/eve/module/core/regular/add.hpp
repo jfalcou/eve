@@ -129,8 +129,18 @@ namespace eve
   template <typename Options>
   constexpr auto neutral(add_t<Options>) noexcept { return eve::zero; }
 
-// Required for optimisation detections
+  // Required for optimisation detections
   using callable_add_ = tag_t<add>;
+
+  namespace detail
+  {
+    // This function is forward declared limited wrapper around add, so that internally we can call it anywhere.
+    template<typename T, typename U>
+    EVE_FORCEINLINE auto call_add(T a, U b)
+    {
+      return add(a, b);
+    }
+  }
 }
 
 #include <eve/module/core/regular/impl/add.hpp>

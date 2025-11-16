@@ -61,4 +61,16 @@ To call_simd_cast(From, as<To>);
 // This is an inderect wrapper of eve::convert to avoid cycling dependencies
 template <simd_value Src, typename Tgt>
 as_wide_as_t<Tgt, Src> call_convert(Src, as<Tgt>);
+
+
+// This is a limited  inderect wrapper of eve::add to avoid cycling dependencies
+template <typename T, typename U>
+auto call_add(T, U);
+
+// This is a limited  inderect wrapper of eve::sub to avoid cycling dependencies
+template <typename T, typename U>
+auto call_sub(T, U);
+
+
+
 }
