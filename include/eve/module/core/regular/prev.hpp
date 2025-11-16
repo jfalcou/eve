@@ -22,6 +22,7 @@
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/detail/scalops.hpp>
 
 namespace eve
 {
@@ -140,7 +141,10 @@ namespace eve
         else
         {
           auto bi = bitinteger(a);
-          return bitfloating(bi - one(as(bi)));
+ //          if constexpr(scalar_value<T> && (sizeof(T) == 2))
+//             return  bitfloating((eve::operator-)(bi, one(as(bi)))); //std::int8_t(bi - one(as(bi))));
+//           else
+          return bitfloating(eve::detail::opsub(bi, one(as(bi))));
         }
       }
       else

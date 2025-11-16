@@ -105,10 +105,10 @@ TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
 // fsnm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",
-              eve::test::simd::all_types_wf16,
+              eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1 )
+  <typename T>(T const& a0, T const& a1 )   //TO DO wf16
 {
   using eve::as;
   using eve::fsnm;
