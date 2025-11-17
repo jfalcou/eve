@@ -24,7 +24,6 @@ EVE_FORCEINLINE auto shuffle_v2_driver_restart(NativeSelector     selector,
 
 // emulated shuffle ------------------------------------
 
-EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 template<typename T, typename... Ts>
 EVE_FORCEINLINE auto
 shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
@@ -37,7 +36,7 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
       {
         using N1 = eve::fixed<(std::ptrdiff_t)sizeof...(I)>;
         using T1 = typename T::template rescale<N1>;
-        T1 res;
+        T1 res{};
 
         int res_i = 0;
 
@@ -60,7 +59,6 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
       idxm::slice_pattern<T::size()>(p));
   return kumi::tuple {shuffled, index<0>};
 }
-EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto
