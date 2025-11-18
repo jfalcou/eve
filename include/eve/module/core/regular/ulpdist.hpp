@@ -98,8 +98,13 @@ namespace eve
       }
       else if constexpr( simd_value<T> )
       {
+        using e_t = eve::element_type_t<T>;
         auto inen = is_not_equal[numeric](a, b);
-        return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+convert(nb_values(a, b), eve::as<eve::element_type_t<T>>()));
+        auto res =  half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+convert(nb_values(a, b), eve::as<e_t>()));
+        if constexpr(!std::same_as<e_t, eve::float16_t>)
+          return res;
+        else
+          return if_else(eve::is_nan(a) && eve::is_nan(b), zero, res);
       }
     }
   }
