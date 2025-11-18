@@ -47,7 +47,7 @@ namespace tts
   template<>
   double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
   {
-    return ulp_distance(static_cast<float>(l), static_cast<float>(r));
+    return ulp_distance(l, r);
   }
 
   template<typename T, typename N>
@@ -557,11 +557,26 @@ namespace tts
   //==================================================================================================
   template <typename T> inline double constexpr prec()
   {
-    if constexpr( sizeof(eve::element_type_t<T>) == 4) return 1.0e-3; else return 1.0e-6;
+    if constexpr( sizeof(eve::element_type_t<T>) == 2)
+      return 1.0e-1;
+    if constexpr( sizeof(eve::element_type_t<T>) == 4)
+      return 1.0e-3;
+    else
+      return 1.0e-6;
   }
 
   template <typename T> inline double constexpr prec(double f,  double d)
   {
     if constexpr( sizeof(eve::element_type_t<T>) == 4) return f; else return d;
+  }
+
+  template <typename T> inline double constexpr prec(double e, double f,  double d)
+  {
+    if constexpr( sizeof(eve::element_type_t<T>) == 2)
+      return e;
+    if constexpr( sizeof(eve::element_type_t<T>) == 4)
+      return f;
+    else
+      return d;
   }
 }

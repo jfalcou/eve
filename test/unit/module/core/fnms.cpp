@@ -54,9 +54,9 @@ TTS_CASE_WITH("Check precision behavior of fnms on real types",
   using eve::fnms;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      eve::fnms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
-      tts::map([&](auto e, auto f) -> v_t { return eve::fnms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-      2);
+    eve::fnms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+    tts::map([&](auto e, auto f) -> v_t { return eve::fnms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+    2);
 };
 
 
