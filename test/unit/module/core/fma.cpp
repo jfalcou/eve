@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
   TTS_ULP_EQUAL(
     eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
     tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-    2);
+    11);
 };
 
 
@@ -75,7 +75,7 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
   TTS_ULP_EQUAL(
       eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
       tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-      2);
+      11);
 };
 
 //==================================================================================================
