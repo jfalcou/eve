@@ -47,7 +47,7 @@ namespace tts
   template<>
   double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
   {
-    return ulp_distance(l, r);
+    return eve::ulpdist(l, r);
   }
 
   template<typename T, typename N>

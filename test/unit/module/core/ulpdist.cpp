@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of ulpdist", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of ulpdist", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check return types of ulpdist", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::ulpdist(v_t(), v_t()), v_t);
 };
 
-TTS_CASE_TPL("Check return types of ulpdist", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of ulpdist", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
