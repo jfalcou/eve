@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::compare_absolute(simd)", eve::test::simd::all_types_wf16)
+TTS_CASE_TPL("Check return types of eve::compare_absolute(simd)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check return types of eve::compare_absolute(simd)", eve::test::sim
 //== Tests for eve::compare_absolute
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::compare_absolute(simd)",
-              eve::test::simd::all_types_wf16,
+              eve::test::simd::all_types,
               tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
