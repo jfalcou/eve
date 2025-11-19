@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check return types of bit_cast", eve::test::simd::all_types_wf16)
 //== bit_cast tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_cast(simd) on integral types",
-              eve::test::simd::all_types_wf16,
+              eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
