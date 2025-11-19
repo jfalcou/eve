@@ -25,6 +25,8 @@ namespace eve::detail
   requires (arm_abi<abi_t<T, N>>)
   {
     constexpr auto c = categorize<wide<T, N>>();
+    if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
+      return eve::compare_absolute.behavior(cpu_{}, opts, v, w);
     if constexpr(F{} == is_less_equal)
     {
       if constexpr( c == category::float16x4  ) return vcale_f16 (v, w);
