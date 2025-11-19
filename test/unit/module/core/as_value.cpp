@@ -10,7 +10,7 @@
 
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL("Check behavior of arithmetic as_value", eve::test::simd::all_types_wf16)
+TTS_CASE_TPL("Check behavior of arithmetic as_value", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t     = eve::element_type_t<T>;
@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check behavior of arithmetic as_value", eve::test::simd::all_types
   }
 };
 
-TTS_CASE_TPL("Check behavior of logical as_value", eve::test::simd::all_types_wf16)
+TTS_CASE_TPL("Check behavior of logical as_value", eve::test::simd::all_types)
 <typename T>(tts::type<T>) {
   {
     using U = eve::logical<T>;
