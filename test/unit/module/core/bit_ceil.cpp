@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of bit_ceil on wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bit_ceil on wide", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -45,7 +45,7 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on integral types",
 };
 
 TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename U>(T const& a0, U const& t)
 {
@@ -75,10 +75,10 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
 // Tests for masked bit_ceil
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_ceil)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::bit_ceil[mask](a0),

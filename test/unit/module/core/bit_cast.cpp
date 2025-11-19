@@ -17,7 +17,7 @@ template<eve::arithmetic_simd_value Wide, typename Scalar>
 using same_size_of =
     eve::wide<Scalar, eve::fixed<std::max<size_t>(1, sizeof(Wide) / sizeof(Scalar))>>;
 
-TTS_CASE_TPL("Check return types of bit_cast", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bit_cast", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using ut_t = eve::as_integer_t<T, unsigned>;
@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check return types of bit_cast", eve::test::simd::all_types)
 //== bit_cast tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_cast(simd) on integral types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {

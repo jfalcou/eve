@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of bitofsign", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bitofsign", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of bitofsign", eve::test::simd::all_types)
 // bitofsign(simd) tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bitofsign(wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of bitofsign(wide)",
 // bitofsign[cond](simd) tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bitofsign(wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
