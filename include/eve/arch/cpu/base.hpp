@@ -28,7 +28,13 @@ namespace eve::detail
   {
     using storage_type = Storage;
 
-    wide_storage() = default;
+    // gcc fix
+  #if defined(SPY_SIMD_IS_ARM_FIXED_SVE2) || defined(SPY_SIMD_IS_ARM_FIXED_SVE)
+    wide_storage() {};
+  #else
+    wide_storage() : data_{} {}; // gcc fix
+  #endif
+
     wide_storage(storage_type const &r) : data_(r) {}
 
     //! @brief Retrieve the architecture-specific storage help by wide
