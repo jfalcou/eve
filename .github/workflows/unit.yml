@@ -21,7 +21,7 @@ jobs:
   no_pch:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -53,7 +53,7 @@ jobs:
   externals:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -104,7 +104,7 @@ jobs:
   riscv:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9b
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -137,7 +137,7 @@ jobs:
   armv7:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -162,7 +162,7 @@ jobs:
   nosimd:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -246,7 +246,7 @@ jobs:
   x86-clang:
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -275,7 +275,7 @@ jobs:
     needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -305,7 +305,7 @@ jobs:
     needs: other-arch
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -333,7 +333,7 @@ jobs:
   avx512:
     runs-on: [self-hosted, avx512]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -360,7 +360,7 @@ jobs:
     needs: avx512
     runs-on: [self-hosted, avx512]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
