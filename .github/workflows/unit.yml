@@ -41,7 +41,7 @@ jobs:
       - name: Compile Unit Tests
         run:  |
           cd build
-          ninja unit.exe -j 4
+          ninja unit.exe -j 3
       - name: Running Unit Tests
         run:  |
           cd build
@@ -60,7 +60,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -mf16c" }
-        # - { comp: gcc  , arch: x86    , opts: "-msse2 -O3"        }
+        - { comp: gcc  , arch: x86    , opts: "-msse2 -O3"        }
     steps:
       - name: Install KUMI
         run: |
@@ -92,7 +92,7 @@ jobs:
       - name: Compile Unit Tests
         run:  |
           cd build
-          ninja unit.exe -j 4
+          ninja unit.exe -j 3
       - name: Running Unit Tests
         run:  |
           cd build
