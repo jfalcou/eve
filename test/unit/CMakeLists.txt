@@ -68,12 +68,12 @@ glob_unit("unit" ${unit_root} "regression/*.cpp" )
 ##==================================================================================================
 ## GLOB and process modules unit tests
 ##==================================================================================================
-##add_custom_target(unit.algo.exe         )
-##add_dependencies(unit.exe unit.algo.exe )
-##glob_unit("unit" ${unit_root} "module/algo/*.cpp"          )
-##glob_unit("unit" ${unit_root} "module/algo/algorithm/*.cpp")
-##glob_unit("unit" ${unit_root} "module/algo/container/*.cpp")
-##glob_unit("unit" ${unit_root} "module/algo/views/*.cpp"    )
+add_custom_target(unit.algo.exe         )
+add_dependencies(unit.exe unit.algo.exe )
+glob_unit("unit" ${unit_root} "module/algo/*.cpp"          )
+glob_unit("unit" ${unit_root} "module/algo/algorithm/*.cpp")
+glob_unit("unit" ${unit_root} "module/algo/container/*.cpp")
+glob_unit("unit" ${unit_root} "module/algo/views/*.cpp"    )
 
 add_custom_target(unit.core.exe         )
 add_dependencies(unit.exe unit.core.exe )
