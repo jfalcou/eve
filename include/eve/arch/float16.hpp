@@ -24,6 +24,7 @@ namespace eve
   namespace detail
   {
     // taken from https://github.com/QiJune/majel/blob/master/float16_t.h
+    // adapted to be usable in constexpr contexts
     static constexpr int32_t fp16_shift = 13;
     static constexpr int32_t fp16_shiftSign = 16;
     static constexpr int32_t fp16_infN = 0x7F800000;
@@ -43,50 +44,39 @@ namespace eve
     static constexpr int32_t fp16_maxD = fp16_infC - fp16_maxC - 1;
     static constexpr int32_t fp16_minD = fp16_minC - fp16_subC - 1;
 
-    union Bits {
-        float f;
-        int32_t si;
-        uint32_t ui;
-    };
-
     constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
     {
-      Bits v;
-      v.ui = raw;
-      int32_t sign = v.si & fp16_sigC;
-      v.si ^= sign;
+      int32_t vsi = std::bit_cast<int32_t>(uint32_t { raw });
+      int32_t sign = vsi & fp16_sigC;
+      vsi ^= sign;
       sign <<= fp16_shiftSign;
-      v.si ^= ((v.si + fp16_minD) ^ v.si) & -(v.si > fp16_subC);
-      v.si ^= ((v.si + fp16_maxD) ^ v.si) & -(v.si > fp16_maxC);
-      Bits s;
-      s.si = fp16_mulC;
-      s.f *= v.si;
-      int32_t mask = -(fp16_norC > v.si);
-      v.si <<= fp16_shift;
-      v.si ^= (s.si ^ v.si) & mask;
-      v.si |= sign;
-      return v.f;
+      vsi ^= ((vsi + fp16_minD) ^ vsi) & -(vsi > fp16_subC);
+      vsi ^= ((vsi + fp16_maxD) ^ vsi) & -(vsi > fp16_maxC);
+      int32_t ssi = std::bit_cast<int32_t>(std::bit_cast<float>(fp16_mulC) * vsi);
+      int32_t mask = -(fp16_norC > vsi);
+      vsi <<= fp16_shift;
+      vsi ^= (ssi ^ vsi) & mask;
+      vsi |= sign;
+      return std::bit_cast<float>(vsi);
     }
 
     template <std::floating_point T>
-    constexpr std::uint16_t emulated_fp_to_fp16(T value) noexcept
+    constexpr uint16_t emulated_fp_to_fp16(T value) noexcept
     {
-      const float f = static_cast<float>(value);
+      int32_t vsi = std::bit_cast<int32_t>(static_cast<float>(value));
 
-      Bits v, s;
-      v.f = f;
-      uint32_t sign = v.si & fp16_sigN;
-      v.si ^= sign;
+      uint32_t sign = vsi & fp16_sigN;
+      vsi ^= sign;
       sign >>= fp16_shiftSign; // logical shift
-      s.si = fp16_mulN;
-      s.si = s.f * v.f; // correct subnormals
-      v.si ^= (s.si ^ v.si) & -(fp16_minN > v.si);
-      v.si ^= (fp16_infN ^ v.si) & -((fp16_infN > v.si) & (v.si > fp16_maxN));
-      v.si ^= (fp16_nanN ^ v.si) & -((fp16_nanN > v.si) & (v.si > fp16_infN));
-      v.ui >>= fp16_shift; // logical shift
-      v.si ^= ((v.si - fp16_maxD) ^ v.si) & -(v.si > fp16_maxC);
-      v.si ^= ((v.si - fp16_minD) ^ v.si) & -(v.si > fp16_subC);
-      return v.ui | sign;
+      int32_t ssi = std::bit_cast<float>(fp16_mulN) * std::bit_cast<float>(vsi); // correct subnormals
+      vsi ^= (ssi ^ vsi) & -(fp16_minN > vsi);
+      vsi ^= (fp16_infN ^ vsi) & -((fp16_infN > vsi) & (vsi > fp16_maxN));
+      vsi ^= (fp16_nanN ^ vsi) & -((fp16_nanN > vsi) & (vsi > fp16_infN));
+      vsi = std::bit_cast<int32_t>(std::bit_cast<uint32_t>(vsi) >> fp16_shift); // logical shift
+      vsi ^= ((vsi - fp16_maxD) ^ vsi) & -(vsi > fp16_maxC);
+      vsi ^= ((vsi - fp16_minD) ^ vsi) & -(vsi > fp16_subC);
+
+      return static_cast<uint16_t>(std::bit_cast<uint32_t>(vsi) | sign);
     }
 
     template <std::integral T>

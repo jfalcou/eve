@@ -17,6 +17,10 @@
 
 namespace eve::detail
 {
+  template <typename T>
+  concept fp16_should_apply = (std::same_as<T, eve::float16_t> && !detail::supports_fp16_native_type)
+                                  || (simd_value<T> && std::same_as<element_type_t<T>, eve::float16_t> && !detail::supports_fp16_vector_ops);
+
   template <typename Func, typename Arg0, typename... Args>
   constexpr EVE_FORCEINLINE auto apply_fp16_as_fp32(Func&& f, Arg0 arg0, Args... args)
   {
@@ -69,4 +73,3 @@ namespace eve::detail
     else                                      return bit_cast(r, as<as_wide_as_t<eve::float16_t, decltype(r)>>{});
   }
 }
-
