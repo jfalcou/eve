@@ -21,15 +21,20 @@ jobs:
   no_pch:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -msse2    }
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: "-msse2" }
+        - { comp: gcc  , arch: x86    , opts: "-msse2" }
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -53,15 +58,20 @@ jobs:
   externals:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: -msse2    }
-        - { comp: gcc  , arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -mf16c" }
+        - { comp: gcc  , arch: x86    , opts: "-msse2"        }
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Install KUMI
         run: |
           mkdir 3rdparty
@@ -118,6 +128,7 @@ jobs:
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -137,7 +148,7 @@ jobs:
   armv7:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -145,6 +156,11 @@ jobs:
         cfg:
         - { comp: clang, arch: arm, opts: -Wno-psabi }
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -162,7 +178,7 @@ jobs:
   nosimd:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -172,6 +188,11 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
 
     steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -198,6 +219,7 @@ jobs:
       - name: Print Runner Info
         run: |
           system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
+          df -h /System/Volumes/Data
       - name: Fetch current branch
         uses: actions/checkout@v4
       - name: Running CMake for ${{ matrix.cfg.comp }}
@@ -246,7 +268,7 @@ jobs:
   x86-clang:
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -275,7 +297,7 @@ jobs:
     needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -305,7 +327,7 @@ jobs:
     needs: other-arch
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -333,7 +355,7 @@ jobs:
   avx512:
     runs-on: [self-hosted, avx512]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
@@ -360,7 +382,7 @@ jobs:
     needs: avx512
     runs-on: [self-hosted, avx512]
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false

@@ -46,3 +46,13 @@ TTS_CASE_WITH("Check behavior of eve::is_flint(simd)",
                 aa1));
   TTS_EQUAL(eve::is_flint[t](a0), eve::if_else(t, eve::is_flint(a0), eve::false_(eve::as(a0))));
 };
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_EQUAL(eve::is_flint(cases.nan), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_flint(cases.inf), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_flint(cases.minf), eve::logical<T>{ false });
+};

@@ -50,7 +50,7 @@ namespace eve::detail
           return if_else(is_lez(a0) || (r - a0 < rmax), r, dec(r));
         }
       }
-      else
+      else if constexpr (O::contains(raw))
       {
         using elt_t = element_type_t<T>;
         using i_t   = as_integer_t<elt_t>;
@@ -62,6 +62,11 @@ namespace eve::detail
         else if constexpr( simd_value<T> )   z = if_else(already_integral, a0, z);
 
         return dec[z > a0](z);
+      }
+      else
+      {
+        const auto finite_mask = is_finite(a0);
+        return if_else(finite_mask, floor[raw](if_else(finite_mask, a0, zero(as(a0)))), a0);
       }
     }
   }

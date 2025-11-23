@@ -61,7 +61,7 @@ TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
 //==================================================================================================
 // Tests for masked frac
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::frac)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::frac[mask](eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
@@ -70,4 +70,14 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::frac)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::frac[mask](a0),
             eve::if_else(mask, eve::frac(a0), a0));
+};
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_IEEE_EQUAL(eve::frac(cases.nan), cases.nan);
+  TTS_IEEE_EQUAL(eve::frac(cases.inf), cases.nan);
+  TTS_IEEE_EQUAL(eve::frac(cases.minf), cases.nan);
 };

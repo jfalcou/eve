@@ -48,3 +48,13 @@ TTS_CASE_WITH("Check behavior of eve::is_even(simd)",
   TTS_EQUAL(eve::is_even(a0), tts::map([](auto e) -> eve::logical<v_t> { return (e & 1) == 0; }, a0));
   TTS_EQUAL(eve::is_even[t](a0), eve::if_else(t, eve::is_even(a0), eve::false_(eve::as(a0))));
 };
+
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
+{
+  auto cases = tts::limits(tgt);
+
+  TTS_EQUAL(eve::is_even(cases.nan), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_even(cases.inf), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_even(cases.minf), eve::logical<T>{ false });
+};

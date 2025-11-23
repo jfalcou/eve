@@ -143,6 +143,8 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
       if constexpr( scalar_value<T> )
       {
         auto result = zero(as(a));
+        if( is_nan(a)|| is_minf(a) ) return nan(as(a));
+        if( is_pinf(a) ) return a;
         if( a == 0 ) return copysign(inf(as(a)), a);
         if( a < 0 )
         {
@@ -182,8 +184,10 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
       else // simd
       {
         a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
-        auto notdone = is_not_nan(a);
-        auto result  = zero(as(a));
+        auto result = if_else(is_pinf(a), a, zero);
+        result = if_else(is_minf(a) || is_nan(a), allbits, result);
+        auto notdone = is_finite(a);
+        a = if_else(is_not_finite(a), one, a);
         auto test    = is_lez(a);
         if( eve::any(test) )
         {
@@ -196,7 +200,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
           result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
           result         = if_else(test, result, zero);
         }
-        auto r = nan(as<T>());
+        auto r = result;
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);

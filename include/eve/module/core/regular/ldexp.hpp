@@ -17,7 +17,7 @@
 namespace eve
 {
 template<typename Options>
-struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
+struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, raw_option, pedantic_option>
 {
   template<eve::floating_value T, eve::value U>
   requires(eve::same_lanes_or_scalar<T, U>)

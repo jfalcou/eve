@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_flint_t : elementwise_callable<is_flint_t, Options, pedantic_option>
+  struct is_flint_t : elementwise_callable<is_flint_t, Options, raw_option, pedantic_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
@@ -87,13 +87,13 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_flint_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_flint_(EVE_REQUIRES(cpu_), O const& opts, T const& a) noexcept
     {
       if constexpr( integral_value<T> )
         return true_(eve::as<T>());
       else
       {
-        auto r = is_eqz(frac[raw](a));
+        auto r = is_eqz(frac[opts.drop(pedantic)](a)); // keep raw if present
         if constexpr( O::contains(pedantic) )
           return r && (a <= eve::maxflint(eve::as<T>()));
         else

@@ -19,7 +19,7 @@
 namespace eve
 {
   template<typename Options>
-  struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
+  struct expm1_t : elementwise_callable<expm1_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -96,6 +96,19 @@ namespace eve
         if( xgemaxlog ) return inf(eve::as<T>());
         if( xlelogeps ) return mone(eve::as<T>());
       }
+      else if constexpr (!O::contains(raw))
+      {
+        const auto not_finite_mask = is_not_finite(xx);
+        if (any(not_finite_mask))
+        {
+          auto r = expm1[o][raw](if_else(not_finite_mask, zero(as(xx)), xx));
+          r = if_else(is_nan(xx), nan(as(xx)), r);
+          r = if_else(is_minf(xx), mone(as(xx)), r);
+          r = if_else(is_pinf(xx), inf(as(xx)), r);
+          return r;
+        }
+      }
+
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T x    = fnma(k, Log_2hi, xx);

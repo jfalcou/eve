@@ -36,7 +36,7 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
       {
         using N1 = eve::fixed<(std::ptrdiff_t)sizeof...(I)>;
         using T1 = typename T::template rescale<N1>;
-        T1 res;
+        T1 res{};
 
         int res_i = 0;
 

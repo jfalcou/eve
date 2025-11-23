@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of exp on wide",
   TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
 };
 
-TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;

@@ -31,6 +31,7 @@ jobs:
       - name: Print Runner Info
         run: |
           system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
+          df -h /System/Volumes/Data
       - name: Fetch current branch
         uses: actions/checkout@v4
       - name: Running CMake for ${{ matrix.cfg.comp }}
@@ -45,7 +46,7 @@ jobs:
   generic:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
     strategy:
       fail-fast: false
       matrix:
@@ -60,6 +61,7 @@ jobs:
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
