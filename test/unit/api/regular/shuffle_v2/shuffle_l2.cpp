@@ -33,9 +33,7 @@ void
 run(auto pattern)
 {
   if constexpr( eve::current_api >= api ) { run_any_api<T, N, G>(pattern); }
-  else {
-    TTS_PASS();
-  }
+  else { TTS_PASS(); }
 }
 
 template<auto api, typename T, std::ptrdiff_t G = 1>
@@ -64,9 +62,7 @@ void
 run2(auto pattern)
 {
   if constexpr( eve::current_api >= api ) { run2_any_api<T, N, G>(pattern); }
-  else {
-    TTS_PASS();
-  }
+  else { TTS_PASS(); }
 }
 
 template<auto api, typename T, std::ptrdiff_t G = 1>

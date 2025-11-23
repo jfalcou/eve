@@ -41,9 +41,7 @@ void
 run(auto pattern)
 {
   if constexpr( eve::current_api >= api ) { run_any_api<T, N, G>(pattern); }
-  else {
-    TTS_PASS();
-  }
+  else { TTS_PASS(); }
 }
 
 TTS_CASE("and 0s")
