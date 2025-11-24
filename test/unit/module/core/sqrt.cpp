@@ -6,17 +6,17 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 
 #include <cmath>
-
 #include <type_traits>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -34,31 +34,35 @@ TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals)
 // sqrt simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0, eve::valmax)))
 <typename T>(T const& a0)
 {
   using eve::rec;
   using eve::sqr;
-  TTS_ULP_EQUAL(eve::sqrt(a0), tts::map([&](auto e) { return std::sqrt(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::sqrt(a0), tts::map([&](auto e) { return std_sqrt(e); }, a0), 2);
 
-  TTS_EXPECT(eve::all(eve::sqrt[eve::lower](a0) <= eve::sqrt(a0)));
-  TTS_EXPECT(eve::all(eve::sqrt[eve::upper](a0) >= eve::sqrt(a0)));
-  TTS_EXPECT(eve::all(eve::sqrt[eve::lower][eve::strict](a0) < eve::sqrt(a0)));
-  TTS_EXPECT(eve::all(eve::sqrt[eve::upper][eve::strict](a0) > eve::sqrt(a0)));
+  //TODO: enable for float16 once support is more complete
+  if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
+  {
+    TTS_EXPECT(eve::all(eve::sqrt[eve::lower](a0) <= eve::sqrt(a0)));
+    TTS_EXPECT(eve::all(eve::sqrt[eve::upper](a0) >= eve::sqrt(a0)));
+    TTS_EXPECT(eve::all(eve::sqrt[eve::lower][eve::strict](a0) < eve::sqrt(a0)));
+    TTS_EXPECT(eve::all(eve::sqrt[eve::upper][eve::strict](a0) > eve::sqrt(a0)));
+  }
 };
 
 //==================================================================================================
 // sqrt[cond](simd) tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0.0, eve::valmax)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
   auto val  = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>()) / 2) : 0;
-  TTS_ULP_EQUAL(eve::sqrt[a0 < val](a0), tts::map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
+  TTS_ULP_EQUAL(eve::sqrt[a0 < val](a0), tts::map([&](auto e) { return (e < val) ? std_sqrt(e) : e; }, a0), 2);
 };
 
 
@@ -66,7 +70,7 @@ TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
 // Tests for masked sqrt
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sqrt)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

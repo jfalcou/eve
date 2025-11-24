@@ -38,8 +38,7 @@ namespace eve
 //! @addtogroup core_accuracy
 //! @{
 //!   @var two_add
-//!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   pair of  sum and error,
+//!   @brief Computes the [elementwise](@ref glossary_elementwise) pair consisting of the sum and its resulting rounding error.
 //!
 //!   @groupheader{Header file}
 //!
@@ -53,17 +52,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto two_add(floating_value auto x, floating_value auto y)      noexcept; //1
-//!      constexpr auto two_add[raw](floating_value auto x, floating_value auto y) noexcept; //2
+//!      constexpr auto two_add(floating_value auto x, floating_value auto y)            noexcept; // 1
+//!      constexpr auto two_add[raw](floating_value auto x, floating_value auto y)       noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto two_add[pedantic](floating_value auto x, floating_value auto y)  noexcept; //3
+//!      constexpr auto two_add[pedantic](floating_value auto x, floating_value auto y)  noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [floating arguments](@ref eve::floating_value).
+//!     * `x`, `y`:  [floating-point arguments](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
@@ -72,9 +71,9 @@ namespace eve
 //!       * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
 //!          where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//!     1. classical alogoritm (6 fps)
-//!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps)
-//!     3. take care of overflow
+//!     1. Classical algorithm, always valid.
+//!     2. 'Fast' algorithm, valid only if |x| < |y|.
+//!     3. Handles overflow.
 //!
 //!  @groupheader{External references}
 //!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
@@ -94,7 +93,7 @@ namespace eve
     {
       auto r0 = a + b;
       T err;
-      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| <  |b| (or if radix is not 2, not our case)
+      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| < |b| (or if radix is not 2, not our case)
       {
         err =  b - (r0 - a);
       }

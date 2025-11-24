@@ -15,7 +15,7 @@
 //== average tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of two_add(wide)",
-              eve::test::scalar::ieee_reals,
+              eve::test::scalar::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
                            )
@@ -23,7 +23,7 @@ TTS_CASE_WITH("Check behavior of two_add(wide)",
 <typename T>(T a0, T a1)
 {
   using eve::two_add;
-  if constexpr(sizeof(eve::element_type_t<T>) == 4)
+  if constexpr(sizeof(eve::element_type_t<T>) <= 4)
   {
     auto [a, e] = two_add(a0, a1);
     double da = double(a);
@@ -46,7 +46,7 @@ TTS_CASE_WITH("Check behavior of two_add(wide)",
 };
 
 TTS_CASE_WITH("Check behavior of two_add(wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
                            )
@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of two_add(wide)",
 <typename T>(T a0, T a1)
 {
   using eve::two_add;
-  if constexpr(sizeof(eve::element_type_t<T>) == 4)
+  if constexpr(sizeof(eve::element_type_t<T>) <= 4)
   {
     auto [a, e] = two_add(a0, a1);
     auto da = eve::upgrade(a);

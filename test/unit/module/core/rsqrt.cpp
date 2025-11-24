@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 
@@ -14,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -37,16 +38,16 @@ TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals)
 auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 TTS_CASE_WITH("Check behavior of rsqrt on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::smallestposval, maxi)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  auto st   = [](auto e) -> v_t { return eve::rec(std::sqrt(e)); };
+  auto st   = [](auto e) -> v_t { return eve::rec(std_sqrt(e)); };
   TTS_ULP_EQUAL(eve::rsqrt(a0), tts::map(st, a0), 2);
 };
 
-TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -59,12 +60,12 @@ TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
     auto z = eve::mindenormal(eve::as<v_t>());
 
     TTS_ULP_EQUAL(
-        eve::rsqrt[eve::pedantic](eve::mindenormal(eve::as<T>())), T(eve::rec(std::sqrt(z))), 2.0);
+        eve::rsqrt[eve::pedantic](eve::mindenormal(eve::as<T>())), T(eve::rec(std_sqrt(z))), 2.0);
     TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic](2 * eve::mindenormal(eve::as<T>())),
-                  T(eve::rec(std::sqrt(2 * z))),
+                  T(eve::rec(std_sqrt(2 * z))),
                   2.0);
-    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((z)), (eve::rec(std::sqrt(z))), 2.0);
-    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((2 * z)), (eve::rec(std::sqrt(2 * z))), 2.0);
+    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((z)), (eve::rec(std_sqrt(z))), 2.0);
+    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((2 * z)), (eve::rec(std_sqrt(2 * z))), 2.0);
   }
 };
 
@@ -72,8 +73,8 @@ TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
 //==================================================================================================
 // Tests for masked rsqrt
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::rsqrt)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::rsqrt[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

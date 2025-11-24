@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var sqrt
-//!   @brief Computes the square root of the parameter.
+//!   @brief Computes the [elementwise](@ref glossary_elementwise) square root of the parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -65,15 +65,15 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. floating value containing the [elementwise](@ref glossary_elementwise)
-//!        square root of `x` or Nan if `x` is less than zero.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. call a proper system intrinsic if one exists, but with possibly
-//!        very poor accuracy in return. Otherwise it uses the regular call
-//!     4. The square root is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!      to be less or equal to the exact one (except for Nans).
-//!     5. The square root is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!       to be greater or equal to the exact one (except for Nans).
+//!     1. A floating-point value containing the [elementwise](@ref glossary_elementwise)
+//!        square root of `x` or NaN if `x` is less than zero.
+//!     2. [The operation is performed conditionally](@ref conditional).
+//!     3. Calls a proper system intrinsic if one exists, but with possibly
+//!        very poor accuracy in return. Otherwise, the regular implementation is used.
+//!     4. The square root is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
+//!        to be less than or equal to the exact value (except for NaNs).
+//!     5. The square root is computed in a 'round toward \f$\infty\f$ mode. The result is guaranteed
+//!        to be greater than or equal to the exact value (except for NaNs).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sqrt.cpp}

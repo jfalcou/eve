@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,7 +41,7 @@ auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 10; });
 // Tests for eve::rec
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(mini, maxi), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
@@ -56,23 +56,28 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));
   TTS_EQUAL(eve::rec[eve::raw][mask](a0), eve::if_else(mask, eve::rec[eve::raw](a0), a0));
   TTS_EQUAL(eve::rec[eve::pedantic][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic](a0), a0));
-  TTS_ULP_EQUAL(eve::rec[lower](a0), eve::div[lower](T(1), a0), 1.0);
-  TTS_ULP_EQUAL(eve::rec[upper](a0), eve::div[upper](T(1), a0), 1.0);
-  TTS_ULP_EQUAL(eve::rec[lower][eve::strict](a0), eve::div[eve::strict][lower](T(1), a0), 1.0);
-  TTS_ULP_EQUAL(eve::rec[upper][eve::strict](a0), eve::div[eve::strict][upper](T(1), a0), 1.0);
-  if constexpr (eve::floating_value<T>)
+
+  //TODO: enable for float16 once support is more complete
+  if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
-    TTS_EXPECT(eve::all(eve::rec[eve::lower](a0) <= eve::rec(a0)));
-    TTS_EXPECT(eve::all(eve::rec[eve::upper](a0) >= eve::rec(a0)));
-    TTS_EXPECT(eve::all(eve::rec[eve::lower][eve::strict](a0) < eve::rec(a0)));
-    TTS_EXPECT(eve::all(eve::rec[eve::upper][eve::strict](a0) > eve::rec(a0)));
+    TTS_ULP_EQUAL(eve::rec[lower](a0), eve::div[lower](T(1), a0), 1.0);
+    TTS_ULP_EQUAL(eve::rec[upper](a0), eve::div[upper](T(1), a0), 1.0);
+    TTS_ULP_EQUAL(eve::rec[lower][eve::strict](a0), eve::div[eve::strict][lower](T(1), a0), 1.0);
+    TTS_ULP_EQUAL(eve::rec[upper][eve::strict](a0), eve::div[eve::strict][upper](T(1), a0), 1.0);
+    if constexpr (eve::floating_value<T>)
+    {
+      TTS_EXPECT(eve::all(eve::rec[eve::lower](a0) <= eve::rec(a0)));
+      TTS_EXPECT(eve::all(eve::rec[eve::upper](a0) >= eve::rec(a0)));
+      TTS_EXPECT(eve::all(eve::rec[eve::lower][eve::strict](a0) < eve::rec(a0)));
+      TTS_EXPECT(eve::all(eve::rec[eve::upper][eve::strict](a0) > eve::rec(a0)));
+    }
   }
 };
 
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::test::simd::ieee_reals_wf16)
   <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
@@ -111,7 +116,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
 //==  rec modular tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of rec mod on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1, 96))
              )
   <typename T>(T const& ra0)

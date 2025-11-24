@@ -25,13 +25,14 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/sqr.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
-//------------------------------------------------------------------------------------------------
-// Generic function for rsqrt on X86
-  template<typename Pack> EVE_FORCEINLINE Pack
-  rsqrt_x86_normal(Pack const& x) noexcept
+  //------------------------------------------------------------------------------------------------
+  // Generic function for rsqrt on X86
+  template<typename Pack>
+  EVE_FORCEINLINE Pack rsqrt_x86_normal(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     // Local constants
@@ -59,8 +60,8 @@ namespace eve::detail
     return if_else(is_eqz(x), inf(eve::as(x)), a0);
   }
 
-  template<typename Pack> EVE_FORCEINLINE Pack
-  rsqrt_x86_full(Pack const& x) noexcept
+  template<typename Pack>
+  EVE_FORCEINLINE Pack rsqrt_x86_full(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     if( eve::any(is_denormal(x)) ||
@@ -81,95 +82,68 @@ namespace eve::detail
     }
   }
 
-//------------------------------------------------------------------------------------------------
-//128 bits rsqrt
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(sse2_),
-                                    O          const&,
-                                    wide<T, N> const& a0) noexcept
-  requires std::same_as<abi_t<T, N>, x86_128_>
+  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(raw))
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if constexpr (std::same_as<T, eve::float16_t>)
     {
-      if constexpr( std::is_same_v<T, double> )
+      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v);
+      else if constexpr (c == category::float16x8)          return _mm_rsqrt_ph(v);
+      else if constexpr (c == category::float16x16)         return _mm256_rsqrt_ph(v);
+      else if constexpr (c == category::float16x32)         return _mm512_rsqrt_ph(v);
+    }
+    else if constexpr(O::contains(raw))
+    {
+      if constexpr (current_api >= avx512)
       {
+        if      constexpr (c == category::float32x16) return _mm512_rsqrt14_ps(v);
+        else if constexpr (c == category::float32x8)  return _mm256_rsqrt14_ps(v);
+        else if constexpr (c == category::float32x4)  return _mm_rsqrt14_ps(v);
+        else if constexpr (c == category::float64x8)  return _mm512_rsqrt14_pd(v);
+        else if constexpr (c == category::float64x4)  return _mm256_rsqrt14_pd(v);
+        else if constexpr (c == category::float64x2)  return _mm_rsqrt14_pd(v);
+      }
+      else
+      {
+        if      constexpr (c == category::float32x8)  return _mm256_rsqrt_ps(v);
+        else if constexpr (c == category::float32x4)  return _mm_rsqrt_ps(v);
         // The maximum error for this approximation is 1.5e-12
-        return _mm_cvtps_pd(_mm_rsqrt_ps(_mm_cvtpd_ps(a0)));
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm_rsqrt_ps(a0);
+        else if constexpr (c == category::float64x4)  return _mm256_cvtps_pd(_mm_rsqrt_ps(_mm256_cvtpd_ps(v)));
+        else if constexpr (c == category::float64x2)  return _mm_cvtps_pd(_mm_rsqrt_ps(_mm_cvtpd_ps(v)));
       }
     }
     else
     {
-      return rsqrt_x86_full(a0);
+      return rsqrt_x86_full(v);
     }
   }
 
-//------------------------------------------------------------------------------------------------
-//256 bits rsqrt
-  template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE  wide<T, N> rsqrt_(EVE_REQUIRES(avx_),
-                                     O          const&,
-                                     wide<T, N> const& a0) noexcept
-  requires std::same_as<abi_t<T, N>, x86_256_>
-  {
-    if constexpr(O::contains(raw))
-    {
-      if constexpr( std::is_same_v<T, double> )
-      {
-        // The maximum error for this approximation is 1.5e-12
-        return _mm256_cvtps_pd(_mm_rsqrt_ps(_mm256_cvtpd_ps(a0)));
-      }
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        return _mm256_rsqrt_ps(a0); }
-    }
-    else
-    {
-        return rsqrt_x86_full(a0);
-    }
-  }
-
-//------------------------------------------------------------------------------------------------
-//avx512 bits rsqrt
-  template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>  rsqrt_(EVE_REQUIRES(avx512_),
-                                     O const&,
-                                     wide<T, N> a0) noexcept
-  {
-    if constexpr(O::contains(raw))
-    {
-      constexpr auto c = categorize<wide<T, N>>();
-      if      constexpr( c == category::float32x16) return _mm512_rsqrt14_ps(a0);
-      else if constexpr( c == category::float64x8 ) return _mm512_rsqrt14_pd(a0);
-      else if constexpr( c == category::float32x8 ) return _mm256_rsqrt_ps(a0);
-      else if constexpr( c == category::float64x4 ) return _mm256_rsqrt14_pd(a0);
-      else if constexpr( c == category::float32x4 ) return _mm_rsqrt_ps(a0);
-      else if constexpr( c == category::float64x2 ) return _mm_rsqrt14_pd(a0);
-    }
-    else
-    {
-      return rsqrt_x86_full(a0);
-    }
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(avx512_),
                                     C          const& cx,
                                     O          const&,
                                     wide<T, N> const& v) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     auto src = alternative(cx, v, as<wide<T, N>> {});
+    constexpr auto c = categorize<wide<T, N>>();
+    auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
     if constexpr( C::is_complete) return src;
+    else if constexpr (std::same_as<T, eve::float16_t>)
+    {
+      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rsqrt, cx, v);
+      else if constexpr (c == category::float16x8)          return _mm_mask_rsqrt_ph(src, m, v);
+      else if constexpr (c == category::float16x16)         return _mm256_mask_rsqrt_ph(src, m, v);
+      else if constexpr (c == category::float16x32)         return _mm512_mask_rsqrt_ph(src, m, v);
+    }
     else if constexpr(O::contains(raw))
     {
-      constexpr auto c = categorize<wide<T, N>>();
-      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
       if      constexpr( c == category::float32x16) return _mm512_mask_rsqrt14_ps(src, m, v);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_rsqrt14_pd(src, m, v);
       else if constexpr( c == category::float32x16) return _mm256_mask_rsqrt14_ps(src, m, v);

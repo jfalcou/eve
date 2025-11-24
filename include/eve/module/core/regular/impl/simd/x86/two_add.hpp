@@ -13,16 +13,20 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(avx512_), O const&, T a, T b)
+  constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(avx512_), O const& opts, T a, T b)
   {
-    // maxmag/maxmag have an intrinsic in avx512 so we gain one operation
-    auto r0 = a + b;
-    auto maxi = maxmag(a, b);
-    auto mini = minmag(a, b);
-    auto r1 = mini - (r0-maxi);
-    if constexpr( eve::platform::supports_infinites )
-      r1 = if_else(is_infinite(r0), eve::zero, r1);
+    if constexpr (O::contains(raw)) return two_add.behavior(cpu_{}, opts, a, b);
+    else
+    {
+      // maxmag/maxmag have an intrinsic in avx512 so we gain one operation
+      auto r0 = a + b;
+      auto maxi = maxmag(a, b);
+      auto mini = minmag(a, b);
+      auto r1 = mini - (r0-maxi);
+      if constexpr( eve::platform::supports_infinites )
+        r1 = if_else(is_infinite(r0), eve::zero, r1);
 
-    return eve::zip(r0, r1);
+      return eve::zip(r0, r1);
+    }
   }
 }
