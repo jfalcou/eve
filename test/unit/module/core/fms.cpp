@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
              )
-  <typename T>(T const& a0, T const& a1, T const& a2 )  //TO wf16
+  <typename T>(T const& a0, T const& a1, T const& a2 ) 6
 {
   using eve::as;
   using eve::fms;
