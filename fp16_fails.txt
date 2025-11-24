@@ -1,6 +1,0 @@
-average
-as_value
-bit_cast
-compare_absolute
-cosine_similarity
-sqrt (sqrt.hpp_, but need prev)
