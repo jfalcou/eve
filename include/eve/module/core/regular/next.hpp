@@ -17,6 +17,7 @@
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqmz.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
@@ -25,6 +26,7 @@
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/none.hpp>
 #include <iostream>
 
 namespace eve
@@ -151,12 +153,14 @@ namespace eve
     {
       if (eve::all( eve::is_normal(a))) return next[raw](a);
       auto pz   = bitinteger(a);
-      T z    = bitfloating(eve::add(pz, one(as(pz))));
-//      auto test = is_negative(a) && is_positive(z);
-      auto test = is_eqz(a) && is_nez(pz);
-      std::cout << "pz" << pz << std::endl; 
-      std::cout << "test " << test <<  std::endl;
-      auto nxt = if_else(test, zero(as(a)), z);
+      T z    = bitfloating(call_add(pz, one(as(pz))));
+//      auto test0 = is_negative(a) && is_positive(z); //a is mzero
+      auto testm0 = is_eqmz(a);
+      if (eve::none(testm0)) return z;
+      auto nxt = if_else(testm0, zero(as(a)), z);
+//       std::cout << "pz" << pz << std::endl;
+//       std::cout << "test0 " << test0 <<  std::endl;
+      if (eve::none(is_not_finite(a))) return nxt;
       nxt = if_else(a == eve::minf(eve::as(a)), eve::valmin(eve::as(a)), nxt);
       if  constexpr(O::contains(saturated))
       {
