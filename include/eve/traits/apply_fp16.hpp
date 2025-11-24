@@ -32,9 +32,11 @@ namespace eve::detail
     };
 
     auto r = f(cvt_args(arg0), cvt_args(args)...);
+    using r_t = decltype(r);
 
-    if constexpr (logical_value<decltype(r)>) return convert(r, as<logical<eve::float16_t>>{});
-    else                                      return convert(r, as<eve::float16_t>{});
+    if      constexpr (logical_value<r_t>)                       return convert(r, as<logical<eve::float16_t>>{});
+    else if constexpr (std::same_as<element_type_t<r_t>, float>) return convert(r, as<eve::float16_t>{});
+    else                                                         return r;
   }
 
   template <typename Func, typename C, typename Arg0, typename... Args>
