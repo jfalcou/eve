@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of maxabs", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of maxabs", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -77,7 +77,7 @@ TTS_CASE_WITH("Check behavior of maxabs on all types full range",
   TTS_ULP_EQUAL(maxabs(tup), v_t(100), 0.5);
 };
 
-TTS_CASE_TPL("Check values of maxabs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check values of maxabs", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -108,8 +108,8 @@ TTS_CASE_TPL("Check values of maxabs", eve::test::simd::ieee_reals)
 //==================================================================================================
 // Tests for masked maxabs
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::maxabs)(eve::wide)",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of eve::maxabs[mask](eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
