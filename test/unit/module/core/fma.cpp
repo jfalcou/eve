@@ -85,7 +85,7 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000)) //wf16 TODO
+                            tts::randoms(-1000, 1000))
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
