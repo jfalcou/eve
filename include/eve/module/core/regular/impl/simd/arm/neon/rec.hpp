@@ -19,9 +19,10 @@ namespace eve::detail
   rec_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
   requires (arm_abi<abi_t<T, N>>)
   {
-
-    if constexpr(O::contains(lower) || O::contains(upper))
+    if constexpr (O::contains(lower) || O::contains(upper) || O::contains(mod))
+    {
       return rec.behavior(cpu_{}, opts, v);
+    }
     else if constexpr(O::contains(raw))
     {
       constexpr auto cat = categorize<wide<T, N>>();
