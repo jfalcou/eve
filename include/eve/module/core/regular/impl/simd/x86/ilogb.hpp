@@ -37,7 +37,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
       else if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::ilogb, a0);
+        if      constexpr (!detail::supports_fp16_vector_ops) return convert(apply_fp16_as_fp32(eve::ilogb, a0), int_from<T>());
         else if constexpr (c == category::float16x32)         return convert(r_t(_mm512_getexp_ph(a0)), int_from<T>());
         else if constexpr (c == category::float16x16)         return convert(r_t(_mm256_getexp_ph(a0)), int_from<T>());
         else if constexpr (c == category::float16x8)          return convert(r_t(_mm_getexp_ph(a0)), int_from<T>());
@@ -71,7 +71,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
       else if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::ilogb, mask, v);
+        if      constexpr (!detail::supports_fp16_vector_ops) return convert(apply_fp16_as_fp32_masked(eve::ilogb, mask, v), int_from<T>());
         else if constexpr (c == category::float16x32)         return convert(r_t(_mm512_mask_getexp_ph(v)), int_from<T>());
         else if constexpr (c == category::float16x16)         return convert(r_t(_mm256_mask_getexp_ph(v)), int_from<T>());
         else if constexpr (c == category::float16x8)          return convert(r_t(_mm_mask_getexp_ph(v)), int_from<T>());
