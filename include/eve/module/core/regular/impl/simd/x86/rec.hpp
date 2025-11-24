@@ -71,14 +71,14 @@ namespace eve::detail
     }
     else if constexpr(O::contains(pedantic) || current_api < avx512)
     {
-      else if constexpr (std::same_as<T, eve::float16_t>)
+      if constexpr (std::same_as<T, eve::float16_t>)
       {
         if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec[pedantic], v);
         else if constexpr (c == category::float16x8)          return _mm_div_ph(one(eve::as(v)), v);
         else if constexpr (c == category::float16x16)         return _mm256_div_ph(one(eve::as(v)), v);
         else if constexpr (c == category::float16x32)         return _mm512_div_ph(one(eve::as(v)), v);
       }
-      if constexpr (current_api >= avx512)
+      else if constexpr (current_api >= avx512)
       {
         if      constexpr( c == category::float32x16) return _mm512_div_ps(one(eve::as(v)), v);
         else if constexpr( c == category::float64x8 ) return _mm512_div_pd(one(eve::as(v)), v);
