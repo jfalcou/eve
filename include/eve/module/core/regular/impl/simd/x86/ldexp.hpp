@@ -36,9 +36,13 @@ namespace eve::detail
       else if constexpr( c == category::float32x16) return _mm512_scalef_ps(a0, a1);
       else if constexpr( c == category::float32x8 ) return _mm256_scalef_ps(a0, a1);
       else if constexpr( c == category::float32x4 ) return _mm_scalef_ps(a0, a1);
-      else if constexpr( c == category::float16x32) return _mm512_scalef_ph(a0, a1);
-      else if constexpr( c == category::float16x16) return _mm256_scalef_ph(a0, a1);
-      else if constexpr( c == category::float16x8 ) return _mm_scalef_ph(a0, a1);
+      else if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::ldexp, a0, a1);
+        else if constexpr (c == category::float16x32)         return _mm512_scalef_ph(a0, a1);
+        else if constexpr (c == category::float16x16)         return _mm256_scalef_ph(a0, a1);
+        else if constexpr (c == category::float16x8)          return _mm_scalef_ph(a0, a1);
+      }
       else return ldexp.behavior(cpu_{}, opts, a0, a1);
     }
   }
@@ -67,9 +71,13 @@ namespace eve::detail
       else if constexpr( c == category::float32x16) return _mm512_mask_scalef_ps(src, m, a0, a1);
       else if constexpr( c == category::float32x8 ) return _mm256_mask_scalef_ps(src, m, a0, a1);
       else if constexpr( c == category::float32x4 ) return _mm_mask_scalef_ps   (src, m, a0, a1);
-      else if constexpr( c == category::float16x32) return _mm512_mask_scalef_ph(src, m, a0, a1);
-      else if constexpr( c == category::float16x16) return _mm256_mask_scalef_ph(src, m, a0, a1);
-      else if constexpr( c == category::float16x8 ) return _mm_mask_scalef_ph   (src, m, a0, a1);
+      else if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::ldexp, mask, a0, a1);
+        else if constexpr (c == category::float16x32)         return _mm512_mask_scalef_ph(src, m, a0, a1);
+        else if constexpr (c == category::float16x16)         return _mm256_mask_scalef_ph(src, m, a0, a1);
+        else if constexpr (c == category::float16x8)          return _mm_mask_scalef_ph   (src, m, a0, a1);
+      }
       else return ldexp.behavior(cpu_{}, opts, a0, a1);
     }
   }
