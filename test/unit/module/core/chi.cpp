@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of chi", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of chi", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of chi", eve::test::simd::all_types)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of chi(wide) and diff  on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10.0, 10.0),
                             tts::randoms(-4.0, 2.0),
                             tts::randoms(5.0, 12.0)))
@@ -58,7 +58,7 @@ TTS_CASE_WITH("Check behavior of chi(wide) and diff  on all types",
 // Tests for masked chi
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::chi)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10.0, 10.0),
                             tts::randoms(-10.0, 10.0),
                             tts::logicals(0, 3)))

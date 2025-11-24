@@ -9,13 +9,13 @@
 #include "test.hpp"
 #include "unit/module/core/reduction_test.hpp"
 
-TTS_CASE_TPL("Check eve::all return type (wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::all return type (wide)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   logical_reduction_simd_type_test(eve::all, eve::as<eve::logical<T>>{});
 };
 
-TTS_CASE_TPL("Check eve::all return type (scalar)", eve::test::scalar::all_types)
+TTS_CASE_TPL("Check eve::all return type (scalar)", eve::test::scalar::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   logical_reduction_scalar_type_test(eve::all, eve::as<eve::logical<T>>{});
@@ -53,14 +53,14 @@ TTS_CASE("Check eve::all booleans")
   logical_reduction_test_case<ManualTestAll>(eve::all, false);
 };
 
-TTS_CASE_TPL("Check eve::all behavior on scalars", eve::test::scalar::all_types)
+TTS_CASE_TPL("Check eve::all behavior on scalars", eve::test::scalar::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   logical_reduction_test_case<ManualTestAll>(eve::all, eve::logical<T>{true});
   logical_reduction_test_case<ManualTestAll>(eve::all, eve::logical<T>{false});
 };
 
-TTS_CASE_TPL("Check eve::all behavior on wides and top_bits", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::all behavior on wides and top_bits", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   logical_reduction_simd_test_cases<ManualTestAll>(eve::all, eve::as<T>{});

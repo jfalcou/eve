@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of bit_floor on unsigned wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bit_floor on unsigned wide", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,10 +41,10 @@ TTS_CASE_WITH("Check behavior of bit_floor(wide) on unsigned integral types",
 // Tests for masked bit_floor
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_floor)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::bit_floor[mask](a0),

@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of bit_mask", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of bit_mask", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of bit_mask", eve::test::simd::all_types)
 //  bit_mask tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_mask(simd) on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename U>(T const& a0, U const& t)
 {
