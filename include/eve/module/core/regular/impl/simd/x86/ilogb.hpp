@@ -15,6 +15,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 #include <type_traits>
 
@@ -34,11 +35,18 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_getexp_ps(a0)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_getexp_pd(a0)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
+      else if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::ilogdb, a0);
+        else if constexpr (c == category::float16x32)         return convert(r_t(_mm512_getexp_ph(a0)), int_from<T>());
+        else if constexpr (c == category::float16x16)         return convert(r_t(_mm256_getexp_ph(a0)), int_from<T>());
+        else if constexpr (c == category::float16x8)          return convert(r_t(_mm_getexp_ph(a0)), int_from<T>());
+      }
       else                                          return ilogb.behavior(cpu_{}, o, a0);
   }
 
-// -----------------------------------------------------------------------------------------------
-// Masked case
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),
                                                  C const         & mask,
@@ -61,6 +69,13 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
+      else if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::ilogdb, mask, v);
+        else if constexpr (c == category::float16x32)         return convert(r_t(_mm512_mask_getexp_ph(v)), int_from<T>());
+        else if constexpr (c == category::float16x16)         return convert(r_t(_mm256_mask_getexp_ph(v)), int_from<T>());
+        else if constexpr (c == category::float16x8)          return convert(r_t(_mm_mask_getexp_ph(v)), int_from<T>());
+      }
       else                                          return ilogb[o][mask].retarget(cpu_{}, v);
     }
   }

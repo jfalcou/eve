@@ -76,10 +76,11 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr auto  ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto z = bit_and(exponentmask(as<T>()), a);
-      auto x = (z >> nbmantissabits(eve::as<T>()));
-      x = sub(x, maxexponent(eve::as<T>()));
-      return if_else(is_eqz(a)||is_not_finite(a), valmin(as(x)), x);
+      using i_t = as_integer_t<T>;
+      i_t z = bit_and(exponentmask(as<T>()), a);
+      i_t x = (z >> nbmantissabits(as<T>()));
+      x = sub(x, maxexponent(as<T>()));
+      return if_else(is_eqz(a) || is_not_finite(a), valmin(as(x)), x);
     }
   }
 }
