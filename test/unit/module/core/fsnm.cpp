@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fsnm", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of fsnm", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -46,7 +46,7 @@ auto onemmileps =
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fsnm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -64,7 +64,7 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
 // fsnm tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fsnm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -108,7 +108,7 @@ TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1 )
+  <typename T>(T const& a0, T const& a1 )
 {
   using eve::as;
   using eve::fsnm;
@@ -143,7 +143,7 @@ TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",
 //  fsnm masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fsnm on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),

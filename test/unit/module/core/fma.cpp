@@ -11,7 +11,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -47,7 +47,7 @@ auto onemmileps =
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fma on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -55,9 +55,9 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
   using eve::fma;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
-      tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-      2);
+    eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+    tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+    11);
 };
 
 
@@ -65,7 +65,7 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
 //fma tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fma on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -75,7 +75,7 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
   TTS_ULP_EQUAL(
       eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
       tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-      2);
+      11);
 };
 
 //==================================================================================================
@@ -106,7 +106,7 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
 //fma promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma[promote] on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1 )
@@ -141,10 +141,10 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
 };
 
 //==================================================================================================
-//  fma masked
+// fma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fma on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),

@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fsm", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of fsm", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -46,7 +46,7 @@ auto onemmileps =
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fsm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -64,7 +64,7 @@ TTS_CASE_WITH("Check precision behavior of fsm on real types",
 //== fsm tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fsm on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of fsm lower upper on all types",
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
              )
-  <typename T>(T const& a0, T const& a1, T const& a2 )
+  <typename T>(T const& a0, T const& a1, T const& a2 ) 
 {
   using eve::as;
   using eve::fsm;
@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of fsm lower upper on all types",
 //==  fsm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsm[promote] on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1 )
@@ -143,7 +143,7 @@ TTS_CASE_WITH("Check behavior of fsm[promote] on all types",
 //  fsm masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fsm on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),

@@ -24,6 +24,10 @@ requires arm_abi<abi_t<T, N>>
   constexpr auto cat = categorize<wide<T, N>>();
 
   if constexpr(O::contains(lower) || O::contains(upper)) return fma.behavior(cpu_{}, opts, a, b, c);
+  else if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
+  {
+    return apply_fp16_as_fp32(fma, a, b, c);
+  }
   else if constexpr( cat == category::float32x4 )   return vfmaq_f32(c, b, a);
   else if constexpr( cat == category::float32x2 )   return vfma_f32 (c, b, a);
   else if constexpr( cat == category::int32x4   )   return vmlaq_s32(c, b, a);
@@ -38,6 +42,8 @@ requires arm_abi<abi_t<T, N>>
   else if constexpr( cat == category::uint16x4  )   return vmla_u16 (c, b, a);
   else if constexpr( cat == category::uint8x16  )   return vmlaq_u8 (c, b, a);
   else if constexpr( cat == category::uint8x8   )   return vmla_u8  (c, b, a);
+  else if constexpr (cat == category::float16x4 )   return vfma_f16 (c, b, a);
+  else if constexpr (cat == category::float16x8 )   return vfmaq_f16(c, b, a);
   else if constexpr( current_api >= asimd )
   {
     if      constexpr( cat == category::float64x2 ) return vfmaq_f64(c, b, a);
