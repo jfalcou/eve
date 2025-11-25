@@ -150,23 +150,14 @@ namespace eve
     {
       if (eve::all( eve::is_normal(a))) return prev[raw](a);
       auto pz   = bitinteger(a);
-      T z    = bitfloating(call_sub(pz, one(as(pz))));
+      T z = bitfloating(call_sub(pz, one(as(pz))));
       auto testm0 = is_eqpz(a);
-      if (eve::none(testm0)) return z;
       auto prv = if_else(testm0, mzero(as(a)), z);
-      if (eve::none(is_not_finite(a))) return prv;
+      if (eve::all(is_finite(a))) return prv;
       prv = if_else(eve::is_pinf(a), eve::valmax(eve::as(a)), prv);
-      if  constexpr(O::contains(saturated))
-      {
-        prv = if_else(is_minf(as(a)), a, prv);
-      std::cout << "icitte" << std::endl;
-        if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
-        return prv;
-      }
-      else
-      {
-        return prv;
-      }
+      if constexpr( eve::platform::supports_nans ) prv = if_else(is_nan(a), eve::allbits, prv);
+      if constexpr(O::contains(saturated))         prv = if_else(is_minf(as(a)), a, prv);
+      return prv;
     }
 
     template<typename T, typename N, callable_options O>
