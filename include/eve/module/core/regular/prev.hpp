@@ -167,14 +167,10 @@ namespace eve
     {
       if constexpr( floating_value<T>)
       {
-        auto bi = bitinteger(a);
-        if constexpr(scalar_value<T>)
-        {
-          using v_t = eve::as_integer_t<T, signed>;
-          return bitfloating(  v_t(bi-n));
-        }
-        else
-          return bitfloating(bi-n);
+        using v_t = eve::as_integer_t<T, signed>;
+        v_t bi = bitinteger(a);
+        if constexpr(scalar_value<T>) return bitfloating(v_t{ bi - n });
+        else                          return bitfloating(bi - convert(n, as_element(bi)));
       }
       else
       {
