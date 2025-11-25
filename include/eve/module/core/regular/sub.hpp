@@ -119,6 +119,13 @@ namespace eve
     {
       return sub(a, b);
     }
+
+    template<typename O, typename T, typename U>
+    EVE_FORCEINLINE auto call_sub(O o, T a, U b)
+    {
+      return sub[o](a, b);
+    }
+
   }
 }
 

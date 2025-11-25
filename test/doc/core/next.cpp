@@ -16,7 +16,7 @@ int main()
   std::cout << "<- wu0                       = " << wu0 << "\n";
 
   std::cout << "-> next(wf0)                 = " << eve::next(wf0) << "\n";
-  std::cout << "-> next(wf0, wi1)            = " << eve::next(wf0, wu0) << "\n";
+  std::cout << "-> next(wf0, wi1)            = " << eve::next(wf0, 2) << "\n";
   std::cout << "-> next[ignore_last(2)](wf0) = " << eve::next[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> next[wf0 != 0](wf0)       = " << eve::next[wf0 != 0](wf0) << "\n";
   std::cout << "-> next[pedantic](wf0)       = " << eve::next[eve::pedantic](wf0) << "\n";
