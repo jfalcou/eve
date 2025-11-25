@@ -18,8 +18,10 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqmz.hpp>
+#include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_pinf.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
@@ -136,7 +138,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated))
         {
           return if_else(a == valmax(as(a)), a, T(a+one(as(a))));
         }
@@ -158,12 +160,12 @@ namespace eve
       if (eve::none(testm0)) return z;
       auto nxt = if_else(testm0, zero(as(a)), z);
       if (eve::none(is_not_finite(a))) return nxt;
-      nxt = if_else(a == eve::minf(eve::as(a)), eve::valmin(eve::as(a)), nxt);
+      nxt = if_else(eve::is_minf(a), eve::valmin(eve::as(a)), nxt);
       if  constexpr(O::contains(saturated))
       {
-        nxt = if_else(a == inf(as(a)), a, nxt);
-        if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-        return z;
+        nxt = if_else(eve::is_pinf(a), a, nxt);
+        if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, nxt);
+        return nxt;
       }
       else
       {
@@ -171,7 +173,7 @@ namespace eve
       }
     }
 
-   template<typename T, typename N, callable_options O>
+    template<typename T, typename N, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
@@ -201,23 +203,20 @@ namespace eve
       }
     }
 
-    template<typename T, typename N, callable_options O>
+    template<floating_value T, typename N, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(O::contains(pedantic))
     {
-      if constexpr( floating_value<T> )
-      {
-        using i_t = as_integer_t<T>;
-        i_t ban   = bitinteger(a) + convert(n, eve::as<element_type_t<i_t>>(n));
-        auto nxt = bitfloating(ban);
-        auto fbanm1 = bitfloating(call_sub(ban, one(as(ban))));
-        nxt = if_else(is_negative(a) && is_positive(fbanm1), fbanm1, nxt);
-        nxt = if_else(is_eqmz(fbanm1), zero, nxt);
-        if constexpr( eve::platform::supports_nans ) nxt = if_else(is_nan(a), a, nxt);
-        if  constexpr(O::contains(saturated))        nxt = if_else(is_pinf(a), inf(as(a)), nxt);
-        return nxt;
-      }
+      using i_t = as_integer_t<T>;
+      i_t ban   = bitinteger(a) + convert(n, eve::as<element_type_t<i_t>>(n));
+      auto nxt = bitfloating(ban);
+      auto fbanm1 = bitfloating(call_sub(ban, one(as(ban))));
+      nxt = if_else(is_negative(a) && is_positive(fbanm1), fbanm1, nxt);
+      nxt = if_else(is_eqmz(fbanm1), zero, nxt);
+      if constexpr( eve::platform::supports_nans ) nxt = if_else(is_nan(a), a, nxt);
+      if constexpr(O::contains(saturated))         nxt = if_else(is_pinf(a), inf(as(a)), nxt);
+      return nxt;
     }
   }
 }
