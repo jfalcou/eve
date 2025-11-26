@@ -51,7 +51,7 @@ namespace eve::detail
     else
     {
       constexpr auto N = sizeof...(Ts)+1;
-      constexpr e_t invn = 1/(e_t(N));
+      const/*expr*/ e_t invn = 1/(e_t(N));
       if constexpr(O::contains(raw))
       {
         if constexpr(integral_value<r_t>)

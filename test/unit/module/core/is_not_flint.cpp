@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_not_flint(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_not_flint(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check return types of eve::is_not_flint(simd)", eve::test::simd::a
 auto mf2 = tts::constant([](auto const& tgt) { return eve::maxflint(tgt) * 4; });
 
 TTS_CASE_WITH("Check behavior of eve::is_not_flint(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::maxflint, mf2),
                             tts::logicals(0, 3)))
@@ -41,10 +41,10 @@ TTS_CASE_WITH("Check behavior of eve::is_not_flint(simd)",
   auto aa0  = eve::trunc(a0) / 2;
   auto aa1  = eve::trunc(a1) / 2;
   TTS_EQUAL(eve::is_not_flint(aa0),
-            tts::map([](auto e) -> eve::logical<v_t> { return e != std::trunc(e); }, aa0));
+            tts::map([](auto e) -> eve::logical<v_t> { return e != eve::trunc(e); }, aa0));
   TTS_EQUAL(eve::is_not_flint[eve::pedantic](aa1),
             tts::map([](auto e) -> eve::logical<v_t>
-                { return (e != std::trunc(e)) || (e > eve::maxflint(eve::as(e))); },
+                { return (e != eve::trunc(e)) || (e > eve::maxflint(eve::as(e))); },
                 aa1));
   TTS_EQUAL(eve::is_not_flint[t](a0),
             eve::if_else(t, eve::is_not_flint(a0), eve::false_(eve::as(a0))));
