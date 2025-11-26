@@ -68,7 +68,9 @@ namespace eve
       uint32_t sign = vsi & fp16_sigN;
       vsi ^= sign;
       sign >>= fp16_shiftSign; // logical shift
-      int32_t ssi = std::bit_cast<float>(fp16_mulN) * std::bit_cast<float>(vsi); // correct subnormals
+      int32_t ssi = 0;
+      auto f = std::bit_cast<float>(fp16_mulN) * std::bit_cast<float>(vsi); // correct subnormals
+      if (f < float(std::numeric_limits<int32_t>::max())) ssi = f;
       vsi ^= (ssi ^ vsi) & -(fp16_minN > vsi);
       vsi ^= (fp16_infN ^ vsi) & -((fp16_infN > vsi) & (vsi > fp16_maxN));
       vsi ^= (fp16_nanN ^ vsi) & -((fp16_nanN > vsi) & (vsi > fp16_infN));
