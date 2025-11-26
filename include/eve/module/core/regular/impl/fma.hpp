@@ -95,7 +95,12 @@ namespace eve::detail
     // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {
-      if constexpr( std::same_as<element_type_t<T>, float> )
+      if constexpr( std::same_as<element_type_t<T>, eve::float16_t> )
+      {
+        constexpr auto tgt = as<float>{};
+        return convert(convert(a,tgt) * convert(b,tgt) + convert(c,tgt), as_element(a));
+      }
+      else if constexpr( std::same_as<element_type_t<T>, float> )
       {
         constexpr auto tgt = as<double>{};
         return convert(convert(a,tgt) * convert(b,tgt) + convert(c,tgt), as_element(a));

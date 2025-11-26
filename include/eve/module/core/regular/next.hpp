@@ -121,9 +121,12 @@ namespace eve
         if constexpr(O::contains(raw))
         {
           auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f, 0x1.004p-11f>(as(a));
-          return fma(s, eve::abs(a), a);
+          return fma[pedantic](s, eve::abs(a), a);
         }
-        if (eve::all( eve::is_normal(a))) return next[raw](a);
+        if ((!std::same_as<element_type_t<T>,  eve::float16_t>) && (eve::all( eve::is_normal(a))))
+        {
+          return next[raw](a);
+        }
         else
         {
           auto bi = bitinteger(a);
@@ -153,7 +156,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     requires(O::contains(pedantic))
     {
-      if (eve::all( eve::is_normal(a))) return next[raw](a);
+      if ((!std::same_as<element_type_t<T>,  eve::float16_t>) && eve::all( eve::is_normal(a))) return next[raw](a);
       auto pz   = bitinteger(a);
       T z    = bitfloating(call_add(pz, one(as(pz))));
       auto testm0 = is_eqmz(a);
