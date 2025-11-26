@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::is_even(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::is_even(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::logical;
@@ -27,14 +27,14 @@ TTS_CASE_TPL("Check return types of eve::is_even(simd)", eve::test::simd::all_ty
 // Tests for eve::is_even
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_even(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_even(a0),
-            tts::map([](auto e) -> eve::logical<v_t> { return (std::trunc(e / 2) * 2) == e; }, a0));
+            tts::map([](auto e) -> eve::logical<v_t> { return (eve::trunc(e / 2) * 2) == e; }, a0));
   TTS_EQUAL(eve::is_even[t](a0), eve::if_else(t, eve::is_even(a0), eve::false_(eve::as(a0))));
 };
 
@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of eve::is_even(simd)",
   TTS_EQUAL(eve::is_even[t](a0), eve::if_else(t, eve::is_even(a0), eve::false_(eve::as(a0))));
 };
 
-TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
