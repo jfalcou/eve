@@ -173,7 +173,7 @@ namespace eve
       }
     }
 
-    template<typename T, typename N, callable_options O>
+    template<typename T, integral_scalar_value N, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
@@ -203,7 +203,7 @@ namespace eve
       }
     }
 
-    template<floating_value T, typename N, callable_options O>
+    template<floating_value T, integral_scalar_value N, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(O::contains(pedantic))
