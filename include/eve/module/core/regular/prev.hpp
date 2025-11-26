@@ -125,7 +125,7 @@ namespace eve
           if constexpr(scalar_value<T>)
           {
             using v_t = eve::as_integer_t<T, signed>;
-            return bitfloating(  v_t(bi- one(as(bi))));
+            return bitfloating(  static_cast<v_t>(bi- one(as(bi))));
           }
           else
             return bitfloating(  bi- one(as(bi)));
@@ -169,7 +169,7 @@ namespace eve
       {
         using v_t = eve::as_integer_t<T, signed>;
         v_t bi = bitinteger(a);
-        if constexpr(scalar_value<T>) return bitfloating(v_t{ bi - n });
+        if constexpr(scalar_value<T>) return bitfloating(static_cast<v_t>(bi - n));
         else                          return bitfloating(bi - convert(n, as_element(bi)));
       }
       else
