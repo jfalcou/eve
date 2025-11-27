@@ -92,7 +92,7 @@ namespace eve
     template<value T, callable_options O>
     constexpr T dist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {
-      T d = sub[o](eve::max(a, b), eve::min(a, b));
+      T d = call_sub(o, eve::max(a, b), eve::min(a, b));
       if constexpr(O::contains(saturated) && signed_integral_value<T>)
         return if_else(is_ltz(d), valmax(eve::as(d)), d);
       else if constexpr(O::contains(pedantic) && floating_value<T>)

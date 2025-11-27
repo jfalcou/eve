@@ -18,6 +18,18 @@ namespace eve
         : detail::make_floating_point<(sizeof(T) <= 2) ? 2: sizeof(T)>
   {};
 
+  template<>
+  struct as_floating_point<short>
+  {
+    using type =  eve::float16_t;
+  };
+
+  template<>
+  struct as_floating_point<unsigned short>
+  {
+    using type = eve::float16_t;
+  };
+
   template<typename T, typename N>
   struct as_floating_point<wide<T,N>>
   {

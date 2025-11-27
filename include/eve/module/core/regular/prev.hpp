@@ -12,17 +12,18 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqpz.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/regular/is_pinf.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
-//#include <eve/module/core/detail/scalops.hpp>
 
 namespace eve
 {
@@ -108,87 +109,68 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
     prev_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    requires(!O::contains(pedantic) || !floating_value<T>)
     {
-      if constexpr( floating_value<T> )
+      if constexpr( floating_value<T>)
       {
         if constexpr(O::contains(raw))
         {
-          auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f>(as(a));
+          auto s = ieee_constant<0x1.0000000000001p-53, 0x1.000002p-24f, 0x1.004p-11f>(as(a));
           return fnma[pedantic](s, eve::abs(a), a);
         }
         if (eve::all( eve::is_normal(a))) return prev[raw](a);
-        if constexpr(O::contains(pedantic))
-        {
-          auto pz   = bitinteger(a);
-          auto z    = bitfloating(call_sub(pz, one(as(pz))));
-          auto test = is_negative(z) && is_positive(a);
-          auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
-          prv =  if_else(is_nan(a), eve::allbits, prv);
-          if  constexpr(O::contains(saturated))
-          {
-            prv = if_else(a == minf(as(a)), a, prv);
-            if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
-          }
-          return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), prv);
-        }
-        else if  constexpr(O::contains(saturated))
-        {
-          auto prv = prev(a);
-          auto z = if_else(a == minf(as(a)), a, prv);
-          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-          else return z;
-        }
         else
         {
           auto bi = bitinteger(a);
-          return bitfloating(eve::detail::call_sub(bi, one(as(bi))));
+          if constexpr(scalar_value<T>)
+          {
+            using v_t = eve::as_integer_t<T, signed>;
+            return bitfloating(  static_cast<v_t>(bi- one(as(bi))));
+          }
+          else
+            return bitfloating(  bi- one(as(bi)));
         }
       }
       else
       {
-        if  constexpr(O::contains(saturated) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated)||O::contains(pedantic))
         {
-          return if_else(a == valmin(as(a)), a, call_sub(a, one(as(a))));
+          return if_else(a == valmin(as(a)), a, T(a-one(as(a))));
         }
         else
         {
-          return call_sub(a, one(as(a)));
+          return T(a-one(as(a)));
         }
       }
+    }
+
+    template<floating_value T, callable_options O>
+    EVE_FORCEINLINE constexpr T prev_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    requires(O::contains(pedantic))
+    {
+      if (eve::all( eve::is_normal(a))) return prev[raw](a);
+      auto pz   = bitinteger(a);
+      T z = bitfloating(call_sub(pz, one(as(pz))));
+      auto testm0 = is_eqpz(a);
+      auto prv = if_else(testm0, mzero(as(a)), z);
+      if (eve::all(is_finite(a))) return prv;
+      prv = if_else(eve::is_pinf(a), eve::valmax(eve::as(a)), prv);
+      if constexpr( eve::platform::supports_nans ) prv = if_else(is_nan(a), eve::allbits, prv);
+      if constexpr(O::contains(saturated))         prv = if_else(is_minf(as(a)), a, prv);
+      return prv;
     }
 
     template<typename T, typename N, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
     prev_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
+    requires(!O::contains(pedantic) || !floating_value<T>)
     {
-      if constexpr( floating_value<T> )
+      if constexpr( floating_value<T>)
       {
-        if constexpr(O::contains(pedantic))
-        {
-          using i_t = as_integer_t<T>;
-          auto vz   = call_sub(bitinteger(a), convert(n, as<element_type_t<i_t>>()));
-          auto pz   = vz + one(as(vz));
-          auto z    = bitfloating(call_sub(pz, one(as(pz))));
-          auto test = is_negative(z) && is_positive(a);
-          if constexpr( scalar_value<T> && scalar_value<N> )
-          {
-            if( is_nan(a) ) return a;
-            return test ? (z == 0 ? T(-0.) : bitfloating(pz)) : z;
-          }
-          else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
-        }
-        else if  constexpr(O::contains(saturated))
-        {
-          auto prv = prev(a, n);
-          auto z = if_else(a >  prv || is_nan(prv), minf(as(a)), prv);
-          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
-          else return z;
-        }
-        else
-        {
-          using i_t =as_integer_t<element_type_t<T>>;
-          return bitfloating(call_sub(bitinteger(a), convert(n, as<i_t>())));
-        }
+        using v_t = eve::as_integer_t<T, signed>;
+        v_t bi = bitinteger(a);
+        if constexpr(scalar_value<T>) return bitfloating(static_cast<v_t>(bi - n));
+        else                          return bitfloating(bi - convert(n, as_element(bi)));
       }
       else
       {
@@ -199,9 +181,25 @@ namespace eve
         }
         else
         {
-          return call_sub(a, convert(n, as<element_type_t<T>>()));
+          return T(a-convert(n, as<element_type_t<T>>()));
         }
       }
+    }
+
+    template<floating_value T, typename N, callable_options O>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
+    prev_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
+    requires(O::contains(pedantic))
+    {
+      using i_t = as_integer_t<T>;
+      i_t bmn   = bitinteger(a) - convert(n, eve::as<element_type_t<i_t>>(n));
+      auto prv = bitfloating(bmn);
+      auto fbmnp1 = bitfloating(call_add(bmn, one(as(bmn))));
+      prv = if_else(is_positive(a) && is_negative(fbmnp1), fbmnp1, prv);
+      prv = if_else(is_eqpz(fbmnp1), mzero, prv);
+      if constexpr( eve::platform::supports_nans ) prv = if_else(is_nan(a), a, prv);
+      if constexpr(O::contains(saturated))         prv = if_else(is_minf(a), minf(as(a)), prv);
+      return prv;
     }
   }
 }

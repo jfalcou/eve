@@ -138,7 +138,7 @@ namespace eve
     template<typename T, typename U>
     EVE_FORCEINLINE auto call_add(T a, U b)
     {
-      return add(a, b);
+      return eve::add(a, b);
     }
   }
 }

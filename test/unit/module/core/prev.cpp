@@ -12,7 +12,7 @@
 #include <cmath>
 
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-// Tests for eve::prev
+//==  Tests for eve::prev
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::prev(eve::wide)",
               eve::test::simd::all_types,
@@ -111,6 +111,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
 
   if constexpr( eve::floating_value<T> )
   {
+    TTS_IEEE_EQUAL(prev(cases.one, 2), prev(prev(cases.one)));
     TTS_IEEE_EQUAL(prev(cases.nan, 2), cases.nan);
     TTS_IEEE_EQUAL(prev(cases.inf, 2), prev(cases.valmax));
     TTS_IEEE_EQUAL(prev(cases.minf, 2), cases.nan);

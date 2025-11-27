@@ -14,7 +14,7 @@
  //==================================================================================================
  //= Types tests
  //==================================================================================================
- TTS_CASE_TPL("Check return types of eve::next", eve::test::simd::all_types)
+ TTS_CASE_TPL("Check return types of eve::next", eve::test::simd::all_types_wf16)
  <typename T>(tts::type<T>)
  {
    using v_t  = eve::element_type_t<T>;
@@ -34,20 +34,20 @@
  //= Tests for eve::next
  //==================================================================================================
  TTS_CASE_WITH("Check behavior of eve::next(eve::wide)",
-               eve::test::simd::all_types,
+               eve::test::simd::all_types_wf16,
                tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
  <typename T, typename M>(T const& a0, M const& t)
  {
    ;
    using v_t = eve::element_type_t<T>;
-   if constexpr( eve::floating_value<v_t> )
+   if constexpr( eve::floating_value<v_t> && sizeof(v_t) >= 4)
    {
      auto n = [](auto e) -> v_t { return std::nextafter(e, eve::valmax(eve::as(e))); };
      TTS_EQUAL(eve::next(a0), tts::map(n, a0));
      auto nn = [n](auto e) -> v_t { return n(n(e)); };
      TTS_EQUAL(eve::next(a0, 2), tts::map(nn, a0));
    }
-   else
+   else if constexpr( eve::integral_value<v_t>)
    {
      TTS_EQUAL(eve::next(a0), eve::inc(a0));
      TTS_EQUAL(eve::next(a0, 2), eve::inc(eve::inc(a0)));
@@ -60,7 +60,7 @@
  // Test for corner-cases values
  //==================================================================================================
  TTS_CASE_TPL("Check corner-cases behavior of eve::next variants on wide",
-              eve::test::simd::all_types)
+              eve::test::simd::all_types_wf16)
  <typename T>(tts::type<T> const& tgt)
  {
    using eve::next;
@@ -71,6 +71,7 @@
 
    if constexpr( eve::floating_value<T> )
    {
+     TTS_IEEE_EQUAL(next(cases.one), eve::inc(eve::eps(eve::as<T>())));
      TTS_IEEE_EQUAL(next(cases.nan), cases.nan);
      TTS_IEEE_EQUAL(next(cases.minf), cases.valmin);
      TTS_IEEE_EQUAL(next(cases.inf), cases.nan);
@@ -89,6 +90,7 @@
      TTS_IEEE_EQUAL(next[pedantic](cases.nan), cases.nan);
      TTS_IEEE_EQUAL(next[pedantic](cases.minf), cases.valmin);
      TTS_IEEE_EQUAL(next[pedantic](cases.inf), cases.nan);
+
      TTS_EQUAL(next[pedantic](cases.mzero), cases.zero);
 
      if constexpr( eve::platform::supports_denormals )
@@ -112,7 +114,7 @@
  };
 
 TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
-             eve::test::simd::all_types)
+             eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T> const& tgt)
 {
   using eve::next;
@@ -123,6 +125,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
 
   if constexpr( eve::floating_value<T> )
   {
+    TTS_IEEE_EQUAL(next(cases.one, 2), next(next(cases.one)));
     TTS_IEEE_EQUAL(next(cases.nan, 2), cases.nan);
     TTS_IEEE_EQUAL(next(cases.minf, 2), next(cases.valmin));
     TTS_IEEE_EQUAL(next(cases.inf, 2), cases.nan);
@@ -167,7 +170,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
 // Tests for masked next
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::next[cx](eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
