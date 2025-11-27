@@ -7,6 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
+
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
@@ -23,7 +28,13 @@ namespace eve::detail
     }
     else if constexpr(O::contains(raw))
     {
-      if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
+      if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
+        else if constexpr (cat == category::float16x8)        return vrsqrteq_f16(v0);
+        else if constexpr (cat == category::float16x4)        return vrsqrte_f16(v0);
+      }
+      else if constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
       else if constexpr( cat == category::float32x4 ) return vrsqrteq_f32(v0);
       else if constexpr( current_api >= asimd )
       {
@@ -34,6 +45,22 @@ namespace eve::detail
     }
     else
     {
+      if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
+        else if constexpr (cat == category::float16x8)
+        {
+          that_t inv = vrsqrteq_f16(v0);
+          inv        = vmulq_f16(vrsqrtsq_f16(v0, inv * inv), inv);
+          return that_t(vmulq_f16(vrsqrtsq_f16(v0, inv * inv), inv));
+        }
+        else if constexpr (cat == category::float16x4)
+        {
+          that_t inv = vrsqrte_f16(v0);
+          inv        = vmul_f16(vrsqrts_f16(v0, inv * inv), inv);
+          return that_t(vmul_f16(vrsqrts_f16(v0, inv * inv), inv));
+        }
+      }
       if constexpr( cat == category::float32x2 )
       {
         that_t inv = vrsqrte_f32(v0);

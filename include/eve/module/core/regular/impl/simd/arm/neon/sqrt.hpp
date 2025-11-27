@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -25,6 +26,12 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
 
     if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, v0);
+    else if constexpr (std::same_as<T, eve::float16_t>)
+    {
+      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::sqrt, v0);
+      else if constexpr (cat == category::float16x8)        return vsqrtq_f16(v0);
+      else if constexpr (cat == category::float16x4)        return vsqrt_f16(v0);
+    }
     else if constexpr( current_api >= asimd )
     {
       if      constexpr( cat == category::float32x2 ) return vsqrt_f32(v0);

@@ -15,6 +15,8 @@
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/traits/apply_fp16.hpp>
+
 #include <cmath>
 
 namespace eve::detail
@@ -44,6 +46,8 @@ namespace eve::detail
           return eve::next[r < a0 || (r == a0 && eve::is_ltz(e))](x);
       }
     }
+    else if constexpr (std::same_as<T, eve::float16_t>)
+      return apply_fp16_as_fp32(eve::sqrt, a0);
     else if constexpr( scalar_value<T> )
       return std::sqrt(a0);
     else

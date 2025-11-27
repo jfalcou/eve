@@ -52,3 +52,10 @@ constexpr T std_abs(T x)
   if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::abs(static_cast<float>(x)));
   else                                           return std::abs(x);
 }
+
+template <typename T>
+constexpr T std_sqrt(T x)
+{
+  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::sqrt(static_cast<float>(x)));
+  else                                           return std::sqrt(x);
+}

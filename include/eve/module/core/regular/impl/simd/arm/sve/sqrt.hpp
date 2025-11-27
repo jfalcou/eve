@@ -50,7 +50,7 @@ namespace eve::detail
       return sqrt.behavior(cpu_{}, opts, v);
     }
     else
-      return svsqrt_z(sve_true<T>(),v);
+      return svsqrt_z(expand_mask(keep_first(N::value), as(v)), v);
   }
 
 }

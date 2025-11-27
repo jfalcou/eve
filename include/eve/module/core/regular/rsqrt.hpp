@@ -60,11 +60,11 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!       1. value containing the [elementwise](@ref glossary_elementwise)
+//!       1. A value containing the [elementwise](@ref glossary_elementwise)
 //!          inverse of the square root of `x`.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
-//!       3. call a proper system intrinsic if one exists, but with possibly
-//!          very poor accuracy in return. Otherwise it uses the regular call.
+//!       2. [The operation is performed conditionally](@ref conditional).
+//!       3. Calls a proper system intrinsic if one exists, but with possibly
+//!          very poor accuracy in return. Otherwise, it uses the regular implementation.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rsqrt.cpp}

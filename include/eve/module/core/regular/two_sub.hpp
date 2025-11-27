@@ -30,10 +30,10 @@ namespace eve
 //! @addtogroup core_accuracy
 //! @{
 //!   @var two_sub
-//!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   pair of  sub and error,
+//!   @brief Computes the [elementwise](@ref glossary_elementwise) pair consisting of the difference of the parameters
+//!   and its resulting rounding error.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -55,19 +55,19 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [floating arguments](@ref eve::value).
+//!     * `x`, `y`: [floating-point arguments](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
-//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
+//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a, e]` such that:
 //!
-//!     * `a` is `x+y`
-//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
-//!        where \f$\oplus\f$ adds its two parameters with infinite precision.
+//!     * `a` is `x - y`
+//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`(-y)`
+//!       where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//!     1. classical alogoritm  (6 fps)
-//!     2. 'fast' algorithm but only valid if  |x| <  |y| (2 fps) (your responsability)
-//!     3. take care of overflow
+//!     1. Classical algorithm, always valid.
+//!     2. 'Fast' algorithm, valid only if |x| < |y|.
+//!     3. Handles overflow.
 //!
 //!  @groupheader{External references}
 //!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
@@ -88,11 +88,11 @@ inline constexpr auto two_sub = functor<two_sub_t>;
     {
       auto r0 = a - b;
       T err;
-      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| <  |b| (or if radix is not 2, not our case)
+      if constexpr(O::contains(raw)) // 2fp, this does not work if |a| < |b| (or if radix is not 2, not our case)
       {
         err =   (a-r0) -b;
       }
-      else //6fp always okq
+      else //6fp always ok
       {
         auto z  = r0 - a;
         err = a - (r0 - z) - (z +b);

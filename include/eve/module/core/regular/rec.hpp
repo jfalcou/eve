@@ -66,18 +66,18 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!
 //!    **Return value**
 //!
-//!      1. The value of the inverse of `x` is returned but does not take care of denormals.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
-//!      3. call a proper system intrinsic if one exists, but with possibly
-//!         very poor accuracy in return (circa 12 bits). Otherwise it uses the regular call.
-//!      4. equivalent to the division operation of `one(as(x))` by `x`.
-//!      5. The inverse is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!         to be less or equal to the exact one (except for Nans).
-//!      6. The inverse is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!        to be greater or equal to the exact one (except for Nans).
-//!      7. compute the result in modular arithmetic. the parameters must be flint positive
+//!      1. The value of the inverse of `x` is returned; denormals may not be handled.
+//!      2. [The operation is performed conditionally](@ref conditional).
+//!      3. Calls a system intrinsic if one exists; this may return reduced accuracy (roughly 12 bits).
+//!         Otherwise, the regular implementation is used.
+//!      4. Equivalent to dividing `one(as(x))` by `x`.
+//!      5. The inverse is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
+//!         to be less than or equal to the exact value (except for NaNs).
+//!      6. The inverse is computed in a 'round toward \f$\infty\f$ mode. The result is guaranteed
+//!         to be greater than or equal to the exact value (except for NaNs).
+//!      7. Computes the result in modular arithmetic. the parameters must be flint positive
 //!         and less than the modulus. The modulus itself must be less than maxflint. Note that
-//!         mul{mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)
+//!         mul[mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)
 //!
 //!  @note
 //!     For [integral value](@ref eve::integral_value) `rec(x)` is equivalent to:

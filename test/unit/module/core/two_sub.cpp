@@ -15,7 +15,7 @@
 //== two_sub tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
                            )
@@ -23,7 +23,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   <typename T>(T a0, T a1)
 {
   using eve::two_sub;
-  if constexpr(sizeof(eve::element_type_t<T>) == 4)
+  if constexpr(sizeof(eve::element_type_t<T>) <= 4)
   {
     auto [a, e] = two_sub(a0, a1);
     auto da = eve::upgrade(a);
@@ -35,7 +35,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 };
 
 TTS_CASE_WITH("Check behavior of average(wide)",
-              eve::test::scalar::ieee_reals,
+              eve::test::scalar::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
                            )
@@ -43,7 +43,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   <typename T>(T a0, T a1)
 {
   using eve::two_sub;
-  if constexpr(sizeof(eve::element_type_t<T>) == 4)
+  if constexpr(sizeof(eve::element_type_t<T>) <= 4)
   {
     auto [a, e] = two_sub(a0, a1);
     auto da = eve::upgrade(a);
