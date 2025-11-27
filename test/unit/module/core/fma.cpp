@@ -12,7 +12,7 @@
 // Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types_wf16)
-<typename T>(tts::type<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,18 +39,18 @@ TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types_wf16)
 // fma tests
 //==================================================================================================
 auto onepmileps =
-    tts::constant([]<typename U>(eve::as<U>)
-                  { return (eve::inc(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
+  tts::constant([]<typename U>(eve::as<U>)
+                { return (eve::inc(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 auto onemmileps =
-    tts::constant([]<typename U>(eve::as<U>)
-                  { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
+  tts::constant([]<typename U>(eve::as<U>)
+                { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fma on real types",
               eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
-<typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1)
 {
   using eve::fma;
   using v_t = eve::element_type_t<T>;
@@ -68,14 +68,14 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
               eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
-<typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1)
 {
   using eve::fma;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
-      tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
-      11);
+    eve::fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+    tts::map([&](auto e, auto f) -> v_t { return eve::fma[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+    11);
 };
 
 //==================================================================================================
@@ -149,7 +149,7 @@ TTS_CASE_WITH("Check behavior of masked fma on all types",
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::logicals(0, 3)))
-<typename T, typename M>(T  a0, T  a1, T  a2, M const& t)
+  <typename T, typename M>(T  a0, T  a1, T  a2, M const& t)
 {
   using eve::fma;
   using eve::if_;
