@@ -183,7 +183,7 @@ Conditional Function Syntax</h1>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; sqrt_positive(v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:81</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the elementwise square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:81</div></div>
 </div><!-- fragment --><p>This code is perfectly valid and will produce the correct result. However, it has some issues:</p><ul>
 <li>the code looks like the important part is the test</li>
 <li>the code can't be optimized in case the current architecture support masked operations (i.e. AVX512 or sve)</li>
@@ -208,9 +208,9 @@ Conditional Function Syntax</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>The code of <code>sqrt_positive</code> now works differently:</p><ul>
 <li>the <code>a &gt;= 0</code> expression is evaluated</li>
-<li>the <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">eve::sqrt</a>[a &gt;= 0] expression builds a new callable object that will perform the conditional call to <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">eve::sqrt</a></li>
+<li>the <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the elementwise square root of the parameter.">eve::sqrt</a>[a &gt;= 0] expression builds a new callable object that will perform the conditional call to <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the elementwise square root of the parameter.">eve::sqrt</a></li>
 <li>this bound callable object is then called over <code>a</code></li>
-<li>Wherever the condition is true, the <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">eve::sqrt</a> function will be applied.</li>
+<li>Wherever the condition is true, the <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the elementwise square root of the parameter.">eve::sqrt</a> function will be applied.</li>
 <li>Wherever the condition is false, the value of the first argument of the function will be returned.</li>
 </ul>
 <p>The fact the conditional syntax builds a new callable object is interesting because it ensures that any optimization over the conditional computation can be captured and that this new callable can be passed as-if to algorithms without having to worry about changing the number of arguments requested.</p>

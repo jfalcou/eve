@@ -173,13 +173,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9e1abef2b027
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>The value of the inverse of <code>x</code> is returned but does not take care of denormals.</li>
-<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
-<li>call a proper system intrinsic if one exists, but with possibly very poor accuracy in return (circa 12 bits). Otherwise it uses the regular call.</li>
-<li>equivalent to the division operation of <code><a class="el" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Computes the constant .">one(as(x))</a></code> by <code>x</code>.</li>
-<li>The inverse is computed in a 'round toward \(-\infty\) mode. The result is guaranted to be less or equal to the exact one (except for Nans).</li>
-<li>The inverse is computed in a 'round toward \(\infty\) mode. The result is guaranted to be greater or equal to the exact one (except for Nans).</li>
-<li>compute the result in modular arithmetic. the parameters must be flint positive and less than the modulus. The modulus itself must be less than maxflint. Note that mul{mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)</li>
+<li>The value of the inverse of <code>x</code> is returned; denormals may not be handled.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionally</a>.</li>
+<li>Calls a system intrinsic if one exists; this may return reduced accuracy (roughly 12 bits). Otherwise, the regular implementation is used.</li>
+<li>Equivalent to dividing <code><a class="el" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Computes the constant .">one(as(x))</a></code> by <code>x</code>.</li>
+<li>The inverse is computed in a 'round toward \(-\infty\) mode. The result is guaranteed to be less than or equal to the exact value (except for NaNs).</li>
+<li>The inverse is computed in a 'round toward \(\infty\) mode. The result is guaranteed to be greater than or equal to the exact value (except for NaNs).</li>
+<li>Computes the result in modular arithmetic. the parameters must be flint positive and less than the modulus. The modulus itself must be less than maxflint. Note that mul[mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>For <a class="el" href="concepteve_1_1integral__value.html">integral value</a> <code><a class="el" href="group__core__arithmetic_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a" title="Computes the inverse of the parameter.">rec(x)</a></code> is equivalent to:<ul>
 <li>If x==1 or x==-1, x is returned.</li>
