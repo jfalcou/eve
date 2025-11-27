@@ -29,7 +29,6 @@
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/none.hpp>
-#include <iostream>
 
 namespace eve
 {
