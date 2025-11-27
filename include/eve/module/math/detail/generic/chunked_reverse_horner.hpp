@@ -15,7 +15,7 @@ namespace eve::detail
   auto chunked_reverse_horner(O const & o, X xx, C c0, Cs... cs)
   {
     auto process = [](auto const& t, auto y, auto xn){
-      return kumi::get<1>(kumi::fold_right( [&](auto e, auto acc)
+      return kumi::get<1>(kumi::fold_left( [&](auto acc, auto e)
                                             {
                                               auto[yy,r] = acc;
                                               return kumi::tuple{yy*xn,kumi::push_back(r, yy*e)};
