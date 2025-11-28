@@ -81,7 +81,7 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 // fms upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fms[promote] on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))

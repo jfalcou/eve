@@ -81,7 +81,7 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
 //== fam upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fam upper lower on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
