@@ -16,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fracscale", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of fracscale", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of fracscale", eve::test::simd::ieee_reals)
 //== fracscale simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fracscale(wide) and diff on  floating types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-100.0, 100.0)))
 <typename T>(T const& a0)
 {
@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of fracscale(wide) and diff on  floating types",
 // fracscale[cond](simd) tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fracscale[cond](wide) on  floating types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0.0, 100.0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of fracscale[cond](wide) on  floating types",
 // Tests for masked fracscale
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::fracscale)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
