@@ -541,6 +541,9 @@ int main(int argc, char const **argv)
 #endif
 
   std::cout << "[EVE] - Target: " << eve::current_api
+            << " - FP16 Support: " << (eve::detail::supports_fp16_vector_ops ? "Full" :
+                                        (eve::detail::supports_fp16_vector_conversion ? "Vector Conv." :
+                                          (eve::detail::supports_fp16_native_type ? "Scalar" : "Emulated")))
             << " - Assertions: "  << assert_status
             << " - PRNG Seed: "   << seed
             << std::endl;
