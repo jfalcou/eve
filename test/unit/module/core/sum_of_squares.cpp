@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of sum_of_squares", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of sum_of_squares", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of sum_of_squares", eve::test::simd::ieee_reals
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of sum_of_squares on all types full range",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of sum_of_squares on all types full range",
 // Tests for masked sum_of_squares
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sum_of_squares)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
@@ -66,7 +66,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sum_of_squares)(eve::wide)",
 };
 
 TTS_CASE_WITH("Check behavior of sum_of_squares kahan on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -78,4 +78,27 @@ TTS_CASE_WITH("Check behavior of sum_of_squares kahan on wide",
   using eve::as;
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
     TTS_ULP_EQUAL(sum_of_squares[kahan](a0, a1, a2), eve::downgrade(sum_of_squares[widen](a0, a1, a2)), 0.5);
+};
+
+//==================================================================================================
+// sum_of_prod upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sum_of_squares upper lower on all types",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(-100, 100),
+                            tts::randoms(-100, 100),
+                            tts::randoms(-100, 100),
+                            tts::randoms(-100, 100))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::as;
+  using eve::sum_of_squares;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(sum_of_squares[upper](a0, a1, a2, a3) >= sum_of_squares(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_squares[lower](a0, a1, a2, a3) <= sum_of_squares(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_squares[upper][strict](a0, a1, a2, a3) > sum_of_squares(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_squares[lower][strict](a0, a1, a2, a3) < sum_of_squares(a0, a1, a2, a3)));
 };
