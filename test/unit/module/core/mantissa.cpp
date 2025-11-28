@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 
@@ -35,7 +36,7 @@ TTS_CASE_WITH("Check behavior of mantissa on wide",
   auto m    = [](auto x) -> v_t
   {
     int n;
-    return std::frexp(x, &n) * 2;
+    return std_frexp(x, &n) * 2;
   };
   TTS_EQUAL(eve::mantissa(a0), tts::map(m, a0));
   TTS_EQUAL(eve::mantissa[t](a0), eve::if_else(t, eve::mantissa(a0), a0));
