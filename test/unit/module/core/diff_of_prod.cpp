@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals)
+TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using e_t   = T;
@@ -72,7 +72,7 @@ TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals)
 // diff_of_prod upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of diff_of_prod upper lower on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
