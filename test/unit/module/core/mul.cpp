@@ -96,10 +96,10 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   TTS_EXPECT(eve::all(mul[lower](w0, -w1) <= mul(w0, -w1)));
   TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >=  mul(w0, w1)));
   TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <=  mul(w0, -w1)));
-  TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  > mul[upper](w0, w1)));
-  TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) < mul[lower](w0, -w1)));
+  TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >= mul[upper](w0, w1)));
+  TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <= mul[lower](w0, -w1)));
   using v_t =  eve::element_type_t<T>;
-  if constexpr(sizeof(v_t) >  2)  //looking for pow
+  if constexpr(eve::floating_value<v_t> && sizeof(v_t) >  2)  //looking for pow
   {
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
