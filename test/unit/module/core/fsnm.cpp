@@ -81,7 +81,7 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
 // fsnm upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
 // fsnm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
   <typename T>(T const& a0, T const& a1 )
