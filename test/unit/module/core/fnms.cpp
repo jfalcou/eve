@@ -81,7 +81,7 @@ TTS_CASE_WITH("Check precision behavior of fnms on real types",
 // fsnm upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
