@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types)
 // inc(simd)  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::signed_types_wf16,
               tts::generate(tts::randoms(-100, 100)))
 <typename T>(T const& a0)
 {
@@ -95,7 +95,7 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types
 //==  inc modular tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of inc mod on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0, 96))
              )
   <typename T>(T const& ra0)
@@ -113,7 +113,7 @@ TTS_CASE_WITH("Check behavior of inc mod on wide",
   TTS_ULP_EQUAL(inc[mod = p][eve::if_(m).else_(-1)](a0), eve::if_else(m, eve::if_else(a0 == p - 1, 0, a0 + 1), -1), 0.5);
 };
 
-TTS_CASE_TPL("Check corner-cases behavior of inc(wide) and inc[mask](wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check corner-cases behavior of inc(wide) and inc[mask](wide)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
