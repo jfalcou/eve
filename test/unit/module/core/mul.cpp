@@ -99,10 +99,13 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  > mul[upper](w0, w1)));
   TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) < mul[lower](w0, -w1)));
   using v_t =  eve::element_type_t<T>;
-  auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
-  constexpr auto s = 3*T::size()/2;
-  auto tup = kumi::generate<s>(t);
-  TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
+  if constexpr(sizeof(v_t) >  2)  //looking for pow
+  {
+    auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
+    constexpr auto s = 3*T::size()/2;
+    auto tup = kumi::generate<s>(t);
+    TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
+  }
 };
 
 TTS_CASE_WITH("Check behavior of mul widen on wide",
