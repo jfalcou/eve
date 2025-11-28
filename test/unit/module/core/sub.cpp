@@ -101,8 +101,7 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   TTS_IEEE_EQUAL(eve::sub[eve::left](a0, a2), eve::sub(a2, a0));
   TTS_IEEE_EQUAL(eve::sub[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::sub(a2, a0), a0));
 
-  //TODO: enable for float16 once support is more complete
-  if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
+  if constexpr (eve::floating_value<T>)
   {
     TTS_ULP_EQUAL( sub[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[lower](sub[lower](e, f), g); }, a0, a1, a2), 1.0);
     TTS_ULP_EQUAL( sub[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[upper](sub[upper](e, f), g); }, a0, a1, a2), 1.0);
@@ -183,33 +182,29 @@ TTS_CASE_WITH("Check behavior of sub[mask]",
   {
     TTS_IEEE_EQUAL(sub[m](a0, a1), tts::map([](auto e, auto f, auto me) { return me ? sub(e, f) : e; }, a0, a1, m));
 
-    //TODO: enable for float16 once support is more complete
-    if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
-    {
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::upper][m](a0, a1) >= sub(a0, a1),
-                sub[eve::upper][m](a0, a1) == a0)));
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::upper][m](a0, a1) >= sub(a0, a1),
+                                     sub[eve::upper][m](a0, a1) == a0)));
 
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::lower][m](a0, -a1) <= sub(a0, -a1),
-                sub[eve::lower][m](a0, -a1) == a0)));
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::lower][m](a0, -a1) <= sub(a0, -a1),
+                                     sub[eve::lower][m](a0, -a1) == a0)));
 
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::strict][m][eve::upper](a0, a1) > sub(a0, a1),
-                sub[eve::strict][m][eve::upper](a0, a1) == a0)));
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::strict][m][eve::upper](a0, a1) > sub(a0, a1),
+                                     sub[eve::strict][m][eve::upper](a0, a1) == a0)));
 
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::strict][m][eve::lower](a0, -a1) < sub(a0, -a1),
-                sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::strict][m][eve::lower](a0, -a1) < sub(a0, -a1),
+                                     sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
 
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::strict][m][eve::upper](a0, a1) >= sub[eve::upper](a0, a1),
-                sub[eve::strict][m][eve::upper](a0, a1) == a0)));
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::strict][m][eve::upper](a0, a1) >= sub[eve::upper](a0, a1),
+                                     sub[eve::strict][m][eve::upper](a0, a1) == a0)));
 
-      TTS_EXPECT(eve::all(eve::if_else(m,
-                sub[eve::strict][m][eve::lower](a0, -a1) <= sub[eve::lower](a0, -a1),
-                sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
-    }
+    TTS_EXPECT(eve::all(eve::if_else(m,
+                                     sub[eve::strict][m][eve::lower](a0, -a1) <= sub[eve::lower](a0, -a1),
+                                     sub[eve::strict][m][eve::lower](a0, -a1) == a0)));
   }
   else
   {
