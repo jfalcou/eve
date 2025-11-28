@@ -6,7 +6,6 @@
 */
 //==================================================================================================
 #pragma once
-#include <concepts>
 namespace kumi
 {
 }
@@ -239,6 +238,7 @@ namespace kumi::_
 }
 #include <cstddef>
 #include <utility>
+#include <concepts>
 #if defined( __ANDROID__ ) || defined(__APPLE__)
 #include <type_traits>
 namespace kumi
@@ -927,7 +927,6 @@ namespace kumi::_
     if constexpr(idx == 9) return arg.member9.value;
   }
 }
-#include <concepts>
 #include <cstddef>
 #include <type_traits>
 #include <utility>
