@@ -37,15 +37,21 @@ namespace eve::detail
     else if constexpr( c == category::float32x8 ) return gl(r_t(_mm256_getmant_ps(a0, interval, sign)));
     else if constexpr( c == category::float64x2 ) return gl(r_t(_mm_getmant_pd(a0, interval, sign)));
     else if constexpr( c == category::float32x4 ) return gl(r_t(_mm_getmant_ps(a0, interval, sign)));
-     else if constexpr(O::contains(raw))
+    else if constexpr (std::same_as<T, eve::float16_t>)
+    {
+      if      constexpr (!detail::supports_fp16_vector_ops) return mantissa.behavior(cpu_{}, o, a0);
+      else if constexpr (c == category::float16x32)         return gl(r_t(_mm512_getmant_ph(a0, interval, sign)));
+      else if constexpr (c == category::float16x16)         return gl(r_t(_mm256_getmant_ph(a0, interval, sign)));
+      else if constexpr (c == category::float16x8 )         return gl(r_t(_mm_getmant_ph(a0, interval, sign)));
+    }
+    else if constexpr(O::contains(raw))
        return mantissa[o].retarget(cpu_{}, a0);
     else
       return if_else(is_nan(a0)||is_eqz(a0), a0, mantissa.behavior(cpu_{}, o, a0));
-
   }
 
-// -----------------------------------------------------------------------------------------------
-// Masked case
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> mantissa_(EVE_REQUIRES(avx512_),
                                        C          const &cx,
@@ -72,6 +78,13 @@ namespace eve::detail
         else if constexpr( c == category::float32x8 ) return _mm256_mask_getmant_ps(src, m, v, interval, sign);
         else if constexpr( c == category::float64x2 ) return _mm_mask_getmant_pd(src, m, v, interval, sign);
         else if constexpr( c == category::float32x4 ) return _mm_mask_getmant_ps(src, m, v, interval, sign);
+        else if constexpr (std::same_as<T, eve::float16_t>)
+        {
+          if      constexpr (!detail::supports_fp16_vector_ops) return mantissa[o][cx].retarget(cpu_{}, v);
+          else if constexpr (c == category::float16x32)         return _mm512_mask_getmant_ph(src, m, v, interval, sign);
+          else if constexpr (c == category::float16x16)         return _mm256_mask_getmant_ph(src, m, v, interval, sign);
+          else if constexpr (c == category::float16x8 )         return _mm_mask_getmant_ph(src, m, v, interval, sign);
+        }
         else return mantissa[o][cx].retarget(cpu_{}, v);
       }
     }

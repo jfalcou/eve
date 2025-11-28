@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of mantissa", eve::test::simd::ieee_reals_wf16)
 // mantissa  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mantissa on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
