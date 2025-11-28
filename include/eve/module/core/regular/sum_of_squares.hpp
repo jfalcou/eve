@@ -124,15 +124,16 @@ namespace eve
         ((p0 = pair_sqr_add(p0,args)),...);
         auto [r, e] = p0;
         auto res = r+e;
-        return force_if_any(o, res, eve::is_infinite, inf(as(res)), a0, args...);
+        res = force_if_any(o, res, eve::is_infinite, inf(as(res)), a0, args...);
+        return if_else(is_nan(res), inf(as(res)), res);
       }
       else
       {
-        auto l_sqr = [](){
+        auto l_sqr = [&](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
             return eve::sqr[saturated];
           else
-            return eve::sqr;
+            return eve::sqr[o];
         };
         r_t r = eve::add[o](l_sqr()(r_t(a0)), l_sqr()(r_t(args))...);
         if constexpr(integral_value<r_t>)
