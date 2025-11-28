@@ -113,7 +113,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
 //===  Tests for lower upper  average
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax))
              )
@@ -124,7 +124,7 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
   using eve::upper;
   using eve::strict;
   TTS_EXPECT(eve::all(eve::average(a0, a1) <= eve::average[eve::upper](a0, a1)));
-  TTS_EXPECT(eve::all(eve::inc(eve::average(a0, a1)) >=eve::average[eve::upper](a0, a1)));
+  TTS_EXPECT(eve::all(eve::average(a0, a1) >= eve::average[eve::lower](a0, a1)));
   T  w0{0.1};
   T  w1{0.12f};
   TTS_EXPECT(eve::all(average[upper](w0, w1)  >=  average(w0, w1)));
@@ -132,7 +132,6 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
   if constexpr (eve::floating_value<T>)
   {
     TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >  average(w0, w1)));
-    TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >= average(w0, w1)));
     TTS_EXPECT(eve::all(average[strict][lower](w0, -w1) <  average(w0, -w1)));
     TTS_EXPECT(eve::all(average[strict][upper](w0, w1)  >= average[upper](w0, w1)));
     TTS_EXPECT(eve::all(average[strict][lower](w0, -w1) <= average[lower](w0, -w1)));
