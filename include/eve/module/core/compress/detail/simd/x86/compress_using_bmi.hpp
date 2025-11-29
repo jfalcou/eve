@@ -160,7 +160,7 @@ namespace eve::detail
 
   template<typename T, typename N> constexpr bool compress_bmi_should_split()
   {
-    std::size_t max_field_size = kumi::max_flat(T {}, [](auto m) { return sizeof(m); });
+    std::size_t max_field_size = kumi::max_flat( kumi::as_tuple_t<T> {}, [](auto m) { return sizeof(m); });
 
          if ( N() > 16  ) return true;
     else if ( N() == 16 ) return max_field_size > 1;

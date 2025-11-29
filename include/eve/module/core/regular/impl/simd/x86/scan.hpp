@@ -70,7 +70,7 @@ use_scan_in_lanes(Wide)
   if constexpr( std::same_as<typename Wide::abi_type, x86_256_> ) return std::true_type {};
   else if constexpr( is_bundle_v<typename Wide::abi_type> )
   {
-    return kumi::fold_right(
+    return kumi::fold_left(
         []<bool so_far, typename T>(std::bool_constant<so_far>, T)
         { return std::bool_constant<so_far&& decltype(use_scan_in_lanes(T {}))::value> {}; },
         Wide {},

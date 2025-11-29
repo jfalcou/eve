@@ -27,7 +27,7 @@ namespace eve::algo::views
 
       auto components = kumi::map([&](auto rng) { return preprocess_range(tr_internal, rng); }, rngs);
 
-      auto tr2 = kumi::fold_right(
+      auto tr2 = kumi::fold_left(
           default_to,
           kumi::map([](auto r) { return drop_key(consider_types_key, r.traits()); }, components),
           tr);

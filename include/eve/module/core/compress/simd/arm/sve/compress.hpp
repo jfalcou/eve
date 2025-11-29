@@ -43,8 +43,8 @@ namespace eve::detail
 
   template<typename T, typename N> constexpr bool compress_sve_should_split()
   {
-    std::size_t min_size = kumi::min_flat( T{}, [](auto m) { return sizeof(m); });
-    std::size_t max_size = kumi::max_flat( T{}, [](auto m) { return sizeof(m); });
+    std::size_t min_size = kumi::min_flat( kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
+    std::size_t max_size = kumi::max_flat( kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
 
     // We can compress 1 full register of at least 4 bytes elements.
     if (min_size == 1U                  ) return N() > eve::expected_cardinal_v<std::int32_t> / 4;
