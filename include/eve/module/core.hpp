@@ -71,15 +71,22 @@
 //! @ingroup core
 //! Basic useful constants (scalar and SIMD)
 //!
-//! All EVE constants can be called in three ways:
-//!    * ct(eve::as<T>())   where T is the wished constant type
-//!    * ct(t)              where t is an instance of a type T
+//! All EVE constants can be called in four ways:
+//!    * ct(eve::as<T>())     where T is the wished constant type
+//!    * ct(eve::as(t))       where t is an instance of a type T
 //!    * ct\[cond\](...)      where cond is a conditional expression.
+//!    * `upper`, `lower`      decorators can also been used (see the note  below).
 //!
 //! Here ct denotes the constant name.
 //!
 //! When the condition is present and evaluate to false the result element default to zero,
 //! but this behavior can be changed if the condition is expressed by an `if_(...).else_(...) clause`.
+//!
+//! @note For mathematic constants whose value is (perhaps) not exactly represented in the floating point type used,
+//!       the regular call provides the value rounded to nearest even, but the semantic modifiyers `upper` and
+//!       `lower` can be used to provide values guaranted to be greater or equal (respectively less or equal) to
+//!       the real mathematical value. For instance the regular nearest values of \f$\pi\f$ for float and double are
+//!       greater (resp. less) than the mathematical value.
 //!
 //! @defgroup core_decorators  Decorators
 //! @ingroup core
@@ -109,6 +116,9 @@
 //!          eve::maxabs, eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::modf, eve::negabsmax,
 //!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist,
 //!          eve::rsqrt, eve::signnz, eve::sum_of_prod,
+//!
+//!       -  `upper`, `lower`  : when available enforce that the operation will lead to a result that will be guaranted less or
+//!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
 //!
 //!   * integer roundings :
 //!
@@ -175,7 +185,7 @@
 //! the decorated pedantic version of these functions. (or the lower or upper versions, that must guarantee on ordering
 //! against the mathematical correct result)
 //!
-//! Take care that can be very expansive if the proper hardware capabilities are not present.
+//! Take care that can be very expensive if the proper hardware capabilities are not present.
 //!
 //! By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand
 //! and if there is no possibility of  maping the std implementation
