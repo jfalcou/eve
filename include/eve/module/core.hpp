@@ -26,16 +26,30 @@
 //! These functions allows performing some basic arithmetics operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
-//! [diff_of_prod](@ref eve::diff_of_prod),
-//! [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma), [two_add](@ref eve::two_add),
-//! [two_prod](@ref eve::two_prod), .
+//! [diff_of_prod](@ref eve::diff_of_prod), [safe_scale](@ref eve::safe_scale), [sufp](@ref eve::sufp),
+//! [sulp](@ref eve::sulp), [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma),
+//! [two_add](@ref eve::two_add), [two_prod](@ref eve::two_prod), [two_sub](@ref eve::two_sub),
+//! [veltkamp](@ref eve::veltkamp).
+//!
+//! @note Many functions can also use a `widen` decorators. This make the whole computation and result
+//!       made in the upgraded type if available. Currently types with 64 bits elements cannot be upgraded and
+//!       for then  `widen` has no effect.
 //!
 //! @defgroup core_arithmetic  Arithmetic operations
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! These functions allows performing some basic arithmetics operations with greater accuracy
-//! even when and upgraded type is not available.
+//! These functions allows performing some basic arithmetics operations.
+//!
+//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmi](@ref eve::absmin),
+//! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
+//! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
+//! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
+//! [covariance](@ref eve::covariance), [](@ref eve::), [](@ref eve::), [](@ref eve::), 
+//! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [](@ref eve::), [dot](@ref eve::dot),
+//! [](@ref eve::)](@ref eve::), 
+//! [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::)](@ref eve::),
+//! [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::)](@ref eve::),  
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
