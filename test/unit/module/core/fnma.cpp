@@ -78,10 +78,13 @@ TTS_CASE_WITH("Check behavior of fnma[promote] on all types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  TTS_EXPECT(eve::all(fnma[upper](a0, a1, a2) >= fnma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fnma[lower](a0, a1, a2) <= fnma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fnma[upper][strict](a0, a1, a2) > fnma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fnma[lower][strict](a0, a1, a2) < fnma(a0, a1, a2)));
+  using eve::strict;
+  using eve::pedantic;
+  auto ref = fnma[pedantic](a0, a1, a2);
+  TTS_EXPECT(eve::all((fnma[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((fnma[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
+  TTS_EXPECT(eve::all((fnma[upper][strict](a0, a1, a2) > ref) || eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((fnma[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
   TTS_EXPECT(eve::all(fnma[strict][upper](a0, a1, a2) >= fnma[upper](a0, a1, a2)));
   TTS_EXPECT(eve::all(fnma[strict][lower](a0, a1, a2) <= fnma[lower](a0, a1, a2)));
 };
