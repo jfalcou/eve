@@ -182,10 +182,10 @@ $(document).ready(function(){initNavTree('group__core__simd_ga1a37b296b3bc64c292
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">float</span> data[2*<a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>()] = {};</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int&gt;</a>   <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">indexes</a>  = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 2*i; };</div>
+<div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;int&gt;</a>   indexes  = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 2*i; };</div>
 <div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::wide&lt;float&gt;</a> values   = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.5f * (1+i); };</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__core__simd_ga1a37b296b3bc64c292dc1f2641ef003d.html#ga1a37b296b3bc64c292dc1f2641ef003d">eve::scatter</a>(values, data, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">indexes</a>);</div>
+<div class="line">  <a class="code hl_variable" href="group__core__simd_ga1a37b296b3bc64c292dc1f2641ef003d.html#ga1a37b296b3bc64c292dc1f2641ef003d">eve::scatter</a>(values, data, indexes);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">e</a> : data)</div>
 <div class="line">    std::<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">cout</a> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">e</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
