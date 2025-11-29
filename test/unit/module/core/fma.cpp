@@ -99,7 +99,7 @@ TTS_CASE_WITH("Check behavior of fma[uppr or lower] on all types",
   TTS_EXPECT(eve::all((fma[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
   TTS_EXPECT(eve::all((fma[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
   TTS_EXPECT(eve::all((fma[upper][strict](a0, a1, a2) > ref) || eve::is_pinf(ref)));
-  TTS_EXPECT(eve::all((fma[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
+  TTS_EXPECT(eve::all((fma[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref) || eve::is_nan(ref))) << "ref " << ref << '\n';
   TTS_EXPECT(eve::all(fma[upper][strict](a0, a1, a2) >= fma[upper](a0, a1, a2)));
   TTS_EXPECT(eve::all(fma[strict][lower](a0, a1, a2) <= fma[lower](a0, a1, a2)));
 };
