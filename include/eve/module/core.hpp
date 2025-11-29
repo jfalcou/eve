@@ -39,17 +39,29 @@
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! These functions allows performing some basic arithmetics operations.
+//! These functions allows performing some basic arithmetics operations and some less basic.
 //!
 //! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmi](@ref eve::absmin),
 //! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
 //! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
 //! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
-//! [covariance](@ref eve::covariance), [](@ref eve::), [](@ref eve::), [](@ref eve::), 
+//! [covariance](@ref eve::covariance),
 //! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [](@ref eve::), [dot](@ref eve::dot),
-//! [](@ref eve::)](@ref eve::), 
-//! [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::)](@ref eve::),
-//! [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::), [](@ref eve::)](@ref eve::),  
+//! [fdim](@ref eve::fdim)], [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
+//! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
+//! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
+//! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
+//! [minabs](@ref eve::minabs), [minmag](@ref eve::minmag), [minmax](@ref eve::minmax), [minus](@ref eve::minus)],
+//! [modf](@ref eve::modf), [mul](@ref eve::mul), [nearest](@ref eve::nearest), [negabsmax](@ref eve::negabsmax),
+//! [negabsmin](@ref eve::negabsmin), [negate](@ref eve::negate),[negatenz](@ref eve::negatenz),
+//! [negmaxabs](@ref eve::negmaxabs), [negminabs](@ref eve::negminabs), [oneminus](@ref eve::oneminus),
+//! [rat](@ref eve::rat), [rec](@ref eve::rec)], [reldist](@ref eve::reldist), [rem](@ref eve::rem),
+//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale)],
+//! [rsqrt](@ref eve::rsqrt), [saturate](@ref eve::saturate), [sign](@ref eve::sign), [sign_alternate](@ref eve::sign_alternate)
+//! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr)], [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
+//! [sum_of_squares](@ref eve::sum_of_squares),
+//! [trunc](@ref eve::trunc), [variance](@ref eve::variance), [welford_average](@ref eve::welford_average),
+//! [welford_covariance](@ref eve::welford_covariance), [welford_variance](@ref eve::welford_variance).
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core

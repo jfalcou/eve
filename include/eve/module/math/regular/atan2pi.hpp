@@ -29,7 +29,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup math_invtrig
 //! @{
 //!   @var atan2pi
 //!   @brief `elementwise_callable` object computing the arc tangent in degrees using the

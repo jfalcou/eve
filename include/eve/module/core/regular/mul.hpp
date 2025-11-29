@@ -57,7 +57,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var mul
-//!   @brief tuple_callable` computing the product of its arguments.
+//!   @brief tuple_callable computing the product of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_internal
 //! @{
 //!   @var flush_denormal
 //!   @brief `elementwise_callable` object computing flushing denormal values to 0.

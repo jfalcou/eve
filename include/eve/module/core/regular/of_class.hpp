@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_internal
 //! @{
 //!   @var of_class
 //!   @brief `strict_elementwise_callable` object computing classification of elements of the input.
