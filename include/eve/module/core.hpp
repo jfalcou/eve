@@ -172,15 +172,16 @@
 //!   2. there is no intermediate overflow
 //!
 //! The implementation of these two properties can always be obtained calling
-//! the decorated pedantic version of these functions.
+//! the decorated pedantic version of these functions. (or the lower or upper versions, that must guarantee on ordering
+//! against the mathematical correct result)
 //!
 //! Take care that can be very expansive if the proper hardware capabilities are not present.
 //!
-//! By themselves the regular version of these function acts by maping the std implementation
-//! if the intrinsics are not at hand.
+//! By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand
+//! and if there is no possibility of  maping the std implementation
 //!
-//! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnms](@ref eve::fnms),
-//! [fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
+//! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnma](@ref eve::fnma),
+//! [fnms](@ref eve::fnms)[fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
 //!
 //!  @defgroup core_reduction  Reductions
 //!  @ingroup core
