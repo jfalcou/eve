@@ -44,6 +44,38 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
+void
+run2_any_api(eve::pattern_t<I...> p)
+{
+  shuffle_test::run2<T, N, G>(return3, p);
+}
+
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+void
+run2_any_api(eve::pattern_formula auto formula)
+{
+  run2_any_api<T, N, G>(eve::fix_pattern<N>(formula));
+}
+
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+void
+run2(auto pattern)
+{
+  if constexpr( eve::current_api >= api ) { run2_any_api<T, N, G>(pattern); }
+  else { TTS_PASS(); }
+}
+
+// named common patterns ------------------------------
+
+auto blend_every_other = [](int i, int size)
+{
+  if( i % 2 ) return i + size;
+  return i;
+};
+
+// any api --------------------------------------------
+
 TTS_CASE("and 0s")
 {
   // masking 0s is free for these arches.
@@ -62,6 +94,8 @@ TTS_CASE("and 0s")
         return i;
       });
 };
+
+// x86 ------------------------------------------------
 
 TTS_CASE("_mm_shuffle_epi8")
 {
@@ -115,6 +149,18 @@ TTS_CASE("_mm_permutexvar")
 
   run<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 1, 5, eve::we_, 2, 0, 7, 3>);
   run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 4, 4, eve::we_, 6, 2, 1>);
+};
+
+TTS_CASE("_mm_blendv_epi8")
+{
+  if constexpr( eve::current_api >= eve::avx512 )
+  {
+    TTS_PASS();
+    return;
+  }
+
+  run2<eve::sse4_1, std::uint8_t, 16>(blend_every_other);
+  run2<eve::avx2, std::uint8_t, 32>(blend_every_other);
 };
 
 }
