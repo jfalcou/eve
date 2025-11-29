@@ -93,10 +93,12 @@ TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  TTS_EXPECT(eve::all(fsnm[upper](a0, a1, a2) >= fsnm(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fsnm[lower](a0, a1, a2) <= fsnm(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fsnm[upper][strict](a0, a1, a2) > fsnm(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fsnm[lower][strict](a0, a1, a2) < fsnm(a0, a1, a2)));
+  using eve::pedantic;
+  auto ref = fsnm[pedantic](a0, a1, a2);
+  TTS_EXPECT(eve::all((fsnm[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((fsnm[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
+  TTS_EXPECT(eve::all((fsnm[upper][strict](a0, a1, a2) > ref) || eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((fsnm[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
   TTS_EXPECT(eve::all(fsnm[strict][upper](a0, a1, a2) >= fsnm[upper](a0, a1, a2)));
   TTS_EXPECT(eve::all(fsnm[strict][lower](a0, a1, a2) <= fsnm[lower](a0, a1, a2)));
 };
