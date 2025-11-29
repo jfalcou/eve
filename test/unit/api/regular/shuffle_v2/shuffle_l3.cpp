@@ -74,6 +74,7 @@ auto blend_every_other = [](int i, int size)
   return i;
 };
 
+
 // any api --------------------------------------------
 
 TTS_CASE("and 0s")
@@ -161,6 +162,35 @@ TTS_CASE("_mm_blendv_epi8")
 
   run2<eve::sse4_1, std::uint8_t, 16>(blend_every_other);
   run2<eve::avx2, std::uint8_t, 32>(blend_every_other);
+};
+
+TTS_CASE("_mm_permutex2var")
+{
+  run2<eve::avx512, std::uint16_t, 8>(eve::pattern<3, 11, 5, eve::we_, 2, 10, 7, 15>);
+  run2<eve::avx512, std::uint16_t, 16>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 4 ) return we_;
+        return (i * 3 + 1) % (2 * size);
+      });
+  run2<eve::avx512, std::uint16_t, 32>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 4 ) return we_;
+        return (i * 3 + 7) % (2 * size);
+      });
+
+  run2<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 5, eve::we_, 7>);
+  run2<eve::avx512, std::uint32_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, eve::we_, 15>);
+  run2<eve::avx512, std::uint32_t, 16>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 6 ) return we_;
+        return (i * 5 + 3) % (2 * size);
+      });
+
+  run2<eve::avx512, std::uint64_t, 4>(eve::pattern<3, 5, eve::we_, 7>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, 7, eve::we_>);
 };
 
 }

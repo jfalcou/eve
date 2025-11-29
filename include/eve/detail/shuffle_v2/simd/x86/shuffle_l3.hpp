@@ -106,10 +106,10 @@ shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_x86_permutex2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( current_api < avx512 || P::g_size == 1 ) return no_matching_shuffle;
-  else if constexpr( !P::has_zeroes )
+  else
   {
     auto idxs = make_idx_mask<P::idxs>(as(x));
 
@@ -130,32 +130,6 @@ shuffle_l3_x86_permutex2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
       static_assert(P::reg_size > 16, "sanity check, should be l2");
       if constexpr( P::reg_size == 32 ) return _mm256_permutex2var_epi64(x, idxs, y);
       else return _mm512_permutex2var_epi64(x, idxs, y);
-    }
-  }
-  else
-  {
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage().value;
-    auto idxs = make_idx_mask<P::idxs>(as(x));
-
-    if constexpr( P::g_size == 2 )
-    {
-      if constexpr( P::reg_size == 16 ) return _mm_maskz_permutex2var_epi16(mask, x, idxs, y);
-      else if constexpr( P::reg_size == 32 )
-        return _mm256_maskz_permutex2var_epi16(mask, x, idxs, y);
-      else return _mm512_maskz_permutex2var_epi16(mask, x, idxs, y);
-    }
-    else if constexpr( P::g_size == 4 )
-    {
-      if constexpr( P::reg_size == 16 ) return _mm_maskz_permutex2var_epi32(mask, x, idxs, y);
-      else if constexpr( P::reg_size == 32 )
-        return _mm256_maskz_permutex2var_epi32(mask, x, idxs, y);
-      else return _mm512_maskz_permutex2var_epi32(mask, x, idxs, y);
-    }
-    else // >= 8
-    {
-      static_assert(P::reg_size > 16, "sanity check, shouldn't happen");
-      if constexpr( P::reg_size == 32 ) return _mm256_maskz_permutex2var_epi64(mask, x, idxs, y);
-      else return _mm512_maskz_permutex2var_epi64(mask, x, idxs, y);
     }
   }
 }
