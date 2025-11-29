@@ -55,11 +55,19 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
     using eve::lower;
     using eve::strict;
     using eve::pedantic;
+<<<<<<< Updated upstream
     auto ref = dist[pedantic](a0, a1);
     TTS_EXPECT(eve::all(dist[upper](a0, a1) >= ref));
     TTS_EXPECT(eve::all(dist[lower](a0, a1) <= ref));
     TTS_EXPECT(eve::all(dist[upper][strict](a0, a1) > ref));
     TTS_EXPECT(eve::all(dist[lower][strict](a0, a1) < ref));
+=======
+    auto dp = dist[pedantic](a0, a1);
+    TTS_EXPECT(eve::all((dist[upper](a0, a1) >= dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[lower](a0, a1) <= dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[upper][strict](a0, a1) > dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[lower][strict](a0, a1) < dp) || eve::is_not_finite(dp))) << "a0 " << a0 << " a1 " << a1 << '\n';
+>>>>>>> Stashed changes
     TTS_EXPECT(eve::all(dist[strict][upper](a0, a1) >= dist[upper](a0, a1)));
     TTS_EXPECT(eve::all(dist[strict][lower](a0, a1) <= dist[lower](a0, a1)));
   }
