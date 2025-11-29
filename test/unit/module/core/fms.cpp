@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of fms", eve::test::simd::all_types_wf16)
 };
 
 //==================================================================================================
-//  fms tests
+//==  fms tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -61,7 +61,7 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 
 
 //==================================================================================================
-// fms tests
+//== fms tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fms on real types",
               eve::test::simd::ieee_reals_wf16,
@@ -78,7 +78,7 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 };
 
 //==================================================================================================
-// fms upper lower tests
+//== fms upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fms[promote] on all types",
               eve::test::simd::ieee_reals_wf16,
@@ -94,16 +94,18 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  TTS_EXPECT(eve::all(fms[upper](a0, a1, a2) >= fms(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fms[lower](a0, a1, a2) <= fms(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fms[upper][strict](a0, a1, a2) > fms(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fms[lower][strict](a0, a1, a2) < fms(a0, a1, a2)));
+  using eve::pedantic;
+  auto ref = fms[pedantic](a0, a1, a2);
+  TTS_EXPECT(eve::all((fms[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((fms[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
+  TTS_EXPECT(eve::all((fms[strict][upper](a0, a1, a2) > ref) || eve::is_pinf(ref))) << ref << fms[upper](a0, a1, a2);
+  TTS_EXPECT(eve::all((fms[strict][lower](a0, a1, a2) < ref) || eve::is_minf(ref)));
   TTS_EXPECT(eve::all(fms[strict][upper](a0, a1, a2) >= fms[upper](a0, a1, a2)));
   TTS_EXPECT(eve::all(fms[strict][lower](a0, a1, a2) <= fms[lower](a0, a1, a2)));
 };
 
 //==================================================================================================
-// fms promote tests
+//== fms promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fms[promote] on all types",
               eve::test::simd::all_types_wf16,
@@ -141,7 +143,7 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
 };
 
 //==================================================================================================
-//  fms masked
+//== fms masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fms on all types",
               eve::test::simd::all_types_wf16,
@@ -155,6 +157,7 @@ TTS_CASE_WITH("Check behavior of masked fms on all types",
   using eve::if_;
   using eve::lower;
   using eve::strict;
+  using eve::pedantic;
 
   TTS_IEEE_EQUAL(fms[t](a0, a1, a2), eve::if_else(t, fms(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fms[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fms(a0, a1, a2), 100));
