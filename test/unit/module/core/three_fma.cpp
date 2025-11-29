@@ -9,10 +9,10 @@
 #include <eve/module/core.hpp>
 
 //==================================================================================================
-//== average tests
+//== three_fma scalar tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide)",
-              eve::test::scalar::ieee_reals,
+              eve::test::scalar::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)

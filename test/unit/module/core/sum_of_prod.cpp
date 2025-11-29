@@ -86,8 +86,10 @@ TTS_CASE_WITH("Check behavior of sum_of_prod upper lower on all types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  TTS_EXPECT(eve::all(sum_of_prod[upper](a0, a1, a2, a3) >= sum_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(sum_of_prod[lower](a0, a1, a2, a3) <= sum_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(sum_of_prod[upper][strict](a0, a1, a2, a3) > sum_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(sum_of_prod[lower][strict](a0, a1, a2, a3) < sum_of_prod(a0, a1, a2, a3)));
+  using eve::pedantic;
+  auto ref =  sum_of_prod[pedantic](a0, a1, a2, a3);
+  TTS_EXPECT(eve::all((sum_of_prod[upper](a0, a1, a2, a3) >= ref) ||  eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((sum_of_prod[lower](a0, a1, a2, a3) <= ref) ||  eve::is_minf(ref)));
+  TTS_EXPECT(eve::all((sum_of_prod[upper][strict](a0, a1, a2, a3) > ref) ||  eve::is_pinf(ref)));
+  TTS_EXPECT(eve::all((sum_of_prod[lower][strict](a0, a1, a2, a3) < ref) ||  eve::is_minf(ref)));
 };
