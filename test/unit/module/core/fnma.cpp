@@ -78,7 +78,6 @@ TTS_CASE_WITH("Check behavior of fnma[promote] on all types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  using eve::strict;
   using eve::pedantic;
   auto ref = fnma[pedantic](a0, a1, a2);
   TTS_EXPECT(eve::all((fnma[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
