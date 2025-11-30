@@ -46,19 +46,19 @@
 //! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
 //! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
 //! [covariance](@ref eve::covariance),
-//! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [](@ref eve::), [dot](@ref eve::dot),
+//! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [dot](@ref eve::dot),
 //! [fdim](@ref eve::fdim)], [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
 //! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
 //! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
 //! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
-//! [minabs](@ref eve::minabs), [minmag](@ref eve::minmag), [minmax](@ref eve::minmax), [minus](@ref eve::minus)],
+//! [minabs](@ref eve::minabs), [minmag](@ref eve::minmag), [minmax](@ref eve::minmax), [minus](@ref eve::minus),
 //! [modf](@ref eve::modf), [mul](@ref eve::mul), [nearest](@ref eve::nearest), [negabsmax](@ref eve::negabsmax),
 //! [negabsmin](@ref eve::negabsmin), [negate](@ref eve::negate),[negatenz](@ref eve::negatenz),
 //! [negmaxabs](@ref eve::negmaxabs), [negminabs](@ref eve::negminabs), [oneminus](@ref eve::oneminus),
-//! [rat](@ref eve::rat), [rec](@ref eve::rec)], [reldist](@ref eve::reldist), [rem](@ref eve::rem),
+//! [rat](@ref eve::rat), [rec](@ref eve::rec), [reldist](@ref eve::reldist), [rem](@ref eve::rem),
 //! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale)],
 //! [rsqrt](@ref eve::rsqrt), [saturate](@ref eve::saturate), [sign](@ref eve::sign), [sign_alternate](@ref eve::sign_alternate)
-//! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr)], [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
+//! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr), [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
 //! [sum_of_squares](@ref eve::sum_of_squares),
 //! [trunc](@ref eve::trunc), [variance](@ref eve::variance), [welford_average](@ref eve::welford_average),
 //! [welford_covariance](@ref eve::welford_covariance), [welford_variance](@ref eve::welford_variance).
@@ -66,6 +66,16 @@
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
 //! These functions are low level and acting on the bit representation of the involved datas.
+//!
+//! [bit_and](@ref eve::bit_and), [bit_andnot](@ref eve::bit_andnot), [bit_cast](@ref eve::bit_cast),
+//! [bit_ceil](@ref eve::bit_ceil), [bit_flip](@ref eve::bit_flip), [bit_floor](@ref eve::bit_floor), [bit_mask](@ref eve::bit_mask),
+//! [bit_not](@ref eve::bit_not), [bit_notand](@ref eve::bit_notand), [bit_notor](@ref eve::bit_notor), [bit_or](@ref eve::bit_or).
+//! [bit_ornot](@ref eve::bit_ornot), [bit_reverse], (@ref eve::bit_reverse), [bit_select](@ref eve::bit_select),
+//! [bit_set](@ref eve::bit_set), [shl](@ref eve::shl),
+//! [bit_shr](@ref eve::bit_shr), [bit_swap_adjacent](@ref eve::bit_swap_adjacent), [bit_swap_pairs](@ref eve::bit_swap_pairs),
+//! [bit_ternary](@ref eve::bit_ternary), [bit_unset](@ref eve::bit_unset), [bit_width](@ref eve::bit_width), [bit_xor](@ref eve::bit_xor).
+//! [byte_reverse](@ref eve::byte_reverse), [byte_swap_adjacent](@ref eve::byte_swap_adjacent), [byte_swap_pairs](@ref eve::byte_swap_pairs),
+//! [countl](@ref eve::countl), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero),
 //!
 //! @defgroup core_constants  Constants
 //! @ingroup core
@@ -204,6 +214,11 @@
 //! @defgroup core_logical  Logical operations
 //! @ingroup core
 //! Logical operations
+//!
+//! [swap_if](@ref eve::swap_if), [logical_and](@ref eve::logical_and), [logical_andnot](@ref eve::logical_andnot),
+//! [logical_not](@ref eve::logical_not), [logical_notand](@ref eve::logical_notand), [logical_notor](@ref eve::logical_notor),
+//! [logical_or](@ref eve::logical_or). [logical_ornot](@ref eve::logical_ornot),
+//! [logical_select](@ref eve::logical_select),[replace_ignored](@ref eve::replace_ignored).
 //!
 //! @defgroup core_predicates  Predicates
 //! @ingroup core
