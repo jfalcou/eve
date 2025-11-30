@@ -21,7 +21,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 <typename T>(T a0, T a1, T a2)
 {
   using eve::three_fma;
-  if constexpr(sizeof(eve::element_type_t<T>) == 4)
+  if constexpr(sizeof(eve::element_type_t<T>) <=  4)
   {
     auto [a, e, f] = three_fma(a0, a1, a2);
     double da = double(a);
@@ -30,7 +30,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     double da0 = double(a0);
     double da1 = double(a1);
     double da2 = double(a2);
-    TTS_EQUAL(eve::fma(da0, da1, da2), (da+de+df));
+    TTS_IEEE_EQUAL(eve::fma(da0, da1, da2), (da+de+df));
   }
   else
   {

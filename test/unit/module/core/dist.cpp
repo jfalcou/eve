@@ -59,9 +59,9 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
     TTS_EXPECT(eve::all((dist[upper](a0, a1) >= dp) || eve::is_not_finite(dp)));
     TTS_EXPECT(eve::all((dist[lower](a0, a1) <= dp) || eve::is_not_finite(dp)));
     TTS_EXPECT(eve::all((dist[upper][strict](a0, a1) > dp) || eve::is_not_finite(dp)));
-    TTS_EXPECT(eve::all((dist[lower][strict](a0, a1) < dp) || eve::is_not_finite(dp))) << "a0 " << a0 << " a1 " << a1 << '\n';
-    TTS_EXPECT(eve::all(dist[strict][upper](a0, a1) >= dist[upper](a0, a1)));
-    TTS_EXPECT(eve::all(dist[strict][lower](a0, a1) <= dist[lower](a0, a1)));
+    TTS_EXPECT(eve::all((dist[lower][strict](a0, a1) < dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all(dist[strict][upper](a0, a1) >= dist[upper](a0, a1))|| eve::is_not_finite(dist[upper](a0, a1)));
+    TTS_EXPECT(eve::all(dist[strict][lower](a0, a1) <= dist[lower](a0, a1))|| eve::is_not_finite(dist[upper](a0, a1)));
   }
 };
 
