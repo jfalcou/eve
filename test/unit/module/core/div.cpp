@@ -69,7 +69,7 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types_wf16)
 TTS_CASE_WITH("Check behavior of div on wide",
               eve::test::simd::ieee_reals_wf16
               ,
-              tts::generate(tts::randoms(0, 100), tts::randoms(1, 11), tts::randoms(1, 11)))
+              tts::generate(tts::randoms(-100, 100), tts::randoms(-100, 100), tts::randoms(1, 11)))
 <typename T>(T a0, T a1, T a2)
 {
   using eve::div;
@@ -92,15 +92,12 @@ TTS_CASE_WITH("Check behavior of div on wide",
   //TODO: enable for float16 once support is more complete
   if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
   {
-    TTS_EXPECT(eve::all(div[upper](a0, a1)     >=  div[lower](a0, a1)));
-    T w0(T(0.12345));
-    T w1(T(0.126789));
-    TTS_EXPECT(eve::all(div[upper](w0, w1)  >=  div(w0, w1)));
-    TTS_EXPECT(eve::all(div[lower](w0, -w1) <= div(w0, -w1)));
-    TTS_EXPECT(eve::all(div[strict][upper](w0, w1)  >  div(w0, w1)));
-    TTS_EXPECT(eve::all(div[strict][lower](w0, -w1) <  div(w0, -w1)));
-    TTS_EXPECT(eve::all(div[strict][upper](w0, w1)  >= div(w0, w1)));
-    TTS_EXPECT(eve::all(div[strict][lower](w0, -w1) <= div(w0, -w1)));
+    TTS_EXPECT(eve::all(div[upper](a0, a1)  >=  div[lower](a0, a1)));
+    auto ref = div(a0, a1);
+    TTS_EXPECT(eve::all((div[upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((div[lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((div[strict][upper](a0, a1) > ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((div[strict][lower](a0, a1) < ref) || eve::is_not_finite(ref)));
   }
 };
 
