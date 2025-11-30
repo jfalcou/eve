@@ -231,6 +231,9 @@ TTS_CASE("vtbl1_u8(x)")
   run<eve::neon, std::uint8_t, 8>(eve::pattern<3, 1, 5, we_, 2, 0, 7, 3>);
   run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 0, 4, 4, we_, 6, 2, 1>);
 
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<3, na_, 5, we_, 2, 0, 7, 3>);
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<na_, 0, 4, 4, we_, na_, 2, 1>);
+
   run<eve::asimd, std::uint8_t, 16>(
       [](int i, int size)
       {
@@ -238,18 +241,19 @@ TTS_CASE("vtbl1_u8(x)")
         if( i == 7 ) return static_cast<int>(na_);
         return (i * 3 + 2) % size;
       });
+
+  run<eve::asimd, std::uint8_t, 16>(
+      eve::pattern<3, 1, na_, we_, 2, 0, 7, 3, 15, 14, 13, na_, 5, 8, 6, 4>);
 };
 
 TTS_CASE("neon_bit_select")
 {
   run2<eve::neon, std::uint8_t, 8>(blend_every_other);
-  run2<eve::asimd, std::uint8_t, 16>(blend_every_other);
-
-  auto pattern2 = [](int i, int size) { return i % 2 == 1 ? i : i + size; };
-  run2<eve::neon, std::uint16_t, 4>(pattern2);
-  run2<eve::asimd, std::uint16_t, 8>(pattern2);
-
-  run2<eve::asimd, std::uint32_t, 4>(eve::pattern<0, 5, 2, 7>);
+  run2<eve::neon, std::uint8_t, 16>(blend_every_other);
+  run2<eve::neon, std::uint16_t, 4>(blend_every_other);
+  run2<eve::neon, std::uint16_t, 8>(blend_every_other);
+  run2<eve::neon, std::uint32_t, 4>(blend_every_other);
+  run2<eve::neon, std::uint32_t, 8>(blend_every_other);
 };
 
 }

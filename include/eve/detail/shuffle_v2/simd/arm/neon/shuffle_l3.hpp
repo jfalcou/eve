@@ -25,7 +25,7 @@ EVE_FORCEINLINE auto
 neon_vtbl(wide<std::uint8_t, N> x, wide<std::uint8_t, N> y, pattern_t<I...>)
 {
   if constexpr( N::value == 8 ) return vtbx1_u8(x, y, wide<std::uint8_t, N> {I...});
-  else return vqtbx1_u8(x, y, wide<std::uint8_t, N> {I...});
+  else return vqtbx1q_u8(x, y, wide<std::uint8_t, N> {I...});
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
@@ -39,11 +39,22 @@ shuffle_l3_neon_tbl(P, fixed<G>, wide<T, N> x)
     auto bytes = eve::bit_cast(x, eve::as<u8xN> {});
 
     constexpr auto no_we = idxm::replace_we(P::idxs, 0);
-    constexpr auto no_na = idxm::replace_na(no_we, N::value * sizeof(T));
-    constexpr auto expanded = idxm::expand_group<P::g_size>(no_na);
-    constexpr auto table_idxs = idxm::to_pattern<expanded>();
 
-    return neon_vtbl(bytes, table_idxs);
+    if constexpr( !P::has_zeroes )
+    {
+      constexpr auto expanded   = idxm::expand_group<P::g_size>(no_we);
+      constexpr auto table_idxs = idxm::to_pattern<expanded>();
+
+      return neon_vtbl(bytes, table_idxs);
+    }
+    else
+    {
+      constexpr auto no_na      = idxm::replace_na(no_we, N::value);
+      constexpr auto expanded   = idxm::expand_group<P::g_size>(no_na);
+      constexpr auto table_idxs = idxm::to_pattern<expanded>();
+
+      return neon_vtbl(u8xN {0}, bytes, table_idxs);
+    }
   }
 }
 
