@@ -101,7 +101,7 @@ TTS_CASE("and 0s")
 TTS_CASE("_mm_shuffle_epi8")
 {
   run<eve::ssse3, std::uint8_t, 16>(
-      eve::pattern<15, eve::na_, 11, eve::we_, 0, 1, 3, 15, 15, 14, 13, 12, 5, 8, 6, 4>);
+      eve::pattern<15, na_, 11, we_, 0, 1, 3, 15, 15, 14, 13, 12, 5, 8, 6, 4>);
 
   auto pattern = [](int i, int) -> std::ptrdiff_t
   {
@@ -124,9 +124,9 @@ TTS_CASE("_mm_shuffle_epi8")
 
 TTS_CASE("_mm_permutexvar")
 {
-  run<eve::avx2, std::uint32_t, 8>(eve::pattern<3, 1, 5, eve::we_, 2, 0, 7, 3>);
-  run<eve::avx2, std::uint32_t, 8>(eve::pattern<0, 0, 4, 4, eve::we_, 6, 2, 1>);
-  run<eve::avx2, std::uint32_t, 8>(eve::pattern<5, eve::we_, 3, 5, 1, 6, 0, 2>);
+  run<eve::avx2, std::uint32_t, 8>(eve::pattern<3, 1, 5, we_, 2, 0, 7, 3>);
+  run<eve::avx2, std::uint32_t, 8>(eve::pattern<0, 0, 4, 4, we_, 6, 2, 1>);
+  run<eve::avx2, std::uint32_t, 8>(eve::pattern<5, we_, 3, 5, 1, 6, 0, 2>);
 
   run<eve::avx512, std::uint16_t, 32>(
       [](int i, int size) -> std::ptrdiff_t
@@ -144,12 +144,12 @@ TTS_CASE("_mm_permutexvar")
       });
 
   run<eve::avx512, std::uint32_t, 16>(
-      eve::pattern<3, 1, 5, eve::we_, 2, 0, 7, 3, 10, 12, 9, 15, 8, 11, 14, 13>);
+      eve::pattern<3, 1, 5, we_, 2, 0, 7, 3, 10, 12, 9, 15, 8, 11, 14, 13>);
   run<eve::avx512, std::uint32_t, 16>(
-      eve::pattern<0, 0, 4, 4, eve::we_, 6, 2, 1, 8, 10, 12, 14, 9, 11, 13, 15>);
+      eve::pattern<0, 0, 4, 4, we_, 6, 2, 1, 8, 10, 12, 14, 9, 11, 13, 15>);
 
-  run<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 1, 5, eve::we_, 2, 0, 7, 3>);
-  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 4, 4, eve::we_, 6, 2, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 1, 5, we_, 2, 0, 7, 3>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 0, 4, 4, we_, 6, 2, 1>);
 };
 
 TTS_CASE("_mm_blendv_epi8")
@@ -166,7 +166,7 @@ TTS_CASE("_mm_blendv_epi8")
 
 TTS_CASE("_mm_permutex2var")
 {
-  run2<eve::avx512, std::uint16_t, 8>(eve::pattern<3, 11, 5, eve::we_, 2, 10, 7, 15>);
+  run2<eve::avx512, std::uint16_t, 8>(eve::pattern<3, 11, 5, we_, 2, 10, 7, 15>);
   run2<eve::avx512, std::uint16_t, 16>(
       [](int i, int size) -> std::ptrdiff_t
       {
@@ -180,8 +180,8 @@ TTS_CASE("_mm_permutex2var")
         return (i * 3 + 7) % (2 * size);
       });
 
-  run2<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 5, eve::we_, 7>);
-  run2<eve::avx512, std::uint32_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, eve::we_, 15>);
+  run2<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 5, we_, 7>);
+  run2<eve::avx512, std::uint32_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, we_, 15>);
   run2<eve::avx512, std::uint32_t, 16>(
       [](int i, int size) -> std::ptrdiff_t
       {
@@ -189,8 +189,30 @@ TTS_CASE("_mm_permutex2var")
         return (i * 5 + 3) % (2 * size);
       });
 
-  run2<eve::avx512, std::uint64_t, 4>(eve::pattern<3, 5, eve::we_, 7>);
-  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, 7, eve::we_>);
+  run2<eve::avx512, std::uint64_t, 4>(eve::pattern<3, 5, we_, 7>);
+  run2<eve::avx512, std::uint64_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, 7, we_>);
 };
+
+// arm-neon -------------------------------------------
+
+TTS_CASE("vtbl1_u8(x)")
+{
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<3, 1, 5, we_, 2, 0, 7, 3>);
+  run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 0, 4, 4, we_, 6, 2, 1>);
+
+  run<eve::asimd, std::uint8_t, 16>([](int i, int size)
+                                     {
+                                       if( i == 4 ) return static_cast<int>(we_);
+                                       if( i == 7 ) return static_cast<int>(na_);
+                                       return (i * 3 + 2) % size;
+                                     });
+};
+
+TTS_CASE("neon_bit_select")
+{
+  run2<eve::neon, std::uint8_t, 8>(blend_every_other);
+  run2<eve::neon, std::uint8_t, 16>(blend_every_other);
+};
+
 
 }
