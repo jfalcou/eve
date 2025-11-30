@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -33,6 +34,7 @@ namespace eve::detail
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
+      constexpr auto fp16s = detail::supports_fp16_vector_ops;
 
       if constexpr(O::contains(upper) || O::contains(lower))
       {
@@ -43,10 +45,10 @@ namespace eve::detail
         else
         {
           auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
-          if      constexpr ( c == category::float64x8  ) return _mm512_div_round_pd(a, b, dir);
-          else if constexpr ( c == category::float32x16 ) return _mm512_div_round_ps(a, b, dir);
-          else if constexpr ( c == category::float64x4 ||  c == category::float64x2 ||
-                              c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          if      constexpr ( c == category::float64x8           ) return _mm512_div_round_pd(a, b, dir);
+          else if constexpr ( c == category::float32x16          ) return _mm512_div_round_ps(a, b, dir);
+          else if constexpr ( c == category::float16x32 && fp16s ) return _mm512_div_round_ph(a, b, dir);
+          else if constexpr (match(c, category::float32 | category::float64) || (match(c, category::float16) && fp16s))
           {
             auto aa = eve::combine(a, a);
             auto bb = eve::combine(b, b);
@@ -65,6 +67,13 @@ namespace eve::detail
       else  if constexpr  ( c == category::float32x16 ) return _mm512_div_ps(a, b);
       else  if constexpr  ( c == category::float32x8  ) return _mm256_div_ps(a, b);
       else  if constexpr  ( c == category::float32x4  ) return _mm_div_ps(a, b);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!fp16s)                    return apply_fp16_as_fp32(div, a, b);
+        else if constexpr (c == category::float16x32) return _mm512_div_ph(a, b);
+        else if constexpr (c == category::float16x16) return _mm256_div_ph(a, b);
+        else if constexpr (c == category::float16x8)  return _mm_div_ph(a, b);
+      }
       else  if constexpr  ( c == category::int32x4 && current_api >= avx  )
       {
         auto dividend = _mm256_cvtepi32_pd(a);
@@ -88,7 +97,9 @@ namespace eve::detail
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
+    constexpr auto fp16s = detail::supports_fp16_vector_ops;
     auto src = alternative(cx, v, as<wide<T, N>> {});
+    auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
     if constexpr(O::contains(left))
     {
@@ -104,10 +115,10 @@ namespace eve::detail
       {
         auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) | _MM_FROUND_NO_EXC;
 
-        if      constexpr ( c == category::float64x8  ) return _mm512_add_round_pd(v, w, dir);
-        else if constexpr ( c == category::float32x16 ) return _mm512_add_round_ps(v, w, dir);
-        else if constexpr ( c == category::float64x4 || c == category::float64x2 ||
-                            c == category::float32x8 || c == category::float32x4 || c == category::float32x2)
+        if      constexpr ( c == category::float64x8           ) return _mm512_mask_div_round_pd(src, m, v, w, dir);
+        else if constexpr ( c == category::float32x16          ) return _mm512_mask_div_round_ps(src, m, v, w, dir);
+        else if constexpr ( c == category::float16x32 && fp16s ) return _mm512_mask_div_round_ph(src, m, v, w, dir);
+        else if constexpr (match(c, category::float32 | category::float64) || (match(c, category::float16) && fp16s))
         {
           auto vv = combine(v, v);
           auto ww = combine(w, w);
@@ -128,8 +139,6 @@ namespace eve::detail
     }
     else
     {
-      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
       if      constexpr( C::is_complete ) return src;
       else if constexpr( c == category::float32x16) return _mm512_mask_div_ps(src, m, v, w);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_div_pd(src, m, v, w);
@@ -137,6 +146,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_div_pd(src, m, v, w);
       else if constexpr( c == category::float32x4 ) return _mm_mask_div_ps(src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_div_pd(src, m, v, w);
+      else  if constexpr (match(c, category::float16))
+      {
+        if      constexpr (!fp16s)                    return apply_fp16_as_fp32_masked(div, cx, v, w);
+        else if constexpr (c == category::float16x32) return _mm512_mask_div_ph(src, m, v, w);
+        else if constexpr (c == category::float16x16) return _mm256_mask_div_ph(src, m, v, w);
+        else if constexpr (c == category::float16x8)  return _mm_mask_div_ph(src, m, v, w);
+      }
       else return div[o][cx].retarget(cpu_{}, v, w);
     }
   }
