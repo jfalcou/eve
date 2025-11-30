@@ -102,6 +102,7 @@
      TTS_EQUAL(next[pedantic](cases.valmax), cases.inf);
      TTS_EQUAL(next[pedantic](T(-1)), T(-1) + eve::eps(eve::as<T>()) / 2);
      TTS_EQUAL(next[pedantic](T(1)), T(1) + eve::eps(eve::as<T>()));
+     TTS_EQUAL(next[saturated](cases.inf)   , cases.inf);
    }
    else
    {

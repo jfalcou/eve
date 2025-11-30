@@ -42,14 +42,10 @@ TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
   using eve::sqr;
   TTS_ULP_EQUAL(eve::sqrt(a0), tts::map([&](auto e) { return std_sqrt(e); }, a0), 2);
 
-  //TODO: enable for float16 once support is more complete
-  if constexpr (!std::same_as<eve::element_type_t<T>, eve::float16_t>)
-  {
-    TTS_EXPECT(eve::all(eve::sqrt[eve::lower](a0) <= eve::sqrt(a0)));
-    TTS_EXPECT(eve::all(eve::sqrt[eve::upper](a0) >= eve::sqrt(a0)));
-    TTS_EXPECT(eve::all(eve::sqrt[eve::lower][eve::strict](a0) < eve::sqrt(a0)));
-    TTS_EXPECT(eve::all(eve::sqrt[eve::upper][eve::strict](a0) > eve::sqrt(a0)));
-  }
+  TTS_EXPECT(eve::all(eve::sqrt[eve::lower](a0) <= eve::sqrt(a0)));
+  TTS_EXPECT(eve::all(eve::sqrt[eve::upper](a0) >= eve::sqrt(a0)));
+  TTS_EXPECT(eve::all(eve::sqrt[eve::lower][eve::strict](a0) < eve::sqrt(a0)));
+  TTS_EXPECT(eve::all(eve::sqrt[eve::upper][eve::strict](a0) > eve::sqrt(a0)));
 };
 
 //==================================================================================================

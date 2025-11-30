@@ -108,7 +108,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    prev_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    prev_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
     {
       if constexpr( floating_value<T>)
@@ -121,6 +121,7 @@ namespace eve
         if (eve::all( eve::is_normal(a))) return prev[raw](a);
         else
         {
+          if constexpr(O::contains(saturated))  a = if_else(is_minf(a), valmin(as(a)), a);
           auto bi = bitinteger(a);
           if constexpr(scalar_value<T>)
           {

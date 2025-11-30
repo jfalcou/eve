@@ -26,7 +26,7 @@ requires arm_abi<abi_t<T, N>>
   if constexpr(O::contains(lower) || O::contains(upper)) return fma.behavior(cpu_{}, opts, a, b, c);
   else if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
   {
-    return apply_fp16_as_fp32(fma, a, b, c);
+    return apply_fp16_as_fp32(fma[opts], a, b, c);
   }
   else if constexpr( cat == category::float32x4 )   return vfmaq_f32(c, b, a);
   else if constexpr( cat == category::float32x2 )   return vfma_f32 (c, b, a);

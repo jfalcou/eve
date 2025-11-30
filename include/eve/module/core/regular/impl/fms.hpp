@@ -76,19 +76,19 @@ namespace eve::detail
     {
       if constexpr(O::contains(strict) )
       {
-        auto r = eve::fms[o.drop(lower, upper)](a, b, c);
+        auto r = eve::fms[pedantic][o.drop(lower, upper)](a, b, c);
         if constexpr(O::contains(lower))
-          return eve::prev(r);
-        else
-          return eve::next(r);
+          return eve::prev[saturated](r);
+        else if constexpr(O::contains(upper))
+          return eve::next[saturated](r);
       }
       else
       {
         auto [r, e, e1] = eve::three_fma(a, b, -c);
         if constexpr(O::contains(lower))
-          return eve::prev[eve::is_ltz(e+e1)](r);
+          return eve::prev[saturated][eve::is_ltz(e+e1)](r);
         else
-          return eve::next[eve::is_gtz(e+e1)](r);
+          return eve::next[saturated][eve::is_gtz(e+e1)](r);
       }
     }
     // PROMOTE ---------------------

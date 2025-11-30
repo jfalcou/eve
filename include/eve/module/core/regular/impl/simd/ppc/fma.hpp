@@ -23,6 +23,8 @@ namespace eve::detail
     // Only floating point has a special behavior and are PEDANTIC by design
     if constexpr( floating_scalar_value<T> && !(O::contains(lower) || O::contains(upper)))
       return vec_madd(a.storage(), b.storage(), c.storage());
+    else if(!O::contains(pedantic) && (O::contains(upper) ||O::contains(lower)) )
+      return fma[opts][pedantic](a, b, c);
     // PEDANTIC, INTEGRAL, UPPER, ETC... ---
     // We don't care about PROMOTE as we only accept similar types.
     else

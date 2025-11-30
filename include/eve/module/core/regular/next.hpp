@@ -112,7 +112,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
     {
       if constexpr( floating_value<T>)
@@ -128,6 +128,7 @@ namespace eve
         }
         else
         {
+          if constexpr(O::contains(saturated))  a = if_else(is_pinf(a), valmax(as(a)), a);
           auto bi = bitinteger(a);
           if constexpr(scalar_value<T>)
           {

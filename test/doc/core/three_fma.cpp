@@ -13,4 +13,8 @@ int main()
   std::cout << "<- wf2                      = " << wf2 << "\n";
 
   std::cout << "-> three_fma(wf0, wf1, wf2) = " << eve::three_fma(wf0, wf1, wf2) << "\n";
+  using f_t =  eve::float16_t;
+  f_t aa(1000);
+  auto [a, b, c] = eve::three_fma(aa, aa, -aa);
+  std::cout << float(a) << " " << float(b) << " " << float(c) << std::endl;
 }

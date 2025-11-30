@@ -102,11 +102,11 @@ namespace eve
       {
         if constexpr(O::contains(strict))
         {
-          auto r = diff_of_prod[o.drop(lower, upper, strict)](a, b, c, d);
+          auto r = diff_of_prod[pedantic][o.drop(lower, upper, strict)](a, b, c, d);
           if constexpr(O::contains(lower))
-            return prev(r);
+            return prev[saturated](r);
           else
-            return next(r);
+            return next[saturated](r);
         }
         else
         {
@@ -114,14 +114,14 @@ namespace eve
           T cdu =  mul[upper](c, d);
           if constexpr(O::contains(upper))
           {
-            auto err = fnma[o](c, d, cdu);
-            auto dop = fms[o](a, b, cdl);
+            auto err = fnma[pedantic][o](c, d, cdu);
+            auto dop = fms[pedantic][o](a, b, cdl);
             return add[o][is_finite(err)](dop, err);
           }
           else
           {
-            auto err = fnma[o](c, d, cdl);
-            auto dop = fms[o](a, b, cdu);
+            auto err = fnma[pedantic][o](c, d, cdl);
+            auto dop = fms[pedantic][o](a, b, cdu);
             return add[o][is_finite(err)](dop, err);
           }
         }
