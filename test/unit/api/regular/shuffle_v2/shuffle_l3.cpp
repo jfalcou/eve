@@ -74,6 +74,21 @@ auto blend_every_other = [](int i, int size)
   return i;
 };
 
+template<int shift>
+auto shift_left = [](int i, int) -> std::ptrdiff_t
+{
+  if( i == 3 ) return we_;
+  if( i - shift < 0 ) return na_;
+  return i - shift;
+};
+
+template<int shift>
+auto shift_right = [](int i, int size) -> std::ptrdiff_t
+{
+  if( i == 3 ) return we_;
+  if( i + shift >= size ) return na_;
+  return i + shift;
+};
 
 // any api --------------------------------------------
 
@@ -94,6 +109,22 @@ TTS_CASE("and 0s")
         if( i % 7 == 0 ) return na_;
         return i;
       });
+};
+
+TTS_CASE("slide_with_0")
+{
+  run<eve::neon, std::uint8_t, 16>(shift_left<1>);
+  run<eve::neon, std::uint8_t, 16>(shift_left<2>);
+  run<eve::neon, std::uint8_t, 16>(shift_left<3>);
+  run<eve::neon, std::uint8_t, 16>(shift_left<4>);
+  run<eve::neon, std::uint8_t, 16>(shift_left<9>);
+
+  run<eve::neon, std::uint8_t, 16>(shift_right<1>);
+  run<eve::neon, std::uint8_t, 16>(shift_right<2>);
+  run<eve::neon, std::uint8_t, 16>(shift_right<3>);
+  run<eve::neon, std::uint8_t, 16>(shift_right<4>);
+  run<eve::neon, std::uint8_t, 16>(shift_right<8>);
+  run<eve::neon, std::uint8_t, 16>(shift_right<9>);
 };
 
 // x86 ------------------------------------------------
@@ -200,19 +231,25 @@ TTS_CASE("vtbl1_u8(x)")
   run<eve::neon, std::uint8_t, 8>(eve::pattern<3, 1, 5, we_, 2, 0, 7, 3>);
   run<eve::neon, std::uint8_t, 8>(eve::pattern<0, 0, 4, 4, we_, 6, 2, 1>);
 
-  run<eve::asimd, std::uint8_t, 16>([](int i, int size)
-                                     {
-                                       if( i == 4 ) return static_cast<int>(we_);
-                                       if( i == 7 ) return static_cast<int>(na_);
-                                       return (i * 3 + 2) % size;
-                                     });
+  run<eve::asimd, std::uint8_t, 16>(
+      [](int i, int size)
+      {
+        if( i == 4 ) return static_cast<int>(we_);
+        if( i == 7 ) return static_cast<int>(na_);
+        return (i * 3 + 2) % size;
+      });
 };
 
 TTS_CASE("neon_bit_select")
 {
   run2<eve::neon, std::uint8_t, 8>(blend_every_other);
-  run2<eve::neon, std::uint8_t, 16>(blend_every_other);
-};
+  run2<eve::asimd, std::uint8_t, 16>(blend_every_other);
 
+  auto pattern2 = [](int i, int size) { return i % 2 == 1 ? i : i + size; };
+  run2<eve::neon, std::uint16_t, 4>(pattern2);
+  run2<eve::asimd, std::uint16_t, 8>(pattern2);
+
+  run2<eve::asimd, std::uint32_t, 4>(eve::pattern<0, 5, 2, 7>);
+};
 
 }
