@@ -32,7 +32,7 @@ namespace eve::detail
     else if constexpr( c == category::float64x2 ) return _mm_reduce_pd(a0, spv);
     else if constexpr (std::same_as<T, eve::float16_t>)
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(fracscale, a0, idx);
+      if      constexpr (!detail::supports_fp16_vector_ops) return fracscale.behavior(cpu_{}, o, a0, idx);
       else if constexpr (c == category::float16x32)         return _mm512_reduce_ph(a0, spv);
       else if constexpr (c == category::float16x16)         return _mm256_reduce_ph(a0, spv);
       else if constexpr (c == category::float16x8 )         return _mm_reduce_ph(a0, spv);
@@ -67,7 +67,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return _mm_mask_reduce_pd(src, m, a0, spv);
       else if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fracscale, mask, a0, idx);
+        if      constexpr (!detail::supports_fp16_vector_ops) return fracscale[o][mask].retarget(cpu_{}, a0, idx);
         else if constexpr (c == category::float16x32)         return _mm512_mask_reduce_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x16)         return _mm256_mask_reduce_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x8 )         return _mm_mask_reduce_ph(src, m, a0, spv);
