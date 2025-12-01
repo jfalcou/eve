@@ -23,13 +23,15 @@ TTS_CASE_WITH("Check behavior of two_add(wide)",
 <typename T>(T a0, T a1)
 {
   using eve::two_add;
-  if constexpr(sizeof(eve::element_type_t<T>) <= 4)
+  using e_t = eve::element_type_t<T>;
+  using u_t = eve::upgrade_t<e_t>;
+  if constexpr(sizeof(e_t) <= 4)
   {
     auto [a, e] = two_add(a0, a1);
-    double da = double(a);
-    double de = double(e);
-    double da0 = double(a0);
-    double da1 = double(a1);
+    u_t da = u_t(a);
+    u_t de = u_t(e);
+    u_t da0 = u_t(a0);
+    u_t da1 = u_t(a1);
     TTS_EQUAL(da0+da1, (da+de));
   }
   else
@@ -56,7 +58,7 @@ TTS_CASE_WITH("Check behavior of two_add(wide)",
   using eve::two_add;
   if constexpr(sizeof(eve::element_type_t<T>) <= 4)
   {
-    auto [a, e] = two_add(a0, a1);
+    auto [a, e] = two_add[eve::pedantic](a0, a1);
     auto da = eve::upgrade(a);
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
