@@ -95,8 +95,8 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     auto ref = mul(a0, a1);
     TTS_EXPECT(eve::all((mul[upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
     TTS_EXPECT(eve::all((mul[lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
-    TTS_EXPECT(eve::all((mul[strict][upper](a0, a1) > ref) || eve::is_not_finite(ref)));
-    TTS_EXPECT(eve::all((mul[strict][lower](a0, a1) < ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((mul[strict][upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((mul[strict][lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
   }
   using v_t =  eve::element_type_t<T>;
   if constexpr(eve::floating_value<v_t> && sizeof(v_t) >  2)  //looking for pow

@@ -91,10 +91,10 @@ namespace eve
     {
       T r1 = fma[pedantic](a, x, y);
       auto [u1, u2] = two_prod(a, x);
-      auto [a1, a2] = two_add(y, u2);
-      auto [b1, b2] = two_add(u1, a1);
+      auto [a1, a2] = two_add[pedantic](y, u2);
+      auto [b1, b2] = two_add[pedantic](u1, a1);
       auto c =  (b1-r1)+b2;
-      auto [r2, r3] = two_add(c, a2);
+      auto [r2, r3] = two_add[pedantic](c, a2);
       if constexpr( eve::platform::supports_infinites)
       {
         r2 = if_else(is_not_finite(r2), eve::zero, r2);

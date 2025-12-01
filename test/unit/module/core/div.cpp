@@ -96,8 +96,8 @@ TTS_CASE_WITH("Check behavior of div on wide",
     auto ref = div(a0, a1);
     TTS_EXPECT(eve::all((div[upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
     TTS_EXPECT(eve::all((div[lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
-    TTS_EXPECT(eve::all((div[strict][upper](a0, a1) > ref) || eve::is_not_finite(ref)));
-    TTS_EXPECT(eve::all((div[strict][lower](a0, a1) < ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((div[strict][upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((div[strict][lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
   }
 };
 

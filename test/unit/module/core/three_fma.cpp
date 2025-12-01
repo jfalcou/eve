@@ -11,7 +11,7 @@
 //==================================================================================================
 //== three_fma scalar tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of three_fma)",
               eve::test::scalar::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
@@ -21,16 +21,19 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 <typename T>(T a0, T a1, T a2)
 {
   using eve::three_fma;
-  if constexpr(sizeof(eve::element_type_t<T>) <=  4)
+  using e_t = eve::element_type_t<T>;
+  using u_t = eve::upgrade_t<T>;
+  if constexpr(sizeof(e_t) <=  4)
   {
     auto [a, e, f] = three_fma(a0, a1, a2);
-    double da = double(a);
-    double de = double(e);
-    double df = double(f);
-    double da0 = double(a0);
-    double da1 = double(a1);
-    double da2 = double(a2);
-    TTS_IEEE_EQUAL(eve::fma(da0, da1, da2), (da+de+df));
+    u_t da = u_t(a);
+    u_t de = u_t(e);
+    u_t df = u_t(f);
+    u_t da0 = u_t(a0);
+    u_t da1 = u_t(a1);
+    u_t da2 = u_t(a2);
+    std::cout << tts::typename_<T> << std::endl;
+    TTS_IEEE_EQUAL(eve::fma[eve::pedantic](da0, da1, da2), (da+de+df));
   }
   else
   {
