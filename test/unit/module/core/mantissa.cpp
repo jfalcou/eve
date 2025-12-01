@@ -32,13 +32,7 @@ TTS_CASE_WITH("Check behavior of mantissa on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
-  using v_t = eve::element_type_t<T>;
-  auto m    = [](auto x) -> v_t
-  {
-    int n;
-    return std_frexp(x, &n) * 2;
-  };
-  TTS_EQUAL(eve::mantissa(a0), tts::map(m, a0));
+  TTS_EQUAL(a0, eve::ldexp[eve::pedantic](eve::mantissa(a0), eve::exponent(a0)));
   TTS_EQUAL(eve::mantissa[t](a0), eve::if_else(t, eve::mantissa(a0), a0));
 };
 

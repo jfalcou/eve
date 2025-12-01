@@ -59,17 +59,3 @@ constexpr T std_sqrt(T x)
   if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::sqrt(static_cast<float>(x)));
   else                                           return std::sqrt(x);
 }
-
-template <typename T>
-constexpr T std_frexp(T x, int* exp)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::frexp(static_cast<float>(x), exp));
-  else                                           return std::frexp(x, exp);
-}
-
-template <typename T>
-constexpr int std_ilogb(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return std::ilogb(static_cast<float>(x));
-  else                                           return std::ilogb(x);
-}
