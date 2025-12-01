@@ -80,7 +80,7 @@ namespace eve
     constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       auto r0 = a * b;
-      auto e0 = if_else(is_not_finite(r0), zero, fms[pedantic](a, b, r0));
+      auto e0 = if_else(is_not_finite(r0), zero, fma[pedantic](a, b, -r0));
       return eve::zip(r0,e0);
     }
   }

@@ -20,11 +20,7 @@ namespace eve
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto sd = [](){
-        if constexpr( std::same_as<v_t, float>)
-        {
-          return float16_t();
-        }
-        else if constexpr( std::same_as<v_t, double>)
+        if constexpr( std::same_as<v_t, double>)
         {
           return float();
         }
@@ -55,11 +51,7 @@ namespace eve
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto ud = [](){
-       if constexpr( std::same_as<v_t, float16_t>)
-        {
-          return float();
-        }
-       else if constexpr( std::same_as<v_t, float>)
+        if constexpr( std::same_as<v_t, float>)
         {
           return double();
         }
