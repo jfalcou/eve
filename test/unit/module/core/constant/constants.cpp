@@ -11,7 +11,7 @@
 
 enum class some_enum : std::int16_t {};
 
-TTS_CASE_TPL("Check basic constants behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check basic constants behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -43,7 +43,7 @@ TTS_CASE("Check basic constants behavior - translation type")
   TTS_EQUAL(eve::allbits(as<some_enum>()), some_enum{~0});
 };
 
-TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types)
+TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -62,14 +62,14 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types)
     TTS_IEEE_EQUAL(eve::nan(as<T>()), T(0.0 / 0.0));
     TTS_EQUAL(eve::eps(as<T>()), T(0x1p-10));
     TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7C00));
-    TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(128));
-    TTS_EQUAL(eve::logeps(as<T>()), T(-15.942384719848632812f));
+    TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(16));
+    TTS_EQUAL(eve::logeps(as<T>()), T(-6.931471805599453));
     TTS_EQUAL(eve::mantissamask(as<T>()), u_t(0x83FF));
-    TTS_EQUAL(eve::oneosqrteps(as<T>()), T(2896.309326171875f));
+    TTS_EQUAL(eve::oneosqrteps(as<T>()), T(4096));
     TTS_EQUAL(eve::maxexponent(as<T>()), i_t(15));
     TTS_EQUAL(eve::maxexponentm1(as<T>()), i_t(14));
     TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(10));
-    TTS_EQUAL(eve::twotonmb(as<T>()), T(0x6400));
+    TTS_EQUAL(eve::twotonmb(as<T>()), T(0x1.0p10));
   }
   else  if constexpr( std::same_as<elt_t, float> )
   {
