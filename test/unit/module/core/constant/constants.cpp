@@ -101,6 +101,13 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types_wf16)
     TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(52));
     TTS_EQUAL(eve::twotonmb(as<T>()), T(4503599627370496));
   }
+  if constexpr(eve::platform::supports_denormals && eve::floating_value<T>)
+  {
+    TTS_EXPECT(eve::all(eve::is_not_denormal(eve::smallestposval(eve::as<T>()))));
+    TTS_EXPECT(eve::all(eve::is_denormal(eve::smallestposval(eve::as<T>())/2)));
+    TTS_EXPECT(eve::all(eve::is_nez(eve::mindenormal(eve::as<T>()))));
+    TTS_EXPECT(eve::all(eve::is_eqz(eve::mindenormal(eve::as<T>())/2)));
+  }
 };
 
 TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types_wf16)
