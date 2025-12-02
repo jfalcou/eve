@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "unit/api/regular/shuffle_v2/shuffle_v2_test.hpp"
+
 namespace
 {
 
@@ -35,8 +36,9 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
-template <auto api, typename T, std::ptrdiff_t G = 1>
-void run_expected_cardinal(auto pattern)
+template<auto api, typename T, std::ptrdiff_t G = 1>
+void
+run_expected_cardinal(auto pattern)
 {
   run<api, T, eve::expected_cardinal_v<T>, G>(pattern);
 }
@@ -63,32 +65,26 @@ run2(auto pattern)
   else { TTS_PASS(); }
 }
 
-template <auto api, typename T, std::ptrdiff_t G = 1>
-void run2_expected_cardinal(auto pattern)
+template<auto api, typename T, std::ptrdiff_t G = 1>
+void
+run2_expected_cardinal(auto pattern)
 {
   run2<api, T, eve::expected_cardinal_v<T>, G>(pattern);
 }
 
 // named common patterns ------------------------------
 
-template <int by>
-constexpr auto shift_2_pattern = [](int i, int) {
-  return i + by;
-};
+template<int by> constexpr auto shift_2_pattern = [](int i, int) { return i + by; };
 
-template <int by>
-constexpr auto rotate_pattern = [](int i, int size) {
-  return (i + by) % size;
-};
+template<int by> constexpr auto rotate_pattern = [](int i, int size) { return (i + by) % size; };
 
-constexpr auto reverse_everithing = [](int i, int size) {
-  return size - i - 1;
-};
+constexpr auto reverse_everithing = [](int i, int size) { return size - i - 1; };
 
-template <int g_size>
-constexpr auto reverse_in_group = [](int i, int) {
+template<int g_size>
+constexpr auto reverse_in_group = [](int i, int)
+{
   int group_offset = i / g_size * g_size;
-  int in_group = i % g_size;
+  int in_group     = i % g_size;
   return group_offset + g_size - in_group - 1;
 };
 
@@ -97,7 +93,6 @@ auto blend_every_other = [](int i, int size)
   if( i % 2 ) return i + size;
   return i;
 };
-
 
 // any api --------------------------------------------
 
@@ -440,13 +435,15 @@ TTS_CASE("_mm_blend_ps / _mm_blend_pd / _mm_mask_blend")
   run2<eve::avx512, std::uint64_t, 8>(blend_every_other);
 };
 
-template <int alignment>
-constexpr auto alignr_epi8_pattern = [] (int i, int size) {
-  int lane = i / 16;
+template<int alignment>
+constexpr auto alignr_epi8_pattern = [](int i, int size)
+{
+  int lane   = i / 16;
   int offset = i % 16;
 
   int offset2 = offset + alignment;
-  if (offset2 >= 16) {
+  if( offset2 >= 16 )
+  {
     offset2 %= 16;
     offset2 += size;
   }
@@ -483,34 +480,37 @@ TTS_CASE("_mm_shuffle_ps(x, y)")
   run2<eve::sse2, std::uint32_t, 4>(eve::pattern<0, 2, 4, 5>);
   run2<eve::sse2, std::uint32_t, 4>(eve::pattern<1, 0, 4, 5>);
 
-  auto p0 = [](int i, int size) {
-    if (i % 4 == 0) return i + 1;
-    if (i % 4 == 1) return i - 1;
-    if (i % 4 == 2) return i + 1 + size;
+  auto p0 = [](int i, int size)
+  {
+    if( i % 4 == 0 ) return i + 1;
+    if( i % 4 == 1 ) return i - 1;
+    if( i % 4 == 2 ) return i + 1 + size;
     /*if (i % 4 == 3)*/ return i - 1 + size;
   };
 
-  auto p1 = [](int i, int size) {
-    if (i % 4 == 0) return i + 2;
-    if (i % 4 == 1) return i + 2;
-    if (i % 4 == 2) return i - 2 + size;
+  auto p1 = [](int i, int size)
+  {
+    if( i % 4 == 0 ) return i + 2;
+    if( i % 4 == 1 ) return i + 2;
+    if( i % 4 == 2 ) return i - 2 + size;
     /*if (i % 4 == 3)*/ return i - 2 + size;
   };
 
-  auto p2 = [](int i, int size) {
-    if (i % 4 == 0) return i + 2;
-    if (i % 4 == 1) return i + 2;
-    if (i % 4 == 2) return i + size;
+  auto p2 = [](int i, int size)
+  {
+    if( i % 4 == 0 ) return i + 2;
+    if( i % 4 == 1 ) return i + 2;
+    if( i % 4 == 2 ) return i + size;
     /*if (i % 4 == 3)*/ return i + size;
   };
 
-  auto p3 = [](int i, int size) {
-    if (i % 4 == 0) return i + 1;
-    if (i % 4 == 1) return i;
-    if (i % 4 == 2) return i + size;
+  auto p3 = [](int i, int size)
+  {
+    if( i % 4 == 0 ) return i + 1;
+    if( i % 4 == 1 ) return i;
+    if( i % 4 == 2 ) return i + size;
     /*if (i % 4 == 3)*/ return i + size;
   };
-
 
   run2<eve::sse2, std::uint32_t, 4>(p0);
   run2<eve::sse2, std::uint32_t, 4>(p1);
