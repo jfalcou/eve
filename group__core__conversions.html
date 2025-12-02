@@ -127,7 +127,11 @@ $(document).ready(function(){initNavTree('group__core__conversions.html',''); in
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Type conversions</p>
-<p><a class="el" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">convert</a>, <a class="el" href="group__core__conversions_gac255fb9fd6a6d2d49347e5e311bab38a.html#gac255fb9fd6a6d2d49347e5e311bab38a">simd_cast</a>, </p>
+<p><a class="el" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">convert</a>, <a class="el" href="group__core__conversions_gac255fb9fd6a6d2d49347e5e311bab38a.html#gac255fb9fd6a6d2d49347e5e311bab38a">simd_cast</a>,</p>
+<ul>
+<li>conversion functions take two arguments a value and a scalar type to convert each lane of the value (the value itself, if it is scalar value)</li>
+<li>The conversion can use the decorator eve::saturated in which case (sic) the result is saturated in the target type. </li>
+</ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

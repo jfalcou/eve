@@ -8,6 +8,5 @@ var searchData=
   ['continued_20fractions_5',['Continued Fractions',['../group__contfrac.html',1,'']]],
   ['conversions_6',['Conversions',['../group__core__conversions.html',1,'']]],
   ['core_20functions_7',['Core functions',['../group__core.html',1,'']]],
-  ['core_5ffma_5finternal_8',['Core_fma_internal',['../group__core__fma__internal.html',1,'']]],
-  ['core_5ffnma_5ffamily_9',['Core_fnma_family',['../group__core__fnma__family.html',1,'']]]
+  ['core_5ffma_5finternal_8',['Core_fma_internal',['../group__core__fma__internal.html',1,'']]]
 ];

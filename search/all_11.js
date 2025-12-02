@@ -4,7 +4,7 @@ var searchData=
   ['of_20eve_20types_1',['Property of EVE types',['../glossary_semantic.html#autotoc_md66',1,'']]],
   ['of_20simd_20registers_2',['Tuple of SIMD registers',['../intro-03.html#autotoc_md106',1,'']]],
   ['of_20tuples_3',['SIMD register of tuples',['../intro-03.html#autotoc_md107',1,'']]],
-  ['of_5fclass_4',['of_class',['../group__core__arithmetic_ga690abaa61eff462af4d2c5978bca34be.html#ga690abaa61eff462af4d2c5978bca34be',1,'eve']]],
+  ['of_5fclass_4',['of_class',['../group__core__internal_ga690abaa61eff462af4d2c5978bca34be.html#ga690abaa61eff462af4d2c5978bca34be',1,'eve']]],
   ['omega_5',['omega',['../group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566',1,'eve']]],
   ['one_6',['one',['../group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5',1,'eve']]],
   ['one_20big_20news_20for_20this_20release_3a_20sve_7',['The One Big News for this release: SVE',['../changelog.html#autotoc_md39',1,'']]],

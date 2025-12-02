@@ -127,7 +127,14 @@ $(document).ready(function(){initNavTree('group__core__predicates.html',''); ini
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Operations returning logical values</p>
-<p>Mind that in SIMD context these functions DO NOT return boolean but logical values that is an internal representation of a vector of truth values that can be handled by the function of the previous section (core_logical). </p>
+<p>Mind that in SIMD context these functions DO NOT return boolean but logical values that is an internal representation of a vector of truth values that can be handled by the function of the previous section logical operations).</p>
+<p>The set of functions is quite exhaustive. Peculiarly all comparison are treated with their negations and decorations as sometime architectures provide specific intrinsics and also because floating Nan values must be taken into account more easily.</p>
+<ul>
+<li>With numeric decorator, Nan never wins against a definite value in a comparison.</li>
+<li>pedantic try to mimic the corresponding standard function behaviour.</li>
+<li><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">almost</a> and <a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">definitely</a> allow a fuzzy treatment of comparisons.</li>
+</ul>
+<p>Supplementary comparisons functions take the bit of sign of zero into account, namely <a class="el" href="group__core__predicates_gaa174fb85a173c44f48b99e0492e02c2a.html#gaa174fb85a173c44f48b99e0492e02c2a">is_eqpz</a>, <a class="el" href="group__core__predicates_gafed3aebafe716e5a3564145a9c9ccb9a.html#gafed3aebafe716e5a3564145a9c9ccb9a">is_eqmz</a>, <a class="el" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a>, <a class="el" href="group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1">is_positive</a> </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

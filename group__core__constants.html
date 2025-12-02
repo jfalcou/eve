@@ -127,13 +127,15 @@ $(document).ready(function(){initNavTree('group__core__constants.html',''); init
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Basic useful constants (scalar and SIMD)</p>
-<p>All EVE constants can be called in three ways:</p><ul>
+<p>All EVE constants can be called in four ways:</p><ul>
 <li><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">ct(eve::as&lt;T&gt;())</a> where T is the wished constant type</li>
-<li><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">ct(t)</a> where t is an instance of a type T</li>
+<li><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">ct(eve::as(t))</a> where t is an instance of a type T</li>
 <li>ct[cond](...) where cond is a conditional expression.</li>
+<li><code>upper</code>, <code>lower</code> decorators can also been used (see the note below).</li>
 </ul>
 <p>Here ct denotes the constant name.</p>
-<p>When the condition is present and evaluate to false the result element default to zero, but this behavior can be changed if the condition is expressed by an <code>if_(...).else_(...) clause</code>. </p>
+<p>When the condition is present and evaluate to false the result element default to zero, but this behavior can be changed if the condition is expressed by an <code>if_(...).else_(...) clause</code>.</p>
+<dl class="section note"><dt>Note</dt><dd>For mathematic constants whose value is (perhaps) not exactly represented in the floating point type used, the regular call provides the value rounded to nearest even, but the semantic modifiyers <code>upper</code> and <code>lower</code> can be used to provide values guaranted to be greater or equal (respectively less or equal) to the real mathematical value. For instance the regular nearest values of \(\pi\) for float and double are greater (resp. less) than the mathematical value. </dd></dl>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
