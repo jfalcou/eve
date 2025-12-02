@@ -56,7 +56,22 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types)
             T(eve::bit_cast(ilt_t(1LL << (sizeof(ilt_t) * 8 - 1)), as<elt_t>())));
   TTS_EQUAL(eve::mindenormal(as<T>()), eve::bitincrement(as<T>()));
 
-  if constexpr( std::same_as<elt_t, float> )
+  if constexpr( std::same_as<elt_t, eve::float16_t> )
+  {
+    TTS_ULP_EQUAL(eve::sqrteps(as<T>()), eve::sqrt(eve::eps(as<T>())), 0.5);
+    TTS_IEEE_EQUAL(eve::nan(as<T>()), T(0.0 / 0.0));
+    TTS_EQUAL(eve::eps(as<T>()), T(0x1p-10));
+    TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7C00));
+    TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(128));
+    TTS_EQUAL(eve::logeps(as<T>()), T(-15.942384719848632812f));
+    TTS_EQUAL(eve::mantissamask(as<T>()), u_t(0x83FF));
+    TTS_EQUAL(eve::oneosqrteps(as<T>()), T(2896.309326171875f));
+    TTS_EQUAL(eve::maxexponent(as<T>()), i_t(15));
+    TTS_EQUAL(eve::maxexponentm1(as<T>()), i_t(14));
+    TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(10));
+    TTS_EQUAL(eve::twotonmb(as<T>()), T(0x6400));
+  }
+  else  if constexpr( std::same_as<elt_t, float> )
   {
     TTS_ULP_EQUAL(eve::sqrteps(as<T>()), eve::sqrt(eve::eps(as<T>())), 0.5);
     TTS_IEEE_EQUAL(eve::nan(as<T>()), T(0.0 / 0.0));
@@ -88,7 +103,7 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -115,10 +130,15 @@ TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types
       TTS_EQUAL(eve::eps[p > 1](as<T>()), test(T(2.2204460492503130e-16)));
       TTS_EQUAL(eve::exponentmask[p > 1](as<T>()), test(i_t(0x7ff0000000000000ULL)));
     }
-    else
+    else if constexpr( std::is_same_v<elt_t, float> )
     {
       TTS_EQUAL(eve::eps[p > 1](as<T>()), test(T(1.1920929e-7)));
       TTS_EQUAL(eve::exponentmask[p > 1](as<T>()), test(i_t(0x7f800000U)));
+    }
+    else if constexpr( std::is_same_v<elt_t, eve::float16_t> )
+    {
+      TTS_EQUAL(eve::eps[p > 1](as<T>()), test(T(0x1p-10)));
+      TTS_EQUAL(eve::exponentmask[p > 1](as<T>()), test(i_t(0x7C00)));
     }
   }
 
@@ -147,10 +167,15 @@ TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::all_types
       TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), T(2.2204460492503130e-16));
       TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), i_t(0x7ff0000000000000ULL));
     }
-    else
+    else if constexpr( std::is_same_v<elt_t, float> )
     {
       TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), T(1.1920929e-7));
       TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), i_t(0x7f800000U));
+    }
+    else if constexpr( std::is_same_v<elt_t, eve::float16_t> )
+    {
+      TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), T(0x1p-10));
+      TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), i_t(0x7C00));
     }
   }
 };
