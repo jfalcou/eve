@@ -26,6 +26,25 @@ TTS_CASE("emulated float16 conversion - float16 to float32")
   }
 };
 
+TTS_CASE("emulated float16 conversion - f16 roundtrip")
+{
+  auto is_nan = [](uint16_t bits) {
+    return ((bits & 0x7C00u) == 0x7C00u) && ((bits & 0x03FFu) != 0);
+  };
+
+  for (uint32_t f32_bits = 0u; f32_bits < eve::valmax(eve::as<uint32_t>{}); ++f32_bits)
+  {
+    float f32 = std::bit_cast<float>(f32_bits);
+
+    uint16_t mf16 = eve::detail::emulated_fp_to_fp16(f32);
+    uint16_t cf16 = std::bit_cast<uint16_t>(static_cast<_Float16>(f32));
+
+    if (eve::is_nan(f32)) TTS_EXPECT(is_nan(mf16) && is_nan(cf16));
+    else                  TTS_EQUAL(mf16, cf16);
+  }
+};
+#endif
+
 TTS_CASE("emulated float16 conversion - f32 roundtrip")
 {
   // TODO: use eve::is_nan when fp16 elementwise_callable support is merged
@@ -41,31 +60,6 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
     // special case for NaN: payload is not conserved
     if (is_nan(f16_bits)) TTS_EXPECT(is_nan(roundtrip));
     else                  TTS_EQUAL(roundtrip, f16_bits);
-  }
-};
-#endif
-
-TTS_CASE("emulated float16 conversion - f16 roundtrip")
-{
-  auto is_nan = [](uint16_t bits) {
-    return ((bits & 0x7C00u) == 0x7C00u) && ((bits & 0x03FFu) != 0);
-  };
-
-  for (uint32_t f32_bits = 0u; f32_bits < eve::valmax(eve::as<uint32_t>{}); ++f32_bits)
-  {
-    float f32 = std::bit_cast<float>(f32_bits);
-
-    uint16_t mf16 = eve::detail::emulated_fp_to_fp16(f32);
-    uint16_t cf16 = std::bit_cast<uint16_t>(static_cast<_Float16>(f32));
-
-    if (eve::is_nan(f32))
-    {
-      TTS_EXPECT(is_nan(mf16) && is_nan(cf16));
-    }
-    else
-    {
-      TTS_EQUAL(mf16, cf16);
-    }
   }
 };
 
