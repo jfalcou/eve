@@ -25,7 +25,6 @@ TTS_CASE("emulated float16 conversion - float16 to float32")
     }
   }
 };
-#endif
 
 TTS_CASE("emulated float16 conversion - f32 roundtrip")
 {
@@ -44,6 +43,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
     else                  TTS_EQUAL(roundtrip, f16_bits);
   }
 };
+#endif
 
 TTS_CASE("emulated float16 conversion - f16 roundtrip")
 {
