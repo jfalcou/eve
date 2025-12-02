@@ -29,11 +29,11 @@ namespace eve
 //! @{
 //!   @var veltkamp
 //!   @brief split a loating-point number with radix 2 and p mantissa bits
-//!   x into two floating-point numbers xh and xl such that, the
-//!   significand of xh fits in p-floor(p/2), the significand of xl fits in floor(p/2) digits, and
-//!   x = xh + xl` exactly. Where p is the number of mantissa bits of the floating type element.
+//!   x into two floating-point numbers `xh` and `xl` such that, the
+//!   significand of xh fits in `p-floor(p/2)`, the significand of xl fits in `floor(p/2)` digits, and
+//!   `x = xh + xl` exactly. Where p is the number of mantissa bits of the floating type element.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

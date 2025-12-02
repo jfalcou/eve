@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var countl_one
-//!   @brief elementwise_callable` object computing the number of consecutive bits unset in a value starting from left
+//!   @brief elementwise_callable object computing the number of consecutive bits unset in a value starting from left
 //!
 //!   @groupheader{Header file}
 //!

@@ -26,34 +26,77 @@
 //! These functions allows performing some basic arithmetics operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
-//! [diff_of_prod](@ref eve::diff_of_prod),
-//! [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma), [two_add](@ref eve::two_add),
-//! [two_prod](@ref eve::two_prod), .
+//! [diff_of_prod](@ref eve::diff_of_prod), [safe_scale](@ref eve::safe_scale), [sufp](@ref eve::sufp),
+//! [sulp](@ref eve::sulp), [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma),
+//! [two_add](@ref eve::two_add), [two_prod](@ref eve::two_prod), [two_sub](@ref eve::two_sub),
+//! [veltkamp](@ref eve::veltkamp).
+//!
+//! @note Many functions can also use a `widen` decorators. This make the whole computation and result
+//!       made in the upgraded type if available. Currently types with 64 bits elements cannot be upgraded and
+//!       for then  `widen` has no effect.
 //!
 //! @defgroup core_arithmetic  Arithmetic operations
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! These functions allows performing some basic arithmetics operations with greater accuracy
-//! even when and upgraded type is not available.
+//! These functions allows performing some basic arithmetics operations and some less basic.
+//!
+//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmi](@ref eve::absmin),
+//! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
+//! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
+//! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
+//! [covariance](@ref eve::covariance),
+//! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [dot](@ref eve::dot),
+//! [fdim](@ref eve::fdim)], [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
+//! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
+//! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
+//! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
+//! [minabs](@ref eve::minabs), [minmag](@ref eve::minmag), [minmax](@ref eve::minmax), [minus](@ref eve::minus),
+//! [modf](@ref eve::modf), [mul](@ref eve::mul), [nearest](@ref eve::nearest), [negabsmax](@ref eve::negabsmax),
+//! [negabsmin](@ref eve::negabsmin), [negate](@ref eve::negate),[negatenz](@ref eve::negatenz),
+//! [negmaxabs](@ref eve::negmaxabs), [negminabs](@ref eve::negminabs), [oneminus](@ref eve::oneminus),
+//! [rat](@ref eve::rat), [rec](@ref eve::rec), [reldist](@ref eve::reldist), [rem](@ref eve::rem),
+//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale)],
+//! [rsqrt](@ref eve::rsqrt), [saturate](@ref eve::saturate), [sign](@ref eve::sign), [sign_alternate](@ref eve::sign_alternate)
+//! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr), [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
+//! [sum_of_squares](@ref eve::sum_of_squares),
+//! [trunc](@ref eve::trunc), [variance](@ref eve::variance), [welford_average](@ref eve::welford_average),
+//! [welford_covariance](@ref eve::welford_covariance), [welford_variance](@ref eve::welford_variance).
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
-//! These functions are low level and acting on the bit representation of the involved datas.
+//! These functions are low level and acting on the bit or byte representation of the involved datas independantly of their type.
+//!
+//! [bit_and](@ref eve::bit_and), [bit_andnot](@ref eve::bit_andnot), [bit_cast](@ref eve::bit_cast), [bit_ceil](@ref eve::bit_ceil),
+//! [bit_flip](@ref eve::bit_flip),[bit_floor](@ref eve::bit_floor),  [bit_mask](@ref eve::bit_mask),
+//! [bit_not](@ref eve::bit_not), [bit_notand](@ref eve::bit_notand), [bit_notor](@ref eve::bit_notor), [bit_or](@ref eve::bit_or).
+//! [bit_ornot](@ref eve::bit_ornot), [bit_reverse](@ref eve::bit_reverse), [bit_select](@ref eve::bit_select),
+//! [bit_set](@ref eve::bit_set), [shl](@ref eve::shl),
+//! [bit_shr](@ref eve::bit_shr), [bit_swap_adjacent](@ref eve::bit_swap_adjacent), [bit_swap_pairs](@ref eve::bit_swap_pairs),
+//! [bit_ternary](@ref eve::bit_ternary), [bit_unset](@ref eve::bit_unset), [bit_width](@ref eve::bit_width), [bit_xor](@ref eve::bit_xor).
+//! [byte_reverse](@ref eve::byte_reverse), [byte_swap_adjacent](@ref eve::byte_swap_adjacent), [byte_swap_pairs](@ref eve::byte_swap_pairs),
+//! [countl](@ref eve::countl), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
 //!
 //! @defgroup core_constants  Constants
 //! @ingroup core
 //! Basic useful constants (scalar and SIMD)
 //!
-//! All EVE constants can be called in three ways:
-//!    * ct(eve::as<T>())   where T is the wished constant type
-//!    * ct(t)              where t is an instance of a type T
+//! All EVE constants can be called in four ways:
+//!    * ct(eve::as<T>())     where T is the wished constant type
+//!    * ct(eve::as(t))       where t is an instance of a type T
 //!    * ct\[cond\](...)      where cond is a conditional expression.
+//!    * `upper`, `lower`      decorators can also been used (see the note  below).
 //!
 //! Here ct denotes the constant name.
 //!
 //! When the condition is present and evaluate to false the result element default to zero,
 //! but this behavior can be changed if the condition is expressed by an `if_(...).else_(...) clause`.
+//!
+//! @note For mathematic constants whose value is (perhaps) not exactly represented in the floating point type used,
+//!       the regular call provides the value rounded to nearest even, but the semantic modifiyers `upper` and
+//!       `lower` can be used to provide values guaranted to be greater or equal (respectively less or equal) to
+//!       the real mathematical value. For instance the regular nearest values of \f$\pi\f$ for float and double are
+//!       greater (resp. less) than the mathematical value.
 //!
 //! @defgroup core_decorators  Decorators
 //! @ingroup core
@@ -84,13 +127,16 @@
 //!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist,
 //!          eve::rsqrt, eve::signnz, eve::sum_of_prod,
 //!
+//!       -  `upper`, `lower`  : when available enforce that the operation will lead to a result that will be guaranted less or
+//!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
+//!
 //!   * integer roundings :
 //!
 //!     These decorators can be used with the functions
 //!     eve::div, eve::rem, eve::round with floating or integral arguments
 //!     to choose the rounding to integer mode
 //!
-//!     - `to_nearest`: troundint to nearest or even
+//!     - `to_nearest`: rounding to nearest or even
 //!     - `downward`: rounding toward \f$-\infty\f$
 //!     - `upward`: rounding toward \f$+\infty\f$
 //!     - `toward_zero`: rounding toward zero
@@ -102,10 +148,13 @@
 //!      - `lower`: the computed result of the floating operation is less than the mathematical exact value
 //!      - `upper`: the computed result of the floating operation is greater than the mathematical exact value
 //!      - `strict`: combined with lower or upper option strict ensures that the inequalities obtained are strict.
+//!           (so in general worse approximation but speedier).
 //!
 //!      These decorators can be used with the functions
 //!      eve::add, eve::average, eve::dec, eve::div, eve::fma,  eve::fms, eve::inc,
 //!      eve::mul, eve::oneminus, eve::rec, eve::sqr, eve::sqrt, eve::sub.
+//!
+//!      Experimentaly eve::add can accept an expansive `to_nearest_odd` decorator.
 //!
 //!      Also `lower` and `upper` (but not `strict`) can be used with all floating point constants.
 //!
@@ -146,15 +195,16 @@
 //!   2. there is no intermediate overflow
 //!
 //! The implementation of these two properties can always be obtained calling
-//! the decorated pedantic version of these functions.
+//! the decorated pedantic version of these functions. (or the lower or upper versions, that must guarantee on ordering
+//! against the mathematical correct result)
 //!
-//! Take care that can be very expansive if the proper hardware capabilities are not present.
+//! Take care that can be very expensive if the proper hardware capabilities are not present.
 //!
-//! By themselves the regular version of these function acts by maping the std implementation
-//! if the intrinsics are not at hand.
+//! By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand
+//! and if there is no possibility of  maping the std implementation
 //!
-//! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnms](@ref eve::fnms),
-//! [fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
+//! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnma](@ref eve::fnma),
+//! [fnms](@ref eve::fnms)[fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
 //!
 //!  @defgroup core_reduction  Reductions
 //!  @ingroup core
@@ -164,9 +214,23 @@
 //! @ingroup core
 //! Operations related to classical IEEE functions and the floating representation of real numbers
 //!
+//! most of the standard function are present,  but their names and calls can slightly change.
+//!
+//!  * [ifrexp](@ref eve::ifrexp) and  [frexp](@ref eve::frexp) are similar to `std:frexp`,  but return a kumi::tuple of two values mantissa and exponent.
+//!        For [ifrexp](@ref eve::ifrexp) the exponent is and integral value,  but for [frexp](@ref eve::frexp) it is a floating value.
+//!  *  [mantissa](@ref eve::mantissa) and  [exponent](@ref eve::exponent) also exists individually but **TAKE CARE** they are not equal to
+//!     the pair returned by `ifrexp`
+//!  * [nextafter](@ref eve::nextafter) comes along  [next](@ref eve::next) and  [prev](@ref eve::prev) that can take a second scalar integral parameter say `n`
+//!    which indicates one want the nth representable value that follows (resp. precedes) the first parameter.
+//!
 //! @defgroup core_logical  Logical operations
 //! @ingroup core
 //! Logical operations
+//!
+//! [swap_if](@ref eve::swap_if), [logical_and](@ref eve::logical_and), [logical_andnot](@ref eve::logical_andnot),
+//! [logical_not](@ref eve::logical_not), [logical_notand](@ref eve::logical_notand), [logical_notor](@ref eve::logical_notor),
+//! [logical_or](@ref eve::logical_or). [logical_ornot](@ref eve::logical_ornot),
+//! [logical_select](@ref eve::logical_select), [replace_ignored](@ref eve::replace_ignored).
 //!
 //! @defgroup core_predicates  Predicates
 //! @ingroup core
@@ -174,13 +238,27 @@
 //!
 //! Mind that in SIMD context these functions DO NOT return boolean but logical values that is
 //! an internal representation of a vector of truth values that can be handled by the function of
-//! the previous section (core_logical).
+//! the previous section logical operations).
+//!
+//! The set of functions is quite exhaustive. Peculiarly all comparison are treated with their negations and decorations as
+//! sometime architectures provide specific intrinsics and also because floating Nan values must be taken into
+//! account more easily.
+//!
+//! *  With [numeric](@ref eve::numeric) decorator, Nan never wins against a definite value in a comparison.
+//! *  [pedantic](@ref eve::pedantic) try to mimic the corresponding standard function behaviour.
+//! *  [almost](@ref eve::almost) and [definitely](@ref eve::almost) allow a fuzzy treatment of comparisons.
+//!
+//! Supplementary comparisons functions take the bit of sign of zero into account,  namely
+//! [is_eqpz](@ref eve::is_eqpz), [is_eqmz](@ref eve::is_eqmz), [is_negative](@ref eve::is_negative), [is_positive](@ref eve::is_positive)
 //!
 //! @defgroup core_conversions Conversions
 //! @ingroup core
 //! Type conversions
 //!
 //! [convert](@ref eve::convert), [simd_cast](@ref eve::simd_cast),
+//!
+//! * conversion functions take two arguments a value and a scalar type to convert each lane of the value (the value itself, if it is scalar value)
+//! * The conversion can use the decorator  [eve::saturated](@ref eve::saturated) in which case (sic) the result is saturated in the target type.
 //!
 //! @defgroup core_simd SIMD Specific Operations
 //! @ingroup core
