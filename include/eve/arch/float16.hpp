@@ -23,62 +23,102 @@ namespace eve
 {
   namespace detail
   {
-    // taken from https://github.com/QiJune/majel/blob/master/float16_t.h
-    // adapted to be usable in constexpr contexts
-    static constexpr int32_t fp16_shift = 13;
-    static constexpr int32_t fp16_shiftSign = 16;
-    static constexpr int32_t fp16_infN = 0x7F800000;
-    // the following constant is set to 65519 instead of 56504 to emulate the rounding behaviour observed on real hw.
-    static constexpr int32_t fp16_maxN = 0x477FEF00; //max flt16 as flt32
-    static constexpr int32_t fp16_minN = 0x38800000; //min flt16 normal as flt32
-    static constexpr int32_t fp16_sigN = 0x80000000; //sign bit
-    static constexpr int32_t fp16_infC = fp16_infN >> fp16_shift;
-    static constexpr int32_t fp16_nanN = (fp16_infC + 1) << fp16_shift; //minimum flt16 nan as float32
-    static constexpr int32_t fp16_maxC = fp16_maxN >> fp16_shift;
-    static constexpr int32_t fp16_minC = fp16_minN >> fp16_shift;
-    static constexpr int32_t fp16_sigC = fp16_sigN >> fp16_shiftSign;
-    static constexpr int32_t fp16_mulN = 0x52000000; //(1 << 23) / minN
-    static constexpr int32_t fp16_mulC = 0x33800000; //minN / (1 << (23 - shift))
-    static constexpr int32_t fp16_subC = 0x003FF; //max flt32 subnormal downshifted
-    static constexpr int32_t fp16_norC = 0x00400; //min flt32 normal downshifted
-    static constexpr int32_t fp16_maxD = fp16_infC - fp16_maxC - 1;
-    static constexpr int32_t fp16_minD = fp16_minC - fp16_subC - 1;
-
     constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
     {
-      int32_t vsi = std::bit_cast<int32_t>(uint32_t { raw });
-      int32_t sign = vsi & fp16_sigC;
-      vsi ^= sign;
-      sign <<= fp16_shiftSign;
-      vsi ^= ((vsi + fp16_minD) ^ vsi) & -(vsi > fp16_subC);
-      vsi ^= ((vsi + fp16_maxD) ^ vsi) & -(vsi > fp16_maxC);
-      int32_t ssi = std::bit_cast<int32_t>(std::bit_cast<float>(fp16_mulC) * vsi);
-      int32_t mask = -(fp16_norC > vsi);
-      vsi <<= fp16_shift;
-      vsi ^= (ssi ^ vsi) & mask;
-      vsi |= sign;
-      return std::bit_cast<float>(vsi);
+      uint32_t sign     = (raw & 0x8000u) << 16;
+      uint32_t exponent = (raw & 0x7C00u) >> 10;
+      uint32_t mantissa = (raw & 0x03FFu);
+
+      uint32_t result;
+
+      if (exponent == 0)
+      {
+        if (mantissa == 0) return std::bit_cast<float>(sign);
+        int shift = std::countl_zero(mantissa) - 21;
+
+        mantissa <<= shift;
+        mantissa &= 0x03FFu;
+        uint32_t exp32 = 113 - shift;
+        result = sign | (exp32 << 23) | (mantissa << 13);
+      }
+      else if (exponent == 31)
+      {
+        result = sign | 0x7F800000u | (mantissa << 13);
+
+        if (mantissa != 0) {
+            result |= 0x400000u;
+        }
+      }
+      else
+      {
+        result = sign | ((exponent + 112) << 23) | (mantissa << 13);
+      }
+
+      return std::bit_cast<float>(result);
     }
 
-    template <std::floating_point T>
-    constexpr uint16_t emulated_fp_to_fp16(T value) noexcept
+    constexpr uint16_t emulated_fp_to_fp16(float value) noexcept
     {
-      int32_t vsi = std::bit_cast<int32_t>(static_cast<float>(value));
+        uint32_t bits = std::bit_cast<uint32_t>(value);
+        uint32_t sign = (bits & 0x80000000u) >> 16;
+        int32_t exponent = int32_t((bits >> 23) & 0xFF) - 127;
+        uint32_t mantissa = bits & 0x7FFFFFu;
 
-      uint32_t sign = vsi & fp16_sigN;
-      vsi ^= sign;
-      sign >>= fp16_shiftSign; // logical shift
-      int32_t ssi = 0;
-      auto f = std::bit_cast<float>(fp16_mulN) * std::bit_cast<float>(vsi); // correct subnormals
-      if (f < float(std::numeric_limits<int32_t>::max())) ssi = f;
-      vsi ^= (ssi ^ vsi) & -(fp16_minN > vsi);
-      vsi ^= (fp16_infN ^ vsi) & -((fp16_infN > vsi) & (vsi > fp16_maxN));
-      vsi ^= (fp16_nanN ^ vsi) & -((fp16_nanN > vsi) & (vsi > fp16_infN));
-      vsi = std::bit_cast<int32_t>(std::bit_cast<uint32_t>(vsi) >> fp16_shift); // logical shift
-      vsi ^= ((vsi - fp16_maxD) ^ vsi) & -(vsi > fp16_maxC);
-      vsi ^= ((vsi - fp16_minD) ^ vsi) & -(vsi > fp16_subC);
+        if ((bits & 0x7F800000u) == 0x7F800000u)
+        {
+          if (mantissa != 0)
+          {
+            uint16_t nan = uint16_t((mantissa >> 13) ? (mantissa >> 13) : 1);
+            return uint16_t(sign | 0x7C00u | nan);
+          }
 
-      return static_cast<uint16_t>(std::bit_cast<uint32_t>(vsi) | sign);
+          return uint16_t(sign | 0x7C00u);
+        }
+
+        if (exponent > 15)
+        {
+          return uint16_t(sign | 0x7C00u);
+        }
+
+        if (exponent <= -15)
+        {
+          if (exponent < -25) return uint16_t(sign);
+          uint32_t mant_with_hidden = mantissa | 0x800000u;
+          int shift = -exponent - 1;
+          if (shift > 24) shift = 24;
+
+          uint32_t rounded = mant_with_hidden >> shift;
+          uint32_t remainder = mant_with_hidden & ((1u << shift) - 1);
+          uint32_t threshold = 1u << (shift - 1);
+
+          if (remainder > threshold || (remainder == threshold && (rounded & 1)))
+          {
+            rounded++;
+          }
+
+          return uint16_t(sign | rounded);
+        }
+
+        uint32_t fp16_exp = uint32_t(exponent + 15) << 10;
+        uint32_t mant_rounded = mantissa >> 13;
+        uint32_t round_bits = mantissa & 0x1FFFu;
+
+        if (round_bits > 0x1000u || (round_bits == 0x1000u && (mant_rounded & 1u)))
+        {
+          mant_rounded++;
+          if (mant_rounded == 0x400u)
+          {
+            mant_rounded = 0;
+            fp16_exp += 0x0400u;
+
+            if ((fp16_exp >> 10) >= 31u)
+            {
+              return uint16_t(sign | 0x7C00u);
+            }
+          }
+        }
+
+        return uint16_t(sign | fp16_exp | (mant_rounded & 0x3FFu));
     }
 
     template <std::integral T>
