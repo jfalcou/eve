@@ -100,8 +100,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-mavx2 -mf16c" }
-        - { comp: gcc  , arch: x86    , opts: "-msse2"        }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -mf16c -Os" }
+        - { comp: gcc  , arch: x86    , opts: "-msse2 -Os"        }
     steps:
       - name: Print Runner Info
         run: |
