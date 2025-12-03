@@ -100,8 +100,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-mavx2 -mf16c -Os" }
-        - { comp: gcc  , arch: x86    , opts: "-msse2 -Os"        }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -mf16c" }
+        - { comp: gcc  , arch: x86    , opts: "-msse2"        }
     steps:
       - name: Print Runner Info
         run: |
@@ -135,14 +135,41 @@ jobs:
           cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compile Unit Tests
+
+      - name: "Chunk 1: Compile"
         run:  |
           cd build
-          ninja unit.exe -j 4
-      - name: Running Unit Tests
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe -j 4
+      - name: "Chunk 1: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.math.exe unit.api.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.math\.|^unit\.api\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.core.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
 
   ##################################################################################################
   ## RISC-V Targets
