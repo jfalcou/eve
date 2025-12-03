@@ -277,7 +277,6 @@ jobs:
       matrix:
         cfg:
         - { comp: 'clang', opts: "-Wno-psabi -march=armv8.7-a+fp16" }
-        - { comp: 'gcc',   opts: "-Wno-psabi -march=armv8.2-a+nofp16" }
     steps:
       - name: Print Runner Info
         run: |
