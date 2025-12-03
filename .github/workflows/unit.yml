@@ -14,6 +14,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ##################################################################################################
+  ## Special non-arch-specific tests
+  ##################################################################################################
+  special:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+    steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja -j 4 unit.internals.float16.exe
+      - name: Running Unit Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R unit.internals.float16.exe
 
   ##################################################################################################
   ## Check no PCH mode
