@@ -82,12 +82,15 @@ namespace eve::detail
       if constexpr( eve::current_api >= eve::asimd )
       {
         using ec_t = expected_cardinal_t<T, abi_t<T, N>>;
+        constexpr auto fp16v = detail::supports_fp16_vector_ops;
 
         if constexpr( N::value == 1 ) return v.get(0);
         else if constexpr( N::value < ec_t::value ) return butterfly_reduction(v, eve::min).get(0);
         else if constexpr( c == category::float64x2 ) return vminvq_f64(v);
         else if constexpr( c == category::float32x2 ) return vminv_f32(v);
         else if constexpr( c == category::float32x4 ) return vminvq_f32(v);
+        else if constexpr( c == category::float16x4 && fp16v) return vminv_f16(v);
+        else if constexpr( c == category::float16x8 && fp16v) return vminvq_f16(v);
         else if constexpr( c == category::int32x2 ) return vminv_s32(v);
         else if constexpr( c == category::int32x4 ) return vminvq_s32(v);
         else if constexpr( c == category::uint32x2 ) return vminv_u32(v);

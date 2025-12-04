@@ -8,13 +8,13 @@
 #include "test.hpp"
 #include "unit/module/core/reduction_test.hpp"
 
-TTS_CASE_TPL("Check eve::maximum return type (scalar)", eve::test::scalar::all_types)
+TTS_CASE_TPL("Check eve::maximum return type (scalar)", eve::test::scalar::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   arithmetic_reduction_scalar_type_test(eve::maximum, eve::as<T>{});
 };
 
-TTS_CASE_TPL("Check eve::maximum return type (wide)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::maximum return type (wide)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   arithmetic_reduction_simd_type_test(eve::maximum, eve::as<T>{});
@@ -43,7 +43,7 @@ struct ManualMaximum
 };
 
 TTS_CASE_WITH("Check behavior of eve::maximum on scalars",
-              eve::test::scalar::all_types,
+              eve::test::scalar::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T v)
 {
@@ -51,7 +51,7 @@ TTS_CASE_WITH("Check behavior of eve::maximum on scalars",
 };
 
 TTS_CASE_WITH("Check behavior of eve::maximum on wides",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T v)
 {

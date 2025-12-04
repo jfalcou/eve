@@ -68,26 +68,27 @@ namespace eve::detail
       {
         if constexpr(current_api >= asimd)
         {
-          v = slide_garbage(v);
+          auto vs = slide_garbage(v);
           constexpr auto c = categorize<wide<T, N>>();
 
-                if constexpr( c== category::float64x2 ) return vaddvq_f64(v);
-          else  if constexpr( c== category::float32x2 ) return vaddv_f32(v);
-          else  if constexpr( c== category::float32x4 ) return vaddvq_f32(v);
-          else  if constexpr( c== category::uint64x2  ) return vaddvq_u64(v);
-          else  if constexpr( c== category::int64x2   ) return vaddvq_s64(v);
-          else  if constexpr( c== category::uint32x2  ) return vaddv_u32(v);
-          else  if constexpr( c== category::uint32x4  ) return vaddvq_u32(v);
-          else  if constexpr( c== category::int32x2   ) return vaddv_s32(v);
-          else  if constexpr( c== category::int32x4   ) return vaddvq_s32(v);
-          else  if constexpr( c== category::uint16x4  ) return vaddv_u16(v);
-          else  if constexpr( c== category::uint16x8  ) return vaddvq_u16(v);
-          else  if constexpr( c== category::int16x4   ) return vaddv_s16(v);
-          else  if constexpr( c== category::int16x8   ) return vaddvq_s16(v);
-          else  if constexpr( c== category::uint8x8   ) return vaddv_u8(v);
-          else  if constexpr( c== category::uint8x16  ) return vaddvq_u8(v);
-          else  if constexpr( c== category::int8x8    ) return vaddv_s8(v);
-          else  if constexpr( c== category::int8x16   ) return vaddvq_s8(v);
+                if constexpr( c== category::float64x2 ) return vaddvq_f64(vs);
+          else  if constexpr( c== category::float32x2 ) return vaddv_f32(vs);
+          else  if constexpr( c== category::float32x4 ) return vaddvq_f32(vs);
+          else  if constexpr( c== category::uint64x2  ) return vaddvq_u64(vs);
+          else  if constexpr( c== category::int64x2   ) return vaddvq_s64(vs);
+          else  if constexpr( c== category::uint32x2  ) return vaddv_u32(vs);
+          else  if constexpr( c== category::uint32x4  ) return vaddvq_u32(vs);
+          else  if constexpr( c== category::int32x2   ) return vaddv_s32(vs);
+          else  if constexpr( c== category::int32x4   ) return vaddvq_s32(vs);
+          else  if constexpr( c== category::uint16x4  ) return vaddv_u16(vs);
+          else  if constexpr( c== category::uint16x8  ) return vaddvq_u16(vs);
+          else  if constexpr( c== category::int16x4   ) return vaddv_s16(vs);
+          else  if constexpr( c== category::int16x8   ) return vaddvq_s16(vs);
+          else  if constexpr( c== category::uint8x8   ) return vaddv_u8(vs);
+          else  if constexpr( c== category::uint8x16  ) return vaddvq_u8(vs);
+          else  if constexpr( c== category::int8x8    ) return vaddv_s8(vs);
+          else  if constexpr( c== category::int8x16   ) return vaddvq_s8(vs);
+          else                                          return sum.behavior(cpu_{}, opts, v);
         }
         else
         {

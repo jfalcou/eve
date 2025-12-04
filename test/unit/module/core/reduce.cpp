@@ -21,27 +21,6 @@ TTS_CASE_TPL("Check return types of eve::reduce(wide)", eve::test::simd::all_typ
 };
 
 //==================================================================================================
-// Arithmetic tests
-//==================================================================================================
-TTS_CASE_TPL("Check behavior of eve::reduce(eve::wide)", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
-{
-  T data = [](auto i, auto c) { return i < c / 2 ? 10 * (i + 1) : -(10 * (i + 1) + 1); };
-  data += 1;
-
-  typename T::value_type ref = 0;
-  for( std::ptrdiff_t i = 0; i < T::size(); ++i ) ref += data.get(i);
-
-  TTS_EQUAL(eve::reduce(data, [](auto a, auto b) { return a + b; }), ref);
-  TTS_EQUAL(eve::reduce(data, eve::add), ref);
-  TTS_EQUAL(eve::reduce(data), ref);
-
-  TTS_EQUAL(eve::reduce[eve::splat](data, [](auto a, auto b) { return a + b; }), T(ref));
-  TTS_EQUAL(eve::reduce[eve::splat](data, eve::add), T(ref));
-  TTS_EQUAL(eve::reduce[eve::splat](data), T(ref));
-};
-
-//==================================================================================================
 // Logical tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::reduce(eve::wide)",
@@ -142,7 +121,7 @@ TTS_CASE_WITH("Check behavior of eve::reduce on arithmetic values with a neutral
   arithmetic_reduction_test_case<ManualReduction>(eve::functor<eve::reduce_proxy<eve::add, 1>::proxy>, v);
 };
 
-TTS_CASE_TPL("Check behavior of eve::reduce on logical values with a neutral element", eve::test::simd::all_types)
+TTS_CASE_TPL("Check behavior of eve::reduce on logical values with a neutral element", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   auto run = [](auto f) { logical_reduction_simd_test_cases_ntb<ManualLogicalReduction>(f, eve::as<T>{}); };
@@ -158,4 +137,12 @@ TTS_CASE_WITH("Check behavior of eve::reduce with a callable advertising a neutr
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v);
+};
+
+TTS_CASE_TPL("Check behavior of eve::reduce with a callable advertising a neutral element (IEEE754)",
+              eve::test::simd::ieee_reals_wf16)
+<typename T>(tts::type<T>)
+{
+  T v = [](auto i, auto c) { return i < c / 2 ? 10 * (i + 1) : -(10 * (i + 1) + 1); };
+  arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v, 0.5);
 };
