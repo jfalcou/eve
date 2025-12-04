@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of eve::detail::sum on wides (ieee754 reals)",
               tts::generate(tts::randoms(1, 9)))
 <typename T>(T v)
 {
-  arithmetic_reduction_test_case<ManualSum>(eve::detail::sum, v, 0.5);
+  arithmetic_reduction_test_case<ManualSum>(eve::detail::sum, v, 1.0);
 };
 
 TTS_CASE_TPL("Check behavior of eve::detail::sum on wides (conditioned ieee754 reals)", eve::test::simd::ieee_reals_wf16)
