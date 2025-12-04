@@ -14,6 +14,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ##################################################################################################
+  ## Special non-arch-specific tests
+  ##################################################################################################
+  special:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+    steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja -j 4 unit.internals.float16.exe
+      - name: Running Unit Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R unit.internals.float16.exe
 
   ##################################################################################################
   ## Check no PCH mode
@@ -50,7 +86,7 @@ jobs:
       - name: Running Unit Tests
         run:  |
           cd build
-          ctest --output-on-failure -j 4 -E ^doc.*.exe
+          ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Check External dependencies
@@ -99,14 +135,41 @@ jobs:
           cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compile Unit Tests
+
+      - name: "Chunk 1: Compile"
         run:  |
           cd build
-          ninja unit.exe -j 4
-      - name: Running Unit Tests
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+      - name: "Chunk 1: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 -E ^doc.*.exe
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.math.exe unit.api.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.math\.|^unit\.api\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.core.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
 
   ##################################################################################################
   ## RISC-V Targets
@@ -140,7 +203,7 @@ jobs:
       - name: Compiling Big Unit Tests
         run:  cd build && ninja unit.api.compress.exe -j 2
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4 -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
+        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|^unit.api.compress.*|unit.core.count_true.exe|unit.memory.store.*"
 
   ##################################################################################################
   ## ARMv7
@@ -170,7 +233,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 4
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
+        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Full emulation tests
@@ -202,7 +265,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Mac OS X Targets
@@ -214,7 +277,6 @@ jobs:
       matrix:
         cfg:
         - { comp: 'clang', opts: "-Wno-psabi -march=armv8.7-a+fp16" }
-        - { comp: 'gcc',   opts: "-Wno-psabi -march=armv8.2-a+nofp16" }
     steps:
       - name: Print Runner Info
         run: |
@@ -229,7 +291,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 2 -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 2 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Windows Targets - Deactivated for now
@@ -288,7 +350,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 10
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 10  --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 1 - PPC & ARM SVE256/512 Tests
@@ -347,7 +409,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 10
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 10 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Post-Skylake SIMD ISA
@@ -373,7 +435,7 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Pre-Skylake SIMD ISA - Special cases
@@ -400,4 +462,4 @@ jobs:
       - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe

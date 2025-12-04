@@ -8,23 +8,47 @@
 #include "test.hpp"
 
 #ifdef SPY_SUPPORTS_FP16_TYPE
-// if the compiler provides fp16 softfloat support, use it to check the fp16 to fp32 routine
-TTS_CASE("emulated float16 conversion - float16 to float32")
-{
-  for (uint16_t f16_bits = 0u; f16_bits < eve::valmax(eve::as<uint16_t>{}); ++f16_bits)
+  // if the compiler provides fp16 softfloat support, use it to check the fp16 to fp32 routine
+  TTS_CASE("emulated float16 conversion - float16 to float32")
   {
-    float f32 = eve::detail::emulated_fp16_to_fp32(f16_bits);
+    for (uint16_t f16_bits = 0u; f16_bits < eve::valmax(eve::as<uint16_t>{}); ++f16_bits)
+    {
+      float f32 = eve::detail::emulated_fp16_to_fp32(f16_bits);
 
-    if (std::isnan(f32))
-    {
-      TTS_EXPECT(std::isnan(static_cast<float>(std::bit_cast<_Float16>(f16_bits))));
+      if (std::isnan(f32))
+      {
+        TTS_EXPECT(std::isnan(static_cast<float>(std::bit_cast<_Float16>(f16_bits))));
+      }
+      else
+      {
+        TTS_EQUAL(f32, static_cast<float>(std::bit_cast<_Float16>(f16_bits)));
+      }
     }
-    else
+  };
+#endif
+
+#if defined(EVE_SPECIAL_TESTS)
+  #ifndef SPY_SUPPORTS_FP16_TYPE
+    #error "Special fp16 test requires compiler support for _Float16 type"
+  #endif
+
+  TTS_CASE("emulated float16 conversion - f16 roundtrip")
+  {
+    auto is_nan = [](uint16_t bits) {
+      return ((bits & 0x7C00u) == 0x7C00u) && ((bits & 0x03FFu) != 0);
+    };
+
+    for (uint32_t f32_bits = 0u; f32_bits < eve::valmax(eve::as<uint32_t>{}); ++f32_bits)
     {
-      TTS_EQUAL(f32, static_cast<float>(std::bit_cast<_Float16>(f16_bits)));
+      float f32 = std::bit_cast<float>(f32_bits);
+
+      uint16_t mf16 = eve::detail::emulated_fp_to_fp16(f32);
+      uint16_t cf16 = std::bit_cast<uint16_t>(static_cast<_Float16>(f32));
+
+      if (eve::is_nan(f32)) TTS_EXPECT(is_nan(mf16) && is_nan(cf16));
+      else                  TTS_EQUAL(mf16, cf16);
     }
-  }
-};
+  };
 #endif
 
 TTS_CASE("emulated float16 conversion - f32 roundtrip")
