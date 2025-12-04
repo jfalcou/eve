@@ -60,8 +60,12 @@ namespace eve::detail
   {
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
-    if constexpr(O::contains(promote)) return fam[o.drop(promote)](a,b,c);
-    // PEDANTIC ---------------------
+    if constexpr(O::contains(promote))
+      return fam[o.drop(promote)](a,b,c);
+    // LOWER,  UPPER---------------------
+    else if constexpr(O::contains(lower) || O::contains(upper))
+      return fma[o][pedantic](b, c, a);
+   // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {
       if constexpr( std::same_as<element_type_t<T>, float> )
@@ -97,8 +101,8 @@ namespace eve::detail
         return fam(a, b, c);
       }
     }
-    // REGULAR UPPER LOWER---------------------
+    // REGULAR ---------------------
     else
-      return fma[o](b, c, a);
+      return fma(b, c, a);
   }
 }
