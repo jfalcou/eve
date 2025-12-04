@@ -111,10 +111,6 @@ namespace eve::detail
     {
       return pedantic_frexp(a0);
     }
-//     else if constexpr(sizeof(element_type_t<T>) == 2)
-//     {
-//       return eve::zip(eve::mantissa(a0)/2, eve::inc(eve::exponent(a0)));
-//     }
     else
     {
       using elt_t = element_type_t<T>;
