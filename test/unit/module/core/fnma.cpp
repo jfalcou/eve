@@ -106,11 +106,9 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
           eve::fnma(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))
           == eve::fnma[eve::pedantic](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
   {
-    TTS_ULP_EQUAL(fnma((a0), (a1), (a2)),
+    TTS_ULP_EQUAL(fnma[eve::pedantic]((a0), (a1), (a2)),
                   tts::map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic](e, f, g); },
-                      a0,
-                      a1,
-                      a2),
+                      a0, a1, a2),
                   2);
   }
   else
@@ -119,11 +117,7 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
                   tts::map([&](auto e, auto f, auto g) -> v_t { return -e * f + g; }, a0, a1, a2),
                   2);
   }
-  TTS_ULP_EQUAL(
-      fnma[eve::pedantic]((a0), (a1), (a2)),
-      tts::map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic](e, f, g); }, a0, a1, a2),
-      2);
- };
+};
 
 //==================================================================================================
 //== fnma promote tests
