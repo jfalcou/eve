@@ -101,13 +101,7 @@ namespace eve::detail
   template<floating_value T, callable_options O>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
-    if constexpr(sizeof(element_type_t<T>) == 2)
-    {
-      auto e = eve::inc[eve::is_nez(a0)](eve::exponent(a0));
-      e =  eve::if_else(is_nan(a0), zero, e);
-      return eve::zip(eve::mantissa(a0)/2, eve::inc[eve::is_nez(a0)](eve::exponent(a0)));
-    }
-    else if constexpr(O::contains(pedantic))
+    if constexpr(O::contains(pedantic))
     {
       return pedantic_frexp(a0);
     }
@@ -118,7 +112,7 @@ namespace eve::detail
       auto r1     = bit_cast(bit_and(a0,emask), as(emask));
       auto x      = bit_notand(emask, a0);
       auto res    = eve::zip( bit_or(half(eve::as<T>()), x)
-                            , bit_shr(r1, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>())
+                            , eve::sub(bit_shr(r1, eve::nbmantissabits(eve::as<elt_t>())), maxexponentm1(eve::as<elt_t>()))
                             );
 
       if constexpr(O::contains(raw)) return res;

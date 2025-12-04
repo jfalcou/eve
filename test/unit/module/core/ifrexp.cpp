@@ -37,7 +37,7 @@ auto exp2(U a1) noexcept
   }
 }
 
-TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T, signed>;
@@ -63,6 +63,7 @@ TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
   }
   if constexpr( eve::platform::supports_nans )
   {
+    std::cout << tts::typename_<T> << std::endl;
     auto [r0, r1] = eve::ifrexp[eve::pedantic](eve::nan(eve::as<T>()));
 
     TTS_IEEE_EQUAL(r0, (eve::nan(eve::as<T>())));
@@ -91,22 +92,6 @@ TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
     TTS_EQUAL(p0, T(0.5));
     TTS_EQUAL(p1, i_t(1));
   }
-//   if constexpr(eve::cardinal_v<T> == 1 && sizeof(eve::element_type_t<T>) == 4)
-//   {
-//     auto a = eve::mindenormal(eve::as<T>())*T(5.);
-//     auto [p0, p1] = eve::ifrexp[eve::pedantic](a);
-//     std::cout << "p0                               " << p0 << std::endl;
-//     std::cout << "p1                               " << p1 << std::endl;
-//     auto denormality = p1+eve::maxexponentp1(eve::as<T>());
-//     std::cout << "denormality " << denormality << std::endl;
-//     auto p1c = eve::add[eve::is_denormal(a)](p1, -denormality+1);
-//     auto p0c = p0*exp2<T>(denormality-1);
-//     std::cout << "p0c                              " << p0c << std::endl;
-//     std::cout << "p1c                              " << p1c << std::endl;
-//     TTS_EQUAL(a, p0c*exp2<T>(p1c));
-//     auto p0c2 = eve::ldexp(p0, denormality-1);
-//     std::cout << "p0c2                             " << p0c2 << std::endl;
-//   }
   {
     auto a = eve::mindenormal(eve::as<T>());
     while(eve::all(eve::is_denormal(a)))
@@ -150,4 +135,20 @@ TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
 //     TTS_EQUAL(a, p0*exp2(T(p1)));
 
 //   }
+// //   if constexpr(eve::cardinal_v<T> == 1 && sizeof(eve::element_type_t<T>) == 4)
+// //   {
+// //     auto a = eve::mindenormal(eve::as<T>())*T(5.);
+// //     auto [p0, p1] = eve::ifrexp[eve::pedantic](a);
+// //     std::cout << "p0                               " << p0 << std::endl;
+// //     std::cout << "p1                               " << p1 << std::endl;
+// //     auto denormality = p1+eve::maxexponentp1(eve::as<T>());
+// //     std::cout << "denormality " << denormality << std::endl;
+// //     auto p1c = eve::add[eve::is_denormal(a)](p1, -denormality+1);
+// //     auto p0c = p0*exp2<T>(denormality-1);
+// //     std::cout << "p0c                              " << p0c << std::endl;
+// //     std::cout << "p1c                              " << p1c << std::endl;
+// //     TTS_EQUAL(a, p0c*exp2<T>(p1c));
+// //     auto p0c2 = eve::ldexp(p0, denormality-1);
+// //     std::cout << "p0c2                             " << p0c2 << std::endl;
+// //   }
 };
