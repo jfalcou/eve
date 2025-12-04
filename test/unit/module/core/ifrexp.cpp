@@ -37,7 +37,7 @@ auto exp2(U a1) noexcept
   }
 }
 
-TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals_wf16)
+TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T, signed>;
