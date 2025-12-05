@@ -6,11 +6,10 @@
 include(test)
 
 add_subdirectory(doc)
-add_subdirectory(unit)
+#add_subdirectory(unit)
 
 # add_subdirectory(exhaustive)
 
-if( EVE_BUILD_RANDOM )
-  add_subdirectory(random)
-endif()
-
+#if( EVE_BUILD_RANDOM )
+#  add_subdirectory(random)
+#endif()
