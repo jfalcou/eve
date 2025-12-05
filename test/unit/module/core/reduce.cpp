@@ -144,5 +144,5 @@ TTS_CASE_TPL("Check behavior of eve::reduce with a callable advertising a neutra
 <typename T>(tts::type<T>)
 {
   T v = [](auto i, auto c) { return i < c / 2 ? 10 * (i + 1) : -(10 * (i + 1) + 1); };
-  arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v, 0.5);
+  arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v, 2.0);
 };

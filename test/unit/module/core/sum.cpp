@@ -70,5 +70,6 @@ TTS_CASE_TPL("Check behavior of eve::detail::sum on wides (conditioned ieee754 r
 <typename T>(tts::type<T>)
 {
   T v = [](auto i, auto c) { return i < c / 2 ? 10 * (i + 1) : -(10 * (i + 1) + 1); };
+  constexpr auto expected_ulp = std::is_same_v<eve::element_type_t<T>, eve::float16_t> ? 0.5 : 0.0;
   arithmetic_reduction_test_case<ManualSum>(eve::detail::sum, v, 0.0);
 };
