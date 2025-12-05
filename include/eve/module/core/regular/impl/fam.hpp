@@ -64,10 +64,14 @@ namespace eve::detail
       return fam[o.drop(promote)](a,b,c);
     // LOWER,  UPPER---------------------
     else if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      std::cout << "icitte upper" << std::endl;
       return fma[o][pedantic](b, c, a);
+    }
    // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {
+      std::cout << "icitte pedantic" << std::endl;
       if constexpr( std::same_as<element_type_t<T>, float> )
       {
         constexpr auto tgt = as<double>{};
@@ -103,6 +107,9 @@ namespace eve::detail
     }
     // REGULAR ---------------------
     else
+    {
+      std::cout << "icitte regular" << std::endl;
       return fma(b, c, a);
+    }
   }
 }

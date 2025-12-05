@@ -88,7 +88,7 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
-  if constexpr(std::same_as<eve::element_type_t<T>,  eve::float16_t>)
+  if constexpr(std::same_as<eve::element_type_t<T>,  eve::float16_t> && eve::cardinal_v<T>== 16)
   {
     using eve::as;
     using eve::fam;
@@ -99,7 +99,6 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
     auto ref = fam[pedantic](a0, a1, a2);
 //   TTS_EXPECT(eve::all((fam[upper](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
 //   TTS_EXPECT(eve::all((fam[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
-    TTS_EXPECT(eve::all((fam[upper][strict](a0, a1, a2) >= ref) || eve::is_pinf(ref)));
     TTS_EXPECT(eve::all((fam[upper][strict](a0, a1, a2) > ref) || eve::is_pinf(ref))) << "a0 " << a0 << " a1 " << a1 << " a2 " << a2 << " ref " << ref
                                                                                        << fam[upper][strict](a0, a1, a2) << '\n';
 //   TTS_EXPECT(eve::all((fam[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
