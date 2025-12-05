@@ -105,12 +105,12 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
 //   TTS_EXPECT(eve::all((fam[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
 //   TTS_EXPECT(eve::all(fam[strict][upper](a0, a1, a2) >= fam[upper](a0, a1, a2)));
 //   TTS_EXPECT(eve::all(fam[strict][lower](a0, a1, a2) <= fam[lower](a0, a1, a2)));
-    eve::float16_t aa(0.00297546);
-    eve::float16_t aan = eve::next(aa);
-    auto diff = aan-aa;
-    std::cout << "diff" << float(diff) << std::endl;
-    //   TTS_EQUAL(aa, aan); //
-    std::cout << float(eve::mindenormal(eve::as(aa))) << " " << 1.90735e-06 <<  std::endl;
+//     eve::float16_t aa(0.00297546);
+//     eve::float16_t aan = eve::next(aa);
+//     auto diff = aan-aa;
+//     std::cout << "diff" << float(diff) << std::endl;
+//     //   TTS_EQUAL(aa, aan); //
+//     std::cout << float(eve::mindenormal(eve::as(aa))) << " " << 1.90735e-06 <<  std::endl;
   }
 };
 
