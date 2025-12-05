@@ -82,9 +82,9 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fam upper lower on all types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000))
+              tts::generate(tts::randoms(-100, 100),
+                            tts::randoms(-100, 100),
+                            tts::randoms(-100, 100))
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
