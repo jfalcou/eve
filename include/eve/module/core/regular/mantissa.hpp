@@ -65,7 +65,7 @@ namespace eve
 //!
 //!      1. The value of the IEEE mantissa is returned. In particular:
 //!        *  `nan` returns nan
-//!        *  \f$\pm\infty\f$ returns \f$\pm\infty\f$.
+//!        *  \f$\pm\infty\f$ returns \f$\pm\1\f$.
 //!        *  zero returns zero
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The results for zero and nan are unspecified.
@@ -93,7 +93,7 @@ namespace eve
       else
       {
         auto [mm, ee] = ifrexp[pedantic](a);
-        return mm*2;
+        return if_else(eve::is_infinite(a), eve::sign(a), mm*2);
       }
     }
   }
