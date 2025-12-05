@@ -6,6 +6,11 @@
 */
 //==================================================================================================
 #pragma once
+#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
@@ -85,7 +90,10 @@ namespace eve
       if constexpr(O::contains(raw))
         return   bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));
       else
-        return  if_else(is_nan(a), allbits,  bit_or(bit_and(a, mantissamask(eve::as<T>())), one[is_nez(a)](eve::as<T>())));
+      {
+        auto [mm, ee] = ifrexp[pedantic](a);
+        return mm*2;
+      }
     }
   }
 }
