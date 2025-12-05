@@ -75,12 +75,15 @@ namespace eve::detail
     {
       if constexpr(O::contains(strict) )
       {
-        std::cout << "fma lower upper strict " << std::endl;
         auto r = eve::fma[pedantic][o.drop(lower, upper)](a, b, c);
+        std::cout << "fma lower upper strict " << std::endl;
         if constexpr(O::contains(lower))
           return eve::prev[saturated](r);
         else if constexpr(O::contains(upper))
-          return eve::next[saturated](r);
+        {
+          std::cout << "next " << std::endl;
+          return eve::next(r);
+        }
       }
       else
       {
