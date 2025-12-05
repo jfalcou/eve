@@ -88,7 +88,7 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
-  if constexpr(std::same_as<eve::element_type_t<T>,  eve::float16_t> && eve::cardinal_v<T>== 16)
+  if constexpr(std::same_as<eve::element_type_t<T>,  eve::float16_t> && eve::cardinal_v<T> == 16)
   {
     using eve::as;
     using eve::fam;
