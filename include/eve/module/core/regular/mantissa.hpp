@@ -65,6 +65,7 @@ namespace eve
 //!
 //!      1. The value of the IEEE mantissa is returned. In particular:
 //!        *  `nan` returns nan
+//!        *  \f$\pm\infty\f$ returns \f$\pm\infty\f$.
 //!        *  zero returns zero
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The results for zero and nan are unspecified.
