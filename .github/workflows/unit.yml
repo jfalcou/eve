@@ -79,14 +79,40 @@ jobs:
           cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compile Unit Tests
+      - name: "Chunk 1: Compile"
         run:  |
           cd build
-          ninja unit.exe -j 4
-      - name: Running Unit Tests
+          ninja unit.core.exe -j 4
+      - name: "Chunk 1: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.api.exe unit.math.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## Check External dependencies
@@ -139,11 +165,11 @@ jobs:
       - name: "Chunk 1: Compile"
         run:  |
           cd build
-          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+          ninja unit.core.exe -j 4
       - name: "Chunk 1: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
       - name: "Chunk 1: Cleanup"
         run:  |
           cd build
@@ -152,11 +178,11 @@ jobs:
       - name: "Chunk 2: Compile"
         run:  |
           cd build
-          ninja unit.math.exe unit.api.exe -j 4
+          ninja unit.api.exe unit.math.exe -j 4
       - name: "Chunk 2: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.math\.|^unit\.api\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
       - name: "Chunk 2: Cleanup"
         run:  |
           cd build
@@ -165,11 +191,11 @@ jobs:
       - name: "Chunk 3: Compile"
         run:  |
           cd build
-          ninja unit.core.exe -j 4
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## RISC-V Targets
@@ -230,10 +256,40 @@ jobs:
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 4
-      - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+      - name: "Chunk 1: Compile"
+        run:  |
+          cd build
+          ninja unit.core.exe -j 4
+      - name: "Chunk 1: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.api.exe unit.math.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## Full emulation tests
@@ -262,10 +318,40 @@ jobs:
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 5
-      - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+      - name: "Chunk 1: Compile"
+        run:  |
+          cd build
+          ninja unit.core.exe -j 4
+      - name: "Chunk 1: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.api.exe unit.math.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## Mac OS X Targets
