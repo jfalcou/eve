@@ -22,6 +22,7 @@
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/common_value.hpp>
 #include <cmath>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -74,6 +75,7 @@ namespace eve::detail
     {
       if constexpr(O::contains(strict) )
       {
+        std::cout << "fma lower upper strict " << std::endl;
         auto r = eve::fma[pedantic][o.drop(lower, upper)](a, b, c);
         if constexpr(O::contains(lower))
           return eve::prev[saturated](r);
