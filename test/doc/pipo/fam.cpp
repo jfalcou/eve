@@ -101,7 +101,7 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
 //   TTS_EXPECT(eve::all((fam[lower](a0, a1, a2) <= ref) || eve::is_minf(ref)));
     auto sref = fam[upper][strict](a0, a1, a2);
     TTS_EXPECT(eve::all((fam[upper][strict](a0, a1, a2) > ref) || eve::is_pinf(ref))) << "a0 " << a0 << " a1 " << a1 << " a2 " << a2 << " ref " << ref
-                                                                                       << sref << '\n' << " diff " << sref -ref << '\n';
+                                                                                      << sref << "\n\n" << " diff " << sref -ref << "\n\n" << eve::next(ref)-ref << "\n\n";
 //   TTS_EXPECT(eve::all((fam[lower][strict](a0, a1, a2) < ref) || eve::is_minf(ref)));
 //   TTS_EXPECT(eve::all(fam[strict][upper](a0, a1, a2) >= fam[upper](a0, a1, a2)));
 //   TTS_EXPECT(eve::all(fam[strict][lower](a0, a1, a2) <= fam[lower](a0, a1, a2)));
