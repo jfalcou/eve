@@ -13,13 +13,11 @@
 
 namespace eve::detail
 {
-
-
   template<auto S, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_REQUIRES(avx512_),
                                         O          const & o,
                                         wide<T, N> const & a0,
-                                        eve::index_t<S> const & ) noexcept
+                                        eve::index_t<S> idx) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest) & 3);
@@ -32,17 +30,23 @@ namespace eve::detail
     else if constexpr( c == category::float64x4 ) return _mm256_reduce_pd(a0, spv);
     else if constexpr( c == category::float32x4 ) return _mm_reduce_ps(a0, spv);
     else if constexpr( c == category::float64x2 ) return _mm_reduce_pd(a0, spv);
+    else if constexpr (std::same_as<T, eve::float16_t>)
+    {
+      if      constexpr (!detail::supports_fp16_vector_ops) return fracscale.behavior(cpu_{}, o, a0, idx);
+      else if constexpr (c == category::float16x32)         return _mm512_reduce_ph(a0, spv);
+      else if constexpr (c == category::float16x16)         return _mm256_reduce_ph(a0, spv);
+      else if constexpr (c == category::float16x8 )         return _mm_reduce_ph(a0, spv);
+    }
   }
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-
   template<auto S, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_REQUIRES(avx512_),
                                         C          const &mask,
                                         O          const &o,
                                         wide<T, N> const &a0,
-                                        eve::index_t<S> const &) noexcept
+                                        eve::index_t<S> idx) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     auto const alt = alternative(mask, a0, as(a0));
@@ -61,6 +65,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_reduce_pd(src, m, a0, spv);
       else if constexpr( c == category::float32x4 ) return _mm_mask_reduce_ps(src, m, a0, spv);
       else if constexpr( c == category::float64x2 ) return _mm_mask_reduce_pd(src, m, a0, spv);
+      else if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return fracscale[o][mask].retarget(cpu_{}, a0, idx);
+        else if constexpr (c == category::float16x32)         return _mm512_mask_reduce_ph(src, m, a0, spv);
+        else if constexpr (c == category::float16x16)         return _mm256_mask_reduce_ph(src, m, a0, spv);
+        else if constexpr (c == category::float16x8 )         return _mm_mask_reduce_ph(src, m, a0, spv);
+      }
     }
   }
 }

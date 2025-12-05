@@ -29,6 +29,12 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
+      if constexpr (std::same_as<T, eve::float16_t>)
+      {
+        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(div, a, b);
+        else if constexpr (c == category::float16x8)          return vdivq_f16(a, b);
+        else if constexpr (c == category::float16x4)          return vdiv_f16(a, b);
+      }
       if constexpr (current_api >= asimd)
       {
         if constexpr( c == category::float64x1 ) return vdiv_f64 (a, b);
