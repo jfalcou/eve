@@ -10,6 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/remove_garbage.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -58,6 +59,11 @@ namespace eve::detail
           __m128  sums  = _mm_add_ps(v, shuf);
           return _mm_cvtss_f32(_mm_add_ss(sums, _mm_movehl_ps(shuf, sums)));
         }
+      }
+      else  if constexpr(match(c, category::float16))
+      {
+        if constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sum, v);
+        else                                             return sum.behavior(cpu_{}, opts, v);
       }
       else  if constexpr( c == category::int32x4 || c == category::uint32x4 )
       {

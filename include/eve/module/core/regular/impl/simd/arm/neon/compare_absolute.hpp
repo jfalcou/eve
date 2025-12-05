@@ -26,7 +26,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
-      return eve::compare_absolute.behavior(cpu_{}, o, v, w);
+      return eve::compare_absolute.behavior(cpu_{}, o, v, w, f);
     if constexpr(F{} == is_less_equal)
     {
       if constexpr( c == category::float16x4  ) return vcale_f16 (v, w);
