@@ -81,7 +81,7 @@ namespace eve::detail
           return eve::prev[saturated](r);
         else if constexpr(O::contains(upper))
         {
-          std::cout << "next " << float(eve::next[saturated](r)-r) << std::endl;
+          std::cout << "next " << is_eqz(eve::next[saturated](r)-r) << std::endl;
           return eve::next[saturated](r);
         }
       }
