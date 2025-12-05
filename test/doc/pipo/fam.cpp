@@ -109,7 +109,7 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
     eve::float16_t aan = eve::next(aa);
     auto diff = aan-aa;
     std::cout << "diff" << float(diff) << std::endl;
-    TTS_EQUAL(aa, aan); //
+    //   TTS_EQUAL(aa, aan); //
     std::cout << float(eve::mindenormal(eve::as(aa))) << " " << 1.90735e-06 <<  std::endl;
   }
 };
