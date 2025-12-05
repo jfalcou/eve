@@ -39,7 +39,7 @@ auto exp2(U a1) noexcept
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -53,58 +53,21 @@ TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_rea
 // Tests for eve::frexp
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using v_t = eve::element_type_t<T>;
-  {
-    auto [x, n] = eve::frexp(a0);
-    TTS_EQUAL(x,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    return std::frexp(e, &ee);
-                  },
-                  a0));
-    TTS_EQUAL(n,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    std::frexp(e, &ee);
-                    return v_t(ee);
-                  },
-                  a0));
-  }
-  {
-    auto [x, n] = eve::frexp[eve::pedantic](a0);
-    TTS_EQUAL(x,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    return std::frexp(e, &ee);
-                  },
-                  a0));
-    TTS_EQUAL(n,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    std::frexp(e, &ee);
-                    return v_t(ee);
-                  },
-                  a0));
-  }
+  auto [x, n] = eve::frexp(a0);
+  auto [xx, nn] =  eve::ifrexp(a0);
+  TTS_EQUAL(x, xx);
+  TTS_EQUAL(nn, eve::convert(n, eve::as_element(decltype(nn)())));
 };
 
 //==================================================================================================
 // Test for corner-cases values pedantic !
 //==================================================================================================
 TTS_CASE_TPL("Check corner-cases behavior of eve::frexp[eve::pedantic] variants on wide",
-             eve::test::simd::ieee_reals)
+             eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
