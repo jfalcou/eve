@@ -10,10 +10,36 @@
 #include <eve/module/core.hpp>
 #include <cmath>
 
+template<eve::floating_value T,  eve::integral_value U>
+auto exp2(U a1) noexcept
+{
+  using r_t =   eve::as_wide_as_t<T, U >;
+  if constexpr( eve::unsigned_value<U> )
+  {
+    r_t base(2);
+      U expo = a1;
+
+      r_t result = eve::one(eve::as<r_t>());
+      while( eve::any(eve::detail::to_logical(expo)) )
+      {
+        result *= eve::if_else(eve::is_odd(expo), base, eve::one);
+        expo = (expo >> 1);
+        base = eve::sqr(base);
+      }
+      return result;
+  }
+  else
+  {
+    using u_t = eve::as_integer_t<U, unsigned>;
+    r_t tmp     = exp2<T>(eve::bit_cast(eve::abs(a1), eve::as<u_t>()));
+    return eve::if_else(eve::is_ltz(a1), eve::rec[eve::pedantic](tmp), tmp);
+  }
+}
+
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -27,58 +53,21 @@ TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_rea
 // Tests for eve::frexp
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using v_t = eve::element_type_t<T>;
-  {
-    auto [x, n] = eve::frexp(a0);
-    TTS_EQUAL(x,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    return std::frexp(e, &ee);
-                  },
-                  a0));
-    TTS_EQUAL(n,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    std::frexp(e, &ee);
-                    return v_t(ee);
-                  },
-                  a0));
-  }
-  {
-    auto [x, n] = eve::frexp[eve::pedantic](a0);
-    TTS_EQUAL(x,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    return std::frexp(e, &ee);
-                  },
-                  a0));
-    TTS_EQUAL(n,
-              tts::map(
-                  [](auto e) -> v_t
-                  {
-                    int ee;
-                    std::frexp(e, &ee);
-                    return v_t(ee);
-                  },
-                  a0));
-  }
+  auto [x, n] = eve::frexp(a0);
+  auto [xx, nn] =  eve::ifrexp(a0);
+  TTS_EQUAL(x, xx);
+  TTS_EQUAL(nn, eve::convert(n, eve::as_element(decltype(nn)())));
 };
 
 //==================================================================================================
 // Test for corner-cases values pedantic !
 //==================================================================================================
 TTS_CASE_TPL("Check corner-cases behavior of eve::frexp[eve::pedantic] variants on wide",
-             eve::test::simd::ieee_reals)
+             eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
@@ -122,5 +111,21 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::frexp[eve::pedantic] variants 
 
     if constexpr( std::is_same_v<v_t, float> ) TTS_EQUAL(n, T(-150) + 2);
     else if constexpr( std::is_same_v<v_t, double> ) TTS_EQUAL(n, T(-1075) + 2);
+  }
+  {
+    auto a = eve::mindenormal(eve::as<T>());
+    while(eve::all(eve::is_denormal(a)))
+    {
+      using i_t = eve::as_integer_t<T, signed>;
+      auto [p0, p1f] = eve::frexp[eve::pedantic](a);
+      auto p1 = eve::convert(p1f, eve::as_element<i_t>());
+      auto denormality = p1+eve::maxexponentp1(eve::as<T>())-1;
+      auto p1c = eve::add[eve::is_denormal(a)](p1, -denormality);
+      auto p0c = p0*exp2<T>(denormality);
+      auto p0c2 = eve::ldexp(p0, denormality);
+      TTS_EQUAL(a, p0c*exp2<T>(p1c));
+      TTS_EQUAL(a, p0c2*exp2<T>(p1c));
+      a *= T(5.0);
+    }
   }
 };

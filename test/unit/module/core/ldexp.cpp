@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check return types of ldexp", eve::test::simd::ieee_reals_wf16)
 };
 
 //======================================================================================================================
-// ldexp  tests
+//== ldexp  tests
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of ldexp on wide"
               , eve::test::simd::ieee_reals_wf16
@@ -140,10 +140,20 @@ TTS_CASE_WITH ( "Check behavior of ldexp[pedantic] on wide"
   TTS_EQUAL(ldexp[pedantic](T(1.0), 0), T(1.0));
   TTS_EQUAL(ldexp[pedantic](1.0, 1), 2.0);
   TTS_EQUAL(ldexp[pedantic](1.0, -1), 0.5);
+
+  {
+    auto a = eve::mindenormal(eve::as<T>());
+    while(eve::all(eve::is_denormal(a)))
+    {
+      auto [p0, p1] = eve::ifrexp[eve::pedantic](a);
+      TTS_EQUAL(a, eve::ldexp[eve::pedantic](p0, p1));
+      a *= T(5.0);
+    }
+  }
 };
 
 //======================================================================================================================
-// Tests for masked ldexp
+//==  Tests for masked ldexp
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of eve::masked(eve::ldexp)(eve::wide)"
               , eve::test::simd::ieee_reals_wf16

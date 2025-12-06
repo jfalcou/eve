@@ -6,6 +6,11 @@
 */
 //==================================================================================================
 #pragma once
+#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
@@ -60,6 +65,7 @@ namespace eve
 //!
 //!      1. The value of the IEEE mantissa is returned. In particular:
 //!        *  `nan` returns nan
+//!        *  \f$\pm\infty\f$ returns \f$\pm\1\f$.
 //!        *  zero returns zero
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The results for zero and nan are unspecified.
@@ -85,7 +91,10 @@ namespace eve
       if constexpr(O::contains(raw))
         return   bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));
       else
-        return  if_else(is_nan(a), allbits,  bit_or(bit_and(a, mantissamask(eve::as<T>())), one[is_nez(a)](eve::as<T>())));
+      {
+        auto [mm, ee] = ifrexp[pedantic](a);
+        return if_else(eve::is_infinite(a), eve::sign(a), mm*2);
+      }
     }
   }
 }

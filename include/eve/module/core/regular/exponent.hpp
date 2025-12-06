@@ -19,9 +19,11 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
 #include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/arch/platform.hpp>
 
 namespace eve
@@ -89,10 +91,21 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr as_integer_t<T, signed>  exponent_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      using i_t =  as_integer_t<T>;
-      i_t z = bit_and(exponentmask(as<T>()), a);
-      i_t x = eve::bit_shr(z, nbmantissabits(eve::as<T>()));
-      return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
+      if (eve::all(is_normal(a)))
+      {
+        using i_t =  as_integer_t<T>;
+        i_t z = bit_and(exponentmask(as<T>()), a);
+        i_t x = eve::bit_shr(z, nbmantissabits(eve::as<T>()));
+        return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
+      }
+      else
+      {
+        auto [mm, ee] = eve::ifrexp[pedantic](a);
+        auto r = eve::dec(ee);
+        r = if_else(eve::is_not_finite(a),  eve::maxexponentp1(eve::as<T>()), r);
+        r = if_else(eve::is_eqz(a), zero, r);
+        return r;
+      }
     }
   }
 }

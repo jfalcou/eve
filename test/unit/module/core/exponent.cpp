@@ -78,5 +78,14 @@ TTS_CASE_TPL("Check return types of eve::exponent(simd)", eve::test::simd::ieee_
   TTS_EQUAL(eve::exponent[eve::raw](v_t(1)), vi_t(0));
   TTS_EQUAL(eve::exponent[eve::raw](T(2.5)), i_t(1));
   TTS_EQUAL(eve::exponent[eve::raw](v_t(2.5)), vi_t(1));
-
+  {
+    auto a = eve::mindenormal(eve::as<T>());
+    while(eve::all(eve::is_denormal(a)))
+    {
+      auto [p0, p1] = eve::ifrexp[eve::pedantic](a);
+      TTS_EQUAL(eve::exponent(a), p1-1);
+      TTS_EQUAL(eve::mantissa(a), p0*2);
+      a *= T(5.0);
+    }
+  }
 };
