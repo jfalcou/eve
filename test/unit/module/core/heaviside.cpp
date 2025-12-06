@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of heaviside", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of heaviside", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of heaviside", eve::test::simd::all_types)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of heaviside(wide) on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10.0, 10.0),
                             tts::randoms(-4.0, 2.0))
              )
@@ -51,7 +51,7 @@ TTS_CASE_WITH("Check behavior of heaviside(wide) on all types",
 // Tests for masked heaviside
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::heaviside)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10.0, 10.0),
                             tts::randoms(-10.0, 10.0),
                             tts::logicals(0, 3)))
