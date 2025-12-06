@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of dec", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of dec", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check return types of dec", eve::test::simd::all_types)
 // dec(simd)  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of dec(wide) and dec[mask](wide) on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::signed_types_wf16,
               tts::generate(tts::randoms(-100, 100)))
 <typename T>(T const& a0)
 {
@@ -74,7 +74,7 @@ TTS_CASE_WITH("Check behavior of dec(wide) and dec[mask](wide) on signed types",
 //==  dec modular tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of dec mod on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0, 96))
              )
   <typename T>(T const& ra0)
