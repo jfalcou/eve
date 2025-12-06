@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals)
 //== covariance tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of covariance(wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)))
