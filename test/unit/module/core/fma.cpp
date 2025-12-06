@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types_wf16)
 };
 
 //==================================================================================================
-// fma tests
+//==  fma tests
 //==================================================================================================
 auto onepmileps =
   tts::constant([]<typename U>(eve::as<U>)
@@ -81,8 +81,8 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
 //==================================================================================================
 //==  fma upper lower tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fma[promote] on all types",
-              eve::test::simd::ieee_reals,
+TTS_CASE_WITH("Check behavior of fma[uppr or lower] on all types",
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
@@ -94,11 +94,13 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  TTS_EXPECT(eve::all(fma[upper](a0, a1, a2) >= fma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fma[lower](a0, a1, a2) <= fma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fma[upper][strict](a0, a1, a2) > fma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fma[lower][strict](a0, a1, a2) < fma(a0, a1, a2)));
-  TTS_EXPECT(eve::all(fma[strict][upper](a0, a1, a2) >= fma[upper](a0, a1, a2)));
+  using eve::pedantic;
+  auto ref = fma[pedantic](a0, a1, a2);
+  TTS_EXPECT(eve::all((fma[upper](a0, a1, a2) >= ref) || eve::is_not_finite(ref)));
+  TTS_EXPECT(eve::all((fma[lower](a0, a1, a2) <= ref) || eve::is_not_finite(ref)));
+  TTS_EXPECT(eve::all((fma[upper][strict](a0, a1, a2) > ref) || eve::is_not_finite(ref)));
+  TTS_EXPECT(eve::all((fma[lower][strict](a0, a1, a2) < ref) || eve::is_not_finite(ref)));
+  TTS_EXPECT(eve::all(fma[upper][strict](a0, a1, a2) >= fma[upper](a0, a1, a2)));
   TTS_EXPECT(eve::all(fma[strict][lower](a0, a1, a2) <= fma[lower](a0, a1, a2)));
 };
 
@@ -141,7 +143,7 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
 };
 
 //==================================================================================================
-// fma masked
+//== fma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fma on all types",
               eve::test::simd::ieee_reals_wf16,

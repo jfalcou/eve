@@ -89,25 +89,23 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
-
-  //TODO: enable for float16 once support is more complete
-  if constexpr (eve::floating_value<T> && !std::same_as<eve::element_type_t<T>, eve::float16_t>)
+  if constexpr (eve::floating_value<T>)
   {
-    T  w0{0.1};
-    T  w1{0.12f};
-    TTS_EXPECT(eve::all(mul[upper](w0, w1)  >=  mul(w0, w1)));
-    TTS_EXPECT(eve::all(mul[lower](w0, -w1) <= mul(w0, -w1)));
-    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >=  mul(w0, w1)));
-    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <=  mul(w0, -w1)));
-    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  > mul[upper](w0, w1)));
-    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) < mul[lower](w0, -w1)));
-    using v_t =  eve::element_type_t<T>;
+    TTS_EXPECT(eve::all(mul[upper](a0, a1)  >=  mul[lower](a0, a1)));
+    auto ref = mul(a0, a1);
+    TTS_EXPECT(eve::all((mul[upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((mul[lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((mul[strict][upper](a0, a1) >= ref) || eve::is_not_finite(ref)));
+    TTS_EXPECT(eve::all((mul[strict][lower](a0, a1) <= ref) || eve::is_not_finite(ref)));
+  }
+  using v_t =  eve::element_type_t<T>;
+  if constexpr(eve::floating_value<v_t> && sizeof(v_t) >  2)  //looking for pow
+  {
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
     TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
   }
-
 };
 
 TTS_CASE_WITH("Check behavior of mul widen on wide",

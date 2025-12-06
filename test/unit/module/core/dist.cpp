@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of dist", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of dist", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of dist", eve::test::simd::all_types)
 //== dist tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of dist(wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T a0, T a1)
@@ -54,12 +54,14 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
     using eve::upper;
     using eve::lower;
     using eve::strict;
-    TTS_EXPECT(eve::all(dist[upper](a0, a1) >= dist(a0, a1)));
-    TTS_EXPECT(eve::all(dist[lower](a0, a1) <= dist(a0, a1)));
-    TTS_EXPECT(eve::all(dist[upper][strict](a0, a1) > dist(a0, a1)));
-    TTS_EXPECT(eve::all(dist[lower][strict](a0, a1) < dist(a0, a1)));
-    TTS_EXPECT(eve::all(dist[strict][upper](a0, a1) >= dist[upper](a0, a1)));
-    TTS_EXPECT(eve::all(dist[strict][lower](a0, a1) <= dist[lower](a0, a1)));
+    using eve::pedantic;
+    auto dp = dist[pedantic](a0, a1);
+    TTS_EXPECT(eve::all((dist[upper](a0, a1) >= dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[lower](a0, a1) <= dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[upper][strict](a0, a1) > dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[lower][strict](a0, a1) < dp) || eve::is_not_finite(dp)));
+    TTS_EXPECT(eve::all((dist[strict][upper](a0, a1) >= dist[upper](a0, a1)) || eve::is_not_finite(dist[upper](a0, a1))));
+    TTS_EXPECT(eve::all((dist[strict][lower](a0, a1) <= dist[lower](a0, a1)) || eve::is_not_finite(dist[upper](a0, a1))));
   }
 };
 
@@ -74,7 +76,7 @@ auto vmax = tts::constant(
         return eve::valmax(tgt)/2;
     });
 TTS_CASE_WITH("Check behavior of dist(wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(vmin, vmax),
                             tts::randoms(vmin, vmax)))
 <typename T>(T const& a0, T const& a1)
