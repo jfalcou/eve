@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of dot", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of dot", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of dot", eve::test::simd::ieee_reals)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of dot on all types full range",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of dot on all types full range",
 // Tests for masked dot
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::dot)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::logicals(0, 3)))
@@ -67,7 +67,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::dot)(eve::wide)",
 };
 
 TTS_CASE_WITH("Check behavior of dot kahan on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
