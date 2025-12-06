@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::fdim(simd)", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::fdim(simd)", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::fdim(simd)", eve::test::simd::all_types
 //== Tests for eve::fdim
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::fdim(simd) floating",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::between(-1, 1), tts::between(1, -1)))
 <typename T>(T const& a0, T const& a1)
 {
@@ -61,7 +61,7 @@ TTS_CASE_WITH("Check behavior of eve::fdim(simd) integral",
 // Tests for masked fdim
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::fdim)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))

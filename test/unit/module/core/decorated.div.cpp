@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -204,7 +204,7 @@ auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; });
 
 TTS_CASE_WITH("Check behavior of div on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::signed_types_wf16,
               tts::generate(tts::randoms(mini, 127),
                             tts::randoms(mini, 127),
                             tts::randoms(mini, 127)))
