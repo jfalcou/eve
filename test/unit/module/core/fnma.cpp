@@ -13,7 +13,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of fnma", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of fnma", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -49,7 +49,7 @@ auto onemmileps =
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fnma on real types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
@@ -66,7 +66,7 @@ TTS_CASE_WITH("Check precision behavior of fnma on real types",
 //== fnma upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fnma[promote] on all types",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000))
@@ -90,7 +90,7 @@ TTS_CASE_WITH("Check behavior of fnma[promote] on all types",
 //== fnma full range tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fnma on all types full range",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -104,7 +104,7 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
           eve::fnma(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))
           == eve::fnma[eve::pedantic](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
   {
-    TTS_ULP_EQUAL(fnma((a0), (a1), (a2)),
+    TTS_ULP_EQUAL(fnma[eve::pedantic]((a0), (a1), (a2)),
                   tts::map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic](e, f, g); },
                       a0,
                       a1,
@@ -127,7 +127,7 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
 //== fnma promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of promote(fnma) on all types",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1 )
@@ -165,7 +165,7 @@ TTS_CASE_WITH("Check behavior of promote(fnma) on all types",
 //== fnma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fnma on all types full range",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
