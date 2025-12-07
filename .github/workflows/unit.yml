@@ -556,7 +556,7 @@ jobs:
   preemptive:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v9
+      image: ghcr.io/jfalcou/compilers:v10
       options: -u root
     strategy:
       fail-fast: false
