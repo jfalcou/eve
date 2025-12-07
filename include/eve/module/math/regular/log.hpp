@@ -84,8 +84,10 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr T
-    log_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+    log_(EVE_REQUIRES(cpu_), O const & o, T a0) noexcept
     {
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::log[o], a0);
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T, signed>;
       T Log_2hi   = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<T>{});
