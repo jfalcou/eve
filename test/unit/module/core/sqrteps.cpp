@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of sqrteps", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of sqrteps", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of sqrteps", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sqrteps  tests
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals)
   using eve::upper;
 
   using elt_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::sqrteps(as<T>()), T(std::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
+  TTS_EQUAL(eve::sqrteps(as<T>()), T(eve::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
   TTS_EXPECT(eve::all(eve::sqrteps[lower](as<elt_t>())
                       <= std::sqrt((long double)(eve::eps(as<elt_t>())))));
   TTS_EXPECT(eve::all(eve::sqrteps[upper](as<elt_t>())
