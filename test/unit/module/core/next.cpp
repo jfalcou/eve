@@ -47,6 +47,13 @@
      auto nn = [n](auto e) -> v_t { return n(n(e)); };
      TTS_EQUAL(eve::next(a0, 2), tts::map(nn, a0));
    }
+   else if constexpr( eve::floating_value<v_t>)
+   {
+     auto n = [](auto e) -> v_t { return eve::nextafter(e, eve::valmax(eve::as(e))); };
+     TTS_EQUAL(eve::next(a0), tts::map(n, a0));
+     auto nn = [n](auto e) -> v_t { return n(n(e)); };
+     TTS_EQUAL(eve::next(a0, 2), tts::map(nn, a0));
+   }
    else if constexpr( eve::integral_value<v_t>)
    {
      TTS_EQUAL(eve::next(a0), eve::inc(a0));
