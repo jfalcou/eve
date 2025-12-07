@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::epsilon(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::epsilon(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::epsilon(simd)", eve::test::simd::ieee_r
 // Tests for eve::epsilon
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::epsilon(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(1)))
 <typename T>(T const& a0)
 {

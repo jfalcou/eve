@@ -12,7 +12,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals)
 //== covariance tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of covariance(wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)))
@@ -37,8 +37,8 @@ TTS_CASE_WITH("Check behavior of covariance(wide)",
 {
   using v_t = eve::element_type_t<T>;
   using  v3_t =  vec3<v_t>;
-  v3_t a(1.0, 2.0, 3.0);
-  v3_t b(-3.0, -4.0, -6.0);
+  v3_t a(1, 2, 3);
+  v3_t b(-3, -4, -6);
   TTS_ULP_EQUAL(eve::covariance[eve::unbiased](a, b), -1.5, 0.5);
   TTS_ULP_EQUAL(eve::covariance(a, b), -1, 0.5);
   ;
@@ -48,10 +48,10 @@ TTS_CASE_WITH("Check behavior of covariance(wide)",
   TTS_ULP_EQUAL(eve::covariance(a, b), -1, 0.5);
   auto wa = wv3_t(a, a, b, b);
   auto wb = wv3_t(b, a, a, b);
-  f4_t cwu{-1.5, 1, -1.5, 7.0/3.0};
+  f4_t cwu{static_cast<v_t>(-1.5), static_cast<v_t>(1), static_cast<v_t>(-1.5), static_cast<v_t>(7.0/3.0)};
   TTS_ULP_EQUAL(eve::covariance[eve::unbiased](wa, wb), cwu, 0.5);
-  f4_t cw{-1, 2.0/3.0, -1, 14.0/9.0};
+  f4_t cw{static_cast<v_t>(-1), static_cast<v_t>(2.0/3.0), static_cast<v_t>(-1), static_cast<v_t>(14.0/9.0)};
   TTS_ULP_EQUAL(eve::covariance(wa, wb), cw, 0.5);
-  f4_t cw3{-1, -1, 14.0/9.0, 14.0/9.0};
+  f4_t cw3{static_cast<v_t>(-1), static_cast<v_t>(-1), static_cast<v_t>(14.0/9.0), static_cast<v_t>(14.0/9.0)};
   TTS_ULP_EQUAL(eve::covariance(wa, b), cw3, 0.5);
 };
