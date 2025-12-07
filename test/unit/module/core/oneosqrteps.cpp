@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of oneosqrteps", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of oneosqrteps", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of oneosqrteps", eve::test::simd::ieee_reals)
 //==================================================================================================
 // oneosqrteps  tests
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_real
   using eve::upper;
   using elt_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::oneosqrteps(as<T>()), T(1.0l / std::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
+  TTS_EQUAL(eve::oneosqrteps(as<T>()), T(1.0l / eve::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
   TTS_EXPECT(eve::all(eve::oneosqrteps[lower](as<elt_t>())
                       <= std::sqrt(1.0l / (long double)(eve::eps(as<elt_t>())))));
   TTS_EXPECT(eve::all(eve::oneosqrteps[upper](as<elt_t>())
