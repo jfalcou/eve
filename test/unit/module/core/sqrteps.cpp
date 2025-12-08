@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -36,22 +37,12 @@ TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals_wf
   using eve::upper;
 
   using elt_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::sqrteps(as<T>()), T(eve::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
-  if constexpr(sizeof(elt_t) == 8)
-  {
-    TTS_EXPECT(eve::all(eve::sqrteps[lower](as<elt_t>())
-                        <= std::sqrt((long double)(eve::eps(as<elt_t>())))));
-    TTS_EXPECT(eve::all(eve::sqrteps[upper](as<elt_t>())
-                        >= std::sqrt((long double)(eve::eps(as<elt_t>())))));
-  }
-  else
-   {
-    TTS_EXPECT(eve::all(eve::sqrteps[lower](as<elt_t>())
-                        <= std::sqrt((double)(eve::eps(as<elt_t>())))));
-    TTS_EXPECT(eve::all(eve::sqrteps[upper](as<elt_t>())
-                        >= std::sqrt((double)(eve::eps(as<elt_t>())))));
-  }
-   
+
+  TTS_EQUAL(eve::sqrteps(as<T>()), T(std_sqrt(eve::eps(as<eve::element_type_t<T>>()))));
+  TTS_EXPECT(eve::all(eve::sqrteps[lower](as<elt_t>())
+                      <= std_sqrt((long double)(eve::eps(as<elt_t>())))));
+  TTS_EXPECT(eve::all(eve::sqrteps[upper](as<elt_t>())
+                      >= std_sqrt((long double)(eve::eps(as<elt_t>())))));
   TTS_EXPECT(eve::all(eve::sqrteps[lower](as<T>()) <= eve::sqrteps(as<T>())));
   TTS_EXPECT(eve::all(eve::sqrteps(as<T>()) <= eve::sqrteps[upper](as<T>())));
   TTS_ULP_EQUAL(eve::sqrteps[lower](as<T>()), eve::sqrteps[upper](as<T>()), 0.5);
