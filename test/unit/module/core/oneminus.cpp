@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::oneminus", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::oneminus", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check return types of eve::oneminus", eve::test::simd::all_types)
 // Tests for eve::oneminus
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::oneminus(eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
@@ -75,7 +75,7 @@ TTS_CASE_WITH("Check behavior of eve::oneminus(eve::wide)",
 // Test for corner-cases values
 //==================================================================================================
 TTS_CASE_TPL("Check corner-cases behavior of eve::oneminus variants on wide",
-             eve::test::simd::all_types)
+             eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::oneminus[eve::saturated](T(1)), T(0));
@@ -110,7 +110,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::oneminus variants on wide",
 //==  oneminus modular tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of oneminus mod on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0, 96))
              )
   <typename T>(T const& ra0)

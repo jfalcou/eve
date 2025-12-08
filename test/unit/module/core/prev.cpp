@@ -14,7 +14,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
@@ -33,20 +33,27 @@ TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types)
 //==================================================================================================
 //==  Tests for eve::prev
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::prev(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::prev(eve::wide<eve)",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
-  if constexpr( eve::floating_value<v_t> )
+  if constexpr( eve::floating_value<v_t> && sizeof(v_t) >= 4 )
   {
     auto n = [](auto e) -> v_t { return std::nextafter(e, eve::valmin(eve::as(e))); };
     TTS_EQUAL(eve::prev(a0), tts::map(n, a0));
     auto nn = [n](auto e) -> v_t { return n(n(e)); };
     TTS_EQUAL(eve::prev(a0, 2), tts::map(nn, a0));
   }
-  else
+  else if constexpr( eve::floating_value<v_t>)
+  {
+    auto n = [](auto e) -> v_t { return eve::nextafter(e, eve::valmin(eve::as(e))); };
+    TTS_EQUAL(eve::prev(a0), tts::map(n, a0));
+    auto nn = [n](auto e) -> v_t { return n(n(e)); };
+    TTS_EQUAL(eve::prev(a0, 2), tts::map(nn, a0));
+  }
+  else if constexpr( eve::integral_value<v_t>)
   {
     TTS_EQUAL(eve::prev(a0), eve::dec(a0));
     TTS_EQUAL(eve::prev(a0, 2), eve::dec(eve::dec(a0)));

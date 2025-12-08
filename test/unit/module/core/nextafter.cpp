@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::nextafter", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::nextafter", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of eve::nextafter", eve::test::simd::all_types)
 // Tests for eve::nextafter
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::nextafter",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1)
@@ -37,8 +37,17 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
   using v_t = eve::element_type_t<T>;
   if constexpr( eve::floating_value<v_t> )
   {
-    auto n = [](auto e, auto f) -> v_t { return std::nextafter(e, f); };
-    TTS_EQUAL(eve::nextafter(a0, a1), tts::map(n, a0, a1));
+    if constexpr( sizeof(eve::element_type_t<T>) >= 4 || eve::integral_value<T>)
+    {
+      auto n = [](auto e, auto f) -> v_t { return std::nextafter(e, f); };
+      TTS_EQUAL(eve::nextafter(a0, a1), tts::map(n, a0, a1));
+    }
+    else
+    {
+      auto n = [](auto e, auto f) -> v_t { return (e > f) ? eve::prev(e) :( (e < f) ? eve::next(e) :e); };
+      TTS_EQUAL(eve::nextafter(a0, a1), tts::map(n, a0, a1));
+    }
+
     TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](eve::nan(eve::as<T>()), T(1)),
                    eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](T(1), eve::nan(eve::as<T>())),
@@ -56,7 +65,7 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
 // Tests for masked nextafter
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::nextafter)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
