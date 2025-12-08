@@ -256,4 +256,27 @@ TTS_CASE("neon_bit_select")
   run2<eve::neon, std::uint32_t, 8>(blend_every_other);
 };
 
+
+TTS_CASE("vtbl2_u8(x, y)")
+{
+  run2<eve::neon, std::uint8_t, 8>(eve::pattern<3, 11, 5, we_, 2, 10, 7, 9>);
+  run2<eve::neon, std::uint8_t, 8>(eve::pattern<0, 8, 4, 12, we_, 14, 2, 10>);
+
+  run2<eve::neon, std::uint8_t, 8>(eve::pattern<3, na_, 5, we_, 2, 10, 7, 9>);
+  run2<eve::neon, std::uint8_t, 8>(eve::pattern<na_, 8, 4, 12, we_, na_, 2, 10>);
+
+  run2<eve::asimd, std::uint8_t, 16>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 4 ) return static_cast<int>(we_);
+        return (i * 3 + 5) % (2 * size);
+      });
+
+  run2<eve::asimd, std::uint8_t, 16>(
+      eve::pattern<3, 19, 5, we_, 2, 18, 7, 21, 15, 30, 13, 28, 5, 24, 6, 17>);
+
+  run2<eve::asimd, std::uint8_t, 16>(
+      eve::pattern<3, na_, 5, we_, 2, 18, na_, 21, 15, 30, 13, na_, 5, 24, 6, 17>);
+};
+
 }
