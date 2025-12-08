@@ -28,7 +28,6 @@ TTS_CASE_TPL("Check return types of oneosqrteps", eve::test::simd::ieee_reals_wf
 //==================================================================================================
 // oneosqrteps  tests
 //==================================================================================================
-<<<<<<< HEAD
 TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
