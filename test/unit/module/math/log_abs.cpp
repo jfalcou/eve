@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -15,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of log_abs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of log_abs", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,13 +29,13 @@ TTS_CASE_TPL("Check return types of log_abs", eve::test::simd::ieee_reals)
 // log_abs  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of log_abs on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-1, 1)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log_abs(a0), tts::map([](auto e) -> v_t { return std::log(std::abs(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log_abs(a0), tts::map([](auto e) -> v_t { return std_log(std_abs(e)); }, a0), 2);
 };
 
 
@@ -42,10 +43,10 @@ TTS_CASE_WITH("Check behavior of log_abs on wide",
 // Tests for masked log_abs
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::log_abs[mask](a0),

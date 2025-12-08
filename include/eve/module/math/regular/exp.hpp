@@ -85,69 +85,74 @@ namespace eve
   {
     template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    exp_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
+    exp_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
     {
-      auto isnan = is_nan(x);
-      auto    minlogval = []() {
-        if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
-        return minlogdenormal(eve::as<T>());
-        else
-          return minlog(eve::as<T>());
-      };
-      if constexpr( scalar_value<T> )
-      {
-        if constexpr( has_emulated_abi_v<wide<T>> )
-        {
-          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
-        }
-        else
-        {
-          wide<T> xx(x);
-          return exp(xx).get(0);
-        }
-      }
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::exp[o], x);
       else
       {
-        using elt_t       = element_type_t<T>;
-        const T Log_2hi   = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<T>{});
-        const T Log_2lo   = ieee_constant<0x1.a39ef35793c76p-33, -0x1.bd01060p-13f>(eve::as<T>{});
-        const T Invlog_2  = eve::invlog_2(eve::as<T>{});
-        auto    xltminlog = x <= minlogval();
-        auto    xgemaxlog = x >= maxlog(eve::as(x));
+        auto isnan = is_nan(x);
+        auto    minlogval = []() {
+          if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
+          return minlogdenormal(eve::as<T>());
+          else
+            return minlog(eve::as<T>());
+        };
         if constexpr( scalar_value<T> )
         {
-          if( isnan ) return x;
-          if( xgemaxlog ) return inf(eve::as(x));
-          if( xltminlog ) return zero(eve::as(x));
+          if constexpr( has_emulated_abi_v<wide<T>> )
+          {
+            return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
+          }
+          else
+          {
+            wide<T> xx(x);
+            return exp(xx).get(0);
+          }
         }
-        auto c = nearest(Invlog_2 * x);
-        auto k = c;
-        x      = fnma(c, Log_2hi, x); // x-c*L
-        if constexpr( std::is_same_v<elt_t, float> )
+        else
         {
-          x      = fnma(c, Log_2lo, x);
-          auto y = eve::reverse_horner(x, T(0x1.000000p-1f), T(0x1.55534ap-3f), T(0x1.5552aep-5f)
-                                      , T(0x1.131b16p-7f), T(0x1.6ef19ep-10f));;
-          c      = inc(fma(y, sqr(x), x));
+          using elt_t       = element_type_t<T>;
+          const T Log_2hi   = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<T>{});
+          const T Log_2lo   = ieee_constant<0x1.a39ef35793c76p-33, -0x1.bd01060p-13f>(eve::as<T>{});
+          const T Invlog_2  = eve::invlog_2(eve::as<T>{});
+          auto    xltminlog = x <= minlogval();
+          auto    xgemaxlog = x >= maxlog(eve::as(x));
+          if constexpr( scalar_value<T> )
+          {
+            if( isnan ) return x;
+            if( xgemaxlog ) return inf(eve::as(x));
+            if( xltminlog ) return zero(eve::as(x));
+          }
+          auto c = nearest(Invlog_2 * x);
+          auto k = c;
+          x      = fnma(c, Log_2hi, x); // x-c*L
+          if constexpr( std::is_same_v<elt_t, float> )
+          {
+            x      = fnma(c, Log_2lo, x);
+            auto y = eve::reverse_horner(x, T(0x1.000000p-1f), T(0x1.55534ap-3f), T(0x1.5552aep-5f)
+                                        , T(0x1.131b16p-7f), T(0x1.6ef19ep-10f));;
+            c      = inc(fma(y, sqr(x), x));
+          }
+          else if constexpr( std::is_same_v<elt_t, double> )
+          {
+            auto hi = x;
+            auto lo = c * Log_2lo;
+            x       = hi - lo;
+            auto t  = sqr(x);
+            c       = fnma(t, eve::reverse_horner(t, T(0x1.555555555553ep-3), T(-0x1.6c16c16bebd93p-9), T(0x1.1566aaf25de2cp-14)
+                                                 , T(-0x1.bbd41c5d26bf1p-20), T(0x1.6376972bea4d0p-25)), x); // x-h*t
+            c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
+          }
+          auto z = ldexp[pedantic](c, k);
+          if constexpr( simd_value<T> )
+          {
+            z = if_else(xltminlog, eve::zero, z);
+            z = if_else(xgemaxlog, inf(eve::as(x)), z);
+            z = if_else(isnan, allbits, z);
+          }
+          return z;
         }
-        else if constexpr( std::is_same_v<elt_t, double> )
-        {
-          auto hi = x;
-          auto lo = c * Log_2lo;
-          x       = hi - lo;
-          auto t  = sqr(x);
-          c       = fnma(t, eve::reverse_horner(t, T(0x1.555555555553ep-3), T(-0x1.6c16c16bebd93p-9), T(0x1.1566aaf25de2cp-14)
-                                               , T(-0x1.bbd41c5d26bf1p-20), T(0x1.6376972bea4d0p-25)), x); // x-h*t
-          c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
-        }
-        auto z = ldexp[pedantic](c, k);
-        if constexpr( simd_value<T> )
-        {
-          z = if_else(xltminlog, eve::zero, z);
-          z = if_else(xgemaxlog, inf(eve::as(x)), z);
-          z = if_else(isnan, allbits, z);
-        }
-        return z;
       }
     }
   }

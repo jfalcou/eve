@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -15,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,20 +29,20 @@ TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)
 // exp  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of exp on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::exp(a0), tts::map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp(a1), tts::map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp(a0), tts::map([](auto e) -> v_t { return std_exp(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp(a1), tts::map([](auto e) -> v_t { return std_exp(e); }, a1), 2);
 
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), tts::map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), tts::map([](auto e) -> v_t { return std_exp(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std_exp(e); }, a1), 2);
 };
 
-TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -61,8 +62,8 @@ TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee
     TTS_IEEE_EQUAL(eve::exp[eve::pedantic](eve::minf(eve::as<T>())), T(0));
   }
 
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](T(1)), T(std::exp(v_t(1))), 0.5);
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](T(-1)), T(std::exp(v_t(-1))), 0.5);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](T(1)), T(std_exp(v_t(1))), 0.5);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](T(-1)), T(std_exp(v_t(-1))), 0.5);
 
   TTS_IEEE_EQUAL(eve::exp[eve::pedantic](T(0.)), T(1));
   TTS_IEEE_EQUAL(eve::exp[eve::pedantic](T(-0.)), T(1));
@@ -70,21 +71,21 @@ TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee
   if constexpr( eve::platform::supports_denormals )
   {
     TTS_ULP_EQUAL(eve::exp(eve::next(eve::minlog(eve::as<T>()))),
-                  T(std::exp(eve::minlog(eve::as<v_t>()))),
+                  T(std_exp(eve::minlog(eve::as<v_t>()))),
                   256.5);
     TTS_ULP_EQUAL(eve::exp[eve::pedantic](eve::minlog(eve::as<T>())),
-                  T(std::exp(eve::minlog(eve::as<v_t>()))),
+                  T(std_exp(eve::minlog(eve::as<v_t>()))),
                   0.5);
     TTS_ULP_EQUAL(eve::exp[eve::pedantic](eve::prev(eve::minlog(eve::as<T>()))),
-                  T(std::exp(eve::prev(eve::minlog(eve::as<v_t>())))),
+                  T(std_exp(eve::prev(eve::minlog(eve::as<v_t>())))),
                   0.5);
   }
 
   TTS_ULP_EQUAL(eve::exp[eve::pedantic](eve::minlogdenormal(eve::as<T>())),
-                T(std::exp(eve::minlogdenormal(eve::as<v_t>()))),
+                T(std_exp(eve::minlogdenormal(eve::as<v_t>()))),
                 0);
   TTS_ULP_EQUAL(eve::exp[eve::pedantic](eve::prev(eve::minlogdenormal(eve::as<T>()))),
-                T(std::exp(eve::prev(eve::minlogdenormal(eve::as<v_t>())))),
+                T(std_exp(eve::prev(eve::minlogdenormal(eve::as<v_t>())))),
                 0);
 };
 
@@ -93,7 +94,7 @@ TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee
 //  Tests for masked exp
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::exp)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -34,11 +35,11 @@ TTS_CASE_WITH("Check behavior of log2 on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log2(a0), tts::map([](auto e) -> v_t { return eve::log2(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log2(a1), tts::map([](auto e) -> v_t { return eve::log2(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::log2(a0), tts::map([](auto e) -> v_t { return std_log2(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log2(a1), tts::map([](auto e) -> v_t { return std_log2(e); }, a1), 2);
 };
 
-TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -53,7 +54,7 @@ TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals)
   if constexpr( eve::platform::supports_denormals )
   {
     TTS_IEEE_EQUAL(eve::log2(eve::mindenormal(eve::as<T>())),
-                   T(std::log2(eve::mindenormal(eve::as<v_t>()))));
+                   T(std_log2(eve::mindenormal(eve::as<v_t>()))));
   }
 
   TTS_IEEE_EQUAL(eve::log2(T(1)), T(0));
