@@ -80,74 +80,79 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& , T x)
+    constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& o, T x)
     {
-      using elt_t  = element_type_t<T>;
+       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::exp10[o], x);
+      else
+      {
+        using elt_t  = element_type_t<T>;
 
-      // Adapt lower bound depending on options
-      auto minlogval = [&]()
+        // Adapt lower bound depending on options
+        auto minlogval = [&]()
+          {
+            if constexpr((eve::platform::supports_denormals) && O::contains(pedantic))
+            return minlog10denormal(as(x));
+            else
+              return minlog10(as(x));
+          };
+
+        const T Log10_2hi   = ieee_constant<0x1.3440000000000p-2,  0x1.3400000p-2f >(as(x));
+        const T Log10_2lo   = ieee_constant<0x1.3509f79fef312p-18, 0x1.04d4280p-12f>(as(x));
+        auto    xltminlog10 = x <= minlogval();
+        auto    xgemaxlog10 = x >= maxlog10(as(x));
+
+        // Scalar early returns
+        if constexpr( scalar_value<T> )
         {
-          if constexpr((eve::platform::supports_denormals) && O::contains(pedantic))
-          return minlog10denormal(as(x));
-          else
-            return minlog10(as(x));
-        };
+          if( is_nan(x)   ) return nan(as(x));
+          if( xgemaxlog10 ) return inf(as(x));
+          if( xltminlog10 ) return zero(as(x));
+        }
 
-      const T Log10_2hi   = ieee_constant<0x1.3440000000000p-2,  0x1.3400000p-2f >(as(x));
-      const T Log10_2lo   = ieee_constant<0x1.3509f79fef312p-18, 0x1.04d4280p-12f>(as(x));
-      auto    xltminlog10 = x <= minlogval();
-      auto    xgemaxlog10 = x >= maxlog10(as(x));
+        auto c = nearest(invlog10_2(as(x)) * x);
+        auto k = c;
+        x      = fnma(c, Log10_2hi, x);
+        x      = fnma(c, Log10_2lo, x);
 
-      // Scalar early returns
-      if constexpr( scalar_value<T> )
-      {
-        if( is_nan(x)   ) return nan(as(x));
-        if( xgemaxlog10 ) return inf(as(x));
-        if( xltminlog10 ) return zero(as(x));
+        if constexpr( std::same_as<elt_t, float> )
+        {
+          c = inc ( eve::reverse_horner ( x
+                                        , T(0x1.26bb1cp+1f), T(0x1.53524cp+1f), T(0x1.046fb4p+1f)
+                                        , T(0x1.2bd698p+0f), T(0x1.1559dep-1f), T(0x1.a9bfe2p-3f)
+                                        ) * x
+                  );
+        }
+        else if constexpr( std::same_as<elt_t, double> )
+        {
+          T xx = sqr(x);
+          T px = x * eve::reverse_horner( xx
+                                        , T(0x1.2b4798e134a01p+11)
+                                        , T(0x1.96b7a050349e4p+8)
+                                        , T(0x1.77d9474c55934p+3)
+                                        , T(0x1.4fd75f3062dd4p-5)
+                                        );
+          T x2 = px / (eve::reverse_horner( xx
+                                          , T(0x1.03f37650df6e2p+11)
+                                          , T(0x1.3e05eefd67782p+10)
+                                          , T(0x1.545fdce51ca08p+6)
+                                          , T(0x1.0p0)
+                                          ) - px
+                      );
+          c = inc(x2 + x2);
+        }
+
+        auto z = ldexp[pedantic](c, k);
+
+        // SIMD value fixes
+        if constexpr( simd_value<T> )
+        {
+          z = if_else(is_nan(x), x, z);
+          z = if_else(xltminlog10, zero, z);
+          z = if_else(xgemaxlog10, inf(as(x)), z);
+        }
+        return z;
       }
-
-      auto c = nearest(invlog10_2(as(x)) * x);
-      auto k = c;
-      x      = fnma(c, Log10_2hi, x);
-      x      = fnma(c, Log10_2lo, x);
-
-      if constexpr( std::same_as<elt_t, float> )
-      {
-        c = inc ( eve::reverse_horner ( x
-                                      , T(0x1.26bb1cp+1f), T(0x1.53524cp+1f), T(0x1.046fb4p+1f)
-                                      , T(0x1.2bd698p+0f), T(0x1.1559dep-1f), T(0x1.a9bfe2p-3f)
-                                      ) * x
-                );
-      }
-      else if constexpr( std::same_as<elt_t, double> )
-      {
-        T xx = sqr(x);
-        T px = x * eve::reverse_horner( xx
-                                      , T(0x1.2b4798e134a01p+11)
-                                      , T(0x1.96b7a050349e4p+8)
-                                      , T(0x1.77d9474c55934p+3)
-                                      , T(0x1.4fd75f3062dd4p-5)
-                                      );
-        T x2 = px / (eve::reverse_horner( xx
-                                        , T(0x1.03f37650df6e2p+11)
-                                        , T(0x1.3e05eefd67782p+10)
-                                        , T(0x1.545fdce51ca08p+6)
-                                        , T(0x1.0p0)
-                                        ) - px
-                    );
-        c = inc(x2 + x2);
-      }
-
-      auto z = ldexp[pedantic](c, k);
-
-      // SIMD value fixes
-      if constexpr( simd_value<T> )
-      {
-        z = if_else(is_nan(x), x, z);
-        z = if_else(xltminlog10, zero, z);
-        z = if_else(xgemaxlog10, inf(as(x)), z);
-      }
-      return z;
     }
   }
 }
