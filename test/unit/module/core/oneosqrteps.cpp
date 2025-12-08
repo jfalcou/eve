@@ -37,9 +37,9 @@ TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_real
 
   TTS_EQUAL(eve::oneosqrteps(as<T>()), T(1.0l / std_sqrt(eve::eps(as<eve::element_type_t<T>>()))));
   TTS_EXPECT(eve::all(eve::oneosqrteps[lower](as<elt_t>())
-                      <= static_cast<elt_t>(std_sqrt(1.0l / (long double)(eve::eps(as<elt_t>()))))));
+                      <= eve::convert(double(std_sqrt(1.0l / (long double)(eve::eps(as<elt_t>()))), eve::as<elt_t>()))));
   TTS_EXPECT(eve::all(eve::oneosqrteps[upper](as<elt_t>())
-                      >= static_cast<elt_t>(std_sqrt(1.0l / (long double)(eve::eps(as<elt_t>()))))));
+                      >= eve::convert(double(std_sqrt(1.0l / (long double)(eve::eps(as<elt_t>()))), eve::as<elt_t>()))));
   TTS_EXPECT(eve::all(eve::oneosqrteps[lower](as<T>()) <= eve::oneosqrteps(as<T>())));
   TTS_EXPECT(eve::all(eve::oneosqrteps(as<T>()) <= eve::oneosqrteps[upper](as<T>())));
   TTS_ULP_EQUAL(eve::oneosqrteps[lower](as<T>()), eve::oneosqrteps[upper](as<T>()), 0.5);
