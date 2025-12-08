@@ -93,7 +93,7 @@ TTS_CASE_TPL("Check behavior of modf on integer types full range", eve::test::si
 
 TTS_CASE_WITH("Check behavior of eve::modf(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0.999999, 1.0))
+              tts::generate(tts::randoms(0.99, 1.0))
              )
 <typename T>(T const& a0)
 {
