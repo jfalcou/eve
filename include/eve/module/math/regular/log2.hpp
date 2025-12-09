@@ -104,7 +104,7 @@ namespace eve
       T Invlog_2hi = ieee_constant<0x1.7154765200000p+0 , 0x1.7160000p+0f  >(eve::as<T>{});
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::log2[o], a0);
-      if constexpr(simd_value<T>)
+      else if constexpr(simd_value<T>)
       {
        constexpr bool is_avx = current_api == avx;
         using TT =  detail::conditional_t<is_avx, T, iT >;
