@@ -70,7 +70,7 @@ TTS_CASE_WITH("Check behavior of eve::is_less(simd)",
 //==================================================================================================
 //== Tests for eve::is_less corner cases for floating
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of eve::is_less(simd) corner cases", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of eve::is_less(simd) corner cases", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T> const&)
 {
   using eve::as;

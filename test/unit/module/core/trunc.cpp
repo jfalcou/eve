@@ -85,7 +85,7 @@ TTS_CASE_WITH("Check behavior of trunc on wide",
 
 };
 
-TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
+TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using elt_t = eve::element_type_t<T>;
