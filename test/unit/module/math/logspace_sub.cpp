@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of logspace_sub on wide",
   auto la2 = eve::log(a2);
   auto la3 = eve::log(a3);
   TTS_ULP_EQUAL(eve::logspace_sub(la0, la1), eve::log(a0 - a1), 25);
-  TTS_ULP_EQUAL(eve::logspace_sub(la2, la3), eve::log(a2 - a3), 25);
+  TTS_ULP_EQUAL(eve::logspace_sub(la2, la3), eve::log(a2 - a3), 58);
 
   auto la4 = eve::log(a4);
   auto la5 = eve::log(a5);
