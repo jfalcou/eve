@@ -36,6 +36,12 @@ namespace eve
       return EVE_DISPATCH_CALL(src, tgt);
     }
 
+    template<floating_scalar_value Tgt>
+    EVE_FORCEINLINE constexpr Tgt operator()(long double src, as<Tgt> tgt) const noexcept
+    {
+      return EVE_DISPATCH_CALL(src, tgt);
+    }
+
     EVE_CALLABLE_OBJECT(convert_t, convert_);
   };
 
