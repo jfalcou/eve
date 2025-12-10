@@ -80,7 +80,8 @@ namespace eve
 //! **Return value**
 //!
 //!    1. The call `logspace_sub(x, xs...)` is semantically equivalent to`log(exp(log(x)) - exp(log(xs))...)`.
-//!       without causing unnecessary overflows or throwing away too much accuracy.
+//!       without causing unnecessary overflows or throwing away too much accuracy,  but its use is not recommended on
+//!       low precision types as float16_t
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
