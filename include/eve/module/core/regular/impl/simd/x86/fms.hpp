@@ -26,6 +26,8 @@ namespace eve::detail
                                   wide<T, N> const  &c) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    constexpr auto f16s = detail::supports_fp16_vector_ops;
+
     constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts, a, b, c);
@@ -37,8 +39,9 @@ namespace eve::detail
         if constexpr(current_api >= avx512)
         {
           auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-          if      constexpr  ( cat == category::float64x8  ) return  _mm512_fmsub_round_pd (a, b, c, dir);
-          else if constexpr  ( cat == category::float32x16 ) return  _mm512_fmsub_round_ps (a, b, c, dir);
+          if      constexpr  ( cat == category::float64x8  )        return _mm512_fmsub_round_pd(a, b, c, dir);
+          else if constexpr  ( cat == category::float32x16 )        return _mm512_fmsub_round_ps(a, b, c, dir);
+          else if constexpr  ( cat == category::float16x32 && f16s) return _mm532_fmsub_round_ps(a, b, c, dir);
           else if constexpr  ( cat == category::float64x4 ||  cat == category::float64x2 ||
                                cat == category::float32x8 ||  cat == category::float32x4 || cat == category::float32x2)
           {
@@ -68,10 +71,10 @@ namespace eve::detail
       else if constexpr( cat == category::float32x16 ) return _mm512_fmsub_ps(a, b, c);
       else  if constexpr ( match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(fms, a, b, c);
-        else if constexpr (cat == category::float16x32)        return _mm512_fmsub_ph(a, b, c);
-        else if constexpr (cat == category::float16x16)        return _mm256_fmsub_ph(a, b, c);
-        else if constexpr (cat == category::float16x8)         return _mm_fmsub_ph(a, b, c);
+        if      constexpr (!f16s)                       return apply_fp16_as_fp32(fms, a, b, c);
+        else if constexpr (cat == category::float16x32) return _mm512_fmsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x16) return _mm256_fmsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x8)  return _mm_fmsub_ph(a, b, c);
       }
       else if constexpr( supports_fma3 )
       {
@@ -138,12 +141,12 @@ namespace eve::detail
       else if constexpr( cx == category::float64x4 ) return _mm256_mask_fmsub_pd(v, m, w, x);
       else if constexpr( cx == category::float32x4 ) return _mm_mask_fmsub_ps(v, m, w, x);
       else if constexpr( cx == category::float64x2 ) return _mm_mask_fmsub_pd(v, m, w, x);
-      else if constexpr ( match(cx, category::float16))
+      else if constexpr (match(cx, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fms, mask, v, w, x);
-        else if constexpr (cx == category::float16x32)        return _mm512_mask_fmsub_ph(v, m, w, x);
-        else if constexpr (cx == category::float16x16)        return _mm256_mask_fmsub_ph(v, m, w, x);
-        else if constexpr (cx == category::float16x8)         return _mm_mask_fmsub_ph(v, m, w, x);
+        if      constexpr (!f16s)                      return apply_fp16_as_fp32_masked(fms, mask, v, w, x);
+        else if constexpr (cx == category::float16x32) return _mm512_mask_fmsub_ph(v, m, w, x);
+        else if constexpr (cx == category::float16x16) return _mm256_mask_fmsub_ph(v, m, w, x);
+        else if constexpr (cx == category::float16x8)  return _mm_mask_fmsub_ph(v, m, w, x);
       }
       // No rounding issue with integers, so we just mask over regular FMS
       else                                          return if_else(mask, eve::fms(v, w, x), v);
