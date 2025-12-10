@@ -35,13 +35,13 @@ TTS_CASE_WITH("Check behavior of exp2 on wide",
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(eve::exp2(a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a0), 30);
   TTS_ULP_EQUAL(eve::exp2(a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a1), 2);
-
+  
   TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a0), 30);
   TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals)
-<typename T>(tts::type<T>)
+  <typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::exp2[eve::pedantic](T(1)), T(2), 0.5);
   TTS_IEEE_EQUAL(eve::exp2[eve::pedantic](T(0)), T(1));

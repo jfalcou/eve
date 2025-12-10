@@ -45,7 +45,7 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                 tts::map(
                     [](auto e) -> v_t
                     {
-                      long double le = e;
+                      long double le(eve::convert(e, eve::as<double>()));
                       return eve::convert(std_exp(-le * le), eve::as<v_t>());
                     },
                     a0),

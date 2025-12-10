@@ -34,7 +34,7 @@ TTS_CASE_WITH ( "Check behavior of exp10 on wide"
   using v_t       = eve::element_type_t<T>;
   long double l10 = std::log(10.0l);
   TTS_ULP_EQUAL(eve::exp10(a0), tts::map([l10](auto e) -> v_t { return  eve::convert(std_exp(l10 * e), eve::as<v_t>()); }, a0), 380) << "a0 " << a0 << '\n';
-
+  
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](a0),
                 tts::map([l10](auto e) -> v_t { return eve::convert(std_exp(l10 * e), eve::as<v_t>()); }, a0),
                 380);
