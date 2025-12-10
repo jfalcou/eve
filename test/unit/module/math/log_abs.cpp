@@ -35,7 +35,7 @@ TTS_CASE_WITH("Check behavior of log_abs on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log_abs(a0), tts::map([](auto e) -> v_t { return std_log(std_abs(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log_abs(a0), tts::map([](auto e) -> v_t { return eve::convert(std_log(std_abs(e)), eve::as<v_t>()); }, a0), 2);
 };
 
 

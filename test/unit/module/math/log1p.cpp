@@ -35,8 +35,8 @@ TTS_CASE_WITH("Check behavior of log1p on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log1p(a0), tts::map([](auto e) -> v_t { return std_log1p(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log1p(a1), tts::map([](auto e) -> v_t { return std_log1p(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::log1p(a0), tts::map([](auto e) -> v_t { return eve::convert(std_log1p(e), eve::as<v_t>()); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log1p(a1), tts::map([](auto e) -> v_t { return eve::convert(std_log1p(e), eve::as<v_t>()); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)

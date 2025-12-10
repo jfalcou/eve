@@ -33,11 +33,11 @@ TTS_CASE_WITH("Check behavior of exp2 on wide",
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::exp2(a0), tts::map([](auto e) -> v_t { return std_exp2(e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::exp2(a1), tts::map([](auto e) -> v_t { return std_exp2(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp2(a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a0), 30);
+  TTS_ULP_EQUAL(eve::exp2(a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a1), 2);
 
-  TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a0), tts::map([](auto e) -> v_t { return std_exp2(e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std_exp2(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a0), 30);
+  TTS_ULP_EQUAL(eve::exp2[eve::pedantic](a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp2(e), eve::as<v_t>()); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals)
