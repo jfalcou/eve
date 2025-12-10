@@ -86,8 +86,6 @@ namespace eve
     constexpr T
     log_(EVE_REQUIRES(cpu_), O const & o, T a0) noexcept
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::log[o], a0);
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T, signed>;
       T Log_2hi   = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<T>{});
@@ -103,15 +101,15 @@ namespace eve
         {
           /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
           /*
-            * ====================================================
-            * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
-            *
-            * Developed at SunPro, a Sun Microsystems, Inc. business.
-            * Permission to use, copy, modify, and distribute this
-            * software is freely granted, provided that this notice
-            * is preserved.
-            * ====================================================
-            */
+           * ====================================================
+           * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+           *
+           * Developed at SunPro, a Sun Microsystems, Inc. business.
+           * Permission to use, copy, modify, and distribute this
+           * software is freely granted, provided that this notice
+           * is preserved.
+           * ====================================================
+           */
           auto       x = a0;
           T          f(0);
           TT         k(0);
@@ -160,19 +158,19 @@ namespace eve
             zz = if_else(isnez, r, minf(eve::as<T>()));
           return if_else(is_ngez(a0), eve::allbits, zz);
         }
-        else // if constexpr(std::is_same_v<elt_t, double>)
+        else if constexpr(std::is_same_v<elt_t, double>)
         {
           /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
           /*
-            * ====================================================
-            * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
-            *
-            * Developed at SunPro, a Sun Microsystems, Inc. business.
-            * Permission to use, copy, modify, and distribute this
-            * software is freely granted, provided that this notice
-            * is preserved.
-            * ====================================================
-            */
+           * ====================================================
+           * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+           *
+           * Developed at SunPro, a Sun Microsystems, Inc. business.
+           * Permission to use, copy, modify, and distribute this
+           * software is freely granted, provided that this notice
+           * is preserved.
+           * ====================================================
+           */
           auto x = a0;
           T f(0);
           TT         k(0);
