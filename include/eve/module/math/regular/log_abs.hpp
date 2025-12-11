@@ -72,9 +72,9 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-      log_abs_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+      log_abs_(EVE_REQUIRES(cpu_), O const& o, T x) noexcept
     {
-      return eve::log(eve::abs(x));
+      return eve::log[o](eve::abs(x));
     }
   }
 }

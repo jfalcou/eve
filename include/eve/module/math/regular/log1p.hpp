@@ -80,13 +80,15 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr auto
-    log1p_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    log1p_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       using uiT           = as_integer_t<T, unsigned>;
       using iT            = as_integer_t<T, signed>;
       using elt_t =  eve::element_type_t<T>;
       const elt_t Log_2hi = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<elt_t>{});
       const elt_t Log_2lo = ieee_constant<0x1.a39ef35793c76p-33, -0x1.bd01060p-13f>(eve::as<elt_t>{});
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::log1p[o], a0);
       if constexpr(simd_value<T>)
       {
         constexpr bool is_avx = current_api == avx;

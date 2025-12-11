@@ -18,44 +18,30 @@
   is needed pre C++23.
 */
 
-template <typename T>
-constexpr T std_floor(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::floor(static_cast<float>(x)));
-  else                                           return std::floor(x);
-}
+#define MAKE_STD_PROXY(NAME)                                            \
+  template <typename T>                                                 \
+  constexpr T std_##NAME(T x)                                           \
+  {                                                                     \
+    if constexpr (std::same_as<T, eve::float16_t>)                      \
+      return static_cast<eve::float16_t>(std::NAME(static_cast<float>(x)));\
+      else return std::NAME(x);                                         \
+  }                                                                     \
+/* */
 
-template <typename T>
-constexpr T std_ceil(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::ceil(static_cast<float>(x)));
-  else                                           return std::ceil(x);
-}
+MAKE_STD_PROXY(abs);
+MAKE_STD_PROXY(acos);
+MAKE_STD_PROXY(acosh);
+MAKE_STD_PROXY(ceil);
+MAKE_STD_PROXY(exp);
+MAKE_STD_PROXY(exp2);
+MAKE_STD_PROXY(expm1);
+MAKE_STD_PROXY(floor);
+MAKE_STD_PROXY(log);
+MAKE_STD_PROXY(log1p);
+MAKE_STD_PROXY(log2);
+MAKE_STD_PROXY(log10);
+MAKE_STD_PROXY(nearbyint);
+MAKE_STD_PROXY(sqrt);
+MAKE_STD_PROXY(trunc);
 
-template <typename T>
-constexpr T std_trunc(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::trunc(static_cast<float>(x)));
-  else                                           return std::trunc(x);
-}
-
-template <typename T>
-constexpr T std_nearbyint(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::nearbyint(static_cast<float>(x)));
-  else                                           return std::nearbyint(x);
-}
-
-template <typename T>
-constexpr T std_abs(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::abs(static_cast<float>(x)));
-  else                                           return std::abs(x);
-}
-
-template <typename T>
-constexpr T std_sqrt(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::sqrt(static_cast<float>(x)));
-  else                                           return std::sqrt(x);
-}
+#undef MAKE_STD_PROXY

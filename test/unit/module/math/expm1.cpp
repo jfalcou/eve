@@ -6,13 +6,14 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 #include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -25,21 +26,21 @@ TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals)
 // expm1  tests
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of expm1 on wide"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::ieee_reals_wf16
               , tts::generate(tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0))
               )
-<typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::expm1(a0), tts::map([](auto e) -> v_t { return std::expm1(e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::expm1(a1), tts::map([](auto e) -> v_t { return std::expm1(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::expm1[eve::pedantic](a0), tts::map([](auto e) -> v_t { return std::expm1(e); }, a0), 30);
-  TTS_ULP_EQUAL(eve::expm1[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std::expm1(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::expm1(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_expm1(e)); }, a0), 30);
+  TTS_ULP_EQUAL(eve::expm1(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_expm1(e)); }, a1), 2);
+  TTS_ULP_EQUAL(eve::expm1[eve::pedantic](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_expm1(e)); }, a0), 30);
+  TTS_ULP_EQUAL(eve::expm1[eve::pedantic](a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_expm1(e)); }, a1), 2);
 };
 
-TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals)
-<typename T>(tts::type<T>)
+TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals_wf16)
+  <typename T>(tts::type<T>)
 {
   if constexpr( eve::platform::supports_invalids )
   {
@@ -55,15 +56,15 @@ TTS_CASE_TPL("Check return types of expm1", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(eve::expm1(T(-0.)), T(0));
 
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::expm1(T(1)), T(std::expm1(v_t(1))), 0.5);
-  TTS_ULP_EQUAL(eve::expm1(T(-1)), T(std::expm1(v_t(-1))), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(T(1)), T(std_expm1(v_t(1))), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(T(-1)), T(std_expm1(v_t(-1))), 0.5);
 };
 
 //==================================================================================================
 // Tests for masked expm1
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of eve::masked(eve::expm1)(eve::wide)"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::ieee_reals_wf16
               , tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
               )
 <typename T, typename M>(T const& a0, M const& mask)

@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -15,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,14 +29,14 @@ TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)
 // log1p  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of log1p on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0.0, eve::valmax), tts::randoms(0.5, 2.0)))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log1p(a0), tts::map([](auto e) -> v_t { return std::log1p(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log1p(a1), tts::map([](auto e) -> v_t { return std::log1p(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::log1p(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log1p(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log1p(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log1p(e)); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)
@@ -52,7 +53,7 @@ TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)
   if constexpr( eve::platform::supports_denormals )
   {
     TTS_IEEE_EQUAL(eve::log1p(eve::mindenormal(eve::as<T>())),
-                   T(std::log1p(eve::mindenormal(eve::as<v_t>()))));
+                   T(std_log1p(eve::mindenormal(eve::as<v_t>()))));
   }
 
   auto epsi = eve::eps(eve::as<T>());
@@ -71,10 +72,10 @@ TTS_CASE_TPL("Check return types of log1p", eve::test::simd::ieee_reals)
 // Tests for masked log1p
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::log1p)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::log1p[mask](a0),

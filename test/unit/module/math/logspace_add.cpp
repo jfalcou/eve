@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of logspace_add", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of logspace_add", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check return types of logspace_add", eve::test::simd::ieee_reals)
 auto maxi = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::valmax(tgt) / 3; });
 
 TTS_CASE_WITH("Check behavior of logspace_add on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(0.0, maxi),
                             tts::randoms(0.0, maxi),
                             tts::randoms(0.5, 2.0),
@@ -70,7 +70,7 @@ TTS_CASE_WITH("Check behavior of logspace_add on wide",
 // Tests for masked logspace_add
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::logspace_add)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))

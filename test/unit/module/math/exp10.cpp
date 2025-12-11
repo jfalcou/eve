@@ -6,6 +6,7 @@
 **/
 //======================================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 #include <eve/module/math.hpp>
 #include <cmath>
 
@@ -25,24 +26,24 @@ TTS_CASE_TPL("Check return types of exp10", eve::test::simd::ieee_reals)
 //  exp10  tests
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of exp10 on wide"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::ieee_reals_wf16
               , tts::generate(tts::randoms(eve::minlog10, eve::maxlog10), tts::randoms(-1.0, 1.0))
               )
 <typename T>(T const& a0, T const& a1)
 {
   using v_t       = eve::element_type_t<T>;
   long double l10 = std::log(10.0l);
-  TTS_ULP_EQUAL(eve::exp10(a0), tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0), 380) << "a0 " << a0 << '\n';
+  TTS_ULP_EQUAL(eve::exp10(a0), tts::map([l10](auto e) -> v_t { return static_cast<v_t>(std_exp(l10 * e)); }, a0), 380) << "a0 " << a0 << '\n';
 
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](a0),
-                tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0),
+                tts::map([l10](auto e) -> v_t { return static_cast<v_t>(std_exp(l10 * e)); }, a0),
                 380);
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](a1),
-                tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a1),
+                tts::map([l10](auto e) -> v_t { return static_cast<v_t>(std_exp(l10 * e)); }, a1),
                 2);
 };
 
-TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](T(1)), T(10), 0.5);
@@ -72,11 +73,11 @@ TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals)
     if constexpr( eve::platform::supports_denormals && std::same_as<elt_t, double> && eve::cardinal_v<T> == 1)
     {
       TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::minlog10(eve::as<T>())),
-                    T(std::exp(elt_t(std::log(10.0)) * eve::minlog10(eve::as<elt_t>()))),
+                    T(std_exp(elt_t(std::log(10.0)) * eve::minlog10(eve::as<elt_t>()))),
                     256) <<
         std::hexfloat << eve::minlog10(eve::as<T>()) <<  " ==== " << eve::minlog10denormal(eve::as<T>()) << '\n';
       TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::prev(eve::minlog10(eve::as<T>()))),
-                    T(std::exp(elt_t(std::log(10.0)) * eve::prev(eve::minlog10(eve::as<elt_t>())))),
+                    T(std_exp(elt_t(std::log(10.0)) * eve::prev(eve::minlog10(eve::as<elt_t>())))),
                     256);
     }
     TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::minlog10denormal(eve::as<T>())), T(0), 0);
@@ -88,7 +89,7 @@ TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals)
 // Tests for masked exp10
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of eve::masked(eve::exp10)(eve::wide)"
-              , eve::test::simd::ieee_reals
+              , eve::test::simd::ieee_reals_wf16
               , tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
               )
 <typename T, typename M>(T const& a0, M const& mask)

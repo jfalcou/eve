@@ -92,17 +92,18 @@ namespace eve
 //!  @}
 //================================================================================================
 
-
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T log2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    EVE_FORCEINLINE constexpr T log2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       using uiT   = as_integer_t<T, unsigned>;
       using iT    = as_integer_t<T, signed>;
       T Invlog_2lo = ieee_constant<0x1.705fc2eefa200p-33, -0x1.7135a80p-13f>(eve::as<T>{});
       T Invlog_2hi = ieee_constant<0x1.7154765200000p+0 , 0x1.7160000p+0f  >(eve::as<T>{});
-      if constexpr(simd_value<T>)
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::log2[o], a0);
+      else if constexpr(simd_value<T>)
       {
        constexpr bool is_avx = current_api == avx;
         using TT =  detail::conditional_t<is_avx, T, iT >;

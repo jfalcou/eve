@@ -51,7 +51,7 @@ TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals_wf
     TTS_EXPECT(eve::all(eve::sqrteps[upper](as<elt_t>())
                         >= std::sqrt((double)(eve::eps(as<elt_t>())))));
   }
-   
+
   TTS_EXPECT(eve::all(eve::sqrteps[lower](as<T>()) <= eve::sqrteps(as<T>())));
   TTS_EXPECT(eve::all(eve::sqrteps(as<T>()) <= eve::sqrteps[upper](as<T>())));
   TTS_ULP_EQUAL(eve::sqrteps[lower](as<T>()), eve::sqrteps[upper](as<T>()), 0.5);

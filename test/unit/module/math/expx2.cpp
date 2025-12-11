@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "std_proxy.hpp"
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
@@ -15,7 +16,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -33,7 +34,7 @@ auto maxi =
     tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::sqrt(eve::maxlog(tgt)); });
 
 TTS_CASE_WITH("Check behavior of exp on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(mini, maxi), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
@@ -43,8 +44,8 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                 tts::map(
                     [](auto e) -> v_t
                     {
-                      long double le = e;
-                      return std::exp(le * le);
+                      long double le(static_cast<double>(e));
+                      return static_cast<v_t>(std_exp(le * le));
                     },
                     a0),
                 200);
@@ -52,14 +53,14 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                 tts::map(
                     [](auto e) -> v_t
                     {
-                      long double le = e;
-                      return std::exp(le * le);
+                      long double le(static_cast<double>(e));
+                      return static_cast<v_t>(std_exp(le * le));
                     },
                     a1),
                 2);
 };
 
-TTS_CASE_TPL("Check expx2 2 parameters", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check expx2 2 parameters", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -79,7 +80,7 @@ TTS_CASE_TPL("Check expx2 2 parameters", eve::test::simd::ieee_reals)
 // Tests for masked expx2
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
