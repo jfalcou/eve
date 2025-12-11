@@ -26,7 +26,7 @@
       return static_cast<eve::float16_t>(std::NAME(static_cast<float>(x)));\
       else return std::NAME(x);                                         \
   }                                                                     \
-//==
+/* */
 
 MAKE_STD_PROXY(abs);
 MAKE_STD_PROXY(acos);
