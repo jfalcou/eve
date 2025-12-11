@@ -86,11 +86,13 @@ namespace tts
   template<typename T, typename N>
   inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
-    double max_ulp = 0;
+    double max_dr = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, relative_distance(T(l.get(i)), T(r.get(i))));
-
-    return max_ulp;
+    {
+      auto dr = eve::reldist(T(l.get(i)), T(r.get(i)));
+      max_dr = (dr > max_dr) ? dr : max_dr;
+    }
+    return max_dr;
   }
 
   template<typename T>
@@ -102,11 +104,13 @@ namespace tts
   template<typename T, typename N>
   inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
-    double max_ulp = 0;
+    double max_d = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, absolute_distance(T(l.get(i)), T(r.get(i))));
-
-    return max_ulp;
+    {
+      auto d = eve::dist(T(l.get(i)), T(r.get(i)));
+      max_d = (d > max_d) ? d : max_d;
+    }
+    return max_d;
   }
 
   template<typename T>

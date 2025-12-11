@@ -33,7 +33,7 @@ TTS_CASE_WITH("Check behavior of acosh on wide",
   <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::acosh(a0), tts::map([](auto e) -> v_t { return eve::convert(std_acosh(e), eve::as<v_t>()); }, a0), 2);
+  TTS_ULP_EQUAL(eve::acosh(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acosh(e)); }, a0), 2);
 };
 
 
