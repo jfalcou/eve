@@ -14,13 +14,6 @@
 
 namespace eve::detail
 {
-  template<callable_options O, floating_scalar_value U>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& , long double const& v0, eve::as<U>)
-  {
-    if constexpr(std::same_as<U, long double>) return v0;
-    else return static_cast<U>(v0);
-  }
-
   template<callable_options O, product_type T, product_type U>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
   {

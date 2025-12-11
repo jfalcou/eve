@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -34,8 +34,8 @@ TTS_CASE_WITH("Check behavior of log on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log(a0), tts::map([](auto e) -> v_t { return eve::log(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log(a1), tts::map([](auto e) -> v_t { return eve::log(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::log(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log(e)); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of log", eve::test::simd::ieee_reals_wf16)

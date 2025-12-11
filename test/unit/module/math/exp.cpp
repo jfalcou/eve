@@ -35,11 +35,11 @@ TTS_CASE_WITH("Check behavior of exp on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::exp(a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp(e), eve::as<v_t>()); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp(a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp(e), eve::as<v_t>()); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_exp(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_exp(e)); }, a1), 2);
   
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), tts::map([](auto e) -> v_t { return eve::convert(std_exp(e), eve::as<v_t>()); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return eve::convert(std_exp(e), eve::as<v_t>()); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_exp(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_exp(e)); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee_reals_wf16)

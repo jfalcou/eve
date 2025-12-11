@@ -26,20 +26,22 @@
       return static_cast<eve::float16_t>(std::NAME(static_cast<float>(x)));\
       else return std::NAME(x);                                         \
   }                                                                     \
-                                                                        \
+//==
 
+MAKE_STD_PROXY(abs);
+MAKE_STD_PROXY(acos);
+MAKE_STD_PROXY(acosh);
+MAKE_STD_PROXY(ceil);
+MAKE_STD_PROXY(exp);
+MAKE_STD_PROXY(exp2);
+MAKE_STD_PROXY(expm1);
+MAKE_STD_PROXY(floor);
 MAKE_STD_PROXY(log);
 MAKE_STD_PROXY(log1p);
 MAKE_STD_PROXY(log2);
 MAKE_STD_PROXY(log10);
-MAKE_STD_PROXY(exp);
-MAKE_STD_PROXY(exp2);
-MAKE_STD_PROXY(expm1);
-MAKE_STD_PROXY(sqrt);
-MAKE_STD_PROXY(floor);
-MAKE_STD_PROXY(ceil);
-MAKE_STD_PROXY(trunc);
 MAKE_STD_PROXY(nearbyint);
-MAKE_STD_PROXY(abs);
+MAKE_STD_PROXY(sqrt);
+MAKE_STD_PROXY(trunc);
 
 #undef MAKE_STD_PROXY

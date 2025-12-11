@@ -35,8 +35,8 @@ TTS_CASE_WITH("Check behavior of log10 on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::log10(a0), tts::map([](auto e) -> v_t { return eve::convert(std_log10(e), eve::as<v_t>()); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log10(a1), tts::map([](auto e) -> v_t { return eve::convert(std_log10(e), eve::as<v_t>()); }, a1), 2);
+  TTS_ULP_EQUAL(eve::log10(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log10(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::log10(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log10(e)); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of log10", eve::test::simd::ieee_reals_wf16)

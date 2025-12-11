@@ -44,8 +44,8 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                 tts::map(
                     [](auto e) -> v_t
                     {
-                      long double le(eve::convert(e, eve::as<double>()));
-                      return eve::convert(std_exp(le * le), eve::as<v_t>());
+                      long double le(static_cast<double>(e));
+                      return static_cast<v_t>(std_exp(le * le));
                     },
                     a0),
                 200);
@@ -53,8 +53,8 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                 tts::map(
                     [](auto e) -> v_t
                     {
-                      long double le(eve::convert(e, eve::as<double>()));
-                      return eve::convert(std_exp(le * le), eve::as<v_t>());
+                      long double le(static_cast<double>(e));
+                      return static_cast<v_t>(std_exp(le * le));
                     },
                     a1),
                 2);
