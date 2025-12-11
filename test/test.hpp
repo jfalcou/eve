@@ -89,8 +89,16 @@ namespace tts
     double max_dr = 0;
     for(auto i = 0; i < l.size(); ++i)
     {
-      auto dr = eve::reldist(T(l.get(i)), T(r.get(i)));
-      max_dr = (dr > max_dr) ? dr : max_dr;
+      if constexpr(eve::integral_value<T>)
+      {
+        auto dr =  relative_distance(T(l.get(i)), T(r.get(i)));
+        max_dr = (dr > max_dr) ? dr : max_dr;
+      }
+      else
+      {
+        auto dr = eve::reldist(T(l.get(i)), T(r.get(i)));
+        max_dr = (dr > max_dr) ? dr : max_dr;
+      }
     }
     return max_dr;
   }
