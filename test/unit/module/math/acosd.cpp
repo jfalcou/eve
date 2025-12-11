@@ -37,7 +37,7 @@ TTS_CASE_WITH("Check behavior of acosd", eve::test::simd::ieee_reals_wf16, tts::
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::acosd(a0), tts::map([](auto e) -> v_t { return eve::radindeg(std_acos(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::acosd(a0), tts::map([](auto e) -> v_t { return eve::convert(eve::radindeg(std_acos(e)), eve::as<v_t>()); }, a0), 2);
 };
 
 TTS_CASE_WITH("Check behavior of acosd[raw]", eve::test::simd::ieee_reals_wf16, tts::generate(tts::randoms(1.-1e-6, 1.0)))
