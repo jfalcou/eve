@@ -73,9 +73,11 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &o, T const& a) noexcept
     {
-      if constexpr(O::contains(kahan))
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::radindeg[o], a);
+      else if constexpr(O::contains(kahan))
       {
         auto pi_h = eve::inv_pi(eve::as<T>());
         auto pi_l = ieee_constant< -1.96786766751824869411566603270715334e-17, 1.2841276633451830e-08>(as<T>());

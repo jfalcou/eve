@@ -88,9 +88,11 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      if constexpr(O::contains(raw))
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::acos[o], a0);
+      else if constexpr(O::contains(raw))
       {
         auto tmp  = pio_2(eve::as(a0))
           + (ieee_constant<0x1.1a62633145c07p-54, -0x1.777a5c0p-25f>(eve::as<T>{}) - asin(a0));
