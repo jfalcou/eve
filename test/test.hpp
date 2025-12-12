@@ -91,12 +91,12 @@ namespace tts
     {
       if constexpr(eve::integral_value<T>)
       {
-        auto dr =  relative_distance(T(l.get(i)), T(r.get(i)));
+        auto dr =  static_cast<double>(relative_distance(T(l.get(i)), T(r.get(i))));
         max_dr = (dr > max_dr) ? dr : max_dr;
       }
       else
       {
-        auto dr = eve::reldist(T(l.get(i)), T(r.get(i)));
+        auto dr = static_cast<double>(eve::reldist(T(l.get(i)), T(r.get(i))));
         max_dr = (dr > max_dr) ? dr : max_dr;
       }
     }
@@ -115,7 +115,7 @@ namespace tts
     double max_d = 0;
     for(auto i = 0; i < l.size(); ++i)
     {
-      auto d = eve::dist(T(l.get(i)), T(r.get(i)));
+      auto d = static_cast<double>(eve::dist(T(l.get(i)), T(r.get(i))));
       max_d = (d > max_d) ? d : max_d;
     }
     return max_d;
