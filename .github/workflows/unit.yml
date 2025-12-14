@@ -549,3 +549,59 @@ jobs:
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## C++26 preemptive test
+  ##################################################################################################
+  preemptive:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang  , arch: x86    , opts: "-std=c++26"  }
+        - { comp: gcc    , arch: x86    , opts: "-std=c++26"  }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: "Chunk 1: Compile"
+        run:  |
+          cd build
+          ninja unit.core.exe -j 4
+      - name: "Chunk 1: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
+      - name: "Chunk 1: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+
+      - name: "Chunk 2: Compile"
+        run:  |
+          cd build
+          ninja unit.api.exe unit.math.exe -j 4
+      - name: "Chunk 2: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
+      - name: "Chunk 2: Cleanup"
+        run:  |
+          cd build
+          ninja clean
+      - name: "Chunk 3: Compile"
+        run:  |
+          cd build
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+      - name: "Chunk 3: Run"
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."

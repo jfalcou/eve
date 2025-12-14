@@ -350,7 +350,7 @@ most_repeated_pattern_impl()
 }
 
 template<std::ptrdiff_t... I>
-constexpr auto most_repeated_pattern = most_repeated_pattern_impl<std::array {I...}>();
+constexpr auto most_repeated_pattern = most_repeated_pattern_impl<std::array<std::ptrdiff_t,sizeof...(I)>{I...}>();
 
 template<auto arr> constexpr auto most_repeated_pattern_a = most_repeated_pattern_impl<arr>();
 
@@ -368,7 +368,7 @@ reduce_repeated_pattern_until_impl()
 
 template<std::size_t target, std::ptrdiff_t... I>
 constexpr auto reduce_repeated_pattern_until =
-    reduce_repeated_pattern_until_impl<target, std::array {I...}>();
+    reduce_repeated_pattern_until_impl<target, std::array<std::ptrdiff_t,sizeof...(I)>{I...}>();
 
 template<std::size_t target, std::ptrdiff_t... I>
 constexpr auto repeated_pattern_of_size = []
@@ -377,7 +377,9 @@ constexpr auto repeated_pattern_of_size = []
   else
   {
     std::optional<std::array<std::ptrdiff_t, target>> res;
-    constexpr auto repeated = idxm::reduce_repeated_pattern_until_impl<target, std::array {I...}>();
+    constexpr auto repeated = idxm::reduce_repeated_pattern_until_impl< target
+                                                                      , std::array<std::ptrdiff_t,sizeof...(I)>{I...}
+                                                                      >();
     if constexpr( repeated.size() == target ) { res = repeated; }
     return res;
   }
@@ -1288,7 +1290,7 @@ template<std::ptrdiff_t... ls>
 constexpr auto
 add_shuffle_levels(eve::index_t<ls>...)
 {
-  return index<add_shuffle_levels(std::array {ls...})>;
+  return index<add_shuffle_levels(std::array<std::ptrdiff_t,sizeof...(ls)>{ls...})>;
 }
 
 } // namespace eve::detail::idxm
