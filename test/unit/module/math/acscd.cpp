@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of acscd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of acscd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of acscd", eve::test::simd::ieee_reals)
 // acscd  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of acscd on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1.0, 100.0),
                             tts::randoms(1.0, 1e20),
                             tts::randoms(-1e20, -1.0),
@@ -37,7 +37,7 @@ TTS_CASE_WITH("Check behavior of acscd on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  auto sacscd = [](auto e) -> v_t { return eve::radindeg(std::asin(1 / e)); };
+  auto sacscd = [](auto e) -> v_t { return static_cast<v_t>(eve::radindeg(std_asin(1 / e))); };
   TTS_ULP_EQUAL(eve::acscd(a0), tts::map(sacscd, a0), 2);
 
   TTS_ULP_EQUAL(eve::acscd(a1), tts::map(sacscd, a1), 2);
@@ -52,10 +52,10 @@ TTS_CASE_WITH("Check behavior of acscd on wide",
 // Tests for masked acscd
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acscd)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::acscd[mask](a0),

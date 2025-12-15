@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -37,7 +37,7 @@ TTS_CASE_WITH("Check behavior of acscpi on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  auto sacscpi = [](auto e) -> v_t { return eve::radinpi(std::asin(1 / e)); };
+  auto sacscpi = [](auto e) -> v_t { return static_cast<v_t>(eve::radinpi(std_asin(1 / e))); };
   TTS_ULP_EQUAL(eve::acscpi(a0), tts::map(sacscpi, a0), 2);
 
   TTS_ULP_EQUAL(eve::acscpi(a1), tts::map(sacscpi, a1), 2);
@@ -55,7 +55,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::acscpi)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::acscpi[mask](a0),

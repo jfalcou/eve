@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of asecpi", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of asecpi", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of asecpi", eve::test::simd::ieee_reals)
 // asecpi  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of asecpi on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1.0, 100.0),
                             tts::randoms(1.0, eve::valmax),
                             tts::randoms(eve::valmin, -1.0),
@@ -37,7 +37,7 @@ TTS_CASE_WITH("Check behavior of asecpi on wide",
 {
   using v_t = eve::element_type_t<T>;
 
-  auto sasecpi = [](auto e) -> v_t { return eve::radinpi(std::acos(1 / e)); };
+  auto sasecpi = [](auto e) -> v_t { return static_cast<v_t>(eve::radinpi(std_acos(1 / e))); };
   TTS_ULP_EQUAL(eve::asecpi(a0), tts::map(sasecpi, a0), 2);
 
   TTS_ULP_EQUAL(eve::asecpi(a1), tts::map(sasecpi, a1), 2);
@@ -52,10 +52,10 @@ TTS_CASE_WITH("Check behavior of asecpi on wide",
 // Tests for masked asecpi
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::asecpi)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::asecpi[mask](a0),
