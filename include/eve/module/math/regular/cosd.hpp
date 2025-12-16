@@ -85,9 +85,11 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T cosd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T cosd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle))
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::cosd[o], a0);
+      else if constexpr(O::contains(quarter_circle))
       {
         return eve::cospi[quarter_circle](div_180(a0));
       }
