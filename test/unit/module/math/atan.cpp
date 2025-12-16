@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of atan", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of atan", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,14 +28,13 @@ TTS_CASE_TPL("Check return types of atan", eve::test::simd::ieee_reals)
 // atan  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of atan on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::randoms(-1.0, 1.0)))
-<typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
-
-  TTS_ULP_EQUAL(eve::atan(a0), tts::map([](auto e) -> v_t { return std::atan(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::atan(a1), tts::map([](auto e) -> v_t { return std::atan(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::atan(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_atan(e)); }, a0), 2);
+  TTS_ULP_EQUAL(eve::atan(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_atan(e)); }, a1), 2);
 };
 
 
@@ -43,10 +42,10 @@ TTS_CASE_WITH("Check behavior of atan on wide",
 // Tests for masked atan
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::atan)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::atan[mask](a0),

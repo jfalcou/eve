@@ -84,16 +84,21 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T atanh_(EVE_REQUIRES(cpu_), O const& , T const& x)
+    constexpr EVE_FORCEINLINE T atanh_(EVE_REQUIRES(cpu_), O const&o , T const& x)
     {
-      auto absx = eve::abs(x);
-      auto t    = absx + absx;
-      auto z1   = oneminus(absx);
-      auto test = absx < half(eve::as<T>());
-      auto tmp  = if_else(test, absx, t) / z1;
-      if constexpr( scalar_value<T> ) tmp = test ? fma(t, tmp, t) : tmp;
-      else tmp = fma[test](tmp, t, t);
-      return signnz(x)*half(eve::as<T>())*log1p(tmp);
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::atanh[o], x);
+      else
+      {
+        auto absx = eve::abs(x);
+        auto t    = absx + absx;
+        auto z1   = oneminus(absx);
+        auto test = absx < half(eve::as<T>());
+        auto tmp  = if_else(test, absx, t) / z1;
+        if constexpr( scalar_value<T> ) tmp = test ? fma(t, tmp, t) : tmp;
+        else tmp = fma[test](tmp, t, t);
+        return signnz(x)*half(eve::as<T>())*log1p(tmp);
+      }
     }
   }
 }

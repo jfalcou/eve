@@ -84,10 +84,15 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& , T const& a)
+    constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      T x = eve::abs(a);
-      return bit_xor(atan_kernel(x, rec[pedantic](x)), bitofsign(a));
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::atan[o], a);
+      else
+      {
+        T x = eve::abs(a);
+        return bit_xor(atan_kernel(x, rec[pedantic](x)), bitofsign(a));
+      }
     }
   }
 }
