@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
 
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return eve::cospi(double(e / 180.0l)); };
+  auto ref  = [](auto e) -> v_t { return static_cast<v_t>(eve::cospi(double(e / 180.0l))); };
 
   TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cosd(a0), tts::map(ref, a0), 2);
