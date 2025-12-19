@@ -82,37 +82,42 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T cotd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T cotd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      auto x = abs(a0);
-      if constexpr(O::contains(quarter_circle))
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::cotd[o], a0);
+      else
       {
-        if constexpr( scalar_value<T> )
+        auto x = abs(a0);
+        if constexpr(O::contains(quarter_circle))
         {
-          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
-          if( is_not_less_equal(x, T(45)) ) return nan(eve::as<T>());
-          return rec[pedantic](tancot_eval(deginrad(a0)));
+          if constexpr( scalar_value<T> )
+          {
+            if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
+            if( is_not_less_equal(x, T(45)) ) return nan(eve::as<T>());
+            return rec[pedantic](tancot_eval(deginrad(a0)));
+          }
+          else
+          {
+            return if_else(
+              is_eqz(a0),
+              bit_or(a0, inf(eve::as(a0))),
+              if_else(is_not_less_equal(x, T(45)), eve::allbits, rec[pedantic](tancot_eval(deginrad(a0)))));
+          }
         }
         else
         {
-          return if_else(
-            is_eqz(a0),
-            bit_or(a0, inf(eve::as(a0))),
-            if_else(is_not_less_equal(x, T(45)), eve::allbits, rec[pedantic](tancot_eval(deginrad(a0)))));
+          if( eve::all(x <= T(45)) ) return cotd[quarter_circle](a0);
+          T    a0_180 = div_180(a0);
+          auto test   = is_nez(a0_180) && is_flint(a0_180);
+          if constexpr( scalar_value<T> ) // early return for nans in scalar case
+          {
+            if( test ) return nan(eve::as<T>());
+          }
+          else { x = if_else(test, eve::allbits, x); }
+          auto [fn, xr, dxr] = rem180(x);
+          return cot_finalize(deginrad(a0), fn, xr, dxr);
         }
-      }
-      else
-      {
-        if( eve::all(x <= T(45)) ) return cotd[quarter_circle](a0);
-        T    a0_180 = div_180(a0);
-        auto test   = is_nez(a0_180) && is_flint(a0_180);
-        if constexpr( scalar_value<T> ) // early return for nans in scalar case
-        {
-          if( test ) return nan(eve::as<T>());
-        }
-        else { x = if_else(test, eve::allbits, x); }
-        auto [fn, xr, dxr] = rem180(x);
-        return cot_finalize(deginrad(a0), fn, xr, dxr);
       }
     }
   }

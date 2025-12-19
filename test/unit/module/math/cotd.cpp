@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of cotd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of cotd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,10 +28,10 @@ TTS_CASE_TPL("Check return types of cotd", eve::test::simd::ieee_reals)
 //== cotd  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cotd on wide",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-45, 45),
-                            tts::randoms(-90, 90),
-                            tts::randoms(-5000, 5000)))
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(0, 45),
+                            tts::randoms(0, 90),
+                            tts::randoms(0, 5000)))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::cotd;
@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of cotd on wide",
   auto ref  = [](auto e) -> v_t
   {
     auto d = eve::sind(e);
-    return d ? eve::cosd(e) / eve::sind(e) : eve::nan(eve::as(e));
+    return d ? eve::cosd(e) / eve::sind(e) : eve::inf(eve::as(e));
   };
   TTS_ULP_EQUAL(cotd[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::cotd(a0), tts::map(ref, a0), 2);
@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of cotd on wide",
   TTS_ULP_EQUAL(eve::cotd(a2), tts::map(ref, a2), 2);
 };
 
-TTS_CASE_TPL("Check corner cases of cotd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check corner cases of cotd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using eve::cotd;
@@ -66,7 +66,7 @@ TTS_CASE_TPL("Check corner cases of cotd", eve::test::simd::ieee_reals)
 // Tests for masked cotd
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cotd)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

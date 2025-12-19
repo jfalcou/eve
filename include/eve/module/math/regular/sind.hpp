@@ -84,21 +84,26 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sind_(EVE_REQUIRES(cpu_), O const& , T const& a0)
+    constexpr EVE_FORCEINLINE T sind_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      auto x = eve::abs(a0);
-      if constexpr(O::contains(quarter_circle))
-      {
-        return  sinpi[eve::quarter_circle](div_180(a0));
-      }
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::sind[o], a0);
       else
       {
-        if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle](a0);
-        if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
-         x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
-        auto [fn, xr, dxr] = rem180(x);
-        return sin_finalize(bitofsign(a0), fn, xr, dxr);
+        auto x = eve::abs(a0);
+        if constexpr(O::contains(quarter_circle))
+        {
+          return  sinpi[eve::quarter_circle](div_180(a0));
+        }
+        else
+        {
+          if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle](a0);
+          if constexpr( scalar_value<T> )
+            if( is_not_finite(a0) ) return nan(eve::as<T>());
+          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+          auto [fn, xr, dxr] = rem180(x);
+          return sin_finalize(bitofsign(a0), fn, xr, dxr);
+        }
       }
     }
   }

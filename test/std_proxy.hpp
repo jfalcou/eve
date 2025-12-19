@@ -51,6 +51,7 @@ MAKE_STD_PROXY(nearbyint);
 MAKE_STD_PROXY(sin);
 MAKE_STD_PROXY(sqrt);
 MAKE_STD_PROXY(tan);
+MAKE_STD_PROXY(tanh);
 MAKE_STD_PROXY(trunc);
 
 #undef MAKE_STD_PROXY
