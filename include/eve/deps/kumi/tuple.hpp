@@ -1480,6 +1480,32 @@ namespace kumi
       return apply([](auto &&...elems) { return tuple<Us...> {static_cast<Us>(elems)...}; }, *this);
     }
     template<typename... Us>
+    requires( (sizeof...(Us) == sizeof...(Ts))
+              && (!std::same_as<Ts, Us> && ...)
+              && _::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>> 
+            )
+    [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() const
+    {
+      if constexpr ( sizeof...(Ts) == 0) return tuple{};
+      else return [&]<std::size_t...I>(std::index_sequence<I...>)
+      {
+        return tuple<Us...>{ static_cast<Us>(get<I>(*this))... };
+      }(std::make_index_sequence<sizeof...(Ts)>{});
+    }
+    template<typename... Us>
+    requires( (sizeof...(Us) == sizeof...(Ts))
+              && (!std::same_as<Ts, Us> && ...)
+              && _::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>
+            )
+    [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() 
+    {
+      if constexpr ( sizeof...(Ts) == 0) return tuple{};
+      else return [&]<std::size_t...I>(std::index_sequence<I...>)
+      {
+        return tuple<Us...>{ static_cast<Us>(get<I>(*this))... };
+      }(std::make_index_sequence<sizeof...(Ts)>{});
+    }
+    template<typename... Us>
     requires(_::piecewise_convertible<tuple, tuple<Us...>>) KUMI_ABI constexpr tuple &
     operator=(tuple<Us...> const &other)
     {
