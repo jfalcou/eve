@@ -45,7 +45,12 @@ TTS_CASE_WITH("Check behavior of cospi on wide",
 
   long double  pi = 3.1415926535897932384626433832795028841971693993751l;
   using v_t = eve::element_type_t<T>;
-  auto ref  = [pi](auto e) -> v_t { return static_cast<v_t>(std_cos((pi*(long double)e))); };
+  auto ref  = [pi](auto e) -> v_t {
+    if constexpr(sizeof(v_t) == 2)
+      return static_cast<v_t>(std_cos((pi*eve::convert(e, float))));
+    else
+      return static_cast<v_t>(std_cos((pi*(long double)e)));
+  };
   TTS_ULP_EQUAL(cospi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cospi(a0), tts::map(ref, a0), 2);
   if constexpr(sizeof(v_t) >= 4)
