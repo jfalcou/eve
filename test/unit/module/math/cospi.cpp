@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of cospi on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [pi](auto e) -> v_t {
     if constexpr(sizeof(v_t) == 2)
-      return static_cast<v_t>(std_cos((pi*eve::convert(e, float))));
+    return static_cast<v_t>(std_cos((pi*eve::convert(e, eve::as<float>))));
     else
       return static_cast<v_t>(std_cos((pi*(long double)e)));
   };
