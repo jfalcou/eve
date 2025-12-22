@@ -111,6 +111,53 @@ TTS_CASE("and 0s")
       });
 };
 
+TTS_CASE("full table lookup with 0s")
+{
+  if constexpr( !(eve::ssse3 <= eve::current_api && eve::current_api < eve::avx) //
+                && !(eve::current_api >= eve::vmx)                               //
+                && !(eve::current_api >= eve::sve)                               //
+  )
+  {
+    TTS_PASS();
+    return;
+  }
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 2 ) return na_;
+        if( i == size - 3 ) return we_;
+        return (i * 3 + 5) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i % 5 == 1 ) return na_;
+        if( i % 7 == 2 ) return we_;
+        return (i * 11 + 3) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 3 ) return na_;
+        if( i == 5 ) return we_;
+        return ((i * 5) ^ 3) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( (i ^ 2) % 7 == 0 ) return na_;
+        if( (i ^ 3) % 5 == 0 ) return we_;
+        return (i * 23 + 11) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i % 10 == 2 ) return na_;
+        if( i % 13 == 7 ) return we_;
+        return ((i * 19) ^ 5) % size;
+      });
+};
+
 TTS_CASE("slide_with_0")
 {
   run<eve::neon, std::uint8_t, 16>(shift_left<1>);
@@ -256,7 +303,6 @@ TTS_CASE("neon_bit_select")
   run2<eve::neon, std::uint32_t, 8>(blend_every_other);
 };
 
-
 TTS_CASE("vtbl2_u8(x, y)")
 {
   run2<eve::neon, std::uint8_t, 8>(eve::pattern<3, 11, 5, we_, 2, 10, 7, 9>);
@@ -277,6 +323,31 @@ TTS_CASE("vtbl2_u8(x, y)")
 
   run2<eve::asimd, std::uint8_t, 16>(
       eve::pattern<3, na_, 5, we_, 2, 18, na_, 21, 15, 30, 13, na_, 5, 24, 6, 17>);
+};
+
+// ppc ------------------------------------------------
+
+TTS_CASE("ppc_vec_sel")
+{
+  run2<eve::vmx, std::uint8_t, 8>(blend_every_other);
+  run2<eve::vmx, std::uint8_t, 16>(blend_every_other);
+  run2<eve::vmx, std::uint16_t, 4>(blend_every_other);
+  run2<eve::vmx, std::uint16_t, 8>(blend_every_other);
+  run2<eve::vmx, std::uint32_t, 4>(blend_every_other);
+  run2<eve::vmx, std::uint32_t, 8>(blend_every_other);
+};
+
+TTS_CASE("ppc_vec_perm2")
+{
+  run2<eve::vmx, std::uint8_t, 16>(
+      eve::pattern<3, 19, 5, we_, 2, 18, 7, 21, 15, 30, 13, 28, 5, 24, 6, 17>);
+
+  run2<eve::vmx, std::uint8_t, 16>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 4 ) return we_;
+        return (i * 3 + 5) % (2 * size);
+      });
 };
 
 }
