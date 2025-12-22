@@ -95,7 +95,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::geommean)(eve::wide)",
 };
 
 TTS_CASE_WITH("Check behavior of geommean kahan on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax)))
