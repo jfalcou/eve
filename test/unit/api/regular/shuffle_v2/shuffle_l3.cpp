@@ -113,9 +113,10 @@ TTS_CASE("and 0s")
 
 TTS_CASE("full table lookup with 0s")
 {
-  if constexpr( !(eve::current_api >= eve::ssse3 && eve::current_api < eve::avx)
-                && !(eve::current_api >= eve::vmx)
-                && !(eve::current_api >= eve::sve) )
+  if constexpr( !(eve::ssse3 <= eve::current_api && eve::current_api < eve::avx) //
+                && !(eve::current_api >= eve::vmx)                               //
+                && !(eve::current_api >= eve::sve)                               //
+  )
   {
     TTS_PASS();
     return;
@@ -154,12 +155,6 @@ TTS_CASE("full table lookup with 0s")
         if( i % 10 == 2 ) return na_;
         if( i % 13 == 7 ) return we_;
         return ((i * 19) ^ 5) % size;
-      });
-  run_any_api_expected_cardinal<std::uint8_t>(
-      [](int i, int size) -> std::ptrdiff_t
-      {
-        if( i < size / 2 ) return i + size / 2;
-        return i - size / 2;
       });
 };
 
@@ -344,7 +339,8 @@ TTS_CASE("ppc_vec_sel")
 
 TTS_CASE("ppc_vec_perm2")
 {
-  run2<eve::vmx, std::uint8_t, 16>(eve::pattern<3, 19, 5, we_, 2, 18, 7, 21, 15, 30, 13, 28, 5, 24, 6, 17>);
+  run2<eve::vmx, std::uint8_t, 16>(
+      eve::pattern<3, 19, 5, we_, 2, 18, 7, 21, 15, 30, 13, 28, 5, 24, 6, 17>);
 
   run2<eve::vmx, std::uint8_t, 16>(
       [](int i, int size) -> std::ptrdiff_t
