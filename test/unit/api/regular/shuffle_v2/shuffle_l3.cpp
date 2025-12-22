@@ -111,6 +111,57 @@ TTS_CASE("and 0s")
       });
 };
 
+TTS_CASE("full table lookup with 0s")
+{
+  if constexpr( !(eve::current_api >= eve::ssse3 && eve::current_api < eve::avx)
+                && !(eve::current_api >= eve::sve) )
+  {
+    TTS_PASS();
+    return;
+  }
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 2 ) return na_;
+        if( i == size - 3 ) return we_;
+        return (i * 3 + 5) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i % 5 == 1 ) return na_;
+        if( i % 7 == 2 ) return we_;
+        return (i * 11 + 3) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 3 ) return na_;
+        if( i == 5 ) return we_;
+        return ((i * 5) ^ 3) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( (i ^ 2) % 7 == 0 ) return na_;
+        if( (i ^ 3) % 5 == 0 ) return we_;
+        return (i * 23 + 11) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i % 10 == 2 ) return na_;
+        if( i % 13 == 7 ) return we_;
+        return ((i * 19) ^ 5) % size;
+      });
+  run_any_api_expected_cardinal<std::uint8_t>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i < size / 2 ) return i + size / 2;
+        return i - size / 2;
+      });
+};
+
 TTS_CASE("slide_with_0")
 {
   run<eve::neon, std::uint8_t, 16>(shift_left<1>);
@@ -255,7 +306,6 @@ TTS_CASE("neon_bit_select")
   run2<eve::neon, std::uint32_t, 4>(blend_every_other);
   run2<eve::neon, std::uint32_t, 8>(blend_every_other);
 };
-
 
 TTS_CASE("vtbl2_u8(x, y)")
 {
