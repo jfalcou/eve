@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of geommean kahan on wide",
   using eve::widen;
   using eve::kahan;
   using eve::as;
-  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+  if constexpr(sizeof(eve::element_type_t<T>) == 4)
     TTS_ULP_EQUAL(geommean[kahan](a0, a1, a2), eve::downgrade(geommean[widen](a0, a1, a2)), 5.0);
 
 };

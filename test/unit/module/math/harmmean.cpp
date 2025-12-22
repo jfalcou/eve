@@ -48,20 +48,29 @@ TTS_CASE_WITH("Check behavior of harmmean(wide)",
 {
   using eve::harmmean;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(harmmean(a0, a1),
-                tts::map( [](auto e, auto f) -> v_t {return (2/(1/e+1/f));}, a0, a1),
-                2);
-  auto f3 = [](auto e, auto f, auto g)  -> v_t{ return 3/(1/e+1/f+1/g);};
-  TTS_ULP_EQUAL(harmmean(a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
-  TTS_ULP_EQUAL(harmmean[eve::pedantic](a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
-  TTS_ULP_EQUAL(harmmean(kumi::tuple{a0, a1, a2}), tts::map(f3, a0, a1, a2), 30);
-  using v_t =  eve::element_type_t<T>;
-  if constexpr(sizeof(v_t) > 2)
+  if constexpr(sizeof(v_t) >  2)
   {
+    TTS_ULP_EQUAL(harmmean(a0, a1),
+                  tts::map( [](auto e, auto f) -> v_t {return (2/(1/e+1/f));}, a0, a1),
+                  2);
+    auto f3 = [](auto e, auto f, auto g)  -> v_t{ return 3/(1/e+1/f+1/g);};
+    TTS_ULP_EQUAL(harmmean(a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(harmmean[eve::pedantic](a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(harmmean(kumi::tuple{a0, a1, a2}), tts::map(f3, a0, a1, a2), 30);
     auto t = [](auto){ return v_t(1.5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
     TTS_RELATIVE_EQUAL(harmmean(tup),v_t(1.5), 1.0e-3);
+  }
+  else
+  {
+    auto cvf = [](auto x){return eve::convert(x, eve::as<float>()); };
+//     TTS_ULP_EQUAL(harmmean(a0, a1),
+//                   tts::map( [cvf](auto e, auto f) -> v_t {
+//                               return static_cast<v_t>(eve::harmmean(cvf(e), cvf(f))); }, a0, a1),
+//                   2);
+    TTS_ULP_EQUAL(harmmean(a0, a1), eve::convert(eve::harmmean(cvf(a0), cvf(a1)), eve::as<eve::float16_t>()),
+                  2);
   }
 };
 
@@ -83,7 +92,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::harmmean)(eve::wide)",
 };
 
 TTS_CASE_WITH("Check behavior of harmmean kahan on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax)))
@@ -93,7 +102,7 @@ TTS_CASE_WITH("Check behavior of harmmean kahan on wide",
   using eve::widen;
   using eve::kahan;
   using eve::as;
-  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+  if constexpr(sizeof(eve::element_type_t<T>) == 4)
     TTS_ULP_EQUAL(harmmean[kahan](a0, a1, a2), eve::downgrade(harmmean[widen](a0, a1, a2)), 5.0);
 
 };

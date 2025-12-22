@@ -15,11 +15,11 @@
 namespace eve
 {
 template<typename Options>
-struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
+struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option, widen_option,
                                     lower_option, upper_option, strict_option, mod_option>
 {
   template<eve::value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  constexpr EVE_FORCEINLINE upgrade_if_t<Options,T>  operator()(T v) const noexcept
   { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(rec_t, rec_);
@@ -55,6 +55,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!      constexpr auto rec[lower](floating_value auto x)          noexcept; // 5
 //!      constexpr auto rec[upper](floating_value auto x)          noexcept; // 6
 //!      constexpr auto rec[mod = p](floating_value auto x)        noexcept; // 7
+//!      constexpr auto rec[widen](floating_value auto x)          noexcept; // 8
 //!   }
 //!   @endcode
 //!
@@ -78,7 +79,8 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!      7. Computes the result in modular arithmetic. the parameters must be flint positive
 //!         and less than the modulus. The modulus itself must be less than maxflint. Note that
 //!         mul[mod = p](a, rec[mod = p](a)) is the gcd of p and a (1 iff a and p are coprime)
-//!
+//!      8. The inverse is computed in the double sized element type (if available).
+//!         This decorator has no effect on double and  64 bits integrals.//!
 //!  @note
 //!     For [integral value](@ref eve::integral_value) `rec(x)` is equivalent to:
 //!       * If x==1 or x==-1, x is returned.

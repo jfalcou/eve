@@ -102,7 +102,10 @@ namespace eve
       using r_t   = common_value_t<T0, Ts...>;
       using elt_t = element_type_t<r_t>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
+      {
+        std::cout << "icitte" << std::endl;
         return eve::detail::apply_fp16_as_fp32(eve::geommean[o], a0, args...);
+      }
       else
       {
         constexpr std::uint64_t sz = sizeof...(Ts)+1;
@@ -112,7 +115,7 @@ namespace eve
           return a0;
         else
         {
-          return rec[pedantic](average(rec(a0), rec(args)...));
+          return rec[pedantic](average(rec[pedantic](a0), rec[pedantic](args)...));
         }
       }
     }
