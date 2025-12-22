@@ -114,6 +114,7 @@ TTS_CASE("and 0s")
 TTS_CASE("full table lookup with 0s")
 {
   if constexpr( !(eve::current_api >= eve::ssse3 && eve::current_api < eve::avx)
+                && !(eve::current_api >= eve::vmx)
                 && !(eve::current_api >= eve::sve) )
   {
     TTS_PASS();
@@ -327,6 +328,30 @@ TTS_CASE("vtbl2_u8(x, y)")
 
   run2<eve::asimd, std::uint8_t, 16>(
       eve::pattern<3, na_, 5, we_, 2, 18, na_, 21, 15, 30, 13, na_, 5, 24, 6, 17>);
+};
+
+// ppc ------------------------------------------------
+
+TTS_CASE("ppc_vec_sel")
+{
+  run2<eve::vmx, std::uint8_t, 8>(blend_every_other);
+  run2<eve::vmx, std::uint8_t, 16>(blend_every_other);
+  run2<eve::vmx, std::uint16_t, 4>(blend_every_other);
+  run2<eve::vmx, std::uint16_t, 8>(blend_every_other);
+  run2<eve::vmx, std::uint32_t, 4>(blend_every_other);
+  run2<eve::vmx, std::uint32_t, 8>(blend_every_other);
+};
+
+TTS_CASE("ppc_vec_perm2")
+{
+  run2<eve::vmx, std::uint8_t, 16>(eve::pattern<3, 19, 5, we_, 2, 18, 7, 21, 15, 30, 13, 28, 5, 24, 6, 17>);
+
+  run2<eve::vmx, std::uint8_t, 16>(
+      [](int i, int size) -> std::ptrdiff_t
+      {
+        if( i == 4 ) return we_;
+        return (i * 3 + 5) % (2 * size);
+      });
 };
 
 }
