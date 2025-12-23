@@ -48,7 +48,16 @@ TTS_CASE_WITH("Check behavior of harmmean(wide)",
 {
   using eve::harmmean;
   using v_t = eve::element_type_t<T>;
-  if constexpr(sizeof(v_t) >  2)
+  if constexpr(sizeof(v_t) ==  2)
+  {
+    auto rcvf = [](auto x){return eve::rec[eve::pedantic](eve::convert(x, eve::as<float>())); };
+    auto hm2  = [rcvf](auto e, auto f){return static_cast<v_t>( eve::rec[eve::pedantic]((rcvf(e)+rcvf(f))/2)); };
+    auto hm3  = [rcvf](auto e, auto f, auto g){return static_cast<v_t>( eve::rec[eve::pedantic]((rcvf(e)+rcvf(f)+rcvf(g))/3)); };
+    TTS_ULP_EQUAL(harmmean(a0, a1), tts::map(hm2, a0, a1), 2);
+    TTS_ULP_EQUAL(harmmean[eve::pedantic](a0, a1, a2), tts::map(hm3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(harmmean(kumi::tuple{a0, a1, a2}), harmmean(a0, a1, a2), 0.5);
+  }
+  else
   {
     TTS_ULP_EQUAL(harmmean(a0, a1),
                   tts::map( [](auto e, auto f) -> v_t {return (2/(1/e+1/f));}, a0, a1),
@@ -56,22 +65,22 @@ TTS_CASE_WITH("Check behavior of harmmean(wide)",
     auto f3 = [](auto e, auto f, auto g)  -> v_t{ return 3/(1/e+1/f+1/g);};
     TTS_ULP_EQUAL(harmmean(a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
     TTS_ULP_EQUAL(harmmean[eve::pedantic](a0, a1, a2), tts::map(f3, a0, a1, a2), 30);
-    TTS_ULP_EQUAL(harmmean(kumi::tuple{a0, a1, a2}), tts::map(f3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(harmmean(kumi::tuple{a0, a1, a2}), harmmean(a0, a1, a2), 0.5);
     auto t = [](auto){ return v_t(1.5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
     TTS_RELATIVE_EQUAL(harmmean(tup),v_t(1.5), 1.0e-3);
   }
-  else
-  {
-    auto cvf = [](auto x){return eve::convert(x, eve::as<float>()); };
-//     TTS_ULP_EQUAL(harmmean(a0, a1),
-//                   tts::map( [cvf](auto e, auto f) -> v_t {
-//                               return static_cast<v_t>(eve::harmmean(cvf(e), cvf(f))); }, a0, a1),
+//   else
+//   {
+//     auto cvf = [](auto x){return eve::convert(x, eve::as<float>()); };
+// //     TTS_ULP_EQUAL(harmmean(a0, a1),
+// //                   tts::map( [cvf](auto e, auto f) -> v_t {
+// //                               return static_cast<v_t>(eve::harmmean(cvf(e), cvf(f))); }, a0, a1),
+// //                   2);
+//     TTS_ULP_EQUAL(harmmean(a0, a1), eve::convert(eve::harmmean(cvf(a0), cvf(a1)), eve::as<eve::float16_t>()),
 //                   2);
-    TTS_ULP_EQUAL(harmmean(a0, a1), eve::convert(eve::harmmean(cvf(a0), cvf(a1)), eve::as<eve::float16_t>()),
-                  2);
-  }
+//   }
 };
 
 

@@ -103,8 +103,7 @@ namespace eve
       using elt_t = element_type_t<r_t>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
       {
-        std::cout << "icitte" << std::endl;
-        return eve::detail::apply_fp16_as_fp32(eve::geommean[o], a0, args...);
+        return eve::detail::apply_fp16_as_fp32(eve::harmmean[o], a0, args...);
       }
       else
       {
