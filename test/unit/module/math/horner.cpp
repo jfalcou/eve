@@ -51,13 +51,22 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(horner(a0, 0), T(0));
     TTS_EQUAL(horner(a0, 1), T(1));
     TTS_EQUAL(horner(a0, 1, 2), fma(a0, 1, 2));
-    TTS_EQUAL(horner(a0, 1, 2, 3), fma(a0, fma(a0, 1, 2), 3));
 
     TTS_EQUAL(horner[pedantic](a0, 0), T(0));
     TTS_EQUAL(horner[pedantic](a0, 1), T(1));
+    using e_t = eve::element_type_t<T>;
     TTS_EQUAL(horner[pedantic](a0, 1, 2), fma[pedantic](a0, 1, 2));
-    TTS_EQUAL(horner[pedantic](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-
+    if constexpr(sizeof(e_t) > 2)
+    {
+      TTS_EQUAL(horner(a0, 1, 2, 3), fma(a0, fma(a0, 1, 2), 3));
+      TTS_EQUAL(horner[pedantic](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+    }
+    else
+    {
+      auto cv = [](auto e){ return eve::convert(e, eve::as<float>()); };
+      TTS_EQUAL(horner(a0, 1, 2, 3), (eve::convert(fma(cv(a0), fma(cv(a0), 1, 2), 3), eve::as<eve::float16_t>()))) ;
+      TTS_EQUAL(horner[pedantic](a0, 1, 2, 3), (eve::convert(fma[pedantic](cv(a0), fma[pedantic](cv(a0), 1, 2), 3), eve::as<eve::float16_t>())));
+    }
     TTS_EQUAL(horner[kahan](a0, 0), T(0));
     TTS_EQUAL(horner[kahan](a0, 1), T(1));
     TTS_EQUAL(horner[kahan](a0, 1, 2), fma[pedantic](a0, 1, 2));
@@ -82,8 +91,8 @@ TTS_CASE_WITH("Check behavior of horner on wide",
 
   TTS_EQUAL(horner[pedantic](a0, tab0), T(0));
   TTS_EQUAL(horner[pedantic](a0, tab1), T(1));
-  TTS_EQUAL(horner[pedantic](a0, tab2), fma[pedantic](a0, 1, 2));
-  TTS_EQUAL(horner[pedantic](a0, tab3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+  TTS_EQUAL(horner[pedantic](a0, tab2), horner[pedantic](a0, 1, 2));
+  TTS_EQUAL(horner[pedantic](a0, tab3), horner[pedantic](a0, 1, 2, 3));
 
   //============================================================================
   //== ranges
