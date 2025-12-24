@@ -17,7 +17,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of horner on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of horner on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of horner on wide", eve::test::simd::ieee_reals
 //== horner tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of horner on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-10.0, 10.0))
              )
 <typename T>(T const& a0)
@@ -62,7 +62,8 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(horner[kahan](a0, 1), T(1));
     TTS_EQUAL(horner[kahan](a0, 1, 2), fma[pedantic](a0, 1, 2));
     TTS_ULP_EQUAL(horner[kahan](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3), 0.5);
-    TTS_ULP_EQUAL(horner[widen](a0, 1, 2, 3), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
+    if constexpr(sizeof(eve::element_type_t<T>) > 2)
+      TTS_ULP_EQUAL(horner[widen](a0, 1, 2, 3), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
  }
 
 
