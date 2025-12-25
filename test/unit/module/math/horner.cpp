@@ -86,8 +86,8 @@ TTS_CASE_WITH("Check behavior of horner on wide",
 
   TTS_EQUAL(horner(a0, tab0), T(0));
   TTS_EQUAL(horner(a0, tab1), T(1));
-  TTS_EQUAL(horner(a0, tab2), fma(a0, 1, 2));
-  TTS_EQUAL(horner(a0, tab3), fma(a0, fma(a0, 1, 2), 3));
+  TTS_EQUAL(horner(a0, tab2), horner(a0, 1, 2));
+  TTS_EQUAL(horner(a0, tab3), horner(a0, 1, 2, 3));
 
   TTS_EQUAL(horner[pedantic](a0, tab0), T(0));
   TTS_EQUAL(horner[pedantic](a0, tab1), T(1));
