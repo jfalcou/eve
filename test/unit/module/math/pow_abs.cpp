@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -26,28 +26,37 @@ TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::pow_abs(v_t(), T()), T);
 };
 
+template < typename T> T std_pow_abs(T a,  T b)
+{
+  if constexpr(sizeof(eve::element_type_t<T>) == 2)
+  {
+    auto cvf = [](auto xx){return eve::convert(xx, eve::as<float>());};
+    auto pa = [cvf](auto e, auto f) { return eve::convert(eve::pow_abs(cvf(e), cvf(f)), eve::as<eve::float16_t>()); };
+    return tts::map(pa, a, b);
+  }
+  else
+  {
+    auto pb = [](auto e, auto f) { return std::pow(std::abs(e), f); };
+    return tts::map(pb, a, b);
+  }
+};
+
 //==================================================================================================
 // pow_abs  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of pow_abs on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1, 10),
                             tts::randoms(-1.0, 1.0),
                             tts::randoms(-1.0, 1.0),
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_ULP_EQUAL(eve::pow_abs(a0, a1),
-                tts::map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1),
-                32);
-  TTS_ULP_EQUAL(eve::pow_abs(a2, a3),
-                tts::map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3),
-                2);
+  TTS_ULP_EQUAL(eve::pow_abs(a0, a1), std_pow_abs(a0, a1), 32);
+  TTS_ULP_EQUAL(eve::pow_abs(a2, a3), std_pow_abs(a2, a3), 32);
 };
 
-TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check limits of pow_abs", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -71,14 +80,18 @@ TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
     TTS_IEEE_EQUAL(eve::pow_abs(T(0.5), eve::inf(eve::as<T>())), T(0));
     TTS_IEEE_EQUAL(eve::pow_abs(T(0.5), eve::minf(eve::as<T>())), eve::inf(eve::as<T>()));
   }
-
+  auto hf = eve::half(eve::as<T>());
+  auto cv = []<typename U>(U x) {
+    if constexpr(sizeof(v_t) == 2) return T(x);
+    else return U(x);
+  };
   TTS_IEEE_EQUAL(eve::pow_abs(T(-1), T(-1)), T(1));
   TTS_IEEE_EQUAL(eve::pow_abs(T(-1), T(5)), T(1));
   TTS_IEEE_EQUAL(eve::pow_abs(T(-1), T(6)), T(1));
   TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(0.25)), T(0.840896415253715), 2);
-  TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(0.25)), T(std::pow(v_t(0.5), v_t(0.25))), 2);
-  TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(2.5)), T(std::pow(v_t(0.5), v_t(2.5))), 2);
-  TTS_ULP_EQUAL(eve::pow_abs(T(1.5), T(1.0e19)), T(eve::inf(eve::as<T>())), 2);
+  TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(0.25)), cv(std_pow_abs(hf, hf/2)), 2);
+  TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(2.5)), cv(std_pow_abs(hf, 2+hf)), 2);
+  TTS_ULP_EQUAL(eve::pow_abs(T(1.5), T(1.0e19)), eve::inf(eve::as<T>()), 2);
   TTS_ULP_EQUAL(eve::pow_abs(T(0.5), T(1.0e19)), T(0), 2);
   TTS_ULP_EQUAL(eve::pow_abs(T(10.0), T(10.0)), T(10000000000.0), 2);
 
@@ -126,7 +139,7 @@ TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
 // Tests for masked pow_abs
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::maskedeve::pow_abs(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))

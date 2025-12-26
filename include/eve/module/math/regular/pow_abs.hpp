@@ -112,51 +112,58 @@ namespace eve
 
     template<typename T,  typename U, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_abs_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
+    pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
       using r_t = common_value_t<T, U>;
-      auto x =  r_t(a);
-      auto y =  r_t(b);
-      if constexpr( scalar_value<r_t> )
-        return std::pow(eve::abs(x), y);
+      if constexpr(std::same_as<element_type_t<r_t>, eve::float16_t>)
+      {
+        return  eve::detail::apply_fp16_as_fp32(eve::pow_abs[o], a, b);
+      }
       else
       {
-        using i_t              = as_integer_t<r_t, unsigned>;
-        using eli_t            = element_type_t<i_t>;
-        auto        iseqzx     = is_eqz(x);
-        auto        ylt0       = y < zero(as(y));
-        auto        ax         = eve::abs(x);
-        auto        ax_is1     = ax == eve::one(as(x));
-        eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
-        auto [yf, yi]          = eve::modf(eve::abs(y));
-        auto test              = yf > r_t(0.5);
-        yf                     = dec[test](yf);
-        auto z                 = eve::exp(yf*eve::log(ax));
-        yi                     = inc[test](yi);
-        yi                     = if_else(ax_is1, eve::one, yi);
-        auto large             = (yi > r_t(largelimit));
-        yi                     = if_else(large, eve::one, yi);
+        auto x =  r_t(a);
+        auto y =  r_t(b);
+        if constexpr( scalar_value<r_t> )
+          return std::pow(eve::abs(x), y);
+        else
+        {
+          using i_t              = as_integer_t<r_t, unsigned>;
+          using eli_t            = element_type_t<i_t>;
+          auto        iseqzx     = is_eqz(x);
+          auto        ylt0       = y < zero(as(y));
+          auto        ax         = eve::abs(x);
+          auto        ax_is1     = ax == eve::one(as(x));
+          eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
+          auto [yf, yi]          = eve::modf(eve::abs(y));
+          auto test              = yf > r_t(0.5);
+          yf                     = dec[test](yf);
+          auto z                 = eve::exp(yf*eve::log(ax));
+          yi                     = inc[test](yi);
+          yi                     = if_else(ax_is1, eve::one, yi);
+          auto large             = (yi > r_t(largelimit));
+          yi                     = if_else(large, eve::one, yi);
 
-        auto russian = [](auto base, auto expo){
-          r_t result(1);
-          while( eve::any(is_nez(expo)) )
-          {
-            result *= if_else(is_odd(expo), base, T(1));
-            expo = (expo >> 1);
-            base = sqr(base);
-          }
-          return result;
-        };
-        if constexpr (!O::contains(raw)) yi = if_else(is_not_finite(yi), eve::zero, yi);
-        z *= russian(ax, convert(yi, uint_from<T>()));
-        z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
-        z = if_else(iseqzx && ylt0, zero, z);
-        z = if_else(is_infinite(ax), inf(as(x)), z);
-        z = if_else(ylt0, rec[pedantic](z), z);
-        z = if_else(ax_is1 || is_eqz(y), one, z);
-        z = if_else(iseqzx && is_gtz(y), zero, z);
-        z = if_else(is_nan(x) && is_nan(y), allbits, z);
-        return z;
+          auto russian = [](auto base, auto expo){
+            r_t result(1);
+            while( eve::any(is_nez(expo)) )
+            {
+              result *= if_else(is_odd(expo), base, T(1));
+              expo = (expo >> 1);
+              base = sqr(base);
+            }
+            return result;
+          };
+          if constexpr (!O::contains(raw)) yi = if_else(is_not_finite(yi), eve::zero, yi);
+          z *= russian(ax, convert(yi, uint_from<T>()));
+          z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
+          z = if_else(iseqzx && ylt0, zero, z);
+          z = if_else(is_infinite(ax), inf(as(x)), z);
+          z = if_else(ylt0, rec[pedantic](z), z);
+          z = if_else(ax_is1 || is_eqz(y), one, z);
+          z = if_else(iseqzx && is_gtz(y), zero, z);
+          z = if_else(is_nan(x) && is_nan(y), allbits, z);
+          return z;
+        }
       }
     }
   }
