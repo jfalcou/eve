@@ -14,10 +14,11 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check type of eve::spli_down_t", eve::test::simd::integers)
+TTS_CASE_TPL("Check type of eve::spli_down_t", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  if constexpr(sizeof(eve::element_type_t<T>) > 1)
+  constexpr auto lowerN = eve::integral_value<T> ? 1 : 2; 
+  if constexpr(sizeof(eve::element_type_t<T>) > lowerN)
   {
     using d_t = eve::downgrade_t<T>;
     using r_t = decltype(eve::combine(d_t(), d_t()));
