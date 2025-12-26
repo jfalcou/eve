@@ -109,10 +109,10 @@ namespace eve
     {
       using r_t = common_value_t<Ts...>;
       using e_t = element_type_t<r_t>;
-      if constexpr(std::same_as<e_t, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
-      else if constexpr(O::contains(widen))
+      if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
+      else if constexpr(std::same_as<e_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
       else
       {
         auto l_abs = [](){
