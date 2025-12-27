@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of gd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of gd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -36,7 +36,7 @@ auto maxi = []<typename T>(eve::as<T> const&)
 auto mini = []<typename T>(eve::as<T> const& tgt) { return -maxi(tgt); };
 
 TTS_CASE_WITH("Check behavior of gd on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(tts::constant(mini), tts::constant(maxi)),
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
@@ -45,8 +45,8 @@ TTS_CASE_WITH("Check behavior of gd on wide",
   using eve::gd;
   using eve::sinh;
 
-  TTS_ULP_EQUAL(gd(a0), tts::map([](auto e) -> v_t { return std::atan(std::sinh(e)); }, a0), 2);
-  TTS_ULP_EQUAL(gd(a1), tts::map([](auto e) -> v_t { return std::atan(std::sinh(e)); }, a1), 2);
+  TTS_ULP_EQUAL(gd(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_atan(std_sinh(e))); }, a0), 2);
+  TTS_ULP_EQUAL(gd(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_atan(std_sinh(e))); }, a1), 2);
 };
 
 
@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of gd on wide",
 // Tests for masked gd
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::gd)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

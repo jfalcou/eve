@@ -115,68 +115,75 @@ namespace eve
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       using e_t = element_type_t<r_t>;
-      if constexpr(O::contains(widen))
-        return hypot[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
-      else if constexpr(sizeof...(Ts) == 0) // 2 parameters
+      if constexpr(std::same_as<e_t, eve::float16_t>)
       {
-        if constexpr(O::contains(pedantic))
-        {
-          ////////////////////////////////////////////////////////////////////////////////////////////////////
-          //  This implementation is inspired by
-          //  AN IMPROVED ALGORITHM FOR HYPOT(A,B) arXiv:1904.09481v6 [math.NA] 14 Jun 2019, CARLOS F. BORGES
-          ////////////////////////////////////////////////////////////////////////////////////////////////////
-          using eve::abs;
-          r_t ax(abs(r0));
-          r_t ay(abs(r1));
-          auto test = ax > ay;
-          eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
-          constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
-          auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
-                              , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
-                                        ,  one)
-                              );
-          ax *= scale;
-          ay *= scale;
-          auto h = sqrt(fma(ax,ax,ay*ay));
-          auto h2 = sqr(h);
-          auto ax2 = sqr(ax);
-          auto x = fma(-ay,ay,h2-ax2) + fma(h,h,-h2) - fma(ax,ax,-ax2);
-          h-= x/(2*h);
-          h /= scale;
-          h = if_else(is_eqz(ay), zero, h);
-          h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
-          h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
-          return h;
-        }
-        else if constexpr(O::contains(raw))
-        {
-          //naive fast computation
-          return eve::sqrt(eve::sum_of_prod(r0, r0, r1, r1));
-        }
-        else
-        {
-          // scaling using the algorithm suggested by
-          // https://members.loria.fr/PZimmermann/papers/split.pdf
-          auto d = eve::safe_scale(average(eve::abs(r0), eve::abs(r1)));
-          auto id= eve::rec(d);
-          auto r0d = r0*id;
-          auto r1d = r1*id;
-          auto r = d*eve::sqrt(eve::sum_of_prod[pedantic](r0d, r0d, r1d, r1d));
-          return if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
-        }
+        return eve::detail::apply_fp16_as_fp32(eve::hypot[o],r0, r1, rs...);
       }
-      else //N parameters
+      else
       {
-        if constexpr(O::contains(pedantic))
+        if constexpr(O::contains(widen))
+          return hypot[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+        else if constexpr(sizeof...(Ts) == 0) // 2 parameters
         {
-          r_t that(hypot[o](r_t(r0), r_t(r1)));
-          ((that = hypot[o](that, r_t(rs))), ...);
-          return that;
+          if constexpr(O::contains(pedantic))
+          {
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            //  This implementation is inspired by
+            //  AN IMPROVED ALGORITHM FOR HYPOT(A,B) arXiv:1904.09481v6 [math.NA] 14 Jun 2019, CARLOS F. BORGES
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            using eve::abs;
+            r_t ax(abs(r0));
+            r_t ay(abs(r1));
+            auto test = ax > ay;
+            eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
+            constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
+            auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
+                                , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
+                                         ,  one)
+                                );
+            ax *= scale;
+            ay *= scale;
+            auto h = sqrt(fma(ax,ax,ay*ay));
+            auto h2 = sqr(h);
+            auto ax2 = sqr(ax);
+            auto x = fma(-ay,ay,h2-ax2) + fma(h,h,-h2) - fma(ax,ax,-ax2);
+            h-= x/(2*h);
+            h /= scale;
+            h = if_else(is_eqz(ay), zero, h);
+            h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
+            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
+            return h;
+          }
+          else if constexpr(O::contains(raw))
+          {
+            //naive fast computation
+            return eve::sqrt(eve::sum_of_prod(r0, r0, r1, r1));
+          }
+          else
+          {
+            // scaling using the algorithm suggested by
+            // https://members.loria.fr/PZimmermann/papers/split.pdf
+            auto d = eve::safe_scale(average(eve::abs(r0), eve::abs(r1)));
+            auto id= eve::rec(d);
+            auto r0d = r0*id;
+            auto r1d = r1*id;
+            auto r = d*eve::sqrt(eve::sum_of_prod[pedantic](r0d, r0d, r1d, r1d));
+            return if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
+          }
         }
-        else
+        else //N parameters
         {
-          r_t that = sum_of_squares[o](r_t(r0), r_t(r1), r_t(rs)...);
-          return eve::sqrt(that);
+          if constexpr(O::contains(pedantic))
+          {
+            r_t that(hypot[o](r_t(r0), r_t(r1)));
+            ((that = hypot[o](that, r_t(rs))), ...);
+            return that;
+          }
+          else
+          {
+            r_t that = sum_of_squares[o](r_t(r0), r_t(r1), r_t(rs)...);
+            return eve::sqrt(that);
+          }
         }
       }
     }

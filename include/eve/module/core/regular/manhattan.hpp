@@ -107,11 +107,14 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
+      using r_t = common_value_t<Ts...>;
+      using e_t = element_type_t<r_t>;
       if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
+      else if constexpr(std::same_as<e_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
       else
       {
-        using r_t = common_value_t<Ts...>;
         auto l_abs = [](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
           return eve::abs[saturated];

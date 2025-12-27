@@ -138,7 +138,12 @@ namespace eve
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
     {
       using r_t          = common_value_t<X, C, Cs...>;
-      if constexpr(O::contains(widen))
+      using elt_t = element_type_t<r_t>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+      {
+        return eve::detail::apply_fp16_as_fp32(eve::reverse_horner[o], xx, c0, cs...);
+      }
+      else if constexpr(O::contains(widen))
         return reverse_horner(upgrade(xx), upgrade(c0), upgrade(cs)...);
       else if constexpr( sizeof...(Cs) == 0 )
         return r_t(c0);

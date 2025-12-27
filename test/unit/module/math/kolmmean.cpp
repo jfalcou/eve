@@ -15,7 +15,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of kolmmean", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of kolmmean", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check return types of kolmmean", eve::test::simd::ieee_reals)
 //== kolmmean tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of kolmmean(wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100)))
@@ -50,21 +50,32 @@ TTS_CASE_WITH("Check behavior of kolmmean(wide)",
   using eve::kolmmean;
   using v_t = eve::element_type_t<T>;
   auto f0 = eve::abs; //l1 mean
-  auto h = [](auto ... e) -> v_t {return eve::average(eve::abs(e)...); };
-  TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1), tts::map(h, a0, a1),2);
-  TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1, a2), tts::map(h, a0, a1, a2), 30);
-  TTS_ULP_EQUAL(kolmmean[eve::pedantic](f0, f0, a0, a1, a2), tts::map(h, a0, a1, a2), 30);
-  TTS_ULP_EQUAL(kolmmean(f0, f0, kumi::tuple{a0, a1, a2}), tts::map(h, a0, a1, a2), 30);
-  using v_t =  eve::element_type_t<T>;
-  auto t = [](auto){ return v_t(1.5); };
-  constexpr auto s = 3*T::size()/2;
-  auto tup = kumi::generate<s>(t);
-  TTS_RELATIVE_EQUAL(kolmmean(f0, f0, tup),v_t(1.5), 1.0e-3);
+  if constexpr(sizeof(v_t) ==  2)
+  {
+    auto acvf = [](auto x){return eve::convert(eve::abs(x), eve::as<float>()); };
+    auto hf = [acvf](auto ... e) -> v_t {return eve::convert(eve::average(acvf(e)...), eve::as<v_t>()); };
+    TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1), tts::map(hf, a0, a1),2);
+    TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1, a2), tts::map(hf, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(kolmmean[eve::pedantic](f0, f0, a0, a1, a2), tts::map(hf, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(kolmmean(f0, f0, kumi::tuple{a0, a1, a2}), tts::map(hf, a0, a1, a2), 30);
+ }
+  else
+  {
+    auto h = [](auto ... e) -> v_t {return eve::average(eve::abs(e)...); };
+    TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1), tts::map(h, a0, a1),2);
+    TTS_ULP_EQUAL(kolmmean(f0, f0, a0, a1, a2), tts::map(h, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(kolmmean[eve::pedantic](f0, f0, a0, a1, a2), tts::map(h, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(kolmmean(f0, f0, kumi::tuple{a0, a1, a2}), tts::map(h, a0, a1, a2), 30);
+    auto t = [](auto){ return v_t(1.5); };
+    constexpr auto s = 3*T::size()/2;
+    auto tup = kumi::generate<s>(t);
+    TTS_RELATIVE_EQUAL(kolmmean(f0, f0, tup),v_t(1.5), 1.0e-3);
+  };
 };
 
 
 TTS_CASE_WITH("Check behavior of kolmmean kahan on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax)))
@@ -75,7 +86,7 @@ TTS_CASE_WITH("Check behavior of kolmmean kahan on wide",
   using eve::kahan;
   using eve::as;
   auto f0 = eve::abs; //l1 mean
-  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+  if constexpr(sizeof(eve::element_type_t<T>) == 4)
     TTS_ULP_EQUAL(kolmmean[kahan](f0, f0, a0, a1, a2), eve::downgrade(kolmmean[widen](f0, f0, a0, a1, a2)), 5.0);
 
 };

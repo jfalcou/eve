@@ -66,7 +66,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    * `f`, `g`: two functions that will be used to compute the mean.
+//!    * `f`, `g`: two functions that will be used to compute the mean (see note above).
 //!    * `xs`: [real](@ref eve::value) arguments.
 //!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
@@ -81,7 +81,7 @@ namespace eve
 //!
 //!  @note For the result to be a proper kolmogorov mean, `f` must be mathematically continuous and injective and `g` be its inverse.
 //!        and **EVE** need them to be defined for a floating_value input, and returning the same type.
-//!        However \f$ \mathbf{g}(\sum \mathbf{f}(x_s)) \f$ is returned if computable.
+//!        However \f$ \mathbf{g}(\sum \mathbf{f}(x_s, ...)) \f$ is returned if computable.
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia quasi-arithmetic mean](https://en.wikipedia.org/wiki/Quasi-arithmetic_mean)
@@ -99,14 +99,23 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     kolmmean_(EVE_REQUIRES(cpu_), O const & o, F f, G g, Ts... args) noexcept
     {
-      constexpr auto sz = sizeof...(Ts);
-      if constexpr(O::contains(widen))
-        return kolmmean[o.drop(widen)](f, g, upgrade(args)...);
-      else if constexpr(sz == 1)
-        return ((args), ...);
+      using r_t   = common_value_t<Ts...>;
+      using elt_t = element_type_t<r_t>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+      {
+        return eve::convert(eve::kolmmean[o](f, g, eve::convert(args, eve::as<float>())...), eve::as<eve::float16_t>());
+      }
       else
       {
-        return g(average[o](f(args)...));
+        constexpr auto sz = sizeof...(Ts);
+        if constexpr(O::contains(widen))
+          return kolmmean[o.drop(widen)](f, g, upgrade(args)...);
+        else if constexpr(sz == 1)
+          return (g(f(args)...));
+        else
+        {
+          return g(average[o](f(args)...));
+        }
       }
     }
 

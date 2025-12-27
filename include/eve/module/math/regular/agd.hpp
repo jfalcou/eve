@@ -83,9 +83,12 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T agd_(EVE_REQUIRES(cpu_), O const&, T const& x)
+    constexpr EVE_FORCEINLINE T agd_(EVE_REQUIRES(cpu_), O const& o, T const& x)
     {
-      return 2*atanh(tan(x*half(as(x))));
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::agd[o], x);
+      else
+        return 2*atanh(tan(x*half(as(x))));
     }
   }
 }

@@ -103,48 +103,53 @@ namespace eve
     {
       using r_t   = common_value_t<T0, Ts...>;
       using elt_t = element_type_t<r_t>;
-      constexpr std::uint64_t sz = sizeof...(Ts)+1;
-      if constexpr(O::contains(widen))
-        return geommean[o.drop(widen)](upgrade(a0), upgrade(args)...);
-      else if constexpr(sz == 1)
-        return a0;
-      else if constexpr(sz == 2)
-      {
-        auto a = r_t(a0);
-        auto b = r_t(args...);
-        if (O::contains(pedantic))
-        {
-          auto m  = max(a, b);
-          auto im = if_else(is_nez(m), rec[pedantic](m), m);
-          auto z  = min(a, b) * im;
-          return if_else(is_nltz(a) || is_nltz(b), sqrt(z) * m, allbits);
-        }
-        else
-        {
-          return if_else(is_nltz(sign(a)*sign(b)), sqrt(abs(a))*sqrt(abs(b)), allbits);
-        }
-      }
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::geommean[o], a0, args...);
       else
       {
-        elt_t invn  = rec(elt_t(sz));
-        auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
-        if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+        constexpr std::uint64_t sz = sizeof...(Ts)+1;
+        if constexpr(O::contains(widen))
+          return geommean[o.drop(widen)](upgrade(a0), upgrade(args)...);
+        else if constexpr(sz == 1)
+          return a0;
+        else if constexpr(sz == 2)
         {
-          auto head = eve::as_wides(eve::one(as<r_t>()), r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
-          auto s = eve::mul[o](head);
-          auto p = butterfly_reduction(s, eve::mul[o]).get(0);
-          auto sgn = sign(p);
-          p = eve::pow_abs(p, invn);
-          p = ldexp[pedantic](p, -e);
-          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+          auto a = r_t(a0);
+          auto b = r_t(args...);
+          if (O::contains(pedantic))
+          {
+            auto m  = max(a, b);
+            auto im = if_else(is_nez(m), rec[pedantic](m), m);
+            auto z  = min(a, b) * im;
+            return if_else(is_nltz(a) || is_nltz(b), sqrt(z) * m, allbits);
+          }
+          else
+          {
+            return if_else(is_nltz(sign(a)*sign(b)), sqrt(abs(a))*sqrt(abs(b)), allbits);
+          }
         }
         else
         {
-          auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
-          auto sgn = sign(p);
-          p = pow_abs(p, invn);
-          p = ldexp[pedantic](p, -e);
-          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+          elt_t invn  = rec(elt_t(sz));
+          auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
+          if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+          {
+            auto head = eve::as_wides(eve::one(as<r_t>()), r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
+            auto s = eve::mul[o](head);
+            auto p = butterfly_reduction(s, eve::mul[o]).get(0);
+            auto sgn = sign(p);
+            p = eve::pow_abs(p, invn);
+            p = ldexp[pedantic](p, -e);
+            return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+          }
+          else
+          {
+            auto p  = mul[o]( r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
+            auto sgn = sign(p);
+            p = pow_abs(p, invn);
+            p = ldexp[pedantic](p, -e);
+            return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+          }
         }
       }
     }

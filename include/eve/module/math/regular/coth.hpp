@@ -76,12 +76,17 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T coth_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T coth_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      auto x = eve::abs(a0 + a0);
-      auto t = rec[pedantic](expm1(x));
-      auto r = fma(T(2), t, T(1));
-      return copysign(r, a0);
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::coth[o], a0);
+      else
+      {
+        auto x = eve::abs(a0 + a0);
+        auto t = rec[pedantic](expm1(x));
+        auto r = fma(T(2), t, T(1));
+        return copysign(r, a0);
+      }
     }
   }
 }

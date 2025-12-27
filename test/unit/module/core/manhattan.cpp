@@ -5,7 +5,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 
 #include <algorithm>
@@ -13,7 +13,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of manhattan", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of manhattan", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of manhattan", eve::test::simd::ieee_reals)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of manhattan on all types full range",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
   using eve::abs;
   using eve::manhattan;
   using v_t = eve::element_type_t<T>;
-  auto m    = [](auto a, auto b, auto c) -> v_t { return abs(a) + abs(b) + abs(c); };
+  auto m    = [](auto a, auto b, auto c) -> v_t { return std_abs(a) + std_abs(b) + std_abs(c); };
   TTS_ULP_EQUAL(manhattan((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(manhattan[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(manhattan(kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
 // Tests for masked manhattan
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
@@ -70,7 +70,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
 };
 
 TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))

@@ -99,7 +99,9 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sin_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      if constexpr(O::contains(quarter_circle))
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::sin[o], a0);
+      else if constexpr(O::contains(quarter_circle))
       {
         auto pi2_16 = pi2o_16[upper](as<T>());
         auto x2 = sqr(a0);
