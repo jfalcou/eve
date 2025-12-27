@@ -54,8 +54,9 @@ TTS_CASE_WITH("Check behavior of horner on wide",
 
     TTS_EQUAL(horner[pedantic](a0, 0), T(0));
     TTS_EQUAL(horner[pedantic](a0, 1), T(1));
-    using e_t = eve::element_type_t<T>;
     TTS_EQUAL(horner[pedantic](a0, 1, 2), fma[pedantic](a0, 1, 2));
+
+    using e_t = eve::element_type_t<T>;
     if constexpr(sizeof(e_t) > 2)
     {
       TTS_EQUAL(horner(a0, 1, 2, 3), fma(a0, fma(a0, 1, 2), 3));

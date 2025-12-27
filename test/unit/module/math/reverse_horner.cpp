@@ -17,7 +17,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ie
 //== reverse_horner tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of reverse_horner on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::ramp(0)))
 <typename T>(T const& a0)
 {
@@ -52,12 +52,23 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
   TTS_EQUAL(reverse_horner(a0, 0), T(0));
   TTS_EQUAL(reverse_horner(a0, 1), T(1));
   TTS_EQUAL(reverse_horner(a0, 2, 1), fma(a0, 1, 2));
-  TTS_EQUAL(reverse_horner(a0, 3, 2, 1), fma(a0, fma(a0, 1, 2), 3));
 
   TTS_EQUAL(reverse_horner[pedantic](a0, 0), T(0));
   TTS_EQUAL(reverse_horner[pedantic](a0, 1), T(1));
   TTS_EQUAL(reverse_horner[pedantic](a0, 2, 1), fma[pedantic](a0, 1, 2));
-  TTS_EQUAL(reverse_horner[pedantic](a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+
+  using e_t = eve::element_type_t<T>;
+  if constexpr(sizeof(e_t) > 2)
+  {
+    TTS_EQUAL(reverse_horner(a0, 3, 2, 1), fma(a0, fma(a0, 1, 2), 3));
+    TTS_EQUAL(reverse_horner[pedantic](a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
+  }
+  else
+  {
+    auto cv = [](auto e){ return eve::convert(e, eve::as<float>()); };
+    TTS_EQUAL(reverse_horner(a0, 3, 2, 1), (eve::convert(fma(cv(a0), fma(cv(a0), 1, 2), 3), eve::as<eve::float16_t>()))) ;
+    TTS_EQUAL(reverse_horner[pedantic](a0, 3, 2, 1), (eve::convert(fma[pedantic](cv(a0), fma[pedantic](cv(a0), 1, 2), 3), eve::as<eve::float16_t>())));
+  }
 
 
   {
@@ -69,13 +80,13 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
     auto tab3 = eve::coefficients{3, 2, 1};
 
     TTS_EQUAL((reverse_horner)(a0, tab1), T(1));
-    TTS_EQUAL((reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
-    TTS_EQUAL((reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+    TTS_EQUAL((reverse_horner)(a0, tab2), eve::horner(a0, 1, 2));
+    TTS_EQUAL((reverse_horner)(a0, tab3), eve::horner(a0, 1, 2, 3));
 
 
     TTS_EQUAL(reverse_horner[pedantic](a0, tab1), T(1));
-    TTS_EQUAL(reverse_horner[pedantic](a0, tab2), (fma)(a0, 1, 2));
-    TTS_EQUAL(reverse_horner[pedantic](a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab2), eve::horner[pedantic](a0, 1, 2));
+    TTS_EQUAL(reverse_horner[pedantic](a0, tab3), eve::horner[pedantic](a0, 1, 2, 3));
   }
 
 
