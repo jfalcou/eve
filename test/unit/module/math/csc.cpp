@@ -36,7 +36,7 @@ auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve:
 
 
 TTS_CASE_WITH("Check behavior of csc on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
                             tts::randoms(tts::constant(mhalf_c), tts::constant(half_c)),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
@@ -46,7 +46,11 @@ TTS_CASE_WITH("Check behavior of csc on wide",
   using eve::csc;
 
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return 1.0 / std::sin(double(e)); };
+  auto cvf = [](auto x){ return eve::convert(x, eve::as<float>()); };
+  auto ref  = [cvf](auto e) -> v_t {
+    if constexpr(sizeof(v_t) == 2) return eve::convert(eve::csc(cvf(e)), eve::as<eve::float16_t>());
+    else return 1.0 / std::sin(double(e));
+  };
   TTS_ULP_EQUAL(csc[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(csc[eve::half_circle   ](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(csc[eve::half_circle   ](a1), tts::map(ref, a1), 2);

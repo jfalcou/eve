@@ -92,7 +92,11 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sec_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      return eve::rec[pedantic](cos[o](a0));
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::sec[o], a0);
+      else
+        return eve::rec[pedantic](cos[o](a0));
     }
   }
 }
