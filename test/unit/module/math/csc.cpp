@@ -47,9 +47,11 @@ TTS_CASE_WITH("Check behavior of csc on wide",
 
   using v_t = eve::element_type_t<T>;
   auto cvf = [](auto x){ return eve::convert(x, eve::as<float>()); };
-  auto ref  = [cvf](auto e) -> v_t {
-    if constexpr(sizeof(v_t) == 2) return eve::convert(eve::csc(cvf(e)), eve::as<eve::float16_t>());
-    else return 1.0 / std::sin(double(e));
+  auto ref  = [](auto e) -> v_t {
+    if constexpr(sizeof(v_t) == 2)
+    return eve::convert(eve::csc(eve::convert(e, eve::as<float>())),
+                        eve::as<eve::float16_t>());
+    else return v_t(1.0 / std::sin(double(e)));
   };
   TTS_ULP_EQUAL(csc[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(csc[eve::half_circle   ](a0), tts::map(ref, a0), 2);

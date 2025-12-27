@@ -45,10 +45,10 @@ TTS_CASE_WITH("Check behavior of sec on wide",
   using eve::sec;
 
   using v_t = eve::element_type_t<T>;
-  auto cvf = [](auto x){ return eve::convert(x, eve::as<float>()); };
   auto ref  = [](auto e) -> v_t {
-    if constexpr(sizeof(v_t) == 2) return eve::convert(eve::sec(cvf(e)), eve::as<eve::float16_t>());
-    else return return 1.0 / std::cos(double(e));
+    if constexpr(sizeof(v_t) == 2) return eve::convert(eve::sec(eve::convert(e, eve::as<float>())),
+                                                       eve::as<eve::float16_t>());
+    else return v_t(1.0 / std::cos(double(e)));
   };
   TTS_ULP_EQUAL(sec[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(sec[eve::half_circle   ](a0), tts::map(ref, a0), 2);
