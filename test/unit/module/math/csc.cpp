@@ -46,7 +46,6 @@ TTS_CASE_WITH("Check behavior of csc on wide",
   using eve::csc;
 
   using v_t = eve::element_type_t<T>;
-  auto cvf = [](auto x){ return eve::convert(x, eve::as<float>()); };
   auto ref  = [](auto e) -> v_t {
     if constexpr(sizeof(v_t) == 2)
     return eve::convert(eve::csc(eve::convert(e, eve::as<float>())),
