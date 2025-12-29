@@ -83,22 +83,28 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sech_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T sech_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      //////////////////////////////////////////////////////////////////////////////
-      // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
-      // respectively computed
-      // *  in the first case sech (e+rec[pedantic](e))/2
-      // *  in the second     sech is (e/2)*e (avoiding undue overflow)
-      // Threshold is maxlog - Log_2
-      //////////////////////////////////////////////////////////////////////////////
-      T    x     = eve::abs(a0);
-      auto test1 = (x > maxlog(eve::as<T>()) - log_2(eve::as<T>()));
-      auto fac   = if_else(test1, half(eve::as<T>()), eve::one);
-      T    tmp1  = exp(-x * fac);
-      T    tmp   = T(2) * tmp1;
-      if constexpr( scalar_value<T> ) { return test1 ? tmp1 * tmp : tmp / fma(tmp1, tmp1, T(1)); }
-      else { return if_else(test1, tmp1 * tmp, tmp / fma(tmp1, tmp1, T(1))); }
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::sech[o], a0);
+      else
+      {
+        //////////////////////////////////////////////////////////////////////////////
+        // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
+        // respectively computed
+        // *  in the first case sech (e+rec[pedantic](e))/2
+        // *  in the second     sech is (e/2)*e (avoiding undue overflow)
+        // Threshold is maxlog - Log_2
+        //////////////////////////////////////////////////////////////////////////////
+        T    x     = eve::abs(a0);
+        auto test1 = (x > maxlog(eve::as<T>()) - log_2(eve::as<T>()));
+        auto fac   = if_else(test1, half(eve::as<T>()), eve::one);
+        T    tmp1  = exp(-x * fac);
+        T    tmp   = T(2) * tmp1;
+        if constexpr( scalar_value<T> ) { return test1 ? tmp1 * tmp : tmp / fma(tmp1, tmp1, T(1)); }
+        else { return if_else(test1, tmp1 * tmp, tmp / fma(tmp1, tmp1, T(1))); }
+      }
     }
   }
 }

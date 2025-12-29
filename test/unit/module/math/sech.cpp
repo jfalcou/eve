@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of sech", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of sech", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -36,7 +36,7 @@ auto maxi = []<typename T>(eve::as<T> const&)
 auto mini = []<typename T>(eve::as<T> const& tgt) { return -maxi(tgt); };
 
 TTS_CASE_WITH("Check behavior of sech on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(tts::constant(mini), tts::constant(maxi)),
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
@@ -46,9 +46,14 @@ TTS_CASE_WITH("Check behavior of sech on wide",
   using eve::sech;
 
   auto rel = std::is_same_v<v_t, float> ? 2e-5 : 1e-13;
-
-  TTS_RELATIVE_EQUAL(sech(a0), tts::map([](auto e) -> v_t { return 1 / std::cosh(e); }, a0), rel);
-  TTS_RELATIVE_EQUAL(sech(a1), tts::map([](auto e) -> v_t { return 1 / std::cosh(e); }, a1), rel);
+  auto ref = [](auto e) -> v_t {
+    if constexpr(sizeof(v_t) == 2)
+    return eve::convert(1 / std::cosh(eve::convert(e, eve::as<float>())), eve::as<eve::float16_t>());
+    else
+      return (1 / std::cosh(e));
+    };
+  TTS_RELATIVE_EQUAL(sech(a0), tts::map(ref, a0), rel);
+  TTS_RELATIVE_EQUAL(sech(a1), tts::map(ref, a1), rel);
 };
 
 
@@ -56,7 +61,7 @@ TTS_CASE_WITH("Check behavior of sech on wide",
 // Tests for masked sech
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sech)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
