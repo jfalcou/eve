@@ -86,13 +86,14 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
       {
-        std::cout << "icitte" << std::endl; 
-        return eve::detail::apply_fp16_as_fp32(eve::sinc[o], a0);
+        auto fa0 =  eve::convert(a0, as<float>());
+        auto r = eve::sinc[o](fa0);
+        return convert(r,  as<float16_t>());
+//        return eve::detail::apply_fp16_as_fp32(eve::sinc[o], a0);
       }
       else
       {
-        std::cout << "latte" << std::endl; 
-         if constexpr( scalar_value<T> )
+        if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) )      return one(eve::as(a0));
           if( is_infinite(a0) ) return zero(eve::as<T>());
