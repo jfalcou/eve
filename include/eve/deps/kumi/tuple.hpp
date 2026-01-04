@@ -1481,9 +1481,10 @@ namespace kumi
     }
     template<typename... Us>
     requires( (sizeof...(Us) == sizeof...(Ts))
-              && (!std::same_as<Ts, Us> && ...)
-              && _::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>> 
+              && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
+              && _::piecewise_constructible<tuple<Ts const&...>, tuple<Us...>>
             )
+    explicit(!_::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>>)
     [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() const
     {
       if constexpr ( sizeof...(Ts) == 0) return tuple{};
@@ -1494,9 +1495,10 @@ namespace kumi
     }
     template<typename... Us>
     requires( (sizeof...(Us) == sizeof...(Ts))
-              && (!std::same_as<Ts, Us> && ...)
-              && _::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>
+              && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
+              && _::piecewise_constructible<tuple<Ts&...>, tuple<Us...>>
             )
+    explicit(!_::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>)
     [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() 
     {
       if constexpr ( sizeof...(Ts) == 0) return tuple{};
