@@ -1483,9 +1483,9 @@ namespace kumi
     requires( (sizeof...(Us) == sizeof...(Ts))
               && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
               && _::piecewise_constructible<tuple<Ts const&...>, tuple<Us...>>
-            )
-    explicit(!_::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>>)
-    [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() const
+            ) 
+    [[nodiscard]] KUMI_ABI 
+    explicit(!_::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>>) constexpr operator tuple<Us...>() const
     {
       if constexpr ( sizeof...(Ts) == 0) return tuple{};
       else return [&]<std::size_t...I>(std::index_sequence<I...>)
@@ -1497,9 +1497,9 @@ namespace kumi
     requires( (sizeof...(Us) == sizeof...(Ts))
               && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
               && _::piecewise_constructible<tuple<Ts&...>, tuple<Us...>>
-            )
-    explicit(!_::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>)
-    [[nodiscard]] KUMI_ABI constexpr operator tuple<Us...>() 
+            ) 
+    [[nodiscard]] KUMI_ABI 
+    explicit(!_::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>) constexpr operator tuple<Us...>() 
     {
       if constexpr ( sizeof...(Ts) == 0) return tuple{};
       else return [&]<std::size_t...I>(std::index_sequence<I...>)
