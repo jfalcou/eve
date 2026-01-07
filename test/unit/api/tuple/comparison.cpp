@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
+#include <test.hpp>
 #include <eve/wide.hpp>
 #include <utility>
 
@@ -38,10 +38,10 @@ TTS_CASE_TPL( "Check eve::wide<tuple>operator==", eve::test::scalar::all_types)
 
   TTS_EQUAL( (lhs == rhs), checks );
   
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs == 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL == lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_equal(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_equal(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs == 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL == lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_equal(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_equal(7ULL,lhs); });
 };
 
 //==================================================================================================
@@ -70,10 +70,10 @@ TTS_CASE_TPL( "Check eve::wide<tuple>operator!=", eve::test::scalar::all_types)
 
   TTS_EQUAL( (lhs != rhs), checks );
 
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs != 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL != lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_not_equal(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_not_equal(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs != 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL != lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_not_equal(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_not_equal(7ULL,lhs); });
 };
 
 //==================================================================================================
@@ -116,24 +116,24 @@ TTS_CASE_TPL( "Check eve::wide<tuple> ordering", eve::test::scalar::all_types)
   TTS_EQUAL( (lhs >= rhs), cge );
   TTS_EQUAL( eve::is_greater_equal(lhs, rhs), cge );
 
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs < 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL < lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_less(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_less(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs < 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL < lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_less(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_less(7ULL,lhs); });
 
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs <= 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL <= lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_less_equal(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_less_equal(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs <= 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL <= lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_less_equal(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_less_equal(7ULL,lhs); });
 
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs > 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL > lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs > 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL > lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater(7ULL,lhs); });
 
-  TTS_EXPECT_NOT_COMPILES( lhs, { lhs >= 7ULL });
-  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL >= lhs });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater_equal(lhs,7ULL) });
-  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater_equal(7ULL,lhs) });
+  TTS_EXPECT_NOT_COMPILES( lhs, { lhs >= 7ULL; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { 7ULL >= lhs; });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater_equal(lhs,7ULL); });
+  TTS_EXPECT_NOT_COMPILES( lhs, { is_greater_equal(7ULL,lhs); });
 };
 
