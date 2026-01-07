@@ -21,7 +21,7 @@ namespace eve
   {
     template<arithmetic_value T, arithmetic_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires ( compatible_arithmetic_values<T, U> && less_equal_comparable<element_type_t<T>, element_type_t<U>> )
+      requires ( compatible_arithmetic_values<T, U> && eve::less_equal_comparable<element_type_t<T>, element_type_t<U>> )
     {
       if constexpr (Options::contains(almost))
       {

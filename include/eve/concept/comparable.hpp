@@ -12,42 +12,42 @@
 namespace eve
 {
   template<typename T, typename U>
-  concept equality_comparable(T t, U u)
+  concept equality_comparable = requires(T t, U u)
   {
     { t == u } -> std::convertible_to<bool>;
     { u == t } -> std::convertible_to<bool>;
   };
   
   template<typename T, typename U>
-  concept inequality_comparable(T t, U u)
+  concept inequality_comparable = requires(T t, U u)
   {
     { t != u } -> std::convertible_to<bool>;
     { u != t } -> std::convertible_to<bool>;
   };
   
   template<typename T, typename U>
-  concept is_less_comparable(T t, U u)
+  concept is_less_comparable = requires(T t, U u)
   {
     { t < u } -> std::convertible_to<bool>;
     { u < t } -> std::convertible_to<bool>;
   };
   
   template<typename T, typename U>
-  concept is_less_equal_comparable(T t, U u)
+  concept is_less_equal_comparable = requires(T t, U u)
   {
     { t <= u } -> std::convertible_to<bool>;
     { u <= t } -> std::convertible_to<bool>;
   };
   
   template<typename T, typename U>
-  concept is_greater_comparable(T t, U u)
+  concept is_greater_comparable = requires(T t, U u)
   {
     { t > u } -> std::convertible_to<bool>;
     { u > t } -> std::convertible_to<bool>;
   };
   
   template<typename T, typename U>
-  concept is_greater_equal_comparable(T t, U u)
+  concept is_greater_equal_comparable = requires(T t, U u)
   {
     { t >= u } -> std::convertible_to<bool>;
     { u >= t } -> std::convertible_to<bool>;

@@ -19,7 +19,7 @@ namespace eve
   {
     template<typename T, typename U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
-    requires ( eve::same_lanes_or_scalar<T, U> && inequality_comparable<element_type_t<T>, element_type_t<U>> )
+    requires ( eve::same_lanes_or_scalar<T, U> && eve::inequality_comparable<element_type_t<T>, element_type_t<U>> )
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
