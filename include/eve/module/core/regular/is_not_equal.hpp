@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/comparable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 
@@ -18,12 +19,11 @@ namespace eve
   {
     template<typename T, typename U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
-    requires (eve::same_lanes_or_scalar<T, U>)
+    requires ( eve::same_lanes_or_scalar<T, U> && inequality_comparable<element_type_t<T>, element_type_t<U>> )
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
     }
-
 
     EVE_CALLABLE_OBJECT(is_not_equal_t, is_not_equal_);
   };
