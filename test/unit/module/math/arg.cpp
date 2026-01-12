@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::arg(simd)", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::arg(simd)", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of eve::arg(simd)", eve::test::simd::ieee_reals
 // Tests for eve::arg
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::arg(simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::between(-1.0, 1.0)))
 <typename T>(T const& a0)
 {
@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of eve::arg(simd)",
 // Tests for eve::arg[eve::pedantic]
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::arg[eve::pedantic](simd)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::between(-1.0, 1.0)))
 <typename T>(T a0)
 {

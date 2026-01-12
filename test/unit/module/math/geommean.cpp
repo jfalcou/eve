@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of geommean", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of geommean", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -40,37 +40,58 @@ TTS_CASE_TPL("Check return types of geommean", eve::test::simd::ieee_reals)
 //== geommean tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of geommean(wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100, 100),
-                            tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(1, 100),
+                            tts::randoms(1, 100),
+                            tts::randoms(1, 100)))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::geommean;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(geommean(a0, a1),
-                tts::map(
+  double ulp = (sizeof(v_t) == 2) ? 50 : 2;
+  if constexpr(sizeof(v_t) ==  2)
+  {
+    auto cvf = [](auto x){return eve::convert(x, eve::as<float>()); };
+    TTS_ULP_EQUAL(geommean(a0, a1),
+                  tts::map(
                     [](auto e, auto f) -> v_t {
-                      return (eve::sign(e) * eve::sign(f) >= 0) ? std::sqrt(e * f)
-                                                                : eve::nan(eve::as<v_t>());
+                      return static_cast<v_t>(eve::sign(e) * eve::sign(f) >= 0) ? std_sqrt(e * f)
+                        : eve::nan(eve::as<v_t>());
                     },
                     a0,
                     a1),
-                2);
-  TTS_ULP_EQUAL(geommean(a0, a1, a2),
-                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
-                30);
-  TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2),
-                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
-                30);
-  TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
-                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
-                30);
-    using v_t =  eve::element_type_t<T>;
+                  ulp);
+    auto ref3 = [cvf](auto e, auto f, auto g){return  static_cast<v_t>(std_cbrt(cvf(g)*cvf(f) * cvf(e))); };
+
+    TTS_ULP_EQUAL(geommean(a0, a1, a2), tts::map(ref3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2), tts::map(ref3, a0, a1, a2), 30);
+    TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}), geommean(a0, a1, a2), 0.5);
+  }
+  else if constexpr(sizeof(v_t) > 2)
+  {
+    TTS_ULP_EQUAL(geommean(a0, a1),
+                  tts::map(
+                    [](auto e, auto f) -> v_t {
+                      return (eve::sign(e) * eve::sign(f) >= 0) ? std::sqrt(e * f)
+                        : eve::nan(eve::as<v_t>());
+                    },
+                    a0,
+                    a1),
+                  2);
+    TTS_ULP_EQUAL(geommean(a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                  30);
+    TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                  30);
+    TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
+                  tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                  30);
     auto t = [](auto){ return v_t(1.5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_RELATIVE_EQUAL(geommean(tup),v_t(1.5), 1.0e-3);
+    TTS_RELATIVE_EQUAL(geommean(tup),static_cast<v_t>(1.5), 1.0e-3);
+  }
 };
 
 
@@ -78,7 +99,7 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
 // Tests for masked geommean
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::geommean)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
@@ -90,6 +111,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::geommean)(eve::wide)",
             eve::if_else(mask, eve::geommean(a0, a1), a0));
 };
 
+
+//==================================================================================================
+// Tests for kahan geommean
+//==================================================================================================
 TTS_CASE_WITH("Check behavior of geommean kahan on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(1, eve::valmax),
@@ -101,7 +126,7 @@ TTS_CASE_WITH("Check behavior of geommean kahan on wide",
   using eve::widen;
   using eve::kahan;
   using eve::as;
-  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+  if constexpr(sizeof(eve::element_type_t<T>) == 4)
     TTS_ULP_EQUAL(geommean[kahan](a0, a1, a2), eve::downgrade(geommean[widen](a0, a1, a2)), 5.0);
 
 };

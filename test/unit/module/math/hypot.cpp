@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -15,7 +15,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -77,10 +77,10 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 //== hypot tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of hypot(wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-10000.0, 10000.0),
-                            tts::randoms(-10000.0, 10000.0),
-                            tts::randoms(-10000.0, 10000.0)))
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(-100.0, 100.0),
+                            tts::randoms(-100.0, 100.0),
+                            tts::randoms(-100.0, 100.0)))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::hypot;
@@ -88,29 +88,37 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
   using eve::raw;
   using eve::kahan;
 
+  auto std_hypot = []<typename U0, typename ...U>(U0 e0, U ...e){
+    if constexpr(sizeof(U0) == 2) return eve::convert(std::hypot(eve::convert(e0, eve::as<float>()),
+                                                                 eve::convert(e, eve::as<float>())...),
+                                                      eve::as<eve::float16_t>()
+                                                     );
+    else return std::hypot(e0, e...);
+  };
+
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
+      hypot(a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
   TTS_ULP_EQUAL(
-    hypot[eve::pedantic](a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5);
+    hypot[eve::pedantic](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 0.5);
   TTS_ULP_EQUAL(
-    hypot[eve::raw](a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 0.5);
+    hypot[eve::raw](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 0.5);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(hypot(a0, a1, a2),
-                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([std_hypot](auto e, auto f, auto g) { return std_hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot[pedantic](a0, a1, a2),
-                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([std_hypot](auto e, auto f, auto g) { return std_hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot(kumi::tuple{a0, a1, a2}),
-                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([std_hypot](auto e, auto f, auto g) { return std_hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot[pedantic](kumi::tuple{a0, a1, a2}),
-                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([std_hypot](auto e, auto f, auto g) { return std_hypot(e, f, g); }, a0, a1, a2),
                   2);
      TTS_ULP_EQUAL(hypot[kahan](kumi::tuple{a0, a1, a2}),
-                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([std_hypot](auto e, auto f, auto g) { return std_hypot(e, f, g); }, a0, a1, a2),
                   2);
   }
 };

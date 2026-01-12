@@ -28,7 +28,11 @@ namespace eve::detail
   constexpr T  rec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
   requires(!O::contains(mod))
   {
-    if constexpr( floating_value<T> )
+    if constexpr(O::contains(widen))
+    {
+      return add[o.drop(widen)](upgrade(a));
+    }
+    else if constexpr( floating_value<T> )
     {
       if constexpr( O::contains(lower) || O::contains(upper))
       {

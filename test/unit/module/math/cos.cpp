@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of cos", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of cos", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -36,7 +36,7 @@ auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_l
 auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium](tgt); };
 
 TTS_CASE_WITH("Check behavior of cos on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
                             tts::randoms(tts::constant(mhalf_c), tts::constant(half_c)),
                             tts::randoms(tts::constant(mfull_c), tts::constant(full_c)),
@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of cos on wide",
   using eve::cos;
 
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return std::cos(e); };
+  auto ref  = [](auto e) -> v_t { return std_cos(e); };
   TTS_ULP_EQUAL(cos[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cos[eve::half_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cos[eve::half_circle](a1), tts::map(ref, a1), 2);
@@ -65,13 +65,13 @@ TTS_CASE_WITH("Check behavior of cos on wide",
 //==================================================================================================
 // Tests for masked cos
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::cos)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::cos[mask](a0),
-//             eve::if_else(mask, eve::cos(a0), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cos)(eve::wide)",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cos[mask](a0),
+            eve::if_else(mask, eve::cos(a0), a0));
+};

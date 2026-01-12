@@ -138,44 +138,52 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
     {
-      using r_t          = common_value_t<X, Cs...>;
-      constexpr auto N =  sizeof...(Cs);
-      if constexpr(O::contains(widen))
-        return horner(upgrade(xx), upgrade(c), upgrade(cs)...);
-      else if constexpr( sizeof...(Cs) == 0 )
-        return r_t(c);
-      else if constexpr(O::contains(kahan))
+      using r_t   = common_value_t<X, Cs...>;
+      using elt_t = element_type_t<r_t>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
       {
-        using a_t = std::array<r_t, N>;
-        a_t err;
-        auto i = 0;
-        auto s = r_t(c);
-        auto x = r_t(xx);
-        auto step = [&s, &err, x, &i]( auto a){
-          auto [pi, epi] = eve::two_prod(s, x);
-          auto [si, esi] = eve::two_add(pi, a);
-          s = si;
-          err[i] = epi+esi;
-          ++i;
-          return s;
-        };
-        ((s = step(r_t(cs))), ...);
-        using tup_t =  kumi::result::generate_t<N, decltype([](std::size_t){return r_t(); })>;
-        auto t = std::bit_cast<tup_t, a_t>(err);
-        return s+ eve::horner(x, coefficients(t));
+        return eve::detail::apply_fp16_as_fp32(eve::horner[o], xx, c, cs...);
       }
       else
       {
-        auto x = r_t(xx);
-        r_t  that{0};
-
-        that = fma[o](that, x, c);
-        ((that = fma[o](that, x, cs)), ...);
-
-        return that;
+        constexpr auto N =  sizeof...(Cs);
+        if constexpr(O::contains(widen))
+          return horner(upgrade(xx), upgrade(c), upgrade(cs)...);
+        else if constexpr( N == 0 )
+          return r_t(c);
+        else if constexpr(O::contains(kahan))
+        {
+          using a_t = std::array<r_t, N>;
+          a_t err;
+          auto i = 0;
+          auto s = r_t(c);
+          auto x = r_t(xx);
+          auto step = [&s, &err, x, &i]( auto a){
+            auto [pi, epi] = eve::two_prod(s, x);
+            auto [si, esi] = eve::two_add(pi, a);
+            s = si;
+            err[i] = epi+esi;
+            ++i;
+            return s;
+          };
+          ((s = step(r_t(cs))), ...);
+          using tup_t =  kumi::result::generate_t<N, decltype([](std::size_t){return r_t(); })>;
+          auto t = std::bit_cast<tup_t, a_t>(err);
+          return s+ eve::horner(x, coefficients(t));
+        }
+        else
+        {
+          auto x = r_t(xx);
+          r_t  that{0};
+          
+          that = fma[o](that, x, c);
+          ((that = fma[o](that, x, cs)), ...);
+          
+          return that;
+        }
       }
     }
-
+    
     template<value X, kumi::product_type Tuple, callable_options O>
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const& tup) noexcept
@@ -187,7 +195,8 @@ namespace eve
       else
         return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
     }
-
+    
+    
     template<typename X, range R, callable_options O>
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const & o, X xx, R const& r) noexcept

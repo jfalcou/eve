@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -16,7 +16,7 @@
 // Types tests
 // //==================================================================================================
 TTS_CASE_TPL( "Check return types of cosd"
-            , eve::test::simd::ieee_reals
+            , eve::test::simd::ieee_reals_wf16
             )
 <typename T>(tts::type<T>)
 {
@@ -30,7 +30,7 @@ TTS_CASE_TPL( "Check return types of cosd"
 //== cosd  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cosd on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(-45, 45),
                             tts::randoms(-90, 90),
                             tts::randoms(-5000, 5000)))
@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
 
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return eve::cospi(double(e / 180.0l)); };
+  auto ref  = [](auto e) -> v_t { return static_cast<v_t>(eve::cospi(double(e / 180.0l))); };
 
   TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cosd(a0), tts::map(ref, a0), 2);
@@ -48,7 +48,7 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
   TTS_ULP_EQUAL(cosd(a2), tts::map(ref, a2), 420);
 };
 
-TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::cosd(T(1)), T(0.9998476951563912391570115588139148516927403105832), 0.5);
@@ -72,7 +72,7 @@ TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals)
 // Tests for masked cosd
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cosd)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
