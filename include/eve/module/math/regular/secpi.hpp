@@ -88,32 +88,38 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T secpi_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
-      if constexpr(O::contains(quarter_circle))
-      {
-        auto x    = abs(a0);
-        auto test = is_not_less_equal(x, T(0.25));
-        if constexpr( scalar_value<T> )
-        {
-          if( test ) return nan(eve::as<T>());
-        }
-        else { a0 = if_else(test, eve::allbits, a0); }
-
-        a0 *= pi(eve::as<T>());
-        auto x2 = sqr(a0);
-        return rec[pedantic](cos_eval(x2));
-      }
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::secpi[o], a0);
       else
       {
-        const T x = eve::abs(a0);
-        if constexpr( scalar_value<T> )
+        if constexpr(O::contains(quarter_circle))
         {
-          if( is_not_finite(x) ) return nan(eve::as<T>());
-          if( x > maxflint(eve::as<T>()) ) return T(1);
-        }
+          auto x    = abs(a0);
+          auto test = is_not_less_equal(x, T(0.25));
+          if constexpr( scalar_value<T> )
+          {
+            if( test ) return nan(eve::as<T>());
+          }
+          else { a0 = if_else(test, eve::allbits, a0); }
 
-        T z = cospi[o](x);
-        if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic](z) : nan(eve::as<T>()); }
-        else { return if_else(is_nez(z) && is_finite(a0), rec[pedantic](z), eve::allbits); }
+          a0 *= pi(eve::as<T>());
+          auto x2 = sqr(a0);
+          return rec[pedantic](cos_eval(x2));
+        }
+        else
+        {
+          const T x = eve::abs(a0);
+          if constexpr( scalar_value<T> )
+          {
+            if( is_not_finite(x) ) return nan(eve::as<T>());
+            if( x > maxflint(eve::as<T>()) ) return T(1);
+          }
+
+          T z = cospi[o](x);
+          if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic](z) : nan(eve::as<T>()); }
+          else { return if_else(is_nez(z) && is_finite(a0), rec[pedantic](z), eve::allbits); }
+        }
       }
     }
   }
