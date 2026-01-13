@@ -1,0 +1,180 @@
+## SIMD
+
+@phdthesis{kretz:15,
+  author      = {Matthias Kretz},
+  title       = {Extending C++ for explicit data-parallel programming via SIMD vector types},
+  type        = {doctoralthesis},
+  pages       = {256},
+  school      = {Universit{\"a}tsbibliothek Johann Christian Senckenberg},
+  year        = {2015},
+}
+
+@inproceedings{pohl:16,
+author = {Pohl, Angela and Cosenza, Biagio and Mesa, Mauricio Alvarez and Chi, Chi Ching and Juurlink, Ben},
+title = {An evaluation of current SIMD programming models for C++},
+year = {2016},
+isbn = {9781450340601},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2870650.2870653},
+doi = {10.1145/2870650.2870653},
+abstract = {SIMD extensions were added to microprocessors in the mid '90s to speed-up data-parallel code by vectorization. Unfortunately, the SIMD programming model has barely evolved and the most efficient utilization is still obtained with elaborate intrinsics coding. As a consequence, several approaches to write efficient and portable SIMD code have been proposed. In this work, we evaluate current programming models for the C++ language, which claim to simplify SIMD programming while maintaining high performance.The proposals were assessed by implementing two kernels: one standard floating-point benchmark and one real-world integer-based application, both highly data parallel. Results show that the proposed solutions perform well for the floating point kernel, achieving close to the maximum possible speed-up. For the real-world application, the programming models exhibit significant performance gaps due to data type issues, missing template support and other problems discussed in this paper.},
+booktitle = {Proceedings of the 3rd Workshop on Programming Models for SIMD/Vector Processing},
+articleno = {3},
+numpages = {8},
+keywords = {vectorization, programming model, parallel programming, SIMD, C++},
+location = {Barcelona, Spain},
+series = {WPMVP '16}
+}
+
+@inproceedings{esterie:14,
+author = {Est\'{e}rie, Pierre and Falcou, Joel and Gaunard, Mathias and Laprest\'{e}, Jean-Thierry},
+title = {Boost.SIMD: generic programming for portable SIMDization},
+year = {2014},
+isbn = {9781450326537},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2568058.2568063},
+doi = {10.1145/2568058.2568063},
+abstract = {SIMD extensions have been a feature of choice for processor manufacturers for a couple of decades. Designed to exploit data parallelism in applications at the instruction level, these extensions still require a high level of expertise or the use of potentially fragile compiler support or vendor-specific libraries. While a large fraction of their theoretical accelerations can be obtained using such tools, exploiting such hardware becomes tedious as soon as application portability across hardware is required. In this paper, we describe B OOST.SIMD, a C++ template library that simplifies the exploitation of SIMD hardware within a standard C++ programming model. BOOST.SIMD provides a portable way to vectorize computation on Altivec, SSE or AVX while providing a generic way to extend the set of supported functions and hardwares. We introduce a C++ standard compliant interface for the users which increases expressiveness by providing a high-level abstraction to handle SIMD operations, an extension-specific optimization pass and a set of SIMD aware standard compliant algorithms which allow to reuse classical C++ abstractions for SIMD computation. We assess BOOST.SIMD performance and applicability by providing an implementation of BLAS and image processing algorithms.},
+booktitle = {Proceedings of the 2014 Workshop on Programming Models for SIMD/Vector Processing},
+pages = {1-8},
+numpages = {8},
+keywords = {template meta-programming, generic programming, c++, SIMD},
+location = {Orlando, Florida, USA},
+series = {WPMVP '14}
+}
+
+@misc{eigen:10,
+  author = {Guennebaud, Gaël and Jacob, Benoît et al.},
+  title = {Eigen: A C++ Template Library for Linear Algebra},
+  howpublished = {http://eigen.tuxfamily.org},
+  year = {2010--present},
+}
+
+@article{kretz:12,
+author = {Kretz, Matthias and Lindenstruth, Volker},
+title = {Vc: A C++ library for explicit vectorization},
+year = {2012},
+issue_date = {November 2012},
+publisher = {John Wiley \& Sons, Inc.},
+address = {USA},
+volume = {42},
+number = {11},
+issn = {0038-0644},
+url = {https://doi.org/10.1002/spe.1149},
+doi = {10.1002/spe.1149},
+abstract = {It is an established trend that CPU development takes advantage of Moore's Law to improve in parallelism much more than in scalar execution speed. This results in higher hardware thread counts (MIMD) and improved vector units (SIMD), of which the MIMD developments have received the focus of library research and development in recent years. To make use of the latest hardware improvements, SIMD must receive a stronger focus of API research and development because the computational power can no longer be neglected and often auto-vectorizing compilers cannot generate the necessary SIMD code, as will be shown in this paper. Nowadays, the SIMD capabilities are sufficiently significant to warrant vectorization of algorithms requiring more conditional execution than was originally expected for Streaming SIMD Extension to handle. The Vc library (http://compeng.uni-frankfurt.de/?vc) was designed to support developers in the creation of portable vectorized code. Its capabilities and performance have been thoroughly tested. Vc provides portability of the source code, allowing full utilization of the hardware's SIMD capabilities, without introducing any overhead. Copyright © 2011 John Wiley \& Sons, Ltd.},
+journal = {Softw. Pract. Exper.},
+month = nov,
+pages = {1409-1430},
+numpages = {22},
+keywords = {vectorization, optimization, data-parallel, Vc, SSE, SIMD, LRBni, C++, AVX}
+}
+
+@misc{highway:18,
+  author = {Google LLC},
+  title = {Highway: Performance and Portability for Modern SIMD},
+  howpublished = {GitHub Repository and Project Documentation},
+  year = {2018--present},
+  url = {https://github.com/google/highway}
+}
+
+@misc{corlay:17,
+  author = {Corlay, Sylvain and Mabille, Johan et al.},
+  title = {XSIMD: A C++ SIMD Abstraction Library},
+  howpublished = {Project Documentation and GitHub Repository},
+  year = {2017--present},
+  url = {https://xsimd.readthedocs.io}
+}
+
+@misc{mipp:15,
+  author = {Dalmas, Stéphane},
+  title = {{MIPP}: {M}ultiple {I}nstructions per {P}ixel {P}arallel library},
+  howpublished = {GitHub Repository and Documentation},
+  year = {2015--present}, % Approximate start
+  url = {https://github.com/aff3ct/MIPP}
+}
+
+
+## SCIENTIFIC USAGE
+@INPROCEEDINGS{pennycook:13,
+  author={Pennycook, Simon J. and Hughes, Chris J. and Smelyanskiy, M. and Jarvis, S.A.},
+  booktitle={2013 IEEE 27th International Symposium on Parallel and Distributed Processing},
+  title={Exploring SIMD for Molecular Dynamics, Using Intel® Xeon® Processors and Intel® Xeon Phi Coprocessors},
+  year={2013},
+  volume={},
+  number={},
+  pages={1085-1097},
+  keywords={Optimization;Registers;Force;Coprocessors;Hardware;Instruction sets;scientific computing;accelerator architectures;parallel programming;performance analysis;high performance computing},
+  doi={10.1109/IPDPS.2013.44}
+}
+
+@InProceedings{huber:21,
+author="Huber, Joseph
+and Wei, Weile
+and Georgakoudis, Giorgis
+and Doerfert, Johannes
+and Hernandez, Oscar",
+editor="McIntosh-Smith, Simon
+and de Supinski, Bronis R.
+and Klinkenberg, Jannis",
+title="A Case Study of LLVM-Based Analysis for Optimizing SIMD Code Generation",
+booktitle="OpenMP: Enabling Massive Node-Level Parallelism",
+year="2021",
+publisher="Springer International Publishing",
+address="Cham",
+pages="142--155",
+abstract="This paper presents a methodology for using LLVM-based tools to tune the DCA++ (dynamical cluster approximation) application that targets the new ARM A64FX processor. The goal is to describe the changes required for the new architecture and generate efficient single instruction/multiple data (SIMD) instructions that target the new Scalable Vector Extension instruction set. During manual tuning, the authors used the LLVM tools to improve code parallelization by using OpenMP SIMD, refactored the code and applied transformation that enabled SIMD optimizations, and ensured that the correct libraries were used to achieve optimal performance. By applying these code changes, code speed was increased by 1.98{\$}{\$}{\backslash}times {\$}{\$}{\texttimes}and 78 GFlops were achieved on the A64FX processor. The authors aim to automatize parts of the efforts in the OpenMP Advisor tool, which is built on top of existing and newly introduced LLVM tooling.",
+isbn="978-3-030-85262-7"
+}
+
+@article{kuhn:23,
+author = {K\"{u}hn, Martin J. and Holke, Johannes and Lutz, Annette and Thies, Jonas and R\"{o}hrig-Z\"{o}llner, Melven and Bleh, Alexander and Backhaus, Jan and Basermann, Achim},
+title = {SIMD vectorization for simultaneous solution of locally varying linear systems with multiple right-hand sides},
+year = {2023},
+issue_date = {Sep 2023},
+publisher = {Kluwer Academic Publishers},
+address = {USA},
+volume = {79},
+number = {13},
+issn = {0920-8542},
+url = {https://doi.org/10.1007/s11227-023-05220-4},
+doi = {10.1007/s11227-023-05220-4},
+abstract = {Developments in numerical simulation of flows and high-performance computing influence one another. More detailed simulation methods create a permanent need for more computational power, while new hardware developments often require changes to the software to exploit new hardware features. This dependency is very pronounced in the case of vector-units which are featured by all modern processors to increase their numerical throughput but require vectorization of the software to be used efficiently. We study the vectorization of a simulation method that exhibits an inherent level of vector-parallelism. This is of particular interest as SIMD operations will hopefully be available with std::simd in a future C++ standard. The simulation method considered here results in the simultaneous solution of multiple sparse linear systems of equations which only differ by their main diagonal and right-hand sides. Such structure arises in the simulation of unsteady flow in turbomachinery by means of a frequency domain approach called harmonic balance.},
+journal = {J. Supercomput.},
+month = apr,
+pages = {14684-14706},
+numpages = {23},
+keywords = {76U99, 76M22, 65Y20, 65Y10, Frequency domain methods, Computational fluid dynamics, SIMD optimization, Performance engineering, High-performance computing, Sparse iterative solvers}
+}
+
+@INPROCEEDINGS{penuchot:18,
+  author={Penuchot, Jules and Falcou, Joel and Khabou, Amal},
+  booktitle={2018 International Conference on High Performance Computing & Simulation (HPCS)},
+  title={Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication},
+  year={2018},
+  volume={},
+  number={},
+  pages={508-514},
+  keywords={C++ languages;Programming;Kernel;Syntactics;Libraries;Standards;Arrays},
+  doi={10.1109/HPCS.2018.00086}
+}
+
+@inproceedings{diehl:2024,
+author = {Diehl, Patrick and Syskakis, Panagiotis and Dai\ss{}, Gregor and Brandt, Steven R. and Kheirkhahan, Alireza and Singanaboina, Srinivas Yadav and Marcello, Dominic and Taylor, Chris and Leidel, John and Kaiser, Hartmut},
+title = {Preparing for HPC on RISC-V: Examining Vectorization and Distributed Performance of an Astrophysics Application with HPX and Kokkos},
+year = {2025},
+isbn = {9798350355543},
+publisher = {IEEE Press},
+url = {https://doi.org/10.1109/SCW63240.2024.00207},
+doi = {10.1109/SCW63240.2024.00207},
+abstract = {In recent years, interest in RISC-V computing architectures has moved from academic to mainstream, especially in the field of High Performance Computing where energy limitations are increasingly a concern. As of this year, the first single board RISC-V CPUs implementing the finalized ratified vector specification are being released. The RISC-V vector specification follows in the tradition of vector processors found in the CDC STAR-100, the Cray-1, the Convex C-Series, and the NEC SX machines and accelerators. The family of vector processors offers support for variable-length array processing as opposed to the fixed-length processing functionality offered by SIMD. Vector processors offer opportunities to perform vector-chaining which allows temporary results to be used without the need to resolve memory references.In this work, we use the Octo-Tiger multi-physics, multi-scale, 3D adaptive mesh refinement astrophysics application to study these early RISC-V chips with vector machine support. We report on our experience in porting this modern C++ code (which is built upon several open-source libraries such as HPX and Kokkos) to RISC-V. In addition, we show the impact of the RISC-V Vector extension on a RISC-V single board computer by implementing the std: experimental:simd interface and integrating it with our code. We also compare the application's performance, scalability, and power consumption on desktop-grade RISC-V computer to an A64FX system.The results presented in this paper are part of a longer-term evaluation of RISC-V's viability for HPC applications.},
+booktitle = {Proceedings of the SC '24 Workshops of the International Conference on High Performance Computing, Network, Storage, and Analysis},
+pages = {1656–1665},
+numpages = {10},
+keywords = {HPX, Kokkos, RISC-V, asynchronous many-task system, scalable vector extensions, task-based run time system, vectorization},
+location = {Atlanta, GA, USA},
+series = {SC-W '24}
+}
+
