@@ -101,7 +101,7 @@ namespace eve
     {
       static constexpr auto spd = [](){
         using v_t = eve::element_type_t<T>;
-        constexpr auto lowerN = integral_value<T> ? 1 : 2; 
+        constexpr auto lowerN = integral_value<T> ? 1 : 2;
         if constexpr(sizeof(v_t) == lowerN)
         {
           return T();
@@ -119,27 +119,6 @@ namespace eve
     };
   }
 
- //  template < simd_value T, bool = false> struct split_down
-//   {
-//     static constexpr auto spd = [](){
-//       using v_t = eve::element_type_t<T>;
-//       if constexpr(sizeof(v_t) == 2)
-//       {
-//         return T();
-//       }
-//       else
-//       {
-//         using d_t = eve::downgrade_t<v_t>;
-//         constexpr auto N = cardinal_v<T>;
-//         constexpr auto N2 = N*2;
-//         using spd_t = wide<d_t, fixed<N2>>;
-//         return spd_t();
-//       }
-//     };
-//     using type = decltype(spd());
-//   };
-  
-  
   template < typename T> using split_down_t = typename detail::split_down<T>::type;
-  
+
 }
