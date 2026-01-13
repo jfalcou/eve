@@ -882,7 +882,6 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator==(wide w, S s) noexcept -> decltype(is_equal(w,s))
     { 
       return is_equal(w, s); 
@@ -890,7 +889,6 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator==(S s, wide w) noexcept -> decltype(is_equal(w,s))
     { 
       return is_equal(w, s); 
@@ -904,7 +902,6 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator!=(wide w, S s) noexcept -> decltype(is_not_equal(w,s))
     { 
       return is_not_equal(w, s); 
@@ -912,7 +909,6 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator!=(S s, wide w) noexcept -> decltype(is_not_equal(w,s))
     { 
       return is_not_equal(w, s); 
