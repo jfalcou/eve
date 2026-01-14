@@ -96,11 +96,13 @@ namespace eve
 
   namespace detail
   {
-    template < integral_simd_value T > struct split_down
+
+    template < simd_value T> struct split_down
     {
       static constexpr auto spd = [](){
         using v_t = eve::element_type_t<T>;
-        if constexpr(sizeof(v_t) == 1)
+        constexpr auto lowerN = integral_value<T> ? 1 : 2;
+        if constexpr(sizeof(v_t) == lowerN)
         {
           return T();
         }
@@ -117,6 +119,6 @@ namespace eve
     };
   }
 
-  template < typename T > using split_down_t = typename detail::split_down<T>::type;
+  template < typename T> using split_down_t = typename detail::split_down<T>::type;
 
 }
