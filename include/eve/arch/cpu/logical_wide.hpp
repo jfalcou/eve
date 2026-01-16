@@ -480,32 +480,32 @@ namespace eve
     //! @}
     //==============================================================================================
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
-    //template<logical_scalar_value S>
-    //friend EVE_FORCEINLINE auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
-    //{
-    //  return is_equal(w, s);
-    //}
+    template<logical_scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
+    {
+      return is_equal(w, s);
+    }
 
-    //////! @brief Element-wise equality comparison of a scalar value and a eve::logical
-    //template<logical_scalar_value S>
-    //friend EVE_FORCEINLINE auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
-    //{
-    //  return is_equal(w, s);
-    //}
+    ////! @brief Element-wise equality comparison of a scalar value and a eve::logical
+    template<logical_scalar_value S>
+    friend EVE_FORCEINLINE auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
+    {
+      return is_equal(w, s);
+    }
 
-    ////! @brief Element-wise inequality comparison of a eve::logical and a scalar value
-    //template<logical_scalar_value S>
-    //friend EVE_FORCEINLINE auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
-    //{
-    //  return is_not_equal(w, s);
-    //}
+    //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
+    template<logical_scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
+    {
+      return is_not_equal(w, s);
+    }
 
-    ////! @brief Element-wise inequality comparison of a scalar value and a eve::logical
-    //template<logical_scalar_value S>
-    //friend EVE_FORCEINLINE auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
-    //{
-    //  return is_not_equal(w, s);
-    //}
+    //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
+    template<logical_scalar_value S>
+    friend EVE_FORCEINLINE auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
+    {
+      return is_not_equal(w, s);
+    }
 
     //! Inserts a eve::wide into a output stream
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
