@@ -80,6 +80,38 @@ TTS_CASE_WITH( "Check comparison operators behavior between wide"
   TTS_EQUAL((lhs >= rhs), ref_gte );
 };
 
+TTS_CASE( "Check comparison operators compilation behavior")
+{
+  eve::logical<eve::wide<float, eve::fixed<8>>> l1{};
+  eve::logical<eve::wide<float, eve::fixed<4>>> l2{};
+  eve::logical<eve::wide<short, eve::fixed<8>>> l3{};
+  eve::logical<int> l4 = 1;
+
+  TTS_EXPECT_NOT_COMPILES( l1, { l1 == "test";  } );
+  TTS_EXPECT_NOT_COMPILES( l1, { "test" == l1;  } );
+  TTS_EXPECT_NOT_COMPILES( l1, l2, { l1 == l2;  } );
+  TTS_EXPECT_NOT_COMPILES( l1, l2, { l2 == l1;  } );
+  TTS_EXPECT_NOT_COMPILES( l2, l3, { l2 == l3;  } );
+  TTS_EXPECT_NOT_COMPILES( l2, l3, { l3 == l2;  } );
+  
+  TTS_EXPECT_COMPILES( l1, l4, { l1 == l4;      } );
+  TTS_EXPECT_COMPILES( l1, l4, { l4 == l1;      } );
+  TTS_EXPECT_COMPILES( l1, l3, { l1 == l3;      } );
+  TTS_EXPECT_COMPILES( l1, l3, { l3 == l1;      } );
+
+  TTS_EXPECT_NOT_COMPILES( l1, { l1 != "test";  } );
+  TTS_EXPECT_NOT_COMPILES( l1, { "test" != l1;  } );
+  TTS_EXPECT_NOT_COMPILES( l1, l2, { l1 != l2;  } );
+  TTS_EXPECT_NOT_COMPILES( l1, l2, { l2 != l1;  } );
+  TTS_EXPECT_NOT_COMPILES( l2, l3, { l2 != l3;  } );
+  TTS_EXPECT_NOT_COMPILES( l2, l3, { l3 != l2;  } );
+
+  TTS_EXPECT_COMPILES( l1, l4, { l1 != l4;      } );
+  TTS_EXPECT_COMPILES( l1, l4, { l4 != l1;      } );
+  TTS_EXPECT_COMPILES( l1, l3, { l1 != l3;      } );
+  TTS_EXPECT_COMPILES( l1, l3, { l3 != l1;      } );
+};
+
 TTS_CASE_WITH( "Check comparison operators behavior between wide & scalar"
         , eve::test::simd::all_types
         , tts::generate ( tts::randoms(eve::valmin, eve::valmax)

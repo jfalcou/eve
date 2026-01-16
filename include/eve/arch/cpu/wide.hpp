@@ -882,13 +882,17 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator==(wide w, S s) noexcept { return is_equal(w, s); }
+    friend EVE_FORCEINLINE auto operator==(wide w, S s) noexcept -> decltype(is_equal(w,s))
+    { 
+      return is_equal(w, s); 
+    }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator==(S s, wide w) noexcept { return is_equal(w, s); }
+    friend EVE_FORCEINLINE auto operator==(S s, wide w) noexcept -> decltype(is_equal(w,s))
+    { 
+      return is_equal(w, s); 
+    }
 
     //! @brief Element-wise inequality comparison of two eve::wide
     friend EVE_FORCEINLINE auto operator!=(wide a, wide b) noexcept
@@ -898,13 +902,17 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator!=(wide w, S s) noexcept { return is_not_equal(w, s); }
+    friend EVE_FORCEINLINE auto operator!=(wide w, S s) noexcept -> decltype(is_not_equal(w,s))
+    { 
+      return is_not_equal(w, s); 
+    }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    requires requires(S s) { wide {s}; }
-    friend EVE_FORCEINLINE auto operator!=(S s, wide w) noexcept { return is_not_equal(w, s); }
+    friend EVE_FORCEINLINE auto operator!=(S s, wide w) noexcept -> decltype(is_not_equal(w,s))
+    { 
+      return is_not_equal(w, s); 
+    }
 
     //! @brief Element-wise less-than comparison between eve::wide
     friend EVE_FORCEINLINE auto operator<(wide a, wide b) noexcept
@@ -917,7 +925,7 @@ namespace eve
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<(wide w, S s) noexcept
+    friend EVE_FORCEINLINE auto operator<(wide w, S s) noexcept -> decltype(is_less(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -927,7 +935,7 @@ namespace eve
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<(S s, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<(S s, wide w) noexcept -> decltype(is_less(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -946,7 +954,7 @@ namespace eve
 
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>(wide w, S s) noexcept
+    friend EVE_FORCEINLINE auto operator>(wide w, S s) noexcept -> decltype(is_greater(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -956,7 +964,7 @@ namespace eve
 
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>(S s, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>(S s, wide w) noexcept -> decltype(is_greater(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -975,7 +983,7 @@ namespace eve
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>=(wide w, S s) noexcept
+    friend EVE_FORCEINLINE auto operator>=(wide w, S s) noexcept -> decltype(is_greater_equal(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -985,7 +993,7 @@ namespace eve
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator>=(S s, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator>=(S s, wide w) noexcept -> decltype(is_greater_equal(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1004,7 +1012,7 @@ namespace eve
 
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<=(wide w, S s) noexcept
+    friend EVE_FORCEINLINE auto operator<=(wide w, S s) noexcept -> decltype(is_less_equal(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1014,7 +1022,7 @@ namespace eve
 
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator<=(S s, wide w) noexcept
+    friend EVE_FORCEINLINE auto operator<=(S s, wide w) noexcept -> decltype(is_less_equal(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
