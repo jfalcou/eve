@@ -525,6 +525,7 @@ namespace eve
   {
     return is_equal(a, b);
   }
+
   
   //! @brief Element-wise inequality comparison of two eve::logical
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal>
@@ -533,6 +534,12 @@ namespace eve
   {
     return is_not_equal(a, b);
   }
+
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename C1, typename C2>
+  auto operator==(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete; 
+    
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename C1, typename C2>
+  auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;  
 
   //================================================================================================
   //! @}
