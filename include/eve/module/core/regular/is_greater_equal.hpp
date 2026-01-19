@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/comparable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
@@ -20,15 +21,14 @@ namespace eve
   {
     template<arithmetic_value T, arithmetic_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires (compatible_arithmetic_values<T, U>)
+      requires ( eve::same_lanes_or_scalar<T, U> && eve::greater_equal_comparable<element_type_t<T>,element_type_t<U>> )
     {
       if constexpr (Options::contains(almost))
       {
         static_assert(floating_value<T>, "[eve::is_greater_equal] The definitely option is only supported for floating types.");
         // static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less_equal] simd tolerance requires at least one simd parameter." );
       }
-
-      
+ 
       return is_less_equal[this->options()](b, a);
     }
 

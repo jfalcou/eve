@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/comparable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/decorator/core.hpp>
@@ -20,7 +21,7 @@ namespace eve
   struct is_equal_t : elementwise_callable<is_equal_t, Options, numeric_option, almost_option>
   {
     template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    requires( eve::same_lanes_or_scalar<T, U> && eve::equality_comparable<element_type_t<T>, element_type_t<U>> )
     constexpr EVE_FORCEINLINE common_logical_t<T, U>  operator()(T a, U b) const
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value

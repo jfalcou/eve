@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/comparable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
@@ -20,7 +21,7 @@ namespace eve
   {
     template<arithmetic_value T, arithmetic_value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
-      requires (compatible_arithmetic_values<T, U>)
+      requires ( eve::same_lanes_or_scalar<T, U> && eve::less_equal_comparable<element_type_t<T>, element_type_t<U>> )
     {
       if constexpr (Options::contains(almost))
       {
