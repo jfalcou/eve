@@ -50,9 +50,44 @@ namespace kumi
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wmissing-braces"
 #endif
-#include <iosfwd>
 #include <cstdint>
 #include <utility>
+#include <concepts>
+#if defined(__ANDROID__) || defined(__APPLE__)
+#include <type_traits>
+namespace kumi
+{
+  template<typename From, typename To>
+  concept convertible_to = std::is_convertible_v<From, To> && requires { static_cast<To>(std::declval<From>()); };
+}
+#else
+#include <concepts>
+namespace kumi
+{
+  using std::convertible_to;
+}
+#endif
+namespace kumi::_
+{
+  template<typename Ret, typename Origin>
+  concept chainable = std::is_lvalue_reference_v<Ret> && kumi::convertible_to<Origin, Ret>;
+  template<typename T>
+  concept stream = requires(T& os, typename T::char_type c, typename T::char_type const* buff, char const* str) {
+    typename T::traits_type;
+    { os.put(c) } -> chainable<T&>;
+    { os.write(buff, 0LL) } -> chainable<T&>;
+    { os.flush() } -> chainable<T&>;
+    { os << str } -> chainable<T&>;
+  };
+  template<typename T, typename Os>
+  requires(stream<Os>)
+  auto make_streamable(T const& e, Os& os)
+  {
+    if constexpr (requires { os << e; }) return e;
+    else if constexpr (requires { as_streamable(e); }) return as_streamable(e);
+    else return "(unknown)";
+  }
+}
 namespace kumi
 {
   struct str
@@ -79,8 +114,7 @@ namespace kumi
       return T{data_, size_};
     }
     KUMI_ABI friend constexpr auto operator<=>(str const&, str const&) noexcept = default;
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, str const& s) noexcept
+    template<_::stream Os> friend auto& operator<<(Os& os, str const& s) noexcept
     {
       os << '\'';
       for (std::size_t i = 0; i < s.size(); ++i) os << s.data_[i];
@@ -108,29 +142,14 @@ namespace kumi
     return str{that.t};
   };
 }
-#include <iosfwd>
 namespace kumi
 {
   struct unit
   {
     KUMI_ABI friend constexpr auto operator<=>(unit, unit) noexcept = default;
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, unit) noexcept
-    {
-      return os << '\'' << "none" << '\'';
-    }
+    template<_::stream Os> friend auto& operator<<(Os& os, unit) noexcept { return os << '\'' << "none" << '\''; }
   };
   inline constexpr unit none = {};
-}
-#include <iosfwd>
-namespace kumi::_
-{
-  template<typename T> auto make_streamable(T const& e)
-  {
-    if constexpr (requires(std::ostream& os) { os << e; }) return e;
-    else if constexpr (requires { as_streamable(e); }) return as_streamable(e);
-    else return "(unknown)";
-  }
 }
 namespace kumi
 {
@@ -140,11 +159,9 @@ namespace kumi
     T value;
     static constexpr auto name = ID;
     static constexpr bool is_field_capture = true;
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os,
-                                                         field_capture const& w) noexcept
+    template<_::stream Os> friend auto& operator<<(Os& os, field_capture const& w) noexcept
     {
-      return os << ID << " : " << _::make_streamable(w.value);
+      return os << ID << " : " << _::make_streamable(w.value, os);
     }
   };
   namespace _
@@ -214,7 +231,6 @@ namespace kumi
     template<typename U, typename T> using field_cast_t = typename field_cast<U, T>::type;
   }
 }
-#include <iosfwd>
 #include <cstddef>
 #include <utility>
 namespace kumi::_
@@ -293,20 +309,6 @@ namespace kumi::_
 #include <cstddef>
 #include <utility>
 #include <concepts>
-#if defined(__ANDROID__) || defined(__APPLE__)
-#include <type_traits>
-namespace kumi
-{
-  template<typename From, typename To>
-  concept convertible_to = std::is_convertible_v<From, To> && requires { static_cast<To>(std::declval<From>()); };
-}
-#else
-#include <concepts>
-namespace kumi
-{
-  using std::convertible_to;
-}
-#endif
 #include <cstddef>
 #include <type_traits>
 #include <utility>
@@ -1246,9 +1248,7 @@ namespace kumi
     {
       return i.get_index<I>();
     }
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os,
-                                                         indexes_t const& i) noexcept
+    template<_::stream Os> friend auto& operator<<(Os& os, indexes_t const& i) noexcept
     {
       os << "( ";
       [&]<std::size_t... I>(std::index_sequence<I...>) {
@@ -1505,7 +1505,6 @@ namespace kumi
 namespace kumi
 {
 }
-#include <iosfwd>
 #include <type_traits>
 namespace kumi
 {
@@ -1692,16 +1691,6 @@ namespace kumi
       return kumi::apply(KUMI_FWD(f), static_cast<tuple&&>(*this));
     }
 #endif
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, tuple const& t) noexcept
-    {
-      os << "( ";
-      [&]<std::size_t... I>(std::index_sequence<I...>) {
-        ((os << _::make_streamable(t[index<I>]) << " "), ...);
-      }(std::make_index_sequence<size_v<decltype(t)>>{});
-      os << ')';
-      return os;
-    }
   };
   template<> struct tuple<>
   {
@@ -1711,12 +1700,22 @@ namespace kumi
     static constexpr auto empty() noexcept { return true; }
     static constexpr auto names() noexcept { return tuple{}; }
     KUMI_ABI friend constexpr auto operator<=>(tuple<>, tuple<>) noexcept = default;
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, tuple<>) noexcept
-    {
-      return os << "()";
-    }
   };
+  template<typename Os, product_type T>
+  requires(_::stream<Os>)
+  auto& operator<<(Os& os, T const& t) noexcept
+  {
+    if constexpr (sized_product_type<T, 0>) os << "()";
+    else
+    {
+      os << "( ";
+      [&]<std::size_t... I>(std::index_sequence<I...>) {
+        ((os << _::make_streamable(get<I>(t), os) << " "), ...);
+      }(std::make_index_sequence<size_v<T>>{});
+      os << ')';
+    }
+    return os;
+  }
   template<typename... Ts> KUMI_CUDA tuple(Ts&&...) -> tuple<std::unwrap_ref_decay_t<Ts>...>;
   template<typename... Ts> [[nodiscard]] KUMI_ABI constexpr auto tie(Ts&... ts) -> tuple<Ts&...>
   {
@@ -1925,17 +1924,6 @@ namespace kumi
     {
       return !(self == other);
     }
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os,
-                                                         record const& t) noexcept
-    {
-      os << "( ";
-      [&]<std::size_t... I>(std::index_sequence<I...>) {
-        ((os << t[index<I>] << " "), ...);
-      }(std::make_index_sequence<size_v<decltype(t)>>{});
-      os << ')';
-      return os;
-    }
   };
   template<> struct record<>
   {
@@ -1946,11 +1934,6 @@ namespace kumi
     static constexpr auto names() noexcept { return tuple{}; }
     static constexpr auto values() noexcept { return tuple{}; }
     KUMI_ABI friend constexpr auto operator<=>(record<>, record<>) noexcept = default;
-    template<typename CharT, typename Traits>
-    friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, record<>) noexcept
-    {
-      return os << "()";
-    }
   };
   template<typename... Ts> KUMI_CUDA record(Ts&&...) -> record<std::unwrap_ref_decay_t<Ts>...>;
   template<str... Fields, typename... Ts>
