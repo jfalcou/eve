@@ -39,7 +39,4 @@ namespace eve
 
   template<typename I, typename T>
   concept index_compatible_values = integral_value<I> && floating_value<T> && size_compatible_values<I, T>;
-
-  template<typename T, typename U>
-  concept compatible_arithmetic_values = scalar_value<T> || scalar_value<U> || std::same_as<T, U>;
 }
