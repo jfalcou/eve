@@ -80,17 +80,14 @@ using i32_x4    = kumi::tuple<std::int32_t, std::int32_t, std::int32_t, std::int
 using i32_x2_x2 = kumi::tuple<i32_x2, i32_x2>;
 
 struct product : i32_u32_f64 {};
-template<>              struct eve::is_product_type<product> : std::true_type {};
 template<>              struct std::tuple_size<product>      : std::tuple_size<i32_u32_f64> {};
 template<std::size_t I> struct std::tuple_element<I,product> : std::tuple_element<I, i32_u32_f64> {};
 
 struct smaller_product : i32_i32_i32 {};
-template<>              struct eve::is_product_type<smaller_product> : std::true_type {};
 template<>              struct std::tuple_size<smaller_product>      : std::tuple_size<i32_i32_i32> {};
 template<std::size_t I> struct std::tuple_element<I,smaller_product> : std::tuple_element<I, i32_i32_i32> {};
 
 struct point : i32_x2 {};
-template<>              struct eve::is_product_type<point> : std::true_type {};
 template<>              struct std::tuple_size<point>      : std::tuple_size<i32_x2> {};
 template<std::size_t I> struct std::tuple_element<I,point> : std::tuple_element<I, i32_x2> {};
 
@@ -98,7 +95,6 @@ using point_x2 = kumi::tuple<point, point>;
 
 struct line : point_x2 {};
 
-template<>              struct eve::is_product_type<line> : std::true_type {};
 template<>              struct std::tuple_size<line>      : std::tuple_size<point_x2> {};
 template<std::size_t I> struct std::tuple_element<I,line> : std::tuple_element<I, point_x2> {};
 

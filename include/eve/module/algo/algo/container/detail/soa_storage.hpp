@@ -45,7 +45,6 @@ namespace eve::algo::detail
   template<eve::product_type Type, eve::simd_allocator Allocator>
   struct soa_storage
   {
-    using is_product_type = void;
     using value_type      = Type;
     using byte_type       = std::byte;
     using flat_type       = kumi::result::flatten_all_t<Type>;

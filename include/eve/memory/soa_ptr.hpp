@@ -33,9 +33,6 @@ namespace eve
     using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
     using tuple_type = kumi::tuple<Ptrs...>;
 
-    // product type
-    using is_product_type = void;
-
     template <std::size_t idx, typename Self>
       requires std::same_as<std::remove_cvref_t<Self>, soa_ptr>
     friend decltype(auto) get(Self&& self)

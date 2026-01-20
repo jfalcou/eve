@@ -1130,10 +1130,6 @@ namespace eve
 //================================================================================================
 // Product type Support
 //================================================================================================
-template<typename T, typename N>
-struct kumi::is_product_type<eve::wide<T, N>> : kumi::is_product_type<T>
-{};
-
 template<std::size_t I, kumi::product_type T, typename N>
 struct std::tuple_element<I, eve::wide<T, N>>
     : std::tuple_element<I, typename eve::wide<T, N>::storage_type>

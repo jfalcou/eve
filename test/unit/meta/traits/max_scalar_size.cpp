@@ -20,7 +20,6 @@ TTS_CASE( "Check max_scalar_size on proper types" )
 
 struct not_literal : kumi::tuple<double,int>
 {
-  using is_product_type = void;
   not_literal(int n) : kumi::tuple<double,int>{6.98,n} {}
 };
 

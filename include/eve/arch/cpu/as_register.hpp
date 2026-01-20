@@ -57,7 +57,6 @@ namespace eve
     {
       static constexpr auto replication = Cardinal::value / expected_cardinal_v<Type>;
 
-      using is_product_type             = void;
       using cardinal_t                  = expected_cardinal_t<Type>;
       using value_type                  = as_wide_t<Type, cardinal_t>;
       using subvalue_type               = as_wide_t<Type, typename Cardinal::split_type>;
