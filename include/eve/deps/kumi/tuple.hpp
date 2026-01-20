@@ -1701,17 +1701,17 @@ namespace kumi
     static constexpr auto names() noexcept { return tuple{}; }
     KUMI_ABI friend constexpr auto operator<=>(tuple<>, tuple<>) noexcept = default;
   };
-  template<typename Os, product_type T>
+  template<typename Os, typename... Ts>
   requires(_::stream<Os>)
-  auto& operator<<(Os& os, T const& t) noexcept
+  auto& operator<<(Os& os, tuple<Ts...> const& t) noexcept
   {
-    if constexpr (sized_product_type<T, 0>) os << "()";
+    if constexpr (sizeof...(Ts) == 0) os << "()";
     else
     {
       os << "( ";
       [&]<std::size_t... I>(std::index_sequence<I...>) {
         ((os << _::make_streamable(get<I>(t), os) << " "), ...);
-      }(std::make_index_sequence<size_v<T>>{});
+      }(std::make_index_sequence<sizeof...(Ts)>{});
       os << ')';
     }
     return os;
@@ -1935,6 +1935,21 @@ namespace kumi
     static constexpr auto values() noexcept { return tuple{}; }
     KUMI_ABI friend constexpr auto operator<=>(record<>, record<>) noexcept = default;
   };
+  template<typename Os, typename... Ts>
+  requires(_::stream<Os>)
+  auto& operator<<(Os& os, record<Ts...> const& r) noexcept
+  {
+    if constexpr (sizeof...(Ts) == 0) os << "()";
+    else
+    {
+      os << "( ";
+      [&]<std::size_t... I>(std::index_sequence<I...>) {
+        ((os << _::make_streamable(get<I>(r), os) << " "), ...);
+      }(std::make_index_sequence<sizeof...(Ts)>{});
+      os << ')';
+    }
+    return os;
+  }
   template<typename... Ts> KUMI_CUDA record(Ts&&...) -> record<std::unwrap_ref_decay_t<Ts>...>;
   template<str... Fields, typename... Ts>
   requires(sizeof...(Fields) == sizeof...(Ts))
