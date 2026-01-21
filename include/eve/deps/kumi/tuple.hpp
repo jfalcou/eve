@@ -26,7 +26,7 @@ namespace kumi
 #include <cstddef>
 #if defined(_MSC_VER)
 #if _MSVC_LANG < 202002L
-#error "Kumi requires C++20 or higher. Use /std:c++20 or higher to enable C++20 features."
+#error "KUMI requires C++20 or higher. Use /std:c++20 or higher to enable C++20 features."
 #endif
 #else
 #if __cplusplus < 202002L
@@ -1274,83 +1274,6 @@ namespace kumi
     return []<typename T>(T const&) constexpr { return Pred<T>::value; };
   }
 }
-namespace kumi
-{
-  namespace _
-  {
-    template<typename T>
-    inline constexpr bool is_reference_wrapper_v =
-      !std::is_same_v<std::decay_t<typename std::unwrap_reference<T&&>::type>,
-                      typename std::unwrap_ref_decay<T&&>::type>;
-    template<typename T> struct apply_object_unwrap
-    {
-      using type = T&&;
-    };
-    template<typename T>
-    requires is_reference_wrapper_v<T>
-    struct apply_object_unwrap<T>
-    {
-      using type = typename std::remove_cvref_t<T>::type&;
-    };
-    template<typename T>
-    requires std::is_pointer_v<std::remove_cvref_t<T>>
-    struct apply_object_unwrap<T>
-    {
-      using type = std::remove_pointer_t<std::remove_cvref_t<T>>&;
-    };
-    template<typename T> using apply_object_unwrap_t = typename apply_object_unwrap<T>::type;
-  }
-  template<typename Function, product_type Tuple>
-  KUMI_ABI constexpr decltype(auto) apply(Function&& f, Tuple&& t)
-    noexcept(_::supports_nothrow_apply<Function&&, Tuple&&>)
-  requires _::supports_apply<Function, Tuple>
-  {
-    if constexpr (sized_product_type<Tuple, 0>) return KUMI_FWD(f)();
-    else if constexpr (record_type<Tuple>) return apply(KUMI_FWD(f), KUMI_FWD(t).values());
-    else if constexpr (std::is_member_pointer_v<std::decay_t<Function>>)
-      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto) {
-        auto&& w = [](auto&& y) -> decltype(auto) {
-          if constexpr (_::is_reference_wrapper_v<decltype(y)>) return y.get();
-          else if constexpr (std::is_pointer_v<std::remove_cvref_t<decltype(y)>>) return *y;
-          else return KUMI_FWD(y);
-        }(get<0>(KUMI_FWD(t)));
-        if constexpr (std::is_member_object_pointer_v<std::remove_cvref_t<decltype(f)>>) return KUMI_FWD(w).*f;
-        else return (KUMI_FWD(w).*f)(get<I + 1>(KUMI_FWD(t))...);
-      }(std::make_index_sequence<size<Tuple>::value - 1>());
-    else
-      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto) {
-        return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
-      }(std::make_index_sequence<size<Tuple>::value>());
-  }
-  namespace result
-  {
-    template<typename Function, product_type Tuple> struct apply
-    {
-      using type = decltype(kumi::apply(std::declval<Function>(), std::declval<Tuple>()));
-    };
-    template<typename Function, product_type Tuple> using apply_t = typename apply<Function, Tuple>::type;
-  }
-  namespace _
-  {
-    template<typename Function, record_type Record>
-    KUMI_ABI constexpr decltype(auto) apply_field(Function&& f, Record&& t)
-    {
-      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto) {
-        return KUMI_FWD(f)(get<I>(KUMI_FWD(t))...);
-      }(std::make_index_sequence<size<Record>::value>());
-      ;
-    }
-    namespace result
-    {
-      template<typename Function, record_type Record> struct apply_field
-      {
-        using type = decltype(kumi::_::apply_field(std::declval<Function>(), std::declval<Record>()));
-      };
-      template<typename Function, record_type Record>
-      using apply_field_t = typename apply_field<Function, Record>::type;
-    }
-  }
-}
 #include <iosfwd>
 namespace kumi
 {
@@ -1377,6 +1300,43 @@ namespace kumi
     }
   };
   inline constexpr unit none = {};
+}
+namespace kumi
+{
+  namespace _
+  {
+    template<typename T>
+    inline constexpr bool is_reference_wrapper_v =
+      !std::is_same_v<std::decay_t<typename std::unwrap_reference<T&&>::type>,
+                      typename std::unwrap_ref_decay<T&&>::type>;
+    template<typename C, typename P, typename O, typename... Ts>
+    KUMI_ABI constexpr decltype(auto) invoke_memptr(P C::* member, O&& o, Ts&&... ts)
+    {
+      using callable_t = P C::*;
+      auto&& ptr = [](auto&& obj) -> decltype(auto) {
+        using T = std::remove_cvref_t<decltype(obj)>;
+        if constexpr (_::is_reference_wrapper_v<T>) return obj.get();
+        else if constexpr (std::is_pointer_v<T>) return *KUMI_FWD(obj);
+        else return KUMI_FWD(obj);
+      }(KUMI_FWD(o));
+      if constexpr (std::is_member_object_pointer_v<callable_t>) return KUMI_FWD(ptr).*member;
+      else return (KUMI_FWD(ptr).*member)(KUMI_FWD(ts)...);
+    };
+  }
+  template<typename C, typename... Ts>
+  KUMI_ABI constexpr decltype(auto) invoke(C&& c, Ts&&... ts) noexcept(std::is_nothrow_invocable<C, Ts...>::value)
+  requires(std::is_invocable<C, Ts...>::value)
+  {
+    if constexpr (std::is_member_pointer_v<std::decay_t<C>>) return _::invoke_memptr(c, KUMI_FWD(ts)...);
+    else return KUMI_FWD(c)(KUMI_FWD(ts)...);
+  };
+  template<typename R, typename C, typename... Ts>
+  KUMI_ABI constexpr R invoke_r(C&& c, Ts&&... ts) noexcept(std::is_nothrow_invocable_r<R, C, Ts...>::value)
+  requires(std::is_invocable_r<R, C, Ts...>::value)
+  {
+    if constexpr (std::is_void_v<R>) invoke(KUMI_FWD(c), KUMI_FWD(ts)...);
+    else return invoke(KUMI_FWD(c), KUMI_FWD(ts)...);
+  };
 }
 #include <type_traits>
 #include <utility>
@@ -1722,34 +1682,6 @@ namespace kumi
     {
       return !(lhs < rhs);
     }
-    template<typename Function>
-    [[deprecated("Use apply() instead")]] KUMI_ABI constexpr auto operator()(Function&& f) const& noexcept(
-      noexcept(kumi::apply(KUMI_FWD(f), *this))) -> decltype(kumi::apply(KUMI_FWD(f), *this))
-    {
-      return kumi::apply(KUMI_FWD(f), *this);
-    }
-#if !defined(KUMI_DOXYGEN_INVOKED)
-    template<typename Function>
-    [[deprecated("Use apply() instead")]] KUMI_ABI constexpr auto operator()(Function&& f) & noexcept(
-      noexcept(kumi::apply(KUMI_FWD(f), *this))) -> decltype(kumi::apply(KUMI_FWD(f), *this))
-    {
-      return kumi::apply(KUMI_FWD(f), *this);
-    }
-    template<typename Function>
-    [[deprecated("Use apply() instead")]] KUMI_ABI constexpr auto operator()(Function&& f) const&& noexcept(
-      noexcept(kumi::apply(KUMI_FWD(f), static_cast<tuple const&&>(*this))))
-      -> decltype(kumi::apply(KUMI_FWD(f), static_cast<tuple const&&>(*this)))
-    {
-      return kumi::apply(KUMI_FWD(f), static_cast<tuple const&&>(*this));
-    }
-    template<typename Function>
-    [[deprecated("Use apply() instead")]] KUMI_ABI constexpr auto operator()(Function&& f) && noexcept(
-      noexcept(kumi::apply(KUMI_FWD(f), static_cast<tuple&&>(*this))))
-      -> decltype(kumi::apply(KUMI_FWD(f), static_cast<tuple&&>(*this)))
-    {
-      return kumi::apply(KUMI_FWD(f), static_cast<tuple&&>(*this));
-    }
-#endif
     template<typename CharT, typename Traits>
     friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, tuple const& t) noexcept
     {
@@ -1800,9 +1732,11 @@ namespace kumi
   {
     return {KUMI_FWD(ts)...};
   }
-  template<product_type Type> [[nodiscard]] KUMI_ABI constexpr auto to_ref(Type&& t)
+  template<product_type T> [[nodiscard]] KUMI_ABI constexpr auto to_ref(T&& t)
   {
-    return apply([](auto&&... elems) { return kumi::forward_as_tuple(KUMI_FWD(elems)...); }, KUMI_FWD(t));
+    return [&]<std::size_t... I>(std::index_sequence<I...>) {
+      return kumi::forward_as_tuple(get<I>(KUMI_FWD(t))...);
+    }(std::make_index_sequence<size_v<T>>{});
   }
   template<std::size_t I, typename... Ts>
   requires(I < sizeof...(Ts))
@@ -1898,7 +1832,7 @@ namespace kumi
 namespace kumi
 {
   template<typename... Ts>
-  requires((entirely_uniquely_named<Ts...>))
+  requires(entirely_uniquely_named<Ts...>)
   struct record<Ts...>
   {
     using is_record_type = void;
@@ -2052,13 +1986,11 @@ namespace kumi
   {
     return {KUMI_FWD(ts)...};
   }
-  template<record_type Type> [[nodiscard]] KUMI_ABI constexpr auto to_ref(Type&& r)
+  template<record_type R> [[nodiscard]] KUMI_ABI constexpr auto to_ref(R&& r)
   {
-    return _::apply_field(
-      [](auto&&... elems) {
-        return kumi::forward_as_record<name_of(as<decltype(elems)>{})...>(field_value_of(KUMI_FWD(elems))...);
-      },
-      KUMI_FWD(r));
+    return [&]<std::size_t... I>(std::index_sequence<I...>) {
+      return kumi::forward_as_record<name_of(as<element_t<I, R>>{})...>(field_value_of(get<I>(KUMI_FWD(r)))...);
+    }(std::make_index_sequence<size_v<R>>{});
   }
   template<std::size_t I, typename... Ts>
   requires(I < sizeof...(Ts))
@@ -2158,6 +2090,48 @@ namespace kumi
     };
     template<product_type T> using members_of_t = typename members_of<T>::type;
     template<product_type T> using values_of_t = typename values_of<T>::type;
+  }
+}
+namespace kumi
+{
+  template<typename Function, product_type T>
+  KUMI_ABI constexpr decltype(auto) apply(Function&& f, T&& t) noexcept(_::supports_nothrow_apply<Function&&, T&&>)
+  requires _::supports_apply<Function, T>
+  {
+    if constexpr (sized_product_type<T, 0>) return invoke(KUMI_FWD(f));
+    else if constexpr (record_type<T>) return apply(KUMI_FWD(f), values_of(KUMI_FWD(t)));
+    else
+      return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto) {
+        return invoke(KUMI_FWD(f), get<I>(KUMI_FWD(t))...);
+      }(std::make_index_sequence<size_v<T>>{});
+  }
+  namespace result
+  {
+    template<typename Function, product_type T> struct apply
+    {
+      using type = decltype(kumi::apply(std::declval<Function>(), std::declval<T>()));
+    };
+    template<typename Function, product_type T> using apply_t = typename apply<Function, T>::type;
+  }
+  namespace _
+  {
+    template<typename Function, record_type R> KUMI_ABI constexpr decltype(auto) apply_field(Function&& f, R&& t)
+    {
+      if constexpr (sized_product_type<R, 0>) return invoke(KUMI_FWD(f));
+      else
+        return [&]<std::size_t... I>(std::index_sequence<I...>) -> decltype(auto) {
+          return invoke(KUMI_FWD(f), get<I>(KUMI_FWD(t))...);
+        }(std::make_index_sequence<size_v<R>>{});
+      ;
+    }
+    namespace result
+    {
+      template<typename Function, record_type R> struct apply_field
+      {
+        using type = decltype(kumi::_::apply_field(std::declval<Function>(), std::declval<R>()));
+      };
+      template<typename Function, record_type R> using apply_field_t = typename apply_field<Function, R>::type;
+    }
   }
 }
 namespace kumi
@@ -2518,7 +2492,7 @@ namespace kumi
         constexpr auto fields = members_of(as<Tuple>{});
         [[maybe_unused]] auto call = [&]<typename M>(M) {
           constexpr auto field = get<M::value>(fields);
-          f(get<field>(KUMI_FWD(t)), get<field>(KUMI_FWD(ts))...);
+          invoke(f, get<field>(KUMI_FWD(t)), get<field>(KUMI_FWD(ts))...);
         };
         (call(std::integral_constant<std::size_t, I>{}), ...);
       }(std::make_index_sequence<size_v<Tuple>>{});
@@ -2527,7 +2501,7 @@ namespace kumi
     {
       [&]<std::size_t... I>(std::index_sequence<I...>) {
         [[maybe_unused]] auto call = [&]<typename M>(M) {
-          f(get<M::value>(KUMI_FWD(t)), get<M::value>(KUMI_FWD(ts))...);
+          invoke(f, get<M::value>(KUMI_FWD(t)), get<M::value>(KUMI_FWD(ts))...);
         };
         (call(std::integral_constant<std::size_t, I>{}), ...);
       }(std::make_index_sequence<size<Tuple>::value>());
@@ -2568,14 +2542,15 @@ namespace kumi
 {
   template<typename Pred, product_type Tuple> [[nodiscard]] KUMI_ABI constexpr auto locate(Tuple&& t, Pred p) noexcept
   {
-    return kumi::apply(
-      [&](auto&&... m) {
-        bool checks[] = {p(m)...};
+    if constexpr (sized_product_type<Tuple, 0>) return 0;
+    else if constexpr (record_type<Tuple>) return locate(values_of(KUMI_FWD(t)), p);
+    else
+      return [&]<std::size_t... I>(std::index_sequence<I...>) {
+        bool checks[] = {invoke(p, get<I>(KUMI_FWD(t)))...};
         for (std::size_t i = 0; i < size_v<Tuple>; ++i)
           if (checks[i]) return i;
         return size_v<Tuple>;
-      },
-      KUMI_FWD(t));
+      }(std::make_index_sequence<size_v<Tuple>>{});
   }
 }
 namespace kumi
@@ -2620,7 +2595,7 @@ namespace kumi
           return cat(v_or_r(get<I>(KUMI_FWD(t)))...);
         }(std::make_index_sequence<size_v<T>>{});
     }
-    template<auto Prefix, typename T, typename F> KUMI_ABI constexpr auto flat_map(T&& t, F&& f)
+    template<auto Prefix, typename T, typename F> KUMI_ABI constexpr auto flat_map(T&& t, F f)
     {
       if constexpr (sized_product_type<T, 0>) return KUMI_FWD(t);
       else
@@ -2632,8 +2607,8 @@ namespace kumi
               else return concatenate_str<Prefix, name_of(as<V>{})>();
             }();
             if constexpr (record_type<kumi::result::field_value_of_t<V>>)
-              return flat_map<name>(field_value_of(KUMI_FWD(v)), KUMI_FWD(f));
-            else return record{field<name> = KUMI_FWD(f)(field_value_of(v))};
+              return flat_map<name>(field_value_of(KUMI_FWD(v)), f);
+            else return record{field<name> = invoke(f, field_value_of(v))};
           };
           return cat(v_or_r(get<I>(KUMI_FWD(t)))...);
         }(std::make_index_sequence<size_v<T>>{});
@@ -2645,32 +2620,28 @@ namespace kumi
     else if constexpr (record_type<T>) return _::flat_one(KUMI_FWD(t));
     else
     {
-      return kumi::apply(
-        [](auto&&... m) {
-          auto v_or_t = []<typename V>(V&& v) {
-            if constexpr (product_type<V>) return KUMI_FWD(v);
-            else return kumi::tuple{KUMI_FWD(v)};
-          };
-          return cat(v_or_t(KUMI_FWD(m))...);
-        },
-        KUMI_FWD(t));
+      return [&]<std::size_t... I>(std::index_sequence<I...>) {
+        auto v_or_t = []<typename V>(V&& v) {
+          if constexpr (product_type<V>) return KUMI_FWD(v);
+          else return kumi::tuple{KUMI_FWD(v)};
+        };
+        return cat(v_or_t(get<I>(KUMI_FWD(t)))...);
+      }(std::make_index_sequence<size_v<T>>{});
     }
   }
-  template<product_type T, typename Func> [[nodiscard]] KUMI_ABI constexpr auto flatten_all(T&& t, Func&& f)
+  template<product_type T, typename Func> [[nodiscard]] KUMI_ABI constexpr auto flatten_all(T&& t, Func f)
   {
     if constexpr (sized_product_type<T, 0>) return t;
     else if constexpr (record_type<T>) return _::flat_map<none>(KUMI_FWD(t), KUMI_FWD(f));
     else
     {
-      return kumi::apply(
-        [&](auto&&... m) {
-          auto v_or_t = [&]<typename V>(V&& v) {
-            if constexpr (product_type<V>) return flatten_all(KUMI_FWD(v), KUMI_FWD(f));
-            else return kumi::tuple{KUMI_FWD(f)(v)};
-          };
-          return cat(v_or_t(KUMI_FWD(m))...);
-        },
-        KUMI_FWD(t));
+      return [&]<std::size_t... I>(std::index_sequence<I...>) {
+        auto v_or_t = [&]<typename V>(V&& v) {
+          if constexpr (product_type<V>) return flatten_all(KUMI_FWD(v), f);
+          else return tuple{invoke(f, v)};
+        };
+        return cat(v_or_t(get<I>(KUMI_FWD(t)))...);
+      }(std::make_index_sequence<size_v<T>>{});
     }
   }
   template<product_type T> [[nodiscard]] KUMI_ABI constexpr auto flatten_all(T&& t)
@@ -2679,15 +2650,13 @@ namespace kumi
     else if constexpr (record_type<T>) return _::flat<none>(KUMI_FWD(t));
     else
     {
-      return kumi::apply(
-        [](auto&&... m) {
-          auto v_or_t = []<typename V>(V&& v) {
-            if constexpr (product_type<V>) return flatten_all(KUMI_FWD(v));
-            else return kumi::tuple{KUMI_FWD(v)};
-          };
-          return cat(v_or_t(KUMI_FWD(m))...);
-        },
-        KUMI_FWD(t));
+      return [&]<std::size_t... I>(std::index_sequence<I...>) {
+        auto v_or_t = []<typename V>(V&& v) {
+          if constexpr (product_type<V>) return flatten_all(KUMI_FWD(v));
+          else return kumi::tuple{KUMI_FWD(v)};
+        };
+        return cat(v_or_t(get<I>(KUMI_FWD(t)))...);
+      }(std::make_index_sequence<size_v<T>>{});
     }
   }
   namespace result
@@ -2732,7 +2701,7 @@ namespace kumi
   template<std::size_t N, typename Function> [[nodiscard]] KUMI_ABI constexpr auto generate(Function const& f) noexcept
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>) {
-      return kumi::tuple{f(index<I>)...};
+      return kumi::tuple{invoke(f, index<I>)...};
     }(std::make_index_sequence<N>{});
   }
   template<std::size_t N, typename T> [[nodiscard]] KUMI_ABI constexpr auto iota(T v) noexcept
@@ -2770,11 +2739,11 @@ namespace kumi
       T value;
       template<typename W> KUMI_ABI friend constexpr decltype(auto) operator>>(foldable&& x, foldable<F, W>&& y)
       {
-        return _::foldable{x.func, x.func(x.value, y.value)};
+        return _::foldable{x.func, invoke(x.func, x.value, y.value)};
       }
       template<typename W> KUMI_ABI friend constexpr decltype(auto) operator<<(foldable&& x, foldable<F, W>&& y)
       {
-        return _::foldable{x.func, x.func(x.value, y.value)};
+        return _::foldable{x.func, invoke(x.func, x.value, y.value)};
       }
     };
     template<class F, class T> foldable(F const&, T&&) -> foldable<F, T>;
@@ -2787,8 +2756,8 @@ namespace kumi
     else if constexpr (record_type<S1>)
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
-        return (_::foldable{sum, prod(get<name_of(as<element_t<I, S1>>{})>(KUMI_FWD(s1)),
-                                      get<name_of(as<element_t<I, S1>>{})>(KUMI_FWD(s2)))} >>
+        return (_::foldable{sum, invoke(prod, get<name_of(as<element_t<I, S1>>{})>(KUMI_FWD(s1)),
+                                        get<name_of(as<element_t<I, S1>>{})>(KUMI_FWD(s2)))} >>
                 ... >> _::foldable{sum, init})
           .value;
       }(std::make_index_sequence<size<S1>::value>());
@@ -2796,7 +2765,8 @@ namespace kumi
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
-        return (_::foldable{sum, prod(get<I>(KUMI_FWD(s1)), get<I>(KUMI_FWD(s2)))} >> ... >> _::foldable{sum, init})
+        return (_::foldable{sum, invoke(prod, get<I>(KUMI_FWD(s1)), get<I>(KUMI_FWD(s2)))} >> ... >>
+                _::foldable{sum, init})
           .value;
       }(std::make_index_sequence<size<S1>::value>());
     }
@@ -2850,9 +2820,9 @@ namespace kumi
         if constexpr (record_type<Tuple>)
         {
           constexpr auto field = name_of(as<element_t<N, Tuple>>{});
-          return field_name<field>{} = f(get<field>(args)...);
+          return field_name<field>{} = invoke(f, get<field>(args)...);
         }
-        else return f(get<N>(KUMI_FWD(args))...);
+        else return invoke(f, get<N>(KUMI_FWD(args))...);
       };
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
         return _::builder<Tuple>::make(call(index<I>, KUMI_FWD(t0), KUMI_FWD(others)...)...);
@@ -2876,7 +2846,7 @@ namespace kumi
     else
     {
       auto const call = [&]<std::size_t N, typename... Ts>(index_t<N> idx, Ts&&... args) {
-        return f(idx, get<N>(KUMI_FWD(args))...);
+        return invoke(f, idx, get<N>(KUMI_FWD(args))...);
       };
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
         return _::builder<Tuple>::make(call(index<I>, KUMI_FWD(t0), KUMI_FWD(others)...)...);
@@ -2901,7 +2871,7 @@ namespace kumi
     {
       auto const call = [&]<std::size_t N, typename... Ts>(index_t<N>, Ts&&... args) {
         constexpr auto field = name_of(as<element_t<N, Tuple>>{});
-        return field_name<field>{} = f(field, (get<field>(args))...);
+        return field_name<field>{} = invoke(f, field, (get<field>(args))...);
       };
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
         return _::builder<Tuple>::make(call(index<I>, KUMI_FWD(t0), KUMI_FWD(others)...)...);
@@ -3053,12 +3023,12 @@ namespace kumi
   template<product_type T, typename F> [[nodiscard]] KUMI_ABI constexpr auto max(T&& t, F f) noexcept
   {
     if constexpr (record_type<T>) return max(values_of(KUMI_FWD(t)), f);
-    else if constexpr (sized_product_type<T, 1>) return f(get<0>(KUMI_FWD(t)));
+    else if constexpr (sized_product_type<T, 1>) return invoke(f, get<0>(KUMI_FWD(t)));
     else
     {
       auto base = f(get<0>(KUMI_FWD(t)));
-      return kumi::fold_left([f]<typename U>(auto cur, U const& u) { return cur > f(u) ? cur : f(u); }, KUMI_FWD(t),
-                             base);
+      return kumi::fold_left([f]<typename U>(auto cur, U const& u) { return cur > invoke(f, u) ? cur : invoke(f, u); },
+                             KUMI_FWD(t), base);
     }
   }
   template<product_type T, typename F> [[nodiscard]] KUMI_ABI constexpr auto max_flat(T&& t, F f) noexcept
@@ -3096,12 +3066,12 @@ namespace kumi
   template<product_type T, typename F> [[nodiscard]] KUMI_ABI constexpr auto min(T&& t, F f) noexcept
   {
     if constexpr (record_type<T>) return min(values_of(KUMI_FWD(t)), f);
-    else if constexpr (sized_product_type<T, 1>) return f(get<0>(KUMI_FWD(t)));
+    else if constexpr (sized_product_type<T, 1>) return invoke(f, get<0>(KUMI_FWD(t)));
     else
     {
       auto base = f(get<0>(KUMI_FWD(t)));
-      return kumi::fold_left([f]<typename U>(auto cur, U const& u) { return cur < f(u) ? cur : f(u); }, KUMI_FWD(t),
-                             base);
+      return kumi::fold_left([f]<typename U>(auto cur, U const& u) { return cur < invoke(f, u) ? cur : invoke(f, u); },
+                             KUMI_FWD(t), base);
     }
   }
   template<product_type T, typename F> [[nodiscard]] KUMI_ABI constexpr auto min_flat(T&& t, F f) noexcept
@@ -3210,8 +3180,8 @@ namespace kumi
   {
     if constexpr (record_type<T>) return all_of(values_of(KUMI_FWD(ts)), p);
     else if constexpr (sized_product_type<T, 0>) return true;
-    else if constexpr (sized_product_type<T, 1>) return p(get<0>(KUMI_FWD(ts)));
-    else return kumi::apply([&](auto&&... m) { return (p(m) && ...); }, KUMI_FWD(ts));
+    else if constexpr (sized_product_type<T, 1>) return invoke(p, get<0>(KUMI_FWD(ts)));
+    else return kumi::apply([&](auto&&... m) { return (invoke(p, m) && ...); }, KUMI_FWD(ts));
   }
   template<product_type T> [[nodiscard]] KUMI_ABI constexpr auto all_of(T&& ts) noexcept
   {
@@ -3224,8 +3194,8 @@ namespace kumi
   {
     if constexpr (record_type<T>) return any_of(values_of(KUMI_FWD(ts)), p);
     else if constexpr (sized_product_type<T, 0>) return true;
-    else if constexpr (sized_product_type<T, 1>) return p(get<0>(KUMI_FWD(ts)));
-    else return kumi::apply([&](auto&&... m) { return (p(m) || ...); }, KUMI_FWD(ts));
+    else if constexpr (sized_product_type<T, 1>) return invoke(p, get<0>(KUMI_FWD(ts)));
+    else return kumi::apply([&](auto&&... m) { return (invoke(p, m) || ...); }, KUMI_FWD(ts));
   }
   template<product_type T> [[nodiscard]] KUMI_ABI constexpr auto any_of(T&& ts) noexcept
   {
@@ -3247,7 +3217,7 @@ namespace kumi
     constexpr std::size_t o = 1ULL;
     constexpr std::size_t z = 0ULL;
     if constexpr (sized_product_type<T, 0>) return z;
-    else return kumi::apply([&](auto&&... m) { return ((p(m) ? o : z) + ... + z); }, KUMI_FWD(ts));
+    else return kumi::apply([&](auto&&... m) { return ((invoke(p, m) ? o : z) + ... + z); }, KUMI_FWD(ts));
   }
   template<product_type T> [[nodiscard]] KUMI_ABI constexpr std::size_t count(T&& ts) noexcept
   {
@@ -3370,18 +3340,18 @@ namespace kumi
     else return KUMI_FWD(m)(init, reduce(KUMI_FWD(m), KUMI_FWD(t)));
   }
   template<product_type T, monoid M, typename Function>
-  [[nodiscard]] KUMI_ABI constexpr auto map_reduce(Function&& f, M&& m, T&& t)
+  [[nodiscard]] KUMI_ABI constexpr auto map_reduce(Function f, M&& m, T&& t)
   {
-    if constexpr (record_type<T>) return map_reduce(KUMI_FWD(f), KUMI_FWD(m), values_of(KUMI_FWD(t)));
+    if constexpr (record_type<T>) return map_reduce(f, KUMI_FWD(m), values_of(KUMI_FWD(t)));
     else if constexpr (sized_product_type<T, 0>) return m.identity;
-    else if constexpr (sized_product_type<T, 1>) return KUMI_FWD(f)(get<0>(KUMI_FWD(t)));
+    else if constexpr (sized_product_type<T, 1>) return invoke(f, get<0>(KUMI_FWD(t)));
     else
     {
       constexpr auto pos = _::reducer<size_v<T>>();
       auto process = [&]<std::size_t I>(index_t<I>) {
         if constexpr (I < pos.count)
-          return KUMI_FWD(m)(KUMI_FWD(f)(get<pos.idx1[I]>(KUMI_FWD(t))), KUMI_FWD(f)(get<pos.idx2[I]>(KUMI_FWD(t))));
-        else return KUMI_FWD(f)(get<size_v<T> - 1>(KUMI_FWD(t)));
+          return KUMI_FWD(m)(invoke(f, get<pos.idx1[I]>(KUMI_FWD(t))), invoke(f, get<pos.idx2[I]>(KUMI_FWD(t))));
+        else return invoke(f, get<size_v<T> - 1>(KUMI_FWD(t)));
       };
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
         return reduce(KUMI_FWD(m), tuple{process(index<I>)...});
@@ -3389,10 +3359,10 @@ namespace kumi
     }
   }
   template<monoid M, product_type T, typename Function, typename Value>
-  [[nodiscard]] KUMI_ABI constexpr auto map_reduce(Function&& f, M&& m, T&& t, Value init)
+  [[nodiscard]] KUMI_ABI constexpr auto map_reduce(Function f, M&& m, T&& t, Value init)
   {
-    if constexpr (sized_product_type<T, 0>) return KUMI_FWD(f)(init);
-    else return KUMI_FWD(m)(KUMI_FWD(f)(init), map_reduce(KUMI_FWD(f), KUMI_FWD(m), KUMI_FWD(t)));
+    if constexpr (sized_product_type<T, 0>) return invoke(f, init);
+    else return KUMI_FWD(m)(invoke(f, init), map_reduce(f, KUMI_FWD(m), KUMI_FWD(t)));
   }
   template<product_type T, typename Value> [[nodiscard]] KUMI_ABI constexpr auto sum(T&& t, Value init)
   {
@@ -3595,24 +3565,25 @@ namespace kumi
       template<typename W> KUMI_ABI friend constexpr decltype(auto) operator>>(scannable&& x, scannable<F, W>&& y)
       {
         constexpr auto size = kumi::size_v<T> - 1;
-        return _::scannable{x.func, kumi::push_back(x.acc, x.func(kumi::get<size>(x.acc), y.acc))};
+        return _::scannable{x.func, kumi::push_back(x.acc, invoke(x.func, kumi::get<size>(x.acc), y.acc))};
       }
       template<typename W> KUMI_ABI friend constexpr decltype(auto) operator<<(scannable&& x, scannable<F, W>&& y)
       {
-        return _::scannable{x.func, kumi::push_front(x.acc, x.func(y.acc, kumi::get<0>(x.acc)))};
+        return _::scannable{x.func, kumi::push_front(x.acc, invoke(x.func, y.acc, kumi::get<0>(x.acc)))};
       }
     };
     template<class F, class T> scannable(F const&, T&&) -> scannable<F, T>;
   }
   template<typename Function, product_type T, typename Value>
-  [[nodiscard]] KUMI_ABI constexpr auto inclusive_scan_left(Function&& f, T&& t, Value init)
+  [[nodiscard]] KUMI_ABI constexpr auto inclusive_scan_left(Function f, T&& t, Value init)
   {
-    if constexpr (record_type<T>) return inclusive_scan_left(KUMI_FWD(f), values_of(KUMI_FWD(t)), init);
+    if constexpr (record_type<T>) return inclusive_scan_left(f, values_of(KUMI_FWD(t)), init);
     else if constexpr (sized_product_type<T, 0>) return tuple{};
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
-        return (_::scannable{f, tuple{f(init, get<0>(KUMI_FWD(t)))}} >> ... >> _::scannable{f, get<I + 1>(KUMI_FWD(t))})
+        return (_::scannable{f, tuple{invoke(f, init, get<0>(KUMI_FWD(t)))}} >> ... >>
+                _::scannable{f, get<I + 1>(KUMI_FWD(t))})
           .acc;
       }(std::make_index_sequence<size_v<T> - 1>());
     }
@@ -3625,9 +3596,9 @@ namespace kumi
     else return inclusive_scan_left(KUMI_FWD(m), KUMI_FWD(t), m.identity);
   }
   template<typename Function, product_type T, typename Value>
-  [[nodiscard]] KUMI_ABI constexpr auto exclusive_scan_left(Function&& f, T&& t, Value init)
+  [[nodiscard]] KUMI_ABI constexpr auto exclusive_scan_left(Function f, T&& t, Value init)
   {
-    if constexpr (record_type<T>) return exclusive_scan_left(KUMI_FWD(f), values_of(KUMI_FWD(t)), init);
+    if constexpr (record_type<T>) return exclusive_scan_left(f, values_of(KUMI_FWD(t)), init);
     else if constexpr (sized_product_type<T, 0>) return tuple{init};
     else
     {
@@ -3644,14 +3615,14 @@ namespace kumi
     else return exclusive_scan_left(KUMI_FWD(m), KUMI_FWD(t), m.identity);
   }
   template<typename Function, product_type T, typename Value>
-  [[nodiscard]] KUMI_ABI constexpr auto inclusive_scan_right(Function&& f, T&& t, Value init)
+  [[nodiscard]] KUMI_ABI constexpr auto inclusive_scan_right(Function f, T&& t, Value init)
   {
     if constexpr (record_type<T>) return inclusive_scan_right(KUMI_FWD(f), values_of(KUMI_FWD(t)), init);
     else if constexpr (sized_product_type<T, 0>) return tuple{};
     else
     {
       return [&]<std::size_t... I>(std::index_sequence<I...>) {
-        return (_::scannable{f, tuple{f(get<size_v<T> - 1>(KUMI_FWD(t)), init)}}
+        return (_::scannable{f, tuple{invoke(f, get<size_v<T> - 1>(KUMI_FWD(t)), init)}}
                 << ... << _::scannable{f, get<size_v<T> - 2 - I>(KUMI_FWD(t))})
           .acc;
       }(std::make_index_sequence<size_v<T> - 1>());
@@ -3665,7 +3636,7 @@ namespace kumi
     else return inclusive_scan_right(KUMI_FWD(m), KUMI_FWD(t), m.identity);
   }
   template<typename Function, product_type T, typename Value>
-  [[nodiscard]] KUMI_ABI constexpr auto exclusive_scan_right(Function&& f, T&& t, Value init)
+  [[nodiscard]] KUMI_ABI constexpr auto exclusive_scan_right(Function f, T&& t, Value init)
   {
     if constexpr (record_type<T>) return exclusive_scan_right(KUMI_FWD(f), values_of(KUMI_FWD(t)), init);
     else if constexpr (sized_product_type<T, 0>) return tuple{init};
