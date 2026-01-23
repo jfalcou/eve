@@ -33,9 +33,6 @@ std::ostream& operator << (std::ostream& os, vec3<T> const & v){
   return os;
 }
 
-// Opt-in for Product Type semantic
-template<typename T> struct kumi::is_product_type<vec3<T>> : std::true_type{};
-
 // Adapt as structured bindable type
 template<typename T>
 struct  std::tuple_size<vec3<T>> : std::integral_constant<std::size_t,3> {};

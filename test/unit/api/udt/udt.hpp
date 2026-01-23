@@ -44,7 +44,6 @@ namespace udt
 }
 
 // Opt-in for eve::product_type + adaptation
-template<>              struct eve::is_product_type<udt::grid2d>    : std::true_type {};
 template<>              struct std::tuple_size<udt::grid2d>         : std::integral_constant<std::size_t, 2> {};
 template<std::size_t I> struct std::tuple_element<I,udt::grid2d>    { using type = int; };
 

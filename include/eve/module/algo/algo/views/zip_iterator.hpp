@@ -143,9 +143,6 @@ namespace eve::algo::views
 
       static constexpr std::size_t main_iterator_idx = detail::main_iterator<Is...>();
 
-      // tuple opt in
-      using is_product_type = void;
-
       template<std::size_t idx, typename Self>
       requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
       friend decltype(auto) get(Self &&self) { return get<idx>(EVE_FWD(self).storage); }
