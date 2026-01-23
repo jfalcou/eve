@@ -13,7 +13,12 @@
 #include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/mul.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/next.hpp>
 
 namespace eve
 {

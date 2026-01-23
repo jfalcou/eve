@@ -14,7 +14,11 @@
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 
 namespace eve
 {

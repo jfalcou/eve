@@ -54,8 +54,8 @@ namespace eve::detail
                                 bit_cast(a1, as<r_t>{}),
                                 bit_cast(args, as<r_t>{})...);
 
-      auto s = eve::bit_and(head);
-      return call_butterfly_reduction(s, eve::bit_and).get(0);
+      auto s = bit_and(head);
+      return call_butterfly_reduction(s, bit_and).get(0);
     }
     else
     {

@@ -11,6 +11,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/concept/invocable.hpp>
 #include <eve/concept/substitute.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/add.hpp>
 
 namespace eve
 {

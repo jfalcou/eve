@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {

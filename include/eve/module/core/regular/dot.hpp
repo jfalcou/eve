@@ -9,6 +9,10 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/updown.hpp>
+#include <eve/module/core/regular/two_fma_approx.hpp>
+#include <eve/module/core/regular/mul.hpp>
 
 namespace eve
 {

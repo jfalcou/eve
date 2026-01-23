@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {

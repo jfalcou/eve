@@ -15,6 +15,8 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/maximum.hpp>
 #include <eve/module/core/regular/minimum.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
 
 namespace eve
 {

@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/traits/updown.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
 namespace eve

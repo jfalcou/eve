@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/detail/force_if_any.hpp>
 #include <eve/module/core/constant/inf.hpp>
