@@ -13,7 +13,7 @@
 
 #include <cstddef>
 #include <concepts>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {

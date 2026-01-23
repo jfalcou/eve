@@ -15,7 +15,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits.hpp>
 #include <type_traits>
-#include <ostream>
+#include <iosfwd>
 #include <compare>
 
 //==================================================================================================
@@ -78,7 +78,8 @@ namespace eve
     }
 
     //! Inserts a conditional expression with alternative into a output stream
-    friend std::ostream& operator<<(std::ostream& os, or_ const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, or_ const& c)
     {
       os << static_cast<C const&>(c);
       return os << " else ( " << c.alternative << " )";
@@ -117,7 +118,8 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
     //! Inserts a eve::if_ conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, if_ const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, if_ const& c)
     {
       return os << "if( " << c.condition_ << " )";
     }
@@ -173,7 +175,8 @@ namespace eve
     constexpr bool friend operator==(ignore_all_ const&, ignore_all_ const&) = default;
 
     //! Inserts a eve::ignore_all_ conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, ignore_all_ const&)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, ignore_all_ const&)
     {
       return os << "ignore_all";
     }
@@ -230,7 +233,8 @@ namespace eve
     constexpr bool friend operator==(ignore_none_ const&, ignore_none_ const&) = default;
 
     //! Inserts a eve::ignore_none_ conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, ignore_none_ const&)
     {
       return os << "ignore_none";
     }
@@ -301,7 +305,8 @@ namespace eve
     constexpr bool friend operator==(keep_first const&, keep_first const&) = default;
 
     //! Inserts a eve::keep_first conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, keep_first const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, keep_first const& c)
     {
       return os << "keep_first( " << c.count_ << " )";
     }
@@ -371,7 +376,8 @@ namespace eve
     constexpr bool friend operator==(ignore_last const&, ignore_last const&) = default;
 
     //! Inserts a eve::ignore_last conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, ignore_last const& c)
     {
       return os << "ignore_last( " << c.count_ << " )";
     }
@@ -440,7 +446,8 @@ namespace eve
     constexpr bool friend operator==(keep_last const&, keep_last const&) = default;
 
     //! Inserts a eve::keep_last conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, keep_last const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, keep_last const& c)
     {
       return os << "keep_last( " << c.count_ << " )";
     }
@@ -509,7 +516,8 @@ namespace eve
     constexpr bool friend operator==(ignore_first const&, ignore_first const&) = default;
 
     //! Inserts a eve::ignore_first conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, ignore_first const& c)
     {
       return os << "ignore_first( " << c.count_ << " )";
     }
@@ -578,7 +586,8 @@ namespace eve
     constexpr bool friend operator==(keep_between const&, keep_between const&) = default;
 
     //! Inserts a eve::keep_between conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, keep_between const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, keep_between const& c)
     {
       return os << "keep_between( " << c.begin_ << ", " << c.end_ << " )";
     }
@@ -648,7 +657,8 @@ namespace eve
     constexpr bool friend operator==(ignore_extrema const&, ignore_extrema const&) = default;
 
     //! Inserts a eve::ignore_extrema conditional expression into a output stream
-    friend std::ostream& operator<<(std::ostream& os, ignore_extrema const& c)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, ignore_extrema const& c)
     {
       return os << "ignore( first(" << c.first_count_ << "), last(" << c.last_count_ << ") )";
     }
