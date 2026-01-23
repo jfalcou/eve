@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_wides.hpp>
-#include <eve/detail/function/reduce.hpp>
+#include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/constant/allbits.hpp>
@@ -55,7 +55,7 @@ namespace eve::detail
                                 bit_cast(args, as<r_t>{})...);
 
       auto s = eve::bit_and(head);
-      return butterfly_reduction(s, eve::bit_and).get(0);
+      return call_butterfly_reduction(s, eve::bit_and).get(0);
     }
     else
     {

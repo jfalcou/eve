@@ -10,6 +10,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -49,7 +50,7 @@ namespace eve::detail
     auto m = opts[condition_key];
 
     auto wt = if_else(m, as_wide_as_t<A1, A0>{t}, v1_t{0});
-  
+
     if constexpr(std::is_unsigned_v<element_type_t<A1>>)
     {
       return eve::all( wt < Mx );

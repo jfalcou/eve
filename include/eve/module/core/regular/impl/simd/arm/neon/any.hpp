@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/arch/top_bits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>

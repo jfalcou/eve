@@ -8,6 +8,9 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/traits/overload/supports.hpp>
 
 namespace eve::detail
 {

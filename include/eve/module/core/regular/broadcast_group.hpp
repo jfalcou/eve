@@ -12,9 +12,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/pattern.hpp>
 
-#include <bit>
-#include <optional>
-
 namespace eve
 {
 //================================================================================================

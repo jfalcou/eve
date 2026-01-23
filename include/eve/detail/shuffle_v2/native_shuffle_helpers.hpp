@@ -9,7 +9,6 @@
 
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_fwd.hpp>
-#include <eve/wide.hpp>
 
 namespace eve::detail
 {

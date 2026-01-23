@@ -14,6 +14,7 @@
 #include <eve/module/core/constant/maxrepint.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/detail/modular.hpp>
 

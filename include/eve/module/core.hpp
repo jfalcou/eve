@@ -276,9 +276,9 @@
 //!
 //! @}
 //==================================================================================================
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/compress/core.hpp>
 #include <eve/module/core/constant/core.hpp>
-#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/core.hpp>
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/module/core/regular/core.hpp>

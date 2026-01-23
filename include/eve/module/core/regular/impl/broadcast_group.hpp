@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/pattern.hpp>

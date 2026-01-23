@@ -9,6 +9,7 @@
 
 #include <eve/concept/memory.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/ptr_translation.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_ptr.hpp>

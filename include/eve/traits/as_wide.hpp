@@ -11,7 +11,6 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
-#include <utility>
 
 namespace eve
 {

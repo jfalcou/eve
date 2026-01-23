@@ -23,6 +23,8 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/prev.hpp>
 //#include <eve/detail/function/sum.hpp>
 namespace eve::detail
 {

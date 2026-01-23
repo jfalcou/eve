@@ -12,6 +12,8 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/compress/compress.hpp>
+#include <eve/module/core/compress/detail/compress_callable.hpp>
 
 namespace eve
 {

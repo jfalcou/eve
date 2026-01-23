@@ -12,6 +12,7 @@
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/write.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::detail
 {
