@@ -12,8 +12,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/function/slice.hpp>
 
-#include <functional>
-
 namespace eve
 {
 
@@ -93,7 +91,7 @@ namespace eve
           return kumi::inner_product(t_types {},
                                      u_types {},
                                      true,
-                                     std::logical_and<> {},
+                                     [](auto a, auto b) { return a && b; },
                                      [](auto a, auto b) { return enabled_for(a, b); });
         }
       }
