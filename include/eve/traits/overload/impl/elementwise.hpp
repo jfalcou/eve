@@ -48,7 +48,6 @@ namespace eve
   struct elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
   {
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
-    using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
     template<typename Src, typename Tgt>
@@ -75,7 +74,7 @@ namespace eve
           static_assert ( has_implementation
                         , "[EVE] - Implementation for current logical callable cannot be called or is ambiguous"
                         );
-          return ignore{};
+          return detail::ignore{};
         }
       }
       else if constexpr (no_logicals)
@@ -88,7 +87,7 @@ namespace eve
           else                                     return e;
         };
 
-        constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))>;
+        constexpr bool is_callable = !std::same_as<detail::ignore, decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))>;
 
         if constexpr (is_callable)     return base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...);
         else
@@ -96,7 +95,7 @@ namespace eve
           constexpr bool is_convertible = requires{ func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...); };
 
           if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...);
-          else                         return ignore{};
+          else                         return detail::ignore{};
         }
       }
       else
@@ -107,7 +106,7 @@ namespace eve
         if constexpr(any_emulated)  return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
         else
         {
-          constexpr bool is_callable = !std::same_as<ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
+          constexpr bool is_callable = !std::same_as<detail::ignore, decltype(base_t::adapt_call(arch, opts, x, xs...))>;
 
           if constexpr(is_callable) return base_t::behavior(arch, opts, x, xs...);
           else                      return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
@@ -120,7 +119,7 @@ namespace eve
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
-        constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
+        constexpr bool supports_call = !std::same_as<detail::ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
         static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
         return adapt_call(arch, opts, x0, xs...);
       }
