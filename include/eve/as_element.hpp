@@ -9,6 +9,8 @@
 
 #include <eve/as.hpp>
 #include <eve/traits/element_type.hpp>
+#include <eve/traits/as_integer.hpp>
+#include <eve/traits/as_floating_point.hpp>
 
 namespace eve
 {

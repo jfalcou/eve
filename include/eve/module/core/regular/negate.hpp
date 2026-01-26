@@ -10,6 +10,10 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve
 {

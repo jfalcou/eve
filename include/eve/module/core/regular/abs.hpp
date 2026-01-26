@@ -8,7 +8,8 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/overload/supports.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
 namespace eve

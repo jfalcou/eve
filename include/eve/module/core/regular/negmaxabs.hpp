@@ -13,7 +13,6 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct negmaxabs_t : tuple_callable<negmaxabs_t, Options, numeric_option, pedantic_option, saturated_option>
   {

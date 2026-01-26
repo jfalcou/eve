@@ -26,6 +26,7 @@
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/shr.hpp>
 #include <eve/module/core/regular/rec.hpp>

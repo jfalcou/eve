@@ -12,7 +12,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/signnz.hpp>
 
-
 namespace eve
 {
   template<typename Options>

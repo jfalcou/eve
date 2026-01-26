@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/modular.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/traits/updown.hpp>
 
 namespace eve
 {

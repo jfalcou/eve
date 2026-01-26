@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-
+#include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/as_wide.hpp>
@@ -37,7 +37,7 @@ namespace eve
   };
 
   template <simd_value T>
-    requires product_type<element_type_t<T>>
+    requires kumi::product_type<element_type_t<T>>
   struct stack_buffer<T>
   {
     auto ptr()       { return kumi::apply([](auto& ...buff) { return soa_ptr{buff.ptr()... }; }, buffs); }

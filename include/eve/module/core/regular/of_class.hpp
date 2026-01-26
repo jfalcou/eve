@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <type_traits>
 #include <eve/module/core/detail/flags.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_eqmz.hpp>

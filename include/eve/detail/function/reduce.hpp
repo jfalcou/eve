@@ -34,4 +34,10 @@ namespace eve::detail
       }(std::make_index_sequence<depth>{});
     }
   }
+
+  template <simd_value Wide, typename Callable>
+  EVE_FORCEINLINE auto call_butterfly_reduction(Wide w, Callable f) noexcept
+  {
+    return butterfly_reduction(w, f);
+  }
 }

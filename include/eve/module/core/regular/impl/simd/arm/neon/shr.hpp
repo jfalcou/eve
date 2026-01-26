@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/module/core/regular/shl.hpp>
 
 namespace eve::detail
 {

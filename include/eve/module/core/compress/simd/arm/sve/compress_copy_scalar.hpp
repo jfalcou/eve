@@ -8,6 +8,9 @@
 #pragma once
 
 #include <eve/module/core/regular/logical_andnot.hpp>
+#include <eve/module/core/regular/write.hpp>
+#include <eve/module/core/regular/read.hpp>
+#include <eve/module/core/compress/detail/compress_callable.hpp>
 
 namespace eve::detail
 {

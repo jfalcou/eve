@@ -11,6 +11,10 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/dot.hpp>
+#include <eve/module/core/regular/average.hpp>
 
 namespace eve
 {

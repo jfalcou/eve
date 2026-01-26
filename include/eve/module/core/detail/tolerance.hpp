@@ -9,7 +9,6 @@
 
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/convert.hpp>
 
 namespace eve
 {

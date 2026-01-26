@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/minmax.hpp>
+#include <eve/module/core/regular/average.hpp>
 
 namespace eve
 {

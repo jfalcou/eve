@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core/compress/compress_store.hpp>
+#include <eve/module/core/regular/load.hpp>
 
 namespace eve
 {

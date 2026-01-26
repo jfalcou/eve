@@ -9,10 +9,13 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/traits/updown.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/sqr.hpp>
 
 namespace eve
 {
