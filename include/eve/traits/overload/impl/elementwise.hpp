@@ -11,6 +11,22 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/traits/overload/impl/strict_elementwise.hpp>
 
+namespace eve::detail
+{
+  template<typename Target>
+  struct local_converter_t
+  {
+    constexpr auto operator()(auto e) const
+    {
+      if constexpr (scalar_value<decltype(e)>) return static_cast<Target>(e);
+      else                                     return e;
+    }
+  };
+
+  template<typename Target>
+  inline constexpr local_converter_t<Target>  local_converter = {};
+}
+
 namespace eve
 {
   //====================================================================================================================
@@ -81,13 +97,11 @@ namespace eve
       {
         using cv_t  = common_value_t<T, Ts...>;
         using cve_t = element_type_t<cv_t>;
+        constexpr detail::local_converter_t<cve_t> s_cvt{};
 
-        constexpr auto s_cvt = [](auto e) {
-          if constexpr (scalar_value<decltype(e)>) return static_cast<cve_t>(e);
-          else                                     return e;
-        };
-
-        constexpr bool is_callable = !std::same_as<detail::ignore, decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))>;
+        constexpr bool is_callable = !std::same_as< detail::ignore
+                                                  , decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))
+                                                  >;
 
         if constexpr (is_callable)     return base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...);
         else
