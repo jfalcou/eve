@@ -9,7 +9,7 @@
 
 #include <eve/concept/pattern.hpp>
 #include <utility>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {
@@ -41,7 +41,8 @@ namespace eve
     }
 
     //! Stream insertion operator for shuffling pattern
-    friend std::ostream& operator<<(std::ostream& os, pattern_t const&)
+    template<typename Ch, typename Ct>
+    friend auto& operator<<(std::basic_ostream<Ch,Ct>& os, pattern_t const&)
     {
       os << "< ";
       ((os << I << " "),...);

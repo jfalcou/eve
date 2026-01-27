@@ -19,7 +19,7 @@
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
 
-#include <ostream>
+#include <iosfwd>
 
 namespace eve::detail
 {
@@ -46,7 +46,8 @@ inline constexpr bool is_identity = []()
 //================================================================================================
 struct identity_swizzle
 {
-  friend std::ostream& operator<<(std::ostream& os, identity_swizzle)
+  template<typename C, typename Ct>
+  friend auto& operator<<(std::basic_ostream<C, Ct>& os, identity_swizzle)
   {
     return os << "identity_swizzle";
   }
@@ -65,7 +66,8 @@ struct identity_swizzle
 
 struct zero_swizzle
 {
-  friend std::ostream& operator<<(std::ostream& os, zero_swizzle) { return os << "zero_swizzle"; }
+  template<typename C, typename Ct>
+  friend auto& operator<<(std::basic_ostream<C, Ct>& os, zero_swizzle) { return os << "zero_swizzle"; }
 
   template<typename Wide, typename Cardinal>
   EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
@@ -91,7 +93,8 @@ template<typename Callable, typename... Args> struct bound
     return Callable {}(w, Args {}...);
   }
 
-  friend std::ostream& operator<<(std::ostream& os, bound)
+  template<typename C, typename Ct>
+  friend auto& operator<<(std::basic_ostream<C, Ct>& os, bound)
   {
     os << Callable {} << "(";
     ((os << " " << Args {}), ...);

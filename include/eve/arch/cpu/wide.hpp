@@ -42,7 +42,7 @@
 #include <eve/traits/as_translation.hpp>
 
 #include <concepts>
-#include <ostream>
+#include <iosfwd>
 #include <utility>
 
 #include <type_traits>
@@ -883,15 +883,15 @@ namespace eve
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator==(wide w, S s) noexcept -> decltype(is_equal(w,s))
-    { 
-      return is_equal(w, s); 
+    {
+      return is_equal(w, s);
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator==(S s, wide w) noexcept -> decltype(is_equal(w,s))
-    { 
-      return is_equal(w, s); 
+    {
+      return is_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
@@ -903,15 +903,15 @@ namespace eve
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator!=(wide w, S s) noexcept -> decltype(is_not_equal(w,s))
-    { 
-      return is_not_equal(w, s); 
+    {
+      return is_not_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator!=(S s, wide w) noexcept -> decltype(is_not_equal(w,s))
-    { 
-      return is_not_equal(w, s); 
+    {
+      return is_not_equal(w, s);
     }
 
     //! @brief Element-wise less-than comparison between eve::wide
@@ -1040,7 +1040,8 @@ namespace eve
     }
 
     //! Inserts a eve::wide into a output stream
-    friend std::ostream& operator<<(std::ostream& os, wide p)
+    template<typename C, typename Ct>
+    friend auto& operator<<(std::basic_ostream<C, Ct>& os, wide p)
     {
       if constexpr( kumi::product_type<Type> )
       {

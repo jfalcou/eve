@@ -18,7 +18,7 @@ struct compress_copy_simd_core
   template<typename Settings, typename I, logical_simd_value L, typename O>
   EVE_FORCEINLINE auto operator()(Settings settings, I f, L m, O o) const -> unaligned_t<O>
   {
-    return operator()(settings, f, eve::load[settings.c_in](f, typename L::cardinal_type {}), m, o);
+    return operator()(settings, f, load[settings.c_in](f, typename L::cardinal_type {}), m, o);
   }
 
   template<typename Settings, typename I, logical_simd_value L, typename O>

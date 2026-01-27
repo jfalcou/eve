@@ -17,7 +17,7 @@
 #include <concepts>
 #include <type_traits>
 #include <utility>
-#include <ostream>
+#include <iosfwd>
 
 #define EVE_REGISTER_CALLABLE(TAG)                                                                 \
 namespace tag { struct TAG {}; }                                                                   \
@@ -113,7 +113,8 @@ namespace tag { struct TAG {}; }                                                
 
 #define EVE_CALLABLE_API(TAG, NAME)                                                                 \
   using callable_##TAG  = detail::callable_object<tag::TAG>;                                        \
-  inline std::ostream& operator<<(std::ostream& os, detail::callable_object<tag::TAG> const&)       \
+  template<typename C, typename T>                                                            \
+  inline auto& operator<<(std::basic_ostream<C,T>& os, detail::callable_object<tag::TAG> const&)       \
   {                                                                                                 \
     return os << #NAME;                                                                             \
   }

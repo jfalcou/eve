@@ -20,7 +20,7 @@
 #include <bit>
 #include <compare>
 #include <optional>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {
@@ -369,7 +369,8 @@ namespace detail
 
     // streaming ----------------------------------
 
-    EVE_FORCEINLINE friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
+    template<typename C, typename Ct>
+    EVE_FORCEINLINE friend auto& operator<<(std::basic_ostream<C, Ct>& o, const top_bits& x)
     {
       if constexpr( is_aggregated ) return o << '[' << x.storage[0] << ", " << x.storage[1] << ']';
       else return o << x.storage;

@@ -13,8 +13,7 @@
 #include <eve/traits/common_value.hpp>
 
 #include <bitset>
-#include <cstring>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {
@@ -180,7 +179,8 @@ namespace eve
     //==============================================================================================
     // Stream insertion operator
     //==============================================================================================
-    friend EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical const &v)
+    template<typename C, typename CT>
+    friend EVE_FORCEINLINE auto& operator<<(std::basic_ostream<C, CT>& os, logical const &v)
     {
       return os << (v.value_ ? "true" : "false");
     }

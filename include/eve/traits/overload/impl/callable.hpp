@@ -14,6 +14,8 @@ namespace eve
   namespace detail
   {
     inline constexpr struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } return_2nd = {};
+
+    struct ignore { template<typename T> operator T() { return T{}; } };
   }
 
   //====================================================================================================================

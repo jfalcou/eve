@@ -11,6 +11,14 @@
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
 
+namespace eve::detail
+{
+  struct accumulate_decorations
+  {
+    constexpr EVE_FORCEINLINE auto operator()(auto acc, auto const& m) const { return m.default_to(acc); }
+  };
+}
+
 namespace eve
 {
   //====================================================================================================================
@@ -161,7 +169,7 @@ namespace eve
     /// Retrieves the current options' state, including processed default
     EVE_FORCEINLINE constexpr auto options() const
     {
-      return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
+      return kumi::fold_left( detail::accumulate_decorations{}
                             , kumi::tuple<Options...>{}
                             , static_cast<OptionsValues const&>(*this)
                             );

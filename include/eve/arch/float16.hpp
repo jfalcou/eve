@@ -13,7 +13,6 @@
 #include <eve/as.hpp>
 
 #include <bit>
-#include <cmath>
 #include <cstdint>
 #include <compare>
 #include <limits>
