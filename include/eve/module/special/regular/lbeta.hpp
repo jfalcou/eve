@@ -10,6 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
+#include <eve/module/special/regular/signgam.hpp>
 #include <eve/traits/common_value.hpp>
 
 namespace eve
@@ -54,7 +55,7 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [strictly positive real floating argument](@ref eve::floating_value).
+//!     * `x`, `y`: [real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -81,7 +82,8 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE auto lbeta_(EVE_REQUIRES(cpu_), O const&, T a0, T a1)
     {
-      return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(a0 + a1);
+      auto s = eve::signgam(a0)*eve::signgam(a1)*eve::signgam(a0+a1);
+      return eve::if_else(eve::is_gez(s), log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(a0 + a1), allbits);
     }
   }
 }
