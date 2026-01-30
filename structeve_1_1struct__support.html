@@ -193,7 +193,7 @@ struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Defines stream insertion</span></div>
-<div class="line">  <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;( std::ostream&amp; os, <a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;vec3&gt;</a> <span class="keyword">auto</span> <span class="keyword">const</span>&amp; self )</div>
+<div class="line">  <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;( std::ostream&amp; os, vec3 <span class="keyword">const</span>&amp; self )</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;{&quot;</span> &lt;&lt; x(self) &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; y(self) &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; z(self) &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
 <div class="line">  }</div>
