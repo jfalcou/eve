@@ -22,8 +22,6 @@ namespace eve
     {
       using func_t =  Func<OptionsValues>;
 
-      struct ignore { template<typename T> operator T() { return T{}; } };
-
       template<callable_options O, typename T, typename... Ts>
       constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
       {

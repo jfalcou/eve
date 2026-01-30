@@ -11,7 +11,7 @@
 #include <eve/arch/float16.hpp>
 #include <compare>
 #include <type_traits>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {
@@ -123,7 +123,8 @@ namespace eve
       friend constexpr mask_n&  operator>>=(mask_n& m, std::ptrdiff_t s) { m.value >>= s; return m; }
       friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m}; return t >>= s; }
 
-      friend std::ostream& operator<<(std::ostream& out, const mask_n& m) { return out << m.value; }
+      template<typename C, typename Ct>
+      friend auto& operator<<(std::basic_ostream<C, Ct>& out, const mask_n& m) { return out << m.value; }
 
       type value;
     };

@@ -30,7 +30,7 @@
 #include <cstring>
 #include <concepts>
 #include <type_traits>
-#include <ostream>
+#include <iosfwd>
 
 namespace eve
 {
@@ -508,7 +508,8 @@ namespace eve
     }
 
     //! Inserts a eve::wide into a output stream
-    friend std::ostream &operator<<(std::ostream &os, logical const &p)
+    template<typename C, typename Ct>
+    friend auto& operator<<(std::basic_ostream<C, Ct> &os, logical const &p)
     {
       auto that = p.bitmap();
       os << '(' << (that[0] ? "true" : "false");
@@ -516,30 +517,30 @@ namespace eve
       return os << ')';
     }
   };
-  
+
 
   //! @brief Element-wise equality comparison of two eve::logical
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal>
-  EVE_FORCEINLINE auto operator==(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept 
+  EVE_FORCEINLINE auto operator==(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
     -> decltype(is_equal(a,b))
   {
     return is_equal(a, b);
   }
 
-  
+
   //! @brief Element-wise inequality comparison of two eve::logical
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal>
-  EVE_FORCEINLINE auto operator!=(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept 
+  EVE_FORCEINLINE auto operator!=(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
     -> decltype(is_not_equal(a,b))
   {
     return is_not_equal(a, b);
   }
 
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename C1, typename C2>
-  auto operator==(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete; 
-    
+  auto operator==(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
+
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename C1, typename C2>
-  auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;  
+  auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
 
   //================================================================================================
   //! @}

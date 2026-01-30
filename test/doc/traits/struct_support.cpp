@@ -45,7 +45,7 @@ struct vec3 : eve::struct_support<vec3, float, float, float>
   }
 
   // Defines stream insertion
-  friend std::ostream& operator<<( std::ostream& os, eve::like<vec3> auto const& self )
+  friend std::ostream& operator<<( std::ostream& os, vec3 const& self )
   {
     return os << "{" << x(self) << ", " << y(self) << ", " << z(self) << "}";
   }
