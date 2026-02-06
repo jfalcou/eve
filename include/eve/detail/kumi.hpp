@@ -23,7 +23,7 @@ namespace eve
   //================================================================================================
   // Reinject kumi concept & traits in EVE
   //================================================================================================
-  using kumi::product_type;
-  using kumi::sized_product_type;
+  using kumi::concepts::product_type;
+  using kumi::concepts::sized_product_type;
   using kumi::is_product_type;
 }
