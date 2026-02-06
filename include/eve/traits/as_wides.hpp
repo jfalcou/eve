@@ -34,7 +34,7 @@ namespace eve
     }
   }
 
-  template<scalar_value T0, kumi::non_empty_product_type T>
+  template<scalar_value T0, eve::non_empty_product_type T>
   auto as_wides(T0 t0, T t)
   {
     return kumi::apply([t0](auto... m){return eve::as_wides(t0, m...); }, t);

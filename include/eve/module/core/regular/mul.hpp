@@ -35,7 +35,7 @@ namespace eve
       return EVE_DISPATCH_CALL(ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
       requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() <= 2))
@@ -43,7 +43,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
       requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() > 2) && !Options::contains(lower) && !Options::contains(upper))
@@ -73,7 +73,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto mul(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto mul(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!      constexpr auto mul(eve::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto mul[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
@@ -93,7 +93,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `... xs` : [real](@ref eve::value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

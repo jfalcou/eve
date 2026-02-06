@@ -19,7 +19,7 @@ namespace eve
     template<typename G, floating_scalar_value T>
     constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept
       -> as_wide_as_t<T, decltype(get<0>(g()))>
-        requires (kumi::sized_product_type<decltype(g()), 2>)
+        requires (eve::sized_product_type<decltype(g()), 2>)
     {
       return EVE_DISPATCH_CALL(g, e, m);
     }

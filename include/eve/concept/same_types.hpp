@@ -26,8 +26,8 @@ namespace eve
     template<eve::product_type T>
     consteval auto tuple_type_check()
     {
-      if constexpr(kumi::sized_product_type<T, 0>) return true;
-      else                                         return kumi::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
+      if constexpr(eve::sized_product_type<T, 0>) return true;
+      else                                         return eve::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
     }
   }
 

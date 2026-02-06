@@ -39,7 +39,7 @@ namespace eve
     constexpr operator()(T0 t0, T1 t1) const noexcept
     { return EVE_DISPATCH_CALL(t0, t1); }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
@@ -68,7 +68,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto variance(eve::floating_value auto ... xs)                                    noexcept; // 1
-//!      constexpr auto variance(kumi::non_empty_product_type auto const& xs)                        noexcept; // 2
+//!      constexpr auto variance(eve::non_empty_product_type auto const& xs)                        noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto variance[conditional_expr auto c](/* any of the above overloads */)          noexcept; // 3

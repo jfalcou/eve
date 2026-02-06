@@ -29,27 +29,27 @@ namespace eve
     constexpr operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
       EVE_FORCEINLINE constexpr
     upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
-    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
+    template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
       EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
-    template<floating_value H, kumi::non_empty_product_type Tup2>
+    template<floating_value H, eve::non_empty_product_type Tup2>
       EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, common_value_t<H, kumi::apply_traits_t<eve::common_value,  Tup2>>>
     operator()(H const& h, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(h, t2); }
 
 
-    template<typename F, kumi::non_empty_product_type Tup2>
-    requires(!value<F> && !kumi::non_empty_product_type<F>)
+    template<typename F, eve::non_empty_product_type Tup2>
+    requires(!value<F> && !eve::non_empty_product_type<F>)
       EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,  Tup2>>
     operator()(F const& f, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(f, t2); }
@@ -76,14 +76,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto trapz(kumi::non_empty_product_type auto const& x,
-//!                           kumi::non_empty_product_type auto const& y)                   noexcept; // 1
+//!      constexpr auto trapz(eve::non_empty_product_type auto const& x,
+//!                           eve::non_empty_product_type auto const& y)                   noexcept; // 1
 //!      constexpr auto trapz(floating_value auto ... ys)                                   noexcept; // 2
-//!      constexpr auto trapz(kumi::non_empty_product_type auto const& y)                   noexcept; // 2
+//!      constexpr auto trapz(eve::non_empty_product_type auto const& y)                   noexcept; // 2
 //!      constexpr auto trapz(floating_value h,
-//!                           kumi::non_empty_product_type auto const& y)                   noexcept; // 2
+//!                           eve::non_empty_product_type auto const& y)                   noexcept; // 2
 //!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                 noexcept; // 4
-//!      constexpr auto trapz(eve::invocable f, kumi::non_empty_product_type auto const& x) noexcept; // 4
+//!      constexpr auto trapz(eve::invocable f, eve::non_empty_product_type auto const& x) noexcept; // 4
 //!
 //!      // Semantic options
 //!      constexpr auto trapz[widen](/*any of the above overloads*/)                        noexcept; // 4
@@ -122,7 +122,7 @@ namespace eve
 
   namespace detail
   {
-    template<kumi::non_empty_product_type PT , callable_options O>
+    template<eve::non_empty_product_type PT , callable_options O>
      EVE_FORCEINLINE constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
@@ -143,7 +143,7 @@ namespace eve
         return eve::trapz[o](kumi::make_tuple(args...));
     }
 
-    template<typename HPT1 ,kumi::non_empty_product_type PT2, callable_options O>
+    template<typename HPT1 ,eve::non_empty_product_type PT2, callable_options O>
     EVE_FORCEINLINE constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, HPT1 x, PT2 y) noexcept
     {

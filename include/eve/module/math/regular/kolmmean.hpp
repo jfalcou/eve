@@ -25,7 +25,7 @@ namespace eve
     operator()(F f, G g, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(f, g, ts...); }
 
-    template<typename F, typename G, kumi::non_empty_product_type Tup>
+    template<typename F, typename G, eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
@@ -57,7 +57,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto kolmmean(floating_value auto ... xs)                               noexcept; // 1
-//!      constexpr auto kolmmean(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!      constexpr auto kolmmean(eve::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Semantic options
 //!      constexpr auto kolmmean[kahan](/*any of the above overloads*/)                    noexcept; // 4
@@ -68,7 +68,7 @@ namespace eve
 //!
 //!    * `f`, `g`: two functions that will be used to compute the mean (see note above).
 //!    * `xs`: [real](@ref eve::value) arguments.
-//!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!    * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -119,7 +119,7 @@ namespace eve
       }
     }
 
-    template<typename F, typename G, kumi::non_empty_product_type Tup, callable_options O>
+    template<typename F, typename G, eve::non_empty_product_type Tup, callable_options O>
     EVE_FORCEINLINE constexpr auto
     kolmmean_(EVE_REQUIRES(cpu_), O const & o, F f, G g, Tup t) noexcept
     {

@@ -27,7 +27,7 @@ namespace eve
     operator()(P p, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(p, ts...); }
 
-    template<value P, kumi::non_empty_product_type Tup>
+    template<value P, eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     as_wide_as_t<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>, P>
     operator()(P p, Tup const& t) const noexcept

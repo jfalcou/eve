@@ -28,14 +28,14 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
       EVE_FORCEINLINE constexpr
     upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
     { return EVE_DISPATCH_CALL(t); }
 
-    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
+    template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)// && Options::contains(widen))
       EVE_FORCEINLINE constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
