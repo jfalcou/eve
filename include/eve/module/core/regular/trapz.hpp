@@ -156,7 +156,7 @@ namespace eve
         else
           return x*trapz[o](y);
       }
-      else if constexpr(kumi::is_product_type<HPT1>::value)
+      else if constexpr(eve::is_product_type<HPT1>::value)
       {
        if constexpr(O::contains(widen))
          return trapz[o.drop(widen)](kumi::map(upgrade, x), kumi::map(upgrade, y));

@@ -49,7 +49,7 @@ namespace eve::detail
   template<typename T, typename Ptr> struct dereference_as;
 
   template<typename T, typename Ptr>
-  requires( !kumi::product_type<Ptr> )
+  requires( !eve::product_type<Ptr> )
   struct dereference_as<T,Ptr>
   {
     using base = typename pointer_traits<Ptr>::value_type;

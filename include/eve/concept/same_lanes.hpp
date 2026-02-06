@@ -33,7 +33,7 @@ namespace eve
       return true;
     }
 
-    template<kumi::product_type T>
+    template<eve::product_type T>
     consteval auto tuple_lanes_check()
     {
       if constexpr(kumi::sized_product_type<T,0>) return true;

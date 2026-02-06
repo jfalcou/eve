@@ -35,7 +35,7 @@ namespace detail
       return std::type_identity<typename T::value_type> {};
     }
     // Maybe this should be deleted
-    else if constexpr( kumi::product_type<T> )
+    else if constexpr( eve::product_type<T> )
     {
       auto mapper = []<typename U>(U) { return typename decltype(value_type_impl<U>())::type {}; };
 

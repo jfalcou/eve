@@ -54,7 +54,7 @@ namespace eve::detail
 
     template<typename S> struct widen : as_wide<S, fixed_t> {};
 
-    using base  = detail::conditional_t< kumi::product_type<value_t>
+    using base  = detail::conditional_t< eve::product_type<value_t>
                                     , kumi::as_tuple<value_t,widen>
                                     , as_wide<value_t, fixed_t>
                                     >;
@@ -94,7 +94,7 @@ namespace eve::detail
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
-    if constexpr( kumi::product_type<element_type_t<w_t>> )
+    if constexpr( eve::product_type<element_type_t<w_t>> )
     {
       return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
               ( [&](auto... I)
@@ -196,13 +196,13 @@ namespace eve::detail
         // Functions returning zipped values need an extra level of storage wrapping.
         // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
         // The check on range is used due to arrays now being considered `product types`
-        if constexpr (!range<storage_t> && kumi::product_type<storage_t> && !instance_of<storage_t, blob>)
+        if constexpr (!range<storage_t> && eve::product_type<storage_t> && !instance_of<storage_t, blob>)
         {
           return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
             {
               using inner_wide_t = typename kumi::element_t<i, storage_t>;
               // Whether we should re-wrap the inner storage into the proper product type.
-              if constexpr (has_aggregated_abi_v<inner_wide_t> || kumi::product_type<kumi::element_t<0, decltype(inner)>>)
+              if constexpr (has_aggregated_abi_v<inner_wide_t> || eve::product_type<kumi::element_t<0, decltype(inner)>>)
               {
                 return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<i>(m.storage())... }; }, inner);
               }

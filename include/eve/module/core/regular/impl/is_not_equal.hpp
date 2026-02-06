@@ -35,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T>
   is_not_equal_(EVE_REQUIRES(cpu_), O const & o, T const& a, T const& b) noexcept
   {
-    if constexpr( kumi::product_type<element_type_t<T>> )
+    if constexpr( eve::product_type<element_type_t<T>> )
     {
       if constexpr (has_equality_support<T>) return comparisons<T>::not_equal(a,b);
       else                                   return a.storage() != b.storage();

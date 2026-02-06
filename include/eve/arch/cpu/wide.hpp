@@ -168,7 +168,7 @@ namespace eve
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<detail::data_source... Ptr>
-    requires(kumi::product_type<Type>)
+    requires(eve::product_type<Type>)
     EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
         : storage_base(load(ptr, Cardinal {}))
     {}
@@ -459,7 +459,7 @@ namespace eve
     //! @brief Performs a bitwise complement on all the wide lanes
     friend EVE_FORCEINLINE wide operator~(wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       return bit_not(v);
@@ -470,7 +470,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE wide& operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires (!kumi::product_type<Type> && supports_bitwise_call<wide, V>)
+        requires (!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
     {
       w = bit_and(w, o);
@@ -482,7 +482,7 @@ namespace eve
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires (!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
+        requires (!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
     {
       return bit_and(a, b);
@@ -493,7 +493,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide operator&(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
     {
       return bit_and(w, bit_cast(s, as<Type> {}));
@@ -504,7 +504,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide<S, Cardinal> operator&(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
       return bit_and(bit_cast(w, as<wide<S, Cardinal>>()), s);
@@ -515,7 +515,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE wide& operator|=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, V>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
     {
       w = bit_or(w, o);
@@ -527,7 +527,7 @@ namespace eve
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE wide operator|(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
     {
       return bit_or(a, b);
@@ -538,7 +538,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide operator|(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
     {
       return bit_or(w, bit_cast(s, as<Type>{}));
@@ -549,7 +549,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide<S, Cardinal> operator|(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
       return bit_or(bit_cast(w, as<wide<S, Cardinal>>{}), s);
@@ -559,7 +559,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE wide& operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, V>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
     {
       w = bit_xor(w, o);
@@ -571,7 +571,7 @@ namespace eve
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE wide operator^(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
     {
       return bit_xor(a, b);
@@ -582,7 +582,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide operator^(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
     {
       return bit_xor(w, bit_cast(s, as<Type>{}));
@@ -593,7 +593,7 @@ namespace eve
     template<scalar_value S>
     friend EVE_FORCEINLINE wide<S, Cardinal> operator^(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
+        requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
       return bit_xor(bit_cast(w, as<wide<S, Cardinal>>()), s);
@@ -607,7 +607,7 @@ namespace eve
 
     //! Unary minus operator. See also: eve::minus
     friend EVE_FORCEINLINE wide operator-(wide const& v) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return minus(v);
     }
@@ -616,7 +616,7 @@ namespace eve
     //! to the current one. See also: eve::add
     template<value V>
     friend EVE_FORCEINLINE wide& operator+=(wide& w, V v) noexcept
-      requires(!kumi::product_type<Type>)
+      requires(!eve::product_type<Type>)
     {
       w = add(w, v);
       return w;
@@ -625,7 +625,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
     friend EVE_FORCEINLINE wide operator+(wide const& a, wide const& b) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!eve::product_type<Type>)
     {
       return add(a, b);
     }
@@ -633,7 +633,7 @@ namespace eve
     //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     friend EVE_FORCEINLINE wide operator+(plain_scalar_value auto s, wide const& v) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!eve::product_type<Type>)
     {
       return add(v, wide{s});
     }
@@ -641,7 +641,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     friend EVE_FORCEINLINE wide operator+(wide const& v, plain_scalar_value auto s) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!eve::product_type<Type>)
     {
       return add(v, wide{s});
     }
@@ -650,7 +650,7 @@ namespace eve
     //! the result to the current one. See also: eve::sub
     template<value V>
     friend EVE_FORCEINLINE wide& operator-=(wide& w, V v) noexcept
-      requires(!kumi::product_type<Type>)
+      requires(!eve::product_type<Type>)
     {
       w = sub(w, v);
       return w;
@@ -659,7 +659,7 @@ namespace eve
     //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
     friend EVE_FORCEINLINE wide operator-(wide const& a, wide const& b) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!eve::product_type<Type>)
     {
       return sub(a, b);
     }
@@ -667,7 +667,7 @@ namespace eve
     //! @brief Performs the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
     friend EVE_FORCEINLINE wide operator-(plain_scalar_value auto s, wide const& w) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return sub(wide{s}, w);
     }
@@ -675,7 +675,7 @@ namespace eve
     //! @brief Performs the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
     friend EVE_FORCEINLINE wide operator-(wide const& w, plain_scalar_value auto s) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return sub(w, wide{s});
     }
@@ -684,7 +684,7 @@ namespace eve
     //! the result to the current one. See also: eve::mul
     template<value V>
     friend EVE_FORCEINLINE wide& operator*=(wide& w, V o) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       w = mul(w, o);
       return w;
@@ -693,7 +693,7 @@ namespace eve
     //! @brief Performs the product between all lanes of its parameters
     //! See also: eve::mul
     friend EVE_FORCEINLINE wide operator*(wide const& a, wide const& b) noexcept
-      requires(!kumi::product_type<Type>)
+      requires(!eve::product_type<Type>)
     {
       return mul(a, b);
     }
@@ -701,7 +701,7 @@ namespace eve
     //! @brief Performs the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     friend EVE_FORCEINLINE wide operator*(plain_scalar_value auto s, wide const& w) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return mul(s, w);
     }
@@ -709,7 +709,7 @@ namespace eve
     //! @brief Performs the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
     friend EVE_FORCEINLINE wide operator*(wide const& w, plain_scalar_value auto s) noexcept
-      requires(!kumi::product_type<Type>)
+      requires(!eve::product_type<Type>)
     {
       return mul(w, s);
     }
@@ -718,7 +718,7 @@ namespace eve
     //! the result to the current one. See also: eve::div
     template<value V>
     friend EVE_FORCEINLINE wide& operator/=(wide& w, V o) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       w = div(w, o);
       return w;
@@ -727,7 +727,7 @@ namespace eve
     //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
     friend EVE_FORCEINLINE wide operator/(wide const& a, wide const& b) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return div(a, b);
     }
@@ -735,7 +735,7 @@ namespace eve
     //! @brief Performs the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
     friend EVE_FORCEINLINE wide operator/(plain_scalar_value auto s, wide const& w) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return div(wide{s}, w);
     }
@@ -743,7 +743,7 @@ namespace eve
     //! @brief Performs the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
     friend EVE_FORCEINLINE wide operator/(wide const& v, plain_scalar_value auto s) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
     {
       return div(v, wide{s});
     }
@@ -754,7 +754,7 @@ namespace eve
     template<integral_value V>
     friend EVE_FORCEINLINE wide& operator%=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
+        requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
       w = rem(w, o);
@@ -766,7 +766,7 @@ namespace eve
     //! integral_scalar_value
     friend EVE_FORCEINLINE wide operator%(wide const& a, wide const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
+        requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
       return rem(a, b);
@@ -778,7 +778,7 @@ namespace eve
     template<integral_scalar_value S>
     friend EVE_FORCEINLINE auto operator%(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
+        requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
       return rem(wide{s}, w);
@@ -789,7 +789,7 @@ namespace eve
     //! integral_scalar_value
     friend EVE_FORCEINLINE auto operator%(wide const& w, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
+        requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
       return rem(w, wide{s});
@@ -800,7 +800,7 @@ namespace eve
     template<integral_value S>
     friend EVE_FORCEINLINE wide& operator<<=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       w = shl(w, s);
@@ -812,7 +812,7 @@ namespace eve
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE wide& operator<<=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       w = shl(w, s);
@@ -838,7 +838,7 @@ namespace eve
     template<integral_value S>
     friend EVE_FORCEINLINE wide& operator>>=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       w = shr(w, s);
@@ -850,7 +850,7 @@ namespace eve
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE wide& operator>>=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       w = shr(w, s);
@@ -1033,7 +1033,7 @@ namespace eve
     //! Computes the logical negation of its parameter
     friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type>)
+        requires(!eve::product_type<Type>)
 #endif
     {
       return logical_not(v);
@@ -1043,7 +1043,7 @@ namespace eve
     template<typename C, typename Ct>
     friend auto& operator<<(std::basic_ostream<C, Ct>& os, wide p)
     {
-      if constexpr( kumi::product_type<Type> )
+      if constexpr( eve::product_type<Type> )
       {
         if constexpr( requires(Type t) { os << t; } )
         {
@@ -1100,13 +1100,13 @@ namespace eve
   //==============================================================================================
   // Product type Support
   //==============================================================================================
-  template<std::size_t I, kumi::product_type T, typename N>
+  template<std::size_t I, eve::product_type T, typename N>
   EVE_FORCEINLINE auto& get(wide<T, N>& w) noexcept
   {
     return kumi::get<I>(w.storage());
   }
 
-  template<std::size_t... Idx, kumi::product_type T, typename N>
+  template<std::size_t... Idx, eve::product_type T, typename N>
 #if !defined(EVE_DOXYGEN_INVOKED)
   requires((Idx < kumi::size<T>::value) && ...)
 #endif
@@ -1131,12 +1131,12 @@ namespace eve
 //================================================================================================
 // Product type Support
 //================================================================================================
-template<std::size_t I, kumi::product_type T, typename N>
+template<std::size_t I, eve::product_type T, typename N>
 struct std::tuple_element<I, eve::wide<T, N>>
     : std::tuple_element<I, typename eve::wide<T, N>::storage_type>
 {};
 
-template<kumi::product_type T, typename N>
+template<eve::product_type T, typename N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
 #endif

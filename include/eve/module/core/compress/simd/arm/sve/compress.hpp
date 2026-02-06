@@ -17,7 +17,7 @@ namespace eve::detail
   {
     eve::logical<eve::wide<U, N>> mask;
 
-    template <kumi::product_type T>
+    template <eve::product_type T>
     EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {

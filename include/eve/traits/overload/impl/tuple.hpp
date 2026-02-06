@@ -23,7 +23,7 @@ namespace eve
   {
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
 
-    template<callable_options O, kumi::product_type T>
+    template<callable_options O, eve::product_type T>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);
@@ -46,7 +46,7 @@ namespace eve
   {
     using base_t = elementwise_callable<Func, OptionsValues, Options...>;
 
-    template<callable_options O, kumi::product_type T>
+    template<callable_options O, eve::product_type T>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);

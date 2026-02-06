@@ -37,7 +37,7 @@ namespace eve
   };
 
   template <simd_value T>
-    requires kumi::product_type<element_type_t<T>>
+    requires eve::product_type<element_type_t<T>>
   struct stack_buffer<T>
   {
     auto ptr()       { return kumi::apply([](auto& ...buff) { return soa_ptr{buff.ptr()... }; }, buffs); }

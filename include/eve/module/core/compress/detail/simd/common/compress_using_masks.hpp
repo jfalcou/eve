@@ -126,7 +126,7 @@ namespace eve::detail
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
-    if constexpr ( kumi::product_type<T> )
+    if constexpr ( eve::product_type<T> )
     {
       return wide<T, N>{ kumi::map(compress_using_masks_shuffle_recurse{num}, v) };
     }
@@ -169,7 +169,7 @@ namespace eve::detail
   EVE_FORCEINLINE
   auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
   {
-    if constexpr ( !kumi::product_type<T> ) return eve::slide_left(v, eve::index<1>);
+    if constexpr ( !eve::product_type<T> ) return eve::slide_left(v, eve::index<1>);
     else
     {
       return wide<T, N>{ kumi::map(compress_using_masks_to_left, v) };

@@ -78,7 +78,7 @@ template<typename T>
 constexpr bool
 scalar_tuple() noexcept
 {
-  if constexpr( !kumi::product_type<T> ) return false;
+  if constexpr( !eve::product_type<T> ) return false;
   else if constexpr( range<T> )          return false;
   else
   {
@@ -97,7 +97,7 @@ namespace eve
 //! @ingroup simd_concepts
 //! @concept product_scalar_value
 //! @brief Specify that a type represents a product type made of scalars
-//! The concept `product_scalar_value<T>` is satisfied if and only if T is a kumi::product_type
+//! The concept `product_scalar_value<T>` is satisfied if and only if T is a eve::product_type
 //! containing only @ref eve::plain_scalar_value or @ref eve::logical_scalar_value
 //!
 //! ## Example Types

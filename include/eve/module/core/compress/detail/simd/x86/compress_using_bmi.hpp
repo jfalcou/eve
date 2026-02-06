@@ -25,7 +25,7 @@ namespace eve::detail
     static constexpr bool is_1_bits = top_bits<logical<wide<U, N>>>::bits_per_element == 1;
     static constexpr bool is_2_bits = top_bits<logical<wide<U, N>>>::bits_per_element == 2;
 
-    template <kumi::product_type T>
+    template <eve::product_type T>
     EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
@@ -121,7 +121,7 @@ namespace eve::detail
   {
     top_bits<logical<wide<U, N>>> mask;
 
-    template <kumi::product_type T>
+    template <eve::product_type T>
     EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {

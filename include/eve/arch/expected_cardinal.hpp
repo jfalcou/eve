@@ -19,7 +19,7 @@ namespace eve::detail
   template<typename Type, regular_abi ABI>
   constexpr std::ptrdiff_t find_expected_cardinal()
   {
-    if constexpr(kumi::product_type<Type>)
+    if constexpr(eve::product_type<Type>)
     {
       return kumi::min_flat ( kumi::as_tuple_t<Type, fec_box>{}
                             , []<typename M>(M) { return find_expected_cardinal<typename M::type,ABI>(); }
