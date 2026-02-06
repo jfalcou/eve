@@ -221,8 +221,8 @@ Creating SIMD-aware UDT</h1>
 <div class="line">    }</div>
 <div class="line">  };</div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition</b> product_type.hpp:107</div></div>
-<div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition</b> product_type.hpp:154</div></div>
+<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition</b> product_type.hpp:101</div></div>
+<div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition</b> product_type.hpp:148</div></div>
 </div><!-- fragment --><p>Let's go over the new components introduced here:</p>
 <ul>
 <li><a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> is to be used as a base class for the new user-defined type. It acts as a <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a> base class that gathers the ordered list of the desired members types. Here we want <code>udt::polar_coords</code> to be two <code>float</code>s. Said data members will then be automatically stored by <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> and accessible via a tuple-like interface via <code>get</code>.</li>
