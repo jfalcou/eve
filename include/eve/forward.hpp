@@ -59,7 +59,7 @@ template <typename From, typename To>
 To call_simd_cast(From, as<To>);
 
 // This is an inderect wrapper of eve::convert to avoid cycling dependencies
-template <simd_value Src, typename Tgt>
+template <typename Src, typename Tgt>
 as_wide_as_t<Tgt, Src> call_convert(Src, as<Tgt>);
 
 // This is an inderect wrapper of eve::detail::butterfly_reduction to avoid cycling dependencies

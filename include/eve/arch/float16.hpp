@@ -22,7 +22,7 @@ namespace eve
 {
   namespace detail
   {
-    constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
+    EVE_NOINLINE constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
     {
       uint32_t sign     = (raw & 0x8000u) << 16;
       uint32_t exponent = (raw & 0x7C00u) >> 10;
@@ -56,7 +56,7 @@ namespace eve
       return std::bit_cast<float>(result);
     }
 
-    constexpr uint16_t emulated_fp_to_fp16(float value) noexcept
+    EVE_NOINLINE constexpr uint16_t emulated_fp_to_fp16(float value) noexcept
     {
         uint32_t bits = std::bit_cast<uint32_t>(value);
         uint32_t sign = (bits & 0x80000000u) >> 16;

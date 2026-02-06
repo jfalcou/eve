@@ -12,6 +12,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
 #include <algorithm>
@@ -102,6 +103,10 @@ namespace eve::detail
                   return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
                 }
               );
+    }
+    else if constexpr (fp16_should_apply<w_t>)
+    {
+      return call_convert(apply_fp16_as_fp32(EVE_FWD(f), EVE_FWD(ts)...), as<element_type_t<w_t>>{});
     }
     else
     {

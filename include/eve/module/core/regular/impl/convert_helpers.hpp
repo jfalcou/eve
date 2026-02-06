@@ -91,14 +91,15 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexce
 {
   using out_t = as_wide_t<Out, cardinal_t<In>>;
 
-  if constexpr( has_aggregated_abi_v<In> )
+  if constexpr( has_aggregated_abi_v<In> && !has_emulated_abi_v<out_t> )
   {
     // If input is aggregated, we can slice and combine without lose of performance
     return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};
   }
   else
   {
-    return map(convert, v0, tgt);
+    // prevent map circular calls for FP16
+    return apply<cardinal_v<out_t>>([&](auto... I) { return out_t{ convert(v0.get(I), tgt)... }; } );
   }
 }
 
