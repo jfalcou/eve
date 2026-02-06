@@ -142,13 +142,13 @@ concept invocable = requires(F&& f, Args&&...args)
   //================================================================================================
   //! @ingroup simd_concepts
   //! @{
-  //! @brief Specifies that `Op` is a monoid function operating on values of type `T`.
+  //! @brief Specifies that `Op` is a abelian monoid function operating on values of type `T`.
   //!
-  //! @tparam Op 
+  //! @tparam Op
   //! @tparam T
   //================================================================================================
   template <typename Op, typename T>
-  concept monoid = invocable_returning<Op, T, T, T>;
+  concept abelian_monoid = invocable_returning<Op, T, T, T>;
   //================================================================================================
   //! @}
   //================================================================================================

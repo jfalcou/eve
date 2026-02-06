@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct scan_t : callable<scan_t, Options>
   {
-    template<simd_value Wide, eve::monoid<Wide> Op, eve::substitute_for<Wide> Zero>
+    template<simd_value Wide, eve::abelian_monoid<Wide> Op, eve::substitute_for<Wide> Zero>
     constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero z) const noexcept
     {
       return EVE_DISPATCH_CALL(w, op, z);
@@ -52,7 +52,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     template<simd_value Wide, eve::monoid<Wide> Op, eve::substitute_for<Wide> Zero>
+  //!     template<simd_value Wide, eve::abelian_monoid<Wide> Op, eve::substitute_for<Wide> Zero>
   //!     constexpr Wide scan(Wide auto x, Op op, Zero zero) noexcept;                       // 1
   //!
   //!     template<simd_value Wide>
