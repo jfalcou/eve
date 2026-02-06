@@ -112,7 +112,7 @@ namespace eve::detail
       }
       else if constexpr ( !value<T>                                      ) return other;
       else if constexpr ( !value<U>                                      ) return self;
-      else if constexpr ( kumi::product_type<T> && kumi::product_type<U> )
+      else if constexpr ( eve::product_type<T> && eve::product_type<U> )
       {
         using t_as_tuple = kumi::as_tuple_t<T>;
         using u_as_tuple = kumi::as_tuple_t<U>;

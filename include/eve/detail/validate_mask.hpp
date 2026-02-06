@@ -52,18 +52,18 @@ namespace eve::detail
 
       if constexpr (simd_value<alt_t>)
       {
-        if constexpr (kumi::product_type<T0>) return same_types_tuple<T0> && std::same_as<alt_t, kumi::apply_traits_t<bit_value, T0>>;
+        if constexpr (eve::product_type<T0>) return same_types_tuple<T0> && std::same_as<alt_t, kumi::apply_traits_t<bit_value, T0>>;
         else                                  return same_types<T0, Ts...> && std::same_as<alt_t, bit_value_t<T0, Ts...>>;
       }
       else
       {
-        if constexpr (kumi::product_type<T0>) return same_types_tuple<T0> ;
+        if constexpr (eve::product_type<T0>) return same_types_tuple<T0> ;
         else                                  return same_types<T0, Ts...>;
       }
     }
     else
     {
-      if constexpr (kumi::product_type<T0>)   return same_lanes_or_scalar_tuple<T0>;
+      if constexpr (eve::product_type<T0>)   return same_lanes_or_scalar_tuple<T0>;
       else                                    return same_lanes_or_scalar<T0, Ts...>;
     }
   }

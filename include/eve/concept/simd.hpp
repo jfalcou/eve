@@ -26,7 +26,7 @@ namespace eve
   concept plain_simd_value =  arithmetic_simd_value<T> && plain_scalar_value<element_type_t<T>>;
 
   template<typename T>
-  concept product_simd_value = arithmetic_simd_value<T> && kumi::product_type<element_type_t<T>>;
+  concept product_simd_value = arithmetic_simd_value<T> && eve::product_type<element_type_t<T>>;
 
   template<typename Type> struct logical;
 

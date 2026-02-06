@@ -15,7 +15,7 @@ namespace eve::detail
 {
   namespace _deinterleave_groups
   {
-    template <std::size_t first, std::size_t step, kumi::product_type T>
+    template <std::size_t first, std::size_t step, eve::product_type T>
     EVE_FORCEINLINE auto select_every_step_from_tuple(T t)
     {
       return [&]<std::size_t ...i>(std::index_sequence<i...>) {
@@ -30,7 +30,7 @@ namespace eve::detail
       {
         return deinterleave_groups(lane<G>, x...);
       }
-      EVE_FORCEINLINE auto operator()(kumi::product_type auto t) const
+      EVE_FORCEINLINE auto operator()(eve::product_type auto t) const
       {
         return kumi::apply(*this, t);
       }

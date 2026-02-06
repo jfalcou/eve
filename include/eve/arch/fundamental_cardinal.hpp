@@ -88,7 +88,7 @@ namespace eve
     };
   }
 
-  template<kumi::product_type T, regular_abi ABI>
+  template<eve::product_type T, regular_abi ABI>
   struct fundamental_cardinal<T,ABI> : fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
   {
     using type = fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;

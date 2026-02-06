@@ -41,7 +41,7 @@ namespace eve
     { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
+    requires(!eve::product_type<Callable> && !eve::value<Callable>)
     EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept{ return detail::build_max_callable(f); }
 
     EVE_CALLABLE_OBJECT(max_t, max_);

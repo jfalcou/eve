@@ -77,7 +77,7 @@ namespace eve::detail
     {
       return make_emulated<Target>(v, vs...);
     }
-    else if constexpr (kumi::product_type<Target>)
+    else if constexpr (eve::product_type<Target>)
     {
       using kumi::get;
       type that;

@@ -39,7 +39,7 @@ namespace eve
   struct as_logical<T> : as_logical< translate_t<T> >
   {};
 
-  template<kumi::product_type T>
+  template<eve::product_type T>
   struct as_logical<T>: kumi::apply_traits<common_logical, T>
   {};
 

@@ -95,7 +95,7 @@ namespace eve
   }
 
   template<typename T>
-  requires kumi::product_type<T>
+  requires eve::product_type<T>
   struct  has_aggregated_component<T>
         : kumi::result::fold_left<detail::check_abi, T, std::false_type>::type
   {};

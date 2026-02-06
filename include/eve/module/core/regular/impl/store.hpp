@@ -89,7 +89,7 @@ namespace eve::detail
       auto [n_cx, n_value, n_dst] = store_equivalent(cx, value, dst);
       store[n_cx](n_value, n_dst);
     }
-    else if constexpr (kumi::product_type<T>)
+    else if constexpr (eve::product_type<T>)
     {
       if constexpr (std::same_as<C, ignore_none_>)
       {
@@ -101,7 +101,7 @@ namespace eve::detail
         {
           auto alt = [&]
           {
-            if constexpr (kumi::product_type<typename C::alternative_type>) return cx.alternative;
+            if constexpr (eve::product_type<typename C::alternative_type>) return cx.alternative;
             else return cx.alternative.storage();
           }();
 

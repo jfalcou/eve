@@ -32,7 +32,7 @@
 namespace eve::detail
 {
 // Local helper for product_type if_else implementation
-template<typename T, kumi::product_type U, kumi::product_type V>
+template<typename T, eve::product_type U, eve::product_type V>
 EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
 {
   using r_t = detail::conditional_t<simd_value<U>, U, V>;
@@ -57,7 +57,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
     using r_t = as_wide_as_t<common_compatible_t<U, V>,T>;
     using e_t = element_type_t<r_t>;
 
-    if      constexpr(kumi::product_type<U> && kumi::product_type<V>) return tuple_select(cond, t, f);
+    if      constexpr(eve::product_type<U> && eve::product_type<V>) return tuple_select(cond, t, f);
     else if constexpr(has_emulated_abi_v<T>)                          return map(if_else, cond, r_t(t), r_t(f));
     else if constexpr(has_aggregated_abi_v<T>)                        return aggregate(if_else, cond, r_t(t), r_t(f));
     else if constexpr(std::same_as<logical<e_t>, element_type_t<T>>)
@@ -113,7 +113,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const
   using tgt = as<U>;
 
   if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? u : v(tgt {});
-  else if constexpr( kumi::product_type<U> )  return if_else(cond, u, v(tgt {}));
+  else if constexpr( eve::product_type<U> )  return if_else(cond, u, v(tgt {}));
   else if constexpr( !T::abi_type::is_wide_logical )  return if_else(cond, u, v(tgt {}));
   else
   {
@@ -150,7 +150,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const
   using tgt = as<U>;
 
   if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? v(tgt {}) : u;
-  else if constexpr( kumi::product_type<U> )  return if_else(cond, v(tgt {}), u);
+  else if constexpr( eve::product_type<U> )  return if_else(cond, v(tgt {}), u);
   else if constexpr( current_api >= avx512 )  return if_else(cond, v(tgt {}), u);
   else
   {

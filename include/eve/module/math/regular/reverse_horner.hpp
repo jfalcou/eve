@@ -28,7 +28,7 @@ namespace eve
     operator()(X x, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, ts...); }
 
-    template<floating_value X, kumi::product_type Tup>
+    template<floating_value X, eve::product_type Tup>
     EVE_FORCEINLINE constexpr
     upgrade_if_t<Options, eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>>
     operator()(X x, coefficients<Tup> const& t) const noexcept
@@ -85,7 +85,7 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in increasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: eve:coefficients is a specialization of [tuple](@ref kumi::product_type) of floating values
+//!    * `tci`: eve:coefficients is a specialization of [tuple](@ref eve::product_type) of floating values
 //!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
@@ -170,7 +170,7 @@ namespace eve
       }
     }
 
-    template<typename X, kumi::product_type Tuple, callable_options O>
+    template<typename X, eve::product_type Tuple, callable_options O>
     EVE_FORCEINLINE constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const & tup) noexcept
     {

@@ -75,7 +75,7 @@ namespace eve
   };
 
   template<typename Type, typename Lanes>
-  requires( kumi::product_type<Type> )
+  requires( eve::product_type<Type> )
   struct abi<Type, Lanes>
   {
     using type = eve::bundle_;

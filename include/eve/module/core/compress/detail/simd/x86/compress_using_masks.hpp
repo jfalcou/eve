@@ -120,7 +120,7 @@ namespace eve::detail
     {
       using half_wide = wide<T, eve::fixed<N() / 2>>;
 
-      if constexpr ( kumi::product_type<T> )
+      if constexpr ( eve::product_type<T> )
       {
         auto mapped = kumi::map(*this, v);
         auto first  = kumi::map([](auto pair) { return get<0>(pair); }, mapped);

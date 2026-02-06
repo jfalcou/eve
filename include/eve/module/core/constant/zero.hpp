@@ -24,7 +24,7 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      if constexpr( kumi::product_type<T> )
+      if constexpr( eve::product_type<T> )
       {
         // Can't just T{kumi::map} because that may not work for scalar product types
         T res;

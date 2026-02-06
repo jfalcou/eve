@@ -23,7 +23,7 @@ namespace eve
       else                              return (std::same_as<element_type_t<T0>, element_type_t<Ts>> && ...);
     }
 
-    template<kumi::product_type T>
+    template<eve::product_type T>
     consteval auto tuple_type_check()
     {
       if constexpr(kumi::sized_product_type<T, 0>) return true;

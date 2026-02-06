@@ -64,7 +64,7 @@ namespace eve
       return detail::bit_cast_impl(current_api, base_t::behavior(arch, opts, process_input(xs, as<r_t>{})...), as<bit_value_t<Ts...>>{});
     }
 
-    template<callable_options O, kumi::product_type Tup>
+    template<callable_options O, eve::product_type Tup>
     constexpr EVE_FORCEINLINE kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
     {
       return kumi::apply([&](auto... xs) { return behavior(arch, opts, xs...); }, x);
