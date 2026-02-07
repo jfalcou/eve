@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gaa2beec5955f67
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::plain_value T &gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_variable" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">zero</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">as&lt;T&gt;</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">zero</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">as&lt;T&gt;</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">x</a>) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85_html_gaa2beec5955f6701b64b3a2e2ef1a6b85"><div class="ttname"><a href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
 <div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gaa2beec5955f67
 <li><code>x</code> : <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The call <code><a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero</a>(as&lt;T&gt;())</code> is semantically equivalent to <code><a class="el" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33" title="Returns the final translated type of T.">T(0)</a></code>.</p>
+<p>The call <code><a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero</a>(as&lt;T&gt;())</code> is semantically equivalent to <code>T(0)</code>.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

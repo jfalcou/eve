@@ -148,9 +148,8 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
 </table>
 </div><div class="memdoc">
 <p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
-<div class="fragment"><div class="line"><a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index);</div>
+<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index);</div>
 <div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition</b> generator.hpp:30</div></div>
-<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
 </div><!-- fragment --><p> <br  />
 </p>
 <p>and is supposed to return the value computed from the current index to store at said index.</p>
@@ -172,6 +171,7 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
 <div class="line">  <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::logical&lt;eve::wide&lt;int&gt;</a>&gt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i%2 == 0; };</div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">r</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="anamespaceeve_a79711a5476c4e0ba17238827c709ad33_html_a79711a5476c4e0ba17238827c709ad33"><div class="ttname"><a href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -159,7 +159,7 @@ struct eve::decorated_with&lt; OptionsValues, Options &gt;</div><p><b>Defined in
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Note that decoration doesn&#39;t impact signature declaration</span></div>
 <div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
-<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">EVE_FORCEINLINE</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a>  operator()(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">T</a> v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">EVE_FORCEINLINE</a> T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
 <div class="line">    <a class="code hl_define" href="group__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(func_t, <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">func_</a>);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
