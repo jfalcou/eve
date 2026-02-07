@@ -196,7 +196,7 @@ namespace eve
     //! Constructs a eve::wide from a sequence of values
     template<typename S0, typename... Ss>
     explicit EVE_FORCEINLINE wide(S0 const& v0, Ss const&...vs) noexcept
-    requires(kumi::sized_product_type_or_more<Type,1+sizeof...(Ss)>)
+    requires(eve::sized_product_type_or_more<Type,1+sizeof...(Ss)>)
     {
       storage_base::storage() = [&]<std::size_t... I>(std::index_sequence<I...>)
         {

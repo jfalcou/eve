@@ -65,14 +65,14 @@ namespace eve
       return EVE_DISPATCH_CALL(ts...);
     }
 
-   template<kumi::non_empty_product_type Tup>
+   template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
       EVE_FORCEINLINE constexpr
     detail::welford_variance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
-//     template<kumi::non_empty_product_type Tup>
+//     template<eve::non_empty_product_type Tup>
 //     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
 //       EVE_FORCEINLINE constexpr
 //     detail::welford_variance_result<kumi::apply_traits_t<eve::common_value,Tup>>
@@ -235,7 +235,7 @@ namespace eve::detail
   }
 
 
-  template< kumi::non_empty_product_type T, callable_options O>
+  template< eve::non_empty_product_type T, callable_options O>
   EVE_FORCEINLINE constexpr auto
   welford_variance_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
   {

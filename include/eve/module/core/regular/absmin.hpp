@@ -26,7 +26,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept
@@ -54,7 +54,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto absmin(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
-//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+//!      constexpr auto absmin(eve::non_empty_product_type auto const& tup)              noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto absmin[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
@@ -72,7 +72,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [real](@ref eve::value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

@@ -25,7 +25,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
       static_assert(detail::bit_validate_mask_for<decltype(this->options()), Tup>(),
@@ -56,7 +56,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto bit_or(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto bit_or(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!      constexpr auto bit_or(eve::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto bit_or[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3

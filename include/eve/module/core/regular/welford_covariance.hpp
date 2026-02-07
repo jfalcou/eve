@@ -65,7 +65,7 @@ namespace eve
     operator()(T t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
-    template<kumi::non_empty_product_type Tup1, kumi::non_empty_product_type Tup2>
+    template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
       EVE_FORCEINLINE constexpr
     detail::welford_covariance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
@@ -142,7 +142,7 @@ namespace eve
 
   namespace detail
   {
-    template<kumi::non_empty_product_type PT1, kumi::non_empty_product_type PT2, callable_options O>
+    template<eve::non_empty_product_type PT1, eve::non_empty_product_type PT2, callable_options O>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
     {

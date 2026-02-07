@@ -22,7 +22,7 @@ namespace eve
     operator()(X x, T t,  Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, t, ts...); }
 
-    template<floating_value X, kumi::non_empty_product_type Tup>
+    template<floating_value X, eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
     operator()(X x, Tup const& t) const noexcept

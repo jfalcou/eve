@@ -24,7 +24,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
+    template<eve::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
       static_assert(detail::bit_validate_mask_for<decltype(this->options()), Tup>(),
