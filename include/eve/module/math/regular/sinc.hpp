@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinc_t : elementwise_callable<sinc_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
+  struct sinc_t : elementwise_callable<sinc_t, Options>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -83,26 +83,33 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sinc_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      if constexpr( scalar_value<T> )
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<elt_t, eve::float16_t>)
       {
-        if( is_eqz(a0) ) return one(eve::as(a0));
-        if constexpr( eve::platform::supports_infinites )
-          if( is_infinite(a0) ) return zero(eve::as<T>());
-        if constexpr( eve::platform::supports_denormals )
-          return eve::abs(a0) < eps(eve::as<T>()) ? one(eve::as<T>()) : sin(a0) / a0;
-        else return sin[o](a0) / a0;
+        auto fa0 =  eve::convert(a0, as<float>());
+        auto r = eve::sinc[o](fa0);
+        return convert(r,  as<float16_t>());
+//        return eve::detail::apply_fp16_as_fp32(eve::sinc[o], a0);
       }
       else
       {
-        auto r1 = sin[o](a0) / a0;
-        if constexpr( eve::platform::supports_denormals )
+        if constexpr( scalar_value<T> )
         {
-          r1 = if_else(eve::abs(a0) < eps(as<T>()), one(eve::as<T>()), r1);
+          if( is_eqz(a0) )      return one(eve::as(a0));
+          if( is_infinite(a0) ) return zero(eve::as<T>());
+          return eve::abs(a0) < eps(eve::as<T>()) ? one(eve::as<T>()) : sin(a0) / a0;
         }
-        else r1 = if_else(is_eqz(a0), one(eve::as<T>()), r1);
-        if constexpr( eve::platform::supports_infinites )
-          r1 = if_else(is_infinite(a0), eve::zero, r1);
-        return r1;
+        else
+        {
+          auto r1 = sin[o](a0) / a0;
+          if constexpr( eve::platform::supports_denormals )
+            r1 = if_else(eve::abs(a0) < eps(as<T>()), one(eve::as<T>()), r1);
+          else
+            r1 = if_else(is_eqz(a0), one(eve::as<T>()), r1);
+          if constexpr( eve::platform::supports_infinites )
+            r1 = if_else(is_infinite(a0), eve::zero, r1);
+          return r1;
+        }
       }
     }
   }
