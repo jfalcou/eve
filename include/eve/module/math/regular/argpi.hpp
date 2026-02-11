@@ -16,18 +16,18 @@ namespace eve
 {
 
   template<typename Options>
-  struct arg_t : elementwise_callable<arg_t, Options, pedantic_option>
+  struct argpi_t : elementwise_callable<argpi_t, Options, pedantic_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-    EVE_CALLABLE_OBJECT(arg_t, arg_);
+    EVE_CALLABLE_OBJECT(argpi_t, argpi_);
   };
 
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
-//!   @var arg
+//!   @var argpi
 //!   @brief `elementwise_callable` object computing the phase angle (in radians).
 //!
 //!   @groupheader{Callable Signatures}
@@ -42,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto arg(floating_value auto x)                  noexcept; // 1
+//!      constexpr auto argpi(floating_value auto x)                  noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto abs[conditional_expr auto c](value auto x)  noexcept; // 2
@@ -55,7 +55,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    * `x`: [floating value](@ref eve::floating_value) argument.
+//!    * `x`: [floating value](@ref eve::floating_value) argpiument.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -66,16 +66,16 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. If the entry is `NaN` the result is `NaN`.
 //!
-//!  @note phase can be used as an alias
+//!  @note phasepi can be used as an alias
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/complex/arg)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/arg.cpp}
+//!  @godbolt{doc/math/argpi.cpp}
 //================================================================================================
-  inline constexpr auto arg = functor<arg_t>;
-  inline constexpr auto phase = functor<arg_t>;
+  inline constexpr auto argpi = functor<argpi_t>;
+  inline constexpr auto phasepi = functor<argpi_t>;
 //================================================================================================
 //!  @}
 //================================================================================================
@@ -86,9 +86,9 @@ namespace eve::detail
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+  argpi_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {
-    auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+    auto z = if_else(is_negative(a), oneeve::as(a)), eve::zero);
     if constexpr( platform::supports_nans && O::contains(pedantic))
       return if_else(is_nan(a), eve::allbits, z);
     else

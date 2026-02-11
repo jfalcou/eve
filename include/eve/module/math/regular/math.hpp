@@ -21,6 +21,7 @@
 #include <eve/module/math/regular/acscpi.hpp>
 #include <eve/module/math/regular/agd.hpp>
 #include <eve/module/math/regular/arg.hpp>
+#include <eve/module/math/regular/argpi.hpp>
 #include <eve/module/math/regular/asec.hpp>
 #include <eve/module/math/regular/asecd.hpp>
 #include <eve/module/math/regular/asech.hpp>
