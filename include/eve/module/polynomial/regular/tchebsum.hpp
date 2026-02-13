@@ -140,7 +140,7 @@ namespace eve::detail
     else if constexpr(O::contains(widen))
       return tchebsum(upgrade(xx), upgrade(cs)...);
     else if constexpr( N == 1 )
-      return r_t((cs/2)...);
+      return r_t((cs/r_t(2))...);
     else if constexpr(!O::contains(decreasing))
     {
       using e_t = element_type_t<r_t>;
@@ -156,7 +156,7 @@ namespace eve::detail
 
       auto br_clemshaw  = [ = ](){
         auto tt = x+x;
-        auto d1 =  zero(as(x));
+        auto d1 =  zero(as<r_t>());
         auto u0 = d1;
         auto u1 = d1;
         auto u2 = d1;
@@ -174,7 +174,7 @@ namespace eve::detail
       };
 
       auto br_reinch  = [ = ](){
-        auto d1 = zero(as(x));
+        auto d1 = zero(aas<r_t>());
         auto d2 = d1;
         auto u1 = d1;
         auto u2 = d1;
@@ -186,7 +186,7 @@ namespace eve::detail
         {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, ci+sgn*d2);
+          d1=fma[o](tt, u2, fam[o]ci, sgn, d2);
           u1=d1+sgn*u2;
           return d1;
         };
