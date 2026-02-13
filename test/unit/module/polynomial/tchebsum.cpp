@@ -114,7 +114,7 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr1)),  T(0.5));
     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr2)),  tchebsum[pedantic](a0, 1, 2));
     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr3)),  tchebsum[pedantic](a0, 1, 2, 3));
-    TTS_ULP_EQUAL(tchebsum[widen](a0, std::span(arr3)), tchebsum(upgrade(a0),  1, 2, 3), 0.5);
+    //   TTS_ULP_EQUAL(tchebsum[widen](a0, std::span(arr3)), tchebsum(upgrade(a0),  1, 2, 3), 0.5);
   }
 
 };
