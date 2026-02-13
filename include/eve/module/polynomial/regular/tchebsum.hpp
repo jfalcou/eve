@@ -186,7 +186,7 @@ namespace eve::detail
         {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, fam[o]ci, sgn, d2);
+          d1=fma[o](tt, u2, fam[o](ci, sgn, d2);
           u1=d1+sgn*u2;
           return d1;
         };
@@ -288,7 +288,7 @@ namespace eve::detail
         for(; cur != last; advance(cur, 1) ) {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, (*cur)+sgn*d2);
+          d1=fma[o](tt, u2, fam[o](*cur, sgn, d2);
           u1=d1+sgn*u2;
         };
         return eve::average(d1, sgn*d2);
