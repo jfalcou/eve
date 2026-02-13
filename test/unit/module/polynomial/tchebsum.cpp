@@ -54,91 +54,71 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
 
     TTS_EQUAL(tchebsum[pedantic](a0, 0), T(0));
     TTS_EQUAL(tchebsum[pedantic](a0, 1), T(0.5));
-    TTS_EQUAL(tchebsum[pedantic](a0, 1, 2),  T(0.5)
-              +eve::tchebytchev(T(2.0), a0))
-
-//     using e_t = eve::element_type_t<T>;
-//     if constexpr(sizeof(e_t) > 2)
-//     {
-//       TTS_EQUAL(tchebsum(a0, 1, 2, 3), fma(a0, fma(a0, 1, 2), 3));
-//       TTS_EQUAL(tchebsum[pedantic](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-//     }
-//     else
-//     {
-//       auto cv = [](auto e){ return eve::convert(e, eve::as<float>()); };
-//       TTS_EQUAL(tchebsum(a0, 1, 2, 3), (eve::convert(fma(cv(a0), fma(cv(a0), 1, 2), 3), eve::as<eve::float16_t>()))) ;
-//       TTS_EQUAL(tchebsum[pedantic](a0, 1, 2, 3), (eve::convert(fma[pedantic](cv(a0), fma[pedantic](cv(a0), 1, 2), 3), eve::as<eve::float16_t>())));
-//     }
-//     TTS_EQUAL(tchebsum[kahan](a0, 0), T(0));
-//     TTS_EQUAL(tchebsum[kahan](a0, 1), T(1));
-//     TTS_EQUAL(tchebsum[kahan](a0, 1, 2), fma[pedantic](a0, 1, 2));
-//     TTS_ULP_EQUAL(tchebsum[kahan](a0, 1, 2, 3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3), 0.5);
-//     if constexpr(sizeof(eve::element_type_t<T>) > 2)
-//       TTS_ULP_EQUAL(tchebsum[widen](a0, 1, 2, 3), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
+    TTS_EQUAL(tchebsum[pedantic](a0, 1, 2),  T(0.5)+eve::tchebytchev(T(2.0), a0));
  }
 
 
- //  //============================================================================
-//   //== tuples
-//   //============================================================================
-//   auto tab0 = eve::coefficients{};
-//   auto tab1 = eve::coefficients{1};
-//   auto tab2 = eve::coefficients{1, 2};
-//   auto tab3 = eve::coefficients{1, 2, 3};
+  //============================================================================
+  //== tuples
+  //============================================================================
+  auto tab0 = eve::coefficients{};
+  auto tab1 = eve::coefficients{1};
+  auto tab2 = eve::coefficients{1, 2};
+  auto tab3 = eve::coefficients{1, 2, 3};
 
-//   TTS_EQUAL(tchebsum(a0, tab0), T(0));
-//   TTS_EQUAL(tchebsum(a0, tab1), T(1));
-//   TTS_EQUAL(tchebsum(a0, tab2), tchebsum(a0, 1, 2));
-//   TTS_EQUAL(tchebsum(a0, tab3), tchebsum(a0, 1, 2, 3));
+  TTS_EQUAL(tchebsum(a0, tab0), T(0));
+  TTS_EQUAL(tchebsum(a0, tab1), T(1));
+  TTS_EQUAL(tchebsum(a0, tab2), tchebsum(a0, 1, 2));
+  TTS_EQUAL(tchebsum(a0, tab3), tchebsum(a0, 1, 2, 3));
 
-//   TTS_EQUAL(tchebsum[pedantic](a0, tab0), T(0));
-//   TTS_EQUAL(tchebsum[pedantic](a0, tab1), T(1));
-//   TTS_EQUAL(tchebsum[pedantic](a0, tab2), tchebsum[pedantic](a0, 1, 2));
-//   TTS_EQUAL(tchebsum[pedantic](a0, tab3), tchebsum[pedantic](a0, 1, 2, 3));
+  TTS_EQUAL(tchebsum[pedantic](a0, tab0), T(0));
+  TTS_EQUAL(tchebsum[pedantic](a0, tab1), T(1));
+  TTS_EQUAL(tchebsum[pedantic](a0, tab2), tchebsum[pedantic](a0, 1, 2));
+  TTS_EQUAL(tchebsum[pedantic](a0, tab3), tchebsum[pedantic](a0, 1, 2, 3));
 
-//   //============================================================================
-//   //== ranges
-//   //============================================================================
-//   {
-//     using v_t = std::vector<T>;
-//     auto vec1 = v_t{T(1)};
-//     auto vec2 = v_t{T(1), T(2)};
-//     auto vec3 = v_t{T(1), T(2), T(3)};
+  //============================================================================
+  //== ranges
+  //============================================================================
+  {
+    using v_t = std::vector<T>;
+    auto vec1 = v_t{T(1)};
+    auto vec2 = v_t{T(1), T(2)};
+    auto vec3 = v_t{T(1), T(2), T(3)};
 
-//     TTS_EQUAL(tchebsum(a0, vec1), T(1));
-//     TTS_EQUAL(tchebsum(a0, vec2), fma(a0, 1, 2));
-//     TTS_EQUAL(tchebsum(a0, vec3), fma(a0, fma(a0, 1, 2), 3));
+    TTS_EQUAL(tchebsum(a0, vec1), T(0.5));
+    TTS_EQUAL(tchebsum(a0, vec2), tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum(a0, vec3), tchebsum[pedantic](a0, 1, 2, 3));
 
-//     TTS_EQUAL(tchebsum[pedantic](a0, vec1), T(1));
-//     TTS_EQUAL(tchebsum[pedantic](a0, vec2), fma[pedantic](a0, 1, 2));
-//     TTS_EQUAL(tchebsum[pedantic](a0, vec3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-//   }
-//   {
-//     auto arr1 = std::array<T,1>{T(1)};
-//     auto arr2 = std::array<T,2>{T(1), T(2)};
-//     auto arr3 = std::array<T,3>{T(1), T(2), T(3)};
+    TTS_EQUAL(tchebsum[pedantic](a0, vec1), T(0.5));
+    TTS_EQUAL(tchebsum[pedantic](a0, vec2), tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum[pedantic](a0, vec3), tchebsum[pedantic](a0, 1, 2, 3));
+  }
+  {
+    auto arr1 = std::array<T,1>{T(1)};
+    auto arr2 = std::array<T,2>{T(1), T(2)};
+    auto arr3 = std::array<T,3>{T(1), T(2), T(3)};
 
-//     TTS_EQUAL(tchebsum(a0, arr1), T(1));
-//     TTS_EQUAL(tchebsum(a0, arr2), fma(a0, 1, 2));
-//     TTS_EQUAL(tchebsum(a0, arr3), fma(a0, fma(a0, 1, 2), 3));
+    TTS_EQUAL(tchebsum(a0, arr1), T(0.5));
+    TTS_EQUAL(tchebsum(a0, arr2), tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum(a0, arr3), tchebsum[pedantic](a0, 1, 2, 3));
 
-//     TTS_EQUAL(tchebsum[pedantic](a0, arr1), T(1));
-//     TTS_EQUAL(tchebsum[pedantic](a0, arr2), fma[pedantic](a0, 1, 2));
-//     TTS_EQUAL(tchebsum[pedantic](a0, arr3), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-//   }
-//   {
-//     auto arr1 = std::array<T,1>{T(1)};
-//     auto arr2 = std::array<T,2>{T(1), T(2)};
-//     auto arr3 = std::array<T,3>{T(1), T(2), T(3)};
+    TTS_EQUAL(tchebsum[pedantic](a0, arr1),  T(0.5));
+    TTS_EQUAL(tchebsum[pedantic](a0, arr2),  tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum[pedantic](a0, arr3),  tchebsum[pedantic](a0, 1, 2, 3));
+  }
+  {
+    auto arr1 = std::array<T,1>{T(1)};
+    auto arr2 = std::array<T,2>{T(1), T(2)};
+    auto arr3 = std::array<T,3>{T(1), T(2), T(3)};
 
-//     TTS_EQUAL(tchebsum(a0, std::span(arr1)), T(1));
-//     TTS_EQUAL(tchebsum(a0, std::span(arr2)), fma(a0, 1, 2));
-//     TTS_EQUAL(tchebsum(a0, std::span(arr3)), fma(a0, fma(a0, 1, 2), 3));
+    TTS_EQUAL(tchebsum(a0, std::span(arr1)),  T(0.5));
+    TTS_EQUAL(tchebsum(a0, std::span(arr2)),  tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum(a0, std::span(arr3)),  tchebsum[pedantic](a0, 1, 2, 3));
 
-//     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr1)), T(1));
-//     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr2)), fma[pedantic](a0, 1, 2));
-//     TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr3)), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
-//     TTS_ULP_EQUAL(tchebsum[widen](a0, std::span(arr3)), fma[pedantic](upgrade(a0), fma[pedantic](upgrade(a0), 1, 2), 3), 0.5);
-//   }
+    TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr1)),  T(0.5));
+    TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr2)),  tchebsum[pedantic](a0, 1, 2));
+    TTS_EQUAL(tchebsum[pedantic](a0, std::span(arr3)),  tchebsum[pedantic](a0, 1, 2, 3));
+    TTS_ULP_EQUAL(tchebsum[widen](a0, std::span(arr3)), tchebsum(upgrade(a0),  1, 2, 3));
+  }
 
 };
