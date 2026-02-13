@@ -125,15 +125,6 @@ namespace eve
 
 namespace eve::detail
 {
-//     template<value X, callable_options O>
-//     EVE_FORCEINLINE constexpr auto
-//     tchebsum_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
-//     {
-//       if constexpr(O::contains(widen))
-//         return eve::zero(as<upgrade_t<X>>());
-//       else
-//         return eve::zero(as<X>());
-//     }
 
   template<value T, typename... Cs, callable_options O>
   EVE_FORCEINLINE constexpr auto
@@ -161,6 +152,7 @@ namespace eve::detail
     {
       //This code is a C++ vectorized version of Alan Macleod's Fortran code
       auto x = r_t(xx);
+      auto sgn = eve::signnz(x);
 
       auto br_clemshaw  = [ = ](){
         auto tt = x+x;
@@ -181,48 +173,27 @@ namespace eve::detail
         return eve::average(that, -u2);
       };
 
-      auto br_reinch_pos  = [ = ](){
-        std::cout << "reinch_pos" << std::endl;
+      auto br_reinch  = [ = ](){
         auto d1 = zero(as(x));
         auto d2 = d1;
         auto u1 = d1;
         auto u2 = d1;
-        auto tt = (x-eve::half(as(x)))-eve::half(as(x));
+        auto shalf = sgn/2;
+        auto tt = (x-shalf)-shalf;
         tt += tt;
-        auto reinch_pos_step = [&](auto ci)
+
+        auto reinch_step = [&](auto ci)
         {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, ci+d2);
-          u1=d1+u2;
+          d1=fma[o](tt, u2, ci+sgn*d2);
+          u1=d1+sgn*u2;
           return d1;
         };
         r_t that(0);
-        ((that = reinch_pos_step(cs)), ...);
-        return eve::average(that, d2);
+        ((that = reinch_step(cs)), ...);
+        return eve::average(that, sgn*d2);
       };
-
-      auto br_reinch_neg  = [ = ](){
-        std::cout << "reinch_neg" << std::endl;
-        auto d1 = zero(as(x));
-        auto d2 = d1;
-        auto u1 = d1;
-        auto u2 = d1;
-        auto tt = (x+eve::half(as(x)))+eve::half(as(x));
-        tt += tt;
-        auto reinch_neg_step = [&](auto ci)
-        {
-          d2=d1;
-          u2=u1;
-          d1=fma[o](tt, u2, ci-d2);
-          u1=d1-u2;
-          return d1;
-        };
-        r_t that(0);
-        ((that = reinch_neg_step(cs)), ...);
-        return eve::average(that, -d2);
-      };
-
       auto r       = nan(as(x));
       auto notdone = is_not_nan(x);
       if( eve::any(notdone) )
@@ -230,11 +201,7 @@ namespace eve::detail
         notdone = next_interval(br_clemshaw, notdone, eve::is_less(eve::abs(x), r_t(0.6)), r);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_reinch_pos, notdone,  eve::is_gez(x), r);
-          if( eve::any(notdone) )
-          {
-            last_interval(br_reinch_neg, notdone, r);
-          }
+          last_interval(br_reinch, notdone, r);
         }
       }
       return r;
@@ -264,25 +231,80 @@ namespace eve::detail
       else return r_t(a);
     };
     auto x    = up_if(xx);
-    auto cur  = std::rbegin(r);
-    auto last = std::rend(r);
-    if( last == cur ) return up_if(zero(as<r_t>()));
-    else if( std::distance(cur, last) == 1 ) return up_if(*cur);
+    auto current  = [&r](){
+      if constexpr(O::contains(increasing))
+         return std::rbegin(r);
+      else
+        return std::begin(r);
+    };
+    auto der  = [&r](){
+      if constexpr(O::contains(increasing))
+         return std::rend(r);
+      else
+        return std::end(r);
+    };
+    if( der() == current() )
+    {
+      return up_if(zero(as<r_t>()));
+    }
+    else if( std::distance(current(), der()) == 1 )
+    {
+      return up_if((*current())/2);
+    }
     else
     {
-      using std::advance;
-      auto that = up_if(0);
-      auto u0 = that;
-      auto u1 = that;
-      auto u2 = that;
-      auto tt = x+x;
+      auto sgn = eve::signnz(x);
+      auto br_clemshaw  = [&](){
+        auto cur = current();
+        auto last= der();
+        using std::advance;
+        auto that = up_if(0);
+        auto u0 = that;
+        auto u1 = that;
+        auto u2 = that;
+        auto tt = x+x;
 
-      for(; cur != last; advance(cur, 1) ) {
-        u2=u1;
-        u1=u0;
-        u0=eve::fma[o](tt, u1, (*cur)-u2);
+        for(; cur != last; advance(cur, 1) ) {
+          u2=u1;
+          u1=u0;
+          u0=eve::fma[o](tt, u1, (*cur)-u2);
+        }
+        return eve::average(u0, -u2);
+      };
+
+      auto br_reinch  = [ & ](){
+        auto cur = current();
+        auto last= der();
+        using std::advance;
+        auto that = up_if(0);
+        auto d1 = that;
+        auto d2 = d1;
+        auto u1 = d1;
+        auto u2 = d1;
+        auto shalf = sgn/2;
+        auto tt = (x-shalf)-shalf;
+        tt += tt;
+
+        for(; cur != last; advance(cur, 1) ) {
+          d2=d1;
+          u2=u1;
+          d1=fma[o](tt, u2, (*cur)+sgn*d2);
+          u1=d1+sgn*u2;
+        };
+        return eve::average(d1, sgn*d2);
+      };
+
+      auto res     = nan(as(x));
+      auto notdone = is_not_nan(x);
+      if( eve::any(notdone) )
+      {
+        notdone = next_interval(br_clemshaw, notdone, eve::is_less(eve::abs(x), r_t(0.6)), res);
+        if( eve::any(notdone) )
+        {
+          last_interval(br_reinch, notdone, res);
+        }
       }
-      return (u0-u2)/2;
+      return res;
     }
   }
 }

@@ -41,9 +41,17 @@ double tch2(auto t, auto ... c)
 int main()
 {
   std::array<double, 4> c{1, 2, 3, 4};
+ std::array<double, 4> d{4.0, 3.0, 2.0, 1.0};
   std::cout <<  tch1(-2.0, c) << std::endl;
-  std::cout <<  eve::tchebsum(-2.0, c)<< std::endl;
-  std::cout <<  tch2(-2.0, 4.0, 3.0, 2.0, 1.0)<< std::endl;
-  std::cout <<  eve::tchebsum[eve::decreasing](-2.0, 4.0, 3.0, 2.0, 1.0)<< std::endl;
-  std::cout <<  eve::tchebsum(-2.0, 1.0, 2.0, 3.0, 4.0)<< std::endl;
+  std::cout <<  eve::tchebsum[eve::increasing](2.0, c)<< std::endl;
+  std::cout <<  eve::tchebsum[eve::decreasing](2.0, d)<< std::endl;
+  std::cout <<  tch2(2.0, 4.0, 3.0, 2.0, 1.0)<< std::endl;
+  std::cout <<  eve::tchebsum[eve::decreasing](2.0, 4.0, 3.0, 2.0, 1.0)<< std::endl;
+  std::cout <<  eve::tchebsum(2.0, 1.0, 2.0, 3.0, 4.0)<< std::endl;
+
+  eve::wide<double, eve::fixed<4>> xx{-2.0, -0.44, 0.44, 2.0};
+  std::cout <<  eve::tchebsum[eve::increasing](xx, c)<< std::endl;
+  std::cout <<  eve::tchebsum[eve::decreasing](xx, d)<< std::endl;
+  std::cout <<  eve::tchebsum(xx, 1.0, 2.0, 3.0, 4.0)<< std::endl;
+
 }
