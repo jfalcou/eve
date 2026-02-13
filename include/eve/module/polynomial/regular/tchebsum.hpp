@@ -186,7 +186,7 @@ namespace eve::detail
         {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, fam[o](ci, sgn, d2);
+          d1=fma[o](tt, u2, fam[o](ci, sgn, d2));
           u1=d1+sgn*u2;
           return d1;
         };
