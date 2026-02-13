@@ -50,11 +50,12 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
   {
     TTS_EQUAL(tchebsum(a0, 0), T(0));
     TTS_EQUAL(tchebsum(a0, 1), T(0.5));
-    TTS_EQUAL(tchebsum(a0, 1, 2), 0.5+eve::tchebytchev(1, a0));
+    TTS_EQUAL(tchebsum(a0, 1, 2), T(0.5)+eve::tchebytchev(T(2.0), a0));
 
-//     TTS_EQUAL(tchebsum[pedantic](a0, 0), T(0));
-//     TTS_EQUAL(tchebsum[pedantic](a0, 1), T(0.5));
-//     TTS_EQUAL(tchebsum[pedantic](a0, 1, 2),  0.5+eve::tchebytchev(1, a0));
+    TTS_EQUAL(tchebsum[pedantic](a0, 0), T(0));
+    TTS_EQUAL(tchebsum[pedantic](a0, 1), T(0.5));
+    TTS_EQUAL(tchebsum[pedantic](a0, 1, 2),  T(0.5)
+              +eve::tchebytchev(T(2.0), a0))
 
 //     using e_t = eve::element_type_t<T>;
 //     if constexpr(sizeof(e_t) > 2)
