@@ -174,7 +174,7 @@ namespace eve::detail
       };
 
       auto br_reinch  = [ = ](){
-        auto d1 = zero(aas<r_t>());
+        auto d1 = zero(as<r_t>());
         auto d2 = d1;
         auto u1 = d1;
         auto u2 = d1;
