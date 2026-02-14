@@ -82,5 +82,3 @@ TTS_CASE("Check return types of tchebytchev")
   TTS_PASS("SKipping due to no reference available");
 };
 #endif
-
-
