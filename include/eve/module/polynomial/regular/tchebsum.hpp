@@ -127,7 +127,7 @@ namespace eve::detail
 {
 
   template<value T, typename... Cs, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   tchebsum_(EVE_REQUIRES(cpu_), O const & o, T xx, Cs... cs) noexcept
   {
     using r_t   = common_value_t<T, Cs...>;
@@ -143,9 +143,8 @@ namespace eve::detail
       return r_t((cs/r_t(2))...);
     else if constexpr(!O::contains(decreasing))
     {
-      using e_t = element_type_t<r_t>;
-      using t_t = kumi::result::fill_t<sizeof...(cs), e_t>;
-      t_t tup{e_t(cs)...};
+      using t_t = kumi::result::fill_t<sizeof...(cs), r_t>;
+      t_t tup{r_t(cs)...};
       return kumi::apply( [&](auto... m) { return tchebsum[o][decreasing](xx, m...); }, kumi::reverse(tup));
     }
     else
@@ -209,20 +208,20 @@ namespace eve::detail
   }
 
   template<value X, eve::product_type Tuple, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   tchebsum_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const& tup) noexcept
   {
     if constexpr(Tuple::size() == 0)
       return eve::zero(as(x));
-    else if constexpr(!O::contains(decreasing))
-      return kumi::apply( [&](auto... m) { return tchebsum[o](x, m...); }, kumi::reverse(tup));
-    else
+    else if constexpr(!O::contains(increasing))
       return kumi::apply( [&](auto... m) { return tchebsum[o](x, m...); }, tup);
+    else
+      return kumi::apply( [&](auto... m) { return tchebsum[o](x, m...); }, kumi::reverse(tup));
   }
 
 
   template<typename X, range R, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   tchebsum_(EVE_REQUIRES(cpu_), O const & o, X xx, R const& r) noexcept
   {
     using r_t = common_value_t<X, typename R::value_type>;
@@ -232,13 +231,13 @@ namespace eve::detail
     };
     auto x    = up_if(xx);
     auto current  = [&r](){
-      if constexpr(O::contains(increasing))
+      if constexpr(!O::contains(increasing))
          return std::rbegin(r);
       else
         return std::begin(r);
     };
     auto der  = [&r](){
-      if constexpr(O::contains(increasing))
+      if constexpr(!O::contains(increasing))
          return std::rend(r);
       else
         return std::end(r);
@@ -258,7 +257,7 @@ namespace eve::detail
         auto cur = current();
         auto last= der();
         using std::advance;
-        auto that = up_if(0);
+        auto that = eve::zero(as(x));
         auto u0 = that;
         auto u1 = that;
         auto u2 = that;
@@ -267,7 +266,7 @@ namespace eve::detail
         for(; cur != last; advance(cur, 1) ) {
           u2=u1;
           u1=u0;
-          u0=eve::fma[o](tt, u1, (*cur)-u2);
+          u0=eve::fma[o](tt, u1, up_if(*cur)-u2);
         }
         return eve::average(u0, -u2);
       };
@@ -276,7 +275,7 @@ namespace eve::detail
         auto cur = current();
         auto last= der();
         using std::advance;
-        auto that = up_if(0);
+        auto that = eve::zero(as(x));
         auto d1 = that;
         auto d2 = d1;
         auto u1 = d1;
@@ -288,7 +287,7 @@ namespace eve::detail
         for(; cur != last; advance(cur, 1) ) {
           d2=d1;
           u2=u1;
-          d1=fma[o](tt, u2, fam[o](*cur, sgn, d2));
+          d1=fma[o](tt, u2, fam[o](up_if(*cur), sgn, d2));
           u1=d1+sgn*u2;
         };
         return eve::average(d1, sgn*d2);
@@ -298,7 +297,7 @@ namespace eve::detail
       auto notdone = is_not_nan(x);
       if( eve::any(notdone) )
       {
-        notdone = next_interval(br_clemshaw, notdone, eve::is_less(eve::abs(x), r_t(0.6)), res);
+        notdone = next_interval(br_clemshaw, notdone, eve::is_less(eve::abs(x), up_if(r_t(0.6))), res);
         if( eve::any(notdone) )
         {
           last_interval(br_reinch, notdone, res);

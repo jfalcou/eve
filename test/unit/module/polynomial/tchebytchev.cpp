@@ -77,10 +77,8 @@ TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
   TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, u4, u3), u5, 300);
 };
 #else
-TTS_CASE("Check return types of tchebytchev")
+TTS_CASE("Check behavior of successor(tchebytchev")
 {
   TTS_PASS("SKipping due to no reference available");
 };
 #endif
-
-
