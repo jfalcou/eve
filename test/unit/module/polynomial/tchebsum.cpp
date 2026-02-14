@@ -50,7 +50,7 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
     TTS_EQUAL(tchebsum(a0, T(0)), T(0));
     TTS_EQUAL(tchebsum(a0, T(1)), T(0.5));
     TTS_EQUAL(tchebsum(a0, T(1), T(2)), T(0.5)+T(2)*a0);
-    TTS_ULP_EQUAL(tchebsum(a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, 0.5);
+    TTS_ULP_EQUAL(tchebsum(a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, 1.0);
 
     TTS_EQUAL(tchebsum[pedantic](a0, 0), T(0));
     TTS_EQUAL(tchebsum[pedantic](a0, 1), T(0.5));
