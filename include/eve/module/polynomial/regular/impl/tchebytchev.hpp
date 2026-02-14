@@ -28,55 +28,32 @@ namespace eve::detail
   tchebytchev_(EVE_REQUIRES(cpu_),  O const& o, I n, T x)
   {
     using r_t = as_wide_as_t<T, I>;
-    if constexpr(O::contains(kind_1))
+    if constexpr(!O::contains(kind_2))
     {
       if constexpr(scalar_value<I>)
       {
         if(is_ltz(n)) return eve::nan(eve::as<r_t>());
-        if constexpr(scalar_value<T>)
+        switch( int(n) )
         {
-          switch( int(n) )
+        case 0: return one(as(x));
+        case 1: return x;
+        case 2: return fma(x, x + x, mone(as(x)));
+        case 3: return x * fms(4 * x, x, 3);
+        case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
+        default:
+          auto nn   = T(n);
+          auto z    = eve::abs(x);
+          auto test = (z <= one(as(z)));
+          if( all(test) ) return cos(nn * acos(x));
+          else
           {
-          case 0: return one(as(x));
-          case 1: return x;
-          case 2: return fma(x, x + x, mone(as(x)));
-          case 3: return x * (4 * sqr(x) - 3);
-          case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
-          default:
-            auto nn = T(n);
-            auto z  = eve::abs(x);
-            if( z <= one(as(z)) ) return cos(nn * acos(x));
+            auto t = cosh(nn * acosh(z));
+            if( none(test) ) return if_else(is_gez(x), t, t * sign_alternate(nn));
             else
             {
-              auto t = cosh(nn * acosh(z));
-              return is_gez(x) ? t : t * sign_alternate(nn);
-            }
-          }
-        }
-        else
-        {
-          switch( int(n) )
-          {
-          case 0: return one(as(x));
-          case 1: return x;
-          case 2: return fma(x, x + x, mone(as(x)));
-          case 3: return x * fms(4 * x, x, 3);
-          case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
-          default:
-            auto nn   = T(n);
-            auto z    = eve::abs(x);
-            auto test = (z <= one(as(z)));
-            if( all(test) ) return cos(nn * acos(x));
-            else
-            {
-              auto t = cosh(nn * acosh(z));
-              if( none(test) ) return if_else(is_gez(x), t, t * sign_alternate(nn));
-              else
-              {
-                auto r0 = cos(nn * acos(x));
-                auto r1 = if_else(is_gez(x), t, t * sign_alternate(nn));
-                return if_else(test, r0, r1);
-              }
+              auto r0 = cos(nn * acos(x));
+              auto r1 = if_else(is_gez(x), t, t * sign_alternate(nn));
+              return if_else(test, r0, r1);
             }
           }
         }
