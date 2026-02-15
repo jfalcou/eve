@@ -18,14 +18,14 @@
 
 namespace eve
 {
-template<typename Options>
-struct acos_t : elementwise_callable<acos_t, Options, raw_option,
-                                     rad_option, pirad_option, deg_option>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct acos_t : elementwise_callable<acos_t, Options, raw_option,
+                                       rad_option, pirad_option, deg_option>
+  {
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(acos_t, acos_);
+    EVE_CALLABLE_OBJECT(acos_t, acos_);
 };
 
 //================================================================================================
@@ -151,4 +151,6 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option,
       }
     }
   }
+  constexpr auto acosd = eve::acos[eve::deg];
+  constexpr auto acospi= eve::acos[eve::pirad];
 }

@@ -108,4 +108,7 @@ namespace eve
       return cos_kernel[o](a0);
     }
   }
+  constexpr auto cosd = eve::cos[eve::deg];
+  constexpr auto cospi= eve::cos[eve::pirad];
+
 }
