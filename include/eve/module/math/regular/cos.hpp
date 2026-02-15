@@ -7,18 +7,7 @@
 //==================================================================================================
 #pragma once
 
-// #include <eve/arch.hpp>
-// #include <eve/traits/overload.hpp>
-// #include <eve/module/core.hpp>
-// #include <eve/module/core/decorator/core.hpp>
-// #include <eve/module/math/constant/pi2o_16.hpp>
-// #include <eve/module/math/constant/pio_2.hpp>
-// #include <eve/module/math/constant/pio_4.hpp>
-
-// #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-// #include <eve/module/math/detail/generic/trig_finalize.hpp>
-// #include <eve/module/math/regular/rempio2.hpp>
-   #include <eve/module/math/detail/generic/cos_kernel.hpp>
+#include <eve/module/math/detail/generic/cos_kernel.hpp>
 
 namespace eve
 {
@@ -52,16 +41,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto cos(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto cos(floating_value auto x)                          noexcept; // 1.a
 //!
 //!      // Lanes masking
 //!      constexpr auto cos[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto cos[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto cos[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto cos[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto cos[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto cs[rad](floating_value auto x)                       noexcept; // 1.a
+//!      constexpr auto cos[deg](floating_value auto x)                      noexcept; // 1.b
+//!      constexpr auto cos[pirad](floating_value auto x)                    noexcept; // 1.c
+//!      constexpr auto cos[quarter_circle](floating_value auto x)           noexcept; // 3.a
+//!      constexpr auto cos[half_circle](floating_value auto x)              noexcept; // 3.b
+//!      constexpr auto cos[full_circle](floating_value auto x)              noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
@@ -74,16 +66,21 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
-//!      In particular:
-//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, Nan is returned.
-//!        * If the element is a `Nan`, `Nan` is returned.
+//!       1. assume a parameter in radian.
+//!       2. assume a parameter in degree.
+//!       3. assume a parameter in \f$\pi\f$ multiples. </br>
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!         1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!         2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!         3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
 //!
+//!       In particular:
+//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!       * If the element is \f$\pm\infty\f$, Nan is returned.
+//!       * If the element is a `Nan`, `Nan` is returned.
+///!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Cosinus)
@@ -103,7 +100,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T cos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
     if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-      return eve::detail::apply_fp16_as_fp32(eve::cos[o], a0);
+      return eve::detail::apply_fp16_as_fp32(eve::cos_kernel[o], a0);
     else
       return cos_kernel[o](a0);
     }
