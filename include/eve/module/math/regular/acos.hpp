@@ -13,16 +13,19 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/asin.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 
 namespace eve
 {
-template<typename Options>
-struct acos_t : elementwise_callable<acos_t, Options, raw_option>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct acos_t : elementwise_callable<acos_t, Options, raw_option,
+                                       rad_option, radpi_option, deg_option>
+  {
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(acos_t, acos_);
+    EVE_CALLABLE_OBJECT(acos_t, acos_);
 };
 
 //================================================================================================
@@ -90,7 +93,13 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+      if constexpr(O::contains(rad))
+        return acos[o.drop(rad)](a0);
+      else if constexpr(O::contains(deg))
+        return radindeg(acos[o.drop(deg)](a0));
+      else if constexpr(O::contains(radpi))
+        return radinpi(acos[o.drop(radpi)](a0));
+      else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::acos[o], a0);
       else if constexpr(O::contains(raw))
       {
@@ -142,4 +151,6 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
       }
     }
   }
+  constexpr auto acosd = eve::acos[eve::deg];
+  constexpr auto acospi= eve::acos[eve::radpi];
 }

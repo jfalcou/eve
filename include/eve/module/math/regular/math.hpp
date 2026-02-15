@@ -8,9 +8,7 @@
 #pragma once
 
 #include <eve/module/math/regular/acos.hpp>
-#include <eve/module/math/regular/acosd.hpp>
 #include <eve/module/math/regular/acosh.hpp>
-#include <eve/module/math/regular/acospi.hpp>
 #include <eve/module/math/regular/acot.hpp>
 #include <eve/module/math/regular/acotd.hpp>
 #include <eve/module/math/regular/acoth.hpp>
@@ -39,9 +37,7 @@
 #include <eve/module/math/regular/atanpi.hpp>
 #include <eve/module/math/regular/cbrt.hpp>
 #include <eve/module/math/regular/cos.hpp>
-#include <eve/module/math/regular/cosd.hpp>
 #include <eve/module/math/regular/cosh.hpp>
-#include <eve/module/math/regular/cospi.hpp>
 #include <eve/module/math/regular/cot.hpp>
 #include <eve/module/math/regular/cotd.hpp>
 #include <eve/module/math/regular/coth.hpp>
