@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of acotpi", eve::test::simd::ieee_reals_wf16)
+TTS_CASE_TPL("Check return types of acotpi", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of acotpi", eve::test::simd::ieee_reals_wf16)
 // acotpi  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of acotpi on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-1e10, 1e10)))
 <typename T>(T const& a0)
 {
@@ -43,7 +43,7 @@ TTS_CASE_WITH("Check behavior of acotpi on wide",
 // Tests for masked acotpi
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acotpi)(eve::wide)",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

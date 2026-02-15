@@ -107,7 +107,7 @@ namespace eve
       }
     }
   }
-  constexpr auto acotd = eve::acos[eve::deg];
-  constexpr auto acotpi= eve::acos[eve::radpi];
+  constexpr auto acotd = eve::acot[eve::deg];
+  constexpr auto acotpi= eve::acot[eve::radpi];
 
 }
