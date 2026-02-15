@@ -103,4 +103,6 @@ namespace eve
         return cot_kernel[o](a0);
     }
   }
+  constexpr auto cotd = eve::cot[eve::deg];
+  constexpr auto cotpi= eve::cot[eve::radpi];
 }
