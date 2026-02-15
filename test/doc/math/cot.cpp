@@ -10,6 +10,9 @@ int main()
   std::cout << "<- wf                     = " << wf << "\n";
 
   std::cout << "-> cot(wf)                = " << eve::cot(wf) << "\n";
+  std::cout << "-> cos[deg](radindeg(wf)) = " << eve::cos[eve::deg](eve::radindeg(wf)) << "\n";
+  std::cout << "-> cos[radpi](wf/pi)      = " << eve::cos[eve::radpi](wf*eve::inv_pi(eve::as(wf))) << "\n";
+  std::cout << "-> cos[rad](wf)           = " << eve::cos[eve::rad](wf) << "\n";
   std::cout << "-> cot[ignore_last(2)](wf)= " << eve::cot[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> cot[wf > 0.0](wf)      = " << eve::cot[wf > 0.0](wf) << "\n";
   std::cout << "-> cot[quarter_circle](wf)= " << eve::cot[eve::quarter_circle](wf) << "\n";

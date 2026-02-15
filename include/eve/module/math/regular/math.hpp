@@ -10,9 +10,7 @@
 #include <eve/module/math/regular/acos.hpp>
 #include <eve/module/math/regular/acosh.hpp>
 #include <eve/module/math/regular/acot.hpp>
-#include <eve/module/math/regular/acotd.hpp>
 #include <eve/module/math/regular/acoth.hpp>
-#include <eve/module/math/regular/acotpi.hpp>
 #include <eve/module/math/regular/acsc.hpp>
 #include <eve/module/math/regular/acscd.hpp>
 #include <eve/module/math/regular/acsch.hpp>
@@ -39,9 +37,7 @@
 #include <eve/module/math/regular/cos.hpp>
 #include <eve/module/math/regular/cosh.hpp>
 #include <eve/module/math/regular/cot.hpp>
-#include <eve/module/math/regular/cotd.hpp>
 #include <eve/module/math/regular/coth.hpp>
-#include <eve/module/math/regular/cotpi.hpp>
 #include <eve/module/math/regular/cscd.hpp>
 #include <eve/module/math/regular/csch.hpp>
 #include <eve/module/math/regular/cscpi.hpp>

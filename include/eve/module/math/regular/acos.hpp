@@ -50,10 +50,13 @@ namespace eve
 //!
 //!      // Semantic option
 //!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 4
 //!
 //!      // Lanes masking
-//!      constexpr auto acos[conditional_expr auto c](floating_value auto x) noexcept; // 3
-//!      constexpr auto acos[logical_value auto m](floating_value auto x)    noexcept; // 3
+//!      constexpr auto acos[conditional_expr auto c](floating_value auto x) noexcept; // 5
+//!      constexpr auto acos[logical_value auto m](floating_value auto x)    noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -65,14 +68,16 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine in radians of the
 //!      input in the range \f$[0 , \pi]\f$.
 //!      In particular:
 //!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
-//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!    3. Result in degrees
+//!    4. Result in \f$\pi\f$ multiples
+//!    5. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: acos](https://en.cppreference.com/w/cpp/numeric/math/acos)
