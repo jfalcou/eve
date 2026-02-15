@@ -35,5 +35,4 @@ int main()
     std::cout << "-> t[" << i << "]                                    = " <<  t[i] << '\n';
     std::cout << "-> tchebytchev(" << i << ", xd)                      = " << eve::tchebytchev(i, xd)   << '\n';
  }
-
 }

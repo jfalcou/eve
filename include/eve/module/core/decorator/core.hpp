@@ -25,8 +25,10 @@ namespace eve
   struct compensated_mode     {};
   struct condon_shortley_mode {};
   struct cylindrical_mode     {};
+  struct decreasing_mode      {};
   struct definitely_mode      {};
   struct eccentric_mode       {};
+  struct increasing_mode      {};
   struct harrisson_mode       {};
   struct kahan_mode           {};
   struct kind_1_mode          {};
@@ -67,9 +69,11 @@ namespace eve
   [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
+  [[maybe_unused]] inline constexpr auto decreasing       = ::rbr::flag( decreasing_mode{}      );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
   [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}       );
   [[maybe_unused]] inline constexpr auto harrisson        = ::rbr::flag( harrisson_mode{}       );
+  [[maybe_unused]] inline constexpr auto increasing       = ::rbr::flag( increasing_mode{}      );
   [[maybe_unused]] inline constexpr auto kahan            = ::rbr::flag( kahan_mode{}           );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
@@ -101,8 +105,10 @@ namespace eve
   struct compensated_option     : detail::exact_option<compensated>     {};
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct cylindrical_option     : detail::exact_option<cylindrical>     {};
+  struct decreasing_option      : detail::exact_option<decreasing>      {};
   struct eccentric_option       : detail::exact_option<eccentric>       {};
   struct harrisson_option       : detail::exact_option<harrisson>       {};
+  struct increasing_option      : detail::exact_option<increasing>      {};
   struct kahan_option           : detail::exact_option<kahan>           {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};

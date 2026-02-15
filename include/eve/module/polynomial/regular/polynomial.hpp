@@ -14,3 +14,4 @@
 #include <eve/module/polynomial/regular/laguerre.hpp>
 #include <eve/module/polynomial/regular/legendre.hpp>
 #include <eve/module/polynomial/regular/tchebytchev.hpp>
+#include <eve/module/polynomial/regular/tchebsum.hpp>
