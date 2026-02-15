@@ -11,7 +11,7 @@ int main()
 
   std::cout << "-> cos(wf)                = " << eve::cos(wf) << "\n";
   std::cout << "-> cos[deg](radindeg(wf)) = " << eve::cos[eve::deg](eve::radindeg(wf)) << "\n";
-  std::cout << "-> cos[pirad](wf/pi)      = " << eve::cos[eve::pirad](wf*eve::inv_pi(eve::as(wf))) << "\n";
+  std::cout << "-> cos[radpi](wf/pi)      = " << eve::cos[eve::radpi](wf*eve::inv_pi(eve::as(wf))) << "\n";
   std::cout << "-> cos[rad](wf)           = " << eve::cos[eve::rad](wf) << "\n";
   std::cout << "-> cos[ignore_last(2)](wf)= " << eve::cos[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> cos[wf > 0.0](wf)      = " << eve::cos[wf > 0.0](wf) << "\n";

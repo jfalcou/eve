@@ -26,7 +26,7 @@ namespace eve
   struct cos_t : elementwise_callable<cos_t, Options, quarter_circle_option,
                                       half_circle_option, full_circle_option,
                                       medium_option, big_option,
-                                      rad_option, pirad_option, deg_option>
+                                      rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -109,6 +109,6 @@ namespace eve
     }
   }
   constexpr auto cosd = eve::cos[eve::deg];
-  constexpr auto cospi= eve::cos[eve::pirad];
+  constexpr auto cospi= eve::cos[eve::radpi];
 
 }

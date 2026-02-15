@@ -29,7 +29,7 @@ namespace eve
   struct cos_kernel_t : elementwise_callable<cos_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,
                                              medium_option, big_option,
-                                             rad_option, pirad_option, deg_option>
+                                             rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -50,7 +50,7 @@ namespace eve::detail
     {
       if constexpr(O::contains(quarter_circle))
       {
-        return eve::cos_kernel[pirad][quarter_circle](div_180(a0));
+        return eve::cos_kernel[radpi][quarter_circle](div_180(a0));
       }
       else
       {
@@ -62,7 +62,7 @@ namespace eve::detail
         return cos_finalize(fn, xr, dxr);
       }
     }
-    else if constexpr(O::contains(pirad))
+    else if constexpr(O::contains(radpi))
     {
       if constexpr(O::contains(quarter_circle))
       {

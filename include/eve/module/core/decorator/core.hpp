@@ -52,7 +52,7 @@ namespace eve
   struct widen_mode       {};
   struct unsafe_mode      {};
 
-  struct pirad_mode       {};
+  struct radpi_mode       {};
   struct rad_mode         {};
   struct deg_mode         {};
 
@@ -105,7 +105,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto to_nearest_odd   = ::rbr::flag( to_nearest_odd_mode{}  );
   [[maybe_unused]] inline constexpr auto unbiased         = ::rbr::flag( unbiased_mode{}        );
 
-  [[maybe_unused]] inline constexpr auto pirad            = ::rbr::flag( pirad_mode{}           );
+  [[maybe_unused]] inline constexpr auto radpi            = ::rbr::flag( radpi_mode{}           );
   [[maybe_unused]] inline constexpr auto rad              = ::rbr::flag( rad_mode{}             );
   [[maybe_unused]] inline constexpr auto deg              = ::rbr::flag( deg_mode{}             );
 
@@ -147,7 +147,7 @@ namespace eve
   struct to_nearest_odd_option  : detail::exact_option<to_nearest_odd>  {};
   struct unbiased_option        : detail::exact_option<unbiased>        {};
 
-  struct pirad_option           : detail::exact_option<pirad>           {};
+  struct radpi_option           : detail::exact_option<radpi>           {};
   struct rad_option             : detail::exact_option<rad>             {};
   struct deg_option             : detail::exact_option<deg>             {};
 

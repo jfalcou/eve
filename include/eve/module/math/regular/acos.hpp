@@ -20,7 +20,7 @@ namespace eve
 {
   template<typename Options>
   struct acos_t : elementwise_callable<acos_t, Options, raw_option,
-                                       rad_option, pirad_option, deg_option>
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -97,8 +97,8 @@ namespace eve
         return acos[o.drop(rad)](a0);
       else if constexpr(O::contains(deg))
         return radindeg(acos[o.drop(deg)](a0));
-      else if constexpr(O::contains(pirad))
-        return radinpi(acos[o.drop(pirad)](a0));
+      else if constexpr(O::contains(radpi))
+        return radinpi(acos[o.drop(radpi)](a0));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::acos[o], a0);
       else if constexpr(O::contains(raw))
@@ -152,5 +152,5 @@ namespace eve
     }
   }
   constexpr auto acosd = eve::acos[eve::deg];
-  constexpr auto acospi= eve::acos[eve::pirad];
+  constexpr auto acospi= eve::acos[eve::radpi];
 }
