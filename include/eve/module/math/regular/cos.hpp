@@ -48,7 +48,7 @@ namespace eve
 //!      constexpr auto cos[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto cs[rad](floating_value auto x)                       noexcept; // 1.a
+//!      constexpr auto cos[rad](floating_value auto x)                      noexcept; // 1.a
 //!      constexpr auto cos[deg](floating_value auto x)                      noexcept; // 1.b
 //!      constexpr auto cos[pirad](floating_value auto x)                    noexcept; // 1.c
 //!      constexpr auto cos[quarter_circle](floating_value auto x)           noexcept; // 3.a
@@ -66,6 +66,7 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
+//!       In particular:
 //!       1. assume a parameter in radian.
 //!       2. assume a parameter in degree.
 //!       3. assume a parameter in \f$\pi\f$ multiples. </br>

@@ -28,7 +28,7 @@
 namespace eve
 {
   template<typename Options>
-  struct cot_kernel_t : elementwise_callable<cos_kernel_t, Options, quarter_circle_option,
+  struct cot_kernel_t : elementwise_callable<cot_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,
                                              medium_option, big_option,
                                              rad_option, radpi_option, deg_option>
@@ -46,7 +46,7 @@ namespace eve
 namespace eve::detail
 {
   template<floating_value T, callable_options O>
-  T cot_kernel_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+  constexpr EVE_NOINLINE T cot_kernel_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
     if constexpr(O::contains(deg))
     {

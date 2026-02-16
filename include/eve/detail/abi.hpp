@@ -79,3 +79,11 @@
 #  define EVE_NO_NANS
 #  define EVE_NO_INFINITIES
 #endif
+
+#if defined(_MSC_VER)
+  #define EVE_NOINLINE __declspec(noinline)
+#elif defined(__GNUC__) || defined(__clang__)
+  #define EVE_NOINLINE __attribute__((noinline))
+#else
+  #define EVE_NOINLINE
+#endif
