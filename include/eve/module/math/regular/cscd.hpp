@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sind.hpp>
+#include <eve/module/math/regular/sin.hpp>
 
 namespace eve
 {
@@ -92,7 +92,7 @@ namespace eve
         {
           if( test ) return nan(eve::as<T>());
         }
-        return if_else(test, eve::allbits, rec[pedantic](sind[o](a0)));
+        return if_else(test, eve::allbits, rec[pedantic](sin[deg][o](a0)));
       }
     }
   }

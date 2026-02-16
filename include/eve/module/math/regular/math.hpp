@@ -87,12 +87,10 @@
 #include <eve/module/math/regular/sin.hpp>
 #include <eve/module/math/regular/sinc.hpp>
 #include <eve/module/math/regular/sincos.hpp>
-#include <eve/module/math/regular/sind.hpp>
 #include <eve/module/math/regular/sindcosd.hpp>
 #include <eve/module/math/regular/sinh.hpp>
 #include <eve/module/math/regular/sinhc.hpp>
 #include <eve/module/math/regular/sinhcosh.hpp>
-#include <eve/module/math/regular/sinpi.hpp>
 #include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/sinpicospi.hpp>
 #include <eve/module/math/regular/tan.hpp>
