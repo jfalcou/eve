@@ -17,10 +17,14 @@
 #include <eve/module/math/regular/acos.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
+
 namespace eve
 {
   template<typename Options>
-  struct asin_t : elementwise_callable<asin_t, Options>
+  struct asin_t : elementwise_callable<asin_t, Options,
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
