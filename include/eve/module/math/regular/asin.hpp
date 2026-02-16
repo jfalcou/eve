@@ -175,4 +175,8 @@ namespace eve
       }
     }
   }
+
+  constexpr auto asind = eve::asin[eve::deg];
+  constexpr auto asinpi= eve::asin[eve::radpi];
+
 }
