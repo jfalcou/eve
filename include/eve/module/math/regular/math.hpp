@@ -35,9 +35,7 @@
 #include <eve/module/math/regular/cos.hpp>
 #include <eve/module/math/regular/cosh.hpp>
 #include <eve/module/math/regular/cot.hpp>
-//#include <eve/module/math/regular/cotd.hpp>
 #include <eve/module/math/regular/coth.hpp>
-//#include <eve/module/math/regular/cotpi.hpp>
 #include <eve/module/math/regular/cscd.hpp>
 #include <eve/module/math/regular/csch.hpp>
 #include <eve/module/math/regular/cscpi.hpp>
@@ -85,12 +83,10 @@
 #include <eve/module/math/regular/sin.hpp>
 #include <eve/module/math/regular/sinc.hpp>
 #include <eve/module/math/regular/sincos.hpp>
-#include <eve/module/math/regular/sindcosd.hpp>
 #include <eve/module/math/regular/sinh.hpp>
 #include <eve/module/math/regular/sinhc.hpp>
 #include <eve/module/math/regular/sinhcosh.hpp>
 #include <eve/module/math/regular/sinpic.hpp>
-#include <eve/module/math/regular/sinpicospi.hpp>
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/tand.hpp>
 #include <eve/module/math/regular/tanh.hpp>

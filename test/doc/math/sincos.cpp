@@ -10,6 +10,9 @@ int main()
   std::cout << "<- wf = " << wf << "\n";
 
   std::cout << "-> sincos(wf)                = " << eve::sincos(wf) << "\n";
+  std::cout << "-> sincos[deg](radindeg(wf)) = " << eve::sincos[eve::deg](eve::radindeg(wf)) << "\n";
+  std::cout << "-> sincos[radpi](wf/pi)      = " << eve::sincos[eve::radpi](wf*eve::inv_pi(eve::as(wf))) << "\n";
+  std::cout << "-> sincos[rad](wf)           = " << eve::sincos[eve::rad](wf) << "\n";
   std::cout << "-> sincos[quarter_circle](wf)= " << eve::sincos[eve::quarter_circle](wf) << "\n";
   std::cout << "-> sincos[half_circle](wf)   = " << eve::sincos[eve::half_circle](wf) << "\n";
   std::cout << "-> sincos[full_circle](wf)   = " << eve::sincos[eve::full_circle](wf) << "\n";
