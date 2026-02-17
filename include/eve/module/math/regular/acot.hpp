@@ -16,7 +16,8 @@
 namespace eve
 {
   template<typename Options>
-  struct acot_t : elementwise_callable<acot_t, Options>
+  struct acot_t : elementwise_callable<acot_t, Options,
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -44,9 +45,15 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto acot(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 4
+//!
 //!      // Lanes masking
-//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 5
+//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -58,12 +65,14 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent in radians of the
 //!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
 //!       * If the element is \f$\pm0\f$, \f$\pm\frac\pi2\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.
+//!    3. Result in degrees
+//!    4. Result in \f$\pi\f$ multiples
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
@@ -83,7 +92,13 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acot_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+     if constexpr(O::contains(rad))
+        return acot[o.drop(rad)](a);
+      else if constexpr(O::contains(deg))
+        return radindeg(acot[o.drop(deg)](a));
+      else if constexpr(O::contains(radpi))
+        return radinpi(acot[o.drop(radpi)](a));
+      else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::acot[o], a);
       else
       {
@@ -92,4 +107,7 @@ namespace eve
       }
     }
   }
+  constexpr auto acotd = eve::acot[eve::deg];
+  constexpr auto acotpi= eve::acot[eve::radpi];
+
 }
