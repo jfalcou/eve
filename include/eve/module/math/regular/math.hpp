@@ -90,6 +90,4 @@
 #include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/sinpicospi.hpp>
 #include <eve/module/math/regular/tan.hpp>
-#include <eve/module/math/regular/tand.hpp>
 #include <eve/module/math/regular/tanh.hpp>
-#include <eve/module/math/regular/tanpi.hpp>
