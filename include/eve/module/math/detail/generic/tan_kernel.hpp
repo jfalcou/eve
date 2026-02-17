@@ -79,7 +79,7 @@ namespace eve::detail
       else
       {
         auto x = eve::abs(a0);
-        if( eve::all(x <= T(0.25)) ) return tan_kernel[pi][eve::quarter_circle](a0);
+        if( eve::all(x <= T(0.25)) ) return tan_kernel[radpi][eve::quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) ) return a0;
