@@ -23,7 +23,6 @@
 #include <eve/module/math/detail/generic/rem180.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
-#include <eve/module/math/regular/deginpi.hpp>
 
 namespace eve
 {
