@@ -30,9 +30,8 @@
 #include <eve/module/math/regular/cosh.hpp>
 #include <eve/module/math/regular/cot.hpp>
 #include <eve/module/math/regular/coth.hpp>
-#include <eve/module/math/regular/cscd.hpp>
+#include <eve/module/math/regular/csc.hpp>
 #include <eve/module/math/regular/csch.hpp>
-#include <eve/module/math/regular/cscpi.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/exp.hpp>
@@ -69,9 +68,7 @@
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
 #include <eve/module/math/regular/sec.hpp>
-#include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/sech.hpp>
-#include <eve/module/math/regular/secpi.hpp>
 #include <eve/module/math/regular/sigmoid.hpp>
 #include <eve/module/math/regular/significants.hpp>
 #include <eve/module/math/regular/sin.hpp>

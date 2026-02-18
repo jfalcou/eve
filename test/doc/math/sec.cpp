@@ -10,6 +10,9 @@ int main()
   std::cout << "<- wf                     = " << wf << "\n";
 
   std::cout << "-> sec(wf)                = " << eve::sec(wf) << "\n";
+  std::cout << "-> sec[deg](wf)           = " << eve::sec[eve::deg](wf) << "\n";
+  std::cout << "-> sec[radpi](wf)         = " << eve::sec[eve::radpi](wf) << "\n";
+  std::cout << "-> sec[rad](wf)           = " << eve::sec[eve::rad](wf) << "\n";
   std::cout << "-> sec[ignore_last(2)](wf)= " << eve::sec[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> sec[wf > 0.0](wf)      = " << eve::sec[wf > 0.0](wf) << "\n";
   std::cout << "-> sec[quarter_circle](wf)= " << eve::sec[eve::quarter_circle](wf) << "\n";

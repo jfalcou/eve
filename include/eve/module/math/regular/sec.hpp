@@ -16,8 +16,10 @@
 namespace eve
 {
   template<typename Options>
-  struct sec_t : elementwise_callable<sec_t, Options, quarter_circle_option, half_circle_option,
-             full_circle_option, medium_option, big_option>
+  struct sec_t : elementwise_callable<sec_t, Options,
+                                      quarter_circle_option, half_circle_option,
+                                      full_circle_option, medium_option, big_option,
+                                      rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -51,6 +53,9 @@ namespace eve
 //!      constexpr auto sec[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
+//!      constexpr auto csc[rad](floating_value auto x)                     noexcept; // 1.a
+//!      constexpr auto csc[deg](floating_value auto x)                     noexcept; // 1.b
+//!      constexpr auto csc[pirad](floating_value auto x)                   noexcept; // 1.c
 //!      constexpr auto sec[quarter_circle](floating_value auto x)          noexcept; // 3.a
 //!      constexpr auto sec[half_circle](floating_value auto x)             noexcept; // 3.b
 //!      constexpr auto sec[full_circle](floating_value auto x)             noexcept; // 3.c
@@ -66,15 +71,21 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) secant of
-//!       the input (inverse of the cosine). In particular:
-//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, Nan is returned.
-//!        * If the element is a `NaN`, `NaN` is returned.
+//!       (the inverse of the cosine). In particular:
+//!       1. assume a parameter in radian.
+//!       2. assume a parameter in degree.
+//!       3. assume a parameter in \f$\pi\f$ multiples. </br>
+//!       the input (inverse of the cosine).
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!
+//!       In particular:
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, Nan is returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)

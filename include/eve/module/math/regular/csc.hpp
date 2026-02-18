@@ -16,8 +16,10 @@
 namespace eve
 {
   template<typename Options>
-  struct csc_t : elementwise_callable<csc_t, Options, quarter_circle_option, half_circle_option,
-             full_circle_option, medium_option, big_option>
+  struct csc_t : elementwise_callable<csc_t, Options,
+                                      quarter_circle_option, half_circle_option,
+                                      full_circle_option, medium_option, big_option,
+                                      rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -51,9 +53,12 @@ namespace eve
 //!      constexpr auto csc[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto csc[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto csc[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto csc[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto csc[rad](floating_value auto x)                      noexcept; // 1.a
+//!      constexpr auto csc[deg](floating_value auto x)                      noexcept; // 1.b
+//!      constexpr auto csc[pirad](floating_value auto x)                    noexcept; // 1.c
+//!      constexpr auto csc[quarter_circle](floating_value auto x)           noexcept; // 3.a
+//!      constexpr auto csc[half_circle](floating_value auto x)              noexcept; // 3.b
+//!      constexpr auto csc[full_circle](floating_value auto x)              noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
@@ -67,14 +72,19 @@ namespace eve
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
 //!       (the inverse of the sine). In particular:
-//!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!         * If the element is \f$\pm\infty\f$, Nan is returned.
-//!         * If the element is a `NaN`, `NaN` is returned.
+//!       1. assume a parameter in radian.
+//!       2. assume a parameter in degree.
+//!       3. assume a parameter in \f$\pi\f$ multiples. </br>
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!
+//!       In particular:
+//!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!         * If the element is \f$\pm\infty\f$, Nan is returned.
+//!         * If the element is a `NaN`, `NaN` is returned.
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosecant.html)
