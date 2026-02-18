@@ -16,7 +16,8 @@ namespace eve
 {
 
   template<typename Options>
-  struct arg_t : elementwise_callable<arg_t, Options, pedantic_option>
+  struct arg_t : elementwise_callable<arg_t, Options, pedantic_option,
+                                      rad_option, radpi_option, deg_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -45,11 +46,14 @@ namespace eve
 //!      constexpr auto arg(floating_value auto x)                  noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto abs[conditional_expr auto c](value auto x)  noexcept; // 2
-//!      constexpr auto abs[logical_value auto m](value auto x)     noexcept; // 2
+//!      constexpr auto arg[conditional_expr auto c](value auto x)  noexcept; // 2
+//!      constexpr auto arg[logical_value auto m](value auto x)     noexcept; // 2
 //!
 //!      // Semantic option
-//!      constexpr auto absmax[pedantic](floating_value auto x)     noexcept; // 3
+//!      constexpr auto arg[pedantic](floating_value auto x)        noexcept; // 3
+//!      constexpr auto arg[rad](floating_value auto x)             noexcept; // 1
+//!      constexpr auto arg[deg](floating_value auto x)             noexcept; // 4
+//!      constexpr auto arg[pirad](floating_value auto x)           noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -65,7 +69,9 @@ namespace eve
 //!       input (0 or\f$\pi\f$) depending of the bit of sign of the input
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. If the entry is `NaN` the result is `NaN`.
-//!
+//!    4. Result in degrees
+//!    5. Result in \f$\pi\f$ multiples
+///!
 //!  @note phase can be used as an alias
 //!
 //!  @groupheader{External references}
@@ -88,10 +94,20 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {
-    auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+    auto valneg = [](auto x){
+      if constexpr(O::contains(deg))          return T(180);
+        else if constexpr(O::contains(radpi)) return one(eve::as(x));
+        else                                  return pi(eve::as(x));
+
+    };
+    auto z = if_else(is_negative(a), valneg(a), eve::zero);
     if constexpr( platform::supports_nans && O::contains(pedantic))
       return if_else(is_nan(a), eve::allbits, z);
     else
       return z;
   }
+
+  constexpr auto argd = eve::arg[eve::deg];
+  constexpr auto argpi= eve::arg[eve::radpi];
+
 }
