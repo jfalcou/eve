@@ -110,4 +110,6 @@ namespace eve
         return eve::rec[pedantic](cos[o](a0));
     }
   }
+  constexpr auto secd = eve::sec[eve::deg];
+  constexpr auto secpi= eve::sec[eve::radpi];
 }
