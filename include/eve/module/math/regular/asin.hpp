@@ -17,10 +17,14 @@
 #include <eve/module/math/regular/acos.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
+
 namespace eve
 {
   template<typename Options>
-  struct asin_t : elementwise_callable<asin_t, Options>
+  struct asin_t : elementwise_callable<asin_t, Options,
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -49,9 +53,14 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto asin(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
+//!
 //!      // Lanes masking
-//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 4
+//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -69,7 +78,9 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. Result in degrees
+//!    3. Result in \f$\pi\f$ multiples
+//!    4. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
@@ -88,10 +99,16 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T
+    constexpr EVE_NOINLINE T
     asin_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+       if constexpr(O::contains(rad))
+        return asin[o.drop(rad)](a0);
+      else if constexpr(O::contains(deg))
+        return radindeg(asin[o.drop(deg)](a0));
+      else if constexpr(O::contains(radpi))
+        return radinpi(asin[o.drop(radpi)](a0));
+      else  if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::asin[o], a0);
       else
       {
@@ -158,4 +175,8 @@ namespace eve
       }
     }
   }
+
+  constexpr auto asind = eve::asin[eve::deg];
+  constexpr auto asinpi= eve::asin[eve::radpi];
+
 }

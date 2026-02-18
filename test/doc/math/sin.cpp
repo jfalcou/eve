@@ -9,8 +9,10 @@ int main()
   wf *= eve::pi[eve::lower](eve::as(wf));
 
   std::cout << "<- wf = " << wf << "\n";
-
   std::cout << "-> sin(wf)                = " << eve::sin(wf) << "\n";
+  std::cout << "-> sin[deg](wf)           = " << eve::sin[eve::deg](wf) << "\n";
+  std::cout << "-> sin[radpi](wf)         = " << eve::sin[eve::radpi](wf) << "\n";
+  std::cout << "-> sin[rad](wf)           = " << eve::sin[eve::rad](wf) << "\n";
   std::cout << "-> sin[ignore_last(2)](wf)= " << eve::sin[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> sin[wf != -2.0f](wf)   = " << eve::sin[wf != -2.0f](wf) << "\n";
   std::cout << "-> sin[quarter_circle](wf)= " << eve::sin[eve::quarter_circle](wf) << "\n";

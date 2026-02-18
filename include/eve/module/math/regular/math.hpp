@@ -23,9 +23,7 @@
 #include <eve/module/math/regular/asech.hpp>
 #include <eve/module/math/regular/asecpi.hpp>
 #include <eve/module/math/regular/asin.hpp>
-#include <eve/module/math/regular/asind.hpp>
 #include <eve/module/math/regular/asinh.hpp>
-#include <eve/module/math/regular/asinpi.hpp>
 #include <eve/module/math/regular/atan.hpp>
 #include <eve/module/math/regular/atan2.hpp>
 #include <eve/module/math/regular/atan2d.hpp>
@@ -87,12 +85,10 @@
 #include <eve/module/math/regular/sin.hpp>
 #include <eve/module/math/regular/sinc.hpp>
 #include <eve/module/math/regular/sincos.hpp>
-#include <eve/module/math/regular/sind.hpp>
 #include <eve/module/math/regular/sindcosd.hpp>
 #include <eve/module/math/regular/sinh.hpp>
 #include <eve/module/math/regular/sinhc.hpp>
 #include <eve/module/math/regular/sinhcosh.hpp>
-#include <eve/module/math/regular/sinpi.hpp>
 #include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/sinpicospi.hpp>
 #include <eve/module/math/regular/tan.hpp>
