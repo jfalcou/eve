@@ -88,23 +88,19 @@ inline constexpr auto phase = functor<arg_t>;
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
-    {
-      auto valneg = [](auto x){
-        if constexpr(O::contains(deg))          return T(180);
+    auto valneg = [](auto x){
+      if constexpr(O::contains(deg))          return T(180);
         else if constexpr(O::contains(radpi)) return one(eve::as(x));
         else                                  return pi(eve::as(x));
 
-      };
-      auto z = if_else(is_negative(a), valneg(a), eve::zero);
-      if constexpr( platform::supports_nans && O::contains(pedantic))
-        return if_else(is_nan(a), eve::allbits, z);
-      else
-        return z;
-    }
+    };
+    auto z = if_else(is_negative(a), valneg(a), eve::zero);
+    if constexpr( platform::supports_nans && O::contains(pedantic))
+      return if_else(is_nan(a), eve::allbits, z);
+    else
+      return z;
   }
+
   constexpr auto argd = eve::arg[eve::deg];
   constexpr auto argpi= eve::arg[eve::radpi];
 
