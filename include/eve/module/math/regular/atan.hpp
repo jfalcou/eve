@@ -16,7 +16,8 @@
 namespace eve
 {
   template<typename Options>
-  struct atan_t : elementwise_callable<atan_t, Options>
+  struct atan_t : elementwise_callable<atan_t, Options,
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -45,9 +46,14 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto atan(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
+//!
 //!      // Lanes masking
-//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 4
+//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -65,7 +71,9 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. Result in degrees
+//!    3. Result in \f$\pi\f$ multiples
+//!    4. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: atan](https://en.cppreference.com/w/cpp/numeric/math/atan)
@@ -86,7 +94,13 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+      if constexpr(O::contains(rad))
+        return atan[o.drop(rad)](a);
+      else if constexpr(O::contains(deg))
+        return radindeg(atan[o.drop(deg)](a));
+      else if constexpr(O::contains(radpi))
+        return radinpi(atan[o.drop(radpi)](a));
+      else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::atan[o], a);
       else
       {
@@ -95,4 +109,6 @@ namespace eve
       }
     }
   }
+  constexpr auto atand = eve::atan[eve::deg];
+  constexpr auto atanpi= eve::atan[eve::radpi];
 }

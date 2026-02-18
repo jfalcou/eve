@@ -28,9 +28,7 @@
 #include <eve/module/math/regular/atan2.hpp>
 #include <eve/module/math/regular/atan2d.hpp>
 #include <eve/module/math/regular/atan2pi.hpp>
-#include <eve/module/math/regular/atand.hpp>
 #include <eve/module/math/regular/atanh.hpp>
-#include <eve/module/math/regular/atanpi.hpp>
 #include <eve/module/math/regular/cbrt.hpp>
 #include <eve/module/math/regular/cos.hpp>
 #include <eve/module/math/regular/cosh.hpp>
@@ -92,6 +90,4 @@
 #include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/sinpicospi.hpp>
 #include <eve/module/math/regular/tan.hpp>
-#include <eve/module/math/regular/tand.hpp>
 #include <eve/module/math/regular/tanh.hpp>
-#include <eve/module/math/regular/tanpi.hpp>

@@ -10,6 +10,9 @@ int main()
    std::cout << "<- wf = " << wf << "\n";
 
    std::cout << "-> tan(wf)                = " << eve::tan(wf) << "\n";
+   std::cout << "-> tan[deg](wf)           = " << eve::tan[eve::deg](wf) << "\n";
+   std::cout << "-> tan[radpi](wf)         = " << eve::tan[eve::radpi](wf) << "\n";
+   std::cout << "-> tan[rad](wf)           = " << eve::tan[eve::rad](wf) << "\n";
    std::cout << "-> tan[ignore_last(2)](wf)= " << eve::tan[eve::ignore_last(2)](wf) << "\n";
    std::cout << "-> tan[wf != -2.0f](wf)   = " << eve::tan[wf != -2.0f](wf) << "\n";
    std::cout << "-> tan[quarter_circle](wf)= " << eve::tan[eve::quarter_circle](wf) << "\n";
