@@ -12,16 +12,12 @@
 #include <eve/module/math/regular/acot.hpp>
 #include <eve/module/math/regular/acoth.hpp>
 #include <eve/module/math/regular/acsc.hpp>
-#include <eve/module/math/regular/acscd.hpp>
 #include <eve/module/math/regular/acsch.hpp>
-#include <eve/module/math/regular/acscpi.hpp>
 #include <eve/module/math/regular/agd.hpp>
 #include <eve/module/math/regular/arg.hpp>
 #include <eve/module/math/regular/argpi.hpp>
 #include <eve/module/math/regular/asec.hpp>
-#include <eve/module/math/regular/asecd.hpp>
 #include <eve/module/math/regular/asech.hpp>
-#include <eve/module/math/regular/asecpi.hpp>
 #include <eve/module/math/regular/asin.hpp>
 #include <eve/module/math/regular/asinh.hpp>
 #include <eve/module/math/regular/atan.hpp>
