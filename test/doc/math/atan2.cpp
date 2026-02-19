@@ -11,6 +11,9 @@ int main()
   std::cout << "<- qf                           = " << qf << "\n";
 
   std::cout << "-> atan2(pf, qf)                = " << eve::atan2(pf, qf) << "\n";
+  std::cout << "-> atan2[deg](pf, qf)           = " << eve::atan2[eve::deg](pf, qf) << "\n";
+  std::cout << "-> atan2[radpi](pf, qf)         = " << eve::atan2[eve::radpi](pf, qf) << "\n";
+  std::cout << "-> atan2[rad](pf, qf)           = " << eve::atan2[eve::rad](pf, qf) << "\n";
   std::cout << "-> atan2[pedantic](pf, qf)      = " << eve::atan2[eve::pedantic](pf, qf) << "\n";
   std::cout << "-> atan2[ignore_last(2)](pf, qf)= " << eve::atan2[eve::ignore_last(2)](pf, qf) << "\n";
   std::cout << "-> atan2[pf != -2.0f](pf, qf)   = " << eve::atan2[pf != -2.0f](pf, qf) << "\n";

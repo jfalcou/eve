@@ -24,9 +24,9 @@ namespace eve
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
-
+    
     EVE_CALLABLE_OBJECT(acos_t, acos_);
-};
+  };
 
 //================================================================================================
 //! @addtogroup math_invtrig
@@ -143,13 +143,13 @@ namespace eve
           else if constexpr( std::same_as<T, double> )
           {
             if( a0 > 0.5 ) return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
-
+            
             T const pio4 = pio_4(eve::as<T>());
-
+            
             T z = pio4 - eve::asin(a0);
             z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
             z += pio4;
-
+            
             return z;
           }
         }
