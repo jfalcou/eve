@@ -179,4 +179,5 @@ namespace eve
   }
   constexpr auto atan2d = eve::atan2[eve::deg];
   constexpr auto atan2pi= eve::atan2[eve::radpi];
+
 }
