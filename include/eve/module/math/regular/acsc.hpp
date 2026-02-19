@@ -16,7 +16,8 @@
 namespace eve
 {
   template<typename Options>
-  struct acsc_t : elementwise_callable<acsc_t, Options>
+  struct acsc_t : elementwise_callable<acsc_t, Options,
+                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -44,9 +45,14 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto acsc(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto acsc[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acsc[deg](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acsc[pirad](floating_value auto x)                   noexcept; // 3
+///!
 //!      // Lanes masking
-//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 4
+//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -65,7 +71,9 @@ namespace eve
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. Result in degrees
+//!    3. Result in \f$\pi\f$ multiples
+//!    4. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cosecant](https://mathworld.wolfram.com/InverseCosecant.html)
@@ -83,9 +91,11 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acsc_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    constexpr EVE_FORCEINLINE T acsc_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      return eve::asin(rec[pedantic](a));
+      return eve::asin[o](rec[pedantic](a));
     }
   }
+  constexpr auto acscd = eve::acsc[eve::deg];
+  constexpr auto acscpi= eve::acsc[eve::radpi];
 }

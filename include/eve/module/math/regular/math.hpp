@@ -12,16 +12,12 @@
 #include <eve/module/math/regular/acot.hpp>
 #include <eve/module/math/regular/acoth.hpp>
 #include <eve/module/math/regular/acsc.hpp>
-#include <eve/module/math/regular/acscd.hpp>
 #include <eve/module/math/regular/acsch.hpp>
-#include <eve/module/math/regular/acscpi.hpp>
 #include <eve/module/math/regular/agd.hpp>
 #include <eve/module/math/regular/arg.hpp>
 #include <eve/module/math/regular/argpi.hpp>
 #include <eve/module/math/regular/asec.hpp>
-#include <eve/module/math/regular/asecd.hpp>
 #include <eve/module/math/regular/asech.hpp>
-#include <eve/module/math/regular/asecpi.hpp>
 #include <eve/module/math/regular/asin.hpp>
 #include <eve/module/math/regular/asinh.hpp>
 #include <eve/module/math/regular/atan.hpp>
@@ -34,9 +30,8 @@
 #include <eve/module/math/regular/cosh.hpp>
 #include <eve/module/math/regular/cot.hpp>
 #include <eve/module/math/regular/coth.hpp>
-#include <eve/module/math/regular/cscd.hpp>
+#include <eve/module/math/regular/csc.hpp>
 #include <eve/module/math/regular/csch.hpp>
-#include <eve/module/math/regular/cscpi.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/exp.hpp>
@@ -73,9 +68,7 @@
 #include <eve/module/math/regular/rempio2.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
 #include <eve/module/math/regular/sec.hpp>
-#include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/sech.hpp>
-#include <eve/module/math/regular/secpi.hpp>
 #include <eve/module/math/regular/sigmoid.hpp>
 #include <eve/module/math/regular/significants.hpp>
 #include <eve/module/math/regular/sin.hpp>

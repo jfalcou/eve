@@ -10,6 +10,9 @@ int main()
   std::cout << "<- wf                     = " << wf << "\n";
 
   std::cout << "-> csc(wf)                = " << eve::csc(wf) << "\n";
+  std::cout << "-> csc[deg](wf)           = " << eve::csc[eve::deg](wf) << "\n";
+  std::cout << "-> csc[radpi](wf)         = " << eve::csc[eve::radpi](wf) << "\n";
+  std::cout << "-> csc[rad](wf)           = " << eve::csc[eve::rad](wf) << "\n";
   std::cout << "-> csc[ignore_last(2)](wf)= " << eve::csc[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> csc[wf != -2.0f](wf)   = " << eve::csc[wf != -2.0f](wf) << "\n";
   std::cout << "-> csc[quarter_circle](wf)= " << eve::csc[eve::quarter_circle](wf) << "\n";
