@@ -179,25 +179,7 @@ $(document).ready(function(){initNavTree('group__math__trig_gadd7dfea01d159d89e6
 <li>Assumes that the inputs elements belong to \([-1/4,1/4]\) and return NaN outside.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">main</a>()</div>
-<div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a> = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf                       = &quot;</span> &lt;&lt; <a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cotpi(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__trig_gadd7dfea01d159d89e67d8edeb12af29b.html#gadd7dfea01d159d89e67d8edeb12af29b">eve::cotpi</a>(<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cotpi[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__trig_gadd7dfea01d159d89e67d8edeb12af29b.html#gadd7dfea01d159d89e67d8edeb12af29b">eve::cotpi</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cotpi[wf &gt; 0.0](wf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__trig_gadd7dfea01d159d89e67d8edeb12af29b.html#gadd7dfea01d159d89e67d8edeb12af29b">eve::cotpi</a>[<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a> &gt; 0.0](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cotpi[quarter_circle](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__trig_gadd7dfea01d159d89e67d8edeb12af29b.html#gadd7dfea01d159d89e67d8edeb12af29b">eve::cotpi</a>[eve::quarter_circle](<a class="code hl_typedef" href="namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33">wf</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:325</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
-</div><!-- fragment --> 
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
