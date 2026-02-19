@@ -7,25 +7,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
-#include <eve/module/core.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/constant/pi2o_16.hpp>
-#include <eve/module/math/constant/pio_2.hpp>
-#include <eve/module/math/constant/pio_4.hpp>
-
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/detail/generic/sincos_kernel.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct sincos_t : elementwise_callable<sincos_t, Options
-                                        , quarter_circle_option, half_circle_option
-                                        , full_circle_option, medium_option, big_option
-                                        >
+  struct sincos_t : elementwise_callable<sincos_t, Options , quarter_circle_option,
+                                         half_circle_option, full_circle_option,
+                                         medium_option, big_option,
+                                         rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -59,6 +49,9 @@ namespace eve
 //!      constexpr auto sincos[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
+//!      constexpr auto sincos[rad](floating_value auto x)                     noexcept; // 1.a
+//!      constexpr auto sincos[deg](floating_value auto x)                     noexcept; // 1.b
+//!      constexpr auto sincos[pirad](floating_value auto x)                   noexcept; // 1.c
 //!      constexpr auto sincos[quarter_circle](floating_value auto x)          noexcept; // 3.a
 //!      constexpr auto sincos[half_circle](floating_value auto x)             noexcept; // 3.b
 //!      constexpr auto sincos[full_circle](floating_value auto x)             noexcept; // 3.c
@@ -74,11 +67,16 @@ namespace eve
 //! **Return value**
 //!
 //!   1 .The computation returns a tuple-like whose elements are `sin(x)` and `cos(x)`
+//!       In particular:
+//!       1. assume a parameter in radian.
+//!       2. assume a parameter in degree.
+//!       3. assume a parameter in \f$\pi\f$ multiples. </br>
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!   3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sincos.cpp}
@@ -87,92 +85,17 @@ namespace eve
 //================================================================================================
 //!  @}
 //================================================================================================
-
-  namespace detail
+ namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    constexpr EVE_FORCEINLINE eve::zipped<T, T> sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      auto x       = abs(a0);
-      if constexpr(O::contains(quarter_circle))
-      {
-        auto pi2_16 = pi2o_16[upper](as<T>());
-        auto x2          = sqr(a0);
-        auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
-        if constexpr( scalar_value<T> )
-        {
-          return  (x2nlepi2_16) ? eve::zip(nan(eve::as<T>()), nan(eve::as<T>()))
-                                : eve::zip(sin_eval(x2, a0), cos_eval(x2));
-        }
-        else
-        {
-          x2 = if_else(x2nlepi2_16, eve::allbits, x2);
-          return eve::zip(sin_eval(x2, a0), cos_eval(x2));
-        }
-      }
-      else if constexpr(O::contains(half_circle))
-      {
-        auto reduce = [](auto xx)
-        {
-          auto pio2_1 = ieee_constant<0x1.921fb54400000p+0 , 0x1.921f000p+0f >(eve::as<T>{});
-          auto pio2_2 = ieee_constant<0x1.0b4611a600000p-34, 0x1.6a88000p-17f>(eve::as<T>{});
-          auto pio2_3 = ieee_constant<0x1.3198a2e000000p-69, 0x1.0b46000p-34f>(eve::as<T>{});
-
-          T xr = xx - pio2_1;
-          xr -= pio2_2;
-          xr -= pio2_3;
-
-          return xr;
-        };
-
-        if constexpr( scalar_value<T> )
-        {
-          using i_t = as_integer_t<T, signed>;
-
-          if( is_less_equal(x, eps(as<T>())) ) return eve::zip(a0, one(eve::as<T>()));
-          if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
-
-          i_t n = x > pio_4(eve::as<T>());
-
-          if( n )
-          {
-            auto xr = reduce(x);
-            return eve::zip ( bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
-                            , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T) * 8 - 1))
-                            );
-          }
-          else return eve::zip(sin_eval(sqr(x), a0), cos_eval(sqr(x)));
-        }
-        else
-        {
-          x           = if_else(is_not_less_equal(x, pio_2(eve::as<T>())), eve::allbits, x);
-          auto test   = is_not_less_equal(x, pio_4(eve::as<T>()));
-          auto n      = one[test](eve::as(x));
-          auto xr     = if_else(test, reduce(x), x);
-          auto [s, c] = sincos_finalize(a0, n, xr, T(0));
-          return eve::zip(s, c);
-        }
-      }
-      else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
-      {
-        auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
-        if constexpr( scalar_value<T> )
-        {
-          if( xnlelim ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
-        }
-        else x = if_else(xnlelim, allbits, x);
-        auto [fn, xr, dxr] = rempio2[o](x);
-        auto [s, c]        = sincos_finalize(bitofsign(a0), fn, xr, dxr);
-        return eve::zip(s, c);
-      }
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::detail::apply_fp16_as_fp32(eve::sincos_kernel[o], a0);
       else
-      {
-        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )   return sincos[quarter_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))  return sincos[half_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))  return sincos[full_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))       return sincos[medium](a0);
-        else                                                          return sincos[big](a0);
-      }
+        return sincos_kernel[o](a0);
     }
-  }
+ }
+  constexpr auto sindcosd = eve::sincos[eve::deg];
+  constexpr auto sinpicospi= eve::sincos[eve::radpi];
 }
