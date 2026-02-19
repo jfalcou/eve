@@ -149,8 +149,8 @@ namespace udt
   auto to_cartesian(eve::like<polar_coords> auto in) {
     auto r = rho(in);
     auto t = theta(in);
-   return eve::zip(eve::as<cartesian_coords>{},
-                   r * eve::cos(t), r * eve::sin(t));
+    auto [s, c] = eve::sincos(t);
+    return eve::zip(eve::as<cartesian_coords>{}, r*s, r*t);
   }
 
   auto to_cartesian( eve::algo::soa_vector<polar_coords> const& ins)

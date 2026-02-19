@@ -5,10 +5,10 @@ Installation & Quick Start {#setup}
 
 **EVE** requires a C++20 compliant compiler. Here is the current minimal compiler version supported:
 
-| Compiler       | Version        |
-| -------------- | -------------- |
-| g++            | 11  or above   |
-| clang++        | 13  or above   |
+| Compiler       | Minimal Version        | Recommended versions   |
+| -------------- | ---------------------- | ---------------------- |
+| g++            | 13  or above           | 14  or above           |
+| clang++        | 16  or above           | 19  or above           |
 
 In term of SIMD extension sets, the supports status are as follows:
 

@@ -21,8 +21,6 @@
 #include <eve/module/math/regular/asinh.hpp>
 #include <eve/module/math/regular/atan.hpp>
 #include <eve/module/math/regular/atan2.hpp>
-#include <eve/module/math/regular/atan2d.hpp>
-#include <eve/module/math/regular/atan2pi.hpp>
 #include <eve/module/math/regular/atanh.hpp>
 #include <eve/module/math/regular/cbrt.hpp>
 #include <eve/module/math/regular/cos.hpp>

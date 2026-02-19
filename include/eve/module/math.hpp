@@ -53,17 +53,17 @@
 //! @ingroup math
 //! These functions allows performing trigonometric computations
 //!
-//! All trigonometric functions exists in three flavors for parameters being radian,
+//! All trigonometric functions admits three flavors for parameters being radian,
 //! degrees or \f$\pi\f$ multiples.
 //!
-//!   * for example eve::cos,  eve::cosd,  eve::cospi.
+//!   * for example eve::cos[eve::rad],  eve::cos[eve::deg],  eve::cos[eve::radpi]. (eve::cos is equivalent to eve::cos[eve::rad])
 //!
-//!   * The main avantage of using `eve::cospi(x)` instead of `eve::cos(eve::pi(as(x)* x))`
-//!     (as well as the other pi ended functions) is that
+//!   * The main avantage of using `eve::cos[eve::radpi](x)` instead of `eve::cos(eve::pi(as(x)* x))`
+//!     (as well as the other radpi decorated functions) is that
 //!     if `x` is exactly representable the multiplication by the floating \f$\pi\f$ multiplier is not.
 //!
 //!     For example eve::cos(eve::pio_2(as<double>()))) is 6.1232e-17 (as pio_2 is not exact),
-//!     but eve::cospi(0.5) is 0 (as 0.5 is exact).
+//!     but eve::cos[radpi](0.5) is 0 (as 0.5 is exact).
 //!
 //! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,
 //! eve::full_circle.
@@ -77,15 +77,14 @@
 //!   * regular call (not decorated) choose the best call and is
 //!     valid on the full range.
 //!
-//!  @warning Note that these decorator only work for floating real values.
-//!
 //! @defgroup contfrac  Continued Fractions
 //! @ingroup math
 //! These functions computes continued fractions
 //!
 //! @defgroup math_invtrig  Inverse trigonometric
 //! @ingroup math
-//! These functions allows performing trigonometric computations
+//! These functions allows performing inverse trigonometric computations. As the direct functions they admit options
+//! such that the return value is exprressed in radian,  degrees or \f$\pi\f$ multiples,  namely eve::rad,  eve::deg and eve::radpi.
 //!
 //! @defgroup math_hyper  Hyperbolic
 //! @ingroup math
@@ -93,7 +92,7 @@
 //!
 //! @defgroup math_invhyper  Inverse hyperbolic
 //! @ingroup math
-//! These functions allows performing unverse hyperbolic computations
+//! These functions allows performing inverse hyperbolic computations
 //!
 //! @defgroup math_log  Logarithm
 //! @ingroup math
