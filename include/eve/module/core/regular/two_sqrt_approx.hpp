@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct two_div_approx_t : elementwise_callable<two_div_approx_t, Options>
+  struct two_sqrt_approx_t : elementwise_callable<two_sqrt_approx_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -27,15 +27,15 @@ namespace eve
       return EVE_DISPATCH_CALL(a,b);
     }
 
-    EVE_CALLABLE_OBJECT(two_div_approx_t, two_div_approx_);
+    EVE_CALLABLE_OBJECT(two_sqrt_approx_t, two_sqrt_approx_);
   };
 
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var two_div_approx
+//!   @var two_sqrt_approx
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   pair of  division and error,
+//!   pair of  sqrtision and error,
 //!
 //!   @groupheader{Header file}
 //!
@@ -48,7 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto two_div_approx(floating_value auto x, floating_value auto y) noexcept;
+//!      constexpr auto two_sqrt_approx(floating_value auto x, floating_value auto y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -60,14 +60,14 @@ namespace eve
 //!
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!       * `a` is `x*y`
-//!       * `e` is a value such that `a`\f$\oplus\f$`e` is an approximation in doubled precision to `x`\f$\odiv\f$`y`,
-//!          where \f$\oplus\f$ (resp. \f$\odiv\f$) adds (resp. divides) its two parameters with
+//!       * `e` is a value such that `a`\f$\oplus\f$`e` is an approximation in doubled precision to `x`\f$\osqrt\f$`y`,
+//!          where \f$\oplus\f$ (resp. \f$\osqrt\f$) adds (resp. sqrtides) its two parameters with
 //!          infinite precision.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/two_div_approx.cpp}
+//!  @godbolt{doc/core/two_sqrt_approx.cpp}
 //================================================================================================
-  inline constexpr auto two_div_approx = functor<two_div_approx_t>;
+  inline constexpr auto two_sqrt_approx = functor<two_sqrt_approx_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -75,10 +75,10 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto two_div_approx_(EVE_REQUIRES(cpu_), O const&, T x, T y)
+    constexpr EVE_FORCEINLINE auto two_sqrt_approx_(EVE_REQUIRES(cpu_), O const&, T x, T y)
     {
-      auto r0 = x/y;
-      auto e0 = if_else(is_not_finite(r0), zero, eve::fma[pedantic](-r0, y, x)/y );
+      auto r0 = eve::sqrt(x);
+      auto e0 = if_else(is_not_finite(r0), zero, eve::fma[pedantic](-r0, r0, x)/(r0+r0));
       return eve::zip(r0,e0);
     }
   }
