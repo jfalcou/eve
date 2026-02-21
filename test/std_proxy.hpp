@@ -28,20 +28,6 @@
   }                                                                     \
 /* */
 
-                                                                        \
-
-MAKE_STD_PROXY(log);
-MAKE_STD_PROXY(log2);
-MAKE_STD_PROXY(sqrt);
-
-template <typename T>
-constexpr T std_floor(T x)
-{
-  if constexpr (std::same_as<T, eve::float16_t>) return static_cast<eve::float16_t>(std::floor(static_cast<float>(x)));
-  else                                           return std::floor(x);
-}
->>>>>>> Stashed changes
-
 
 
 MAKE_STD_PROXY(abs);
