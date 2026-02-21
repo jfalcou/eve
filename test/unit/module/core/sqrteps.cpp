@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
+#include "std_proxy.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -36,6 +36,7 @@ TTS_CASE_TPL("Check behavior of sqrteps on wide", eve::test::simd::ieee_reals_wf
   using eve::upper;
 
   using elt_t = eve::element_type_t<T>;
+
   TTS_EQUAL(eve::sqrteps(as<T>()), T(eve::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
   if constexpr(sizeof(elt_t) == 8)
   {
