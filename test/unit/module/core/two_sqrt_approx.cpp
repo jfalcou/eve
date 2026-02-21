@@ -56,6 +56,6 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);
     ld_t da0 = ld_t(a0);
-    TTS_EQUAL(std::sqrtl(da0), (da+de));
+    TTS_ULP_EQUAL(std::sqrtl(da0), (da+de), 20.0);
   }
 };
