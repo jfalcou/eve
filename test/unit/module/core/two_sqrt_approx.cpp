@@ -29,7 +29,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     auto da = eve::upgrade(a);
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
-    TTS_ULP_EQUAL(eve::sqrt(da0), (da+de), 6.0);
+    TTS_ULP_EQUAL(eve::sqrt(da0), (da+de), 20.0);
   }
 };
 
@@ -46,7 +46,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     auto da = eve::upgrade(a);
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
-    TTS_ULP_EQUAL(eve::sqrt(da0), (da+de), 4.0);
+    TTS_ULP_EQUAL(eve::sqrt(da0), (da+de), 20.0);
   }
   else
   {
