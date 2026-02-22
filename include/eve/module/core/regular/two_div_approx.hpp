@@ -59,7 +59,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
-//!       * `a` is `x*y`
+//!       * `a` is `x/y`
 //!       * `e` is a value such that `a`\f$\oplus\f$`e` is an approximation in doubled precision to `x`\f$\odiv\f$`y`,
 //!          where \f$\oplus\f$ (resp. \f$\odiv\f$) adds (resp. divides) its two parameters with
 //!          infinite precision.
