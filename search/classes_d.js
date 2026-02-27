@@ -6,6 +6,7 @@ var searchData=
   ['relaxed_5fiterator_3',['relaxed_iterator',['../structrelaxed__iterator.html',1,'']]],
   ['relaxed_5frange_4',['relaxed_range',['../structrelaxed__range.html',1,'']]],
   ['relaxed_5fsentinel_5ffor_5',['relaxed_sentinel_for',['../structrelaxed__sentinel__for.html',1,'']]],
-  ['reverse_5fiterator_6',['reverse_iterator',['../structeve_1_1algo_1_1views_1_1reverse__iterator.html',1,'eve::algo::views::reverse_iterator&lt; I &gt;'],['../structreverse__iterator.html',1,'reverse_iterator']]],
-  ['reverse_5frange_7',['reverse_range',['../structeve_1_1algo_1_1views_1_1reverse__range.html',1,'eve::algo::views::reverse_range&lt; R &gt;'],['../structreverse__range.html',1,'reverse_range']]]
+  ['reverse_5fiterator_6',['reverse_iterator',['../structeve_1_1algo_1_1views_1_1reverse__iterator.html',1,'eve::algo::views::reverse_iterator&lt; I &gt;'],['../structeve_1_1views_1_1reverse__iterator.html',1,'eve::views::reverse_iterator&lt; I &gt;'],['../structreverse__iterator.html',1,'reverse_iterator']]],
+  ['reverse_5fiterator_3c_20unaligned_5ft_3c_20i_20_3e_20_3e_7',['reverse_iterator&lt; unaligned_t&lt; I &gt; &gt;',['../structeve_1_1algo_1_1views_1_1reverse__iterator.html',1,'eve::algo::views']]],
+  ['reverse_5frange_8',['reverse_range',['../structeve_1_1algo_1_1views_1_1reverse__range.html',1,'eve::algo::views::reverse_range&lt; R &gt;'],['../structeve_1_1views_1_1reverse__range.html',1,'eve::views::reverse_range&lt; R &gt;'],['../structreverse__range.html',1,'reverse_range']]]
 ];

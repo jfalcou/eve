@@ -1,7 +1,25 @@
 var searchData=
 [
-  ['data_20structures_0',['Data Structures',['../intro-04.html',1,'']]],
-  ['decisions_1',['Design Decisions',['../design_rationale.html',1,'']]],
-  ['design_20decisions_2',['Design Decisions',['../design_rationale.html',1,'']]],
-  ['development_20environment_3',['Development Environment',['../dev_environment.html',1,'']]]
+  ['a_20match_0',['a match',['../group__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md22',1,'What if I know there is a match?'],['../group__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md24',1,'What if I know there is a match?']]],
+  ['abi_20traits_1',['ABI traits',['../glossary_semantic.html#autotoc_md70',1,'']]],
+  ['about_20non_20native_20sizes_2',['What about non-native sizes?',['../inter-with-native.html#autotoc_md97',1,'']]],
+  ['access_3',['Generalized Element Access',['../glossary_semantic.html#autotoc_md72',1,'']]],
+  ['adapting_20udt_20to_20simd_20processing_4',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md110',1,'']]],
+  ['advanced_20options_5',['Advanced options',['../setup.html#autotoc_md90',1,'']]],
+  ['algorithms_6',['Algorithms',['../intro-02.html',1,'Algorithms'],['../algo_rationale.html',1,'SIMD Algorithms'],['../intro-02.html#autotoc_md104',1,'Toward SIMD Algorithms']]],
+  ['algorithms_7',['Tuning algorithms',['../intro-02.html#autotoc_md105',1,'']]],
+  ['algorithms_20traits_8',['Algorithms traits',['../algo_rationale.html#autotoc_md63',1,'']]],
+  ['alternative_9',['Mask with alternative',['../conditional.html#autotoc_md94',1,'']]],
+  ['and_20depreciation_10',['Removal and Depreciation',['../changelog.html#autotoc_md38',1,'']]],
+  ['and_20processing_11',['Storage and Processing',['../intro-04.html#autotoc_md112',1,'']]],
+  ['and_20using_20dynamic_20kernels_12',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md119',1,'']]],
+  ['any_13',['any',['../group__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md21',1,'Should you check for any?'],['../group__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md23',1,'Should you check for any?']]],
+  ['api_14',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
+  ['architecture_20targets_15',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]],
+  ['architectures_20compilers_20support_20fixes_16',['Architectures/Compilers Support &amp;amp; Fixes',['../changelog.html#autotoc_md39',1,'']]],
+  ['arithmetic_20functions_17',['Arithmetic Functions',['../glossary_semantic.html#glossary_arithmetic',1,'']]],
+  ['as_20main_20api_18',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
+  ['as_20type_20x_20cardinal_19',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
+  ['aur_20',['AUR',['../setup.html#autotoc_md81',1,'']]],
+  ['aware_20udt_21',['Creating SIMD-aware UDT',['../intro-04.html#autotoc_md111',1,'']]]
 ];

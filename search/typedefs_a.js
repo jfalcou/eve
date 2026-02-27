@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['translate_5ft_0',['translate_t',['../namespaceeve_a79711a5476c4e0ba17238827c709ad33.html#a79711a5476c4e0ba17238827c709ad33',1,'eve']]],
-  ['translated_5felement_5ftype_1',['translated_element_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a5f060eb46b55b689cb389f01b7105b5b',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::translated_element_type'],['../structeve_1_1wide.html#a6f964ba2b4950d9916b5d280c88e8d6f',1,'eve::wide::translated_element_type']]],
-  ['translated_5ftype_2',['translated_type',['../structeve_1_1logical_3_01T_01_4.html#a0506b5419f1b6c7408451d6ae0bb0b19',1,'eve::logical&lt; T &gt;::translated_type'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a815b515edafa5a1fd54dfa58284cc2b1',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::translated_type'],['../structeve_1_1wide.html#aa09188474474c521bce2199283dd0557',1,'eve::wide::translated_type']]],
-  ['type_3',['type',['../structeve_1_1as.html#a904ff0e88e1f435dc24505e3168b52f5',1,'eve::as']]]
+  ['scalar_5ftype_0',['scalar_type',['../structeve_1_1top__bits.html#a46b500a7f5599d078b9c1069f400aa56',1,'eve::top_bits']]],
+  ['sentinel_5ft_1',['sentinel_t',['../group__algo__concepts_ga5b4e7bedc3df8b7b9b7a778766ac301a.html#ga5b4e7bedc3df8b7b9b7a778766ac301a',1,'eve::algo']]],
+  ['size_5ftype_2',['size_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::size_type'],['../structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4',1,'eve::wide::size_type'],['../structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381',1,'eve::algo::soa_vector::size_type']]],
+  ['storage_5ftype_3',['storage_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::storage_type'],['../structeve_1_1top__bits.html#a9710f1c9c44fda47778a072781e5105a',1,'eve::top_bits::storage_type'],['../structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53',1,'eve::wide::storage_type']]]
 ];

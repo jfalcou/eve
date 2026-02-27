@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['scaling_0',['Frequency Scaling.',['../freqscale.html',1,'']]],
-  ['semantic_1',['Components Semantic',['../glossary_semantic.html',1,'']]],
-  ['simd_20algorithms_2',['SIMD Algorithms',['../algo_rationale.html',1,'']]],
-  ['solving_20quadratic_20equations_3',['Solving quadratic equations',['../intro-05.html',1,'']]],
-  ['start_4',['Installation &amp; Quick Start',['../setup.html',1,'']]],
-  ['structures_5',['Data Structures',['../intro-04.html',1,'']]]
+  ['library_0',['Setting up the Library',['../setup.html#autotoc_md83',1,'']]],
+  ['library_1',['Using the library',['../setup.html#autotoc_md85',1,'']]],
+  ['licence_2',['Licence',['../licence.html',1,'']]],
+  ['log_3',['Change Log',['../changelog.html',1,'']]],
+  ['logical_20functions_4',['Logical Functions',['../glossary_semantic.html#glossary_logical',1,'']]],
+  ['loops_5',['Reusable loops',['../algo_rationale.html#autotoc_md58',1,'']]]
 ];

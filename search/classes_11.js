@@ -1,6 +1,21 @@
 var searchData=
 [
   ['wide_0',['wide',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_3c_20value_5ftype_2c_20n_20_3e_1',['wide&lt; value_type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_3c_20value_5ftype_5ft_3c_20i_20_3e_2c_20n_20_3e_2',['wide&lt; value_type_t&lt; I &gt;, N &gt;',['../structeve_1_1wide.html',1,'eve']]]
+  ['wide_3c_20detail_3a_3amake_5finteger_5ft_3c_20sizeof_28translated_5felement_5ftype_29_2c_20unsigned_20_3e_2c_20cardinal_20_3e_1',['wide&lt; detail::make_integer_t&lt; sizeof(translated_element_type), unsigned &gt;, Cardinal &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20index_5ft_2c_20eve_3a_3aiterator_5fcardinal_5ft_3c_20i_20_3e_20_3e_2',['wide&lt; index_t, eve::iterator_cardinal_t&lt; I &gt; &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20t_2c_20eve_3a_3afixed_3c_2016_2fsizeof_28t_29_3e_20_3e_3',['wide&lt; T, eve::fixed&lt; 16/sizeof(T)&gt; &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20t_2c_20eve_3a_3afixed_3c_20n_20_3e_20_3e_4',['wide&lt; T, eve::fixed&lt; N &gt; &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20t_2c_20n_20_3e_5',['wide&lt; T, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20t_2c_20nofs_5fcardinal_5ft_3c_20t_20_3e_20_3e_6',['wide&lt; T, nofs_cardinal_t&lt; T &gt; &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20t_2c_20typename_20n_3a_3asplit_5ftype_20_3e_7',['wide&lt; T, typename N::split_type &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20translated_5felement_5ftype_2c_20cardinal_20_3e_8',['wide&lt; translated_element_type, Cardinal &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20type_2c_20n_20_3e_9',['wide&lt; Type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20type_2c_20size_20_3e_10',['wide&lt; Type, Size &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20type_2c_20typename_20cardinal_3a_3acombined_5ftype_20_3e_11',['wide&lt; Type, typename Cardinal::combined_type &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20typename_20as_5ffloating_5fpoint_3c_20t_20_3e_3a_3atype_2c_20n_20_3e_12',['wide&lt; typename as_floating_point&lt; T &gt;::type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20typename_20as_5finteger_3c_20t_2c_20sign_20_3e_3a_3atype_2c_20n_20_3e_13',['wide&lt; typename as_integer&lt; T, Sign &gt;::type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20v_5fi_2c_20eve_3a_3aiterator_5fcardinal_5ft_3c_20i_20_3e_20_3e_14',['wide&lt; v_i, eve::iterator_cardinal_t&lt; I &gt; &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20value_5ftype_2c_20cardinal_20_3e_15',['wide&lt; value_type, Cardinal &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20value_5ftype_2c_20n_20_3e_16',['wide&lt; value_type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20value_5ftype_5ft_3c_20i_20_3e_2c_20n_20_3e_17',['wide&lt; value_type_t&lt; I &gt;, N &gt;',['../structeve_1_1wide.html',1,'eve']]]
 ];
