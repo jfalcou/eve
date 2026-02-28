@@ -16,7 +16,7 @@
 //==================================================================================================
 TTS_CASE_WITH ( "Check store behavior with unaligned pointers"
               , eve::test::simd::all_types_wf16
-              , tts::generate(tts::ramp(1),tts::logicals(1,2))
+              , tts::ramp(1),tts::logicals(1,2)
               )
 <typename T, typename L> (T data, L logical_data)
 {

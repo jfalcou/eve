@@ -36,9 +36,9 @@ TTS_CASE_TPL( "Check behavior of broadcast for scalars", eve::test::scalar::all_
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of broadcast swizzle"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+        ,  tts::randoms(eve::valmin, eve::valmax)
                               , tts::logicals(1, 2)
-                              )
+                              
         )
 <typename T, typename L> (T data, L logicals)
 {

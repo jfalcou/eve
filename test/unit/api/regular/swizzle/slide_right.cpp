@@ -13,7 +13,7 @@
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
 inline constexpr
-auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
+constexpr auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
                                                 {
                                                   return i<Shift ? eve::na_ : i-Shift;
                                                 });
@@ -23,9 +23,9 @@ auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of slide_right swizzle"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+        ,  tts::randoms(eve::valmin, eve::valmax)
                               , tts::logicals(0, 1)
-                              )
+                              
         )
 <typename T, typename L>(T simd, L logicals)
 {

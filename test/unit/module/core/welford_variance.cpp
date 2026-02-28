@@ -39,9 +39,9 @@ TTS_CASE_TPL("Check return types of welford_variance", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of welford_variance(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::welford_variance;
@@ -53,9 +53,9 @@ TTS_CASE_WITH("Check behavior of welford_variance(wide)",
 
 TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::welford_variance;

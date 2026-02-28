@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of asinpi", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of asinpi on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1, 1)))
+              tts::randoms(-1, 1))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -44,8 +44,8 @@ TTS_CASE_WITH("Check behavior of asinpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::asinpi)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

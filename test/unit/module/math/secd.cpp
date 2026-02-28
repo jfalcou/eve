@@ -29,8 +29,8 @@ TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of secd on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-45, 45),
-                            tts::randoms(-90, 90)))
+              tts::randoms(-45, 45),
+                            tts::randoms(-90, 90))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::secd;
@@ -69,8 +69,8 @@ TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::secd)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

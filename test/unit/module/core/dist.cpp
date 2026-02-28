@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check return types of dist", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of dist(wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T a0, T a1)
 {
   using eve::dist;
@@ -65,20 +65,20 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
   }
 };
 
-auto vmin = tts::constant(
+constexpr auto vmin = tts::constant(
     []<typename T>(eve::as<T> const& tgt)
     {
         return eve::valmin(tgt)/2;
     });
-auto vmax = tts::constant(
+constexpr auto vmax = tts::constant(
     []<typename T>(eve::as<T> const& tgt)
     {
         return eve::valmax(tgt)/2;
     });
 TTS_CASE_WITH("Check behavior of dist(wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(vmin, vmax),
-                            tts::randoms(vmin, vmax)))
+              tts::randoms(vmin, vmax),
+                            tts::randoms(vmin, vmax))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::dist;

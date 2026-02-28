@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of tchebsum on wide", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of tchebsum on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-3.0, 3.0))
+              tts::randoms(-3.0, 3.0)
              )
 <typename T>(T const& a0)
 {

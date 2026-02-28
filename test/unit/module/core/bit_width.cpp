@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of bit_width on wide", eve::test::simd::unsigne
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_width(wide) on unsigned integrals",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of bit_width(wide) on unsigned integrals",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_width(wide) on unsigned integrals",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;

@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::sulp(simd)", eve::test::simd::ieee_real
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::sulp(simd)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(1)))
+              tts::ramp(1))
   <typename T>(T const& )
 {
   using eve::as;
