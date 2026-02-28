@@ -73,9 +73,9 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of add on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::add;
@@ -131,9 +131,9 @@ TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integer
 
 TTS_CASE_WITH("Check behavior of add widen on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::add;
@@ -160,8 +160,8 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of add mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -178,14 +178,14 @@ TTS_CASE_WITH("Check behavior of add mod on wide",
 //==================================================================================================
 //==  conditional add tests on simd
 //==================================================================================================
-auto mini = tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; });
 
 TTS_CASE_WITH("Check behavior of add on signed types",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(mini, 127),
+              tts::randoms(mini, 127),
                             tts::randoms(mini, 127),
-                            tts::randoms(mini, 127)))
+                            tts::randoms(mini, 127))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::add;
@@ -208,9 +208,9 @@ TTS_CASE_WITH("Check behavior of add on signed types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)
@@ -232,9 +232,9 @@ TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
 
 TTS_CASE_WITH("Check behavior of add kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::add;

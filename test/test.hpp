@@ -35,17 +35,17 @@ namespace eve
 
 namespace tts
 {
-  template<typename T, typename U>
-  double ulp_distance(T const &l, U const &r);
+  // Defined by TTS further down, forward-declared so the element-wise loops below can reach them.
+  template<typename T, typename U> inline double ulp_check(T const& a, U const& b);
+  template<typename T, typename U> inline double relative_check(T const& a, U const& b);
 
-  template<typename T, typename U>
-  double relative_distance(T const &l, U const &r);
-
-  template<typename T, typename U>
-  double absolute_distance(T const &l, U const &r);
-
-  template<>
-  inline double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
+  //================================================================================================
+  // v3 hooks on these by name: `if constexpr(requires { ulp_distance(a,b); })`. Declaring an
+  // unconstrained generic here would satisfy that test for every type and hijack the fallback,
+  // so only the EVE types are declared, and element-wise recursion goes back through v3's own
+  // ulp_check / relative_check / absolute_check.
+  //================================================================================================
+  template<std::same_as<eve::float16_t> T> inline double ulp_distance(T const &l, T const &r)
   {
     return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
   }
@@ -55,7 +55,7 @@ namespace tts
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, ulp_distance(T(l.get(i)), T(r.get(i))));
+      max_ulp = std::max(max_ulp, ulp_check(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -67,7 +67,7 @@ namespace tts
   }
 
   template<typename T, typename N>
-  inline bool is_ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
+  inline bool ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
   {
     for(auto i = 0; i < a.size(); ++i)
     {
@@ -78,7 +78,7 @@ namespace tts
   }
 
   template<typename T>
-  inline bool is_ieee_equal(eve::logical<T> const &l, eve::logical<T>const &r)
+  inline bool ieee_equal(eve::logical<T> const &l, eve::logical<T>const &r)
   {
     return eve::compare_equal(l,r);
   }
@@ -91,7 +91,7 @@ namespace tts
     {
       if constexpr(eve::integral_value<T>)
       {
-        auto dr =  static_cast<double>(relative_distance(T(l.get(i)), T(r.get(i))));
+        auto dr =  static_cast<double>(relative_check(T(l.get(i)), T(r.get(i))));
         max_dr = (dr > max_dr) ? dr : max_dr;
       }
       else
@@ -127,8 +127,7 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : 1;
   }
 
-  template<>
-  inline double absolute_distance(eve::float16_t const &l, eve::float16_t const &r)
+  template<std::same_as<eve::float16_t> T> inline double absolute_distance(T const &l, T const &r)
   {
     return static_cast<double>(eve::dist(l, r));
   }
@@ -148,6 +147,41 @@ namespace tts
 }
 
 #include <tts/tts.hpp>
+
+//==================================================================================================
+// TTS v2's amalgamated header pulled these in; v3 does not, and the suite has always leant on
+// them being there. Kept in one place rather than sprinkled over seven hundred test files.
+//==================================================================================================
+#include <algorithm>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <optional>
+#include <random>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <vector>
+
+namespace tts
+{
+  //================================================================================================
+  // v3 renders a streamed value through as_text, which only knows numbers, ranges and its own
+  // types. The suite also logs index constants and shuffle patterns; both stream to an ostream.
+  //================================================================================================
+  template<typename T, T V> auto to_text(std::integral_constant<T,V> const&)
+  {
+    std::ostringstream os; os << V; return ::tts::text(os.str().c_str());
+  }
+
+  template<std::ptrdiff_t... I> auto to_text(eve::pattern_t<I...> const& p)
+  {
+    std::ostringstream os; os << p; return ::tts::text(os.str().c_str());
+  }
+
+}
+
 
 //==================================================================================================
 // EVE Specific types
@@ -189,7 +223,7 @@ namespace eve::test
     };
 
     using type_all =
-        tts::concatenate_t<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
+        tts::concatenate<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
 
     template<typename Type> struct rvv_pred
     {
@@ -258,25 +292,25 @@ namespace eve::test
 namespace eve::test::scalar
 {
   using ieee_reals        = ::tts::real_types;
-  using ieee_reals_wf16   = ::tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>;
+  using ieee_reals_wf16   = ::tts::concatenate<::tts::real_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using signed_types      = ::tts::signed_types;
-  using signed_types_wf16 = ::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>;
+  using signed_types_wf16 = ::tts::concatenate<::tts::signed_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
-  using integers_wf16     = ::tts::concatenate_t<::tts::integral_types, ::tts::types<eve::float16_t>>;
+  using integers_wf16     = ::tts::concatenate<::tts::integral_types, ::tts::types<eve::float16_t>>;
   using all_types         = ::tts::arithmetic_types;
-  using all_types_wf16    = ::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
+  using all_types_wf16    = ::tts::concatenate<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
 }
 
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
-  using ieee_reals_wf16   = eve::test::wides<tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>>::type;
+  using ieee_reals_wf16   = eve::test::wides<tts::concatenate<::tts::real_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using signed_types      = eve::test::wides<::tts::signed_types>::type;
-  using signed_types_wf16 = eve::test::wides<::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>>::type;
+  using signed_types_wf16 = eve::test::wides<::tts::concatenate<::tts::signed_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
@@ -317,15 +351,33 @@ namespace tts
   //================================================================================================
   // Constant wrapper
   //================================================================================================
-  template<typename F> struct constant : F
+  //================================================================================================
+  // v3 passes generators as non-type template parameters, which requires a structural type.
+  // Deriving from the closure is not: the type carries the lambda, the object stores nothing.
+  //================================================================================================
+  template<typename F> struct constant
   {
-    constant(F f) : F(f) {}
-    using F::operator();
+    constexpr constant(F) {}
+    template<typename D> constexpr auto operator()(D d) const { return F{}(d); }
   };
 
   template<typename T, typename V> auto as_value(constant<V> const& v)
   {
     return v(eve::as<T>{});
+  }
+
+  //================================================================================================
+  // v3 funnels a generator bound through convert_as, which static_casts it to the tested type.
+  // A constant is a per-type recipe, not a value: it has to be evaluated against T instead.
+  //================================================================================================
+  template<typename T, typename V> auto convert_as(V const& v, type<T> const&)
+  requires( requires { v(eve::as<T>{}); } )
+  {
+    auto r = v(eve::as<T>{});
+    // A recipe is free to answer in whatever type it finds natural - `-128 : 0` is an int even
+    // when T is double. Both bounds of a generator must land on T or v3 cannot deduce it.
+    if constexpr(std::convertible_to<decltype(r), T>) return static_cast<T>(r);
+    else                                             return r;
   }
 
   //================================================================================================
@@ -360,13 +412,78 @@ namespace tts
   }
 
   //================================================================================================
+  // v3 unwraps a generated type through tts::base_type before sizing its integer counterpart.
+  // Left unspecialized it would size against sizeof(wide<T,N>) rather than sizeof(T).
+  //================================================================================================
+  template<typename T, typename N> struct base_type<eve::wide<T,N>>    { using type = T; };
+  template<typename T, typename N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
+  template<typename T>             struct boolean_type<eve::logical<T>> { using type = eve::logical<T>; };
+  template<typename T> requires(std::is_arithmetic_v<T> && !std::is_same_v<T,bool>)
+  struct boolean_type<T> { using type = eve::logical<T>; };
+  template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
+
+  //================================================================================================
+  // v3 owns the name `random_bits` and gives it the other meaning: a full-width bit pattern.
+  // What the shift tests need is a valid shift count, which is what EVE's generator always was.
+  //================================================================================================
+  struct random_shift
+  {
+    template<typename D> auto operator()(tts::type<D>, auto...) const
+    {
+      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
+      return tts::random_value<i_t>(0, 8*sizeof(i_t)-1);
+    }
+  };
+
+  //================================================================================================
+  // v3 ships its own limits(), but it is built on std::numeric_limits, which knows nothing of
+  // eve::wide. Constrained on EVE values so it wins over v3's for those and only those.
+  //================================================================================================
+  template<eve::value T>
+  inline auto limits(tts::type<T>)
+  {
+    if constexpr(eve::floating_value<T>)
+    {
+      struct values
+      {
+        using type  = T;
+        type nan            = eve::nan           (eve::as<type>{});
+        type inf            = eve::inf           (eve::as<type>{});
+        type minf           = eve::minf          (eve::as<type>{});
+        type mzero          = eve::mzero         (eve::as<type>{});
+        type zero           = eve::zero          (eve::as<type>{});
+        type maxflint       = eve::maxflint      (eve::as<type>{});
+        type valmax         = eve::valmax        (eve::as<type>{});
+        type valmin         = eve::valmin        (eve::as<type>{});
+        type mindenormal    = eve::mindenormal   (eve::as<type>{});
+        type smallestposval = eve::smallestposval(eve::as<type>{});
+        type mone           = eve::mone          (eve::as<type>{});
+        type one            = eve::one           (eve::as<type>{});
+      };
+
+      return values{};
+    }
+    else
+    {
+      struct values
+      {
+        using type  = T;
+        type valmax = eve::valmax(eve::as<type>{});
+        type valmin = eve::valmin(eve::as<type>{});
+      };
+
+      return values{};
+    }
+  }
+
+  //================================================================================================
   // Customization point for argument building
   //================================================================================================
   template<eve::simd_value T>
-  auto produce(type<T> const&, auto g, auto& rng, auto... args)
+  auto produce(type<T> const&, auto g, auto... args)
   {
     using e_t = eve::element_type_t<T>;
-    auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
+    auto data = produce(type<std::array<e_t,T::size()>>{},g, args...);
 
     using v_t = typename decltype(data)::value_type;
     eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
@@ -374,9 +491,9 @@ namespace tts
     return poison(that);
   }
 
-  auto produce(type<eve::float16_t> const&, auto g, auto& rng, auto... args)
+  auto produce(type<eve::float16_t> const&, auto g, auto... args)
   {
-    auto data = produce(type<float>{}, g, rng, args...);
+    auto data = produce(type<float>{}, g, args...);
     if constexpr (eve::logical_value<decltype(data)>)
     {
       return static_cast<eve::logical<eve::float16_t>>(data);
@@ -388,129 +505,12 @@ namespace tts
   }
 
   template<std::ptrdiff_t N>
-  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
+  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto... args)
   {
-    auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
+    auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
     return poison(eve::load(arr.data(), eve::fixed<N>{}));
   }
 
-  template<typename Mx, typename Mn>
-  auto produce(type<eve::float16_t> const&, randoms<Mx, Mn> g, auto& rng, auto...)
-  {
-    tts::realistic_distribution<float> dist(
-      static_cast<float>(as_value<eve::float16_t>(g.mini)),
-      static_cast<float>(as_value<eve::float16_t>(g.maxi))
-    );
-    return static_cast<eve::float16_t>(dist(rng));
-  }
-
-  //================================================================================================
-  // logical ramp - generate (v+1) % k == 0, (v+2) % k ==  0, ... (v+N) % k == 0
-  //================================================================================================
-  template<typename T, typename U = T> struct logicals
-  {
-    logicals(T v, U k) : start(v), range(k)  {}
-
-    template<typename D> auto operator()(tts::type<D>, auto&) const
-    {
-      using type = eve::as_logical_t<D>;
-      return as_value<type>(false);
-    }
-
-    template<typename D> auto operator()(tts::type<D>, auto&, auto idx, auto...) const
-    {
-      using type = eve::as_logical_t<D>;
-      return as_value<type>(((start+idx)%range) == 0);
-    }
-
-    T start;
-    U range;
-  };
-
-  //================================================================================================
-  // generate random bits
-  //================================================================================================
-  struct random_bits
-  {
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
-    {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      tts::realistic_distribution<i_t> dist(0,8*sizeof(i_t)-1);
-      return dist(rng);
-    }
-  };
-
-  //================================================================================================
-  // Convert generated data to integral values
-  //================================================================================================
-  template<typename G>
-  struct as_integer
-  {
-    as_integer(G g) : generator_(g) {}
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
-    {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      return generator_(tts::type<i_t>{},rng, args...);
-    }
-
-    G generator_;
-  };
-
-  template<typename G>
-  struct as_signed_integer
-  {
-    as_signed_integer(G g) : generator_(g) {}
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
-    {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>, signed>;
-      return generator_(tts::type<i_t>{},rng, args...);
-    }
-
-    G generator_;
-  };
-
-  //================================================================================================
-  // IEEE Special Constant value
-  //================================================================================================
-  template<typename T>
-  inline auto limits(tts::type<T>)
-  {
-    return []()
-    {
-      if constexpr(eve::floating_value<T>)
-      {
-        struct values
-        {
-          using type  = T;
-          type nan         = eve::nan     (eve::as<type>{});
-          type inf         = eve::inf     (eve::as<type>{});
-          type minf        = eve::minf    (eve::as<type>{});
-          type mzero       = eve::mzero   (eve::as<type>{});
-          type zero        = eve::zero   (eve::as<type>{});
-          type maxflint    = eve::maxflint(eve::as<type>{});
-          type valmax      = eve::valmax(eve::as<type>{});
-          type valmin      = eve::valmin(eve::as<type>{});
-          type mindenormal = eve::mindenormal(eve::as<type>{});
-          type smallestposval = eve::smallestposval(eve::as<type>{});
-          type mone       = eve::mone   (eve::as<type>{});
-          type one        = eve::one   (eve::as<type>{});
-        };
-
-        return values{};
-      }
-      else
-      {
-        struct values
-        {
-          using type  = T;
-          type valmax    = eve::valmax(eve::as<type>{});
-          type valmin    = eve::valmin(eve::as<type>{});
-        };
-
-        return values{};
-      }
-    }();
-  }
 
   template<typename Fn, typename Wm, typename... Args>
   auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>

@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of sindcosd", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sindcosd on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-45, 45), tts::randoms(-90, 90), tts::randoms(-360, 360)))
+              tts::randoms(-45, 45), tts::randoms(-90, 90), tts::randoms(-360, 360))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::sindcosd;

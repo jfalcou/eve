@@ -28,14 +28,14 @@ TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // expmx2  tests
 //==================================================================================================
-auto mini =
+constexpr auto mini =
     tts::constant([]<typename T>(eve::as<T> const& tgt) { return -eve::sqrt(eve::maxlog(tgt)); });
-auto maxi =
+constexpr auto maxi =
     tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::sqrt(eve::maxlog(tgt)); });
 
 TTS_CASE_WITH("Check behavior of exp on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(mini, maxi))
+              tts::randoms(mini, maxi)
              )
 <typename T>(T const& a0)
 {
@@ -73,8 +73,8 @@ TTS_CASE_TPL("Check expmx2", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::expmx2)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(mini, maxi),
-              tts::logicals(0, 3)))
+              tts::randoms(mini, maxi),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -84,7 +84,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expmx2)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of expmx2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0.5, 5)))
+              tts::randoms(0.5, 5))
   <typename T>(T const& a0)
 {
    using eve::raw;

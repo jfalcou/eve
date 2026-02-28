@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of ellint_d", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of ellint_d on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 1.0), tts::randoms(0, eve::pio_2)))
+              tts::randoms(0, 1.0), tts::randoms(0, eve::pio_2))
 <typename T>(T const& k, T const& phi)
 {
   using v_t = eve::element_type_t<T>;
@@ -56,9 +56,9 @@ TTS_CASE_WITH("Check behavior of ellint_d on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::ellint_d)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 1.0),
+              tts::randoms(0, 1.0),
                             tts::randoms(0, eve::pio_2),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

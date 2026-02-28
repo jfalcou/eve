@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of horner on wide", eve::test::simd::ieee_reals
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of horner on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10.0, 10.0))
+              tts::randoms(-10.0, 10.0)
              )
 <typename T>(T const& a0)
 {

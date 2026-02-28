@@ -37,16 +37,16 @@ TTS_CASE_TPL("Check return types of rshl", eve::test::simd::unsigned_integers)
 //==================================================================================================
 // rshl tests
 //==================================================================================================
-auto shift_max = []<typename T>(eve::as<T> const&)
+constexpr auto shift_max = []<typename T>(eve::as<T> const&)
 { return static_cast<T>(sizeof(eve::element_type_t<T>)) * 8 - 1; };
-auto shift_min = []<typename T>(eve::as<T> const&)
+constexpr auto shift_min = []<typename T>(eve::as<T> const&)
 { return -static_cast<T>(sizeof(eve::element_type_t<T>)) * 8 + 1; };
 
 TTS_CASE_WITH("Check behavior of rshl on integral types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::as_signed_integer(tts::randoms(tts::constant(shift_min),
-                                                                tts::constant(shift_max)))))
+                                                                tts::constant(shift_max))))
 <typename T, typename U>(T const& a0, U const& a1)
 {
   using eve::rshl;
@@ -64,10 +64,10 @@ TTS_CASE_WITH("Check behavior of rshl on integral types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::rshr)(eve::wide)",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::as_signed_integer(tts::randoms(tts::constant(shift_min),
                                                                 tts::constant(shift_max))),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename U, typename M>(T const& a0,
                                        U const& a1,
                                        M const& mask)

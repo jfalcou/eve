@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of bit_shl", eve::test::simd::unsigned_integers
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_shl(wide, wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::random_bits(), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::random_shift{}, tts::logicals(0, 3))
 <typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shl;
@@ -50,7 +50,7 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, wide)",
 
 TTS_CASE_WITH("Check behavior of bit_shl(wide, scalar)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::random_bits(), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::random_shift{}, tts::logicals(0, 3))
 <typename T, typename I, typename L>(T a0, I s, L test)
 {
   using eve::bit_shl;
@@ -62,7 +62,7 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, scalar)",
 
 TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename L>(T a0, L test)
 {
   using eve::bit_shl;
@@ -76,8 +76,8 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::bit_shl[cx](eve::wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

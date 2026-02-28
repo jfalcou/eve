@@ -29,7 +29,7 @@ TTS_CASE("are_below_ignoring_specials")
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::are_below_ignoring_specials(in, ub);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1}, 1, false);
@@ -49,7 +49,7 @@ TTS_CASE("upscale_pattern")
     auto actual = eve::_::idxm::upscale_pattern(in);
     TTS_EXPECT(actual);
 
-    TTS_EQUAL(expected, *actual) << tts::as_string(in);
+    TTS_EQUAL(expected, *actual) << tts::as_text(in);
   };
 
   auto no_test = [](auto _in)
@@ -87,9 +87,9 @@ TTS_CASE("swap_xy")
     std::array<std::ptrdiff_t, N> expected = to_idxs(_expected);
     std::array<std::ptrdiff_t, N> input    = to_idxs(_input);
 
-    TTS_EQUAL(expected, eve::_::idxm::swap_xy(input, s)) << tts::as_string(input) << " " << s;
+    TTS_EQUAL(expected, eve::_::idxm::swap_xy(input, s)) << tts::as_text(input) << " " << s;
     TTS_EQUAL(input, eve::_::idxm::swap_xy(expected, s))
-        << tts::as_string(expected) << " " << s;
+        << tts::as_text(expected) << " " << s;
   };
 
   // T::size() == 1
@@ -135,7 +135,7 @@ TTS_CASE("fix_indexes_to_fundamental")
     auto expected = to_idxs(_expected);
     auto actual   = eve::_::idxm::fix_indexes_to_fundamental<Fundamental>(p, cardinal);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(p) << ", " << cardinal;
+    TTS_EQUAL(expected, actual) << tts::as_text(p) << ", " << cardinal;
   };
 
   test(eve::lane<4>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3});
@@ -155,9 +155,9 @@ TTS_CASE("shuffle_within_halves")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::shuffle_within_halves(in);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
     actual = eve::_::idxm::shuffle_within_n(in, std::ssize(in) / 2);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1, we_, we_}, true);
@@ -179,7 +179,7 @@ TTS_CASE("shuffle_within_n")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::shuffle_within_n(in, n);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1, 3, 2, 5, 4, 7, 6}, 2, true);
@@ -199,8 +199,8 @@ TTS_CASE("shuffle_halves_independetly")
     auto expected_hi = to_idxs(_expected_hi);
 
     auto [lo, hi] = eve::_::idxm::shuffle_halves_independetly(in);
-    TTS_EQUAL(expected_lo, lo) << tts::as_string(in);
-    TTS_EQUAL(expected_hi, hi) << tts::as_string(in);
+    TTS_EQUAL(expected_lo, lo) << tts::as_text(in);
+    TTS_EQUAL(expected_hi, hi) << tts::as_text(in);
   };
 
   test(std::array {1, 0, we_, 2}, std::array {1, 0, we_, 3}, std::array {0, 1, we_, 2});
@@ -215,15 +215,15 @@ TTS_CASE("is_repeating_pattern")
     auto half = to_idxs(_half);
 
     auto res = eve::_::idxm::is_repeating_pattern(full);
-    TTS_EXPECT(res) << tts::as_string(full);
-    if( res ) { TTS_EQUAL(*res, half) << tts::as_string(full); }
+    TTS_EXPECT(res) << tts::as_text(full);
+    if( res ) { TTS_EQUAL(*res, half) << tts::as_text(full); }
   };
 
   auto no_test = []<std::size_t N>(std::array<int, N> _full)
   {
     auto full = to_idxs(_full);
     auto res  = eve::_::idxm::is_repeating_pattern(full);
-    TTS_EXPECT_NOT(res) << tts::as_string(full) << " res: " << tts::as_string(res);
+    TTS_EXPECT_NOT(res) << tts::as_text(full) << " res: " << tts::as_text(res);
   };
 
   // 1 register
@@ -307,7 +307,7 @@ TTS_CASE("repeated_pattern_of_size")
       []<std::ptrdiff_t Tgt, std::ptrdiff_t... I>(eve::pattern_t<I...> p, eve::fixed<Tgt>)
   {
     auto actual = eve::_::idxm::repeated_pattern_of_size<(std::size_t)Tgt, I...>;
-    TTS_EXPECT_NOT(actual) << p << " actual: " << tts::as_string(actual);
+    TTS_EXPECT_NOT(actual) << p << " actual: " << tts::as_text(actual);
   };
 
   yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<2>, std::array {1, 0});
@@ -326,7 +326,7 @@ TTS_CASE("repeat")
     auto in       = to_idxs(_in);
     auto actual   = eve::_::idxm::repeat<(std::size_t)G>(in);
     auto expected = to_idxs(_expected);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1}, eve::lane<1>, std::array {0, 1});
@@ -339,7 +339,7 @@ TTS_CASE("is_identity")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::is_identity(in);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
   test(std::array {0}, true);
   test(std::array {we_}, true);
@@ -354,7 +354,7 @@ TTS_CASE("is_zero")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::is_zero(in);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
   test(std::array {na_}, true);
   test(std::array {we_}, true);
@@ -370,7 +370,7 @@ TTS_CASE("has_zeroes")
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::has_zeroes(in);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {1, 2}, false);
@@ -385,7 +385,7 @@ TTS_CASE("is_all_zeroes")
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::is_all_zeroes(in);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {we_, we_}, true);
@@ -401,7 +401,7 @@ TTS_CASE("is_just_zeroes_replaced")
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::is_just_zeroes_replaced(in);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {we_, we_}, true);
@@ -420,7 +420,7 @@ TTS_CASE("is_just_setting_one_zero")
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_just_setting_one_zero(in).value_or(-1);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {we_, we_}, -1);
@@ -443,7 +443,7 @@ TTS_CASE("is_just_setting_one_lane")
     auto actual   = eve::_::idxm::is_just_setting_one_lane(in).value_or(
         std::array<std::ptrdiff_t, 2> {-1, -1});
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {we_, we_}, std::array {-1, -1});
@@ -462,7 +462,7 @@ TTS_CASE("is_in_order")
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_in_order(in).value_or(-1);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {1, 2}, 1);
@@ -486,7 +486,7 @@ TTS_CASE("is_in_order_from")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_in_order_from(in, from);
-    TTS_EQUAL(expected, actual) << tts::as_string(in) << " from: " << from;
+    TTS_EQUAL(expected, actual) << tts::as_text(in) << " from: " << from;
   };
 
   test(std::array {0, 1}, 0, true);
@@ -505,12 +505,12 @@ TTS_CASE("is_rotate")
 
     if( expected == -1 )
     {
-      TTS_EXPECT_NOT(actual) << tts::as_string(in) << " actual: " << tts::as_string(actual);
+      TTS_EXPECT_NOT(actual) << tts::as_text(in) << " actual: " << tts::as_text(actual);
       return;
     }
 
-    if( actual ) { TTS_EQUAL(*actual, expected) << tts::as_string(in); }
-    else { TTS_EQUAL(-1, expected) << tts::as_string(in); }
+    if( actual ) { TTS_EQUAL(*actual, expected) << tts::as_text(in); }
+    else { TTS_EQUAL(-1, expected) << tts::as_text(in); }
   };
 
   TTS_EQUAL(eve::_::idxm::is_rotate({}), 0);
@@ -542,20 +542,20 @@ TTS_CASE("rotate_as_two_shifts_and_or")
 
     auto res = eve::_::idxm::rotate_as_two_shifts_and_or(in);
 
-    TTS_EXPECT(res) << "in: " << tts::as_string(in);
+    TTS_EXPECT(res) << "in: " << tts::as_text(in);
 
     if( !res ) return;
 
     auto [actual_l, actual_r] = *res;
-    TTS_EQUAL(expected_l, actual_l) << "in: " << tts::as_string(in);
-    TTS_EQUAL(expected_r, actual_r) << "in: " << tts::as_string(in);
+    TTS_EQUAL(expected_l, actual_l) << "in: " << tts::as_text(in);
+    TTS_EQUAL(expected_r, actual_r) << "in: " << tts::as_text(in);
   };
 
   auto no_test = [](auto _in)
   {
     auto in  = to_idxs(_in);
     auto res = eve::_::idxm::rotate_as_two_shifts_and_or(in);
-    TTS_EXPECT_NOT(res) << "in: " << tts::as_string(in);
+    TTS_EXPECT_NOT(res) << "in: " << tts::as_text(in);
   };
 
   yes_test(std::array {1, 0}, std::array {1, na_}, std::array {na_, 0});
@@ -612,7 +612,7 @@ TTS_CASE("matches 1")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::matches(to_idxs(_in), p);
-    TTS_EQUAL(expected, actual) << "in: " << tts::as_string(in) << " p: " << tts::as_string(p);
+    TTS_EQUAL(expected, actual) << "in: " << tts::as_text(in) << " p: " << tts::as_text(p);
   };
 
   test(std::array {we_}, {0}, true);
@@ -635,8 +635,8 @@ TTS_CASE("matches many")
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::matches(to_idxs(_in), p0, p1);
-    TTS_EQUAL(expected, actual) << "in: " << tts::as_string(in) << " p0: " << tts::as_string(p0)
-                                << " p1: " << tts::as_string(p1);
+    TTS_EQUAL(expected, actual) << "in: " << tts::as_text(in) << " p0: " << tts::as_text(p0)
+                                << " p1: " << tts::as_text(p1);
   };
 
   test(std::array {1}, {0}, {we_}, true);
@@ -713,7 +713,7 @@ TTS_CASE("is_blend")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_blend(in, cardinal);
-    TTS_EQUAL(expected, actual) << tts::as_string(in) << "cardinal: " << cardinal;
+    TTS_EQUAL(expected, actual) << tts::as_text(in) << "cardinal: " << cardinal;
   };
   test(std::array {0, 1}, 2, true);
   test(std::array {2, 1}, 2, true);
@@ -744,8 +744,8 @@ TTS_CASE("extract_blends")
       const auto& a_ = actual.register_blends[i];
 
       TTS_EQUAL(e.idxs, a_.idxs, REQUIRED);
-      TTS_EQUAL(e.present_in_blend, a_.present_in_blend, REQUIRED) << tts::as_string(idxs);
-      TTS_EQUAL(e.present_in_shuffle, a_.present_in_shuffle, REQUIRED) << tts::as_string(idxs);
+      TTS_EQUAL(e.present_in_blend, a_.present_in_blend, REQUIRED) << tts::as_text(idxs);
+      TTS_EQUAL(e.present_in_shuffle, a_.present_in_shuffle, REQUIRED) << tts::as_text(idxs);
     }
   };
 
@@ -826,7 +826,7 @@ TTS_CASE("trim_trailing_we")
     auto        actual   = eve::_::idxm::trim_trailing_we(in);
     std::vector actual_v(actual.begin(), actual.end());
     std::vector expected_v(expected.begin(), expected.end());
-    TTS_EQUAL(expected_v, actual_v) << tts::as_string(in);
+    TTS_EQUAL(expected_v, actual_v) << tts::as_text(in);
   };
 
   test(std::array {0, 1}, std::array {0, 1});
@@ -843,7 +843,7 @@ TTS_CASE("is_slide_left")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_slide_left(in).value_or(-1);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1, 2, 3}, 0);
@@ -864,7 +864,7 @@ TTS_CASE("is_slide_right")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_slide_right(in).value_or(-1);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1, 2, 3}, 0);
@@ -888,7 +888,7 @@ TTS_CASE("is_slide_left2")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_slide_left_2(in, reg_groups).value_or(-1);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0, 1, 2, 3}, 4, 0); // not slide 2, result is unimportant
@@ -914,8 +914,8 @@ TTS_CASE("slide_as_slide2_with_0")
     auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
     auto actual   = eve::_::idxm::slide_as_slide2_with_0(in);
-    TTS_EXPECT(actual) << tts::as_string(in);
-    TTS_EQUAL(expected, *actual) << tts::as_string(in);
+    TTS_EXPECT(actual) << tts::as_text(in);
+    TTS_EQUAL(expected, *actual) << tts::as_text(in);
   };
 
   auto no_test = [](auto _in)
@@ -941,7 +941,7 @@ TTS_CASE("is_reverse")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_reverse(in);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {0}, true);
@@ -961,7 +961,7 @@ TTS_CASE("is_lane_broadcast")
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::is_lane_broadcast(in).value_or(-1);
-    TTS_EQUAL(expected, actual) << tts::as_string(in);
+    TTS_EQUAL(expected, actual) << tts::as_text(in);
   };
 
   test(std::array {we_}, -1);

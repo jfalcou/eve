@@ -31,20 +31,20 @@ TTS_CASE_TPL("Check return types of clamp", eve::test::simd::all_types_wf16)
 //==================================================================================================
 // clamp simd tests
 //==================================================================================================
-auto val1 = ::tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto val1 = ::tts::constant([]<typename T>(eve::as<T> const&)
                             { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6); });
-auto val2 = ::tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto val2 = ::tts::constant([]<typename T>(eve::as<T> const&)
                             { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6) * 2; });
-auto val3 = ::tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto val3 = ::tts::constant([]<typename T>(eve::as<T> const&)
                             { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6) * 3; });
-auto val4 = ::tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto val4 = ::tts::constant([]<typename T>(eve::as<T> const&)
                             { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6) * 4; });
 
 TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(val1, val4),
+              tts::randoms(val1, val4),
                             tts::randoms(eve::valmin, val2),
-                            tts::randoms(val3, eve::valmax)))
+                            tts::randoms(val3, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::clamp;
@@ -61,9 +61,9 @@ TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::clamp)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

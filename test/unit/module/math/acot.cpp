@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of acot", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of acot on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000., +1000.)))
+              tts::randoms(-1000., +1000.))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -43,8 +43,8 @@ TTS_CASE_WITH("Check behavior of acot on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acot)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -55,7 +55,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::acot)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of acot on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+              tts::randoms(-10, 10), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

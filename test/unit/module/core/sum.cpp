@@ -44,7 +44,7 @@ struct ManualSum
 
 TTS_CASE_WITH("Check behavior of eve::_::sum on scalars",
               eve::test::scalar::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v);
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on scalars",
 
 TTS_CASE_WITH("Check behavior of eve::_::sum on wides (integers)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v);
@@ -60,7 +60,7 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on wides (integers)",
 
 TTS_CASE_WITH("Check behavior of eve::_::sum on wides (ieee754 reals)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1, 9)))
+              tts::randoms(1, 9))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v, 1.0);

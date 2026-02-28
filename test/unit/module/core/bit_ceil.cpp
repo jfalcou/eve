@@ -26,15 +26,15 @@ TTS_CASE_TPL("Check return types of bit_ceil on wide", eve::test::simd::all_type
 //==================================================================================================
 // bit_ceil simd tests
 //==================================================================================================
-auto maxi = tts::constant(
+constexpr auto maxi = tts::constant(
     []<typename T>(eve::as<T> const&)
     { return eve::valmax(eve::as<T>()) / 2; }); // over valmax/2 bit_ceil is UB so don't test
-auto mini =
+constexpr auto mini =
     tts::constant([]<typename T>(eve::as<T> const&)
                   { return eve::valmin(eve::as<T>()) / 4; }); // negative values all return 1;
 TTS_CASE_WITH("Check behavior of bit_ceil(wide) on integral types",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(mini, maxi), tts::logicals(0, 3)))
+              tts::randoms(mini, maxi), tts::logicals(0, 3))
 <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -46,7 +46,7 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on integral types",
 
 TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(-10, eve::valmax), tts::logicals(0, 3))
 <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -76,8 +76,8 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_ceil)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

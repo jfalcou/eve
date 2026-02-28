@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check return types of cotd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cotd on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 45),
+              tts::randoms(0, 45),
                             tts::randoms(0, 90),
-                            tts::randoms(0, 5000)))
+                            tts::randoms(0, 5000))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::cotd;
@@ -67,8 +67,8 @@ TTS_CASE_TPL("Check corner cases of cotd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cotd)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

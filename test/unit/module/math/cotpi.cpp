@@ -27,17 +27,17 @@ TTS_CASE_TPL("Check return types of cotpi", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // cotpi  tests
 //==================================================================================================
-auto mmed = [](auto const& tgt)
+constexpr auto mmed = [](auto const& tgt)
 { return -eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
-auto med = [](auto const& tgt)
+constexpr auto med = [](auto const& tgt)
 { return eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of cotpi on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-0.25, 0.25),
+              tts::randoms(-0.25, 0.25),
                             tts::randoms(-0.5, 0.5),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cotpi;
@@ -60,8 +60,8 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cotpi)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

@@ -10,7 +10,7 @@ int main()
   std::vector<double>  v = {1.2,2.3,3.4,4.5,5.6,6.7};
 
   std::cout << " -> v                                                        = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> eve::algo::reduce(v, 0.)                                 = "

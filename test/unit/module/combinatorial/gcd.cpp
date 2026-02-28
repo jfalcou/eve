@@ -21,12 +21,12 @@ TTS_CASE_TPL("Check return types of eve::gcd", eve::test::simd::integers)
   TTS_EXPR_IS(eve::gcd(e_t(), e_t()), e_t);
 };
 
-auto mini = tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return eve::inc(eve::valmin(eve::as<T>())); });
 
 TTS_CASE_WITH("Check  behavior of eve::gcd on wide",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(mini, eve::valmax), tts::randoms(mini, eve::valmax)))
+              tts::randoms(mini, eve::valmax), tts::randoms(mini, eve::valmax))
 <typename T>(const T& a0, const T& a1)
 {
   using v_t = eve::element_type_t<T>;

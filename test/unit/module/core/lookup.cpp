@@ -16,7 +16,7 @@
 //==================================================================================================
 TTS_CASE_WITH("Check eve::lookup behavior on arithmetic wide",
               eve::test::simd::all_types,
-              tts::generate(tts::ramp(1), tts::logicals(1, 2)))
+              tts::ramp(1), tts::logicals(1, 2))
 <typename T, typename L>(T data, L logical_data)
 {
   using i_t = eve::as_integer_t<T>;

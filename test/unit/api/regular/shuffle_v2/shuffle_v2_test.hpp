@@ -72,7 +72,13 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
     TTS_EQUAL(expected_level, l())
         << "G: " << g() << "\npattern: " << p << "\nT type: " << tts::typename_<T>;
   }
-  else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
+  else
+  {
+    // v3 builds the message with tts::text{...} rather than streaming it, so compose first.
+    std::ostringstream msg;
+    msg << "Failed to shuffle, G: " << g() << "\npattern: " << p;
+    TTS_FAIL(msg.str().c_str());
+  }
 }
 
 template<typename T, std::ptrdiff_t... I>
@@ -94,7 +100,13 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
     if( eve::has_emulated_abi_v<T> ) expected_level = 0;
     TTS_EQUAL(expected_level, l()) << "G: " << g() << "\npattern: " << p;
   }
-  else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
+  else
+  {
+    // v3 builds the message with tts::text{...} rather than streaming it, so compose first.
+    std::ostringstream msg;
+    msg << "Failed to shuffle, G: " << g() << "\npattern: " << p;
+    TTS_FAIL(msg.str().c_str());
+  }
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>

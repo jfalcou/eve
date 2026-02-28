@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::sign_alternate", eve::test::simd::signe
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::sign_alternate(eve::wide)",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(-100, +100), tts::logicals(0, 3)))
+              tts::randoms(-100, +100), tts::logicals(0, 3))
 <typename T, typename M>(T const& a00, M const& mask)
 {
   using eve::as;

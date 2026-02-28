@@ -42,9 +42,9 @@ TTS_CASE_TPL("Check return types of kolmmean", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of kolmmean(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::kolmmean;
@@ -76,9 +76,9 @@ TTS_CASE_WITH("Check behavior of kolmmean(wide)",
 
 TTS_CASE_WITH("Check behavior of kolmmean kahan on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1, eve::valmax),
+              tts::randoms(1, eve::valmax),
                             tts::randoms(1, eve::valmax),
-                            tts::randoms(1, eve::valmax)))
+                            tts::randoms(1, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::kolmmean;
