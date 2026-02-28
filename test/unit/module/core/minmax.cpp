@@ -25,9 +25,9 @@ TTS_CASE_TPL("Check return types of minmax", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of minmax on all types full range",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, M const& m)
 {
   auto[mn , mx] = eve::minmax(a0,a1);
@@ -41,9 +41,9 @@ TTS_CASE_WITH("Check behavior of minmax on all types full range",
 
 TTS_CASE_WITH ( "Check predicate version of minmax",
                 eve::test::simd::all_types,
-                tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                 tts::randoms(eve::valmin, eve::valmax)
                               , tts::randoms(eve::valmin, eve::valmax)
-                              )
+                              
               )
 <typename T>(T const& a0, T const& a1)
 {

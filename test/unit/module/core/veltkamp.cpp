@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of veltkamp on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 10))
+              tts::randoms(0, 10)
              )
   <typename T>(T const& a0)
 {

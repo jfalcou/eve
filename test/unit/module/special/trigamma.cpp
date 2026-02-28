@@ -59,7 +59,7 @@ TTS_CASE_TPL("Check behavior of trigamma on wide", eve::test::scalar::ieee_reals
 
 TTS_CASE_WITH("Check behavior of trigamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.4, 4.0)))
+              tts::randoms(0.4, 4.0))
   <typename T>(T const& a0) { TTS_ULP_EQUAL(eve::trigamma(a0), T(tts::map(eve::trigamma, a0)), 3); };
 
 
@@ -68,8 +68,8 @@ TTS_CASE_WITH("Check behavior of trigamma on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::trigamma)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.4, 4.0),
-                            tts::logicals(0, 3)))
+              tts::randoms(0.4, 4.0),
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            M const& mask)
 {

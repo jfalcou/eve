@@ -44,7 +44,7 @@ struct ManualMaximum
 
 TTS_CASE_WITH("Check behavior of eve::maximum on scalars",
               eve::test::scalar::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualMaximum>(eve::maximum, v);
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of eve::maximum on scalars",
 
 TTS_CASE_WITH("Check behavior of eve::maximum on wides",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualMaximum>(eve::maximum, v);

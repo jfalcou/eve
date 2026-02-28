@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of eve::reduce(wide)", eve::test::simd::all_typ
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::reduce(eve::wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::logicals(0, 3)))
+              tts::logicals(0, 3))
 <typename T>(T const& a0)
 {
   TTS_EQUAL(eve::reduce(a0, eve::logical_and), eve::all(a0));
@@ -114,7 +114,7 @@ namespace eve
 
 TTS_CASE_WITH("Check behavior of eve::reduce on arithmetic values with a neutral element",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualReduction>(eve::functor<eve::reduce_proxy<eve::add, eve::one>::proxy>, v);
@@ -133,7 +133,7 @@ TTS_CASE_TPL("Check behavior of eve::reduce on logical values with a neutral ele
 
 TTS_CASE_WITH("Check behavior of eve::reduce with a callable advertising a neutral element",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualProd>(eve::functor<eve::reduce_proxy_adv_t>, v);

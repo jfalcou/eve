@@ -44,9 +44,9 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of welford_average(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T  a0, T a1, T a2)
 {
 

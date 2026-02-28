@@ -44,7 +44,7 @@ struct ManualMinimum
 
 TTS_CASE_WITH("Check behavior of eve::minimum on scalars",
               eve::test::scalar::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualMinimum>(eve::minimum, v);
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of eve::minimum on scalars",
 
 TTS_CASE_WITH("Check behavior of eve::minimum on wides",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualMinimum>(eve::minimum, v);

@@ -35,8 +35,8 @@ TTS_CASE_TPL("Check behavior of valmax(wide)", eve::test::simd::all_types)
 
 TTS_CASE_WITH("Check behavior of valmax[mask] on :wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmax, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmax, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T, M m)
 {
   TTS_EQUAL(eve::valmax[m](eve::as<T>()), eve::if_else(m, T{ std::numeric_limits<eve::element_type_t<T>>::max() }, eve::zero));

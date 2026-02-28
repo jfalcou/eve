@@ -34,15 +34,15 @@ TTS_CASE_TPL("Check return types of rotl", eve::test::simd::unsigned_integers)
   TTS_EXPR_IS(rotl(v_t(), si_t()), v_t);
 };
 
-auto maxi = []<typename T>(eve::as<T> const&) { return sizeof(eve::element_type_t<T>) * 8 - 1; };
+constexpr auto maxi = []<typename T>(eve::as<T> const&) { return sizeof(eve::element_type_t<T>) * 8 - 1; };
 
 //======================================================================================================================
 //== rotl  tests
 //======================================================================================================================
 TTS_CASE_WITH("Check behavior of rotl on wide",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(0, tts::constant(maxi))))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(0, tts::constant(maxi)))
 <typename T>(T a0, T a1)
 {
   using eve::rotl;
@@ -64,8 +64,8 @@ TTS_CASE_WITH("Check behavior of rotl on wide",
 //======================================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::rotl)(eve::wide)",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,M const& mask)
 {
   TTS_IEEE_EQUAL(eve::rotl[mask](a0, 2),eve::if_else(mask, eve::rotl(a0, 2), a0));

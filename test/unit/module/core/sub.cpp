@@ -69,9 +69,9 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sub on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::saturated;
@@ -125,9 +125,9 @@ TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integer
 
 TTS_CASE_WITH("Check behavior of sub widen on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::sub;
@@ -147,8 +147,8 @@ TTS_CASE_WITH("Check behavior of sub widen on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sub mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -165,13 +165,13 @@ TTS_CASE_WITH("Check behavior of sub mod on wide",
 //==================================================================================================
 //==  conditional sub tests on simd
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of sub[mask]",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+              tts::randoms(tts::constant(mini), 127),
+                            tts::randoms(tts::constant(mini), 127))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::saturated;

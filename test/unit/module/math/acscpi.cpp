@@ -29,10 +29,10 @@ TTS_CASE_TPL("Check return types of acscpi", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of acscpi on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 100.0),
+              tts::randoms(1.0, 100.0),
                             tts::randoms(1.0, 1e20),
                             tts::randoms(-1e20, -1.0),
-                            tts::randoms(-100.0, -1.0)))
+                            tts::randoms(-100.0, -1.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
@@ -53,8 +53,8 @@ TTS_CASE_WITH("Check behavior of acscpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acscpi)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

@@ -13,9 +13,9 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior oftwo_prod)",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
-                           )
+                           
              )
 <typename T>(T a0, T a1)
 {
@@ -58,9 +58,9 @@ TTS_CASE_WITH("Check behavior oftwo_prod)",
 
 TTS_CASE_WITH("Check behavior of two_prod(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms( -1000., +1000.),
+              tts::randoms( -1000., +1000.),
                             tts::randoms( -1000., +1000.)
-                           )
+                           
              )
 <typename T>(T a0, T a1)
 {

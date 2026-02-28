@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check return types of eve::bit_notor(simd)", eve::test::simd::all_
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::bit_notor",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T a, T b, T c)
 {
   bit_test_simd(eve::bit_notor, [](auto e, auto f, auto... g) -> decltype(e) { return ~e | (f | ... | g); }, a, b, c);

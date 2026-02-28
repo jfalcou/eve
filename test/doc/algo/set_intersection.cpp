@@ -28,9 +28,9 @@ basic_example()
   r.erase(eve::algo::set_intersection(v1, v2, r).out, r.end());
   TTS_EQUAL(r, (std::vector{3, 5}));
 
-  std::cout << "-> v1:" << tts::as_string(v1) << '\n';
-  std::cout << "-> v2:" << tts::as_string(v2) << '\n';
-  std::cout << "-> r: " << tts::as_string(r) << '\n';
+  std::cout << "-> v1:" << tts::as_text(v1) << '\n';
+  std::cout << "-> v2:" << tts::as_text(v2) << '\n';
+  std::cout << "-> r: " << tts::as_text(r) << '\n';
 }
 
 void not_enough_space_example()
@@ -55,10 +55,10 @@ void not_enough_space_example()
   TTS_EQUAL(*in2, 4);
   TTS_EQUAL(out, r.end());
 
-  std::cout << "r:             " << tts::as_string(r) << "\n";
+  std::cout << "r:             " << tts::as_text(r) << "\n";
   std::cout << "*in1:          " << *in1 << "\n";
   std::cout << "*in2:          " << *in2 << "\n";
-  std::cout << "out == r.end() " << tts::as_string(out == r.end()) << "\n";
+  std::cout << "out == r.end() " << tts::as_text(out == r.end()) << "\n";
 }
 
 void
@@ -101,9 +101,9 @@ pairs_example()
   eve::algo::soa_vector<pair_t> r_expected {{2, 2.2f}, {4, 4.4f}};
   TTS_EQUAL(r, r_expected);
 
-  std::cout << "-> pairs:   " << tts::as_string(pairs) << '\n';
-  std::cout << "-> sclaras: " << tts::as_string(scalars) << '\n';
-  std::cout << "-> r:       " << tts::as_string(r) << '\n';
+  std::cout << "-> pairs:   " << tts::as_text(pairs) << '\n';
+  std::cout << "-> sclaras: " << tts::as_text(scalars) << '\n';
+  std::cout << "-> r:       " << tts::as_text(r) << '\n';
 }
 
 void
@@ -144,11 +144,11 @@ different_scalar_types_example()
   r2.erase(eve::algo::set_intersection(i32, f64, r2, lt, eq).out, r2.end());
   TTS_EQUAL(r2, (std::vector<float>{20, 40}));
 
-  std::cout << "-> f64: " << tts::as_string(f64) << '\n';
-  std::cout << "-> i32: " << tts::as_string(i32) << '\n';
-  std::cout << "-> r0:  " << tts::as_string(r0) << '\n';
-  std::cout << "-> r1:  " << tts::as_string(r1) << '\n';
-  std::cout << "-> r2:  " << tts::as_string(r2) << '\n';
+  std::cout << "-> f64: " << tts::as_text(f64) << '\n';
+  std::cout << "-> i32: " << tts::as_text(i32) << '\n';
+  std::cout << "-> r0:  " << tts::as_text(r0) << '\n';
+  std::cout << "-> r1:  " << tts::as_text(r1) << '\n';
+  std::cout << "-> r2:  " << tts::as_text(r2) << '\n';
 }
 
 void
@@ -166,8 +166,8 @@ biase_example()
   TTS_EQUAL(r0, v2);
   TTS_EQUAL(r1, v2);
 
-  std::cout << "-> r0:  " << tts::as_string(r0) << '\n';
-  std::cout << "-> r1:  " << tts::as_string(r1) << '\n';
+  std::cout << "-> r0:  " << tts::as_text(r0) << '\n';
+  std::cout << "-> r1:  " << tts::as_text(r1) << '\n';
 }
 
 void
@@ -186,7 +186,7 @@ sparse_output_example()
     eve::algo::set_intersection[eve::algo::sparse_output](v1, v2, r).out,
     r.end());
 
-  std::cout << " -> r: " << tts::as_string(r) << std::endl;
+  std::cout << " -> r: " << tts::as_text(r) << std::endl;
   TTS_EQUAL(r, std::vector({0, 15, 30, 45}));
 }
 

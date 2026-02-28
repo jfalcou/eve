@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of minmag", eve::test::simd::all_types_wf16)
 //==================================================================================================
 // minmag tests
 //==================================================================================================
-auto vmin = tts::constant(
+constexpr auto vmin = tts::constant(
     []<typename T>(eve::as<T> const& tgt)
     {
       {
@@ -49,10 +49,10 @@ auto vmin = tts::constant(
 
 TTS_CASE_WITH("Check behavior of minmag on all types full range",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(vmin, eve::valmax),
+              tts::randoms(vmin, eve::valmax),
                             tts::randoms(vmin, eve::valmax),
                             tts::randoms(vmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& mask)
 {
   using eve::abs;
@@ -110,9 +110,9 @@ TTS_CASE_TPL("Check values of minmag", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::minmag)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

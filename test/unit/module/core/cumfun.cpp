@@ -29,10 +29,10 @@ TTS_CASE_TPL("Check return types of cumsum", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cumfun;
@@ -45,10 +45,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cumfun;
@@ -61,10 +61,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cumfun;
@@ -77,10 +77,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cumfun;

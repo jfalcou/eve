@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of eve::is_infinite(simd)", eve::test::simd::al
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_infinite(simd) integrals",
               eve::test::simd::integers_wf16,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T a0, M const& t)
 {
   TTS_EQUAL(eve::is_infinite(a0), eve::false_(eve::as(a0)));
@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of eve::is_infinite(simd) integrals",
 
 TTS_CASE_WITH("Check behavior of eve::is_infinite(simd) IEEE",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;

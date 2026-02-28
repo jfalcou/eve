@@ -127,5 +127,5 @@ TTS_CASE_TPL("iterate_selected, explicit cases", eve::test::simd::all_types)
 
 TTS_CASE_WITH("iterate_selected, random cases",
               eve::test::simd::all_types,
-              tts::generate(tts::logicals(1, 2)))
+              tts::logicals(1, 2))
 <typename L>(L logical_data) { tstLogical(logical_data); };

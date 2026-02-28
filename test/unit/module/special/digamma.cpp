@@ -66,7 +66,7 @@ TTS_CASE_TPL("Check behavior of digamma on wide", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of digamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.4, 4.0)))
+              tts::randoms(0.4, 4.0))
 <typename T>(T const& a0) { TTS_ULP_EQUAL(eve::digamma(a0), T(tts::map(eve::digamma, a0)), 2); };
 
 
@@ -75,8 +75,8 @@ TTS_CASE_WITH("Check behavior of digamma on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::digamma)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.4, 4.0),
-              tts::logicals(0, 3)))
+              tts::randoms(0.4, 4.0),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::digamma)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of digamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100, 100), tts::randoms(-1, 1)))
+              tts::randoms(-100, 100), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

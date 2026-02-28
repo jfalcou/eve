@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::is_odd(simd)", eve::test::simd::all_typ
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
 
 TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
               eve::test::simd::integers,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;

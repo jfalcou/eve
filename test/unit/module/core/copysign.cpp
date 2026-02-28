@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check return types of copysign", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of copysign on wide and scalar",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1)
 {
   auto val1 = a1.get(0);
@@ -50,9 +50,9 @@ TTS_CASE_WITH("Check behavior of copysign on wide and scalar",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::copysign)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

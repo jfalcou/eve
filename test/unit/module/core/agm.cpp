@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of agm", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of agm(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1, 10), tts::randoms(1, 10)))
+              tts::randoms(1, 10), tts::randoms(1, 10))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -55,7 +55,7 @@ TTS_CASE_WITH("Check behavior of agm(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of  agm[cond](wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 10), tts::randoms(0, 10), tts::randoms(0, 10)))
+              tts::randoms(0, 10), tts::randoms(0, 10), tts::randoms(0, 10))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::agm;
@@ -71,9 +71,9 @@ TTS_CASE_WITH("Check behavior of  agm[cond](wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::agm)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

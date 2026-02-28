@@ -77,7 +77,7 @@ TTS_CASE_TPL("eve::iota relative ignore", eve::test::simd::all_types)
 
 TTS_CASE_WITH( "Check compress behavior for logicals"
         , eve::test::simd::all_types
-        , tts::generate(tts::logicals(1,2))
+        , tts::logicals(1,2)
         )
 <typename T> (eve::logical<T> m)
 {

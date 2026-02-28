@@ -27,12 +27,12 @@ TTS_CASE_TPL("Check return types of sinc", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sinc  tests
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
-auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
+constexpr auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
+constexpr auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 TTS_CASE_WITH("Check behavior of sinc on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0)))
+              tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinc;
@@ -50,8 +50,8 @@ TTS_CASE_WITH("Check behavior of sinc on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sinc)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -62,7 +62,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sinc)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of sinc on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+              tts::randoms(-10, 10), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
   auto pa1 = a1*eve::pio_2(eve::as(a1));
