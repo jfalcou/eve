@@ -9,14 +9,16 @@
 ##==================================================================================================
 add_library(eve_test INTERFACE)
 
+target_compile_features ( eve_test INTERFACE  cxx_std_20 )
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options( eve_test INTERFACE /bigobj /W3 /EHsc /std:c++20 /wd4267 /wd4244 /wd4146)
+  target_compile_options( eve_test INTERFACE /bigobj /W3 /EHsc /wd4267 /wd4244 /wd4146)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics
+  target_compile_options( eve_test INTERFACE -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics
                           -ftemplate-backtrace-limit=0
                         )
 else()
-  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
+  target_compile_options( eve_test INTERFACE  -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
                           -ftemplate-backtrace-limit=0 -fconcepts-diagnostics-depth=8
                           -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow
                           -Wno-maybe-uninitialized
@@ -38,10 +40,12 @@ target_include_directories( eve_test SYSTEM INTERFACE
 ##==================================================================================================
 add_library(eve_bench INTERFACE)
 
+target_compile_features ( eve_bench INTERFACE  cxx_std_20 )
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   target_compile_options( eve_bench INTERFACE /0x /W3 /EHsc /std:c++latest)
 else()
-  target_compile_options( eve_bench INTERFACE -O3 -std=c++20 -Werror -Wall -Wpedantic -Wextra)
+  target_compile_options( eve_bench INTERFACE -O3 -Werror -Wall -Wpedantic -Wextra)
 endif()
 
 target_include_directories( eve_bench INTERFACE

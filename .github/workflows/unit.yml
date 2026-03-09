@@ -571,7 +571,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DCMAKE_CXX_FLAGS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
         run:  |
           cd build
