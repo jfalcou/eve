@@ -60,9 +60,11 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
+#include <eve/module/core/regular/diff.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/divdiff.hpp>
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/regular/epsilon.hpp>
 #include <eve/module/core/regular/exponent.hpp>
