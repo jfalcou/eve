@@ -64,7 +64,6 @@
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>
-#include <eve/module/core/regular/divdiff.hpp>
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/regular/epsilon.hpp>
 #include <eve/module/core/regular/exponent.hpp>
