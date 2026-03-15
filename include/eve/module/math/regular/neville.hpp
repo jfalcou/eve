@@ -20,7 +20,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct neville_t : callable<neville_t, Options>
+  struct neville_t : callable<neville_t, Options, pedantic_option>
   {
 
     template<eve::floating_value T0, floating_value... Ts>
@@ -112,7 +112,7 @@ namespace eve
           auto x1 = get<1>(xsyst);
           auto y0 = get<2>(xsyst);
           auto y1 = get<3>(xsyst);
-          return  eve::sum_of_prod((x - x1), y0, (x0 - x), y1)/ (x0-x1);
+          return  eve::sum_of_prod[o]((x - x1), y0, (x0 - x), y1)/ (x0-x1);
         }
         else
         {
