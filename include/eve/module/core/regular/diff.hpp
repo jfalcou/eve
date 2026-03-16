@@ -22,7 +22,6 @@ namespace eve
   template<typename Options>
   struct diff_t : callable<diff_t, Options, widen_option>
   {
-
     template<eve::floating_value T0, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
       EVE_FORCEINLINE auto constexpr operator()(T0 t0, Ts...ts) const -> decltype(kumi::tuple{ts...})// const noexcept
@@ -104,7 +103,7 @@ namespace eve
       if constexpr(O::contains(widen))
         return diff[o.drop(widen)](kumi::map(upgrade, x));
       else
-        return kumi::map(eve::sub[o], kumi::pop_front(x), kumi::pop_back(x));
+        return kumi::map(eve::sub[o], kumi::pop_back(x), kumi::pop_front(x));
     }
 
     template<floating_value... Ts, callable_options O>
