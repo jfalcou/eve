@@ -3,11 +3,13 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-include(benchmark)
+include(target/generate_benchmark)
 
+set(bench_root "${PROJECT_SOURCE_DIR}/benchmarks")
 
-add_subdirectory(module/algorithm)
-add_subdirectory(module/core)
-add_subdirectory(module/math)
-add_subdirectory(module/special)
-add_subdirectory(module/combinatorial)
+##==================================================================================================
+## GLOB and process arch bench tests
+##==================================================================================================
+add_custom_target(bench.core.exe         )
+add_dependencies(bench.exe bench.core.exe )
+glob_bench("bench" ${bench_root} "core/*.cpp")
