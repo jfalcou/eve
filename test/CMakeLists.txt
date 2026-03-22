@@ -3,7 +3,7 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-include(test)
+include(target/generate_test)
 
 add_subdirectory(doc)
 add_subdirectory(unit)

@@ -13,7 +13,7 @@ file(TOUCH "${PROJECT_BINARY_DIR}/test_pch.cpp" )
 ## Let warnings come out even when PCH is setup
 set(CMAKE_PCH_PROLOGUE "")
 
-add_executable(bench_pch  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/doc_pch.cpp> )
+add_executable(bench_pch  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/test_pch.cpp> )
 add_executable(test_pch   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/test_pch.cpp> )
 add_executable(doc_pch    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/doc_pch.cpp> )
 
@@ -21,7 +21,7 @@ target_link_libraries(bench_pch PUBLIC eve_bench)
 target_link_libraries(test_pch  PUBLIC eve_test )
 target_link_libraries(doc_pch   PUBLIC eve_test )
 
-set_property( TARGET bench_pch  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench" )
+set_property( TARGET bench_pch  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/benchmarks" )
 set_property( TARGET test_pch   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
 set_property( TARGET doc_pch    PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )
 
@@ -49,7 +49,7 @@ target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/wid
 target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/logical.hpp")
 
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/benchmarks/generators.hpp")
-target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/benchmarks/experiment.hpp")
+target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/benchmarks/benchmark.hpp")
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/wide.hpp")
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/logical.hpp")
 

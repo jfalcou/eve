@@ -1,3 +1,9 @@
+# ##==================================================================================================
+# ##  EVE - Expressive Vector Engine
+# ##  Copyright : EVE Project Contributors
+# ##  SPDX-License-Identifier: BSL-1.0
+# ##==================================================================================================
+
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
 ##  Copyright : EVE Project Contributors
@@ -5,72 +11,79 @@
 ##==================================================================================================
 
 ##==================================================================================================
-## Setup a bench with many option
+## Setup a test with many option
 ##==================================================================================================
 function(generate_bench root rootpath dep file)
-  # string(REPLACE ".cpp" ".bench" base ${file})
-  # string(REPLACE "/"    "." base ${base})
-  # string(REPLACE "\\"   "." base ${base})
-
-  # if( NOT root STREQUAL "")
-  #   set(bench "${root}.${base}")
-  # else()
-  #   set(bench "${base}")
-  # endif()
-
-
-  string(REPLACE ".cpp" ".exe" base ${file})
-  string(REPLACE "/"    "." base ${base})
-  string(REPLACE "\\"   "." base ${base})
+  string(REPLACE ".cpp"    ".exe" base ${file})
+  string(REPLACE "/"       "."    base ${base})
+  string(REPLACE "\\"      "."    base ${base})
+  string(REPLACE "module." ""     base ${base})
 
   if( NOT root STREQUAL "")
-    set(bench "${root}.${base}")
+    set(test "${root}.${base}")
   else()
-    set(bench "${base}")
+    set(test "${base}")
   endif()
 
-  add_executable( ${bench}  "${rootpath}${file}")
+  add_executable( ${test}  "${rootpath}${file}")
 
   if( ${ARGC} EQUAL 5)
-    target_compile_definitions( ${bench} PUBLIC ${ARGV4})
+    target_compile_definitions( ${test} PUBLIC ${ARGV4})
   endif()
 
-  target_link_libraries(${bench} PUBLIC eve_bench)
+  target_link_libraries(${test} PUBLIC eve_bench)
 
-  if( EVE_USE_PCH )
-    target_precompile_headers(${bench} REUSE_FROM bench_pch)
-    add_dependencies(${bench} bench_pch)
-  endif()
-
-  set_property( TARGET ${bench}
-                PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
+  set_property( TARGET ${test}
+                PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/benchmarks"
               )
 
-    add_test( NAME ${bench}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
-              COMMAND $<TARGET_FILE:${bench}>
+  if (CMAKE_CROSSCOMPILING_CMD)
+  add_test( NAME ${test}
+            WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/benchmarks"
+            COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
+          )
+  else()
+    add_test( NAME ${test}
+              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/benchmarks"
+              COMMAND $<TARGET_FILE:${test}>
             )
+  endif()
 
-  set_target_properties ( ${bench} PROPERTIES
+  if( EVE_USE_PCH )
+    target_precompile_headers(${test} REUSE_FROM bench_pch)
+    add_dependencies(${test} bench_pch)
+  endif()
+
+  set_target_properties ( ${test} PROPERTIES
                           EXCLUDE_FROM_DEFAULT_BUILD TRUE
                           EXCLUDE_FROM_ALL TRUE
                           ${MAKE_UNIT_TARGET_PROPERTIES}
                         )
 
-  target_include_directories( ${bench}
-                              PRIVATE
-                                ${PROJECT_SOURCE_DIR}/include
-                                ${PROJECT_SOURCE_DIR}/benchmarks
-                                ${Boost_INCLUDE_DIRS}
-                            )
-
-  target_link_libraries(${bench})
-
-  add_dependencies(bench ${bench})
+  add_dependencies(bench.exe ${test})
 
   if( NOT dep STREQUAL "")
-    add_dependencies(${dep} ${bench})
+    add_dependencies(${dep} ${test})
   endif()
 
-  add_parent_target(${bench})
+  add_parent_target(${test})
+endfunction()
+
+##==================================================================================================
+## Setup a basic test
+##==================================================================================================
+function(make_bench root)
+  foreach(file ${ARGN})
+    generate_bench(${root} "" "" ${file})
+  endforeach()
+endfunction()
+
+##==================================================================================================
+## Generate tests from a GLOB
+##==================================================================================================
+function(glob_bench root relative  pattern)
+  file(GLOB files CONFIGURE_DEPENDS RELATIVE ${relative} ${pattern})
+  foreach(file ${files})
+    generate_bench("${root}" "" "" ${file})
+  endforeach()
 endfunction()
