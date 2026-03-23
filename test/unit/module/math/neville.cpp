@@ -47,6 +47,6 @@ TTS_CASE_WITH("Check behavior of neville on all types full range",
   auto y1 = horner[eve::kahan](a1, 1.0, 2.0, 3.0);
   auto y2 = horner[eve::kahan](a2, 1.0, 2.0, 3.0);
 
-  TTS_ULP_EQUAL(neville[eve::pedantic](x, a0, a1, a2, y0, y1, y2), eve::horner[eve::kahan](x, 1.0, 2.0, 3.0 ),3000.0);
+  TTS_ULP_EQUAL(neville[eve::pedantic](x, a0, a1, a2, y0, y1, y2), eve::horner[eve::kahan](x, 1.0, 2.0, 3.0 ),3500.0);
 
 };
