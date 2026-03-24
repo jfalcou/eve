@@ -28,5 +28,5 @@ namespace eve
   using kumi::concepts::sized_product_type_or_more;
   using kumi::concepts::non_empty_product_type;
   using kumi::concepts::homogeneous_product_type;
-  using kumi::is_product_type;
+  using kumi::is_kumi_tuple;
 }
