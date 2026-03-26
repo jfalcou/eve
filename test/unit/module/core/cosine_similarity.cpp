@@ -23,6 +23,12 @@ TTS_CASE_TPL("Check return types of cosine_similarity", eve::test::simd::ieee_re
   TTS_EXPR_IS(eve::cosine_similarity(wv3_t(), v3_t()),  r_t);
   TTS_EXPR_IS(eve::cosine_similarity( v3_t(),wv3_t()),  r_t);
   TTS_EXPR_IS(eve::cosine_similarity(v3_t(),  v3_t()),  v_t);
+  using uv_t =  eve::upgrade_t<v_t>;
+  using ur_t =   eve::wide<uv_t, eve::fixed<wv3_t::size()>>;
+  TTS_EXPR_IS(eve::cosine_similarity[eve::widen](wv3_t(), wv3_t()), ur_t);
+  TTS_EXPR_IS(eve::cosine_similarity[eve::widen](wv3_t(), v3_t()),  ur_t);
+  TTS_EXPR_IS(eve::cosine_similarity[eve::widen]( v3_t(),wv3_t()),  ur_t);
+  TTS_EXPR_IS(eve::cosine_similarity[eve::widen](v3_t(),  v3_t()),  uv_t);
 };
 
 //==================================================================================================
@@ -37,6 +43,8 @@ TTS_CASE_TPL("Check behavior of cosine_similarity(wide)", eve::test::simd::ieee_
   v3_t b(-3.0, -4.0, -6.0);
 
   TTS_ULP_EQUAL(eve::cosine_similarity(a, b), v_t(-0.9923595707022745), 0.5);
+  TTS_ULP_EQUAL(eve::cosine_similarity[eve::widen](a, b), -0.9923595707022745, 0.5);
+
 
   std::cout << std::setprecision(16);
   using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
