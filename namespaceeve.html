@@ -1332,6 +1332,32 @@ e^{\log x_i}\right)\)  <br /></td></tr>
 <tr class="memitem:ga236718c341e8b18e5a0f070e24d4d325" id="r_ga236718c341e8b18e5a0f070e24d4d325"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__math__exp_ga236718c341e8b18e5a0f070e24d4d325.html#ga236718c341e8b18e5a0f070e24d4d325">lpnorm</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lpnorm_t&gt;</td></tr>
 <tr class="memdesc:ga236718c341e8b18e5a0f070e24d4d325"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing the lpnorm operation  \( \left(\sum_{i = 0}^n
 |x_i|^p\right)^{\frac1p} \).  <br /></td></tr>
+<tr class="memitem:ga9410b950085a4299478368cdc4864e58" id="r_ga9410b950085a4299478368cdc4864e58"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__core__arithmetic_ga9410b950085a4299478368cdc4864e58.html#ga9410b950085a4299478368cdc4864e58">neville</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;neville_t&gt;</td></tr>
+<tr class="memdesc:ga9410b950085a4299478368cdc4864e58"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">callable</a></span> computing the value of the interpolation polynomial \(p\) of degree n, satisfying: /f$ p(x_i) = y_i for i = 0..n                           \(  @groupheader{Header file}
+
+  @code
+  #include &lt;eve/module/core.hpp&gt;
+  @endcode
+
+  @groupheader{Callable Signatures}
+
+  @code
+  namespace eve
+  {
+     // Regular overloads
+     constexpr auto neville(auto x, auto const&amp; xs..., auto const&amp; ys...)                                                    noexcept; // 1
+     constexpr auto neville(auto x, eve::non_empty_product_type auto const&amp; xx,  eve::non_empty_product_type auto const&amp; yy) noexcept; // 2
+  }
+  @endcode
+
+  **Parameters**
+
+      `xs ...`, `ys ...: [real](@ref eve::floating values) arguments
+      `xx`, `yy`       : kumi::tuple of arguments
+
+   **Return value**
+
+       1. Return the value at x of the polynomial \)@_fakenlp \( of degree n, atisfying: /f$ p(x_i) = y_i for i = 0..n\) where n+1 is the common number of <span class="tt">xs</span>, <span class="tt">ys</span>.  <br /></td></tr>
 <tr class="memitem:ga9cf7e798d0bd35ae16a3588021c871e7" id="r_ga9cf7e798d0bd35ae16a3588021c871e7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__math__exp_ga9cf7e798d0bd35ae16a3588021c871e7.html#ga9cf7e798d0bd35ae16a3588021c871e7">nthroot</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nthroot_t&gt;</td></tr>
 <tr class="memdesc:ga9cf7e798d0bd35ae16a3588021c871e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the nth root: \(x^{1/n}\).  <br /></td></tr>
 <tr class="memitem:ga67952622d4400abecd8ca1b9986f9648" id="r_ga67952622d4400abecd8ca1b9986f9648"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__math__exp_ga67952622d4400abecd8ca1b9986f9648.html#ga67952622d4400abecd8ca1b9986f9648">pow</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;pow_t&gt;</td></tr>

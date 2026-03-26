@@ -250,6 +250,32 @@ Variables</h2></td></tr>
 <tr class="memdesc:ga3fee14a8a396f4ac89e650e0fb0768f7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elementwise welford_covariance product of the vector of the first half parameter by thevector of the last half.  <br /></td></tr>
 <tr class="memitem:ga6cfd55c36f3ce4f4137aa7b14f74f5ce" id="r_ga6cfd55c36f3ce4f4137aa7b14f74f5ce"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__core__arithmetic_ga6cfd55c36f3ce4f4137aa7b14f74f5ce.html#ga6cfd55c36f3ce4f4137aa7b14f74f5ce">eve::welford_variance</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;welford_variance_t&gt;</td></tr>
 <tr class="memdesc:ga6cfd55c36f3ce4f4137aa7b14f74f5ce"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">tuple_callable</span> computing the arithmetic mean of its arguments.  <br /></td></tr>
+<tr class="memitem:ga9410b950085a4299478368cdc4864e58" id="r_ga9410b950085a4299478368cdc4864e58"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__core__arithmetic_ga9410b950085a4299478368cdc4864e58.html#ga9410b950085a4299478368cdc4864e58">eve::neville</a> = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;neville_t&gt;</td></tr>
+<tr class="memdesc:ga9410b950085a4299478368cdc4864e58"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">callable</a></span> computing the value of the interpolation polynomial \(p\) of degree n, satisfying: /f$ p(x_i) = y_i for i = 0..n                           \(  @groupheader{Header file}
+
+  @code
+  #include &lt;eve/module/core.hpp&gt;
+  @endcode
+
+  @groupheader{Callable Signatures}
+
+  @code
+  namespace eve
+  {
+     // Regular overloads
+     constexpr auto neville(auto x, auto const&amp; xs..., auto const&amp; ys...)                                                    noexcept; // 1
+     constexpr auto neville(auto x, eve::non_empty_product_type auto const&amp; xx,  eve::non_empty_product_type auto const&amp; yy) noexcept; // 2
+  }
+  @endcode
+
+  **Parameters**
+
+      `xs ...`, `ys ...: [real](@ref eve::floating values) arguments
+      `xx`, `yy`       : kumi::tuple of arguments
+
+   **Return value**
+
+       1. Return the value at x of the polynomial \)@_fakenlp \( of degree n, atisfying: /f$ p(x_i) = y_i for i = 0..n\) where n+1 is the common number of <span class="tt">xs</span>, <span class="tt">ys</span>.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

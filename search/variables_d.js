@@ -10,13 +10,14 @@ var searchData=
   ['negatenz_7',['negatenz',['../group__core__arithmetic_ga250e72507a1740ed75af67f72fc47d90.html#ga250e72507a1740ed75af67f72fc47d90',1,'eve']]],
   ['negmaxabs_8',['negmaxabs',['../group__core__arithmetic_ga7ab645c942cb4745b4f50947e2526527.html#ga7ab645c942cb4745b4f50947e2526527',1,'eve']]],
   ['negminabs_9',['negminabs',['../group__core__arithmetic_gabcdcf0169de90c64260492e8d2300bde.html#gabcdcf0169de90c64260492e8d2300bde',1,'eve']]],
-  ['next_10',['next',['../group__core__internal_gad1c0d7b11ba73f9ea7f39864166d7fb4.html#gad1c0d7b11ba73f9ea7f39864166d7fb4',1,'eve']]],
-  ['nextafter_11',['nextafter',['../group__core__internal_ga3b419a68a0b99756c3138528b7db9941.html#ga3b419a68a0b99756c3138528b7db9941',1,'eve']]],
-  ['no_5faligning_12',['no_aligning',['../group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e',1,'eve::algo']]],
-  ['no_5funrolling_13',['no_unrolling',['../group__algo__traits.html#ga0d4b9be2485537d9328218378c918107',1,'eve::algo']]],
-  ['nofs_5fcardinal_5fv_14',['nofs_cardinal_v',['../group__arch_gab4d8e703ad1e3e94918f3a3ff44e1324.html#gab4d8e703ad1e3e94918f3a3ff44e1324',1,'eve']]],
-  ['none_15',['none',['../group__core__reduction_ga6c3f7d70fe96da70a69c2139a7c325ea.html#ga6c3f7d70fe96da70a69c2139a7c325ea',1,'eve']]],
-  ['none_5fof_16',['none_of',['../group__algos_ga0bd36eeeef22153e10757aae05e6a032.html#ga0bd36eeeef22153e10757aae05e6a032',1,'eve::algo']]],
-  ['nth_5fprime_17',['nth_prime',['../group__combinatorial_ga07a4c4bd17dd7be0c16010a39d9d9d93.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
-  ['nthroot_18',['nthroot',['../group__math__exp_ga9cf7e798d0bd35ae16a3588021c871e7.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]]
+  ['neville_10',['neville',['../group__core__arithmetic_ga9410b950085a4299478368cdc4864e58.html#ga9410b950085a4299478368cdc4864e58',1,'eve']]],
+  ['next_11',['next',['../group__core__internal_gad1c0d7b11ba73f9ea7f39864166d7fb4.html#gad1c0d7b11ba73f9ea7f39864166d7fb4',1,'eve']]],
+  ['nextafter_12',['nextafter',['../group__core__internal_ga3b419a68a0b99756c3138528b7db9941.html#ga3b419a68a0b99756c3138528b7db9941',1,'eve']]],
+  ['no_5faligning_13',['no_aligning',['../group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e',1,'eve::algo']]],
+  ['no_5funrolling_14',['no_unrolling',['../group__algo__traits.html#ga0d4b9be2485537d9328218378c918107',1,'eve::algo']]],
+  ['nofs_5fcardinal_5fv_15',['nofs_cardinal_v',['../group__arch_gab4d8e703ad1e3e94918f3a3ff44e1324.html#gab4d8e703ad1e3e94918f3a3ff44e1324',1,'eve']]],
+  ['none_16',['none',['../group__core__reduction_ga6c3f7d70fe96da70a69c2139a7c325ea.html#ga6c3f7d70fe96da70a69c2139a7c325ea',1,'eve']]],
+  ['none_5fof_17',['none_of',['../group__algos_ga0bd36eeeef22153e10757aae05e6a032.html#ga0bd36eeeef22153e10757aae05e6a032',1,'eve::algo']]],
+  ['nth_5fprime_18',['nth_prime',['../group__combinatorial_ga07a4c4bd17dd7be0c16010a39d9d9d93.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
+  ['nthroot_19',['nthroot',['../group__math__exp_ga9cf7e798d0bd35ae16a3588021c871e7.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]]
 ];
