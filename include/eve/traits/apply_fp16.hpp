@@ -12,6 +12,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/concept/same_lanes.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 
 #include <type_traits>
 
@@ -66,14 +67,14 @@ namespace eve::detail
   {
     constexpr auto cast_args = [](auto v) {
       if constexpr (std::same_as<element_type_t<decltype(v)>, eve::float16_t>)
-        return bit_cast(v, as<as_wide_as_t<uint16_t, decltype(v)>>{});
+        return eve::bit_cast(v, as<as_wide_as_t<uint16_t, decltype(v)>>{});
       else
         return v;
     };
 
     auto r = f(cast_args(arg0), cast_args(args)...);
 
-    if constexpr (logical_value<decltype(r)>) return bit_cast(r, as<as_wide_as_t<logical<eve::float16_t>, decltype(r)>>{});
-    else                                      return bit_cast(r, as<as_wide_as_t<eve::float16_t, decltype(r)>>{});
+    if constexpr (logical_value<decltype(r)>) return eve::bit_cast(r, as<as_wide_as_t<logical<eve::float16_t>, decltype(r)>>{});
+    else                                      return eve::bit_cast(r, as<as_wide_as_t<eve::float16_t, decltype(r)>>{});
   }
 }
