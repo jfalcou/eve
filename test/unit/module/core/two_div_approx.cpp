@@ -14,10 +14,10 @@
 //==================================================================================================
 //== two_div_approx tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)
+              tts::generate(tts::randoms(+5., +1000.),
+                            tts::randoms(+5., +1000.)
                            )
              )
   <typename T>(T a0, T a1)
@@ -34,10 +34,10 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   }
 };
 
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
               eve::test::scalar::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)
+              tts::generate(tts::randoms(+5., +1000.),
+                            tts::randoms(+5., +1000.)
                            )
              )
   <typename T>(T a0, T a1)

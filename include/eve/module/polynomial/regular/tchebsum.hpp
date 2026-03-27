@@ -125,6 +125,12 @@ namespace eve
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto tchebsum_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    return tchebsum[o.drop(widen)](upgrade(ts)...);
+  }
 
   template<value T, typename... Cs, callable_options O>
   constexpr auto

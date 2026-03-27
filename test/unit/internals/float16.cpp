@@ -53,7 +53,6 @@
 
 TTS_CASE("emulated float16 conversion - f32 roundtrip")
 {
-  // TODO: use eve::is_nan when fp16 elementwise_callable support is merged
   auto is_nan = [](uint16_t bits) {
     return ((bits & 0x7C00u) == 0x7C00u) && ((bits & 0x03FFu) != 0);
   };
@@ -69,7 +68,41 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
   }
 };
 
-TTS_CASE("emulated float16 conversion - f16 roundtrip")
+TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
+{
+  auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
+    using wf16_t = eve::wide<eve::float16_t, eve::fixed<N>>;
+    using wf32_t = eve::wide<float, eve::fixed<N>>;
+
+    for (uint32_t base = 0u; base <= 0xFFFFu; base += N)
+    {
+      wf16_t input = [&](auto i, auto) {
+        return eve::bit_cast(static_cast<uint16_t>(base + i), eve::as<eve::float16_t>{});
+      };
+
+      wf32_t f32       = eve::convert(input, eve::as<float>{});
+      wf16_t roundtrip = eve::convert(f32, eve::as<eve::float16_t>{});
+
+      for (std::ptrdiff_t lane = 0; lane < N; ++lane)
+      {
+        eve::float16_t orig = input.get(lane);
+        eve::float16_t rt   = roundtrip.get(lane);
+
+        if (eve::is_nan(orig)) TTS_EXPECT(eve::is_nan(rt));
+        else                   TTS_EQUAL(rt, orig);
+      }
+    }
+  };
+
+  constexpr uint32_t max_c = eve::expected_cardinal_v<eve::float16_t> * 2;
+  constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
+
+  [&]<std::size_t... I>(std::index_sequence<I...>) {
+    (run_for(std::integral_constant<std::ptrdiff_t, 1LL << I>{}), ...);
+  }(std::make_index_sequence<seq_size>{});
+};
+
+TTS_CASE("emulated float16 conversion - f16 special")
 {
   auto cases = tts::limits(tts::type<float>{});
 

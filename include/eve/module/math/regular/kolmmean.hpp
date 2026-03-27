@@ -95,6 +95,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto kolmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return kolmmean[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<typename F, typename G, floating_value... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     kolmmean_(EVE_REQUIRES(cpu_), O const & o, F f, G g, Ts... args) noexcept

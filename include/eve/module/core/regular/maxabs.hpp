@@ -19,7 +19,6 @@ namespace eve
   struct maxabs_t : tuple_callable<maxabs_t, Options, numeric_option, pedantic_option,
                                                       saturated_option, widen_option>
   {
-
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
     EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<Ts...>> operator()(Ts...ts) const noexcept

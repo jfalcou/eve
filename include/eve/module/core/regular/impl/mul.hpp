@@ -33,6 +33,31 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if constexpr (O::contains(widen))
+    {
+      return mul[o.drop(widen)](upgrade(ts)...);
+    }
+    else if constexpr (sizeof...(Ts) > 2)
+    {
+      using r_t = common_value_t<Ts...>;
+      auto r0 = eve::one(as<r_t>{});
+      ((r0 = mul[o](r0, ts)), ...);
+      return r0;
+    }
+    else if constexpr (O::contains(upper) || O::contains(lower))
+    {
+      return detail::map(mul[o], ts...);
+    }
+    else
+    {
+      return apply_fp16_as_fp32(mul[o], ts...);
+    }
+  }
+
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {

@@ -95,6 +95,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto harmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return harmmean[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<typename T0, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     harmmean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept

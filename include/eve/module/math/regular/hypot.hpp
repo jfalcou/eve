@@ -17,7 +17,6 @@ namespace eve
   template<typename Options>
   struct hypot_t : tuple_callable<hypot_t, Options, raw_option, pedantic_option, kahan_option, widen_option>
   {
-
     template<value... Ts>
     requires((sizeof...(Ts) !=  0) && eve::same_lanes_or_scalar<Ts...>)
       EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<Ts...>> operator()(Ts...ts) const noexcept
@@ -99,6 +98,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto hypot_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return hypot[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<typename T0, callable_options O>
     EVE_FORCEINLINE constexpr auto
     hypot_(EVE_REQUIRES(cpu_), O const &, T0 a0) noexcept

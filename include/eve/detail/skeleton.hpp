@@ -104,10 +104,6 @@ namespace eve::detail
                 }
               );
     }
-    else if constexpr (fp16_should_apply<w_t>)
-    {
-      return call_convert(apply_fp16_as_fp32(EVE_FWD(f), EVE_FWD(ts)...), as<element_type_t<w_t>>{});
-    }
     else
     {
       return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
@@ -244,9 +240,14 @@ namespace eve::detail
         }
       };
 
-      if      constexpr (has_emulated_abi_v<wide_t>)   return kumi::apply([](auto... m) { return wide_t{m...}; }, rewrap(inner_output));
-      else if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) } };
-      else                                             return rewrap(inner_output);
+      const auto out = rewrap(inner_output);
+
+      if constexpr (has_emulated_abi_v<wide_t> && product_type<decltype(out)>)
+        return kumi::apply([](auto... m) { return wide_t{m...}; }, out);
+      else if constexpr (has_aggregated_abi_v<wide_t>)
+        return wide_t { storage_t { out } };
+      else
+        return out;
     }
     else
     {

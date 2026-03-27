@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -19,7 +20,6 @@ namespace eve
                                 upper_option, strict_option, widen_option, left_option,
                                 right_option, mod_option>
   {
-
     template<eve::value T0, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, Ts...>)
       EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<T0, Ts...>>

@@ -23,7 +23,6 @@ namespace eve
   struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, kahan_option>
   {
-
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) != 0))
       EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
@@ -104,16 +103,22 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto manhattan_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+      requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      if      constexpr (O::contains(widen))                       return manhattan[o.drop(widen)](upgrade(ts)...);
+      else if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(manhattan[o], ts...);
+      else                                                         return apply_fp16_as_fp32(manhattan[o], ts...);
+    }
+
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
       using r_t = common_value_t<Ts...>;
-      using e_t = element_type_t<r_t>;
       if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
-      else if constexpr(std::same_as<e_t, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
       else
       {
         auto l_abs = [](){

@@ -11,6 +11,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/apply_fp16.hpp>
+
 namespace eve
 {
   template<typename Options>
@@ -89,6 +91,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto covariance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return covariance[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<eve::non_empty_product_type PT1, eve::non_empty_product_type PT2, callable_options O>
     EVE_FORCEINLINE constexpr auto covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
