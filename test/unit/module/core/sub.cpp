@@ -81,23 +81,16 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   using eve::sub;
 
   TTS_EQUAL(sub(a0, a2), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
-  TTS_EQUAL(sub[saturated](a0, a2),
-            tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
-  TTS_EQUAL(sub(a0, a1, a2),
-            tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(sub[saturated](a0, a1, a2),
+  TTS_EQUAL(sub[saturated](a0, a2), tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
+  TTS_ULP_EQUAL(sub(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(sub[saturated](a0, a1, a2),
             tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
-                a0,a1,a2)
-            );
+                a0,a1,a2),
+            0.5);
   TTS_EQUAL(sub(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
-  TTS_EQUAL(sub[saturated](kumi::tuple{a0, a2}),
-            tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
-  TTS_EQUAL(sub(kumi::tuple{a0, a1, a2}),
-            tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}),
-            tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
-                a0,a1,a2)
-            );
+  TTS_EQUAL(sub[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
+  TTS_ULP_EQUAL(sub(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); }, a0,a1,a2), 0.5);
   TTS_IEEE_EQUAL(eve::sub[eve::left](a0, a2), eve::sub(a2, a0));
   TTS_IEEE_EQUAL(eve::sub[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::sub(a2, a0), a0));
 

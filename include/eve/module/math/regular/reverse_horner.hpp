@@ -21,7 +21,6 @@ namespace eve
   struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option,
                                      kahan_option, widen_option>
   {
-
     template<floating_value X, value ... Ts>
     requires(eve::same_lanes_or_scalar<X, Ts...>)
     EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<X, Ts...>>
@@ -122,6 +121,13 @@ namespace eve
 
   namespace detail
   {
+
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return reverse_horner[o.drop(widen)](upgrade(ts)...);
+    }
 
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto

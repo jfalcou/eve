@@ -22,11 +22,13 @@ namespace eve::detail
                                   || (simd_value<T> && std::same_as<element_type_t<T>, eve::float16_t> && !detail::supports_fp16_vector_ops);
 
   template <typename Func, typename Arg0, typename... Args>
-  EVE_NOINLINE constexpr auto apply_fp16_as_fp32(Func&& f, Arg0 arg0, Args... args)
+  EVE_FORCEINLINE constexpr auto apply_fp16_as_fp32(Func&& f, Arg0 arg0, Args... args)
   {
     constexpr auto cvt_args = [](auto v) {
       if constexpr (std::same_as<element_type_t<decltype(v)>, eve::float16_t>)
         return detail::call_convert(v, as<float>{});
+      else if constexpr (std::same_as<element_type_t<decltype(v)>, eve::logical<eve::float16_t>>)
+        return detail::call_convert(v, as<eve::logical<float>>{});
       else
         return v;
     };
@@ -40,7 +42,7 @@ namespace eve::detail
   }
 
   template <typename Func, typename C, typename Arg0, typename... Args>
-  EVE_NOINLINE constexpr auto apply_fp16_as_fp32_masked(Func&& f, C const& cx, Arg0 arg0, Args... args)
+  EVE_FORCEINLINE constexpr auto apply_fp16_as_fp32_masked(Func&& f, C const& cx, Arg0 arg0, Args... args)
   {
     if constexpr (relative_conditional_expr<C>)
     {
@@ -60,7 +62,7 @@ namespace eve::detail
   }
 
   template <typename Func, typename Arg0, typename... Args>
-  EVE_NOINLINE constexpr auto apply_fp16_as_u16(Func&& f, Arg0 arg0, Args... args)
+  EVE_FORCEINLINE constexpr auto apply_fp16_as_u16(Func&& f, Arg0 arg0, Args... args)
   {
     constexpr auto cast_args = [](auto v) {
       if constexpr (std::same_as<element_type_t<decltype(v)>, eve::float16_t>)

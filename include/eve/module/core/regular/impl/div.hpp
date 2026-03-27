@@ -42,6 +42,28 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if constexpr (sizeof...(Ts) > 2)
+    {
+      return [&o]<typename T0, typename T1, typename... Us>(T0 x0, T1 x1, Us... xs)
+      {
+        auto den = x1;
+        ((den = apply_fp16_as_fp32(mul[o], den, xs)), ...);
+        return apply_fp16_as_fp32(div[o], x0, den);
+      }(ts...);
+    }
+    else if constexpr (O::contains(upper) || O::contains(lower))
+    {
+      return detail::map(div[o], ts...);
+    }
+    else
+    {
+      return apply_fp16_as_fp32(div[o], ts...);
+    }
+  }
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept

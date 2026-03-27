@@ -99,6 +99,12 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto lpnorm_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return lpnorm[o.drop(widen)](upgrade(ts)...);
+    }
 
     template<typename P, floating_value... Ts, callable_options O>
     EVE_NOINLINE constexpr auto

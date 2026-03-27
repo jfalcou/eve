@@ -44,7 +44,6 @@ namespace eve
   template<typename Options>
   struct welford_average_t : callable<welford_average_t, Options, widen_option>
   {
-
 //     template<typename... Ts>
 //     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_t<Ts>...>  && !Options::contains(widen))
 //       EVE_FORCEINLINE constexpr detail::welford_result<common_value_t<detail::internal_welford_t<Ts>...>>
@@ -141,6 +140,13 @@ namespace eve
 
 namespace eve::detail
 {
+
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto welford_average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    return welford_average[o.drop(widen)](upgrade(ts)...);
+  }
 
   template<scalar_value T0, scalar_value ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto

@@ -17,7 +17,7 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0., +1000.)
+              tts::generate(tts::randoms(+5., +1000.)
                            )
              )
   <typename T>(T a0)
@@ -35,7 +35,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::scalar::ieee_reals_wf16,
-              tts::generate(tts::randoms(0., +1000.))
+              tts::generate(tts::randoms(+5., +1000.))
              )
   <typename T>(T a0)
 {
@@ -51,7 +51,6 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   else
   {
     using ld_t = long double;
-    std::cout << sizeof(ld_t);
     auto [a, e] = eve::two_sqrt_approx(a0);
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);

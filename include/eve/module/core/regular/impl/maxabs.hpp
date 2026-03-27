@@ -13,6 +13,13 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto maxabs_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    return maxabs[o.drop(widen)](upgrade(ts)...);
+  }
+
   template<typename T0, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   maxabs_(EVE_REQUIRES(cpu_), O const & o, T0 t0, Ts... as) noexcept

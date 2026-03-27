@@ -13,12 +13,13 @@
 #include <eve/module/core/regular/sum_of_squares.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/apply_fp16.hpp>
+
 namespace eve
 {
   template<typename Options>
   struct cosine_similarity_t : tuple_callable<cosine_similarity_t, Options, kahan_option, widen_option, unbiased_option>
   {
-
     template<value Tup1, value Tup2>
     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>> && Options::contains(widen))
     EVE_FORCEINLINE constexpr
@@ -83,6 +84,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto cosine_similarity_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return cosine_similarity[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<eve::non_empty_product_type PT1,
              eve::non_empty_product_type PT2, callable_options O>
     EVE_FORCEINLINE constexpr auto cosine_similarity_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept

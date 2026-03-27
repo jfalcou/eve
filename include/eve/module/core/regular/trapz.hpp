@@ -22,7 +22,6 @@ namespace eve
   template<typename Options>
   struct trapz_t : callable<trapz_t, Options, widen_option, kahan_option>
   {
-
     template<floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
       EVE_FORCEINLINE eve::upgrade_if_t<Options, common_value_t<Ts...>>
@@ -122,6 +121,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto trapz_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return trapz[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<eve::non_empty_product_type PT , callable_options O>
      EVE_FORCEINLINE constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
