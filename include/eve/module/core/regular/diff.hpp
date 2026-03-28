@@ -16,32 +16,20 @@ namespace eve
 {
 
   template<typename Options>
-  struct diff_t : callable<diff_t, Options, widen_option>
+  struct diff_t : callable<diff_t, Options>
   {
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE kumi::result::iota_t<kumi::size_v<Tup>-1, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> constexpr
+      EVE_FORCEINLINE kumi::result::iota_t<kumi::size_v<Tup>-1, kumi::apply_traits_t<eve::common_value, Tup>> constexpr
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<size_t N, eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr  kumi::result::iota_t<kumi::size_v<Tup>-N,  eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>>
+      EVE_FORCEINLINE constexpr  kumi::result::iota_t<kumi::size_v<Tup>-N, kumi::apply_traits_t<eve::common_value, Tup>>
     operator()(kumi::index_t<N>, Tup t) const noexcept
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, t); }
-
-    template<size_t N, value T0, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...>)
-      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts)-N+1,  eve::upgrade_if_t<Options, eve::common_value_t<T0, Ts...>>>
-    constexpr operator()(kumi::index_t<N>, T0 t0, Ts...ts) const
-    { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, kumi::make_tuple(t0, ts...)); }
-
-    template<value T0, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, Ts...>)
-      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts), eve::upgrade_if_t<Options, eve::common_value_t<T0, Ts...>>>
-    constexpr operator()(T0 t0, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(kumi::make_tuple(t0, ts...)); }
 
     EVE_CALLABLE_OBJECT(diff_t, diff_);
   };
@@ -94,52 +82,29 @@ namespace eve
   namespace detail
   {
     template<eve::non_empty_product_type PT , callable_options O>
-     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const & o, PT x) noexcept
-    {
-      if constexpr(O::contains(widen))
-        return diff[o.drop(widen)]( kumi::map( [](auto s) { return upgrade(s); }, x));
-      else
-      {
-        using r_t = kumi::apply_traits_t<common_value, PT>;
-        auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
-        return kumi::map(eve::sub[o], kumi::pop_back(xx), kumi::pop_front(xx));
-      }
-    }
-
-    template<floating_value... Ts, callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const &, PT x) noexcept
     {
-      return eve::diff[o](kumi::make_tuple(args...));
+      using r_t = kumi::apply_traits_t<common_value, PT>;
+      auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
+      return kumi::map(eve::sub, kumi::pop_back(xx), kumi::pop_front(xx));
     }
 
     template<size_t N, eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const & o, kumi::index_t<N> n, PT & x) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const &, kumi::index_t<N>, PT & x) noexcept
     {
       using r_t = kumi::apply_traits_t<common_value, PT>;
-      if constexpr(O::contains(widen))
-      {
-        return diff[o.drop(widen)](n,  kumi::map( [](auto s) { return upgrade(s); }, x));
-      }
+      auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
+      if constexpr(N >= kumi::size_v<PT>)
+        return kumi::tuple{};
+      else if constexpr(N == 0)
+        return xx;
       else
-        if constexpr(N >= kumi::size_v<PT>) return kumi::tuple{};
-        else if constexpr(N == 0)           return x;
-        else
-        {
-          auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
-          if constexpr(N == 1)             return diff(xx);
-          else                             return diff(kumi::index_t<N-1>{}, diff(xx));
-        }
-    }
-
-   template<size_t N, value... Ts, callable_options O>
-    EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const & o, kumi::index_t<N> n, Ts... args) noexcept
-    {
-      return eve::diff[o](n, kumi::make_tuple(args...));
+      {
+        if constexpr(N == 1)             return diff(xx);
+        else                             return diff(kumi::index_t<N-1>{}, diff(xx));
+      }
     }
   }
-
 }
