@@ -60,7 +60,7 @@ namespace eve::_
       if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
       if (base_3_value >= 1) ++number_of_1s, base_3_value -= 1;
 
-      auto* it = res[i].begin();
+      auto* it = res[i].data();
       if (number_of_1s) *it++ = idxs[0], --number_of_1s;
       if (number_of_1s) *it++ = idxs[1], --number_of_1s;
       if (number_of_3s) *it++ = idxs[2], --number_of_3s;
