@@ -78,7 +78,7 @@ namespace eve
       return get<0>(storage) <=> get<0>(x.storage);
     }
 
-    // airthmetics
+    // arithmetics
 
     soa_ptr& operator+=(std::ptrdiff_t n)
     {

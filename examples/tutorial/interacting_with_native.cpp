@@ -49,7 +49,7 @@ TTS_CASE("Check remove spaces") {
     remove_spaces(s);
     TTS_EQUAL(s, "12345");
 #else
-  TTS_PASS();
+  TTS_PASS("");
 #endif  // __SSSE3__
 };
 

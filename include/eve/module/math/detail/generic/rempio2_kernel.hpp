@@ -178,24 +178,24 @@ namespace eve::_
         6658437.0,  6231200.0,  6832269.0,  16767104.0, 5075751.0,  3212806.0,  1398474.0,
         7579849.0,  6349435.0,  12618859.0, 4703257.0,  12806093.0, 14477321.0, 2786137.0,
         12875403.0, 9837734.0,  14528324.0, 13719321.0, 343717.0};
-      double tm600 = double(0x1.0000000000000p-600); /* 2 ^- 600 */
-      double split = double(0x1.0000002000000p+27); /* 2^27 + 1 */
-      double hp0   = double(0x1.921fb54442d18p+0); /* 1.5707963267948966     */
-      double hp1   = double(0x1.1a62633145c07p-54); /* 6.123233995736766e-17  */
-      double mp1   = double(0x1.921fb58000000p+0); /* 1.5707963407039642     */
-      double mp2   = double(-0x1.dde9740000000p-27); /*-1.3909067675399456e-08 */
+      constexpr double tm600 = double(0x1.0000000000000p-600);  /* 2 ^- 600 */
+      constexpr double split = double(0x1.0000002000000p+27);   /* 2^27 + 1 */
+      constexpr double hp0   = double(0x1.921fb54442d18p+0);    /* 1.5707963267948966     */
+      constexpr double hp1   = double(0x1.1a62633145c07p-54);   /* 6.123233995736766e-17  */
+      constexpr double mp1   = double(0x1.921fb58000000p+0);    /* 1.5707963407039642     */
+      constexpr double mp2   = double(-0x1.dde9740000000p-27);  /*-1.3909067675399456e-08 */
       T      x     = xx * tm600;
       T      t_     = prevent_gcc_abusive_contract(x * split);
       T      x1    = t_ - (t_ - x);
       T      x2    = x - x1;
       T      sum_v(0);
 
-      auto pass = [&toverp](auto vx1, T& vb1, T& vbb1)
+      auto pass = [&](auto vx1, T& vb1, T& vbb1)
         {
-          uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
-          double   tm24 = double(0x1.0000000000000p-24); /* 2 ^- 24  */
-          double   bigv = double(0x1.8000000000000p+52); /*  6755399441055744      */
-          double   big1 = double(0x1.8000000000000p+54); /* 27021597764222976      */
+          constexpr uint64_t t576 = 0x63f0000000000000ULL;          /* 2 ^ 576  */
+          constexpr double   tm24 = double(0x1.0000000000000p-24);  /* 2 ^- 24  */
+          constexpr double   bigv = double(0x1.8000000000000p+52);  /*  6755399441055744      */
+          constexpr double   big1 = double(0x1.8000000000000p+54);  /* 27021597764222976      */
           T        sum_v_(0);
           ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
           i32_t    k;
@@ -227,7 +227,7 @@ namespace eve::_
 
           for( int i = 0; i < 6; ++i )
           {
-            auto values = gather(eve::as_aligned(&toverp[0], cardinal_t<T> {}), inds);
+            auto values = gather(eve::as_aligned(toverp, cardinal_t<T> {}), inds);
             inds        = inc(inds);
             r[i]        = vx1 * values * tmp1;
             tmp1 *= tm24;

@@ -3,6 +3,7 @@
 #include <tts/tts.hpp>
 #include <iostream>
 #include <vector>
+#include <numeric>
 
 int main()
 {
