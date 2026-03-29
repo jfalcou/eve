@@ -32,6 +32,18 @@ namespace eve
     operator()(kumi::index_t<N>, Tup t) const noexcept
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, t); }
 
+    template<floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...>)
+      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts)-1, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> constexpr
+    operator()(Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(kumi::make_tuple(ts...)); }
+
+    template<size_t N, floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<Ts...>)
+      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts)-N,  eve::common_value_t<Ts...>>
+    constexpr operator()(kumi::index_t<N>, Ts...ts) const
+    { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, kumi::make_tuple(ts...)); }
+
     EVE_CALLABLE_OBJECT(diff_t, diff_);
   };
 
