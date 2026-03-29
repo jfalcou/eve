@@ -23,6 +23,13 @@ TTS_CASE_TPL("Check return types of covariance", eve::test::simd::ieee_reals_wf1
   TTS_EXPR_IS(eve::covariance(wv3_t(), v3_t()),  r_t);
   TTS_EXPR_IS(eve::covariance( v3_t(),wv3_t()),  r_t);
   TTS_EXPR_IS(eve::covariance(v3_t(),  v3_t()),  v_t);
+  using uv_t =  eve::upgrade_t<v_t>;
+  using ur_t =   eve::wide<uv_t, eve::fixed<wv3_t::size()>>;
+  TTS_EXPR_IS(eve::covariance[eve::widen](wv3_t(), wv3_t()), ur_t);
+  TTS_EXPR_IS(eve::covariance[eve::widen](wv3_t(), v3_t()),  ur_t);
+  TTS_EXPR_IS(eve::covariance[eve::widen]( v3_t(),wv3_t()),  ur_t);
+  TTS_EXPR_IS(eve::covariance[eve::widen](v3_t(),  v3_t()),  uv_t);
+
 };
 
 //==================================================================================================
@@ -41,7 +48,9 @@ TTS_CASE_WITH("Check behavior of covariance(wide)",
   v3_t b(-3, -4, -6);
   TTS_ULP_EQUAL(eve::covariance[eve::unbiased](a, b), -1.5, 0.5);
   TTS_ULP_EQUAL(eve::covariance(a, b), -1, 0.5);
-  ;
+  TTS_ULP_EQUAL(eve::covariance[eve::unbiased][eve::widen](a, b), -1.5, 0.5);
+  TTS_ULP_EQUAL(eve::covariance[eve::widen](a, b), -1.0, 0.5);
+
   using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
   using  f4_t =  eve::wide<v_t, eve::fixed<4>>;
   TTS_ULP_EQUAL(eve::covariance[eve::unbiased](a, b), -1.5, 0.5);
