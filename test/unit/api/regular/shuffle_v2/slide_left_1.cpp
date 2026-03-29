@@ -30,7 +30,7 @@ TTS_CASE("Slide left 1, example") {
   using w_i =  eve::wide<unsigned int, eve::fixed<8>>;
   w_i x{[](int i, int) { return i; } };
   std::cerr << eve::shuffle_v2(x, eve::pattern<3, 4, 5, 6, 7, -1, -1, -1>) << std::endl;
-  TTS_PASS();
+  TTS_PASS("");
 };
 #endif
 
@@ -79,7 +79,7 @@ TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
                                          return lifted;
                                        });
   }
-  else { TTS_PASS(); }
+  else { TTS_PASS(""); }
 };
 
 }

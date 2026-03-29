@@ -99,7 +99,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
       using eli_t  = as_integer_t<elt_t, unsigned>;
       auto gold    = c_t(1.61803398874989484820458683436563811772030917980575);
       auto goldbar = c_t(-0.61803398874989484820458683436563811772030917980575);
-      constexpr elt_t oneosqrt5 = 0.4472135954999579392818347337462552470881236719223;
+      constexpr auto oneosqrt5 = elt_t(0.4472135954999579392818347337462552470881236719223);
 
       if constexpr(std::same_as<T, U>)
       {
