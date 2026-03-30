@@ -19,29 +19,34 @@ namespace eve
   template<typename Options>
   struct diff_t : callable<diff_t, Options, widen_option>
   {
+    template<std::size_t N, typename... Ts>
+    struct result;
 
-    template<eve::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE kumi::result::iota_t<kumi::size_v<Tup>-1, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> constexpr
-    operator()(Tup const& t) const noexcept
+    template<std::size_t N, floating_value... Ts>
+    struct result<N,Ts...> : kumi::result::iota<sizeof...(Ts)-N, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> {};
+
+    template<std::size_t N, eve::same_lanes_or_scalar_tuple Tup>
+    struct result<N, Tup> : kumi::result::iota<kumi::size_v<Tup>-N,  eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> {};
+
+    template<eve::same_lanes_or_scalar_tuple Tup>
+    EVE_FORCEINLINE typename result<1, Tup>::type constexpr operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
-    template<size_t N, eve::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE kumi::result::iota_t<kumi::size_v<Tup>-N, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> constexpr
-    operator()(kumi::index_t<N>, Tup t) const noexcept
+    template<std::size_t N, eve::same_lanes_or_scalar_tuple Tup>
+    EVE_FORCEINLINE typename result<N, Tup>::type constexpr
+    operator()(kumi::index_t<N>, Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, t); }
 
     template<floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts)-1, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> constexpr
-    operator()(Ts...ts) const noexcept
+    EVE_FORCEINLINE typename result<1, Ts...>::type constexpr
+    operator()(Ts const& ...ts) const noexcept
     { return EVE_DISPATCH_CALL(kumi::make_tuple(ts...)); }
 
     template<size_t N, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE kumi::result::iota_t<sizeof...(Ts)-N,  eve::common_value_t<Ts...>>
-    constexpr operator()(kumi::index_t<N>, Ts...ts) const
+    EVE_FORCEINLINE typename result<N, Ts...>::type constexpr
+    operator()(kumi::index_t<N>, Ts const&...ts) const
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, kumi::make_tuple(ts...)); }
 
     EVE_CALLABLE_OBJECT(diff_t, diff_);
@@ -96,7 +101,7 @@ namespace eve
   {
     template<eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const &, PT x) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const &, PT const& x) noexcept
     requires(!O::contains(widen))
     {
       //std::cout << "!widen" << std::endl;
@@ -107,7 +112,7 @@ namespace eve
 
     template<eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const &, PT x) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const &, PT const& x) noexcept
     requires(O::contains(widen))
     {
       //std::cout << "widen" << std::endl;
@@ -117,9 +122,9 @@ namespace eve
       return kumi::map(eve::sub, kumi::pop_back(xx), kumi::pop_front(xx));
     }
 
-    template<size_t N, eve::non_empty_product_type PT , callable_options O>
+    template<std::size_t N, eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const &, kumi::index_t<N>, PT & x) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const &, kumi::index_t<N>, PT const & x) noexcept
     requires(!O::contains(widen))
     {
       //std::cout << "!widen index" << std::endl;
@@ -136,9 +141,9 @@ namespace eve
       }
     }
 
-    template<size_t N, eve::non_empty_product_type PT , callable_options O>
+    template<std::size_t N, eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
-    diff_(EVE_REQUIRES(cpu_), O const & o, kumi::index_t<N> n, PT & x) noexcept
+    diff_(EVE_REQUIRES(cpu_), O const & o, kumi::index_t<N> n, PT const& x) noexcept
     requires(O::contains(widen))
     {
       //std::cout << "widen index" << std::endl;

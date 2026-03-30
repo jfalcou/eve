@@ -53,6 +53,6 @@ int main()
   {
    std::cout << " -> mydiff(index_t<1>, ...)  = " << mydiff(kumi::index_t<1>{},1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
    std::cout << " -> diff( ...)               = " << eve::diff(1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
-//   std::cout << " -> diff(index_t<1>, ...)    = " << eve::diff(kumi::index_t<1>{}, 1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
+   std::cout << " -> diff(index_t<1>, ...)    = " << eve::diff(kumi::index_t<1>{}, 1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
   }
 }
