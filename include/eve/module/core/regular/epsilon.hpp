@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/dist.hpp>
@@ -93,6 +94,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts... ts) noexcept
+      requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return detail::map(epsilon[o], ts...);
+    }
+
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
