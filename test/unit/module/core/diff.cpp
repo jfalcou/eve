@@ -20,7 +20,7 @@ TTS_CASE_TPL("Check return types of diff", eve::test::simd::ieee_reals)
 
   TTS_EXPR_IS(eve::diff(T(), T(), T(), T()), (kumi::tuple<T, T, T>));
   TTS_EXPR_IS(eve::diff(v_t(), v_t(), v_t(), v_t()), (kumi::tuple<v_t, v_t, v_t>));
-  TTS_EXPR_IS(eve::diff(v_t(), T()  , v_t(), v_t()), (kumi::tuple<T, T, T>))
+  TTS_EXPR_IS(eve::diff(v_t(), T()  , v_t(), v_t()), (kumi::tuple<T, T, T>));
 };
 
 //==================================================================================================
