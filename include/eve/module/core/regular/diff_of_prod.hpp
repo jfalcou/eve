@@ -14,6 +14,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -87,6 +88,14 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto diff_of_prod_(EVE_REQUIRES(strict_elementwise_emulated_), O const & o, Ts const&... ts) noexcept
+      requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(diff_of_prod[o], ts...);
+      else                                                   return apply_fp16_as_fp32(diff_of_prod[o], ts...);
+    }
+
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
     diff_of_prod_(EVE_REQUIRES(cpu_), O const & o,

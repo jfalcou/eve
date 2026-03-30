@@ -18,6 +18,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/detail/modular.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -102,6 +103,15 @@ namespace eve
 
   namespace detail
   {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    oneminus_(EVE_REQUIRES(strict_elementwise_emulated_), O const & o, T v) noexcept
+      requires(detail::fp16_should_apply<T>)
+    {
+      if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(oneminus[o], v);
+      else                                                    return apply_fp16_as_fp32(oneminus[o], v);
+    }
+
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
     oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept

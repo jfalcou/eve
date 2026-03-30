@@ -22,10 +22,19 @@
 #include <eve/module/core/regular/three_fma.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/common_value.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <cmath>
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts const&... ts) noexcept
+    requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(fms[o], ts...);
+    else                                                    return apply_fp16_as_fp32(fms[o], ts...);
+  }
+
   template<typename T, typename U, typename V, callable_options O>
   EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
   {

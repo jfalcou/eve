@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/detail/modular.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -112,6 +113,14 @@ namespace eve
 
   namespace detail
   {
+    template<value T, callable_options O>
+    EVE_FORCEINLINE constexpr auto dec_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T v) noexcept
+      requires(detail::fp16_should_apply<T>)
+    {
+      if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(dec[o], v);
+      else                                                    return apply_fp16_as_fp32(dec[o], v);
+    }
+
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {

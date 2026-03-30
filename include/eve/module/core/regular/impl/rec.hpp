@@ -25,7 +25,7 @@ namespace eve::detail
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(emulated_), O const& o, T a) noexcept
+  EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T a) noexcept
     requires (detail::fp16_should_apply<common_value_t<T>>)
   {
     if      constexpr (O::contains(widen))                       return rec[o.drop(widen)](upgrade(a));
