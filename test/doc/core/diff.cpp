@@ -4,13 +4,6 @@
 #include <iomanip>
 
 
-template<size_t N, eve::floating_value... Ts>
-EVE_FORCEINLINE constexpr  kumi::result::iota_t<sizeof...(Ts)-N, eve::common_value_t<Ts...>>
- mydiff( kumi::index_t<N> n, Ts... args) noexcept
-{
-  return eve::diff(n, kumi::make_tuple(args...));
-}
-
 int main()
 {
   std::cout << std::hexfloat << std::endl;
@@ -51,8 +44,9 @@ int main()
 
   }
   {
-   std::cout << " -> mydiff(index_t<1>, ...)  = " << mydiff(kumi::index_t<1>{},1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
-   std::cout << " -> diff( ...)               = " << eve::diff(1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
-   std::cout << " -> diff(index_t<1>, ...)    = " << eve::diff(kumi::index_t<1>{}, 1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
+   std::cout << " -> diff( ...)                      = " << eve::diff(1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
+   std::cout << " -> diff(index_t<1>, ...)           = " << eve::diff(kumi::index_t<1>{}, 1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
+   std::cout << " -> diff[widen]( ...)               = " << eve::diff[widen](1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
+   std::cout << " -> diff[widen](index_t<1>, ...)    = " << eve::diff[widen](kumi::index_t<1>{}, 1.5000e-5f, 2.2500f, 3.3750f, 5.0625f, 7.0f, 11.0f, 17.0f, 25.0f) << std::endl;
   }
 }

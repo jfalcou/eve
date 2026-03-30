@@ -104,7 +104,6 @@ namespace eve
     diff_(EVE_REQUIRES(cpu_), O const &, PT const& x) noexcept
     requires(!O::contains(widen))
     {
-      //std::cout << "!widen" << std::endl;
       using r_t = kumi::apply_traits_t<common_value, PT>;
       auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
       return kumi::map(eve::sub, kumi::pop_back(xx), kumi::pop_front(xx));
@@ -115,7 +114,6 @@ namespace eve
     diff_(EVE_REQUIRES(cpu_), O const &, PT const& x) noexcept
     requires(O::contains(widen))
     {
-      //std::cout << "widen" << std::endl;
       using r_t = kumi::apply_traits_t<common_value, PT>;
       using ur_t = eve::upgrade_t<r_t>;
       auto xx =  kumi::map([](auto m){ return ur_t(m); }, x);
@@ -127,7 +125,6 @@ namespace eve
     diff_(EVE_REQUIRES(cpu_), O const &, kumi::index_t<N>, PT const & x) noexcept
     requires(!O::contains(widen))
     {
-      //std::cout << "!widen index" << std::endl;
       using r_t = kumi::apply_traits_t<common_value, PT>;
       auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
       if constexpr(N >= kumi::size_v<PT>)
@@ -146,7 +143,6 @@ namespace eve
     diff_(EVE_REQUIRES(cpu_), O const & o, kumi::index_t<N> n, PT const& x) noexcept
     requires(O::contains(widen))
     {
-      //std::cout << "widen index" << std::endl;
       using r_t = kumi::apply_traits_t<common_value, PT>;
       using ur_t = eve::upgrade_t<r_t>;
       auto xx =  kumi::map([](auto m){ return ur_t(m); }, x);
