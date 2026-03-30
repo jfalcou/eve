@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/inf.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -89,6 +90,14 @@ namespace eve
 
   namespace detail
   {
+    template<value T, callable_options O>
+    EVE_FORCEINLINE constexpr auto dist_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T a, T b)
+      requires(detail::fp16_should_apply<T>)
+    {
+      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(dist[o], a, b);
+      else                                                   return apply_fp16_as_fp32(dist[o], a, b);
+    }
+
     template<value T, callable_options O>
     constexpr T dist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {

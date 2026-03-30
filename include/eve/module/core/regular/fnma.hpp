@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/detail/fmx_utils.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -93,6 +94,14 @@ namespace eve
 
   namespace detail
   {
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T const& a, U const& b, V const& c)
+      requires(detail::fp16_should_apply<common_value_t<T, U, V>>)
+    {
+      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(fnma[o], a, b, c);
+      else                                                   return apply_fp16_as_fp32(fnma[o], a, b, c);
+    }
+
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {

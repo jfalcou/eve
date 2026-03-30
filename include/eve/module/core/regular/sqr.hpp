@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 
 namespace eve
@@ -101,6 +102,15 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 
   namespace detail
   {
+
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    sqr_(EVE_REQUIRES(strict_elementwise_emulated_), O const &o, T const &a0) noexcept
+      requires(detail::fp16_should_apply<T>)
+    {
+      if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(sqr[o], a0);
+      else                                                    return apply_fp16_as_fp32(sqr[o], a0);
+    }
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
