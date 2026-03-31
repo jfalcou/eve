@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +24,9 @@ namespace eve::detail
     requires (detail::fp16_should_apply<common_value_t<Ts...>>)
   {
     if      constexpr (O::contains(widen))                       return average[o.drop(widen)](upgrade(ts)...);
-    else if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(average[o], ts...);
+    else if constexpr (O::contains(upper) || O::contains(lower)) {
+      return average_(EVE_TARGETS(cpu_), o, ts...);
+    }
     else                                                         return apply_fp16_as_fp32(average[o], ts...);
   }
 
