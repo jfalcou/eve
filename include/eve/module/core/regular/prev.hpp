@@ -110,7 +110,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto prev_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts... ts) noexcept
       requires (detail::fp16_should_apply<common_value_t<Ts...>>)
     {
-      return detail::map(prev[o], ts...);
+      return prev_(EVE_TARGETS(cpu_), o, ts...);
     }
 
     template<typename T, callable_options O>

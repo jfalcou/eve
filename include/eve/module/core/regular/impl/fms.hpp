@@ -27,12 +27,12 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename... Ts>
+  template<callable_options O, simd_value... Ts>
   EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts const&... ts) noexcept
-    requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (detail::fp16_should_apply<Ts> && ...)
   {
-    if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(fms[o], ts...);
-    else                                                    return apply_fp16_as_fp32(fms[o], ts...);
+    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fms[o], ts...);
+    else                                                                             return apply_fp16_as_fp32(fms[o], ts...);
   }
 
   template<typename T, typename U, typename V, callable_options O>
@@ -106,7 +106,12 @@ namespace eve::detail
     // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {
-      if constexpr( std::same_as<element_type_t<T>, float> )
+      if constexpr( std::same_as<element_type_t<T>, eve::float16_t> )
+      {
+        constexpr auto tgt = as<float>{};
+        return convert(convert(a,tgt) * convert(b,tgt) - convert(c,tgt), as_element(a));
+      }
+      else if constexpr( std::same_as<element_type_t<T>, float> )
       {
         constexpr auto tgt = as<double>{};
         return convert(convert(a,tgt) * convert(b,tgt) - convert(c,tgt), as_element(a));

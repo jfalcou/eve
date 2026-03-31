@@ -92,12 +92,12 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T const& a, U const& b, V const& c)
-      requires(detail::fp16_should_apply<common_value_t<T, U, V>>)
+    template<callable_options O, simd_value... Ts>
+    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts const&... ts)
+      requires (detail::fp16_should_apply<Ts> && ...)
     {
-      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(fsm[o], a, b, c);
-      else                                                   return apply_fp16_as_fp32(fsm[o], a, b, c);
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fsm[o], ts...);
+      else                                                                            return apply_fp16_as_fp32(fsm[o], ts...);
     }
 
     template<typename T, typename U, typename V, callable_options O>
@@ -105,7 +105,6 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
     {
       return fms[o](b, c, a);
     }
-
   }
 }
 

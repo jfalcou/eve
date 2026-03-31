@@ -11,7 +11,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
-#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {

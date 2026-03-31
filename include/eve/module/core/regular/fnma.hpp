@@ -94,12 +94,12 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T const& a, U const& b, V const& c)
-      requires(detail::fp16_should_apply<common_value_t<T, U, V>>)
+    template<callable_options O, simd_value... Ts>
+    EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts const&... ts)
+      requires (detail::fp16_should_apply<Ts> && ...)
     {
-      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(fnma[o], a, b, c);
-      else                                                   return apply_fp16_as_fp32(fnma[o], a, b, c);
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fnma[o], ts...);
+      else                                                                            return apply_fp16_as_fp32(fnma[o], ts...);
     }
 
     template<typename T, typename U, typename V, callable_options O>
