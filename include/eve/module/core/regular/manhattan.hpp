@@ -121,21 +121,26 @@ namespace eve
         return manhattan[o.drop(widen)](upgrade(args)...);
       else
       {
-        auto l_abs = [](){
+        auto nan_found = eve::false_(eve::as<r_t>());
+        auto l_abs = [&nan_found](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
           return eve::abs[saturated];
           else
-            return eve::abs;
+            return [&nan_found](auto x){
+              nan_found = nan_found || is_nan(x);
+              return if_else(eve::is_nan(x), zero, eve::abs(x));};
         }();
         if constexpr(sizeof...(Ts) == 1)
-          return l_abs(args...);
+          return eve::abs(args...);
         else
         {
           r_t r = eve::add[o](l_abs(r_t(args))...);
           if constexpr(integral_value<r_t>)
             return r;
           else
-            return force_if_any(o, r, eve::is_infinite, inf(as(r)), args...);
+          {
+            return if_else(nan_found && eve::is_infinite(r), eve::allbits, r);
+          }
         }
       }
     }
