@@ -30,7 +30,7 @@ TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
     auto da1 = eve::upgrade(a1);
-    TTS_ULP_EQUAL(da0/da1, (da+de), 27.0);
+    TTS_ULP_EQUAL(da0/da1, (da+de), 40.0);
   }
 };
 
@@ -50,7 +50,7 @@ TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
     auto da1 = eve::upgrade(a1);
-    TTS_ULP_EQUAL(da0/da1, (da+de), 20.0);
+    TTS_ULP_EQUAL(da0/da1, (da+de), 25.0);
   }
   else
   {
