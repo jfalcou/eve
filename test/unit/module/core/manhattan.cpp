@@ -11,7 +11,7 @@
 #include <algorithm>
 
 //==================================================================================================
-// Types tests
+//= Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of manhattan", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of manhattan", eve::test::simd::ieee_reals_wf16
 };
 
 //==================================================================================================
-// manhattan tests
+//= manhattan tests
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of manhattan on all types full range",
@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
 
 
 //==================================================================================================
-// Tests for masked manhattan
+//= Tests for masked manhattan
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
@@ -69,6 +69,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
                  eve::if_else(mask, eve::manhattan(a0, a1), a0));
 };
 
+//==================================================================================================
+//= Tests with kahan vs widen
+//==================================================================================================
 TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
               eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
@@ -80,7 +83,9 @@ TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
   using eve::widen;
   using eve::kahan;
   using eve::as;
-  if constexpr(sizeof(eve::element_type_t<T>) < 8)
+  if constexpr(sizeof(eve::element_type_t<T>) == 2 && eve::cardinal_v<T> < 8)
+  {
     TTS_ULP_EQUAL(manhattan[kahan](a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
-
+    TTS_ULP_EQUAL(manhattan(a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
+  }
 };
