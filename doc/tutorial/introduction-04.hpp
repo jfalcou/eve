@@ -21,7 +21,6 @@ an opt-in system to do just that.
 To register `polar_coords` to be usable as a type inside eve::wide, two things are needed:
   - adapt the structure to be [compatible with C++ structured bindings](https://en.cppreference.com/w/cpp/language/structured_binding).
     This includes specializations for `std::tuple_size`, `std::tuple_element` and a `get` function.
-  - specialize eve::is_product_type to opt-in for product-type behavior
 
 @snippet tutorial/intro-04.cpp simd-udt-adapt
 

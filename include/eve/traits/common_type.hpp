@@ -67,15 +67,6 @@ namespace eve::detail
   };
 
   template <typename T>
-  struct is_kumi_tuple : std::false_type {};
-
-  template <typename ...Ts>
-  struct is_kumi_tuple<kumi::tuple<Ts...>> : std::true_type {};
-
-  template <typename T>
-  concept is_kumi_tuple_v = is_kumi_tuple<T>::value;
-
-  template <typename T>
   struct common_type_reduction;
 
   template <typename, typename>
@@ -122,8 +113,8 @@ namespace eve::detail
         {
           using res_type = typename tuple_res::type;
 
-               if constexpr ( std::same_as<res_type, t_as_tuple> && !is_kumi_tuple_v<T> ) return self;
-          else if constexpr ( std::same_as<res_type, u_as_tuple> && !is_kumi_tuple_v<U> ) return other;
+               if constexpr ( std::same_as<res_type, t_as_tuple> && !is_kumi_tuple<T>::value ) return self;
+          else if constexpr ( std::same_as<res_type, u_as_tuple> && !is_kumi_tuple<U>::value ) return other;
           else                                                                            return tuple_res{};
         }
         else
@@ -137,8 +128,8 @@ namespace eve::detail
           {
             using res_type = typename flat_res::type;
 
-                 if constexpr ( std::same_as<res_type, t_flat> && !is_kumi_tuple_v<T> ) return self;
-            else if constexpr ( std::same_as<res_type, u_flat> && !is_kumi_tuple_v<U> ) return other;
+                 if constexpr ( std::same_as<res_type, t_flat> && !is_kumi_tuple<T>::value ) return self;
+            else if constexpr ( std::same_as<res_type, u_flat> && !is_kumi_tuple<U>::value ) return other;
             else if constexpr ( std::same_as<res_type, t_flat>                        ) return self;
             else if constexpr ( std::same_as<res_type, u_flat>                        ) return other;
             else                                                                        return flat_res{};

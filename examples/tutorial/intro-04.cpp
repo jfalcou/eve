@@ -28,10 +28,6 @@ namespace adapt
 // Opt-in for eve::product_type
 #include <eve/traits/product_type.hpp>
 
-template<>
-struct eve::is_product_type<adapt::polar_coords> : std::true_type
-{};
-
 // Standard Structured Bindings adaptation
 namespace adapt
 {
