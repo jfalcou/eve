@@ -97,13 +97,13 @@ namespace eve
       {
         err =  b - (r0 - a);
       }
-       else //6fp always ok
+      else //6fp always ok
       {
         auto z  = r0 - a;
         err = a - (r0 - z) + (b - z);
       }
       if constexpr( eve::platform::supports_infinites && O::contains(pedantic))
-        err = if_else(is_infinite(r0), eve::zero, err);
+        err = if_else(is_not_finite(err) || is_not_finite(r0), eve::zero, err);
       return eve::zip(r0, err);
     }
   }

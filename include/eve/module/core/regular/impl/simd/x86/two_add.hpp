@@ -23,8 +23,8 @@ namespace eve::detail
       auto maxi = maxmag(a, b);
       auto mini = minmag(a, b);
       auto r1 = mini - (r0-maxi);
-      if constexpr( eve::platform::supports_infinites )
-        r1 = if_else(is_infinite(r0), eve::zero, r1);
+      if constexpr( eve::platform::supports_infinites && O::contains(pedantic))
+        r1 = if_else(is_not_finite(r0)||is_not_finite(r1), eve::zero, r1);
 
       return eve::zip(r0, r1);
     }

@@ -142,7 +142,7 @@ namespace eve::detail
         // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
         auto get_fn= [](){
           if constexpr(O::contains(raw)) return two_add[raw];
-          else return two_add;
+          else return two_add[pedantic];
         };
         auto pair_add = [fn = get_fn()](auto pair0, auto ri){
           auto [a0, e0] = pair0;
