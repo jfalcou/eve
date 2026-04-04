@@ -56,7 +56,7 @@ namespace eve
       return std::bit_cast<float>(result);
     }
 
-    EVE_NOINLINE constexpr uint16_t emulated_fp_to_fp16(float value) noexcept
+    EVE_NOINLINE constexpr uint16_t emulated_fp32_to_fp16(float value) noexcept
     {
         uint32_t bits = std::bit_cast<uint32_t>(value);
         uint32_t sign = (bits & 0x80000000u) >> 16;
@@ -123,7 +123,7 @@ namespace eve
     template <std::integral T>
     constexpr std::uint16_t emulated_int_to_fp16(T value) noexcept
     {
-      return emulated_fp_to_fp16(static_cast<float>(value));
+      return emulated_fp32_to_fp16(static_cast<float>(value));
     }
 
     constexpr std::partial_ordering emulated_fp16_compare(std::uint16_t a_bits, std::uint16_t b_bits) noexcept
@@ -199,7 +199,7 @@ namespace eve
       public:
         constexpr float16_t() = default;
         constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp_to_fp16(v)) { }
+        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp32_to_fp16(v)) { }
 
         constexpr EVE_FORCEINLINE explicit operator bool()               const noexcept { return into<bool>(); }
 
