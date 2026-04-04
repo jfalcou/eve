@@ -42,14 +42,14 @@ namespace eve::detail
 
   template<callable_options O, typename U, typename N>
   EVE_NOINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
-    requires (!detail::supports_fp16_vector_conversion)
+    requires (!detail::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
   {
     return convert(detail::emulated_simd_fp16_to_fp32(v), as<U>{});
   }
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
-    requires (!detail::supports_fp16_vector_conversion)
+    requires (!detail::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t>)
   {
     return detail::emulated_simd_fp32_to_fp16(convert(v, as<float>{}));
   }
