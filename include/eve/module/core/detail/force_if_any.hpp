@@ -19,8 +19,8 @@ namespace eve::detail
     using r_t = common_value_t<Ts...>;
     if constexpr(O::contains(pedantic) && floating_value<r_t>)
     {
-      auto inf_found =  (test(r_t(ts)) || ...);
-      return if_else(inf_found, r_t(value), r);
+      auto found =  (test(r_t(ts)) || ...);
+      return if_else(found, r_t(value), r);
     }
     else
       return r;

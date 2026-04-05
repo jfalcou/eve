@@ -16,7 +16,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct minabs_t : tuple_callable<minabs_t, Options, numeric_option, widen_option,
+  struct minabs_t : tuple_callable<minabs_t, Options, nan_aware_option, numeric_option, widen_option,
                                    pedantic_option, saturated_option>
   {
 
@@ -66,6 +66,7 @@ namespace eve
 //!      constexpr auto minabs[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!      constexpr auto minabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!      constexpr auto minabs[widen](/* any of the above overloads */)                   noexcept; // 6
+//!      constexpr auto maxabs[nan_aware](/* any of the above overloads */)               noexcept; // 7
 //!
 //!   }
 //!   @endcode
@@ -89,6 +90,7 @@ namespace eve
 //!        returns \f$0\f$ even if some other arguments are NaNs.
 //!     5. `NaNs` are considered greater than anything else.
 //!     6. compute the upgraded result if available.
+//!     7. returns NaN as soon as one of the parameters is a NaN.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minabs.cpp}
