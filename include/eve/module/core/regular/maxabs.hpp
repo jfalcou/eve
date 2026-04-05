@@ -16,7 +16,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct maxabs_t : tuple_callable<maxabs_t, Options, numeric_option, pedantic_option,
+  struct maxabs_t : tuple_callable<maxabs_t, Options, nan_aware_option, numeric_option, pedantic_option,
                                                       saturated_option, widen_option>
   {
 
@@ -54,7 +54,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto maxabs(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
-//!      constexpr auto maxabs(eve::non_empty_product_type auto const& tup)              noexcept; // 2
+//!      constexpr auto maxabs(eve::non_empty_product_type auto const& tup)               noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto maxabs[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
@@ -64,6 +64,7 @@ namespace eve
 //!      constexpr auto maxabs[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!      constexpr auto maxabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!      constexpr auto maxabs[widen](/* any of the above overloads */)                   noexcept; // 6
+//!      constexpr auto maxabs[nan_aware](/* any of the above overloads */)               noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -87,6 +88,7 @@ namespace eve
 //!        (with no consideration of `Nans`)
 //!     5. `NaNs` are considered less than anything else.
 //!     6. compute the upgraded result if available.
+//!     7. returns NaN as soon as one of the parameters is a NaN.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/maxabs.cpp}

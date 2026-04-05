@@ -37,6 +37,7 @@ namespace eve
   struct mod_mode             {};
   struct modular_mode         {};
   struct numeric_mode         {};
+  struct nan_aware_mode       {};
   struct p_kind_mode          {};
   struct promote_mode         {};
   struct q_kind_mode          {};
@@ -84,6 +85,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
   [[maybe_unused]] inline constexpr auto modular          = ::rbr::flag( modular_mode{}         );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
+  [[maybe_unused]] inline constexpr auto nan_aware        = ::rbr::flag( nan_aware_mode{}       );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
@@ -124,6 +126,7 @@ namespace eve
   struct kind_2_option          : detail::exact_option<kind_2>          {};
   struct left_option            : detail::exact_option<left>            {};
   struct modular_option         : detail::exact_option<modular>         {};
+  struct nan_aware_option       : detail::exact_option<nan_aware>       {};
   struct numeric_option         : detail::exact_option<numeric>         {};
   struct p_kind_option          : detail::exact_option<p_kind>          {};
   struct promote_option         : detail::exact_option<promote>         {};

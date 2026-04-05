@@ -17,7 +17,7 @@ int main()
   std::cout << "<- wi1                              = " << wi1 << "\n";
   std::cout << "<- wu0                              = " << wu0 << "\n";
   std::cout << "<- wu1                              = " << wu1 << "\n";
-                                                    
+
   std::cout << "-> maxabs(wf0, wf1)                 = " << eve::maxabs(wf0, wf1) << "\n";
   std::cout << "-> maxabs[ignore_last(2)](wf0, wf1) = " << eve::maxabs[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> maxabs[wf0 != 0](wf0, wf1)       = " << eve::maxabs[wf0 != 0](wf0, wf1) << "\n";
@@ -25,4 +25,29 @@ int main()
   std::cout << "-> maxabs[numeric ](wf0, wf1)       = " << eve::maxabs[eve::numeric ](wf0, wf1) << "\n";
   std::cout << "-> maxabs(wu0, wu1)                 = " << eve::maxabs(wu0, wu1) << "\n";
   std::cout << "-> maxabs(wi0, wi1)                 = " << eve::maxabs(wi0, wi1) << "\n";
+
+  float o = 1.0f;
+  float i = eve::inf(eve::as(o));
+  float n = eve::nan(eve::as(o));
+  float m = (eve::valmax(eve::as(o))/3)*2;
+  std::cout << "<- o                                = " << o << "\n";
+  std::cout << "-> i                                = " << i << "\n";
+  std::cout << "-> n                                = " << n << "\n";
+  std::cout << "-> maxabs(i, o, -i)                 = " << eve::maxabs(i, o, -i) << "\n";
+  std::cout << "-> maxabs(i, o, n)                  = " << eve::maxabs(i, o, -i) << "\n";
+  std::cout << "-> maxabs[pedantic](o, o, n)        = " << eve::maxabs[eve::pedantic](o, o, n) << "\n";
+  std::cout << "-> maxabs[pedantic](o, n, o)        = " << eve::maxabs[eve::pedantic](o, n, o) << "\n";
+  std::cout << "-> maxabs[pedantic](n, o, o)        = " << eve::maxabs[eve::pedantic](n, o, o) << "\n";
+  std::cout << "-> maxabs[numeric ](o, o, n)        = " << eve::maxabs[eve::numeric ](o, o, n) << "\n";
+  std::cout << "-> maxabs[numeric](o, n, o)         = " << eve::maxabs[eve::numeric](o, n, o) << "\n";
+  std::cout << "-> maxabs[numeric](n, o, o)         = " << eve::maxabs[eve::numeric](n, o, o) << "\n";
+  std::cout << "-> maxabs          (o, o, n)        = " << eve::maxabs(o, o, n) << "\n";
+  std::cout << "-> maxabs          (o, n, o)        = " << eve::maxabs(o, n, o) << "\n";
+  std::cout << "-> maxabs          (n, o, o)        = " << eve::maxabs(n, o, o) << "\n";
+  std::cout << "-> maxabs(n, n, n)                  = " << eve::maxabs(n, n, n) << "\n";
+  std::cout << "-> maxabs(m, o, o)                  = " << eve::maxabs(m, o, o)<< "\n";
+  std::cout << "-> maxabs(i, o, n)                  = " << eve::maxabs(i, o, n)<< "\n";
+  std::cout << "-> maxabs[nan_aware](i, o, n)       = " << eve::maxabs[eve::nan_aware](i, o, n)<< "\n";
+  std::cout << "-> maxabs(i, o, n)                  = " << eve::maxabs(i, o, n)<< "\n";
+
 }
