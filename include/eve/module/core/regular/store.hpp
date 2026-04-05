@@ -52,13 +52,13 @@ namespace eve
   //!   {
   //!     // Regular overload
   //!     template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
-  //!     void store(T value, Ptr ptr) noexcept;                                         // 1
+  //!     void store(T value, Ptr ptr) noexcept;                                           // 1
   //!
   //!     template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
-  //!     void store(T value, Ptr ptr) noexcept;                                         // 1
+  //!     void store(T value, Ptr ptr) noexcept;                                           // 1
   //!
   //!     // Lanes masking
-  //!     auto mul[conditional_expr auto c](/* any of the above overloads */) noexcept;  // 2
+  //!     auto store[conditional_expr auto c](/* any of the above overloads */) noexcept;  // 2
   //!   }
   //!   @endcode
   //!
