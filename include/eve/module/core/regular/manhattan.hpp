@@ -118,13 +118,13 @@ namespace eve
         return eve::abs(args...);
       else
       {
-        auto  nan_found = eve::false_(eve::as<r_t>());
-        auto l_abs = [&nan_found](){
+        [[maybe_unused]] auto nan_found = eve::false_(eve::as<r_t>());
+        auto l_abs = [&](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
-          return eve::abs[saturated];
+             return eve::abs[saturated];
           else if constexpr(O::contains(pedantic))
           {
-            return [&nan_found](auto x){
+            return [&](auto x){
               nan_found = nan_found || is_nan(x);
               return if_else(eve::is_nan(x), zero, eve::abs(x));
             };

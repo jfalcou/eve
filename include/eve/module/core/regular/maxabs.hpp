@@ -16,7 +16,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct maxabs_t : tuple_callable<maxabs_t, Options, nan_aware_option, numeric_option, pedantic_option,
+  struct maxabs_t : tuple_callable<maxabs_t, Options, drastic_option, numeric_option, pedantic_option,
                                                       saturated_option, widen_option>
   {
 
@@ -64,7 +64,7 @@ namespace eve
 //!      constexpr auto maxabs[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!      constexpr auto maxabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!      constexpr auto maxabs[widen](/* any of the above overloads */)                   noexcept; // 6
-//!      constexpr auto maxabs[nan_aware](/* any of the above overloads */)               noexcept; // 7
+//!      constexpr auto maxabs[drastic](/* any of the above overloads */)               noexcept; // 7
 //!   }
 //!   @endcode
 //!

@@ -10,7 +10,6 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
@@ -27,12 +26,12 @@ namespace eve::detail
         return upgrade(maxabs[o.drop(widen)](t0, as...));
     }
     else if constexpr(sizeof...(Ts) == 0)
-      return abs[o.drop(pedantic,numeric,nan_aware)](r_t(t0));
+      return abs[o.drop(pedantic,numeric,drastic)](r_t(t0));
     else
     {
-      auto abso = abs[o.drop(pedantic,numeric,nan_aware)];
+      auto abso = abs[o.drop(pedantic,numeric,drastic)];
       auto r = eve::max[o.drop(saturated)](abso(t0), abso(as)...);
-      if constexpr(O::contains(nan_aware))
+      if constexpr(O::contains(drastic))
       {
         auto nan_found = (eve::is_nan(r_t(t0)) || (eve::is_nan(r_t(as)) || ...));
         return if_else(nan_found, allbits, r);

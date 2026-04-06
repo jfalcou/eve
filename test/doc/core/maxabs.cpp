@@ -47,7 +47,7 @@ int main()
   std::cout << "-> maxabs(n, n, n)                  = " << eve::maxabs(n, n, n) << "\n";
   std::cout << "-> maxabs(m, o, o)                  = " << eve::maxabs(m, o, o)<< "\n";
   std::cout << "-> maxabs(i, o, n)                  = " << eve::maxabs(i, o, n)<< "\n";
-  std::cout << "-> maxabs[nan_aware](i, o, n)       = " << eve::maxabs[eve::nan_aware](i, o, n)<< "\n";
+  std::cout << "-> maxabs[drastic](i, o, n)       = " << eve::maxabs[eve::drastic](i, o, n)<< "\n";
   std::cout << "-> maxabs(i, o, n)                  = " << eve::maxabs(i, o, n)<< "\n";
 
 }

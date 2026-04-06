@@ -48,7 +48,7 @@ int main()
   std::cout << "-> minabs(n, n, n)                  = " << eve::minabs(n, n, n) << "\n";
   std::cout << "-> minabs(m, o, o)                  = " << eve::minabs(m, o, o)<< "\n";
   std::cout << "-> minabs(i, o, n)                  = " << eve::minabs(i, o, n)<< "\n";
-  std::cout << "-> minabs[nan_aware](z, o, n)       = " << eve::minabs[eve::nan_aware](z, o, n)<< "\n";
+  std::cout << "-> minabs[drastic](z, o, n)       = " << eve::minabs[eve::drastic](z, o, n)<< "\n";
   std::cout << "-> minabs[numeric](z, o, n)         = " << eve::minabs[eve::numeric](z, o, n)<< "\n";
   std::cout << "-> minabs[pedantic](z, o, n)        = " << eve::minabs[eve::pedantic](z, o, n)<< "\n";
   std::cout << "-> minabs(z, o, n)                  = " << eve::minabs(z, o, n)<< "\n";

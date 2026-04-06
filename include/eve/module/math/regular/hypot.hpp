@@ -153,7 +153,6 @@ namespace eve
             h /= scale;
             h = if_else(is_eqz(ay), zero, h);
             h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
-            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
             return h;
           }
           else if constexpr(O::contains(raw))
