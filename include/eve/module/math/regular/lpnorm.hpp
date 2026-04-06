@@ -126,7 +126,6 @@ namespace eve
           {
             auto nan_found = eve::false_(eve::as<r_t>());
             auto rp = r_t(p);
-            auto any_is_inf = (is_infinite(r_t(args)) || ...);
             auto e  = -maxmag(if_else(is_nan(args), zero, exponent(r_t(args)))...);
             auto f = [&](auto a){
               nan_found =  nan_found || eve::is_nan(a);

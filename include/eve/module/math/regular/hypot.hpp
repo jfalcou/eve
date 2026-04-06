@@ -81,7 +81,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!    4. the naive formula is used.
 //!    5. The pedantic option` computes the result without undue overflow or underflow
-//!        at intermediate stages of the computation and can be more accurate than the regular call.
+//!        at intermediate stages of the computation.
 //!    6. A kahan like compensated algorithm  is used internal for more accurate results.
 //!    7. The computation is done in the double sized element type (if available).
 //!
@@ -171,13 +171,20 @@ namespace eve
             return if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
           }
         }
-        else //N parameters
+        else //N > 2  parameters
         {
           if constexpr(O::contains(pedantic))
           {
-            r_t that(hypot[o](r_t(r0), r_t(r1)));
-            ((that = hypot[o](that, r_t(rs))), ...);
-            return that;
+            auto nan_found = eve::false_(eve::as<r_t>());
+            auto expo = [&](auto x){return if_else(is_nan(x), zero, exponent(r_t(x))); };
+            auto e  = -maxmag(expo(r0), expo(r1), expo(rs)...);
+            auto f = [&](auto a){
+              nan_found =  nan_found || eve::is_nan(a);
+              return if_else(eve::is_nan(a), zero, sqr(ldexp[o](r_t(a), e)));
+            };
+            r_t that = eve::add[o](f(r0), f(r1), f(rs)...);
+            auto r = ldexp[pedantic](sqrt(that), -e);
+            return if_else(nan_found && !is_infinite(r), allbits, r);
           }
           else
           {
