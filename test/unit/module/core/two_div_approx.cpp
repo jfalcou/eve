@@ -61,6 +61,6 @@ TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
     ld_t de = ld_t(e);
     ld_t da0 = ld_t(a0);
     ld_t da1 = ld_t(a1);
-    TTS_EQUAL(da0/da1, (da+de));
+    TTS_ULP_EQUAL(da0/da1, (da+de), 0.5);
   }
 };

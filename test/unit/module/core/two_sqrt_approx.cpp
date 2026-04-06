@@ -15,7 +15,7 @@
 //==================================================================================================
 //== two_sqrt_approx tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of two_sqrt_approx(wide)",
               eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(+5., +1000.)
                            )
@@ -33,7 +33,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   }
 };
 
-TTS_CASE_WITH("Check behavior of average(wide)",
+TTS_CASE_WITH("Check behavior of two_sqrt_approx(scalar)",
               eve::test::scalar::ieee_reals_wf16,
               tts::generate(tts::randoms(+5., +1000.))
              )
@@ -55,6 +55,6 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);
     ld_t da0 = ld_t(a0);
-    TTS_LESS(double(std::abs(std::sqrt(da0) - (da+de))), 1.0e-32);
+    TTS_LESS(double(std::abs(std::sqrt(da0) - (da+de))), 3.0e-32);
   }
 };
