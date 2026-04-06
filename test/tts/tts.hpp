@@ -1365,6 +1365,16 @@ namespace tts::detail
 #endif
   inline auto as_int(float a)   noexcept  { return bit_cast<std::int32_t>(a); }
   inline auto as_int(double a)  noexcept  { return bit_cast<std::int64_t>(a); }
+  inline auto as_int(long double a)  noexcept
+  {
+    constexpr auto size = sizeof(long double);
+    static_assert(size == 8 || size == 16, "Unsupported long double size");
+
+    return [=](auto x) {
+      if constexpr (size == 8) return bit_cast<std::int64_t>(x);
+      else                     return bit_cast<__int128>(x);
+    }(a);
+  }
   template<typename T> inline auto bitinteger(T a) noexcept
   {
     auto ia = as_int(a);

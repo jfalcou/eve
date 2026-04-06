@@ -55,7 +55,6 @@ TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
   else
   {
     using ld_t = long double;
-    std::cout << sizeof(ld_t);
     auto [a, e] = two_div_approx(a0, a1);
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);

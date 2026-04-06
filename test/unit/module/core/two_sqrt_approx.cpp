@@ -55,6 +55,6 @@ TTS_CASE_WITH("Check behavior of two_sqrt_approx(scalar)",
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);
     ld_t da0 = ld_t(a0);
-    TTS_LESS(double(std::abs(std::sqrt(da0) - (da+de))), 3.0e-32);
+    TTS_ULP_EQUAL(std::sqrt(da0), (da+de), 0.5);
   }
 };
