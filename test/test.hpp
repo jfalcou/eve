@@ -552,8 +552,12 @@ int main(int argc, char const **argv)
   constexpr auto assert_status = "Enabled";
 #endif
 
+  constexpr auto fp16_status = eve::detail::supports_fp16_vector_ops ? "Full" :
+                              (eve::detail::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
+
   std::cout << "[EVE] - Target: " << eve::current_api
             << " - Assertions: "  << assert_status
+            << " - FP16: "        << fp16_status
             << " - PRNG Seed: "   << seed
             << std::endl;
 
