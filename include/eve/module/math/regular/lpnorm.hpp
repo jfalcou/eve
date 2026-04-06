@@ -87,7 +87,7 @@ namespace eve
 //!   4. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters the result is \f$\infty\f$.
 //!   5. The summation is computed in the double sized element type (if available).
 //!   6. Kahan like compensated algorithm is used in internal summation for better precision (see [add](@ref eve::add)).
-//!   7. This option is speedier does not care about avoiding overflows or treating 'Nans' in special ways.
+//!   7. This option is speedier, but does not care about avoiding overflows or treating 'Nans' in special ways.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/lpnorm.cpp}
