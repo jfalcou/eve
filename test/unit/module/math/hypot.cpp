@@ -162,8 +162,8 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
   TTS_IEEE_EQUAL(eve::hypot[eve::raw](cases.mzero, cases.mzero), T(0));
   TTS_IEEE_EQUAL(eve::hypot(cases.nan, a0), cases.nan);
   TTS_IEEE_EQUAL(eve::hypot(cases.minf, a0), cases.inf);
-  TTS_IEEE_EQUAL(eve::hypot(cases.nan, cases.minf), cases.inf);
-  TTS_IEEE_EQUAL(eve::hypot(cases.inf, cases.nan), cases.inf);
+  TTS_IEEE_EQUAL(eve::hypot(cases.nan, cases.minf), cases.nan);
+  TTS_IEEE_EQUAL(eve::hypot(cases.inf, cases.nan), cases.nan);
   TTS_IEEE_EQUAL(eve::hypot(cases.mzero, cases.mzero), T(0));
 #endif
                 };

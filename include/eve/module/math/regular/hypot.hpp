@@ -153,6 +153,7 @@ namespace eve
             h /= scale;
             h = if_else(is_eqz(ay), zero, h);
             h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
+            h = if_else(is_infinite(r0) || is_infinite(r1), inf(as(h)), h);
             return h;
           }
           else if constexpr(O::contains(raw))
@@ -164,12 +165,13 @@ namespace eve
           {
             // scaling using the algorithm suggested by
             // https://members.loria.fr/PZimmermann/papers/split.pdf
-            auto d = eve::safe_scale(average(eve::abs(r0), eve::abs(r1)));
+            auto avg = average(eve::abs(r0), eve::abs(r1));
+            auto d = eve::safe_scale(avg);
             auto id= eve::rec(d);
             auto r0d = r0*id;
             auto r1d = r1*id;
             auto r = d*eve::sqrt(eve::sum_of_prod[pedantic](r0d, r0d, r1d, r1d));
-            return r; //if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
+            return if_else(is_not_finite(r0) || is_not_finite(r1), avg, r);
           }
         }
         else //N > 2  parameters
