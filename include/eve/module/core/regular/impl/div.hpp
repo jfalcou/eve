@@ -42,23 +42,25 @@
 
 namespace eve::detail
 {
-  template<callable_options O, typename T0, typename... Ts>
-  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T0 t0, T0 t1, Ts... ts) noexcept
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts... ts) noexcept
     requires (detail::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(upper) || O::contains(lower) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
-      return detail::map(div[o], t0, t1, ts...);
+      return detail::map(div[o], ts...);
     }
-    else if constexpr (sizeof...(Ts) > 0)
+    else if constexpr (sizeof...(Ts) > 2)
     {
-      auto den = t1;
-      ((den = apply_fp16_as_fp32(mul[o], den, ts)), ...);
-       return apply_fp16_as_fp32(div[o], t0, den);
+      return [&](auto t0, auto t1, auto... rest) {
+        auto den = t1;
+        ((den = apply_fp16_as_fp32(mul[o], den, rest)), ...);
+        return apply_fp16_as_fp32(div[o], t0, den);
+      }(ts...);
     }
     else
     {
-      return apply_fp16_as_fp32(div[o], t0, t1, ts...);
+      return apply_fp16_as_fp32(div[o], ts...);
     }
   }
 
