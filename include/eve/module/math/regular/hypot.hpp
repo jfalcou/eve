@@ -189,7 +189,7 @@ namespace eve
             {
               auto nan_found = eve::false_(eve::as<r_t>());
               auto f = [&](auto a){
-                nan_found =  nan_found || eve::is_nan(a);
+                nan_found = eve::is_nan(a);
                 return if_else(eve::is_nan(a), zero, sqr(ldexp[o](r_t(a), e)));
               };
               r_t that = eve::add[o](f(r0), f(r1), f(rs)...);

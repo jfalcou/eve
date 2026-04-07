@@ -128,7 +128,7 @@ namespace eve
             auto rp = r_t(p);
             auto e  = -maxmag(if_else(is_nan(args), zero, exponent(r_t(args)))...);
             auto f = [&](auto a){
-              nan_found =  nan_found || eve::is_nan(a);
+              nan_found = eve::is_nan(a);
               return if_else(eve::is_nan(a), zero, pow_abs(ldexp[o](r_t(a), e), rp));
             };
             r_t that = eve::add[o](f(args)...);

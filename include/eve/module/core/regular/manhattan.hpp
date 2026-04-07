@@ -125,7 +125,7 @@ namespace eve
           else if constexpr(O::contains(pedantic))
           {
             return [&](auto x){
-              nan_found = nan_found || is_nan(x);
+              nan_found = is_nan(x);
               return if_else(eve::is_nan(x), zero, eve::abs(x));
             };
           }
