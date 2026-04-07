@@ -26,15 +26,20 @@ namespace eve::detail
         return upgrade(maxabs[o.drop(widen)](t0, as...));
     }
     else if constexpr(sizeof...(Ts) == 0)
-      return abs[o.drop(pedantic,numeric)](r_t(t0));
+      return abs[o.drop(pedantic,numeric,drastic)](r_t(t0));
     else
     {
-      auto abso = abs[o.drop(pedantic,numeric)];
+      auto abso = abs[o.drop(pedantic,numeric,drastic)];
       auto r = eve::max[o.drop(saturated)](abso(t0), abso(as)...);
-      if constexpr(integral_value<r_t> || !O::contains(pedantic))
-        return r;
-      else
+      if constexpr(O::contains(drastic))
+      {
+        auto nan_found = (eve::is_nan(r_t(t0)) || (eve::is_nan(r_t(as)) || ...));
+        return if_else(nan_found, allbits, r);
+      }
+      else if constexpr(!integral_value<r_t> && O::contains(pedantic))
         return force_if_any(o, r, eve::is_infinite, inf(eve::as(r)), t0, as...);
+      else
+        return r;
     }
   }
 }

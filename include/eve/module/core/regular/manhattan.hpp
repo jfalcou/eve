@@ -20,7 +20,7 @@
 namespace eve
 {
   template<typename Options>
-  struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option, lower_option,
+  struct manhattan_t : tuple_callable<manhattan_t, Options, raw_option, pedantic_option, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, kahan_option>
   {
 
@@ -62,7 +62,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto manhattan(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto manhattan(eve::non_empty_product_type auto const& tup)             noexcept; // 2
+//!      constexpr auto manhattan(eve::non_empty_product_type auto const& tup)              noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto manhattan[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
@@ -88,7 +88,7 @@ namespace eve
 //!       2. equivalent to the call on the elements of the tuple.
 //!       3. [The operation is performed conditionnaly](@ref conditional)
 //!       4. internally uses `saturated` options.
-//!       5. returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+//!       5. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters the result is \f$\infty\f$.
 //!       6. uses kahan like compensated algorithm for better accuracy.
 //!
 //!  @groupheader{External references}
@@ -114,29 +114,36 @@ namespace eve
         return manhattan[o.drop(widen)](upgrade(args)...);
       else if constexpr(std::same_as<e_t, eve::float16_t>)
         return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
+      else if constexpr((sizeof...(Ts) == 1))
+        return eve::abs(args...);
       else
       {
-        auto nan_found = eve::false_(eve::as<r_t>());
-        auto l_abs = [&nan_found](){
+        [[maybe_unused]] auto nan_found = eve::false_(eve::as<r_t>());
+        auto l_abs = [&](){
           if constexpr(integral_value<r_t> && O::contains(saturated))
-          return eve::abs[saturated];
+             return eve::abs[saturated];
+          else if constexpr(O::contains(pedantic))
+          {
+            return [&](auto x){
+              nan_found = is_nan(x);
+              return if_else(eve::is_nan(x), zero, eve::abs(x));
+            };
+          }
           else
-            return [&nan_found](auto x){
-              nan_found = nan_found || is_nan(x);
-              return if_else(eve::is_nan(x), zero, eve::abs(x));};
+            return eve::abs;
         }();
-        if constexpr(sizeof...(Ts) == 1)
-          return eve::abs(args...);
-        else
+        if constexpr(O::contains(pedantic))
         {
           r_t r = eve::add[o](l_abs(r_t(args))...);
           if constexpr(integral_value<r_t>)
             return r;
           else
           {
-            return if_else(nan_found && eve::is_infinite(r), eve::allbits, r);
+            return if_else(nan_found && !eve::is_infinite(r), eve::allbits, r);
           }
         }
+        else
+          return eve::add[o](eve::abs(r_t(args))...);
       }
     }
   }

@@ -79,9 +79,11 @@ namespace eve
 //!        and avoid overflows.
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. the naive formula is used.
-//!    5. The pedantic option` computes the result without undue overflow or underflow
-//!        at intermediate stages of the computation and can be more accurate than the regular call.
+//!    4. the naive formula is used.This option is speedier, but does not care about avoiding overflows
+//!       or treating 'Nans' in special ways.
+//!    5. The pedantic option. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters
+//!       the result is \f$\infty\f$,  and computes the result without undue overflows or underflows.
+//!        at intermediate stages of the computation.
 //!    6. A kahan like compensated algorithm  is used internal for more accurate results.
 //!    7. The computation is done in the double sized element type (if available).
 //!
@@ -151,7 +153,7 @@ namespace eve
             h /= scale;
             h = if_else(is_eqz(ay), zero, h);
             h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
-            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
+            h = if_else(is_infinite(r0) || is_infinite(r1), inf(as(h)), h);
             return h;
           }
           else if constexpr(O::contains(raw))
@@ -163,26 +165,43 @@ namespace eve
           {
             // scaling using the algorithm suggested by
             // https://members.loria.fr/PZimmermann/papers/split.pdf
-            auto d = eve::safe_scale(average(eve::abs(r0), eve::abs(r1)));
+            auto avg = average(eve::abs(r0), eve::abs(r1));
+            auto d = eve::safe_scale(avg);
             auto id= eve::rec(d);
             auto r0d = r0*id;
             auto r1d = r1*id;
             auto r = d*eve::sqrt(eve::sum_of_prod[pedantic](r0d, r0d, r1d, r1d));
-            return if_else(is_infinite(r0) || is_infinite(r1), inf(as(r)), r);
+            return if_else(is_not_finite(r0) || is_not_finite(r1), avg, r);
           }
         }
-        else //N parameters
+        else //N > 2  parameters
         {
-          if constexpr(O::contains(pedantic))
-          {
-            r_t that(hypot[o](r_t(r0), r_t(r1)));
-            ((that = hypot[o](that, r_t(rs))), ...);
-            return that;
-          }
-          else
+          if constexpr(O::contains(raw))
           {
             r_t that = sum_of_squares[o](r_t(r0), r_t(r1), r_t(rs)...);
             return eve::sqrt(that);
+          }
+          else
+          {
+            auto expo = [&](auto x){return if_else(is_nan(x), zero, exponent(r_t(x))); };
+            auto e  = -maxmag(expo(r0), expo(r1), expo(rs)...);
+            if constexpr(O::contains(pedantic))
+            {
+              auto nan_found = eve::false_(eve::as<r_t>());
+              auto f = [&](auto a){
+                nan_found = eve::is_nan(a);
+                return if_else(eve::is_nan(a), zero, sqr(ldexp[o](r_t(a), e)));
+              };
+              r_t that = eve::add[o](f(r0), f(r1), f(rs)...);
+              auto r = ldexp[pedantic](sqrt(that), -e);
+              return if_else(nan_found && !is_infinite(r), allbits, r);
+            }
+            else
+            {
+              auto f = [&](auto a){ return sqr(ldexp[o](r_t(a), e)); };
+              r_t that = eve::add[o](f(r0), f(r1), f(rs)...);
+              return ldexp[pedantic](sqrt(that), -e);
+            }
           }
         }
       }

@@ -26,16 +26,21 @@ namespace eve::detail
     }
     else if constexpr(sizeof...(Ts) == 0)
     {
-      return abs[o.drop(pedantic,numeric)](r_t(t0));
+      return abs[o.drop(pedantic,numeric,drastic)](r_t(t0));
     }
     else
     {
-      auto abso = abs[o.drop(pedantic,numeric)];
+     auto abso = abs[o.drop(pedantic,numeric,drastic)];
       auto r = eve::min[o.drop(saturated)](abso(t0), abso(as)...);
-      if constexpr(integral_value<r_t> || !O::contains(pedantic))
-        return r;
+      if constexpr(O::contains(drastic))
+      {
+        auto nan_found = (eve::is_nan(r_t(t0)) || (eve::is_nan(r_t(as)) || ...));
+        return if_else(nan_found, allbits, r);
+      }
+      else if constexpr(!integral_value<r_t> && O::contains(pedantic))
+        return force_if_any(o, r, eve::is_eqz, zero(eve::as(r)), t0, as...);
       else
-        return force_if_any(o, r, eve::is_eqz, eve::zero(eve::as(r)), t0, as...);
+        return r;
     }
   }
 }

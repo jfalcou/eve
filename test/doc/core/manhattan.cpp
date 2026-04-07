@@ -38,4 +38,28 @@ int main()
   auto tup = kumi::tuple{1.0f, eps_2, eps_2, eps_2};
   std::cout << "-> manhattan[kahan](tup)   = " << eve::manhattan[eve::kahan](tup) << "\n";
 
+
+  float o = 1.0f;
+  float i = eve::inf(eve::as(o));
+  float n = eve::nan(eve::as(o));
+  float m = (eve::valmax(eve::as(o))/3)*2;
+  std::cout << "<- o                                   = " << o << "\n";
+  std::cout << "-> i                                   = " << i << "\n";
+  std::cout << "-> n                                   = " << n << "\n";
+  std::cout << "-> manhattan(i, o, -i)                 = " << eve::manhattan(i, o, -i) << "\n";
+  std::cout << "-> manhattan(i, o, n)                  = " << eve::manhattan(i, o,  n) << "\n";
+  std::cout << "-> manhattan[pedantic](i, o, -i)       = " << eve::manhattan[eve::pedantic](i, o, -i) << "\n";
+  std::cout << "-> manhattan[pedantic](i, o, n)        = " << eve::manhattan[eve::pedantic](i, o,  n) << "\n";
+  std::cout << "-> manhattan[pedantic](o, o, n)        = " << eve::manhattan[eve::pedantic](o, o, n) << "\n";
+  std::cout << "-> manhattan[pedantic](o, n, o)        = " << eve::manhattan[eve::pedantic](o, n, o) << "\n";
+  std::cout << "-> manhattan[pedantic](n, o, o)        = " << eve::manhattan[eve::pedantic](n, o, o) << "\n";
+  std::cout << "-> manhattan          (o, o, n)        = " << eve::manhattan(o, o, n) << "\n";
+  std::cout << "-> manhattan          (o, n, o)        = " << eve::manhattan(o, n, o) << "\n";
+  std::cout << "-> manhattan          (n, o, o)        = " << eve::manhattan(n, o, o) << "\n";
+  std::cout << "-> manhattan(n, n, n)                  = " << eve::manhattan(n, n, n) << "\n";
+  std::cout << "-> manhattan(m, o, o)                  = " << eve::manhattan(m, o, o)<< "\n";
+  std::cout << "-> manhattan(m, m, n)                  = " << eve::manhattan(m, m, n)<< "\n";
+  std::cout << "-> manhattan(i, n)                     = " << eve::manhattan(i, n) << "\n";
+  std::cout << "-> manhattan[pedantic](m, m, n)        = " << eve::manhattan[eve::pedantic](m, m, n)<< "\n";
+  std::cout << "-> manhattan[pedantic](i, n)           = " << eve::manhattan[eve::pedantic](i, n) << "\n";
 }

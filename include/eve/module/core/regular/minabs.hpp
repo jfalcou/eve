@@ -16,22 +16,9 @@ namespace eve
 {
 
   template<typename Options>
-  struct minabs_t : tuple_callable<minabs_t, Options, numeric_option, widen_option,
+  struct minabs_t : tuple_callable<minabs_t, Options, drastic_option, numeric_option, widen_option,
                                    pedantic_option, saturated_option>
   {
-//     template<value... Ts>
-//     requires(eve::same_lanes_or_scalar<Ts...> && !Options::contains(widen))
-//     EVE_FORCEINLINE constexpr common_value_t<Ts...> operator()(Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
-
-//     template<value... Ts>
-//     requires(eve::same_lanes_or_scalar<Ts...> && Options::contains(widen))
-//     EVE_FORCEINLINE constexpr upgrade_t<common_value_t<Ts...>> operator()(Ts...ts) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(ts...);
-//     }
 
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
@@ -39,18 +26,6 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(ts...);
     }
-
-//     template<eve::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-//     EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
-//     operator()(Tup t) const noexcept
-//     { return EVE_DISPATCH_CALL(t); }
-
-//     template<eve::non_empty_product_type Tup>
-//     requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
-//     EVE_FORCEINLINE constexpr  upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
-//     operator()(Tup t) const noexcept
-//     { return EVE_DISPATCH_CALL(t); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
@@ -81,7 +56,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto minabs(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
-//!      constexpr auto minabs(eve::non_empty_product_type auto const& tup)              noexcept; // 2
+//!      constexpr auto minabs(eve::non_empty_product_type auto const& tup)               noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto minabs[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
@@ -91,6 +66,7 @@ namespace eve
 //!      constexpr auto minabs[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!      constexpr auto minabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!      constexpr auto minabs[widen](/* any of the above overloads */)                   noexcept; // 6
+//!      constexpr auto maxabs[drastic](/* any of the above overloads */)               noexcept; // 7
 //!
 //!   }
 //!   @endcode
@@ -114,6 +90,7 @@ namespace eve
 //!        returns \f$0\f$ even if some other arguments are NaNs.
 //!     5. `NaNs` are considered greater than anything else.
 //!     6. compute the upgraded result if available.
+//!     7. returns NaN as soon as one of the parameters is a NaN.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minabs.cpp}
