@@ -90,7 +90,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr auto fanm_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T const& a, U const& b, V const& c)
+    EVE_FORCEINLINE constexpr auto fanm_(EVE_REQUIRES(emulated_), O const& o, T const& a, U const& b, V const& c)
       requires (detail::fp16_should_apply<common_value_t<T, U, V>>)
     {
       if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fanm[o], a, b, c);

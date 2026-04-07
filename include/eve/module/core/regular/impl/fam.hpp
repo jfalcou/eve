@@ -16,7 +16,7 @@
 namespace eve::detail
 {
   template<callable_options O, simd_value... Ts>
-  EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts const&... ts) noexcept
+  EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
     requires (detail::fp16_should_apply<Ts> && ...)
   {
     if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fam[o], ts...);

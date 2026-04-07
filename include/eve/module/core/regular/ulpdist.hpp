@@ -84,7 +84,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto ulpdist_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts... ts) noexcept
+    EVE_FORCEINLINE constexpr auto ulpdist_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (detail::fp16_should_apply<common_value_t<Ts...>>)
     {
       return detail::map(ulpdist[o], ts...);

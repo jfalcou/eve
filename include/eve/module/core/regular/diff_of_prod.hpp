@@ -89,7 +89,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto diff_of_prod_(EVE_REQUIRES(strict_elementwise_emulated_), O const & o, Ts const&... ts) noexcept
+    EVE_FORCEINLINE constexpr auto diff_of_prod_(EVE_REQUIRES(emulated_), O const & o, Ts const&... ts) noexcept
       requires(detail::fp16_should_apply<common_value_t<Ts...>>)
     {
       if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(diff_of_prod[o], ts...);

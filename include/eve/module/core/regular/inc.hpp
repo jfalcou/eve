@@ -113,7 +113,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, typename T>
-    EVE_FORCEINLINE constexpr auto inc_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T v) noexcept
+    EVE_FORCEINLINE constexpr auto inc_(EVE_REQUIRES(emulated_), O const& o, T v) noexcept
       requires (detail::fp16_should_apply<common_value_t<T>>)
     {
       if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(inc[o], v);

@@ -105,7 +105,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    sqr_(EVE_REQUIRES(strict_elementwise_emulated_), O const &o, T const &a0) noexcept
+    sqr_(EVE_REQUIRES(emulated_), O const &o, T const &a0) noexcept
       requires(detail::fp16_should_apply<T>)
     {
       if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(sqr[o], a0);

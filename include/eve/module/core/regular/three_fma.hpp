@@ -87,7 +87,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, simd_value... Ts>
-    EVE_FORCEINLINE constexpr auto three_fma_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, Ts... ts) noexcept
+    EVE_FORCEINLINE constexpr auto three_fma_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (detail::fp16_should_apply<Ts> && ...)
     {
       return detail::map(three_fma[o], ts...);

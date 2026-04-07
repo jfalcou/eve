@@ -91,7 +91,7 @@ namespace eve
   namespace detail
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr auto dist_(EVE_REQUIRES(strict_elementwise_emulated_), O const& o, T a, T b)
+    EVE_FORCEINLINE constexpr auto dist_(EVE_REQUIRES(emulated_), O const& o, T a, T b)
       requires(detail::fp16_should_apply<T>)
     {
       if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(dist[o], a, b);

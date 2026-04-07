@@ -105,7 +105,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    oneminus_(EVE_REQUIRES(strict_elementwise_emulated_), O const & o, T v) noexcept
+    oneminus_(EVE_REQUIRES(emulated_), O const & o, T v) noexcept
       requires(detail::fp16_should_apply<T>)
     {
       if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(oneminus[o], v);
