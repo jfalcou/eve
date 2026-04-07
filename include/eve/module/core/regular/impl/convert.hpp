@@ -49,7 +49,7 @@ namespace eve::detail
       using card_t = expected_cardinal_t<float>;
       using base  = typename wide<eve::float16_t, N>::template rescale<card_t>;
       auto parts  = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card_t::value>(v.storage()));
-      auto cvt    = kumi::map([](auto p) { return convert(p, as<float>{}); }, parts);
+      auto cvt    = kumi::map([](auto p) { return convert(p, as<U>{}); }, parts);
       return kumi::apply([&](auto... m) { return wide<U, N>{m...}; }, cvt);
     }
     else
