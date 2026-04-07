@@ -183,7 +183,7 @@ Adapting UDT to SIMD processing</h1>
 <div class="line">{</div>
 <div class="line">  <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = eve::hypot(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
 <div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
 <div class="line">  }</div>
@@ -232,7 +232,7 @@ Storage and Processing</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = eve::hypot(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
 <div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a>{rho, theta};</div>
 <div class="line">  }</div>

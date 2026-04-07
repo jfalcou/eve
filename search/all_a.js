@@ -24,5 +24,6 @@ var searchData=
   ['hub_21',['Writing the dynamic function hub',['../multiarch.html#autotoc_md118',1,'']]],
   ['hurwitz_22',['hurwitz',['../group__special_gadf7af0b7e2002701bbdbb8419d6757eb.html#gadf7af0b7e2002701bbdbb8419d6757eb',1,'eve']]],
   ['hyperbolic_23',['Hyperbolic',['../group__math__hyper.html',1,'']]],
-  ['hyperbolic_24',['Inverse hyperbolic',['../group__math__invhyper.html',1,'']]]
+  ['hyperbolic_24',['Inverse hyperbolic',['../group__math__invhyper.html',1,'']]],
+  ['hypot_25',['hypot',['../group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370',1,'eve']]]
 ];

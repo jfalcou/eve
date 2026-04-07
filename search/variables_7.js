@@ -7,5 +7,6 @@ var searchData=
   ['hermite_4',['hermite',['../group__polynomial_ga6cb61eb743e4ac43c44bd0b330f8a8c9.html#ga6cb61eb743e4ac43c44bd0b330f8a8c9',1,'eve']]],
   ['heuman_5flambda_5',['heuman_lambda',['../group__elliptic_ga24d1bc66420e69358ebd2eb5ff39bff2.html#ga24d1bc66420e69358ebd2eb5ff39bff2',1,'eve']]],
   ['hi_6',['hi',['../group__core__bitops_gac36375f33a27d2122d4ca0f3a006f7b2.html#gac36375f33a27d2122d4ca0f3a006f7b2',1,'eve']]],
-  ['hurwitz_7',['hurwitz',['../group__special_gadf7af0b7e2002701bbdbb8419d6757eb.html#gadf7af0b7e2002701bbdbb8419d6757eb',1,'eve']]]
+  ['hurwitz_7',['hurwitz',['../group__special_gadf7af0b7e2002701bbdbb8419d6757eb.html#gadf7af0b7e2002701bbdbb8419d6757eb',1,'eve']]],
+  ['hypot_8',['hypot',['../group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370',1,'eve']]]
 ];

@@ -54,6 +54,5 @@ var searchData=
   ['logspace_5fsub_51',['logspace_sub',['../group__math__log_gaf5f2a44d3148e9431e1840397b1edd46.html#gaf5f2a44d3148e9431e1840397b1edd46',1,'eve']]],
   ['lohi_52',['lohi',['../group__core__bitops_gaaf5061a57a817fcd65de7dc459bd465b.html#gaaf5061a57a817fcd65de7dc459bd465b',1,'eve']]],
   ['loops_53',['Reusable loops',['../algo_rationale.html#autotoc_md58',1,'']]],
-  ['lpnorm_54',['lpnorm',['../group__math__exp_ga236718c341e8b18e5a0f070e24d4d325.html#ga236718c341e8b18e5a0f070e24d4d325',1,'eve']]],
-  ['lrising_5ffactorial_55',['lrising_factorial',['../group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html#gab1b9a2a36db6d1dcaa97a3619eef8e9b',1,'eve']]]
+  ['lrising_5ffactorial_54',['lrising_factorial',['../group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html#gab1b9a2a36db6d1dcaa97a3619eef8e9b',1,'eve']]]
 ];
