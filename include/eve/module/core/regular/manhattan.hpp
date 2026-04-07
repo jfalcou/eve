@@ -23,6 +23,7 @@ namespace eve
   struct manhattan_t : tuple_callable<manhattan_t, Options, raw_option, pedantic_option, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option, kahan_option>
   {
+
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) != 0))
       EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
@@ -117,6 +118,7 @@ namespace eve
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
       using r_t = common_value_t<Ts...>;
+      using e_t = element_type_t<r_t>;
       if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
       else if constexpr(std::same_as<e_t, eve::float16_t>)
