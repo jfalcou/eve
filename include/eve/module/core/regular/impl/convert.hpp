@@ -44,7 +44,18 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
     requires (!detail::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
   {
-    return convert(detail::emulated_simd_fp16_to_fp32(v), as<U>{});
+    if constexpr( has_aggregated_abi_v<wide<float,N>> )
+    {
+      using card_t = expected_cardinal_t<float>;
+      using base  = typename wide<eve::float16_t, N>::template rescale<card_t>;
+      auto parts  = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card_t::value>(v.storage()));
+      auto cvt    = kumi::map([](auto p) { return convert(p, as<float>{}); }, parts);
+      return kumi::apply([&](auto... m) { return wide<U, N>{m...}; }, cvt);
+    }
+    else
+    {
+      return convert(detail::emulated_simd_fp16_to_fp32(v), as<U>{});
+    }
   }
 
   template<callable_options O, typename T, typename N>
