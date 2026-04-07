@@ -44,6 +44,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
     requires (!detail::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
   {
+    // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
+    // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
     if constexpr( has_aggregated_abi_v<wide<float,N>> )
     {
       using card_t = expected_cardinal_t<float>;
