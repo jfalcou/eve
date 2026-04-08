@@ -108,7 +108,7 @@ namespace eve
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation
-  struct emulated_ : cpu_
+  struct emulated_
   {
     static constexpr std::size_t bits                     = 128;
     static constexpr std::size_t bytes                    = 16;

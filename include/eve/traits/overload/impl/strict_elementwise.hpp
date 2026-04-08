@@ -11,6 +11,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/validate_mask.hpp>
 #include <eve/traits/overload/impl/conditional.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -23,18 +24,32 @@ namespace eve
     using base_t = conditional_callable<Func, OptionsValues, Options...>;
     using func_t =  Func<OptionsValues>;
 
+    template<typename... Ts>
+    constexpr EVE_FORCEINLINE typename detail::wide_result<func_t, Ts...>::type map(Ts... ts) const noexcept
+    {
+      using R = typename detail::wide_result<func_t, Ts...>::type;
+
+      if constexpr (detail::fp16_should_apply<R> && (detail::fp16_should_apply<Ts> && ...))
+        return detail::apply_fp16_as_fp32(this->derived(), ts...);
+      else
+        return detail::map(this->derived(), ts...);
+    }
+
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x, Ts... xs) const
     {
-      constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
-      constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
-      constexpr bool any_emulated               = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-      constexpr bool any_aggregated             = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
+      constexpr bool has_implementation          = requires{ func_t::deferred_call(a, o, x, xs...); };
+      constexpr bool has_emulated_implementation = requires{ func_t::deferred_call(emulated_{}, o, x, xs...); };
+      constexpr bool supports_map_no_conversion  = requires{ this->map(x, xs...); };
+      constexpr bool any_emulated                = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+      constexpr bool any_aggregated              = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
 
-      if      constexpr(any_aggregated)                             return aggregate(this->derived(), x, xs...);
-      else if constexpr(any_emulated && supports_map_no_conversion) return map(this->derived(), x, xs...);
-      else if constexpr(has_implementation)                         return func_t::deferred_call(a, o, x, xs...);
-      else                                                          return detail::ignore{};
+
+      if      constexpr(any_aggregated)                              return aggregate(this->derived(), x, xs...);
+      else if constexpr(any_emulated && has_emulated_implementation) return func_t::deferred_call(emulated_{}, o, x, xs...);
+      else if constexpr(any_emulated && supports_map_no_conversion)  return this->map(x, xs...);
+      else if constexpr(has_implementation)                          return func_t::deferred_call(a, o, x, xs...);
+      else                                                           return detail::ignore{};
     }
 
     template<callable_options O, typename T, typename... Ts>

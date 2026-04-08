@@ -11,9 +11,18 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve::detail
 {
+  template<callable_options O, simd_value... Ts>
+  EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+    requires (detail::fp16_should_apply<Ts> && ...)
+  {
+    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fam[o], ts...);
+    else                                                                             return apply_fp16_as_fp32(fam[o], ts...);
+  }
+
   template<typename T, typename U, typename V, callable_options O>
   EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
   {
@@ -68,7 +77,12 @@ namespace eve::detail
    // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {
-      if constexpr( std::same_as<element_type_t<T>, float> )
+      if constexpr( std::same_as<element_type_t<T>, eve::float16_t> )
+      {
+        constexpr auto tgt = as<float>{};
+        return convert(convert(a,tgt) + convert(b,tgt) * convert(c,tgt), as_element(a));
+      }
+      else if constexpr( std::same_as<element_type_t<T>, float> )
       {
         constexpr auto tgt = as<double>{};
         return convert(convert(a,tgt) + convert(b,tgt) * convert(c,tgt), as_element(a));

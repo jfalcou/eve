@@ -124,6 +124,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto horner_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return horner[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<value X, callable_options O>
     EVE_FORCEINLINE constexpr auto
     horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept

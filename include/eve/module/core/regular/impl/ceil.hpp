@@ -15,6 +15,13 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto ceil_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+    requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if constexpr (O::contains(almost)) return detail::map(ceil[o], ts...);
+    else                               return apply_fp16_as_fp32(ceil[o], ts...);
+  }
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T

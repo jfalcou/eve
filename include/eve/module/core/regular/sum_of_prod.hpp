@@ -19,6 +19,7 @@
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -91,6 +92,14 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto sum_of_prod_(EVE_REQUIRES(emulated_), O const & o, Ts const&... ts) noexcept
+      requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(sum_of_prod[o], ts...);
+      else                                                                            return apply_fp16_as_fp32(sum_of_prod[o], ts...);
+    }
+
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
     sum_of_prod_(EVE_REQUIRES(cpu_), O const & o,

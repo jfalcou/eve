@@ -22,6 +22,14 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr auto sqrt_(EVE_REQUIRES(emulated_), O const& o, T const& a0) noexcept
+    requires(detail::fp16_should_apply<T>)
+  {
+    if constexpr(O::contains(lower) || O::contains(upper)) return detail::map(sqrt[o], a0);
+    else                                                   return apply_fp16_as_fp32(sqrt[o], a0);
+  }
+
+  template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T sqrt_(EVE_REQUIRES(cpu_),
                                     O const& o,
                                     T const& a0) noexcept

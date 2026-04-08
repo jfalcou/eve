@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/detail/fmx_utils.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
@@ -91,12 +92,19 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 
   namespace detail
   {
+    template<callable_options O, simd_value... Ts>
+    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
+      requires (detail::fp16_should_apply<Ts> && ...)
+    {
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fsm[o], ts...);
+      else                                                                            return apply_fp16_as_fp32(fsm[o], ts...);
+    }
+
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
       return fms[o](b, c, a);
     }
-
   }
 }
 

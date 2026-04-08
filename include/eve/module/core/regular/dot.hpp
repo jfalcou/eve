@@ -13,13 +13,13 @@
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/regular/mul.hpp>
+#include <eve/traits/apply_fp16.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct dot_t : tuple_callable<dot_t, Options, kahan_option, widen_option>
   {
-
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<T0, T1, Ts... >>
@@ -96,6 +96,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto dot_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return dot[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto dot_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     requires(sizeof...(Ts) > 1  && sizeof...(Ts)%2 == 0)

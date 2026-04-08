@@ -21,7 +21,11 @@ namespace eve
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto sd = [](){
-        if constexpr( std::same_as<v_t, double>)
+        if constexpr( std::same_as<v_t, float>)
+        {
+          return eve::float16_t();
+        }
+        else if constexpr( std::same_as<v_t, double>)
         {
           return float();
         }
@@ -55,6 +59,10 @@ namespace eve
         if constexpr( std::same_as<v_t, float>)
         {
           return double();
+        }
+        else if constexpr( std::same_as<v_t, eve::float16_t>)
+        {
+          return float();
         }
         else if constexpr( arithmetic_scalar_value<v_t> && sizeof(v_t) >= 8)
         {

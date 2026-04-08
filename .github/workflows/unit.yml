@@ -26,8 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
-        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: clang, arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: gcc  , arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
     steps:
       - name: Print Runner Info
         run: |
@@ -226,12 +226,12 @@ jobs:
           cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=${{ matrix.cfg.runner }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
         run: |
-          cd build 
+          cd build
           ninja unit.meta.exe unit.arch.exe unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 4
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|unit.core.count_true.exe|unit.memory.store.*"
-          ninja clean 
+          ninja clean
       - name: Compiling Big Unit Tests
-        run: | 
+        run: |
           cd build
           ninja unit.api.compress.exe -j 2
           ctest -R "^unit.api.compress.*"

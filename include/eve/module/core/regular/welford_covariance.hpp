@@ -51,7 +51,6 @@ namespace eve
   template<typename Options>
   struct welford_covariance_t : callable<welford_covariance_t, Options, widen_option, unbiased_option>
   {
-
     template<typename... Ts>
     requires((detail::is_welford_covariance_result_v<Ts> && ...))
       EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_if_t<Options, common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
@@ -142,6 +141,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return welford_covariance[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<eve::non_empty_product_type PT1, eve::non_empty_product_type PT2, callable_options O>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())

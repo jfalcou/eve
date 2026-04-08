@@ -76,7 +76,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &o, T const& a) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::radindeg[o], a);
+        return eve::detail::apply_fp16_as_fp32(eve::radinpi[o], a);
       else if constexpr(O::contains(kahan))
       {
         auto pi_h = eve::inv_pi(eve::as<T>());

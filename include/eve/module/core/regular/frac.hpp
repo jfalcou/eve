@@ -87,6 +87,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto frac_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+      requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return detail::map(frac[o], ts...);
+    }
+
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
     frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept

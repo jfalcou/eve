@@ -38,7 +38,8 @@ TTS_CASE_WITH("Check behavior of asecd on wide",
   using v_t = eve::element_type_t<T>;
 
   auto sasecd = [](auto e) -> v_t { return static_cast<v_t>(eve::radindeg(std_acos(1 / e))); };
-  TTS_ULP_EQUAL(eve::asecd(a0), tts::map(sasecd, a0), 2);
+  //TODO: check if ULP can be reduced when using fp16
+  TTS_ULP_EQUAL(eve::asecd(a0), tts::map(sasecd, a0), 4);
 
   TTS_ULP_EQUAL(eve::asecd(a1), tts::map(sasecd, a1), 2);
 

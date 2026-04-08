@@ -25,9 +25,17 @@
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/prev.hpp>
-//#include <eve/detail/function/sum.hpp>
+
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if      constexpr (O::contains(widen))                       return add[o.drop(widen)](upgrade(ts)...);
+    else if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(add[o], ts...);
+    else                                                         return apply_fp16_as_fp32(add[o], ts...);
+  }
 
   template<callable_options O, typename T0, typename T1>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T0 a0, T1 b0) noexcept

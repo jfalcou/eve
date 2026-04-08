@@ -12,6 +12,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
 #include <algorithm>
@@ -239,9 +240,14 @@ namespace eve::detail
         }
       };
 
-      if      constexpr (has_emulated_abi_v<wide_t>)   return kumi::apply([](auto... m) { return wide_t{m...}; }, rewrap(inner_output));
-      else if constexpr (has_aggregated_abi_v<wide_t>) return wide_t { storage_t { rewrap(inner_output) } };
-      else                                             return rewrap(inner_output);
+      const auto out = rewrap(inner_output);
+
+      if constexpr (has_emulated_abi_v<wide_t> && product_type<decltype(out)>)
+        return kumi::apply([](auto... m) { return wide_t{m...}; }, out);
+      else if constexpr (has_aggregated_abi_v<wide_t>)
+        return wide_t { storage_t { out } };
+      else
+        return out;
     }
     else
     {

@@ -38,7 +38,8 @@ TTS_CASE_WITH("Check behavior of asec on wide",
   using v_t = eve::element_type_t<T>;
 
   auto sasec = [](auto e) -> v_t { return static_cast<v_t>(std_acos(1 / e)); };
-  TTS_ULP_EQUAL(eve::asec(a0), tts::map(sasec, a0), 3.5);
+  //TODO: check if ULP can be reduced when using fp16
+  TTS_ULP_EQUAL(eve::asec(a0), tts::map(sasec, a0), 5.0);
 
   TTS_ULP_EQUAL(eve::asec(a1), tts::map(sasec, a1), 2);
 

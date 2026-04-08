@@ -26,7 +26,6 @@ namespace eve
   struct variance_t : tuple_callable<variance_t, Options, raw_option, kahan_option,
                                      widen_option, unbiased_option>
   {
-
     template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...>)
       EVE_FORCEINLINE constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
@@ -118,6 +117,13 @@ namespace eve
 
 namespace eve::detail
 {
+
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto variance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    return variance[o.drop(widen)](upgrade(ts)...);
+  }
 
   template<value T0, value ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto

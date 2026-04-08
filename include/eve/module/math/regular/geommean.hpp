@@ -19,7 +19,6 @@ namespace eve
   struct geommean_t : strict_tuple_callable<geommean_t, Options, pedantic_option, widen_option,
                                      kahan_option>
   {
-
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
       EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
@@ -97,6 +96,13 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, typename... Ts>
+    EVE_FORCEINLINE constexpr auto geommean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    {
+      return geommean[o.drop(widen)](upgrade(ts)...);
+    }
+
     template<typename T0, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept

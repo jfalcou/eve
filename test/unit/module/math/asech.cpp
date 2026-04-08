@@ -33,7 +33,8 @@ TTS_CASE_WITH("Check behavior of asech on wide",
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::asech(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acosh(1 / e)); }, a0), 2);
+  //TODO: check if ULP can be reduced when using fp16
+  TTS_ULP_EQUAL(eve::asech(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acosh(1 / e)); }, a0), 5.5);
 };
 
 

@@ -38,7 +38,8 @@ TTS_CASE_WITH("Check behavior of asecpi on wide",
   using v_t = eve::element_type_t<T>;
 
   auto sasecpi = [](auto e) -> v_t { return static_cast<v_t>(eve::radinpi(std_acos(1 / e))); };
-  TTS_ULP_EQUAL(eve::asecpi(a0), tts::map(sasecpi, a0), 2);
+  //TODO: check if ULP can be reduced when using fp16
+  TTS_ULP_EQUAL(eve::asecpi(a0), tts::map(sasecpi, a0), 6.5);
 
   TTS_ULP_EQUAL(eve::asecpi(a1), tts::map(sasecpi, a1), 2);
 

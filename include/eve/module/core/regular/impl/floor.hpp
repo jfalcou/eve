@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_not_less_equal.hpp>
@@ -28,6 +29,14 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename... Ts>
+  EVE_FORCEINLINE constexpr auto floor_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+    requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+  {
+    if constexpr (O::contains(almost)) return detail::map(floor[o], ts...);
+    else                               return apply_fp16_as_fp32(floor[o], ts...);
+  }
+
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
   floor_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
