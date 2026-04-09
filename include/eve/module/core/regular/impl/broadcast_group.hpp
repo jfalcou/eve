@@ -25,7 +25,7 @@ find_broadcast_group(std::array<std::ptrdiff_t, Size> const& pattern)
     std::ptrdiff_t group = -1, index = -1;
   };
 
-  for( std::ptrdiff_t g = Cardinal; g > 0; g /= 2 )
+  for( std::ptrdiff_t g = Size; g > 0; g /= 2 )
   {
     std::ptrdiff_t nb_idx = Cardinal / g;
 
