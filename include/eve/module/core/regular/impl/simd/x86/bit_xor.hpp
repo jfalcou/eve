@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve ::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept
