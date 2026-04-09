@@ -26,7 +26,7 @@ namespace tag { struct TAG {}; }                                                
 #define EVE_DECLARE_CALLABLE(TAG,NAME)                                                             \
   template<typename C> struct if_;                                                                 \
                                                                                                    \
-  namespace detail                                                                                 \
+  namespace _                                                                                 \
   {                                                                                                \
     template<typename... Args>                                                                     \
     concept supports_ ## TAG = requires(Args&&... args)                                            \
@@ -47,13 +47,13 @@ namespace tag { struct TAG {}; }                                                
       {                                                                                            \
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag_type>{},                   \
+          check ( delay_t{}, ::eve::_::types<std::decay_t<Arg>,tag_type>{},                   \
                   EVE_FWD(args)...                                                                 \
                 );                                                                                 \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<tag_type>{}, EVE_FWD(d),                         \
+          check ( delay_t{}, ::eve::_::types<tag_type>{}, EVE_FWD(d),                         \
                   EVE_FWD(args)...                                                                 \
                 );                                                                                 \
         }                                                                                          \
@@ -93,7 +93,7 @@ namespace tag { struct TAG {}; }                                                
       EVE_FORCEINLINE constexpr auto operator[](T c) const noexcept                                \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        using type = detail::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
+        using type = _::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
         return (*this)[if_(logical<type>(c))];                                                     \
       }                                                                                            \
                                                                                                    \
@@ -108,13 +108,13 @@ namespace tag { struct TAG {}; }                                                
 /**/
 
 #define EVE_ALIAS_CALLABLE(TAG, NAME)                                                              \
-  inline detail::callable_object<tag::TAG> const NAME = {}                                         \
+  inline _::callable_object<tag::TAG> const NAME = {}                                         \
 /**/
 
 #define EVE_CALLABLE_API(TAG, NAME)                                                                 \
-  using callable_##TAG  = detail::callable_object<tag::TAG>;                                        \
+  using callable_##TAG  = _::callable_object<tag::TAG>;                                        \
   template<typename C, typename T>                                                            \
-  inline auto& operator<<(std::basic_ostream<C,T>& os, detail::callable_object<tag::TAG> const&)       \
+  inline auto& operator<<(std::basic_ostream<C,T>& os, _::callable_object<tag::TAG> const&)       \
   {                                                                                                 \
     return os << #NAME;                                                                             \
   }
@@ -144,7 +144,7 @@ namespace tag { struct TAG {}; }                                                
 #define EVE_SUPPORTS(ARCH) delay_t const &, ARCH const &
 
 // Flag a function to support delayed calls on given architecture
-#define EVE_MATCH_CALL(...) delay_t const &, ::eve::detail::types<__VA_ARGS__> const &
+#define EVE_MATCH_CALL(...) delay_t const &, ::eve::_::types<__VA_ARGS__> const &
 
 // Flag a function to support delayed calls on given architecture
 #define EVE_RETARGET(ARCH)  delay_t{}, ARCH {}
@@ -193,7 +193,7 @@ namespace eve
     }
   };
 
-  namespace detail
+  namespace _
   {
     //==============================================================================================
     // basic type to support delayed calls

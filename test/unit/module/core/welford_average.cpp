@@ -17,13 +17,13 @@
 TTS_CASE_TPL("Check return types of average", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  using welford_result_t = eve::detail::welford_result<T>;
+  using welford_result_t = eve::_::welford_result<T>;
   using v_t = eve::element_type_t<T>;
   // regular
   TTS_EXPR_IS(eve::welford_average(T(), T()), welford_result_t);
   TTS_EXPR_IS(eve::welford_average(T(), v_t()), welford_result_t);
   TTS_EXPR_IS(eve::welford_average(v_t(), T()), welford_result_t);
-  TTS_EXPR_IS(eve::welford_average(v_t(), v_t()), eve::detail::welford_result<v_t>);
+  TTS_EXPR_IS(eve::welford_average(v_t(), v_t()), eve::_::welford_result<v_t>);
 
   // multi
   if constexpr( eve::floating_value<T> )
@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::ieee_reals)
     TTS_EXPR_IS(eve::welford_average(v_t(), v_t(), T()), welford_result_t);
     TTS_EXPR_IS(eve::welford_average(v_t(), T(), v_t()), welford_result_t);
 
-    TTS_EXPR_IS(eve::welford_average(v_t(), v_t(), v_t()), eve::detail::welford_result<v_t>);
+    TTS_EXPR_IS(eve::welford_average(v_t(), v_t(), v_t()), eve::_::welford_result<v_t>);
   }
 };
 

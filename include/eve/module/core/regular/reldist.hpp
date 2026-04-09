@@ -78,7 +78,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<value T, callable_options O>
     constexpr T reldist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)

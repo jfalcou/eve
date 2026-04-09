@@ -20,7 +20,7 @@ namespace eve
   }
 
   template<typename T>
-  concept arithmetic_simd_value = detail::instance_of<T,wide>;
+  concept arithmetic_simd_value = _::instance_of<T,wide>;
 
   template<typename T>
   concept plain_simd_value =  arithmetic_simd_value<T> && plain_scalar_value<element_type_t<T>>;
@@ -43,7 +43,7 @@ namespace eve
   //! - eve::logical<eve::wide<int,eve::fixed<2>>>
   //================================================================================================
   template<typename T>
-  concept logical_simd_value  =   detail::instance_of<T,logical>
+  concept logical_simd_value  =   _::instance_of<T,logical>
                               &&  plain_simd_value<typename T::mask_type>;
   //================================================================================================
   //! @}

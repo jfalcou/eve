@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/options.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Single slice

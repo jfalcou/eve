@@ -8,7 +8,7 @@
 #pragma once
 #include <eve/module/core.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<scalar_value X,  scalar_value C, scalar_value... Cs, callable_options O>
@@ -36,6 +36,6 @@ namespace eve::detail
     auto xxx =  eve::scan(zz, eve::mul[o], e_t(1));
     e_t xn = small_pow(xx);
     auto res =  process(head, xxx, xn);
-    return eve::detail::sum(eve::add[o](res));
+    return eve::_::sum(eve::add[o](res));
   }
 }

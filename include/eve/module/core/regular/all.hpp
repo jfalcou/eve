@@ -19,7 +19,7 @@ namespace eve
     EVE_FORCEINLINE bool operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::all] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v);

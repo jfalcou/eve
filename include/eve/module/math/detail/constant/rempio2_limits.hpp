@@ -29,7 +29,7 @@ namespace eve
 
   inline constexpr auto Rempio2_limit = functor<Rempio2_limit_t>;
 
-  namespace detail
+  namespace _
   {
     template< typename T, callable_options O>
     EVE_FORCEINLINE constexpr T  Rempio2_limit_(EVE_REQUIRES(cpu_), O const& , as<T> const&) noexcept

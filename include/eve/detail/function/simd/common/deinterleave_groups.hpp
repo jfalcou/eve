@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   namespace _deinterleave_groups
   {

@@ -11,7 +11,7 @@
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<value T>
 EVE_FORCEINLINE auto

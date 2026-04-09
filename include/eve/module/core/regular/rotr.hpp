@@ -87,7 +87,7 @@ namespace eve
 }
 
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename S, callable_options O>
   constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotr_(EVE_REQUIRES(cpu_), O const& o, T v, S s)

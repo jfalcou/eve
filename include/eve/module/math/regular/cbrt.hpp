@@ -71,13 +71,13 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<eve::floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr auto cbrt_(EVE_REQUIRES(cpu_), O const& o, T x) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::cbrt[o], x);
+        return eve::_::apply_fp16_as_fp32(eve::cbrt[o], x);
       else
       {
         using vt_t = element_type_t<T>;

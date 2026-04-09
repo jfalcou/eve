@@ -16,7 +16,7 @@
 #include <eve/traits/as_floating_point.hpp>
 #include <eve/traits/as_integer.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 //================================================================================================
 // shuffle requires cross-api re-targeting (ie AVX512 128bits calling back SSSE3)

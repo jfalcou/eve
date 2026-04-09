@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a0) noexcept
@@ -29,7 +29,7 @@ namespace eve::detail
     else if constexpr( c == category::float32x4 ) return _mm_sqrt_ps(a0);
     else if constexpr (std::same_as<T, eve::float16_t>)
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::sqrt, a0);
+      if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::sqrt, a0);
       else if constexpr (c == category::float16x8)          return _mm_sqrt_ph(a0);
       else if constexpr (c == category::float16x16)         return _mm256_sqrt_ph(a0);
       else if constexpr (c == category::float16x32)         return _mm512_sqrt_ph(a0);
@@ -59,7 +59,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return _mm_mask_sqrt_pd(src, m, a0);
       else if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::sqrt, cx, a0);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::sqrt, cx, a0);
         else if constexpr (c == category::float16x8)          return _mm_mask_sqrt_ph(src, m, a0);
         else if constexpr (c == category::float16x16)         return _mm256_mask_sqrt_ph(src, m, a0);
         else if constexpr (c == category::float16x32)         return _mm512_mask_sqrt_ph(src, m, a0);

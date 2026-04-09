@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, floating_scalar_value T, typename N, conditional_expr C>

@@ -16,7 +16,7 @@
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_value T>
   EVE_FORCEINLINE auto

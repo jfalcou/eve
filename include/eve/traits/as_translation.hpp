@@ -89,12 +89,12 @@ namespace eve
   //!   static_assert(std::same_as<decltype(eve::translate_ptr(ptr)), int*>);
   //! @endcode
   //================================================================================================
-  template <detail::scalar_pointer Ptr>
+  template <_::scalar_pointer Ptr>
   constexpr auto translate_ptr(Ptr ptr)
   {
     if constexpr (has_plain_translation<value_type_t<Ptr>>)
     {
-      using trans_t = detail::copy_qualifiers_t<translated_value_type_t<Ptr>, Ptr>;
+      using trans_t = _::copy_qualifiers_t<translated_value_type_t<Ptr>, Ptr>;
 
       if constexpr (std::is_pointer_v<Ptr>)
       {

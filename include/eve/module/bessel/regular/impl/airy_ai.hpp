@@ -12,7 +12,7 @@
 #include <eve/module/bessel/regular/bessel_k.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O> constexpr
   T  airy_ai_(EVE_REQUIRES(cpu_), O const&, T x) noexcept

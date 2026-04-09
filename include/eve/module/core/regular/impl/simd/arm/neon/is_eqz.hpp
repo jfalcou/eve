@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>>
@@ -26,7 +26,7 @@ namespace eve::detail
     {
       constexpr auto cat = categorize<wide<T, N>>();
       if      constexpr( cat == category::float32x4) return vceqzq_f32(v);
-      if constexpr (match(cat, category::float16) && detail::supports_fp16_vector_ops)
+      if constexpr (match(cat, category::float16) && _::supports_fp16_vector_ops)
       {
         if      constexpr( cat == category::float16x8) return vceqzq_f16(v);
         else if constexpr( cat == category::float16x4) return vceqz_f16(v);

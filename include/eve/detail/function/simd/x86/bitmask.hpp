@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <bitset>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Logical to Bits

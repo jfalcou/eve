@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, typename T, typename N>
@@ -34,7 +34,7 @@ namespace eve::detail
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
-      constexpr auto fp16s = detail::supports_fp16_vector_ops;
+      constexpr auto fp16s = _::supports_fp16_vector_ops;
 
       if constexpr(O::contains(upper) || O::contains(lower))
       {
@@ -97,7 +97,7 @@ namespace eve::detail
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto fp16s = detail::supports_fp16_vector_ops;
+    constexpr auto fp16s = _::supports_fp16_vector_ops;
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 

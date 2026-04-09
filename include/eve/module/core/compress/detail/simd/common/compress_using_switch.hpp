@@ -15,7 +15,7 @@
 
 #include <eve/arch/top_bits.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE

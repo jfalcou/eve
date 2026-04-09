@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/shuffle_v2.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 constexpr auto try_each_group_rotate_halfs_pattern = [](int i, int size)

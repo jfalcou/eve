@@ -52,7 +52,7 @@ TTS_CASE_TPL("eve::common_type for two types computes", eve::test::scalar::all_t
 TTS_CASE_TPL("eve::common_type matches std::common_type", eve::test::scalar::all_types_wf16 )
 <typename T>(tts::type<T>)
 {
-  if constexpr (std::same_as<T, eve::float16_t> && !eve::detail::supports_fp16_native_type)
+  if constexpr (std::same_as<T, eve::float16_t> && !eve::_::supports_fp16_native_type)
   {
     TTS_PASS();
   }

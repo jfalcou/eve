@@ -12,7 +12,7 @@
 #include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <bit>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // reduce toward wide using a generic butterfly algorithm

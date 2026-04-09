@@ -88,7 +88,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename N, typename T, typename U, callable_options O>
     constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T, U>, N>

@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename Wide, typename... ABI>
     struct  is_native_for_abi
@@ -30,5 +30,5 @@ namespace eve
   }
 
   template<typename Wide, typename... ABI>
-  concept native_simd_for_abi = detail::is_native_for_abi<Wide, ABI...>::value;
+  concept native_simd_for_abi = _::is_native_for_abi<Wide, ABI...>::value;
 }

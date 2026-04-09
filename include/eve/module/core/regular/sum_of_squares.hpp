@@ -92,14 +92,14 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto sum_of_squares_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       if      constexpr(O::contains(widen))                        return sum_of_squares[o.drop(widen)](upgrade(ts)...);
-      else if constexpr(O::contains(upper) || O::contains(lower))  return detail::map(sum_of_squares[o], ts...);
+      else if constexpr(O::contains(upper) || O::contains(lower))  return _::map(sum_of_squares[o], ts...);
       else                                                          return apply_fp16_as_fp32(sum_of_squares[o], ts...);
     }
 

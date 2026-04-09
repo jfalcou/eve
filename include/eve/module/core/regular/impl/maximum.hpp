@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/max.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> maximum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v) noexcept

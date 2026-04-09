@@ -16,7 +16,7 @@
 namespace eve::algo
 {
 
-  namespace detail
+  namespace _
   {
     template<typename TraitsSupport> struct transform_copy_if_ : TraitsSupport
     {
@@ -114,7 +114,7 @@ namespace eve::algo
   //!   transforming them in the process.
   //!
   //!   If the output range is too small, fills all the available space and then stops.
-  //!   
+  //!
   //!   If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.
   //!
   //!   @groupheader{Callable Signatures}
@@ -152,6 +152,6 @@ namespace eve::algo
   //!
   //! @}
   //==============================================================================================
-  inline constexpr auto transform_copy_if = function_with_traits<detail::transform_copy_if_>;
+  inline constexpr auto transform_copy_if = function_with_traits<_::transform_copy_if_>;
 
 }

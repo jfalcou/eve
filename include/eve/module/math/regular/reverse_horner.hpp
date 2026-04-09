@@ -33,7 +33,7 @@ namespace eve
     operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
-    template<floating_value X, eve::detail::range R>
+    template<floating_value X, eve::_::range R>
     EVE_FORCEINLINE constexpr
     upgrade_if_t<Options, eve::common_value_t<typename R::value_type, X>>
     operator()(X x, R const& t) const noexcept
@@ -119,12 +119,12 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return reverse_horner[o.drop(widen)](upgrade(ts)...);
     }
@@ -147,7 +147,7 @@ namespace eve
       using elt_t = element_type_t<r_t>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
       {
-        return eve::detail::apply_fp16_as_fp32(eve::reverse_horner[o], xx, c0, cs...);
+        return eve::_::apply_fp16_as_fp32(eve::reverse_horner[o], xx, c0, cs...);
       }
       else if constexpr(O::contains(widen))
         return reverse_horner(upgrade(xx), upgrade(c0), upgrade(cs)...);

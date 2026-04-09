@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<eve::simd_value Wide>
   EVE_FORCEINLINE Wide
@@ -58,7 +58,7 @@ namespace eve::detail
       else if constexpr( current_api >= avx512 && c == category::uint64x4 )
         return _mm256_max_epu64(v0, v1);
       else if constexpr( match(c, category::int64x4, category::uint64x4) )
-        return detail::if_else_max(v0, v1);
+        return _::if_else_max(v0, v1);
       // 256 - 32 bit ints
       else if constexpr( current_api >= avx2 && c == category::int32x8 )
         return _mm256_max_epi32(v0, v1);
@@ -88,28 +88,28 @@ namespace eve::detail
       else if constexpr( current_api >= avx512 && c == category::uint64x2 )
         return _mm_max_epu64(v0, v1);
       else if constexpr( current_api >= sse4_2 && c == category::int64x2 )
-        return detail::if_else_max(v0, v1);
+        return _::if_else_max(v0, v1);
       else if constexpr( current_api >= sse4_2 && c == category::uint64x2 )
-        return detail::if_else_max(v0, v1);
+        return _::if_else_max(v0, v1);
       else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map(max, v0, v1);
       // 128 - 32 bit ints
       else if constexpr( current_api >= sse4_1 && c == category::int32x4 ) return _mm_max_epi32(v0, v1);
       else if constexpr( current_api >= sse4_1 && c == category::uint32x4 )
         return _mm_max_epu32(v0, v1);
       else if constexpr( match(c, category::int32x4, category::uint32x4) )
-        return detail::if_else_max(v0, v1);
+        return _::if_else_max(v0, v1);
       // 128 - 16 bit ints
       else if constexpr( c == category::int16x8 ) return _mm_max_epi16(v0, v1);
       else if constexpr( current_api >= sse4_1 && c == category::uint16x8 )
         return _mm_max_epu16(v0, v1);
-      else if constexpr( c == category::uint16x8 ) return detail::if_else_max(v0, v1);
+      else if constexpr( c == category::uint16x8 ) return _::if_else_max(v0, v1);
       // 128 - 8 bit ints
       else if constexpr( current_api >= sse4_1 && c == category::int8x16 ) return _mm_max_epi8(v0, v1);
-      else if constexpr( c == category::int8x16 ) return detail::if_else_max(v0, v1);
+      else if constexpr( c == category::int8x16 ) return _::if_else_max(v0, v1);
       else if constexpr( c == category::uint8x16 ) return _mm_max_epu8(v0, v1);
       else if constexpr( match(c, category::float16 ))
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
+        if      constexpr( !_::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
         else if constexpr( c == category::float16x8 )          return _mm_max_ph(v0, v1);
         else if constexpr( c == category::float16x16 )         return _mm256_max_ph(v0, v1);
         else if constexpr( c == category::float16x32 )         return _mm512_max_ph(v0, v1);
@@ -135,7 +135,7 @@ namespace eve::detail
 
       if constexpr (match(c, category::float16))
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(eve::max, cx, v, w);
+        if      constexpr( !_::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(eve::max, cx, v, w);
         else if constexpr( c == category::float16x32 )         return _mm512_mask_max_ph(src, m, v, w);
         else if constexpr( c == category::float16x16 )         return _mm256_mask_max_ph(src, m, v, w);
         else if constexpr( c == category::float16x8  )         return _mm_mask_max_ph(src, m, v, w);

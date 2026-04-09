@@ -18,7 +18,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //====================================================================================================================
   // Regular is_equal x86
@@ -38,7 +38,7 @@ namespace eve::detail
     {
       return is_equal.behavior(cpu_{}, opts, v, w);
     }
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32(is_equal, v, w);
     }
@@ -161,7 +161,7 @@ namespace eve::detail
     {
       return is_equal[opts][mask].retarget(cpu_{}, v, w);
     }
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32_masked(is_equal, mask, v, w);
     }

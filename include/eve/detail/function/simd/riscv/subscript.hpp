@@ -10,7 +10,7 @@
 #include <eve/arch/riscv/rvv_common_masks.hpp>
 #include <eve/concept/vectorizable.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE T

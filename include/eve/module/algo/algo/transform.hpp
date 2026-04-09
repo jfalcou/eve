@@ -17,7 +17,7 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
     template<typename LoadStore, typename Op>
     struct transform_delegate
@@ -64,7 +64,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename Op>
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
-      detail::transform_delegate<inplace_load_store, Op> d{op};
+      _::transform_delegate<inplace_load_store, Op> d{op};
       for_each[TraitsSupport::get_traits()](EVE_FWD(rng), d);
     }
   };
@@ -97,7 +97,7 @@ namespace eve::algo
     template <zipped_range_pair R, typename Op>
     EVE_FORCEINLINE void operator()(R r, Op op) const
     {
-      detail::transform_delegate<to_load_store, Op> d{op};
+      _::transform_delegate<to_load_store, Op> d{op};
       for_each[TraitsSupport::get_traits()](r, d);
     }
 

@@ -11,7 +11,7 @@
 #include <eve/module/special.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<typename I, typename T, typename U, callable_options O>

@@ -12,7 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto

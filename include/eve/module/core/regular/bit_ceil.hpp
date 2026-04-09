@@ -80,7 +80,7 @@ namespace eve
 //================================================================================================
 
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T

@@ -14,7 +14,7 @@
 #include <eve/as.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<callable_options O, typename T, typename N>

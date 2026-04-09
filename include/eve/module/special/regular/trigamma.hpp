@@ -72,7 +72,7 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr T  trigamma_(EVE_REQUIRES(cpu_), O const&, T z) noexcept

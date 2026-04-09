@@ -14,7 +14,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename Obj, value T0, value ... T>
   EVE_FORCEINLINE  auto apply_over(Obj f, T0 const & arg0, T const &... args) noexcept

@@ -17,10 +17,10 @@ namespace eve
 EVE_REGISTER_CALLABLE(shuffle_l6_l7_)
 EVE_DECLARE_CALLABLE(shuffle_l6_l7_, shuffle_l6_l7)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(shuffle_l6_l7_, shuffle_l6_l7);
-} // namespace detail
+} // namespace _
 
 // level 2 is allowed one instruction with no mask
 EVE_CALLABLE_API(shuffle_l6_l7_, shuffle_l6_l7)

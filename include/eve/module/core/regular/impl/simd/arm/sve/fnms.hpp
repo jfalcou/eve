@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>

@@ -15,7 +15,7 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/function/simd/common/load.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Regular loads
@@ -28,7 +28,7 @@ namespace eve::detail
     constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
     constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
     constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
-    constexpr bool has_fp16 = detail::supports_fp16_vector_ops;
+    constexpr bool has_fp16 = _::supports_fp16_vector_ops;
 
     if constexpr( !std::is_pointer_v<Ptr> )
     {
@@ -100,7 +100,7 @@ namespace eve::detail
     requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
   {
     using r_t = wide<T, N>;
-    constexpr bool has_fp16 = detail::supports_fp16_vector_ops;
+    constexpr bool has_fp16 = _::supports_fp16_vector_ops;
 
     if constexpr (C::is_complete)
     {

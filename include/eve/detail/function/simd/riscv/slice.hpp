@@ -13,7 +13,7 @@
 
 // Return first or second part of vector.
 
-namespace eve::detail
+namespace eve::_
 {
 
 //================================================================================================

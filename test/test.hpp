@@ -284,7 +284,7 @@ namespace eve::test::simd
 //==================================================================================================
 
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename V> auto as_value(callable_object<V> const& v)
   {
@@ -507,11 +507,11 @@ namespace tts
   }
 
   template<typename Fn, typename Wm, typename... Args>
-  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::detail::get_at(wm, 0), eve::detail::get_at(args, 0)...)), eve::cardinal_t<Wm>>
+  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>
   {
-    using r_t = eve::as_wide_t<decltype(f(eve::detail::get_at(wm, 0), eve::detail::get_at(args, 0)...)), eve::cardinal_t<Wm>>;
-    auto call_f = [&](auto idx) { return f(eve::detail::get_at(wm, idx), eve::detail::get_at(args, idx)...); };
-    return eve::detail::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
+    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>;
+    auto call_f = [&](auto idx) { return f(eve::_::get_at(wm, idx), eve::_::get_at(args, idx)...); };
+    return eve::_::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
   }
 
   template<typename L1> struct rewrap;
@@ -552,8 +552,8 @@ int main(int argc, char const **argv)
   constexpr auto assert_status = "Enabled";
 #endif
 
-  constexpr auto fp16_status = eve::detail::supports_fp16_vector_ops ? "Full" :
-                              (eve::detail::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
+  constexpr auto fp16_status = eve::_::supports_fp16_vector_ops ? "Full" :
+                              (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
 
   std::cout << "[EVE] - Target: " << eve::current_api
             << " - Assertions: "  << assert_status

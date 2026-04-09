@@ -21,7 +21,7 @@
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/arch/platform.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<floating_scalar_value T, typename N, callable_options O>

@@ -11,7 +11,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Wide to Logical

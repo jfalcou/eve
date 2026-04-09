@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>

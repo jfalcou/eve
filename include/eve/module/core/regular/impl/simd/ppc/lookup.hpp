@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/generic/lookup_helpers.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename I, typename N>
   EVE_FORCEINLINE wide<T, N>

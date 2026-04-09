@@ -9,7 +9,7 @@
 
 #include <eve/detail/shuffle_v2/shuffle_v2_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 /*
@@ -24,7 +24,7 @@ namespace eve::detail
  *  * emulation
  *  * patterns of 1 elemenmt
  *
- * struct shuffle_name_t : detail::named_shuffle_1<shuffle_name_t>
+ * struct shuffle_name_t : _::named_shuffle_1<shuffle_name_t>
  * {
  *   template <simd_value T, std::ptrdiff_t G>
  *   static constexpr std::ptrdiff_t level(eve::as<T>, eve::fixed<G>, auto ...args)

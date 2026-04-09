@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N>
@@ -24,7 +24,7 @@ requires arm_abi<abi_t<T, N>>
   constexpr auto cat = categorize<wide<T, N>>();
 
   if constexpr(O::contains(lower) || O::contains(upper)) return fma.behavior(cpu_{}, opts, a, b, c);
-  else if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
+  else if constexpr (match(cat, category::float16) && !_::supports_fp16_vector_ops)
   {
     return apply_fp16_as_fp32(fma[opts], a, b, c);
   }

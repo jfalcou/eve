@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void

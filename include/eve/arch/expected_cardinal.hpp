@@ -12,7 +12,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T> struct fec_box { using type = always<T>; };
 
@@ -35,7 +35,7 @@ namespace eve::detail
 namespace eve
 {
   template<typename Type, regular_abi ABI = eve::current_abi_type>
-  constexpr inline auto expected_cardinal_v = detail::find_expected_cardinal<Type, ABI>();
+  constexpr inline auto expected_cardinal_v = _::find_expected_cardinal<Type, ABI>();
 
   //================================================================================================
   //! @addtogroup arch

@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/rotate.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<simd_value T, std::ptrdiff_t G>

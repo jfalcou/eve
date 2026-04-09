@@ -22,7 +22,7 @@ EVE_MAKE_CALLABLE(shuffle_, shuffle);
 #include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/module/core/detail/generic/find_optimized_shuffle_pattern.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<simd_value T, std::ptrdiff_t... I>
 EVE_FORCEINLINE constexpr auto
@@ -31,7 +31,7 @@ shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
   static_assert(pattern_t<I...> {}.validate(T::size()),
                 "[eve::shuffle] - Shuffle pattern is invalid. Checks its size or values.");
 
-  constexpr auto shuffler = detail::find_optimized_shuffle_pattern<T::size(), I...>();
+  constexpr auto shuffler = _::find_optimized_shuffle_pattern<T::size(), I...>();
   return shuffler(v);
 }
 

@@ -10,7 +10,7 @@
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>

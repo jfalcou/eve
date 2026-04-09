@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/round.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<auto S, typename T, callable_options O>
   EVE_FORCEINLINE constexpr T fracscale_(EVE_REQUIRES(cpu_),

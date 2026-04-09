@@ -88,13 +88,13 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr auto dist_(EVE_REQUIRES(emulated_), O const& o, T a, T b)
-      requires(detail::fp16_should_apply<T>)
+      requires(_::fp16_should_apply<T>)
     {
-      if constexpr(O::contains(upper) || O::contains(lower)) return detail::map(dist[o], a, b);
+      if constexpr(O::contains(upper) || O::contains(lower)) return _::map(dist[o], a, b);
       else                                                   return apply_fp16_as_fp32(dist[o], a, b);
     }
 

@@ -100,7 +100,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
@@ -117,7 +117,7 @@ namespace eve
       using r_t = common_value_t<T, U>;
       if constexpr(std::same_as<element_type_t<r_t>, eve::float16_t>)
       {
-        return  eve::detail::apply_fp16_as_fp32(eve::pow_abs[o], a, b);
+        return  eve::_::apply_fp16_as_fp32(eve::pow_abs[o], a, b);
       }
       else
       {

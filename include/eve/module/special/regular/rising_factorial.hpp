@@ -88,7 +88,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename I, typename T, callable_options O>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, I>

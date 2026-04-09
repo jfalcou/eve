@@ -31,11 +31,11 @@
 #include <eve/traits/updown.hpp>
 #include <eve/traits/as_wides.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
-    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(widen))
     {
@@ -50,7 +50,7 @@ namespace eve::detail
     }
     else if constexpr (O::contains(upper) || O::contains(lower))
     {
-      return detail::map(mul[o], ts...);
+      return _::map(mul[o], ts...);
     }
     else
     {

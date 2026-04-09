@@ -77,7 +77,7 @@ namespace eve
   //================================================================================================
   // product_type special case
   //================================================================================================
-  namespace detail
+  namespace _
   {
     template<typename T, regular_abi ABI> struct min_fundamental;
 
@@ -89,9 +89,9 @@ namespace eve
   }
 
   template<eve::product_type T, regular_abi ABI>
-  struct fundamental_cardinal<T,ABI> : fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
+  struct fundamental_cardinal<T,ABI> : fixed<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
   {
-    using type = fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
+    using type = fixed<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
   };
 
   template<typename Type, typename ABI = eve::current_abi_type>

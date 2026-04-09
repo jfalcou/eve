@@ -11,7 +11,7 @@
 #include <eve/concept/simd.hpp>
 #include <eve/detail/category.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<scalar_value T, typename N, scalar_value U, typename M>
   requires( sve_abi<abi_t<T, N>> )

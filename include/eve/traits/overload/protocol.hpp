@@ -130,13 +130,13 @@ using callable_tag_type     = TYPE                                              
 //!   @endcode
 //!
 //!   Use inside a @callable definition to generate the required EVE protocol of function's resolution based on type
-//!   and architecture informations using overload from the `eve::detail` namespace.
+//!   and architecture informations using overload from the `eve::_` namespace.
 //!
 //!   @warning @ref EVE_CALLABLE_OBJECT is mostly used for EVE @callable definition. If you want to use EVE's overload
 //!   facility for your own library, use @ref EVE_CALLABLE_OBJECT_FROM.
 //!
 //!   @param TYPE Current @callable type
-//!   @param NAME Function identifier for overloads. Calls to `eve::detail::NAME` are supposed to succeed.
+//!   @param NAME Function identifier for overloads. Calls to `eve::_::NAME` are supposed to succeed.
 //!
 //!   @groupheader{Usage}
 //!
@@ -146,7 +146,7 @@ using callable_tag_type     = TYPE                                              
 //!   @ref EVE_CALLABLE_OBJECT relies on its enclosing type to provide at least one declaration of a member function
 //!   named `call` which represent the expected prototype of the function object, including potential constraints, and
 //!   its associated return type. @ref EVE_CALLABLE_OBJECT also relies on the existence of an appropriate number of
-//!   function overloads named `NAME` defined in the eve::detail namespace. Those function contains the implementation
+//!   function overloads named `NAME` defined in the eve::_ namespace. Those function contains the implementation
 //!   of the @callable overload for each pre-defined function.
 //!
 //!   @groupheader{Example}
@@ -157,14 +157,14 @@ using callable_tag_type     = TYPE                                              
 #define EVE_CALLABLE_OBJECT(TYPE,NAME)                                                                                 \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE constexpr auto deferred_call(auto arch, Args&&...args) noexcept                                 \
--> decltype(NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...))                                                     \
+-> decltype(NAME(eve::_::adl_helper, arch, EVE_FWD(args)...))                                                     \
 {                                                                                                                      \
-  return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \
+  return NAME(eve::_::adl_helper, arch, EVE_FWD(args)...);                                                        \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename Callable, typename... Args>
   EVE_FORCEINLINE constexpr auto dispatch_call_impl(Callable const& c, Args&&... args)
@@ -191,7 +191,7 @@ namespace eve::detail
 //!   @brief Generate the proper call to current EVE's @callable implementation
 //! @}
 //======================================================================================================================
-#define EVE_DISPATCH_CALL(...) eve::detail::dispatch_call_impl(*this, __VA_ARGS__)
+#define EVE_DISPATCH_CALL(...) eve::_::dispatch_call_impl(*this, __VA_ARGS__)
 /**/
 
 //======================================================================================================================
@@ -226,8 +226,8 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 #define EVE_REQUIRES(ARCH) adl_helper_t const &, ARCH const &
 #define EVE_TARGETS(ARCH)   adl_helper_t{}, ARCH{}
 
-// Register eve::detail as the deferred namespace by default
-namespace eve::detail { EVE_CALLABLE_NAMESPACE(); }
+// Register eve::_ as the deferred namespace by default
+namespace eve::_ { EVE_CALLABLE_NAMESPACE(); }
 
 namespace eve
 {

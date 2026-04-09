@@ -22,8 +22,8 @@ namespace eve
   inline constexpr auto func = functor<func_t>;
 };
 
-// As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::detail
-namespace eve::detail
+// As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::_
+namespace eve::_
 {
   auto func_(EVE_REQUIRES(cpu_), eve::callable_options auto const&, eve::integral_value auto x) {  return x*x;  }
   auto func_(EVE_REQUIRES(cpu_), eve::callable_options auto const&, double x)                   {  return 1./x; }

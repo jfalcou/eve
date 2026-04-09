@@ -10,8 +10,8 @@
 #include "test.hpp"
 template<typename Type> struct rvv_compress_filter
 {
-  static constexpr bool value = eve::detail::is_one_of<eve::element_type_t<Type>>(
-      eve::detail::types<std::int8_t, std::uint16_t, float, double> {});
+  static constexpr bool value = eve::_::is_one_of<eve::element_type_t<Type>>(
+      eve::_::types<std::int8_t, std::uint16_t, float, double> {});
 };
 
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV

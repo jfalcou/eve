@@ -75,7 +75,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename N, typename T, callable_options O>
     constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const&, N s, T z) noexcept

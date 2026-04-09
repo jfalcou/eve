@@ -13,7 +13,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<std::uint8_t I, floating_scalar_value T, typename N, callable_options O>
@@ -34,7 +34,7 @@ namespace eve::detail
     else if constexpr( c == category::float32x16) return s_t {_mm512_fpclass_ps_mask(a, I)};
     else if constexpr( c == category::float32x8 ) return s_t {_mm256_fpclass_ps_mask(a, I)};
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, I)};
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       constexpr auto using_bit_manip = (eve::poszero | eve::negzero | eve::posinf | eve::neginf).value;
       constexpr auto only_bit_manip = (I & ~using_bit_manip) == 0;
@@ -81,7 +81,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return mask8 {_mm256_mask_fpclass_pd_mask(m, v, I)};
       else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_fpclass_ps_mask(m, v, I)};
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_fpclass_pd_mask(m, v, I)};
-      else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+      else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
       {
         return apply_fp16_as_fp32_masked(of_class, cx, cls, v);
       }

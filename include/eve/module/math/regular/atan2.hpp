@@ -116,7 +116,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, typename U, callable_options O>
     constexpr EVE_NOINLINE common_value_t<T, U>
@@ -129,7 +129,7 @@ namespace eve
       else if constexpr(O::contains(radpi))
         return radinpi(atan2[o.drop(radpi)](a0, a1));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::atan2[o], a0, a1);
+        return eve::_::apply_fp16_as_fp32(eve::atan2[o], a0, a1);
       else
       {
         using r_t = common_value_t<T, U>;
@@ -171,7 +171,7 @@ namespace eve
         else
         {
           auto q = eve::abs(a00/a10);
-          auto z = detail::atan_kernel(q, eve::rec[pedantic](q));
+          auto z = _::atan_kernel(q, eve::rec[pedantic](q));
           return if_else(is_positive(a10), z, (pi(eve::as(a00)) - z))*signnz(a00);
         }
       }

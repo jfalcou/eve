@@ -18,7 +18,7 @@
 
 namespace eve
 {
-namespace detail
+namespace _
 {
 
 // MSVC was iceing
@@ -93,7 +93,7 @@ namespace detail
 
   template<typename T>
   requires(!value<T> && !wide_cardinal<T>)
-  using value_type_t = typename decltype(detail::value_type_impl<T>())::type;
+  using value_type_t = typename decltype(_::value_type_impl<T>())::type;
 
   template<typename T>
   requires(!value<T> && !wide_cardinal<T>)

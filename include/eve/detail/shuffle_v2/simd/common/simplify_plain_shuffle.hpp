@@ -11,7 +11,7 @@
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<std::ptrdiff_t... I>
@@ -52,7 +52,7 @@ simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts
       using e_t = eve::element_type_t<typename T::mask_type>;
       using N   = eve::fixed<T::size()>;
 
-      using u_t = typename T::template rebind<detail::make_integer_t<sizeof(e_t), unsigned>, N>;
+      using u_t = typename T::template rebind<_::make_integer_t<sizeof(e_t), unsigned>, N>;
       return simplify_plain_up_the_type(p, g, bit_cast_tuple(xs, as<u_t> {}));
     }
     else return simplified_pattern {xs, g, p};
@@ -61,14 +61,14 @@ simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts
   {
     using e_t = eve::element_type_t<T>;
     using N   = eve::fixed<T::size()>;
-    using u_t = eve::wide<detail::make_integer_t<sizeof(e_t), unsigned>, N>;
+    using u_t = eve::wide<_::make_integer_t<sizeof(e_t), unsigned>, N>;
     return simplify_plain_up_the_type(p, g, bit_cast_tuple(xs, as<u_t> {}));
   }
   else if constexpr( G >= 2 && sizeof(eve::element_type_t<T>) < 8 )
   {
     using e_t  = eve::element_type_t<T>;
     using N    = eve::fixed<T::size() / 2>;
-    using up_t = eve::wide<detail::make_integer_t<sizeof(e_t) * 2, unsigned>, N>;
+    using up_t = eve::wide<_::make_integer_t<sizeof(e_t) * 2, unsigned>, N>;
     return simplify_plain_up_the_type(p, eve::lane<G / 2>, bit_cast_tuple(xs, as<up_t> {}));
   }
   else { return simplified_pattern {xs, g, p}; }

@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   constexpr EVE_FORCEINLINE auto laguerre_successor(auto n, auto l, auto x, auto pl, auto plm1)
   {

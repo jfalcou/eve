@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template< template<typename> class Func
     , typename OptionsValues
@@ -34,9 +34,9 @@ namespace eve
   , typename OptionsValues
   , typename... Options
   >
-  struct relative_conditional_callable : detail::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>
+  struct relative_conditional_callable : _::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>
   {
-    using base_t = detail::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>;
+    using base_t = _::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
@@ -49,9 +49,9 @@ namespace eve
   , typename OptionsValues
   , typename... Options
   >
-  struct conditional_callable : detail::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>
+  struct conditional_callable : _::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>
   {
-    using base_t = detail::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>;
+    using base_t = _::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const

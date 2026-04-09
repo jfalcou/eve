@@ -30,7 +30,7 @@ template<typename O> struct is_less_t;
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
 // to_logical -----------------------------------------------------------
 template<typename T, typename N> auto to_logical(wide<T, N> const& v) noexcept;
@@ -62,7 +62,7 @@ To call_simd_cast(From, as<To>);
 template <typename Src, typename Tgt>
 as_wide_as_t<Tgt, Src> call_convert(Src, as<Tgt>);
 
-// This is an inderect wrapper of eve::detail::butterfly_reduction to avoid cycling dependencies
+// This is an inderect wrapper of eve::_::butterfly_reduction to avoid cycling dependencies
 template <simd_value Wide, typename Callable>
 auto call_butterfly_reduction(Wide w, Callable f) noexcept;
 

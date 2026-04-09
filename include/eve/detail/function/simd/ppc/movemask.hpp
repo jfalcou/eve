@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <utility>
 
-namespace eve::detail
+namespace eve::_
 {
   // Adapted from this completely unsuspecting thread:
   // https://stackoverflow.com/questions/33938584/on-powerpc-is-there-any-equivalent-of-intels-movemask-intrinsics

@@ -40,7 +40,7 @@ namespace eve::algo
 
   template <typename T, typename U>
   auto spaceship_helper(T x, U y) {
-         if constexpr ( detail::supports_spaceship<T, U>                  ) return x <=> y;
+         if constexpr ( _::supports_spaceship<T, U>                  ) return x <=> y;
     else if constexpr ( std::contiguous_iterator<T> && std::same_as<T, U> ) return std::to_address(x) <=> std::to_address(y);
   }
 }

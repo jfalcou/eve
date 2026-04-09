@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>

@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename Options>
   struct insert_t : callable<insert_t, Options>

@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T> struct down;
 
@@ -35,12 +35,12 @@ namespace eve
         }
         else if constexpr(std::signed_integral<v_t>)
         {
-          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, signed>::type;
+          using sd_t = typename eve::_::make_integer<sizeof(v_t)/2, signed>::type;
           return sd_t();
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
+          using sd_t = typename eve::_::make_integer<sizeof(v_t)/2, unsigned>::type;
           return sd_t();
         }
         else
@@ -70,12 +70,12 @@ namespace eve
         }
         else if constexpr(std::signed_integral<v_t>)
         {
-          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, signed>::type;
+          using ud_t = typename eve::_::make_integer<sizeof(v_t)*2, signed>::type;
           return ud_t();
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
+          using ud_t = typename eve::_::make_integer<sizeof(v_t)*2, unsigned>::type;
           return ud_t();
         }
         else
@@ -85,8 +85,8 @@ namespace eve
     };
   }
 
-  template < typename T > using downgrade_t = typename detail::down<T>::type;
-  template < typename T > using upgrade_t = typename detail::up<T>::type;
+  template < typename T > using downgrade_t = typename _::down<T>::type;
+  template < typename T > using upgrade_t = typename _::up<T>::type;
   template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
   template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
 
@@ -94,16 +94,16 @@ namespace eve
   struct upgrade_if;
 
   template < typename O, typename T>
-  requires( requires{typename detail::up<T>::type;} )
+  requires( requires{typename _::up<T>::type;} )
   struct upgrade_if<O,T>
   {
-    using base = std::conditional_t<O::contains(eve::widen), detail::up<T>, eve::detail::always<T>>;
+    using base = std::conditional_t<O::contains(eve::widen), _::up<T>, eve::_::always<T>>;
     using type = typename base::type;
   };
 
   template< typename O, typename T> using upgrade_if_t = upgrade_if<O, T>::type;
 
-  namespace detail
+  namespace _
   {
 
     template < simd_value T> struct split_down
@@ -128,6 +128,6 @@ namespace eve
     };
   }
 
-  template < typename T> using split_down_t = typename detail::split_down<T>::type;
+  template < typename T> using split_down_t = typename _::split_down<T>::type;
 
 }

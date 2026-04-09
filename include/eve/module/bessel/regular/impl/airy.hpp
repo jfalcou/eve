@@ -14,7 +14,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename O> constexpr
   kumi::tuple<T, T> airy_(EVE_REQUIRES(cpu_), O const&, T x)

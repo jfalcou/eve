@@ -15,7 +15,7 @@
 namespace eve
 {
 
-  namespace detail
+  namespace _
   {
     template<floating_value T> struct welford_covariance_result
     {
@@ -52,22 +52,22 @@ namespace eve
   struct welford_covariance_t : callable<welford_covariance_t, Options, widen_option, unbiased_option>
   {
     template<typename... Ts>
-    requires((detail::is_welford_covariance_result_v<Ts> && ...))
-      EVE_FORCEINLINE constexpr detail::welford_covariance_result<upgrade_if_t<Options, common_value_t<detail::internal_welford_covariance_t<Ts>...>>>
+    requires((_::is_welford_covariance_result_v<Ts> && ...))
+      EVE_FORCEINLINE constexpr _::welford_covariance_result<upgrade_if_t<Options, common_value_t<_::internal_welford_covariance_t<Ts>...>>>
     operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<typename T>
-    requires(detail::is_welford_covariance_result_v<T>)
+    requires(_::is_welford_covariance_result_v<T>)
       EVE_FORCEINLINE constexpr
-    detail::welford_covariance_result<upgrade_if_t<Options, element_type_t<detail::internal_welford_covariance_t<T>>>>
+    _::welford_covariance_result<upgrade_if_t<Options, element_type_t<_::internal_welford_covariance_t<T>>>>
     operator()(T t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
       EVE_FORCEINLINE constexpr
-    detail::welford_covariance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
+    _::welford_covariance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept
     { return EVE_DISPATCH_CALL(t1, t2); }
 
@@ -139,11 +139,11 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return welford_covariance[o.drop(widen)](upgrade(ts)...);
     }
@@ -195,9 +195,9 @@ namespace eve
     // This call compute the join covariance from previously computed welford covariances
     template<typename T, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t, Ts... args) noexcept
-    requires((sizeof...(Ts)!= 0) && detail::is_welford_covariance_result_v<T> && (detail::is_welford_covariance_result_v<Ts> && ...))
+    requires((sizeof...(Ts)!= 0) && _::is_welford_covariance_result_v<T> && (_::is_welford_covariance_result_v<Ts> && ...))
     {
-      using r_t =  common_value_t<detail::internal_welford_covariance_t<T>, detail::internal_welford_covariance_t<Ts>...>;
+      using r_t =  common_value_t<_::internal_welford_covariance_t<T>, _::internal_welford_covariance_t<Ts>...>;
       if constexpr(O::contains(widen))
       {
         auto up_it = [](auto a){
@@ -231,7 +231,7 @@ namespace eve
     // This call 'scalarize' a welford covariance
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto welford_covariance_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
-    requires(detail::is_welford_covariance_result_v<T>)
+    requires(_::is_welford_covariance_result_v<T>)
     {
       auto scalarize = []<typename U>(U w){
         using e_t =  element_type_t<typename U::type>;

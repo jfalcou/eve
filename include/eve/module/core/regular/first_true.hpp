@@ -17,7 +17,7 @@ namespace eve
     template<relaxed_logical_value T>
     EVE_FORCEINLINE std::optional<std::ptrdiff_t> operator()(T v) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::first_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v);

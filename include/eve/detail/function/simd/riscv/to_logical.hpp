@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N>
 EVE_FORCEINLINE auto

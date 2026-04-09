@@ -132,7 +132,7 @@ namespace eve
   template <typename Self, typename... Fields>
   struct struct_support;
 
-  namespace detail
+  namespace _
   {
     std::false_type derived_from_struct_support_impl(...);
 
@@ -305,8 +305,8 @@ namespace eve
   //================================================================================================
 }
 
-template <eve::detail::derived_from_struct_support Type>
+template <eve::_::derived_from_struct_support Type>
 struct std::tuple_size<Type> : std::tuple_size<typename Type::tuple_type> {};
 
-template <std::size_t I, eve::detail::derived_from_struct_support Type>
+template <std::size_t I, eve::_::derived_from_struct_support Type>
 struct std::tuple_element<I, Type> : std::tuple_element<I, typename Type::tuple_type> {};

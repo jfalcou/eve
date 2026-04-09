@@ -13,7 +13,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T0, typename... Ts>
     consteval auto lanes_check()
@@ -60,7 +60,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename... Ts>
-  concept same_lanes_or_scalar  = detail::lanes_check<Ts...>();
+  concept same_lanes_or_scalar  = _::lanes_check<Ts...>();
 
   //================================================================================================
   //! @addtogroup traits
@@ -75,7 +75,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename T>
-  concept same_lanes_or_scalar_tuple  = detail::tuple_lanes_check<T>();
+  concept same_lanes_or_scalar_tuple  = _::tuple_lanes_check<T>();
 
   //================================================================================================
   //! @addtogroup traits

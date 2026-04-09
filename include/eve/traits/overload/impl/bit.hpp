@@ -26,7 +26,7 @@ namespace eve
     constexpr static EVE_FORCEINLINE auto process_input(T v, as<Tgt>) noexcept
     {
       using expected_t = as_wide_as_t<element_type_t<T>, Tgt>;
-      if constexpr (has_emulated_abi_v<expected_t>) return detail::bit_cast_impl(current_api, v, as<as_uinteger_t<T>>{});
+      if constexpr (has_emulated_abi_v<expected_t>) return _::bit_cast_impl(current_api, v, as<as_uinteger_t<T>>{});
       else                                          return v;
     }
 
@@ -53,7 +53,7 @@ namespace eve
       }
       else
       {
-        return detail::bit_cast_impl(current_api, v, as<inner_tgt_t>{});
+        return _::bit_cast_impl(current_api, v, as<inner_tgt_t>{});
       }
     }
 
@@ -61,7 +61,7 @@ namespace eve
     constexpr EVE_FORCEINLINE bit_value_t<Ts...> execute(auto arch, O const& opts, Ts... xs) const
     {
       using r_t = bit_value_t<Ts...>;
-      return detail::bit_cast_impl(current_api, base_t::behavior(arch, opts, process_input(xs, as<r_t>{})...), as<bit_value_t<Ts...>>{});
+      return _::bit_cast_impl(current_api, base_t::behavior(arch, opts, process_input(xs, as<r_t>{})...), as<bit_value_t<Ts...>>{});
     }
 
     template<callable_options O, eve::product_type Tup>

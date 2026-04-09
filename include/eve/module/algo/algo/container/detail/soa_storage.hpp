@@ -18,7 +18,7 @@
 #include <type_traits>
 #include <memory>
 
-namespace eve::algo::detail
+namespace eve::algo::_
 {
   struct memory_helper
   {
@@ -31,7 +31,7 @@ namespace eve::algo::detail
     template <typename T, typename U>
     static EVE_FORCEINLINE auto align_to_cacheline(U* p) noexcept
     {
-      return eve::as_aligned(reinterpret_cast<T*>(p), eve::detail::cache_line_cardinal<T>{});
+      return eve::as_aligned(reinterpret_cast<T*>(p), eve::_::cache_line_cardinal<T>{});
     }
 
     static void copy_all_aligned(std::byte const* src, std::byte* dst, std::size_t size)
@@ -181,7 +181,7 @@ namespace eve::algo::detail
 
     template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
     {
-      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
+      return eve::as_aligned(ptr, eve::_::cache_line_cardinal<T>{});
     }
 
     template<typename T>
@@ -196,11 +196,11 @@ namespace eve::algo::detail
 }
 
 template <eve::product_type Type, typename Allocator>
-struct std::tuple_size<eve::algo::detail::soa_storage<Type,Allocator>>
-      : kumi::size<typename eve::algo::detail::soa_storage<Type,Allocator>::flat_type>
+struct std::tuple_size<eve::algo::_::soa_storage<Type,Allocator>>
+      : kumi::size<typename eve::algo::_::soa_storage<Type,Allocator>::flat_type>
 {};
 
 template <std::size_t I, eve::product_type Type, typename Allocator>
-struct std::tuple_element<I, eve::algo::detail::soa_storage<Type,Allocator>>
-      : std::add_pointer<kumi::element<I, typename eve::algo::detail::soa_storage<Type,Allocator>::flat_type>>
+struct std::tuple_element<I, eve::algo::_::soa_storage<Type,Allocator>>
+      : std::add_pointer<kumi::element<I, typename eve::algo::_::soa_storage<Type,Allocator>::flat_type>>
 {};

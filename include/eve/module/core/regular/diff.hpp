@@ -96,7 +96,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto

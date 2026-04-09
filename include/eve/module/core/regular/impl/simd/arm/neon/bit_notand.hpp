@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(neon128_),

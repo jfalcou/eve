@@ -12,7 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/constant/iota.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, typename N::combined_type>

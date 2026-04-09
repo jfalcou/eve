@@ -12,7 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 //================================================================================================
 // Helper for aggregate basic_shuffle

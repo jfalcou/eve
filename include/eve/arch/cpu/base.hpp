@@ -12,7 +12,7 @@
 
 EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   //! @struct wide_storage

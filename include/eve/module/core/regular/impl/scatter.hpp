@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/write.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void scatter_(EVE_REQUIRES(cpu_), O const& o, T const& v, Ptr p, Idx const& idx)
@@ -51,7 +51,7 @@ namespace eve::detail
       };
 
       // Scatter all (clang doesn't like capturing structured bindings)
-      eve::detail::for_<0, 1, T::size()>([&](auto... I) { ( sc(I,get<0>(se),get<1>(se)), ...); });
+      eve::_::for_<0, 1, T::size()>([&](auto... I) { ( sc(I,get<0>(se),get<1>(se)), ...); });
     }
   }
 }

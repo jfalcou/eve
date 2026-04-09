@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T, integral_value S>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
       requires(eve::same_lanes_or_scalar<T, S>)
-    {      
+    {
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -96,7 +96,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept

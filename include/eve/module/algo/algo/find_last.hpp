@@ -15,7 +15,7 @@
 
 namespace eve::algo
 {
-namespace detail
+namespace _
 {
   // needed to forceinline
   struct find_last_branchless_lambda
@@ -67,7 +67,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
 
       // TODO: this might not be ideal, see: #764
       std::optional<std::ptrdiff_t> match;
-      std::size_t pos = find_branchless(tests, detail::find_last_branchless_lambda {&match});
+      std::size_t pos = find_branchless(tests, _::find_last_branchless_lambda {&match});
 
       set_found(arr[0] + pos * iterator_cardinal_v<I>, *match);
 

@@ -21,7 +21,7 @@
 
 #include <iosfwd>
 
-namespace eve::detail
+namespace eve::_
 {
 //================================================================================================
 // Detects <-1,...,-1> as zeroing
@@ -124,7 +124,7 @@ inline constexpr auto is_swag = []()
   (std::make_index_sequence<std::bit_width(sz) - 1> {});
 
   // Find the fitting one
-  constexpr auto idx = detail::find_index(pattern<I...>, x);
+  constexpr auto idx = _::find_index(pattern<I...>, x);
   return fixed<sz / (1 << (idx + 1))> {};
 }();
 

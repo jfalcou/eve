@@ -16,7 +16,7 @@ namespace eve::algo::views
   template <typename ...Is>
   struct zip_iterator;
 
-  namespace detail
+  namespace _
   {
     template <typename Traits, typename ...Rngs>
     EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {

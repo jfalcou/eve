@@ -81,14 +81,14 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T
     exp_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::exp[o], x);
+        return eve::_::apply_fp16_as_fp32(eve::exp[o], x);
       else
       {
         auto isnan = is_nan(x);

@@ -85,12 +85,12 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr explicit operator bool()
   {
-    return svptest_any(detail::sve_true<scalar_type>(), storage);
+    return svptest_any(_::sve_true<scalar_type>(), storage);
   }
 
   EVE_FORCEINLINE constexpr auto as_int() const requires(static_bits_size <= 64)
   {
-    using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
+    using uint_type = _::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
     uint_type rraw;
 
     std::memcpy(&rraw, &storage, sizeof(uint_type));
@@ -106,7 +106,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr bool operator==(top_bits const& x) const
   {
-    return !svptest_any(detail::sve_true<scalar_type>(), storage != x.storage);
+    return !svptest_any(_::sve_true<scalar_type>(), storage != x.storage);
   }
 
   EVE_FORCEINLINE top_bits& operator&=(top_bits x)

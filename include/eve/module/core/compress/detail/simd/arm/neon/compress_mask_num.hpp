@@ -9,7 +9,7 @@
 
 #include <concepts>
 
-namespace eve::detail
+namespace eve::_
 {
   // FIX-#965: most of this should be in reduce, except for 64 bits on arm-v7
   template <std::unsigned_integral T>

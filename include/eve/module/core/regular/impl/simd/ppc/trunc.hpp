@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(vmx_),

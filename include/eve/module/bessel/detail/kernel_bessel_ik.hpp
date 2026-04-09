@@ -17,7 +17,7 @@
 //       W. T. Vetterling, B. P. Flannery, Cambridge University Press (1992),
 //       2nd ed, pp. 246-249.
 
-namespace eve::detail
+namespace eve::_
 {
 
 /**

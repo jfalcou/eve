@@ -9,7 +9,7 @@
 
 #include <eve/module/core/constant/iota.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept

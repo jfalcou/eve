@@ -16,7 +16,7 @@
 
 #include <cmath>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T>
 EVE_FORCEINLINE constexpr T

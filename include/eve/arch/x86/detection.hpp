@@ -19,7 +19,7 @@ namespace eve
   template<x86_tag API>
   bool is_supported(API const& ) noexcept
   {
-    using namespace detail;
+    using namespace _;
 
           if constexpr( API::version == sse2.value()   ) return cpuid_states.supports_sse2();
     else  if constexpr( API::version == sse3.value()   ) return cpuid_states.supports_sse3();
@@ -32,5 +32,5 @@ namespace eve
     else                                                        return false;
   }
 
-  inline bool is_supported(fma3_ const &) noexcept  { return detail::cpuid_states.supports_fma3();}
+  inline bool is_supported(fma3_ const &) noexcept  { return _::cpuid_states.supports_fma3();}
 }

@@ -16,7 +16,7 @@ namespace eve
 {
 // Re-implementation of the invoke_result traits to work with incomplete type everywhere
 // This is a direct copy from the possible implementation by cppreference.com
-namespace detail
+namespace _
 {
   template<typename T> struct is_reference_wrapper : std::false_type
   {};
@@ -68,22 +68,22 @@ namespace detail
   {};
 
   template<typename F, typename... Args>
-  struct invoke_result<decltype(void(detail::INVOKE(std::declval<F>(), std::declval<Args>()...))),
+  struct invoke_result<decltype(void(_::INVOKE(std::declval<F>(), std::declval<Args>()...))),
                        F,
                        Args...>
   {
-    using type = decltype(detail::INVOKE(std::declval<F>(), std::declval<Args>()...));
+    using type = decltype(_::INVOKE(std::declval<F>(), std::declval<Args>()...));
   };
 
   template<typename F, typename... ArgTypes>
-  struct get_invoke_result : detail::invoke_result<void, F, ArgTypes...>
+  struct get_invoke_result : _::invoke_result<void, F, ArgTypes...>
   {};
 }
 
 template<typename F, typename... Args>
 concept invocable = requires(F&& f, Args&&...args)
 {
-  typename detail::get_invoke_result<F&&, Args&&...>::type;
+  typename _::get_invoke_result<F&&, Args&&...>::type;
 };
 
   //================================================================================================

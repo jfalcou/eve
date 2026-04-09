@@ -11,7 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T> constexpr
   T  cb_i1(T x)

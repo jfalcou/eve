@@ -90,7 +90,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<floating_value T, floating_value... XsYs,  callable_options O>

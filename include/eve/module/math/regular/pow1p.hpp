@@ -82,7 +82,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>

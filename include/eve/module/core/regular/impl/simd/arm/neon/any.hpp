@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE auto
@@ -76,7 +76,7 @@ any_(EVE_REQUIRES(neon128_),
   else // chars, no asimd
   {
     auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
-    return eve::any[ignore_none](detail::to_logical(dwords));
+    return eve::any[ignore_none](_::to_logical(dwords));
   }
 }
 }

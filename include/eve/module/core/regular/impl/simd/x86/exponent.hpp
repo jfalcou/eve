@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_),

@@ -27,7 +27,7 @@ namespace eve
     template<typename T, typename I0, typename I1>
     struct result
     {
-      using type = detail::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
+      using type = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
     };
 
     template<integral_value T, integral_value I0, integral_value I1>
@@ -95,7 +95,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, conditional_expr C, value T, integral_value I0, integral_value I1>
     constexpr auto bit_swap_pairs_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, I0 i0, I1 i1) noexcept

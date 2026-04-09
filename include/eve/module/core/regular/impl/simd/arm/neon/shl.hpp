@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, arithmetic_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, wide<S, N> s) noexcept

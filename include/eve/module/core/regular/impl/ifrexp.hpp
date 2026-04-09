@@ -34,7 +34,7 @@
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/shr.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<typename T>

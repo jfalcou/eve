@@ -19,7 +19,7 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
 
     template<typename LoadStore>
@@ -81,7 +81,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
-      detail::inclusive_scan_common<inplace_load_store>{}(
+      _::inclusive_scan_common<inplace_load_store>{}(
         TraitsSupport::get_traits(), views::convert(EVE_FWD(rng), eve::as<U>{}), op_zero, init);
     }
 
@@ -100,7 +100,7 @@ namespace eve::algo
     template <zipped_range_pair R, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE void operator()(R r, std::pair<Op, Zero> op_zero, U init) const
     {
-      detail::inclusive_scan_common<to_load_store>{}(
+      _::inclusive_scan_common<to_load_store>{}(
         TraitsSupport::get_traits(), r[force_type<U>], op_zero, init);
     }
 

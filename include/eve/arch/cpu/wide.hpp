@@ -47,7 +47,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N>
   struct wide_split_type_helper
@@ -89,10 +89,10 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
-        detail::wide_split_type_helper<Type, Cardinal>
+      : _::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
+        _::wide_split_type_helper<Type, Cardinal>
   {
-    using storage_base = detail::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
+    using storage_base = _::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
 
     //! The type stored in the register.
     using value_type = Type;
@@ -152,7 +152,7 @@ namespace eve
     //! @brief Constructs a eve::wide from a @container.
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are
     //! @raiterator{s}.
-    template<detail::range Range>
+    template<_::range Range>
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
     requires (std::same_as<value_type_t<Range>, Type> && !std::same_as<storage_type, Range>)
         : wide(std::begin(EVE_FWD(r)))
@@ -167,7 +167,7 @@ namespace eve
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
-    template<detail::data_source... Ptr>
+    template<_::data_source... Ptr>
     requires(eve::product_type<Type>)
     EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
         : storage_base(load(ptr, Cardinal {}))
@@ -177,7 +177,7 @@ namespace eve
     template<typename S>
     requires (std::constructible_from<Type, S> || (std::floating_point<S> && std::same_as<Type, eve::float16_t>))
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
+        : storage_base(_::make(eve::as<translated_type>{}, static_cast<translated_element_type>(translate(v))))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -187,7 +187,7 @@ namespace eve
                   && std::is_convertible_v<S0,Type>
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
-        : storage_base(detail::make(eve::as<translated_type> {},
+        : storage_base(_::make(eve::as<translated_type> {},
                                     static_cast<translated_element_type>(translate(v0)),
                                     static_cast<translated_element_type>(translate(v1)),
                                     static_cast<translated_element_type>(translate(vs))...))
@@ -245,7 +245,7 @@ namespace eve
     //==============================================================================================
     template<eve::invocable<size_type, size_type> Generator>
     EVE_FORCEINLINE wide(Generator&& g) noexcept
-        : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
+        : storage_base(_::fill(eve::as<wide> {}, EVE_FWD(g)))
     {}
 
     //==============================================================================================
@@ -279,7 +279,7 @@ namespace eve
     //==============================================================================================
     template<eve::invocable<size_type> Generator>
     EVE_FORCEINLINE wide(Generator&& g) noexcept
-        : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
+        : storage_base(_::fill(eve::as<wide> {}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
@@ -324,11 +324,11 @@ namespace eve
     //! Set the value of a given lane
     EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
     {
-      detail::insert(*this, i, v);
+      _::insert(*this, i, v);
     }
 
     //! Retrieve the value from a given lane
-    EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return detail::extract(*this, i); }
+    EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return _::extract(*this, i); }
 
     //! Retrieve the value from the last lane
     EVE_FORCEINLINE Type back() const noexcept { return get(Cardinal::value - 1); }
@@ -360,7 +360,7 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE auto slice() const requires(Cardinal::value > 1)
     {
-      return detail::slice(*this);
+      return _::slice(*this);
     }
 
     //==============================================================================================
@@ -394,7 +394,7 @@ namespace eve
     template<std::size_t Slice>
     EVE_FORCEINLINE auto slice(slice_t<Slice> s) const requires(Cardinal::value > 1)
     {
-      return detail::slice(*this, s);
+      return _::slice(*this, s);
     }
 
     //! Exchange this value with another eve::wide

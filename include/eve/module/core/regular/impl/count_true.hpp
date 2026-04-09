@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
@@ -50,7 +50,7 @@ namespace eve::detail
         constexpr std::ptrdiff_t size = T::size();
 
         EVE_ASSUME((begin >= 0) && (begin <= end) && (end <= size));
-        
+
         for (std::ptrdiff_t i = begin; i < end; ++i)
         {
           count += v.get(i);

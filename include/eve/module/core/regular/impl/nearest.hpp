@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
@@ -28,7 +28,7 @@ namespace eve::detail
     {
       return a0;
     }
-    else if constexpr (detail::fp16_should_apply<T>)
+    else if constexpr (_::fp16_should_apply<T>)
     {
       return apply_fp16_as_fp32(nearest, a0);
     }

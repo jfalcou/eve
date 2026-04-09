@@ -124,10 +124,10 @@ namespace eve
   };
 
   template<typename T>
-  concept non_native_abi = detail::is_one_of<T>(detail::types<aggregated_, emulated_, bundle_> {});
+  concept non_native_abi = _::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
 
   template<typename T>
-  concept native_abi = !detail::is_one_of<T>(detail::types<aggregated_, emulated_, bundle_> {});
+  concept native_abi = !_::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
 
   //================================================================================================
   // Checks if a type fills all its storage

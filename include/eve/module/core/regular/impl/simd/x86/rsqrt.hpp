@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //------------------------------------------------------------------------------------------------
   // Generic function for rsqrt on X86
@@ -90,7 +90,7 @@ namespace eve::detail
 
     if constexpr (std::same_as<T, eve::float16_t>)
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v);
+      if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v);
       else if constexpr (c == category::float16x8)          return _mm_rsqrt_ph(v);
       else if constexpr (c == category::float16x16)         return _mm256_rsqrt_ph(v);
       else if constexpr (c == category::float16x32)         return _mm512_rsqrt_ph(v);
@@ -137,7 +137,7 @@ namespace eve::detail
     if constexpr( C::is_complete) return src;
     else if constexpr (std::same_as<T, eve::float16_t>)
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rsqrt, cx, v);
+      if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rsqrt, cx, v);
       else if constexpr (c == category::float16x8)          return _mm_mask_rsqrt_ph(src, m, v);
       else if constexpr (c == category::float16x16)         return _mm256_mask_rsqrt_ph(src, m, v);
       else if constexpr (c == category::float16x32)         return _mm512_mask_rsqrt_ph(src, m, v);

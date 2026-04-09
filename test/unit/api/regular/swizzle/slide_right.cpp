@@ -29,7 +29,7 @@ TTS_CASE_WITH( "Check behavior of slide_right swizzle"
         )
 <typename T, typename L>(T simd, L logicals)
 {
-  eve::detail::for_<0,1,T::size()>
+  eve::_::for_<0,1,T::size()>
   ( [&]<typename Shift>(Shift)
   {
     T ref = [=](auto i, auto)

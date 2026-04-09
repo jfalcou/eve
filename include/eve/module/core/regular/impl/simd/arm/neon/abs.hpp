@@ -13,7 +13,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
@@ -39,7 +39,7 @@ namespace eve::detail
       else if constexpr( cat == category::int8x8          ) return vabs_s8(v);
       else if constexpr (match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return eve::abs.behavior(cpu_{}, opts, v);
+        if      constexpr (!_::supports_fp16_vector_ops) return eve::abs.behavior(cpu_{}, opts, v);
         else if constexpr (cat == category::float16x4)        return vabs_f16(v);
         else if constexpr (cat == category::float16x8)        return vabsq_f16(v);
       }

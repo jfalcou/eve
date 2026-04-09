@@ -121,7 +121,7 @@ simd_cast_logical_test()
 TTS_CASE_TPL("simd_cast, plain", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  eve::detail::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
+  eve::_::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
       []<typename Idx>(Idx)
       {
         simd_cast_test<T, eve::wide<std::uint8_t, eve::fixed<1 << Idx::value>>>();
@@ -134,7 +134,7 @@ TTS_CASE_TPL("simd_cast, plain", eve::test::simd::all_types)
 TTS_CASE_TPL("simd_cast, logical", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  eve::detail::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
+  eve::_::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
       []<typename Idx>(Idx)
       {
         simd_cast_logical_test<T, eve::wide<std::uint8_t, eve::fixed<1 << Idx::value>>>();

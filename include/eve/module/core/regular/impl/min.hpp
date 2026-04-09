@@ -21,7 +21,7 @@
 #include <eve/module/core/regular/is_ordered.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>

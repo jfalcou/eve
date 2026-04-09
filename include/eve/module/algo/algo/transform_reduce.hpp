@@ -59,7 +59,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
     template<typename I, std::size_t size>
     EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
     {
-      eve::detail::for_<0, 1, size>([&](auto idx) { step(arr[idx()], ignore_none, idx); });
+      eve::_::for_<0, 1, size>([&](auto idx) { step(arr[idx()], ignore_none, idx); });
       return false;
     }
 

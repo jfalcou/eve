@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>

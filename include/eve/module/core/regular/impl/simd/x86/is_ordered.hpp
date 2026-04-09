@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_ordered_(EVE_REQUIRES(sse2_),
@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_ORD_Q;
 
-    if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32(is_ordered, a, b);
     }
@@ -62,7 +62,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32_masked(is_ordered, cx, v, w);
     }

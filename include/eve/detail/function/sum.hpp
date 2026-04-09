@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename Options>
   struct sum_t : conditional_callable<sum_t, Options, splat_option>
@@ -19,7 +19,7 @@ namespace eve::detail
     EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::sum] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v);

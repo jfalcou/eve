@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, simd_value W, typename Index>
   EVE_FORCEINLINE auto

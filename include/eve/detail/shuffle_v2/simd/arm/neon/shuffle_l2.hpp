@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 // NOTE: using no_matching_shuffle_t {} because otherwise apple clang crashes.
@@ -61,7 +61,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_neon_set_one_zero(P, fixed<G>, wide<T, N> x)
 {
-  constexpr auto pos = eve::detail::idxm::is_just_setting_one_zero(P::idxs);
+  constexpr auto pos = eve::_::idxm::is_just_setting_one_zero(P::idxs);
 
   if constexpr( !pos ) return no_matching_shuffle_t {};
   else if constexpr( P::reg_size == 8 )

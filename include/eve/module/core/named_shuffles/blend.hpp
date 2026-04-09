@@ -89,7 +89,7 @@ struct blend_t
     {
       using half_t = decltype(T {}.slice(lower_));
 
-      auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
+      auto [p0, p1] = _::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
 
       return std::max(level(as<half_t> {}, as<half_t> {}, g, p0),
                       level(as<half_t> {}, as<half_t> {}, g, p1));
@@ -118,10 +118,10 @@ struct blend_t
       if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
       {
         using half_t  = decltype(T {}.slice(lower_));
-        auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
+        auto [p0, p1] = _::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
         auto l0       = level(as<half_t> {}, as<half_t> {}, g, p0);
         auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
-        return detail::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {l0, l1, 4});
+        return _::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {l0, l1, 4});
       }
       if( current_api >= sse4_1 ) return g_size >= 4 ? 2 : 3;
 
@@ -147,7 +147,7 @@ struct blend_t
   }
 };
 
-inline constexpr auto blend = detail::named_shuffle_2<blend_t> {};
+inline constexpr auto blend = _::named_shuffle_2<blend_t> {};
   //================================================================================================
   //!  @}
   //================================================================================================

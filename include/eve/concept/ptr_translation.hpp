@@ -23,7 +23,7 @@ namespace eve
   //! - `std::byte*`
   //==================================================================================================
   template <typename T>
-  concept translatable_ptr = detail::scalar_pointer<T> && has_plain_translation<value_type_t<T>>;
+  concept translatable_ptr = _::scalar_pointer<T> && has_plain_translation<value_type_t<T>>;
   //==================================================================================================
   //! @}
   //==================================================================================================

@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> max_(EVE_REQUIRES(vmx_),

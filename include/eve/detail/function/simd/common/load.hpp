@@ -28,7 +28,7 @@
 
 #include <iterator>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Load helper
@@ -58,14 +58,14 @@ namespace eve::detail
     if constexpr (C::is_complete)
     {
       if constexpr (C::is_inverted) return piecewise_load(ptr, tgt);
-      else                          return detail::alternative(cx, Wide {}, tgt);
+      else                          return _::alternative(cx, Wide {}, tgt);
     }
     else
     {
       std::ptrdiff_t begin = cx.offset(tgt);
       std::ptrdiff_t end = begin + cx.count(tgt);
 
-      Wide res = detail::alternative(cx, Wide { }, tgt);
+      Wide res = _::alternative(cx, Wide { }, tgt);
 
       if (begin != end)
       {
@@ -111,7 +111,7 @@ namespace eve::detail
   // Load impl
   //================================================================================================
 
-  template<detail::data_source DS, typename T, typename N>
+  template<_::data_source DS, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
     using w_src = wide_value_type_t<DS>;
@@ -126,7 +126,7 @@ namespace eve::detail
     }
   }
 
-  template<relative_conditional_expr C, detail::data_source DS, typename Wide>
+  template<relative_conditional_expr C, _::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
   {
     using e_t = typename pointer_traits<Wide>::value_type;
@@ -200,7 +200,7 @@ namespace eve::detail
     }
   }
 
-  template<relative_conditional_expr C, detail::data_source DS, typename Wide>
+  template<relative_conditional_expr C, _::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
   {
     constexpr auto aggregated = has_aggregated_abi_v<Wide>;
@@ -244,14 +244,14 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, detail::data_source DS, typename Wide>
+  template<callable_options O, _::data_source DS, typename Wide>
   SPY_DISABLE_SANITIZERS Wide load_unsafe_(O const& opts, DS src, as<Wide> tgt) noexcept
   {
     if constexpr (spy::supports::sanitizers_status)
     {
       auto cx = opts[condition_key];
 
-      auto res = detail::alternative(cx, Wide {}, tgt);
+      auto res = _::alternative(cx, Wide {}, tgt);
 
       auto offset = cx.offset(tgt);
       auto count  = cx.count(tgt);
@@ -267,7 +267,7 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, detail::data_source DS, typename Wide>
+  template<callable_options O, _::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
@@ -281,7 +281,7 @@ namespace eve::detail
     {
       return src.load(opts, tgt);
     }
-    else if constexpr (std::input_iterator<DS> && !detail::scalar_pointer<DS>)
+    else if constexpr (std::input_iterator<DS> && !_::scalar_pointer<DS>)
     {
       return load_iterator_(opts, src, tgt);
     }

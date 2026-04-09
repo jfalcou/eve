@@ -13,13 +13,13 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, simd_value... Ts>
   EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
-    requires (detail::fp16_should_apply<Ts> && ...)
+    requires (_::fp16_should_apply<Ts> && ...)
   {
-    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fam[o], ts...);
+    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fam[o], ts...);
     else                                                                             return apply_fp16_as_fp32(fam[o], ts...);
   }
 
@@ -60,7 +60,7 @@ namespace eve::detail
     else
     {
       using r_t = common_value_t<T, U, V>;
-      return detail::mask_op(cx, detail::return_2nd, r_t(a), fam[o](r_t(a), r_t(b), r_t(c)));
+      return _::mask_op(cx, _::return_2nd, r_t(a), fam[o](r_t(a), r_t(b), r_t(c)));
     }
   }
 

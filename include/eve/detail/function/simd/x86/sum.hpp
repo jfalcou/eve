@@ -12,7 +12,7 @@
 #include <eve/detail/remove_garbage.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
@@ -62,7 +62,7 @@ namespace eve::detail
       }
       else  if constexpr(match(c, category::float16))
       {
-        if constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(sum, v);
+        if constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(sum, v);
         else                                             return sum.behavior(cpu_{}, opts, v);
       }
       else  if constexpr( c == category::int32x4 || c == category::uint32x4 )

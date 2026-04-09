@@ -14,14 +14,14 @@
 
 // rotl is only implemented for unsigned integers as per the EVE documentation
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename S, typename N, callable_options O>
 EVE_FORCEINLINE wide<T,N> rotl_(EVE_REQUIRES(avx512_), O const&, wide<T, N> v, wide<S, N> s) noexcept
 requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
 {
   constexpr auto c = categorize<wide<T, N>>();
-  
+
   if      constexpr( c == category::uint32x16 ) return _mm512_rolv_epi32 (v, s);
   else if constexpr( c == category::uint32x8  ) return _mm256_rolv_epi32 (v, s);
   else if constexpr( c == category::uint32x4  ) return _mm_rolv_epi32    (v, s);

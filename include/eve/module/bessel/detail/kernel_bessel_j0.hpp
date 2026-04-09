@@ -16,7 +16,7 @@
 // They are not meant to be called directly
 // The inspiration is from boost math
 /////////////////////////////////////////////////////////////////////////////////
-namespace eve::detail
+namespace eve::_
 {
 
   template <typename T > constexpr T cb_j0(T a0) noexcept

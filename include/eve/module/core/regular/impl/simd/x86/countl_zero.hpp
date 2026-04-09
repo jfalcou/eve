@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sse2_),

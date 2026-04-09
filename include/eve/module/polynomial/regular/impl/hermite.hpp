@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //Recurrence relation for hermite polynomials:
   template<value N, floating_value T, callable_options O> //successor

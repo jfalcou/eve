@@ -18,7 +18,7 @@ namespace eve
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T>
     using wrap = T;
@@ -27,7 +27,7 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::ppc_)
   {
-    using detail::wrap;
+    using _::wrap;
 
     constexpr auto size_check = [](std::size_t t, std::size_t n)
     {
@@ -36,7 +36,7 @@ namespace eve
 
     if constexpr (std::same_as<T, float> && (N::value <= 4))
     {
-      return wrap<__vector float>{}; 
+      return wrap<__vector float>{};
     }
     else if constexpr (std::same_as<T, double> && (N::value <= 2))
     {
@@ -76,7 +76,7 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, eve::ppc_)
   {
-    using detail::wrap;
+    using _::wrap;
 
     constexpr auto size_check = [](std::size_t t, std::size_t n)
     {

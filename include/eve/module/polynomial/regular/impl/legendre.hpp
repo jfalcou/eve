@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   // Recurrence relation for legendre polynomials of all kinds
   template<typename L, typename T, callable_options O>

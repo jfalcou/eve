@@ -13,7 +13,7 @@
 
 #include <cstddef>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Emulation Helpers

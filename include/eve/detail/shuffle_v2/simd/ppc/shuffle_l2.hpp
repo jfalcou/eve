@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>

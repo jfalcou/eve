@@ -10,7 +10,7 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T> constexpr
   T cb_i0(T x)

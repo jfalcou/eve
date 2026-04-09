@@ -18,7 +18,7 @@
 #  include <intrin.h>
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto popcount_(EVE_REQUIRES(cpu_), O const&, T x) noexcept

@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_select.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>

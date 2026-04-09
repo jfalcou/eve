@@ -19,7 +19,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_using_switch_)
   EVE_DECLARE_CALLABLE(compress_using_switch_, compress_using_switch)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_using_switch_, compress_using_switch);
   }

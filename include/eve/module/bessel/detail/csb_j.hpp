@@ -13,7 +13,7 @@
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template < typename I,  typename T > constexpr EVE_FORCEINLINE
   T cb_j(I nu, T x) noexcept
@@ -62,7 +62,7 @@ namespace eve::detail
     if constexpr( integral_value<I> ) return sb_j(convert(n, as<elt_t>()), x);
     else return if_else(abs(x) < eps(as(x)) && is_gez(n),
                         if_else(is_eqz(n), one(as(x)), zero),
-                        detail::cb_j(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));
+                        _::cb_j(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));
 
   }
 }

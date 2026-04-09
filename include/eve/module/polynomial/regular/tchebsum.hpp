@@ -32,7 +32,7 @@ namespace eve
     operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
-    template<floating_value X, eve::detail::range R>
+    template<floating_value X, eve::_::range R>
     EVE_FORCEINLINE constexpr
     upgrade_if_t<Options, eve::common_value_t<typename R::value_type, X>>
     operator()(X x, R const& t) const noexcept
@@ -123,11 +123,11 @@ namespace eve
 //================================================================================================
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto tchebsum_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return tchebsum[o.drop(widen)](upgrade(ts)...);
   }
@@ -142,7 +142,7 @@ namespace eve::detail
     if constexpr(N == 0)
       return zero(as(xx));
    else if constexpr(std::same_as<elt_t, eve::float16_t>)
-      return eve::detail::apply_fp16_as_fp32(eve::tchebsum[o], xx, cs...);
+      return eve::_::apply_fp16_as_fp32(eve::tchebsum[o], xx, cs...);
     else if constexpr(O::contains(widen))
       return tchebsum(upgrade(xx), upgrade(cs)...);
     else if constexpr( N == 1 )

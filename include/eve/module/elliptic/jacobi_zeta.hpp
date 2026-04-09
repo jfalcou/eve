@@ -84,7 +84,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<floating_value T, callable_options O>
     auto jacobi_zeta_(EVE_REQUIRES(cpu_), O const&, T phi, T k) noexcept

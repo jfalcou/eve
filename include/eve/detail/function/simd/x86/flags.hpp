@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     // AVX512 FIXUPIMM intrinsic enum class builder
     enum class token  { qnan    = 0   // quiet nan

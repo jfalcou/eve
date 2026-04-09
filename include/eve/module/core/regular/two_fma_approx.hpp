@@ -77,7 +77,7 @@ namespace eve
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE auto two_fma_approx_(EVE_REQUIRES(cpu_), O const&, T a, T b, T c) noexcept

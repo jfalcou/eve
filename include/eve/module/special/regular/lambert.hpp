@@ -77,7 +77,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T>
     EVE_FORCEINLINE constexpr auto lambert_serie_utility(T r)

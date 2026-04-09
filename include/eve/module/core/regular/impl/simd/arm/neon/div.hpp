@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
@@ -31,7 +31,7 @@ namespace eve::detail
 
       if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(div, a, b);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(div, a, b);
         else if constexpr (c == category::float16x8)          return vdivq_f16(a, b);
         else if constexpr (c == category::float16x4)          return vdiv_f16(a, b);
       }

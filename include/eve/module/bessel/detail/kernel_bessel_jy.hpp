@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<floating_value T>
 EVE_FORCEINLINE constexpr auto

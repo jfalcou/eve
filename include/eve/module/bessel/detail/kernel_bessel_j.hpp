@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/bessel/detail/kernel_bessel_j0.hpp>
-#include <eve/module/bessel/detail/kernel_bessel_j1.hpp>   
+#include <eve/module/bessel/detail/kernel_bessel_j1.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
@@ -23,7 +23,7 @@
 // n and x ranges values which are not tested on entry.
 // The inspiration is from boost math
 /////////////////////////////////////////////////////////////////////////////////
-namespace eve::detail
+namespace eve::_
 {
 
 template<value I, floating_value T>
@@ -37,8 +37,8 @@ template<floating_value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
 {
-  auto prev    = j0; 
-  auto current = j1; 
+  auto prev    = j0;
+  auto current = j1;
   T    scale(1), value(j0);
   auto nn = if_else(n < x, n, zero);
   for( int k = 1; k < eve::maximum(nn); ++k )

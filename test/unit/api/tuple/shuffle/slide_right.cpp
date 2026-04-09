@@ -30,7 +30,7 @@ TTS_CASE_TPL( "Check behavior of slide_right shuffle", eve::test::scalar::all_ty
                                           };
                             };
 
-  eve::detail::for_<0,1,w_t::size()>
+  eve::_::for_<0,1,w_t::size()>
   ( [&]<typename Shift>(Shift)
   {
     eve::wide<s_t> ref =  [&](auto i, auto )

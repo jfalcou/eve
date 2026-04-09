@@ -22,7 +22,7 @@ namespace eve
     static constexpr auto find()
     {
       constexpr bool f16 = std::same_as<Type, eve::float16_t>;
-      constexpr bool is_fp16_no_support = f16 && !detail::supports_fp16_vector_conversion;
+      constexpr bool is_fp16_no_support = f16 && !_::supports_fp16_vector_conversion;
 
       if constexpr(supports_simd && !is_fp16_no_support)
       {

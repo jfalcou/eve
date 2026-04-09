@@ -32,7 +32,7 @@ struct compress_store_core
     {
       auto [c_out1, x1, o1] = store_equivalent(settings.c_out, x, o);
       auto res1             = operator()(
-          detail::compress_callable_settings(settings.safety, dense, settings.c_in, c_out1),
+          _::compress_callable_settings(settings.safety, dense, settings.c_in, c_out1),
           x1,
           m,
           o1);
@@ -42,7 +42,7 @@ struct compress_store_core
     {
       auto   offset = settings.c_out.offset(as(x));
       auto   count  = settings.c_out.count(as(x));
-      return operator()(detail::compress_callable_settings(
+      return operator()(_::compress_callable_settings(
                             settings.safety, dense, settings.c_in, keep_first(count)),
                         x,
                         m,
@@ -53,7 +53,7 @@ struct compress_store_core
       stack_buffer<T> buf;
 
       auto unsafe_settings =
-          detail::compress_callable_settings(unsafe, dense, settings.c_in, ignore_none);
+          _::compress_callable_settings(unsafe, dense, settings.c_in, ignore_none);
 
       auto up_to       =   operator()(unsafe_settings, x, m, buf.ptr());
       std::ptrdiff_t n = up_to - buf.ptr();
@@ -93,7 +93,7 @@ struct compress_store_core
     else if( !COut::is_complete )
     {
       auto safe_settings =
-          detail::compress_callable_settings(safe, dense, settings.c_in, settings.c_out);
+          _::compress_callable_settings(safe, dense, settings.c_in, settings.c_out);
       return operator()(safe_settings, x, m, o);
     }
     else
@@ -115,6 +115,6 @@ struct compress_store_core
   }
 };
 
-inline constexpr auto compress_store = detail::compress_callable_no_density<compress_store_core> {};
+inline constexpr auto compress_store = _::compress_callable_no_density<compress_store_core> {};
 
 }

@@ -15,7 +15,7 @@
 #include <bit>
 #include <array>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_), O const &, T x, index_t<I0>, index_t<I1>) noexcept

@@ -9,7 +9,7 @@
 
 #include <eve/detail/remove_garbage.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<scalar_value T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto

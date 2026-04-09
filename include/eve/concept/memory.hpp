@@ -14,12 +14,12 @@ namespace eve
 {
   template<typename T, typename SIMD>
   concept simd_compatible_ptr = simd_value<SIMD> &&
-    (!detail::range<T>) &&
+    (!_::range<T>) &&
     std::same_as<translated_element_type_t<SIMD>, translated_value_type_t<T>>;
 
   template<typename T, typename SIMD>
   concept logical_simd_compatible_ptr = simd_value<SIMD> &&
-    (!detail::range<T>) &&
+    (!_::range<T>) &&
    sizeof(value_type_t<T>) == sizeof(element_type_t<SIMD>);
 
 }

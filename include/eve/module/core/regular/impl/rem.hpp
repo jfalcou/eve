@@ -21,7 +21,7 @@
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept

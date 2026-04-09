@@ -21,9 +21,9 @@
 // n and x ranges values which are not tested on entry.
 // The inspiration is from boost math
 /////////////////////////////////////////////////////////////////////////////////
-namespace eve::detail
+namespace eve::_
 {
-  
+
   /////////////////////////////////////////////////////////////////////////
   // bessel_i
   template<floating_value T>
@@ -31,7 +31,7 @@ namespace eve::detail
   kernel_bessel_i(T n, T x) noexcept
   {
     auto br_small = [](auto nn, auto xx) { return bessel_i_small_z_series(nn, xx); };
-    
+
     auto br_medium = [](auto nn, auto xx)
       {
         auto [in, ipn, kn, kpn] = kernel_bessel_ik(nn, xx);
@@ -46,7 +46,7 @@ namespace eve::detail
         }
         else return rsqrt(xx * pio_2(as(xx))) * sinh(xx);
       };
-    
+
     if constexpr( scalar_value<T> )
     {
       if( is_ngez(x) ) return nan(as(x));
@@ -70,7 +70,7 @@ namespace eve::detail
       if( eve::any(iseqzn) ) { r = if_else(iseqzn, cb_i0(x), r); }
       auto iseq1n = n == one(as(n));
       if( eve::any(iseq1n) ) { r = if_else(n == one(as(n)), cb_i1(x), r); }
-      
+
       auto notdone = is_gez(x) && !(iseqzn || iseq1n);
       x            = if_else(notdone, x, allbits);
       if( eve::any(notdone) )

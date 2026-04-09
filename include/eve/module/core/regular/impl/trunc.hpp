@@ -18,13 +18,13 @@
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto trunc_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
-    requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires(_::fp16_should_apply<common_value_t<Ts...>>)
   {
-    if constexpr (O::contains(almost)) return detail::map(trunc[o], ts...);
+    if constexpr (O::contains(almost)) return _::map(trunc[o], ts...);
     else                               return apply_fp16_as_fp32(trunc[o], ts...);
   }
 

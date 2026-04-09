@@ -19,7 +19,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(byte_16_runtime_shuffle_)
   EVE_DECLARE_CALLABLE(byte_16_runtime_shuffle_, byte_16_runtime_shuffle)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(byte_16_runtime_shuffle_, byte_16_runtime_shuffle);
   }

@@ -23,7 +23,7 @@ namespace eve
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
     constexpr EVE_FORCEINLINE
-    detail::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
@@ -90,14 +90,14 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<callable_options O, simd_value... Ts>
     EVE_FORCEINLINE constexpr auto fnms_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
-      requires (detail::fp16_should_apply<Ts> && ...)
+      requires (_::fp16_should_apply<Ts> && ...)
     {
-      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fnms[o], ts...);
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fnms[o], ts...);
       else                                                                            return apply_fp16_as_fp32(fnms[o], ts...);
     }
 

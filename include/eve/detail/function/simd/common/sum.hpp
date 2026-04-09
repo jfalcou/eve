@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
@@ -27,7 +27,7 @@ namespace eve::detail
     if constexpr (std::same_as<C, ignore_none_>)
     {
             if constexpr( N::value == 1 )               return v;
-      else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::detail::sum(v) );
+      else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::_::sum(v) );
       else  if constexpr( is_aggregated_v<abi_t<T, N>>)
       {
         auto[l,h] = v.slice();

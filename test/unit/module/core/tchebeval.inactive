@@ -61,7 +61,7 @@ TTS_CASE_WITH("Check behavior of tchebeval on wide",
   { return boost::math::chebyshev_clenshaw_recurrence(c2.data(), c2.size(), x); };
   auto bcl3 = [c3](auto x) -> v_t
   {
-    return boost::math::detail::unchecked_chebyshev_clenshaw_recurrence(
+    return boost::math::_::unchecked_chebyshev_clenshaw_recurrence(
         c3.data(), c3.size(), v_t(-1), v_t(1), v_t(x));
   };
 

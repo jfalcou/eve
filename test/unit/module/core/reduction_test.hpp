@@ -20,7 +20,7 @@ auto invoke_truth_fn(T v, C mask)
   }
   else if constexpr (eve::conditional_expr<C>)
   {
-    return Impl{}(v, eve::detail::expand_mask(mask, eve::as(v)));
+    return Impl{}(v, eve::_::expand_mask(mask, eve::as(v)));
   }
   else
   {

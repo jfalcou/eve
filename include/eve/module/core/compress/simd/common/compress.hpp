@@ -9,7 +9,7 @@
 
 #include <eve/module/core/compress/detail/compress_using_masks.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<relative_conditional_expr C, typename T, typename U, typename N>

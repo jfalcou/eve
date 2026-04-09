@@ -20,7 +20,7 @@ TTS_CASE_TPL("byte 16 runtime shuffle 4 elements", eve::test::wides_t<tts::types
   {
     T what([](int i, int) { return -i; });
     T pattern([](int i, int) { return i / 2; });
-    T actual = eve::detail::byte_16_runtime_shuffle(what, pattern);
+    T actual = eve::_::byte_16_runtime_shuffle(what, pattern);
     T expected = -pattern;
 
     TTS_EQUAL(actual, expected);

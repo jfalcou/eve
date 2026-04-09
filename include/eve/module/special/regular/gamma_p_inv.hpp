@@ -82,7 +82,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr auto  gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T p, T k) noexcept

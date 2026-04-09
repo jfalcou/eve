@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<relative_conditional_expr C, scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void store_impl(vmx_, C const& cx, wide<T, N> const& value, Ptr ptr) noexcept

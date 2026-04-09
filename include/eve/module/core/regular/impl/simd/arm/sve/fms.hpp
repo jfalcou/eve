@@ -13,7 +13,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<scalar_value T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>

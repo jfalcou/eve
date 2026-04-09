@@ -24,7 +24,7 @@ template<std::ptrdiff_t Shift, std::ptrdiff_t N>
 inline constexpr auto slide_right_pattern = fix_pattern<N>([](auto i, auto)
                                                            { return i < Shift ? na_ : i - Shift; });
 
-namespace detail
+namespace _
 {
   //==============================================================================================
   // Classify a pattern as a slide_right

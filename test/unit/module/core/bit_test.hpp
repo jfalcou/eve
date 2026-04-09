@@ -120,7 +120,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
     const auto inA = eve::bit_cast(ra_t { va }, as<u_t>{});
     const auto inB = eve::bit_cast(rb_t { vb }, as<u_t>{});
 
-    return eve::bit_cast(eve::detail::map(truthFn, inA, inB, eve::bit_cast(vc, as<u_t>{})...), as<ra_t>{});
+    return eve::bit_cast(eve::_::map(truthFn, inA, inB, eve::bit_cast(vc, as<u_t>{})...), as<ra_t>{});
   };
 
   const auto run_case = [&](auto va, auto vb, auto vc)

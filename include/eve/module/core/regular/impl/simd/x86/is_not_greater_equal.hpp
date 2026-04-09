@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(sse2_),
@@ -35,7 +35,7 @@ namespace eve::detail
 
       if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_not_greater_equal, a, b);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_not_greater_equal, a, b);
         else if constexpr (c == category::float16x8)  return s_t{ _mm_cmp_ph_mask(a, b, m) };
         else if constexpr (c == category::float16x16) return s_t{ _mm256_cmp_ph_mask(a, b, m) };
         else if constexpr (c == category::float16x32) return s_t{ _mm512_cmp_ph_mask(a, b, m) };
@@ -81,7 +81,7 @@ namespace eve::detail
       if      constexpr( C::is_complete )            return s;
       else if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_not_greater_equal, mask, v, w);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_not_greater_equal, mask, v, w);
         else if constexpr (c == category::float16x8)          return mask8 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
         else if constexpr (c == category::float16x16)         return mask16 {_mm512_mask_cmp_ph_mask(m, v, w, f)};
         else if constexpr (c == category::float16x32)         return mask32 {_mm512_mask_cmp_ph_mask(m, v, w, f)};

@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  namespace detail {
+  namespace _ {
 
 #if defined(EVE_AVX512_DEFAULT_64_BYTES)
   constexpr bool avx512_default_64_bytes = true;
@@ -19,7 +19,7 @@ namespace eve
   constexpr bool avx512_default_64_bytes = false;
 #endif
 
-  }  // namespace detail
+  }  // namespace _
 
   //================================================================================================
   //! @addtogroup arch
@@ -66,7 +66,7 @@ namespace eve
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
   constexpr std::ptrdiff_t nofs_cardinal_v =
-    (std::same_as<ABI, x86_512_> && !detail::avx512_default_64_bytes)
+    (std::same_as<ABI, x86_512_> && !_::avx512_default_64_bytes)
      ? expected_cardinal_v<T, x86_256_> : expected_cardinal_v<T, ABI>;
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>

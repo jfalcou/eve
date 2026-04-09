@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/is_less.hpp>
 
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, floating_scalar_value T, typename N,  typename F>

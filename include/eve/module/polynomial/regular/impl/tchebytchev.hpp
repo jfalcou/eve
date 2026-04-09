@@ -11,7 +11,7 @@
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   // Recurrence relation for Tchebytchev polynomials:
   template<typename T, callable_options O>

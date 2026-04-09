@@ -10,7 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>

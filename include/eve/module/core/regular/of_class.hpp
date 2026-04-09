@@ -90,7 +90,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<std::uint8_t I, typename T, callable_options O>

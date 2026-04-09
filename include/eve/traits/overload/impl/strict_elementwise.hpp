@@ -25,14 +25,14 @@ namespace eve
     using func_t =  Func<OptionsValues>;
 
     template<typename... Ts>
-    constexpr EVE_FORCEINLINE typename detail::wide_result<func_t, Ts...>::type map(Ts... ts) const noexcept
+    constexpr EVE_FORCEINLINE typename _::wide_result<func_t, Ts...>::type map(Ts... ts) const noexcept
     {
-      using R = typename detail::wide_result<func_t, Ts...>::type;
+      using R = typename _::wide_result<func_t, Ts...>::type;
 
-      if constexpr (detail::fp16_should_apply<R> && (detail::fp16_should_apply<Ts> && ...))
-        return detail::apply_fp16_as_fp32(this->derived(), ts...);
+      if constexpr (_::fp16_should_apply<R> && (_::fp16_should_apply<Ts> && ...))
+        return _::apply_fp16_as_fp32(this->derived(), ts...);
       else
-        return detail::map(this->derived(), ts...);
+        return _::map(this->derived(), ts...);
     }
 
     template<callable_options O, typename T, typename... Ts>
@@ -49,7 +49,7 @@ namespace eve
       else if constexpr(any_emulated && has_emulated_implementation) return func_t::deferred_call(emulated_{}, o, x, xs...);
       else if constexpr(any_emulated && supports_map_no_conversion)  return this->map(x, xs...);
       else if constexpr(has_implementation)                          return func_t::deferred_call(a, o, x, xs...);
-      else                                                           return detail::ignore{};
+      else                                                           return _::ignore{};
     }
 
     template<callable_options O, typename T, typename... Ts>
@@ -57,7 +57,7 @@ namespace eve
     {
       if constexpr (!O::contains(condition_key) || match_option<condition_key, O, ignore_none_>)
       {
-        constexpr bool supports_call = !std::same_as<detail::ignore, decltype(adapt_call(arch, opts, x0, xs...))>;
+        constexpr bool supports_call = !std::same_as<_::ignore, decltype(adapt_call(arch, opts, x0, xs...))>;
         static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
         return adapt_call(arch, opts.drop(condition_key), x0, xs...);
       }
@@ -69,11 +69,11 @@ namespace eve
         [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
 
         // Check that the mask and the value are of same kind if simd
-        constexpr bool compatible_mask = detail::validate_mask_for<cond_t, decltype(f(x0, xs...))>();
+        constexpr bool compatible_mask = _::validate_mask_for<cond_t, decltype(f(x0, xs...))>();
         static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
 
         // Shush any other cascading errors
-        if constexpr(!compatible_mask) return detail::ignore{};
+        if constexpr(!compatible_mask) return _::ignore{};
         // Handle masking SIMD with scalar with ?: to prevent issues in masking optimizations
         else
         // Or proceed to find the proper way to handle this masked call
@@ -90,7 +90,7 @@ namespace eve
           else
           {
             // if not, call the non-masked version then mask piecewise
-            return detail::mask_op(cond, detail::return_2nd, x0, f(x0, xs...));
+            return _::mask_op(cond, _::return_2nd, x0, f(x0, xs...));
           }
         }
       }

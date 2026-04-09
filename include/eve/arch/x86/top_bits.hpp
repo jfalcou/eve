@@ -58,7 +58,7 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   // -- constructor(ignore)
   template<relative_conditional_expr C> EVE_FORCEINLINE constexpr explicit top_bits(C c)
   {
-    storage = detail::cond_to_int<static_size, bits_per_element, raw_storage_type>(c);
+    storage = _::cond_to_int<static_size, bits_per_element, raw_storage_type>(c);
   }
 
   // -- constructor: logical + ignore

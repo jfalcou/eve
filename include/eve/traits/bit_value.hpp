@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     // SIMD/* drive case
     // Equality of sizeof of type/element_type is enough
@@ -84,18 +84,18 @@ namespace eve
   struct bit_value;
 
   template<scalar_value T0, value... Ts>
-  requires( detail::adequate_size<T0,Ts...>().size != -1 )
+  requires( _::adequate_size<T0,Ts...>().size != -1 )
   struct bit_value<T0,Ts...>
   {
-    static constexpr auto sz = detail::adequate_size<T0,Ts...>();
-    using type  = detail::conditional_t< sz.is_scalar
+    static constexpr auto sz = _::adequate_size<T0,Ts...>();
+    using type  = _::conditional_t< sz.is_scalar
                                     , T0
                                     , as_wide_t<T0, fixed<sz.size / sizeof(T0)>>
                                     >;
   };
 
   template<simd_value T0, value... Ts>
-  requires( (detail::bit_compatibility<T0,Ts>) && ... )
+  requires( (_::bit_compatibility<T0,Ts>) && ... )
   struct bit_value<T0,Ts...>
   {
     using type = T0;

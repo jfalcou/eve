@@ -13,7 +13,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve::algo::detail
+namespace eve::algo::_
 {
   template <typename R>
   concept has_begin_end = requires (R&& r) {

@@ -19,7 +19,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_using_masks_)
   EVE_DECLARE_CALLABLE(compress_using_masks_, compress_using_masks)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_using_masks_, compress_using_masks);
   }
@@ -34,7 +34,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_using_masks_shuffle_)
   EVE_DECLARE_CALLABLE(compress_using_masks_shuffle_, compress_using_masks_shuffle)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_using_masks_shuffle_, compress_using_masks_shuffle);
   }
@@ -47,7 +47,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_using_masks_to_left_)
   EVE_DECLARE_CALLABLE(compress_using_masks_to_left_, compress_using_masks_to_left)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_using_masks_to_left_, compress_using_masks_to_left);
   }

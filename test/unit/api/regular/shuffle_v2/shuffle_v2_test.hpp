@@ -12,7 +12,7 @@
 namespace shuffle_test
 {
 
-namespace idxm = eve::detail::idxm;
+namespace idxm = eve::_::idxm;
 
 template<typename T, typename U, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
@@ -66,7 +66,7 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
 
     if( g() >= T::size() || g() >= eve::expected_cardinal_v<e_t> || idxs.size() == 1 )
     {
-      expected_level = eve::detail::idxm::has_zeroes(idxs);
+      expected_level = eve::_::idxm::has_zeroes(idxs);
     }
     if( eve::has_emulated_abi_v<T> ) expected_level = 0;
     TTS_EQUAL(expected_level, l())
@@ -89,7 +89,7 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
 
     if( g() >= T::size() || g() >= eve::expected_cardinal_v<e_t> || idxs.size() == 1 )
     {
-      expected_level = eve::detail::idxm::has_zeroes(idxs);
+      expected_level = eve::_::idxm::has_zeroes(idxs);
     }
     if( eve::has_emulated_abi_v<T> ) expected_level = 0;
     TTS_EQUAL(expected_level, l()) << "G: " << g() << "\npattern: " << p;
@@ -308,7 +308,7 @@ debug_call_shuffle_l_directly()
 {
   using w_t = eve::as_wide_t<T, eve::fixed<N>>;
 
-  auto p = eve::detail::expanded_pattern<w_t, G, I...>;
+  auto p = eve::_::expanded_pattern<w_t, G, I...>;
   auto g = eve::lane<G>;
 
   w_t x {[](int i, int) { return i + 1; }};
@@ -317,13 +317,13 @@ debug_call_shuffle_l_directly()
 #  if !defined(EVE_INCLUDE_ARM_SVE_HEADER) && !defined(EVE_INCLUDE_POWERPC_HEADER)
   if constexpr( l == 2 )
   {
-    eve::detail::shuffle_l2_(eve::detail::delay_t {}, eve::current_api, p, g, x);
+    eve::_::shuffle_l2_(eve::_::delay_t {}, eve::current_api, p, g, x);
   }
   else
 #  endif
       if constexpr( l == 99 )
   {
-    eve::detail::shuffle_l_fallback_(eve::detail::delay_t {}, eve::current_api, p, g, x);
+    eve::_::shuffle_l_fallback_(eve::_::delay_t {}, eve::current_api, p, g, x);
   }
   else { std::cout << __func__ << " you need to add l: " << l << std::endl; }
 }

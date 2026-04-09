@@ -12,7 +12,7 @@
 #include <eve/module/algo/algo/for_each_iteration_fixed_overflow.hpp>
 #include <eve/module/algo/algo/min_value.hpp>
 
-namespace eve::algo::detail
+namespace eve::algo::_
 {
 
 template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
@@ -176,9 +176,9 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
     auto processed = preprocess_range(TraitsSupport::get_traits(), rng);
     if constexpr( decltype(processed.traits())::contains(single_pass) )
     {
-      return detail::min_element_1_pass[TraitsSupport::get_traits()](rng, less);
+      return _::min_element_1_pass[TraitsSupport::get_traits()](rng, less);
     }
-    else { return detail::min_element_2_pass[TraitsSupport::get_traits()](rng, less); }
+    else { return _::min_element_2_pass[TraitsSupport::get_traits()](rng, less); }
   }
 
   template<relaxed_range Rng>

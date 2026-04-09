@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, relaxed_logical_value T>
   EVE_FORCEINLINE constexpr T logical_andnot_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept

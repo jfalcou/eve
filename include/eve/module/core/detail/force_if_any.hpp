@@ -9,7 +9,7 @@
 
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   // if the `pedantic` option is satisfied and any  satisfies the predicate test, value is returned else r.
   //

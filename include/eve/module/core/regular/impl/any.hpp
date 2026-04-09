@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template <callable_options O, logical_simd_value T>
 EVE_FORCEINLINE T any_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept

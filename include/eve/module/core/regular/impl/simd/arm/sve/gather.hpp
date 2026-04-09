@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<U, N> gather_impl(EVE_REQUIRES(sve_), O const& opts, U const* p, wide<T, N> v) noexcept

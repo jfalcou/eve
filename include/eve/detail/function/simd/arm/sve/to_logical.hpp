@@ -14,7 +14,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/arch/fundamental_cardinal.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto to_logical(wide<T, N> const& v) noexcept

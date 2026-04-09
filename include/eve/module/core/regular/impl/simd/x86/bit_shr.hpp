@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   // bit_shr[mask](wide_val, wide_mask)
   template<conditional_expr C, integral_scalar_value T, typename S, typename N, callable_options O>

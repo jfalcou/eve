@@ -29,13 +29,13 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
 // Local helper for product_type if_else implementation
 template<typename T, eve::product_type U, eve::product_type V>
 EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
 {
-  using r_t = detail::conditional_t<simd_value<U>, U, V>;
+  using r_t = _::conditional_t<simd_value<U>, U, V>;
   return r_t {kumi::map([&](auto const& vv, auto const& fv) { return if_else(cond, vv, fv); }, t, f)};
 }
 
@@ -88,7 +88,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U 
   }
   else
   {
-    using r_t = typename detail::conditional_t < logical_value<U> || logical_value<V>
+    using r_t = typename _::conditional_t < logical_value<U> || logical_value<V>
                                             , common_logical<U,V>
                                             , common_value<U,V>
                                             >::type;

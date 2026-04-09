@@ -112,7 +112,7 @@ namespace eve
 //================================================================================================
   template<typename T> using unaligned_t = decltype(unalign(std::declval<T>()));
 }
-namespace eve::detail
+namespace eve::_
 {
   template<std::contiguous_iterator I, callable_options O>
   constexpr EVE_FORCEINLINE I unalign_(EVE_REQUIRES(cpu_), O const&, I i) noexcept

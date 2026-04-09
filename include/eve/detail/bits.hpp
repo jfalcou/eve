@@ -9,7 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template <typename N>
   EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n)

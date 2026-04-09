@@ -15,7 +15,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   // Types that are too big and are not emulated require aggregation
   template<typename Type, typename Size>
@@ -68,7 +68,7 @@ namespace eve
 
 #if !defined(EVE_DOXYGEN_INVOKED)
   template<typename Type, typename Lanes>
-  requires( arithmetic<Type> && detail::require_aggregation<Type, Lanes> )
+  requires( arithmetic<Type> && _::require_aggregation<Type, Lanes> )
   struct abi<Type, Lanes>
   {
     using type = eve::aggregated_;
@@ -82,20 +82,20 @@ namespace eve
   };
 
   template<typename Type, typename Lanes>
-  requires( arithmetic<Type> && !detail::require_aggregation<Type, Lanes> )
+  requires( arithmetic<Type> && !_::require_aggregation<Type, Lanes> )
   struct abi<Type, Lanes> : abi_of<Type, Lanes::value>
   {};
 
   // Wrapper for SIMD registers holding logical type
   template<typename Type, typename Lanes>
-  requires( arithmetic<Type> && detail::require_aggregation<Type, Lanes> )
+  requires( arithmetic<Type> && _::require_aggregation<Type, Lanes> )
   struct abi<logical<Type>, Lanes>
   {
     using type = eve::aggregated_;
   };
 
   template<typename Type, typename Lanes>
-  requires( arithmetic<Type> && !detail::require_aggregation<Type, Lanes> )
+  requires( arithmetic<Type> && !_::require_aggregation<Type, Lanes> )
   struct abi<logical<Type>, Lanes> : abi_of<logical<Type>, Lanes::value>
   {};
 #endif

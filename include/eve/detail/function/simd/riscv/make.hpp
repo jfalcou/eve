@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/traits/as_integer.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<arithmetic_scalar_value T, typename N>

@@ -96,7 +96,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr EVE_NOINLINE T
@@ -109,7 +109,7 @@ namespace eve
       else if constexpr(O::contains(radpi))
         return radinpi(asin[o.drop(radpi)](a0));
       else  if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::asin[o], a0);
+        return eve::_::apply_fp16_as_fp32(eve::asin[o], a0);
       else
       {
         using elt_t = element_type_t<T>;

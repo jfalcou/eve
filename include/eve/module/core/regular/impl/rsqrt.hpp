@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T rsqrt_(EVE_REQUIRES(cpu_), O const& , T const& a0) noexcept

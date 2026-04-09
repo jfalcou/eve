@@ -28,7 +28,7 @@ TTS_CASE("eve.algo for_each_iteration_fixed_overflow, selection")
     auto sel = eve::algo::for_each_iteration_fixed_overflow(tr, f, l);
     TTS_TYPE_IS(
         decltype(sel),
-        (eve::algo::detail::for_each_iteration_fixed_overflow_aligning<decltype(tr), u_it, u_it>));
+        (eve::algo::_::for_each_iteration_fixed_overflow_aligning<decltype(tr), u_it, u_it>));
 
     TTS_EQUAL(sel.base, fix.aligned_begin());
     TTS_TYPE_IS(decltype(sel.base), a_it);
@@ -40,7 +40,7 @@ TTS_CASE("eve.algo for_each_iteration_fixed_overflow, selection")
     auto sel = eve::algo::for_each_iteration_fixed_overflow(tr, f, l);
 
     TTS_TYPE_IS(decltype(sel),
-                (eve::algo::detail::
+                (eve::algo::_::
                      for_each_iteration_fixed_overflow_precise_f_l<decltype(tr), u_it, u_it>));
 
     TTS_EQUAL(sel.base, f);
@@ -54,7 +54,7 @@ TTS_CASE("eve.algo for_each_iteration_fixed_overflow, selection")
 
     TTS_TYPE_IS(
         decltype(sel),
-        (eve::algo::detail::for_each_iteration_fixed_overflow_precise_f<decltype(tr), u_it, u_it>));
+        (eve::algo::_::for_each_iteration_fixed_overflow_precise_f<decltype(tr), u_it, u_it>));
 
     TTS_EQUAL(sel.base, f);
     TTS_TYPE_IS(decltype(sel.base), u_it);
@@ -67,7 +67,7 @@ TTS_CASE("eve.algo for_each_iteration_fixed_overflow, selection")
 
     TTS_TYPE_IS(
         decltype(sel),
-        (eve::algo::detail::for_each_iteration_fixed_overflow_precise_f<decltype(tr), a_it, u_it>));
+        (eve::algo::_::for_each_iteration_fixed_overflow_precise_f<decltype(tr), a_it, u_it>));
 
     TTS_EQUAL(sel.base, a_f);
     TTS_TYPE_IS(decltype(sel.base), a_it);

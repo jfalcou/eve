@@ -21,7 +21,7 @@ auto exp2(U a1) noexcept
       U expo = a1;
 
       r_t result = eve::one(eve::as<r_t>());
-      while( eve::any(eve::detail::to_logical(expo)) )
+      while( eve::any(eve::_::to_logical(expo)) )
       {
         result *= eve::if_else(eve::is_odd(expo), base, eve::one);
         expo = (expo >> 1);

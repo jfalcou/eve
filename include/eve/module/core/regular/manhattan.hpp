@@ -102,14 +102,14 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto manhattan_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
-      requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+      requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       if      constexpr (O::contains(widen))                       return manhattan[o.drop(widen)](upgrade(ts)...);
-      else if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(manhattan[o], ts...);
+      else if constexpr (O::contains(upper) || O::contains(lower)) return _::map(manhattan[o], ts...);
       else                                                         return apply_fp16_as_fp32(manhattan[o], ts...);
     }
 
@@ -122,7 +122,7 @@ namespace eve
       if constexpr(O::contains(widen))
         return manhattan[o.drop(widen)](upgrade(args)...);
       else if constexpr(std::same_as<e_t, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::manhattan[o], args...);
+        return eve::_::apply_fp16_as_fp32(eve::manhattan[o], args...);
       else if constexpr((sizeof...(Ts) == 1))
         return eve::abs(args...);
       else

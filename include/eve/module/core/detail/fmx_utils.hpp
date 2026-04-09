@@ -9,7 +9,7 @@
 
 #include <eve/traits.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template <typename W, typename... Ts>
   using fmx_rpart_t = as_wide_as_t<common_type_t<element_type_t<Ts>...>, W>;

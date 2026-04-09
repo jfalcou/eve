@@ -15,7 +15,7 @@ namespace eve
 EVE_REGISTER_CALLABLE(basic_shuffle_)
 EVE_DECLARE_CALLABLE(basic_shuffle_, basic_shuffle)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(basic_shuffle_, basic_shuffle);
 }

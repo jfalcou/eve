@@ -85,7 +85,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x) noexcept

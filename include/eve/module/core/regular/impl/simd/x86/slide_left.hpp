@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
@@ -28,7 +28,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       constexpr auto shift = Shift * sizeof(T);
       using i_t            = as_integer_t<wide<T, N>, unsigned>;
 
-      auto const b = bit_cast(detail::remove_garbage(v), as<i_t>());
+      auto const b = bit_cast(_::remove_garbage(v), as<i_t>());
       return bit_cast(i_t(_mm_bsrli_si128(b, shift)), as(v));
     }
     else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )

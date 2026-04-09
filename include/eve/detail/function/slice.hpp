@@ -33,7 +33,7 @@ namespace eve
   //! @}
   //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename Options>
     struct slice_callable_t : callable<slice_callable_t, Options>
@@ -58,7 +58,7 @@ namespace eve
       EVE_CALLABLE_OBJECT(slice_callable_t, slice_);
     };
 
-    inline constexpr auto slice = functor<detail::slice_callable_t>;
+    inline constexpr auto slice = functor<_::slice_callable_t>;
   }
 }
 

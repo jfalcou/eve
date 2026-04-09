@@ -17,7 +17,7 @@
 
 #include <optional>
 
-namespace eve::detail
+namespace eve::_
 {
   // Internal helper
   template<logical_simd_value Logical>

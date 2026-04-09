@@ -9,7 +9,7 @@
 
 #include <eve/detail/spy.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // alignr_si256 reconstruction

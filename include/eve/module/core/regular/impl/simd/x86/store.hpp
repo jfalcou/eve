@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
 template<relative_conditional_expr C, scalar_value T,
          typename N,
@@ -74,7 +74,7 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
     if constexpr( !std::is_pointer_v<Ptr> ) store[cond](v, ptr.get());
     else if constexpr( current_api == eve::avx && std::is_integral_v<T> )
     {
-      using float_t      = detail::make_floating_point_t<sizeof(T)>;
+      using float_t      = _::make_floating_point_t<sizeof(T)>;
       using wide_float_t = as_wide_t<float_t, N>;
       store[cond](eve::bit_cast(v, as<wide_float_t> {}), (float_t *)ptr);
     }

@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<bool Check, typename Cond, typename TC, typename TF>
   EVE_FORCEINLINE auto branch( Cond const & c, TC t, TF f)

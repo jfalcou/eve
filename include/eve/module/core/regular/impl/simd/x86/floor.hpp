@@ -18,7 +18,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_REQUIRES(sse4_1_),
@@ -43,7 +43,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 )           return _mm_round_ps(a0, mode);
       else if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(floor, a0);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(floor, a0);
         else if constexpr (c == category::float16x8)          return _mm_roundscale_ph(a0, mode);
         else if constexpr (c == category::float16x16)         return _mm256_roundscale_ph(a0, mode);
         else if constexpr (c == category::float16x32)         return _mm512_roundscale_ph(a0, mode);
@@ -82,7 +82,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4  )          return _mm_mask_roundscale_ps(src, m, v, mode);
       else if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(floor, cx, v);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(floor, cx, v);
         else if constexpr (c == category::float16x32)         return _mm512_mask_roundscale_ph(src, m, v, mode);
         else if constexpr (c == category::float16x16)         return _mm256_mask_roundscale_ph(src, m, v, mode);
         else if constexpr (c == category::float16x8)          return _mm_mask_roundscale_ph(src, m, v, mode);

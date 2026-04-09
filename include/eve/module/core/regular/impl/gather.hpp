@@ -13,7 +13,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Unaligned pointer

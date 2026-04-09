@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>>
@@ -32,7 +32,7 @@ namespace eve::detail
                                               return as_logical_t<E>(e == f);
                                             };
 
-      if constexpr (match(cat, category::float16) && !detail::supports_fp16_vector_ops)
+      if constexpr (match(cat, category::float16) && !_::supports_fp16_vector_ops)
       {
         return apply_fp16_as_fp32(is_equal, a, b);
       }

@@ -9,7 +9,7 @@
 
 #include <eve/traits/pointer.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template <typename Ptr>
   EVE_FORCEINLINE auto arm_ptr_downcast(Ptr ptr) noexcept

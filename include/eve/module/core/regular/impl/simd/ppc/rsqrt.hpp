@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sub.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(vmx_),

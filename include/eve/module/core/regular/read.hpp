@@ -35,7 +35,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(read_t, read_);
   };
-// TODO DOC 
+// TODO DOC
 //================================================================================================
 //! @addtogroup memory
 //! @{
@@ -76,7 +76,7 @@ namespace eve
 //!  @}
 //================================================================================================
 }
-namespace eve::detail
+namespace eve::_
 {
   template<typename Ptr, callable_options O>
   EVE_FORCEINLINE auto read_(EVE_REQUIRES(cpu_), O const&, Ptr ptr) noexcept

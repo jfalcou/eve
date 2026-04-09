@@ -11,7 +11,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>

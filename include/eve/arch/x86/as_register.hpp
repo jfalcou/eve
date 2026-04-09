@@ -36,7 +36,7 @@ namespace eve
         else if constexpr (std::same_as<T, float >)         return __m128{};
         else if constexpr (std::same_as<T, eve::float16_t>)
         {
-          if constexpr (detail::supports_fp16_vector_ops)   return __m128h{};
+          if constexpr (_::supports_fp16_vector_ops)   return __m128h{};
           else                                              return __m128i{};
         }
         else if constexpr (std::is_integral_v<T>  )         return __m128i{};
@@ -50,7 +50,7 @@ namespace eve
         else if constexpr (std::same_as<T, float >)         return __m256{};
         else if constexpr (std::same_as<T, eve::float16_t>)
         {
-          if constexpr (detail::supports_fp16_vector_ops)   return __m256h{};
+          if constexpr (_::supports_fp16_vector_ops)   return __m256h{};
           else                                              return __m256i{};
         }
         else if constexpr (std::is_integral_v<T>  )         return __m256i{};
@@ -64,7 +64,7 @@ namespace eve
         else if constexpr (std::same_as<T, float >)         return __m512{};
         else if constexpr (std::same_as<T, eve::float16_t>)
         {
-          if constexpr (detail::supports_fp16_vector_ops)   return __m512h{};
+          if constexpr (_::supports_fp16_vector_ops)   return __m512h{};
           else                                              return __m512i{};
         }
         else if constexpr (std::is_integral_v<T>  )         return __m512i{};
@@ -72,7 +72,7 @@ namespace eve
     }
   }
 
-  namespace detail
+  namespace _
   {
     template<int N> struct as_mask;
 
@@ -151,18 +151,18 @@ namespace eve
 
     if constexpr (std::same_as<ABI, x86_512_> && (width == 64))
     {
-      return detail::as_mask_t<64 / sizeof(T)>{};
+      return _::as_mask_t<64 / sizeof(T)>{};
     }
     else if constexpr (std::same_as<ABI, x86_256_> && (width == 32))
     {
-      if constexpr (N::value <= 8 ) return detail::mask8{};
-      if constexpr (N::value == 16) return detail::mask16{};
-      if constexpr (N::value == 32) return detail::mask32{};
+      if constexpr (N::value <= 8 ) return _::mask8{};
+      if constexpr (N::value == 16) return _::mask16{};
+      if constexpr (N::value == 32) return _::mask32{};
     }
     else if constexpr (std::same_as<ABI, x86_128_> && (width <= 16))
     {
-      if constexpr (sizeof(T) == 1) return detail::mask16{};
-      else                          return detail::mask8{};
+      if constexpr (sizeof(T) == 1) return _::mask16{};
+      else                          return _::mask8{};
     }
   }
 # else

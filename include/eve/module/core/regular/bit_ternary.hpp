@@ -101,7 +101,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     // this is adapted from Samuel neves ternary logic for sse avx etc.

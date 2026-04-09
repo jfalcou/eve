@@ -92,7 +92,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T log2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
@@ -102,11 +102,11 @@ namespace eve
       T Invlog_2lo = ieee_constant<0x1.705fc2eefa200p-33, -0x1.7135a80p-13f>(eve::as<T>{});
       T Invlog_2hi = ieee_constant<0x1.7154765200000p+0 , 0x1.7160000p+0f  >(eve::as<T>{});
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::log2[o], a0);
+        return eve::_::apply_fp16_as_fp32(eve::log2[o], a0);
       else if constexpr(simd_value<T>)
       {
        constexpr bool is_avx = current_api == avx;
-        using TT =  detail::conditional_t<is_avx, T, iT >;
+        using TT =  _::conditional_t<is_avx, T, iT >;
         using elt_t = element_type_t<T>;
         if constexpr( std::is_same_v<elt_t, float> )
         {
@@ -171,8 +171,8 @@ namespace eve
           //       T  hi = f - hfsq;
           //       hi =  (hi & uiT(0xfffff000ull));
           //       T  lo = fma(s, hfsq+R, f - hi - hfsq);
-          //       T r = (lo+hi)*detail::Invlog_2lo<T>() + lo*detail::Invlog_2hi<T>() +
-          //       hi*detail::Invlog_2hi<T>() + k;
+          //       T r = (lo+hi)*_::Invlog_2lo<T>() + lo*_::Invlog_2hi<T>() +
+          //       hi*_::Invlog_2hi<T>() + k;
           T zz;
           if constexpr( eve::platform::supports_infinites )
           {

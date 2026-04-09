@@ -21,7 +21,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_using_bmi_)
   EVE_DECLARE_CALLABLE(compress_using_bmi_, compress_using_bmi)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_using_bmi_, compress_using_bmi);
   }

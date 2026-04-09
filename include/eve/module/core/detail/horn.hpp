@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/fma.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T>
 EVE_FORCEINLINE constexpr auto
