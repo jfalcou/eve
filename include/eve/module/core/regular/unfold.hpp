@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct unfold_t : tuple_callable<unfold_t, Options, widen_option>
+  struct unfold_t : callable<unfold_t, Options, widen_option>
   {
 
     template<typename T, typename ...Ts>  static constexpr auto len(){return ((cardinal_v<Ts>) + ... + 0 )+cardinal_v<T>; };
