@@ -421,6 +421,10 @@ TTS_CASE("Check broadcast_group patterns get optimized")
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,8,9,10,11,12,13,14,15,8,9,10,11,12,13,14,15>())
               , (bound<callable_broadcast_group_,fixed<8>,index_t<1>,fixed<16>>)
               );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16, 8, 9, 10, 11>())
+              , (bound<callable_broadcast_group_, fixed<4>, index_t<2>, fixed<4>>)
+              );
 };
 
 TTS_CASE("Check reverse get optimized")
