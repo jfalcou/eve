@@ -729,7 +729,7 @@ TTS_CASE("extract_blends")
   using eve::_::idxm::extracted_blends_info;
   auto test = []<std::size_t NumRegs, std::size_t N>(std::array<int, N>                idxs,
                                                      std::ptrdiff_t                    cardinal,
-                                                     eve::detail::idxm::extracted_blends_info<NumRegs, N> expected)
+                                                     eve::_::idxm::extracted_blends_info<NumRegs, N> expected)
   {
     extracted_blends_info<NumRegs, N> actual =
         eve::_::idxm::extract_blends<NumRegs>(to_idxs(idxs), cardinal);
