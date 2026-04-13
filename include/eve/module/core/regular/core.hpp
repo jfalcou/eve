@@ -60,7 +60,6 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
-#include <eve/module/core/regular/deploy.hpp>
 #include <eve/module/core/regular/diff.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
@@ -238,6 +237,7 @@
 #include <eve/module/core/regular/two_sub.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/unfold.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
