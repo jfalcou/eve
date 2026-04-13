@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf16)
+TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf1
 // Tests for eve::unfold
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax))
              )
