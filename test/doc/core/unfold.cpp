@@ -18,8 +18,8 @@ int main()
   std::cout << eve::unfold(wf, 1.0f, 2.0f) << std::endl;
   eve::wide<std::int32_t> wi(fill);
   std::cout << eve::unfold(wi, 1, 2) << std::endl;
-//   auto t = kumi::make_tuple(wi, 1, 2);
-//   std::cout << t << std::endl;
-//  std::cout << eve::unfold(t) << std::endl;
+  auto t = kumi::make_tuple(wi);
+  std::cout << t << std::endl;
+  std::cout << eve::unfold(t) << std::endl;
 
 };

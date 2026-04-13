@@ -17,28 +17,43 @@ namespace eve
   template<typename Options>
   struct unfold_t : callable<unfold_t, Options, widen_option>
   {
-
-    template<typename T, typename ...Ts>  static constexpr auto len(){return ((cardinal_v<Ts>) + ... + 0 )+cardinal_v<T>; };
-    template<value T, value... Ts>
-    struct result : kumi::result::fill< len<T, Ts...>(), eve::element_type_t<eve::upgrade_if_t<Options, eve::common_value_t<T, Ts...>>>> {};
-
+    template<typename ...Ts>
+    struct cardinal_sum
+    {
+      static constexpr auto value = ((cardinal_v<Ts>) + ... + 0 ); 
+      using type = std::integral_constant<std::size_t,value>;
+    };
+    
+    template<typename T>
+    using return_type = eve::element_type_t<eve::upgrade_if_t<Options,T>>;
+    
+    template<value... Ts>
+    using result = kumi::result::fill_t<
+      cardinal_sum<Ts...>::value
+      , return_type<eve::common_value_t<Ts...>>>;
+    
+    template<product_type T>
+    using tuple_result = kumi::result::fill_t<
+      kumi::apply_traits_t<cardinal_sum, T>::value
+      , return_type<kumi::apply_traits_t<eve::common_value, T>>>;
+    
     template<value T, value ...Ts>
-    EVE_FORCEINLINE constexpr result<T, Ts...>::type
+    EVE_FORCEINLINE constexpr result<T, Ts...>
     operator()(T t, Ts ... ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t, ts...);
     }
-
-//     template<non_empty_product type T>
-//     EVE_FORCEINLINE constexpr /* what is the return type"*/
-//     operator()(T t) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(t);
-//     }
-
+    
+    template<non_empty_product_type T>
+    EVE_FORCEINLINE constexpr tuple_result<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+    
     EVE_CALLABLE_OBJECT(unfold_t, unfold_);
-  };
-
+  }; 
+  
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -113,5 +128,13 @@ namespace eve
         return kumi::cat(unfold(cvt(x)), unfold(cvt(xs)...));
       }
     }
+
+    template<non_empty_product_type T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    unfold_(EVE_REQUIRES(cpu_), O const &, T tup) noexcept
+    {
+      return kumi::apply([](auto ... ts){return unfold(ts...); }, tup);
+    }
+
   }
 }
