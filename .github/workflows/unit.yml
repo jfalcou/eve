@@ -438,11 +438,11 @@ jobs:
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
           cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-      #- name: Math Tests
-      #  run: |
-      #    cd build
-      #    cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
-      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
+      - name: Math Tests
+        run: |
+          cd build
+          cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
     
   clang-cl:
     runs-on: [windows-2022]
@@ -495,11 +495,11 @@ jobs:
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
           cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-      #- name: Math Tests
-      #  run: |
-      #    cd build
-      #    cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
-      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
+      - name: Math Tests
+        run: |
+          cd build
+          cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
           
 
   ##################################################################################################
