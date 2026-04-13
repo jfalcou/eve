@@ -172,7 +172,7 @@ namespace eve::_
 
       // Build the lists of all ready-to-aggregate values
       auto parts = kumi::make_tuple(slicer(ts)...);
-      auto process = [&](auto i) { return kumi::apply([&](auto... p) { return f( get<i>(p)... ); }, parts); };
+      auto process = [&]<std::size_t I>(kumi::index_t<I>) { return kumi::apply([&](auto... p) { return f( get<I>(p)... ); }, parts); };
 
       using small_result_t = decltype(process(kumi::index<0>));
       using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;

@@ -34,10 +34,11 @@ TTS_CASE_TPL( "Check behavior of broadcast swizzle", eve::test::scalar::all_type
   eve::_::for_<0,1,ssz>
   ( [&]<typename Group>(Group g)
   {
-    constexpr auto grp = (eve::wide<s_t>::size()/(1<<g));
     eve::_::for_<0,1,(1<<Group::value)>
     ( [&]<typename Index>(Index)
     {
+      constexpr auto grp = (eve::wide<s_t>::size()/(1<<Group::value));
+
       eve::wide<s_t> ref = [&](auto i, auto c)
               {
                 constexpr auto p = broadcast_group_n<grp,Index::value,eve::wide<s_t>::size()>;

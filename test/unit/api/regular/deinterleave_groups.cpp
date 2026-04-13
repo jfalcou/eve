@@ -118,7 +118,7 @@ TTS_CASE_TPL( "Check behavior of deinterleave on arithmetic data", less_test_typ
   // maybe unsused for gcc bug
   [[maybe_unused]] constexpr unsigned max_group_size = (T::size() >= 64) ? 4 : T::size();
 
-  eve::_::for_<1, 1, max_fields_count + 1>([](auto fields) {
+  eve::_::for_<1, 1, max_fields_count + 1>([&](auto fields) {
    eve::_::for_<0, 1, std::countr_zero(max_group_size) + 1>([&](auto group_size_log) {
      deinterleave_groups_test<1 << group_size_log(), fields(), T>();
 

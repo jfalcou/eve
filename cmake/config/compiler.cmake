@@ -20,7 +20,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
                           )
   endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options( eve_test INTERFACE /bigobj /EHsc /W3 /utf-8 /wd4244 /wd4267 /wd4146 /wd4018 /wd4305 /WX /Zc:preprocessor ) 
+  target_compile_options( eve_test INTERFACE /bigobj /EHsc /W3 /utf-8 /wd4244 /wd4267 /wd4146 /wd4018 /wd4305 /wd4334 /WX /Zc:preprocessor ) 
 else()
   target_compile_options( eve_test INTERFACE  -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
                           -ftemplate-backtrace-limit=0 -fconcepts-diagnostics-depth=8
