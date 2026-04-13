@@ -30,26 +30,26 @@ TTS_CASE_WITH( "Check behavior of broadcast_groups swizzle"
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 
   eve::_::for_<0,1,ssz>
-  ( [&]<typename Group>(Group g)
+  ( [&]<typename Group>(Group)
   {
     eve::_::for_<0,1,(1<<Group::value)>
     ( [&]<typename Index>(Index)
     {
       T ref = [=](auto i, auto c)
               {
-                constexpr auto grp = (T::size()/(1<<g));
+                constexpr auto grp = (T::size()/(1<<Group::value));
                 constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                 return simd.get(p(i,c));
               };
 
       L lref  = [=](auto i, auto c)
                 {
-                  constexpr auto grp = (T::size()/(1<<g));
+                  constexpr auto grp = (T::size()/(1<<Group::value));
                   constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                   return logicals.get(p(i,c));
                 };
 
-      constexpr auto grp = (T::size()/(1<<g));
+      constexpr auto grp = (T::size()/(1<<Group::value));
       TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
                                       , eve::index<Index::value>, eve::lane<T::size()>
                                       )
