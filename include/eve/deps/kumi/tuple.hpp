@@ -197,7 +197,7 @@ namespace kumi::_
     return static_cast<T##N const&&>(member##N)(identifier_of_t<T##N>{});
 #define KUMI_BINDER(N)                                                                                                 \
   template<KUMI_PP_ENUM(N, KUMI_PP_TAC, typename T)>                                                                   \
-  requires(no_empty<KUMI_PP_ENUM(N, KUMI_PP_TAC, T)> && no_references<KUMI_PP_ENUM(N, KUMI_PP_TAC, T)>)                \
+  requires((N <= 10) && no_empty<KUMI_PP_ENUM(N, KUMI_PP_TAC, T)> && no_references<KUMI_PP_ENUM(N, KUMI_PP_TAC, T)>)   \
   struct binder<std::integer_sequence<int, KUMI_PP_ENUM(N, KUMI_PP_IDENTITY, _)>, KUMI_PP_ENUM(N, KUMI_PP_TAC, T)>     \
   {                                                                                                                    \
     static constexpr bool is_homogeneous = (N == 1);                                                                   \
@@ -793,7 +793,7 @@ namespace kumi::_
     }
   };
   template<int... Is, typename T0, typename T1, typename... Ts>
-  requires(all_the_same<T0, T1, Ts...> && no_references<T0, T1, Ts...> && no_empty<T0, T1, Ts...>)
+  requires((2+sizeof...(Ts) <= 10) && all_the_same<T0, T1, Ts...> && no_references<T0, T1, Ts...> && no_empty<T0, T1, Ts...>)
   struct make_binder<std::integer_sequence<int, Is...>, T0, T1, Ts...>
   {
     using type = binder_n<T0, 2 + sizeof...(Ts)>;
