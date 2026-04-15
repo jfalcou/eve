@@ -18,7 +18,7 @@ TTS_CASE_TPL("Check return types of welford_variance", eve::test::simd::ieee_rea
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  using welford_variance_result_t = eve::detail::welford_variance_result<T>;
+  using welford_variance_result_t = eve::_::welford_variance_result<T>;
 
   // multi
   if constexpr( eve::floating_value<T> )
@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of welford_variance", eve::test::simd::ieee_rea
     TTS_EXPR_IS(eve::welford_variance(v_t(), v_t(), T()), welford_variance_result_t);
     TTS_EXPR_IS(eve::welford_variance(v_t(), T(), v_t()), welford_variance_result_t);
 
-    TTS_EXPR_IS(eve::welford_variance(v_t(), v_t(), v_t()), eve::detail::welford_variance_result<v_t>);
+    TTS_EXPR_IS(eve::welford_variance(v_t(), v_t(), v_t()), eve::_::welford_variance_result<v_t>);
   }
 };
 

@@ -74,7 +74,7 @@ namespace eve
                       || std::is_enum_v<T>
                       || translatable_struct<T>;
 
-  namespace detail
+  namespace _
   {
     template <typename T>
     consteval auto as_translated_type(as<T>)
@@ -104,7 +104,7 @@ namespace eve
   //! Recursively resolves the translation chain until reaching a fundamental type.
   //================================================================================================
   template <translatable T>
-  using translate_t = typename decltype(detail::as_translated_type(as<T>{}))::type;
+  using translate_t = typename decltype(_::as_translated_type(as<T>{}))::type;
 
   // All enums are translatable into their underlying type by default.
   template <typename T>

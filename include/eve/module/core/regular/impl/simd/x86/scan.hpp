@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N> slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>);

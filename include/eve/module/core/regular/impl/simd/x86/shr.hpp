@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w, S s) noexcept

@@ -15,7 +15,7 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
     template <std::size_t f, std::size_t l, typename T, std::size_t N, typename Op>
     EVE_FORCEINLINE constexpr T array_reduce_impl(std::array<T, N> const& x, Op op)
@@ -54,7 +54,7 @@ namespace eve::algo
   EVE_FORCEINLINE constexpr T array_reduce(std::array<T, N> x, Op op)
     requires (N >= 1)
   {
-    return detail::array_reduce_impl<0, N>(x, op);
+    return _::array_reduce_impl<0, N>(x, op);
   }
 
   struct

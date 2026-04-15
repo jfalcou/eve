@@ -25,13 +25,13 @@
 #include <eve/traits/apply_fp16.hpp>
 #include <cmath>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, simd_value... Ts>
   EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
-    requires (detail::fp16_should_apply<Ts> && ...)
+    requires (_::fp16_should_apply<Ts> && ...)
   {
-    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fms[o], ts...);
+    if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fms[o], ts...);
     else                                                                             return apply_fp16_as_fp32(fms[o], ts...);
   }
 
@@ -73,7 +73,7 @@ namespace eve::detail
     {
       using r_t = common_value_t<T, U, V>;
       // Drop the mask key to prevent circular calls
-      return detail::mask_op(cx, detail::return_2nd, r_t(a), fms[o](r_t(a), r_t(b), r_t(c)));
+      return _::mask_op(cx, _::return_2nd, r_t(a), fms[o](r_t(a), r_t(b), r_t(c)));
     }
   }
 

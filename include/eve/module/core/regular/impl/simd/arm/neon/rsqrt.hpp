@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(neon128_),
@@ -30,7 +30,7 @@ namespace eve::detail
     {
       if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
         else if constexpr (cat == category::float16x8)        return vrsqrteq_f16(v0);
         else if constexpr (cat == category::float16x4)        return vrsqrte_f16(v0);
       }
@@ -47,7 +47,7 @@ namespace eve::detail
     {
       if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rsqrt, v0);
         else if constexpr (cat == category::float16x8)
         {
           that_t inv = vrsqrteq_f16(v0);

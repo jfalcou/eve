@@ -99,7 +99,7 @@ namespace eve
 //================================================================================================
 
 
-  namespace detail
+  namespace _
   {
 
     template<floating_value T, callable_options O>
@@ -115,7 +115,7 @@ namespace eve
       auto a  = one(as(x));
       auto b  = sqrt(oneminus(sqr(xx)));
       auto c  = xx;
-      int i = 0; 
+      int i = 0;
       while( eve::any((eve::abs(c)>tol)) && (++i < 100))
       {
         auto an = average(a, b);

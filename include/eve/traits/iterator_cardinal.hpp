@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template <typename T>
     constexpr auto iterator_cardinal_impl()
@@ -46,7 +46,7 @@ namespace eve
   //================================================================================================
 
   template <typename T>
-  using iterator_cardinal_t = decltype(detail::iterator_cardinal_impl<T>());
+  using iterator_cardinal_t = decltype(_::iterator_cardinal_impl<T>());
 
   template <typename T>
   constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<T>::value;

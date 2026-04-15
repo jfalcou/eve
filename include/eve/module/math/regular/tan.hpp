@@ -85,13 +85,13 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tan_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
     if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-      return eve::detail::apply_fp16_as_fp32(eve::tan_kernel[o], a0);
+      return eve::_::apply_fp16_as_fp32(eve::tan_kernel[o], a0);
     else
       return tan_kernel[o](a0);
     }

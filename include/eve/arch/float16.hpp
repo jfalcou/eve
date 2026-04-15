@@ -20,7 +20,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     EVE_NOINLINE constexpr float emulated_fp16_to_fp32(uint16_t raw) noexcept
     {
@@ -161,7 +161,7 @@ namespace eve
   }
 
   #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16)
-    namespace detail
+    namespace _
     {
       static constexpr bool supports_fp16_native_type = spy::supports::fp16::type;
       static constexpr bool supports_fp16_scalar_ops = spy::supports::fp16::scalar_ops;
@@ -171,7 +171,7 @@ namespace eve
 
     using float16_t = _Float16;
   #else
-    namespace detail
+    namespace _
     {
       static constexpr bool supports_fp16_native_type = false;
       static constexpr bool supports_fp16_scalar_ops = false;
@@ -192,14 +192,14 @@ namespace eve
           }
           else
           {
-            return static_cast<T>(detail::emulated_fp16_to_fp32(data));
+            return static_cast<T>(_::emulated_fp16_to_fp32(data));
           }
         }
 
       public:
         constexpr float16_t() = default;
-        constexpr float16_t(std::integral auto v): data(detail::emulated_int_to_fp16(v)) { }
-        constexpr float16_t(std::floating_point auto v): data(detail::emulated_fp32_to_fp16(v)) { }
+        constexpr float16_t(std::integral auto v): data(_::emulated_int_to_fp16(v)) { }
+        constexpr float16_t(std::floating_point auto v): data(_::emulated_fp32_to_fp16(v)) { }
 
         constexpr EVE_FORCEINLINE explicit operator bool()               const noexcept { return into<bool>(); }
 
@@ -295,12 +295,12 @@ namespace eve
 
         constexpr EVE_FORCEINLINE std::partial_ordering operator<=>(float16_t const& other) const noexcept
         {
-          return detail::emulated_fp16_compare(data, other.data);
+          return _::emulated_fp16_compare(data, other.data);
         }
 
         constexpr EVE_FORCEINLINE bool operator==(float16_t const& other) const noexcept
         {
-          return detail::emulated_fp16_compare(data, other.data) == std::partial_ordering::equivalent;
+          return _::emulated_fp16_compare(data, other.data) == std::partial_ordering::equivalent;
         }
     };
 
@@ -333,7 +333,7 @@ namespace eve
     }
   #endif
 
-  namespace detail
+  namespace _
   {
     constexpr static eve::float16_t float16_from_bits(std::uint16_t bits) noexcept
     {

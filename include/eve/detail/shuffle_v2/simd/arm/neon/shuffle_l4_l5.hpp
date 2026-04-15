@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 // For now didn't figure out how to generalize

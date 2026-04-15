@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> mantissa_(EVE_REQUIRES(avx512_),

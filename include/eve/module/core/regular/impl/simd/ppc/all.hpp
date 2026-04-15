@@ -12,7 +12,7 @@
 #include <eve/module/core/constant/true.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto all_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> v) noexcept

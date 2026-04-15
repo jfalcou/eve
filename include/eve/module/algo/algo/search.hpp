@@ -17,7 +17,7 @@
 namespace eve::algo
 {
 
-namespace detail
+namespace _
 {
 
   /*
@@ -227,7 +227,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       }
     } verify {{}, check};
 
-    detail::for_each_possibly_matching_for_search(drop_key(divisible_by_cardinal, traits),
+    _::for_each_possibly_matching_for_search(drop_key(divisible_by_cardinal, traits),
                                                   haystack_f,
                                                   haystack_main_part_l,
                                                   needle_front,

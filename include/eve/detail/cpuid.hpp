@@ -146,7 +146,7 @@ namespace
 }
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   inline const runtime_flags cpuid_states = {};
 }

@@ -14,7 +14,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<value In, scalar_value Out>

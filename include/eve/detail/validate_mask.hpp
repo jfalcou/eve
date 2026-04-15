@@ -18,7 +18,7 @@
 
 #include <concepts>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename C, typename T>
   EVE_FORCEINLINE constexpr bool validate_mask_for() noexcept

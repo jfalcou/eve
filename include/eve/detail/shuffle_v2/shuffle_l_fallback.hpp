@@ -14,10 +14,10 @@ namespace eve
 EVE_REGISTER_CALLABLE(shuffle_l_fallback_)
 EVE_DECLARE_CALLABLE(shuffle_l_fallback_, shuffle_l_fallback)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(shuffle_l_fallback_, shuffle_l_fallback);
-} // namespace detail
+} // namespace _
 
 // l fallback does some of known things that are quite bad
 // but are the best we can do in some cases.

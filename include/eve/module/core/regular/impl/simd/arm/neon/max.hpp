@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> max_(EVE_REQUIRES(neon128_),
@@ -45,7 +45,7 @@ namespace eve::detail
       else if constexpr( cat == category::float32x2 ) return vmax_f32(v0, v1);
       else if constexpr( match(cat, category::float16) )
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
+        if      constexpr( !_::supports_fp16_vector_ops ) return apply_fp16_as_fp32(eve::max, v0, v1);
         else if constexpr( cat == category::float16x8 )        return vmaxq_f16(v0, v1);
         else if constexpr( cat == category::float16x4 )        return vmax_f16(v0, v1);
       }

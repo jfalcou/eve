@@ -9,7 +9,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename Src, typename Tgt>
   struct copy_qualifiers

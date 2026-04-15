@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename U, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept

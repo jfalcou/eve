@@ -112,7 +112,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     // This function is forward declared limited wrapper around add, so that internally we can call it anywhere.
     template<typename T, typename U>

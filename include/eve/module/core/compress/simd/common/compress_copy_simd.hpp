@@ -32,6 +32,6 @@ struct compress_copy_simd_core
   }
 };
 
-inline constexpr auto compress_copy_simd = detail::compress_callable<compress_copy_simd_core> {};
+inline constexpr auto compress_copy_simd = _::compress_callable<compress_copy_simd_core> {};
 
 }

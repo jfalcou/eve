@@ -73,7 +73,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<value T, callable_options O>
     constexpr T bit_not_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept

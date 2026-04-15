@@ -77,7 +77,7 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE auto lbeta_(EVE_REQUIRES(cpu_), O const&, T a0, T a1)

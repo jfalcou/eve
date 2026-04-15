@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<std::ptrdiff_t ToTry, typename P>

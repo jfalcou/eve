@@ -11,7 +11,7 @@
 
 #include <concepts>
 
-namespace eve::detail
+namespace eve::_
 {
 
 struct no_matching_shuffle_t

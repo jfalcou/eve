@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/traits/as_wides.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto

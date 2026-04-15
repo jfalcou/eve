@@ -14,7 +14,7 @@
 #include <eve/detail/shuffle_v2/shuffle_l6_l7.hpp>
 #include <eve/detail/shuffle_v2/shuffle_l_fallback.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename T, std::ptrdiff_t G, std::ptrdiff_t... I>

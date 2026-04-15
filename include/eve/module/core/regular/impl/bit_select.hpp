@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<typename T, typename U, typename M, callable_options O>

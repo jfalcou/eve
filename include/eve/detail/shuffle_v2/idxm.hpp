@@ -18,7 +18,7 @@
  * Mostly tested through shuffles.
  */
 
-namespace eve::detail::idxm
+namespace eve::_::idxm
 {
 
 constexpr bool
@@ -1296,7 +1296,7 @@ add_shuffle_levels(eve::index_t<ls>...)
   return index<add_shuffle_levels(std::array<std::ptrdiff_t,sizeof...(ls)>{ls...})>;
 }
 
-} // namespace eve::detail::idxm
+} // namespace eve::_::idxm
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/shuffle_v2/simd/x86/idxm.hpp>

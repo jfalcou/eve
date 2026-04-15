@@ -35,7 +35,7 @@ namespace eve
   inline constexpr auto func = functor<func_t>;
 };
 
-namespace eve::detail
+namespace eve::_
 {
   auto func_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opt, int x)
   {

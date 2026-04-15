@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of veltkamp on wide",
   using eve::veltkamp;
   using eve::as;
   using eve::raw;
-  using eve::detail::map;
+  using eve::_::map;
   auto [s, r] = veltkamp(a0);
   TTS_EQUAL(s+r, a0);
 };

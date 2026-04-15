@@ -12,7 +12,7 @@
 #include <eve/detail/remove_garbage.hpp>
 #include <eve/module/core/regular/lo.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>

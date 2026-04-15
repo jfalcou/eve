@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, floating_value U, callable_options O>
 constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
@@ -73,7 +73,7 @@ constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
       if constexpr(scalar_value<T> != scalar_value<U>)
       {
         using w_t  = as_wide_as_t<T,U>;
-        using wi_t = detail::conditional_t<simd_value<U>, U, wide<i_t,cardinal_t<T>>>;
+        using wi_t = _::conditional_t<simd_value<U>, U, wide<i_t,cardinal_t<T>>>;
 
         return ldexp[o]( w_t(a), wi_t(b) );
       }
@@ -103,7 +103,7 @@ constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
   {
     using elt_t = element_type_t<T>;
     using i_t   = as_integer_t<T, signed>;
-    using shf_t = detail::conditional_t<simd_value<T>, T, elt_t>;
+    using shf_t = _::conditional_t<simd_value<T>, T, elt_t>;
 
     auto  bb   = convert(b, as<element_type_t<i_t>>{});
     i_t   ik   = bb + maxexponent(as<shf_t>());

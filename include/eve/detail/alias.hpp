@@ -23,7 +23,7 @@
 #  define EVE_MAY_ALIAS
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T> struct alias
   {

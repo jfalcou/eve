@@ -17,7 +17,7 @@ template<typename Type, typename Cond> void check_conditional_bits()
   if constexpr( !eve::has_aggregated_abi_v<Type> )
   {
     using m_t = typename eve::logical<Type>::storage_type::type;
-    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(Type::size()));
+    m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(Type::size()));
 
     for(std::ptrdiff_t i = 0;i <= Type::size();i++)
     {
@@ -86,7 +86,7 @@ TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
   {
     using m_t = typename eve::logical<type>::storage_type::type;
     TTS_EQUAL ( ignore_none.mask(as<type>()).storage().value
-              , eve::detail::set_lower_n_bits<m_t>(type::size())
+              , eve::_::set_lower_n_bits<m_t>(type::size())
               );
   }
 #endif
@@ -353,7 +353,7 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
   if constexpr( !eve::has_aggregated_abi_v<type> )
   {
     using m_t = typename eve::logical<type>::storage_type::type;
-    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
+    m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(type::size()));
 
     auto ignore_mask = keep_between(fi,li).mask(eve::as<type>()).storage().value;
     TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );
@@ -423,7 +423,7 @@ TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_
   if constexpr( !eve::has_aggregated_abi_v<type> )
   {
     using m_t = typename eve::logical<type>::storage_type::type;
-    m_t bits_mask = m_t(~eve::detail::set_lower_n_bits<m_t>(type::size()));
+    m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(type::size()));
 
     auto ignore_mask = (ignore_first(fi) && ignore_last(li)).mask(eve::as<type>()).storage().value;
     TTS_EQUAL( m_t(ignore_mask & bits_mask), m_t(0) );

@@ -14,7 +14,7 @@
 
 #include <utility>
 
-namespace eve::detail
+namespace eve::_
 {
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>

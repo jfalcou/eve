@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename N, arithmetic_scalar_value U>

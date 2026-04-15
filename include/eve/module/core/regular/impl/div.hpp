@@ -40,15 +40,15 @@
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
-    requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(upper) || O::contains(lower) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
-      return detail::map(div[o], ts...);
+      return _::map(div[o], ts...);
     }
     else if constexpr (sizeof...(Ts) > 2)
     {

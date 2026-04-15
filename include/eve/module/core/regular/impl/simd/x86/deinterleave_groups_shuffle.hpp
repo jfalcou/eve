@@ -10,7 +10,7 @@
 #include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>

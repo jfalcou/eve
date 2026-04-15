@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, typename U>
   EVE_FORCEINLINE logical<wide<T, N>>
@@ -24,9 +24,9 @@ namespace eve::detail
     {
       return is_not_equal.behavior(cpu_{}, opts, a, wide<T, N>{ b });
     }
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
-      return detail::apply_fp16_as_fp32(is_not_equal, a, b);
+      return _::apply_fp16_as_fp32(is_not_equal, a, b);
     }
     else
     {

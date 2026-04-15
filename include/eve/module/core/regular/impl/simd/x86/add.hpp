@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
@@ -97,7 +97,7 @@ namespace eve::detail
       else  if constexpr  ( c == category::float32x8  ) return _mm256_add_ps(v, w);
       else  if constexpr ( match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
         else if constexpr (c == category::float16x32)         return _mm512_add_ph(v, w);
         else if constexpr (c == category::float16x16)         return _mm256_add_ph(v, w);
         else if constexpr (c == category::float16x8)          return _mm_add_ph(v, w);
@@ -187,7 +187,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return _mm_mask_add_pd      (src, m, v, w);
       else  if constexpr ( match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(add, cx, v, w);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(add, cx, v, w);
         else if constexpr (c == category::float16x32)         return _mm512_mask_add_ph(src, m, v, w);
         else if constexpr (c == category::float16x16)         return _mm256_mask_add_ph(src, m, v, w);
         else if constexpr (c == category::float16x8)          return _mm_mask_add_ph(src, m, v, w);

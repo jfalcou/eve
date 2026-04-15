@@ -19,7 +19,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<floating_value T> struct welford_variance_result
     {
@@ -49,16 +49,16 @@ namespace eve
   struct welford_variance_t : callable<welford_variance_t, Options, unbiased_option, widen_option>
   {
  //    template<typename... Ts>
-//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_variance_t<Ts>...>  && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr detail::welford_variance_result<common_value_t<detail::internal_welford_variance_t<Ts>...>>
+//     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<_::internal_welford_variance_t<Ts>...>  && !Options::contains(widen))
+//       EVE_FORCEINLINE constexpr _::welford_variance_result<common_value_t<_::internal_welford_variance_t<Ts>...>>
 //     operator()(Ts...ts) const noexcept
 //     {
 //       return EVE_DISPATCH_CALL(ts...);
 //     }
 
     template<typename... Ts>
-    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<detail::internal_welford_variance_t<Ts>...>)
-      EVE_FORCEINLINE constexpr detail::welford_variance_result<upgrade_if_t<Options, common_value_t<detail::internal_welford_variance_t<Ts>...>>>
+    requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<_::internal_welford_variance_t<Ts>...>)
+      EVE_FORCEINLINE constexpr _::welford_variance_result<upgrade_if_t<Options, common_value_t<_::internal_welford_variance_t<Ts>...>>>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
@@ -67,14 +67,14 @@ namespace eve
    template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
       EVE_FORCEINLINE constexpr
-    detail::welford_variance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>>
+    _::welford_variance_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
 //     template<eve::non_empty_product_type Tup>
 //     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
 //       EVE_FORCEINLINE constexpr
-//     detail::welford_variance_result<kumi::apply_traits_t<eve::common_value,Tup>>
+//     _::welford_variance_result<kumi::apply_traits_t<eve::common_value,Tup>>
 //     operator()(Tup const& t) const noexcept
 //     { return EVE_DISPATCH_CALL(t); }
 
@@ -145,12 +145,12 @@ namespace eve
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto welford_variance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return welford_variance[o.drop(widen)](upgrade(ts)...);
   }
@@ -186,7 +186,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   welford_variance_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
   {
-    using r_t =  common_value_t<detail::internal_welford_variance_t<T0>,  detail::internal_welford_variance_t<Ts>...>;
+    using r_t =  common_value_t<_::internal_welford_variance_t<T0>,  _::internal_welford_variance_t<Ts>...>;
     if constexpr(O::contains(widen))
     {
       auto up_it = [](auto a){

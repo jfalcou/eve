@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::detail
+namespace eve::_
 {
 // shift to apply on large integers lookup index
 template<typename I>

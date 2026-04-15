@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template <callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>>
@@ -31,7 +31,7 @@ namespace eve::detail
     {
       return is_not_equal.behavior(cpu_{}, opts, v, w);
     }
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32(is_not_equal, v, w);
     }
@@ -104,7 +104,7 @@ namespace eve::detail
     {
       return is_not_equal[opts][mask].retarget(cpu_{}, v, w);
     }
-    else if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    else if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
     {
       return apply_fp16_as_fp32_masked(is_not_equal, mask, v, w);
     }

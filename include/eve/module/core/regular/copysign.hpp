@@ -77,7 +77,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<floating_value T, floating_value U, callable_options O>
     EVE_FORCEINLINE constexpr auto copysign_(EVE_REQUIRES(cpu_), O const &, T aa, U bb) noexcept

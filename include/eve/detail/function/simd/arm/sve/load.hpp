@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(sve_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept

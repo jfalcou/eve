@@ -77,7 +77,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept

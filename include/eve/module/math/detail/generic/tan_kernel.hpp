@@ -42,7 +42,7 @@ namespace eve
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_value T, callable_options O> EVE_NOINLINE
   T tan_kernel_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept

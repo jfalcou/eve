@@ -43,7 +43,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all
 
             // complete
             {
-              auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(ignore, mask);
+              auto [actual_num, actual_count] = eve::_::compress_store_swizzle_mask_num(ignore, mask);
               TTS_EQUAL(expected_num, actual_num);
 
               std::ptrdiff_t expected_count = eve::count_true(mask_with_ignore);
@@ -87,7 +87,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all
     }
 
     {
-      auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(l);
+      auto [actual_num, actual_count] = eve::_::compress_store_swizzle_mask_num(l);
       TTS_EQUAL(num, actual_num);
       TTS_EQUAL(count, actual_count);
     }
@@ -96,7 +96,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all
 
     {
       l.set(6, true);
-      auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(l);
+      auto [actual_num, actual_count] = eve::_::compress_store_swizzle_mask_num(l);
       TTS_EQUAL(num, actual_num);
       TTS_EQUAL(count, actual_count);
       l.set(6, false);
@@ -104,7 +104,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all
 
     {
       l.set(7, true);
-      auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(l);
+      auto [actual_num, actual_count] = eve::_::compress_store_swizzle_mask_num(l);
       TTS_EQUAL(num, actual_num);
       TTS_EQUAL(count, actual_count);
       l.set(7, false);
@@ -115,7 +115,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all
     {
       l.set(6, true);
       l.set(7, true);
-      auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(l);
+      auto [actual_num, actual_count] = eve::_::compress_store_swizzle_mask_num(l);
       TTS_EQUAL(num, actual_num);
       TTS_EQUAL(count, actual_count);
     }
@@ -150,11 +150,11 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 16 elements",eve::test::scalar::al
     // For basic case a little bit testing itself but this is what we expect
     // and if there is an actual problem it will pop up in a upper layer test.
 
-    auto [num1, count1, num2, count2] = eve::detail::compress_store_swizzle_mask_num(l);
+    auto [num1, count1, num2, count2] = eve::_::compress_store_swizzle_mask_num(l);
 
     auto [lo, hi] = l.slice();
-    auto [expected_num1, expected_count1] = eve::detail::compress_store_swizzle_mask_num(lo);
-    auto [expected_num2, expected_count2] = eve::detail::compress_store_swizzle_mask_num(hi);
+    auto [expected_num1, expected_count1] = eve::_::compress_store_swizzle_mask_num(lo);
+    auto [expected_num2, expected_count2] = eve::_::compress_store_swizzle_mask_num(hi);
 
     TTS_EQUAL(expected_num1,     num1);
     TTS_EQUAL(expected_num2,     num2);

@@ -10,9 +10,9 @@
 
 TTS_CASE("Check identity patterns get optimized")
 {
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
-  using identity = eve::detail::identity_swizzle;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
+  using identity = eve::_::identity_swizzle;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<2,0,1>())
               , (bound<identity, eve::pattern_t<0, 1>>)
@@ -72,9 +72,9 @@ TTS_CASE("Check identity patterns get optimized")
 
 TTS_CASE("Check zero patterns get optimized")
 {
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
-  using zero = eve::detail::zero_swizzle;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
+  using zero = eve::_::zero_swizzle;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern< 1,-1>()), (bound<zero,eve::fixed<1>>));
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern< 2,-1,-1>()), (bound<zero,eve::fixed<2>>));
@@ -116,8 +116,8 @@ TTS_CASE("Check zero patterns get optimized")
 
 TTS_CASE("Check broadcast patterns get optimized")
 {
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
 
   // Test all broadcast of size 1->64 with every index from 1->64
   [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
@@ -154,9 +154,9 @@ TTS_CASE("Check broadcast patterns get optimized")
 TTS_CASE("Check swap_adjacent patterns get optimized")
 {
   using eve::fixed;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
-  using callable = eve::detail::named_shuffle_1<eve::swap_adjacent_t>;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
+  using callable = eve::_::named_shuffle_1<eve::swap_adjacent_t>;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,1,0>())
               , (bound<callable,fixed<1>>)
@@ -231,8 +231,8 @@ TTS_CASE("Check broadcast_group patterns get optimized")
 {
   using eve::fixed;
   using eve::index_t;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
   using eve::callable_broadcast_group_;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,0,1,0,1>())
@@ -430,9 +430,9 @@ TTS_CASE("Check broadcast_group patterns get optimized")
 TTS_CASE("Check reverse get optimized")
 {
   using eve::fixed;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
-  using callable = eve::detail::named_shuffle_1<eve::reverse_t>;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
+  using callable = eve::_::named_shuffle_1<eve::reverse_t>;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4, 3, 2, 1,0>())
               , (bound<callable>)
@@ -452,8 +452,8 @@ TTS_CASE("Check reverse get optimized")
 TTS_CASE("Check slide_left get optimized")
 {
   using eve::index_t;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
   using eve::callable_slide_left_;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<2,1,-1>())
@@ -505,8 +505,8 @@ TTS_CASE("Check slide_left get optimized")
 TTS_CASE("Check slide_right get optimized")
 {
   using eve::index_t;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
   using eve::callable_slide_right_;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<2,-1,0>())
@@ -557,8 +557,8 @@ TTS_CASE("Check slide_right get optimized")
 TTS_CASE("Check deinterleave get optimized")
 {
   using eve::fixed;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
   using deinter = eve::callable_deinterleave_groups_shuffle_;
 
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,0,2,1,3>())
@@ -586,8 +586,8 @@ TTS_CASE("Check deinterleave get optimized")
 TTS_CASE("Check rotate get optimized")
 {
   using eve::index_t;
-  using eve::detail::find_optimized_shuffle_pattern;
-  using eve::detail::bound;
+  using eve::_::find_optimized_shuffle_pattern;
+  using eve::_::bound;
   using eve::callable_rotate_;
   using eve::callable_basic_shuffle_;
 

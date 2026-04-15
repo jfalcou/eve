@@ -11,7 +11,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/traits/product_type.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Interleave pairs of wides

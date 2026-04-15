@@ -105,7 +105,7 @@ struct slide_left_impl_t
     }
     else if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
     {
-      auto mask = detail::mask_type(tgt);
+      auto mask = _::mask_type(tgt);
       return level(mask, g, s) + 4;
     }
     else if constexpr( current_api >= sve ) return 2;
@@ -148,7 +148,7 @@ struct slide_left_impl_t
     if constexpr( S == 0 || S == T::size() ) return 0;
     if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
     {
-      auto mask = detail::mask_type(tgt);
+      auto mask = _::mask_type(tgt);
       return level(mask, mask, g, s) + 6;
     }
     if constexpr( current_api >= neon || current_api >= sve ) return 2;
@@ -166,7 +166,7 @@ struct slide_left_impl_t
   }
 };
 
-struct slide_left_t : detail::named_shuffle_1<slide_left_impl_t>
+struct slide_left_t : _::named_shuffle_1<slide_left_impl_t>
 {};
 
 inline constexpr auto slide_left2 = slide_left_t {};

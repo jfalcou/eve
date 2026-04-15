@@ -98,14 +98,14 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr EVE_NOINLINE T sec_(EVE_REQUIRES(cpu_), O const& o, T a0)
     {
       using elt_t = element_type_t<T>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::sec[o], a0);
+        return eve::_::apply_fp16_as_fp32(eve::sec[o], a0);
       else if constexpr(O::contains(radpi))
       {
         if constexpr(O::contains(quarter_circle))

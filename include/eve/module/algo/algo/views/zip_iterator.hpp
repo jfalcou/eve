@@ -41,7 +41,7 @@ namespace eve::algo::views
 
   template <typename ...Is> struct zip_iterator;
 
-  namespace detail
+  namespace _
   {
     template<typename... Is> struct zip_iterator_common;
   }
@@ -61,13 +61,13 @@ namespace std
   };
 
   template<std::size_t idx, typename ...Is>
-  struct tuple_element<idx, eve::algo::views::detail::zip_iterator_common<Is...>>
+  struct tuple_element<idx, eve::algo::views::_::zip_iterator_common<Is...>>
     : tuple_element<idx, kumi::tuple<Is...>>
   {
   };
 
   template<typename ...Is>
-  struct tuple_size<eve::algo::views::detail::zip_iterator_common<Is...>>
+  struct tuple_size<eve::algo::views::_::zip_iterator_common<Is...>>
     : std::tuple_size<kumi::tuple<Is...>>
   {
   };
@@ -75,7 +75,7 @@ namespace std
 
 namespace eve::algo::views
 {
-  namespace detail
+  namespace _
   {
     // Don't take always aligned if possible.
     // Prefer aligned if avaliable.
@@ -119,9 +119,9 @@ namespace eve::algo::views
   }
 
   template <typename T, typename U>
-  concept compatible_zip_iterators = detail::compatible_zip_iterators_impl<T, U>::value;
+  concept compatible_zip_iterators = _::compatible_zip_iterators_impl<T, U>::value;
 
-  namespace detail
+  namespace _
   {
     template<typename... Is> struct zip_iterator_common;
 
@@ -141,7 +141,7 @@ namespace eve::algo::views
       using tuple_type        = kumi::tuple<Is...>;
       using types_to_consider = kumi::result::cat_t<types_to_consider_for_t<Is>...>;
 
-      static constexpr std::size_t main_iterator_idx = detail::main_iterator<Is...>();
+      static constexpr std::size_t main_iterator_idx = _::main_iterator<Is...>();
 
       template<std::size_t idx, typename Self>
       requires std::derived_from<std::remove_cvref_t<Self>, zip_iterator_common<Is...>>
@@ -224,7 +224,7 @@ namespace eve::algo::views
       template <typename T>
       EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, eve::as<T> tgt)
       {
-        return detail::convert_zipped(self, tgt);
+        return _::convert_zipped(self, tgt);
       }
 
       // store_ has to be in common and not in iterator, because
@@ -280,9 +280,9 @@ namespace eve::algo::views
   }
 
   template <typename ... Is>
-  struct zip_iterator : detail::zip_iterator_common<Is...>
+  struct zip_iterator : _::zip_iterator_common<Is...>
   {
-    using base = detail::zip_iterator_common<Is...>;
+    using base = _::zip_iterator_common<Is...>;
     using base::base;
 
     template<typename Traits, compatible_zip_iterators<zip_iterator<Is...>> Other>
@@ -292,14 +292,14 @@ namespace eve::algo::views
         return as_range(f_, l_);
       }, self, other);
 
-      return detail::preprocess_zip_range(traits, ranges);
+      return _::preprocess_zip_range(traits, ranges);
     }
   };
 
   template <iterator I, iterator ... Is>
-  struct zip_iterator<I, Is...> : detail::zip_iterator_common<I, Is...>
+  struct zip_iterator<I, Is...> : _::zip_iterator_common<I, Is...>
   {
-    using base = detail::zip_iterator_common<I, Is...>;
+    using base = _::zip_iterator_common<I, Is...>;
 
     static_assert((std::same_as<iterator_cardinal_t<I>, iterator_cardinal_t<Is>> && ...));
 

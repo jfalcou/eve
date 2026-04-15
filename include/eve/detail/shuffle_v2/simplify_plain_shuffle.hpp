@@ -22,7 +22,7 @@ namespace eve
 EVE_REGISTER_CALLABLE(simplify_plain_shuffle_)
 EVE_DECLARE_CALLABLE(simplify_plain_shuffle_, simplify_plain_shuffle)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(simplify_plain_shuffle_, simplify_plain_shuffle);
 }

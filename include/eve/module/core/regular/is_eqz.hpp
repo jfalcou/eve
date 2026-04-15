@@ -76,7 +76,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<T>
@@ -86,7 +86,7 @@ namespace eve
       {
         return !a;
       }
-      else if constexpr (std::same_as<element_type_t<T>, float16_t> && !detail::supports_fp16_vector_ops)
+      else if constexpr (std::same_as<element_type_t<T>, float16_t> && !_::supports_fp16_vector_ops)
       {
         using u_t = as_uinteger_t<T>;
         auto uv = bit_cast(a, as<u_t>());

@@ -70,7 +70,7 @@ inline constexpr rvv_ rvv = {};
 // RISC-V RVV ABI concept
 //================================================================================================
 template<typename T>
-concept rvv_abi = detail::is_one_of<T>(detail::types<riscv_> {});
+concept rvv_abi = _::is_one_of<T>(_::types<riscv_> {});
 template<typename T>
 concept rvv_tag = requires(T) { typename T::is_rvv; };
 }

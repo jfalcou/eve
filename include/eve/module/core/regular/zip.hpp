@@ -92,7 +92,7 @@ namespace eve
   using zipped = eve::result_t<zip,Vs...>;
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, scalar_value... Vs>
   EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, Vs... vs) noexcept

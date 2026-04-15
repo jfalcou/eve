@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE std::optional<std::ptrdiff_t>

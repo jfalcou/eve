@@ -83,7 +83,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE

@@ -14,7 +14,7 @@
 #include <eve/as.hpp>
 #include <cstring>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Extract value
@@ -63,7 +63,7 @@ namespace eve::detail
 
       if constexpr( abi_t::is_wide_logical )
       {
-        auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage());
+        auto ptr = reinterpret_cast<_::alias_t<type>*>(&p.storage());
         ptr[i] = v;
       }
       else

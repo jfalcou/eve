@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_notand_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept

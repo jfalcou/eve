@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> is_less_equal_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
@@ -43,7 +43,7 @@ namespace eve::detail
       else if constexpr (cat == category::float32x2) return vcle_f32(a, b);
       else if constexpr (match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_less_equal, a, b);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_less_equal, a, b);
         else if constexpr (cat == category::float16x4)        return vcle_f16(a, b);
         else if constexpr (cat == category::float16x8)        return vcleq_f16(a, b);
       }

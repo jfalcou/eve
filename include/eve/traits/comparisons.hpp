@@ -46,7 +46,7 @@ namespace eve
   struct comparisons<T> : comparisons<element_type_t<T>>
   {};
 
-  namespace detail
+  namespace _
   {
     template <typename T>
     struct supports_equality {
@@ -61,5 +61,5 @@ namespace eve
   }
 
   template<typename T>
-  inline constexpr bool has_equality_support = detail::supports_equality<T>::value;
+  inline constexpr bool has_equality_support = _::supports_equality<T>::value;
 }

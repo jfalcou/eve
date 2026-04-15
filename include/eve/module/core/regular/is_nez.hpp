@@ -73,14 +73,14 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_nez_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr (std::same_as<element_type_t<T>, eve::float16_t>) return logical_not(is_eqz(a));
-      else                                                           return detail::to_logical(a);
+      else                                                           return _::to_logical(a);
     }
   }
 }

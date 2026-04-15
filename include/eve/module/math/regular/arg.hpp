@@ -86,7 +86,7 @@ inline constexpr auto phase = functor<arg_t>;
 //!  @}
 //===============================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T

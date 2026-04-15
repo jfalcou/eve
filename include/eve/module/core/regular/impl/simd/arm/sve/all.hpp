@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/logical_ornot.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE auto all_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> v) noexcept

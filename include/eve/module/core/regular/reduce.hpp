@@ -27,7 +27,7 @@ namespace eve
     EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f) const noexcept
       requires (!Options::contains(splat))
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::reduce] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v, f);
@@ -37,7 +37,7 @@ namespace eve
     EVE_FORCEINLINE bool operator()(T v, Callable f) const noexcept
       requires (!Options::contains(splat))
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::reduce] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v, f);
@@ -47,7 +47,7 @@ namespace eve
     EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), T>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::reduce] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(v);
@@ -158,12 +158,12 @@ namespace eve
   //! @}
   //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename T, typename Callable>
     EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f) noexcept
     {
-      if      constexpr (std::same_as<Callable, tag_t<eve::add>>)         return eve::detail::sum[opts](v);
+      if      constexpr (std::same_as<Callable, tag_t<eve::add>>)         return eve::_::sum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::min>>)         return eve::minimum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::max>>)         return eve::maximum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::logical_and>>) return eve::all[opts](v);
@@ -209,7 +209,7 @@ namespace eve
     template<callable_options O, arithmetic_value T>
     EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
     {
-      return eve::detail::sum[opts](v);
+      return eve::_::sum[opts](v);
     }
   }
 }

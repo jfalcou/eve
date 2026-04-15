@@ -90,7 +90,7 @@ namespace eve
 //================================================================================================
 
 
-  namespace detail
+  namespace _
   {
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr common_logical_t<T,U>

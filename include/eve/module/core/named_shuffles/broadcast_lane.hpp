@@ -97,7 +97,7 @@ struct broadcast_lane_t
     if (current_api == avx512 && logical_value<T>)
     {
       if (G == 1) return 4;
-      return level(detail::mask_type(tgt), g, i) + 4;
+      return level(_::mask_type(tgt), g, i) + 4;
     }
 
     if (reg_size == 64)
@@ -124,7 +124,7 @@ struct broadcast_lane_t
   }
 };
 
-inline constexpr auto broadcast_lane = detail::named_shuffle_1<broadcast_lane_t> {};
+inline constexpr auto broadcast_lane = _::named_shuffle_1<broadcast_lane_t> {};
   //================================================================================================
   //!  @}
   //================================================================================================

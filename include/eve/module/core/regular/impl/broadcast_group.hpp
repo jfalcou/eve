@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 // Find the proper broadcast group shape. If none is found, returns {-1,-1}
 template<std::size_t Cardinal, std::size_t Size>
@@ -48,7 +48,7 @@ template<std::ptrdiff_t Sz, std::ptrdiff_t... Is>
 inline constexpr auto is_broadcast_group = []()
 {
   constexpr std::array<std::ptrdiff_t, sizeof...(Is)> p      = {Is...};
-  constexpr auto                                      result = detail::find_broadcast_group<Sz>(p);
+  constexpr auto                                      result = _::find_broadcast_group<Sz>(p);
 
   if constexpr( result.group != -1 )
     return std::optional {std::pair {lane<result.group>, index<result.index>}};
@@ -79,7 +79,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
     // If the input wide is not aggregated and we don't bcast more than 64 bits
     else if constexpr( sizeof(v_t) * Group <= 8 )
     {
-      using outer_type = detail::make_integer_t<sizeof(v_t) * Group>;
+      using outer_type = _::make_integer_t<sizeof(v_t) * Group>;
       using w_t        = as_wide_t<outer_type, fixed<card / Group>>;
       return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Size / Group>), as<that_t>());
     }

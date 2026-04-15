@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <utility>
 
-namespace eve::detail
+namespace eve::_
 {
   // Extract ith element of a wide or propagate the value if non SIMD
   template<typename T> EVE_FORCEINLINE
@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename F, typename... Ts>
   concept supports_mapping =  requires(F func, Ts... ts)
   {
-    { func(eve::detail::get_at(ts, 0)...) };
+    { func(eve::_::get_at(ts, 0)...) };
   };
 
   // Compute a transformed wide type
@@ -50,12 +50,12 @@ namespace eve::detail
     }
 
     static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
-    using value_t                       = decltype(std::declval<F>()(eve::detail::get_at(std::declval<Ts>(), 0)...));
+    using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
 
     template<typename S> struct widen : as_wide<S, fixed_t> {};
 
-    using base  = detail::conditional_t< eve::product_type<value_t>
+    using base  = _::conditional_t< eve::product_type<value_t>
                                     , kumi::as_tuple<value_t,widen>
                                     , as_wide<value_t, fixed_t>
                                     >;
@@ -70,7 +70,7 @@ namespace eve::detail
       return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
     };
 
-    return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
+    return _::apply<kumi::size<Out>::value>( [&]( auto const&... I)
     {
       Out that;
       ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
@@ -86,7 +86,7 @@ namespace eve::detail
     template<typename Func, typename Idx, typename... Ts>
     EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
     {
-      return EVE_FWD(fn)(eve::detail::get_at(EVE_FWD(vs), i)...);
+      return EVE_FWD(fn)(eve::_::get_at(EVE_FWD(vs), i)...);
     }
   };
 

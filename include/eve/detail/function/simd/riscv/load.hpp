@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 // Fills undefined values with zeros

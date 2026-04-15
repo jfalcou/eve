@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, floating_scalar_value T, typename N, typename F>
   EVE_FORCEINLINE logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(neon128_), O const& o,
@@ -25,7 +25,7 @@ namespace eve::detail
   requires (arm_abi<abi_t<T, N>>)
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr (match(c, category::float16) && !detail::supports_fp16_vector_ops)
+    if constexpr (match(c, category::float16) && !_::supports_fp16_vector_ops)
       return eve::compare_absolute.behavior(cpu_{}, o, v, w, f);
     if constexpr(F{} == is_less_equal)
     {

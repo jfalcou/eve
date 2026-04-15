@@ -19,13 +19,13 @@
 
 #include <cmath>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto sqrt_(EVE_REQUIRES(emulated_), O const& o, T const& a0) noexcept
-    requires(detail::fp16_should_apply<T>)
+    requires(_::fp16_should_apply<T>)
   {
-    if constexpr(O::contains(lower) || O::contains(upper)) return detail::map(sqrt[o], a0);
+    if constexpr(O::contains(lower) || O::contains(upper)) return _::map(sqrt[o], a0);
     else                                                   return apply_fp16_as_fp32(sqrt[o], a0);
   }
 

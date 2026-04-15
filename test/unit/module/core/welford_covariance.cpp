@@ -18,8 +18,8 @@ TTS_CASE_TPL("Check return types of welford_covariance", eve::test::simd::ieee_r
   using v_t = eve::element_type_t<T>;
   using v3_t = vec3<v_t>;
   using wv3_t = eve::wide<v3_t>;
-  using wr_t = eve::detail::welford_covariance_result<kumi::apply_traits_t<eve::common_value, wv3_t>>;
-  using vr_t = eve::detail::welford_covariance_result<kumi::apply_traits_t<eve::common_value, v3_t>>;
+  using wr_t = eve::_::welford_covariance_result<kumi::apply_traits_t<eve::common_value, wv3_t>>;
+  using vr_t = eve::_::welford_covariance_result<kumi::apply_traits_t<eve::common_value, v3_t>>;
   TTS_EXPR_IS(eve::welford_covariance(wv3_t(), wv3_t()), wr_t);
   TTS_EXPR_IS(eve::welford_covariance(wv3_t(), v3_t()),  wr_t);
   TTS_EXPR_IS(eve::welford_covariance( v3_t(),wv3_t()),  wr_t);

@@ -20,7 +20,7 @@
 #  include <intrin.h>
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   template<auto S, typename T, typename N>
   EVE_FORCEINLINE auto putcounts(wide<T, N> in)
@@ -54,7 +54,7 @@ namespace eve::detail
     }
     else
     {
-      return popcount.behavior(cpu_{}, opts, x); 
+      return popcount.behavior(cpu_{}, opts, x);
     }
   }
 

@@ -27,7 +27,7 @@ TTS_CASE_WITH( "Check behavior of rotate swizzle"
         )
 <typename T, typename L>(T simd, L logicals)
 {
-  eve::detail::for_<0,1,T::size()>
+  eve::_::for_<0,1,T::size()>
   ( [&]<typename M>(M)
   {
     T ref = scalar_rotate(simd, M{}());

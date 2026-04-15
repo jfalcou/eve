@@ -49,8 +49,8 @@ namespace eve::algo
   struct soa_vector
   {
     private:
-    using storage_type        = detail::soa_storage<Type,Allocator>;
-    using const_storage_type  = detail::soa_storage<Type,Allocator> const;
+    using storage_type        = _::soa_storage<Type,Allocator>;
+    using const_storage_type  = _::soa_storage<Type,Allocator> const;
 
     public:
     //=============================================================================================

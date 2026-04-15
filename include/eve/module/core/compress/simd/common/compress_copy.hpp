@@ -47,6 +47,6 @@ struct compress_copy_core
   }
 };
 
-inline constexpr auto compress_copy = detail::compress_callable<compress_copy_core> {};
+inline constexpr auto compress_copy = _::compress_callable<compress_copy_core> {};
 
 }

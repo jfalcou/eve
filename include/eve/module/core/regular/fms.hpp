@@ -21,7 +21,7 @@ namespace eve
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
     constexpr EVE_FORCEINLINE
-    detail::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))

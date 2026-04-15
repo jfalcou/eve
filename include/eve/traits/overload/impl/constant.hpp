@@ -66,8 +66,8 @@ namespace eve
         // Compute the raw constant
         auto constant_value = Func<OptionsValues>::value(as<tgt_type>{},opts);
         using type          = decltype(constant_value);
-        using out_t         = typename detail::conditional_t< std::same_as<type,tgt_type>
-                                                         , detail::always<T>
+        using out_t         = typename _::conditional_t< std::same_as<type,tgt_type>
+                                                         , _::always<T>
                                                          , as_wide_as<type, T>
                                                          >::type;
 
@@ -76,7 +76,7 @@ namespace eve
 
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
         if constexpr(match_option<condition_key, O, ignore_none_>) return that;
-        else return detail::mask_op(opts[condition_key], detail::return_2nd, out_t{e_t(0)}, that);
+        else return _::mask_op(opts[condition_key], _::return_2nd, out_t{e_t(0)}, that);
       }
     }
   };

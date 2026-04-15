@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sve_),

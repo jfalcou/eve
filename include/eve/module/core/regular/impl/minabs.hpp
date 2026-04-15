@@ -10,11 +10,11 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/concept/value.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto minabs_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return minabs[o.drop(widen)](upgrade(ts)...);
   }

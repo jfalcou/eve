@@ -81,7 +81,7 @@ namespace eve
 //================================================================================================
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename Ptr, typename V>
   EVE_FORCEINLINE void write_(EVE_REQUIRES(cpu_), O const&, V v, Ptr p) noexcept

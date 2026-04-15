@@ -94,11 +94,11 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto geommean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-    requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+    requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return geommean[o.drop(widen)](upgrade(ts)...);
     }
@@ -110,7 +110,7 @@ namespace eve
       using r_t   = common_value_t<T0, Ts...>;
       using elt_t = element_type_t<r_t>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::geommean[o], a0, args...);
+        return eve::_::apply_fp16_as_fp32(eve::geommean[o], a0, args...);
       else
       {
         constexpr std::uint64_t sz = sizeof...(Ts)+1;

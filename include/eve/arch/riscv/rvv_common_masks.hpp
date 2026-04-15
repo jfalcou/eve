@@ -9,7 +9,7 @@
 
 #include <eve/arch/riscv/rvv_utils.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>

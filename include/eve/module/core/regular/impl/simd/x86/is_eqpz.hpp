@@ -13,7 +13,7 @@
 #include <eve/module/core/detail/flags.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_eqpz_(EVE_REQUIRES(avx512_),
@@ -35,7 +35,7 @@ namespace eve::detail
     else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, f)};
     else if constexpr( match(c, category::float16) )
     {
-      if      constexpr( !detail::supports_fp16_vector_ops ) return is_eqpz.behavior(cpu_{}, opts, a);
+      if      constexpr( !_::supports_fp16_vector_ops ) return is_eqpz.behavior(cpu_{}, opts, a);
       else if constexpr( c == category::float16x32 )         return s_t {_mm512_fpclass_ph_mask(a, f)};
       else if constexpr( c == category::float16x16 )         return s_t {_mm256_fpclass_ph_mask(a, f)};
       else if constexpr( c == category::float16x8  )         return s_t {_mm_fpclass_ph_mask(a, f)};
@@ -70,7 +70,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_fpclass_pd_mask(m, v, f)};
       else if constexpr( match(c, category::float16) )
       {
-        if      constexpr( !detail::supports_fp16_vector_ops ) return is_eqpz[o][cx].retarget(cpu_{}, v);
+        if      constexpr( !_::supports_fp16_vector_ops ) return is_eqpz[o][cx].retarget(cpu_{}, v);
         else if constexpr( c == category::float16x32 )         return mask32 {_mm512_mask_fpclass_ph_mask(m, v, f)};
         else if constexpr( c == category::float16x16 )         return mask16 {_mm256_mask_fpclass_ph_mask(m, v, f)};
         else if constexpr( c == category::float16x8  )         return mask8  {_mm_mask_fpclass_ph_mask(m, v, f)};

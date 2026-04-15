@@ -81,7 +81,7 @@ struct swap_adjacent_t
       else
       {
         if( g_size == 8 && fund_size == 16 ) return 2;
-        return level(detail::mask_type(tgt), g) + 4;
+        return level(_::mask_type(tgt), g) + 4;
       }
     }
     if( current_api >= vmx ) return 3;
@@ -89,7 +89,7 @@ struct swap_adjacent_t
 
     if( eve::current_api == avx512 && logical_simd_value<T> )
     {
-      return level(detail::mask_type(tgt), g) + 4;
+      return level(_::mask_type(tgt), g) + 4;
     }
 
     if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
@@ -98,7 +98,7 @@ struct swap_adjacent_t
       std::ptrdiff_t half_l = level(eve::as<half_t> {}, g);
       // since we are adding, we need to deal with aggregation
       if( reg_size > 32 ) return half_l;
-      return detail::idxm::add_shuffle_levels({half_l, half_l, 4});
+      return _::idxm::add_shuffle_levels({half_l, half_l, 4});
     }
 
     if( current_api >= sse2 )
@@ -114,7 +114,7 @@ struct swap_adjacent_t
   }
 };
 
-inline constexpr auto swap_adjacent = detail::named_shuffle_1<swap_adjacent_t> {};
+inline constexpr auto swap_adjacent = _::named_shuffle_1<swap_adjacent_t> {};
   //================================================================================================
   //!  @}
   //================================================================================================

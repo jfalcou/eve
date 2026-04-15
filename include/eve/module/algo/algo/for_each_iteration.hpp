@@ -19,7 +19,7 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
     struct for_each_iteration_common
     {
@@ -71,7 +71,7 @@ namespace eve::algo
           // single steps
           bool should_break = false;
 
-          if( eve::detail::for_until_<0, 1, unrolling>(
+          if( eve::_::for_until_<0, 1, unrolling>(
                   small_steps_lambda<I, S, Delegate> {should_break, f, l, delegate}) )
           {
             return should_break;
@@ -82,7 +82,7 @@ namespace eve::algo
           while( big_steps_count )
           {
             std::array<I, unrolling> arr;
-            eve::detail::for_<0, 1, unrolling>([&](auto idx) mutable {
+            eve::_::for_<0, 1, unrolling>([&](auto idx) mutable {
               arr[idx()] = f;
               f += iterator_cardinal_v<I>;
             });
@@ -190,9 +190,9 @@ namespace eve::algo
     auto operator()(Traits traits, I f, S l) const
     {
       EVE_ASSERT(f != l, "for_each_iteration requires a non-empty range");
-      if constexpr (!Traits::contains(no_aligning) && !partially_aligned_iterator<I> ) return detail::for_each_iteration_aligning{traits, f, l};
-      else if constexpr (Traits::contains(divisible_by_cardinal)                          ) return detail::for_each_iteration_precise_f_l{traits, f, l};
-      else                                                                                  return detail::for_each_iteration_precise_f{traits, f, l};
+      if constexpr (!Traits::contains(no_aligning) && !partially_aligned_iterator<I> ) return _::for_each_iteration_aligning{traits, f, l};
+      else if constexpr (Traits::contains(divisible_by_cardinal)                          ) return _::for_each_iteration_precise_f_l{traits, f, l};
+      else                                                                                  return _::for_each_iteration_precise_f{traits, f, l};
     }
   } inline constexpr for_each_iteration;
 }

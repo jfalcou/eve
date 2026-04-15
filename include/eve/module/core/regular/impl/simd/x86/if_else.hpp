@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE constexpr
@@ -35,7 +35,7 @@ requires x86_abi<abi_t<T,N>>
     else if constexpr( c == category::float32x4 ) return _mm_mask_blend_ps(msk, s2, s1);
     else if constexpr( match(c, category::float16) )
     {
-      if constexpr (eve::detail::supports_fp16_vector_ops)
+      if constexpr (eve::_::supports_fp16_vector_ops)
       {
         if      constexpr( c == category::float16x32) return _mm512_mask_blend_ph(msk, s2, s1);
         else if constexpr( c == category::float16x16) return _mm256_mask_blend_ph(msk, s2, s1);

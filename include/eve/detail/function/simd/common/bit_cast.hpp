@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <bit>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename Target>
   EVE_FORCEINLINE constexpr Target bit_cast_impl(cpu_, T const &a, as<Target>) noexcept
@@ -26,7 +26,7 @@ namespace eve::detail
     else
     {
       const auto mem = reinterpret_cast<const element_type_t<Target>*>(&a.storage());
-      return detail::apply<Target::size()>([&](auto... I) { return Target{ mem[I]... }; });
+      return _::apply<Target::size()>([&](auto... I) { return Target{ mem[I]... }; });
     }
   }
 }

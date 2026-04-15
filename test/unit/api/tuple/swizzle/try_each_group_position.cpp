@@ -24,7 +24,7 @@ TTS_CASE_TPL( "Check behavior of try_each_group_position", eve::test::scalar::al
                               };
   auto r = eve::try_each_group_position(data, eve::lane<1>);
 
-  eve::detail::for_<0,1,w_t::size()>([&]<typename I>(I ) {
+  eve::_::for_<0,1,w_t::size()>([&]<typename I>(I ) {
     auto perm = get<I{}()>(r);
     for (int i = 0; i != w_t::size(); ++i) {
       TTS_EXPECT(eve::any(perm == data.get(i))) << data.get(i);

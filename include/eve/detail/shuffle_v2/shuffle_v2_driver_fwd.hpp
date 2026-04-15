@@ -17,10 +17,10 @@ namespace eve
 EVE_REGISTER_CALLABLE(shuffle_v2_driver_impl_)
 EVE_DECLARE_CALLABLE(shuffle_v2_driver_impl_, shuffle_v2_driver_impl)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(shuffle_v2_driver_impl_, shuffle_v2_driver_impl);
-} // namespace detail
+} // namespace _
 
 EVE_CALLABLE_API(shuffle_v2_driver_impl_, shuffle_v2_driver_impl)
 
@@ -41,7 +41,7 @@ template<typename Pattern, typename G, typename... Ts> struct pattern_failed_val
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename NativeSelector> struct shuffle_v2_driver
@@ -56,7 +56,7 @@ template<typename NativeSelector> struct shuffle_v2_driver
     {
       return cant_shuffle_different_types<T, Ts...> {};
     }
-    else if constexpr( !detail::idxm::validate_pattern(
+    else if constexpr( !_::idxm::validate_pattern(
                            eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...) )
     {
       return pattern_failed_validation<pattern_t<I...>, fixed<G>, T, Ts...> {};

@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<auto S, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
@@ -32,7 +32,7 @@ namespace eve::detail
     else if constexpr( c == category::float64x2 ) return _mm_roundscale_pd(a0, spv);
     else if constexpr (match(c, category::float16))
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return roundscale.behavior(cpu_{}, o, a0, idx);
+      if      constexpr (!_::supports_fp16_vector_ops) return roundscale.behavior(cpu_{}, o, a0, idx);
       else if constexpr (c == category::float16x8)          return _mm_roundscale_ph(a0, spv);
       else if constexpr (c == category::float16x16)         return _mm256_roundscale_ph(a0, spv);
       else if constexpr (c == category::float16x32)         return _mm512_roundscale_ph(a0, spv);
@@ -69,7 +69,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 ) return _mm_mask_roundscale_pd(src, m, a0, spv);
       else if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return roundscale[o][mask].retarget(cpu_{}, a0, idx);
+        if      constexpr (!_::supports_fp16_vector_ops) return roundscale[o][mask].retarget(cpu_{}, a0, idx);
         else if constexpr (c == category::float16x32)         return _mm512_mask_roundscale_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x16)         return _mm256_mask_roundscale_ph(src, m, a0, spv);
         else if constexpr (c == category::float16x8)          return _mm_mask_roundscale_ph(src, m, a0, spv);

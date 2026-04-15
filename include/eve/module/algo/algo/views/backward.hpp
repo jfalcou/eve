@@ -87,14 +87,14 @@ namespace eve::algo::views
         auto rng  = range_ref(EVE_FWD(wrapped));
         using Rng = decltype(rng);
 
-        if constexpr(eve::detail::instance_of<Rng, backward_range>) return rng.base;
+        if constexpr(eve::_::instance_of<Rng, backward_range>) return rng.base;
         else                                                        return backward_range<Rng>{rng};
       }
       else
       {
         using I = std::remove_cvref_t<Wrapped>;
 
-        if constexpr(eve::detail::instance_of<I, backward_iterator>)  return wrapped.base;
+        if constexpr(eve::_::instance_of<I, backward_iterator>)  return wrapped.base;
         else                                                          return backward_iterator<I>{wrapped};
       }
     }

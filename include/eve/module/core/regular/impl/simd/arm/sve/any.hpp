@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE auto

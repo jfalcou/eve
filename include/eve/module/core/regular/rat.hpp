@@ -81,7 +81,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //! @}
 //================================================================================================
 
-namespace detail
+namespace _
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto rat_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept

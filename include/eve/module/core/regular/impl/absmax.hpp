@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto

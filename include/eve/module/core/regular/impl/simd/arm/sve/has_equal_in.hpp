@@ -16,12 +16,12 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/rotate.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, typename Pred>
   constexpr EVE_FORCEINLINE logical<wide<T, N>> has_equal_in_(EVE_REQUIRES(sve2_), O const& opts, wide<T, N> x, wide<T, N> match_against, Pred op) noexcept
     requires (sve_abi<abi_t<T, N>> && (sizeof(T) <= 2) && integral_scalar_value<T>)
-  { 
+  {
     if constexpr (!same_callable<Pred, eve::is_equal>)
     {
       return has_equal_in.behavior(cpu_{}, opts, x, match_against, op);
@@ -46,7 +46,7 @@ namespace eve::detail
       else
       {
         auto all_rotations = try_each_group_position(match_against, eve::lane<16 / sizeof(T)>);
-        
+
         auto all_tests = kumi::map([&](auto needle) -> eve::logical<wide<T, N>> {
             return svmatch(sve_true<T>(), x, needle);
         }, all_rotations);

@@ -152,7 +152,7 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
@@ -210,7 +210,7 @@ namespace eve
     //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
@@ -279,7 +279,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
@@ -350,7 +350,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
@@ -420,7 +420,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
@@ -490,7 +490,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
@@ -560,7 +560,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
@@ -631,7 +631,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       check_mask(tgt);
-      return detail::to_logical(*this, tgt);
+      return _::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> tgt) const

@@ -18,7 +18,7 @@ namespace eve
     template<arithmetic_value T, integral_value U>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(T const* ptr, U idx) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
         "[Gather] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(ptr, idx);
@@ -27,7 +27,7 @@ namespace eve
     template<arithmetic_value T, integral_value U, typename N>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(aligned_ptr<T, N> ptr, U idx) const noexcept
     {
-      static_assert(detail::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
+      static_assert(_::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),
         "[Gather] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
 
       return EVE_DISPATCH_CALL(ptr, idx);

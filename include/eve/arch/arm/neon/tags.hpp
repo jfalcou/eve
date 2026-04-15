@@ -50,6 +50,6 @@ namespace eve
   //================================================================================================
   // ARM ABI concept
   //================================================================================================
-  template<typename T> concept arm_abi = detail::is_one_of<T> ( detail::types<arm_64_,arm_128_> {});
+  template<typename T> concept arm_abi = _::is_one_of<T> ( _::types<arm_64_,arm_128_> {});
   template<typename T> concept arm_tag = requires(T) { typename T::is_arm; };
 }

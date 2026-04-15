@@ -92,7 +92,7 @@ namespace eve
 
 #include <eve/module/core/regular/abs.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<value T, typename F, callable_options O>
   EVE_FORCEINLINE constexpr logical<T>

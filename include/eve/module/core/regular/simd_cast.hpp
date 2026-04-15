@@ -113,7 +113,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     // This function is forward declared wrapper around simd_cast,
     // so that internally we can call it anywhere.
@@ -122,7 +122,7 @@ namespace eve
       return eve::simd_cast(x, tgt);
     }
 
-  } // namespace detail
+  } // namespace _
 
 } // namespace eve
 

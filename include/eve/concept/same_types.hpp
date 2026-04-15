@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T0, typename... Ts>
     consteval auto type_check()
@@ -45,7 +45,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename... Ts>
-  concept same_types = same_lanes_or_scalar<Ts...> && detail::type_check<Ts...>();
+  concept same_types = same_lanes_or_scalar<Ts...> && _::type_check<Ts...>();
 
   //================================================================================================
   //! @addtogroup traits
@@ -61,5 +61,5 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename T>
-  concept same_types_tuple = same_lanes_or_scalar_tuple<T> && detail::tuple_type_check<T>();
+  concept same_types_tuple = same_lanes_or_scalar_tuple<T> && _::tuple_type_check<T>();
 }

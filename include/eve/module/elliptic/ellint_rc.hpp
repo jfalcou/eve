@@ -83,7 +83,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr auto ellint_rc_(EVE_REQUIRES(cpu_), O const&, T x, T y) noexcept

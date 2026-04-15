@@ -100,7 +100,7 @@ struct reverse_in_subgroups_t
         if( sub_size <= 8 ) return 2;
         return 3;
       }
-      return level(detail::mask_type(tgt), g, sub_g) + 4;
+      return level(_::mask_type(tgt), g, sub_g) + 4;
     }
 
     if( current_api >= vmx ) return 3;
@@ -108,7 +108,7 @@ struct reverse_in_subgroups_t
 
     if( current_api == avx512 && logical_value<T> )
     {
-      return level(detail::mask_type(tgt), g, sub_g) + 4;
+      return level(_::mask_type(tgt), g, sub_g) + 4;
     }
 
     if (sub_size == 32) {
@@ -130,7 +130,7 @@ struct reverse_in_subgroups_t
   }
 };
 
-inline constexpr auto reverse_in_subgroups = detail::named_shuffle_1<reverse_in_subgroups_t> {};
+inline constexpr auto reverse_in_subgroups = _::named_shuffle_1<reverse_in_subgroups_t> {};
   //================================================================================================
   //!  @}
   //================================================================================================

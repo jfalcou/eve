@@ -20,7 +20,7 @@
 #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
@@ -30,7 +30,7 @@ namespace eve::detail
 
     constexpr auto c = categorize<wide<T, N>>();
     using abi = abi_t<T, N>;
-    constexpr bool avx512fp16 = detail::supports_fp16_vector_ops;
+    constexpr bool avx512fp16 = _::supports_fp16_vector_ops;
 
     if constexpr (sizeof...(vs) == 0)
     {
@@ -80,7 +80,7 @@ namespace eve::detail
         else if constexpr( match(c,category::int64x2 , category::uint64x2)  )
         {
           [[maybe_unused]] __m128i that{};
-          T *ptr = reinterpret_cast<detail::alias_t<T>*>(&that);
+          T *ptr = reinterpret_cast<_::alias_t<T>*>(&that);
           ptr[0] = ptr[1] = static_cast<T>(v);
           return that;
         }
@@ -143,7 +143,7 @@ namespace eve::detail
         {
           [[maybe_unused]] __m128i that{};
 
-          T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
+          T *ptr = reinterpret_cast<_::alias_t<T> *>(&that);
           T d[] = { v, static_cast<T>(vs)... };
 
           ptr[0] = d[0];

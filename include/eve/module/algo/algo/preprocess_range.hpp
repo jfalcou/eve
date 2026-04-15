@@ -20,7 +20,7 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
     template <typename T, typename A>
     EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
@@ -52,13 +52,13 @@ namespace eve::algo
   }
 
   template <typename Traits, typename I_, typename S_>
-    requires detail::pointer_iterator_sentinel<I_, S_>
+    requires _::pointer_iterator_sentinel<I_, S_>
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
     // We have to force cardinal here, because iterators
     // with different cardinals don't form a valid range.
-    auto f = detail::fix_up_cardinal(traits_, detail::ptr_to_iterator(f_));
-    auto l = detail::fix_up_cardinal(traits_, detail::ptr_to_iterator(l_));
+    auto f = _::fix_up_cardinal(traits_, _::ptr_to_iterator(f_));
+    auto l = _::fix_up_cardinal(traits_, _::ptr_to_iterator(l_));
 
     return operator()(traits_, f, l);
   }
@@ -79,8 +79,8 @@ namespace eve::algo
   {
     auto traits_ = process_equivalents(with_equivalents_);
 
-    auto f = detail::fix_up_cardinal(traits_, f_);
-    auto l = detail::fix_up_cardinal(traits_, l_);
+    auto f = _::fix_up_cardinal(traits_, f_);
+    auto l = _::fix_up_cardinal(traits_, l_);
 
     using I = decltype(f);
     using S = decltype(l);

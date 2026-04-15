@@ -82,7 +82,7 @@ namespace eve
   template<typename T>
   struct has_aggregated_component : has_aggregated_abi<T> {};
 
-  namespace detail
+  namespace _
   {
     struct check_abi
     {
@@ -97,7 +97,7 @@ namespace eve
   template<typename T>
   requires eve::product_type<T>
   struct  has_aggregated_component<T>
-        : kumi::result::fold_left<detail::check_abi, T, std::false_type>::type
+        : kumi::result::fold_left<_::check_abi, T, std::false_type>::type
   {};
 
   template<typename T>

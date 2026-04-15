@@ -14,7 +14,7 @@
 namespace eve::algo
 {
 
-namespace detail
+namespace _
 {
   struct for_each_iteration_with_expensive_optional_part_common
   {
@@ -62,7 +62,7 @@ namespace detail
     {
       while( f <= unroll_l )
       {
-        if( eve::detail::for_until_<0, 1, get_unrolling<Traits>()>(
+        if( eve::_::for_until_<0, 1, get_unrolling<Traits>()>(
                 unrolled_steps_lambda<I, S, Delegate> {f, delegate}) )
         {
           return true;
@@ -242,15 +242,15 @@ struct
                "for_each_iteration_with_expensive_optional_part requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )
     {
-      return detail::for_each_iteration_with_expensive_optional_part_aligning {traits, f, l};
+      return _::for_each_iteration_with_expensive_optional_part_aligning {traits, f, l};
     }
     else if constexpr( Traits::contains(divisible_by_cardinal) )
     {
-      return detail::for_each_iteration_with_expensive_optional_part_precise_f_l {traits, f, l};
+      return _::for_each_iteration_with_expensive_optional_part_precise_f_l {traits, f, l};
     }
     else
     {
-      return detail::for_each_iteration_with_expensive_optional_part_precise_f {traits, f, l};
+      return _::for_each_iteration_with_expensive_optional_part_precise_f {traits, f, l};
     }
   }
 } inline constexpr for_each_iteration_with_expensive_optional_part;

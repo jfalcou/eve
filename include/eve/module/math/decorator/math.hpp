@@ -26,9 +26,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto const medium          = ::rbr::flag( medium_mode{}          );
   [[maybe_unused]] inline constexpr auto const quarter_circle  = ::rbr::flag( quarter_circle_mode{}  );
 
-  struct big_option             : detail::exact_option<big>            {};
-  struct full_circle_option     : detail::exact_option<full_circle>    {};
-  struct half_circle_option     : detail::exact_option<half_circle>    {};
-  struct medium_option          : detail::exact_option<medium>         {};
-  struct quarter_circle_option  : detail::exact_option<quarter_circle> {};
+  struct big_option             : _::exact_option<big>            {};
+  struct full_circle_option     : _::exact_option<full_circle>    {};
+  struct half_circle_option     : _::exact_option<half_circle>    {};
+  struct medium_option          : _::exact_option<medium>         {};
+  struct quarter_circle_option  : _::exact_option<quarter_circle> {};
 }

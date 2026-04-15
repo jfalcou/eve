@@ -21,9 +21,9 @@ namespace eve
     EVE_FORCEINLINE constexpr Z  operator()(N const& n, Z const & z) const noexcept
     {
       if constexpr(Options::contains(eve::spherical))
-        return detail::sb_k(n, z);
+        return _::sb_k(n, z);
       else
-        return detail::cb_k(n, z);
+        return _::cb_k(n, z);
     }
     EVE_CALLABLE_OBJECT(bessel_k_t, bessel_k_);
   };

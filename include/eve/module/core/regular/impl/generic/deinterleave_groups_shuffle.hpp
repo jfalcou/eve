@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/traits/product_type.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 //==============================================================================================
 // Classify a pattern as a deinterleave_groups
@@ -29,7 +29,7 @@ inline constexpr auto is_deinterleave_groups_shuffle = []()
   (std::make_index_sequence<std::bit_width(sz) - 1> {});
 
   // Find the fitting one
-  constexpr auto idx = detail::find_index(pattern<I...>, x);
+  constexpr auto idx = _::find_index(pattern<I...>, x);
   return fixed<sz / (1 << (idx + 1))> {};
 }();
 

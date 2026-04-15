@@ -17,7 +17,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/arch/simdfloat16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, product_type T, product_type U>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
@@ -28,7 +28,7 @@ namespace eve::detail
     }
     else
     {
-      using out_t = detail::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
+      using out_t = _::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
       out_t res;
 
       auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
@@ -42,7 +42,7 @@ namespace eve::detail
 
   template<callable_options O, typename U, typename N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
-    requires (!detail::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
+    requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
     // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
@@ -56,15 +56,15 @@ namespace eve::detail
     }
     else
     {
-      return convert(detail::emulated_simd_fp16_to_fp32(v), as<U>{});
+      return convert(_::emulated_simd_fp16_to_fp32(v), as<U>{});
     }
   }
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
-    requires (!detail::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t>)
+    requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t>)
   {
-    return detail::emulated_simd_fp32_to_fp16(convert(v, as<float>{}));
+    return _::emulated_simd_fp32_to_fp16(convert(v, as<float>{}));
   }
 
   template<callable_options O, value In, scalar_value Out>

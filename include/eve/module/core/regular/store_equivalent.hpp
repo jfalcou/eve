@@ -46,7 +46,7 @@ concept has_store_equivalent = simd_compatible_ptr<Ptr, T> &&(
                   decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()))>);
 }
 
-namespace eve::detail
+namespace eve::_
 {
 template<relative_conditional_expr C, typename T, simd_compatible_ptr<T> Ptr>
 EVE_FORCEINLINE kumi::tuple<C, T, Ptr>

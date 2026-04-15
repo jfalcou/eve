@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> sign_(EVE_REQUIRES(ssse3_), O const &o, wide<T, N> a) noexcept

@@ -78,7 +78,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T a, T b)

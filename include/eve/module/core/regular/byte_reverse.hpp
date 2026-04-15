@@ -80,7 +80,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<unsigned_scalar_value T> T bswap(T x)
     {

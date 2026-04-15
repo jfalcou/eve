@@ -31,7 +31,7 @@ template<typename Selector> struct just_shuffle_test_selector
   requires(std::invocable<Selector, Args...>)
   {
     auto r = sel(args...);
-    if constexpr( !eve::detail::matched_shuffle<decltype(r)> )
+    if constexpr( !eve::_::matched_shuffle<decltype(r)> )
     {
       return kumi::tuple {r, eve::index<-1>};
     }
@@ -61,7 +61,7 @@ template<typename Selector>
 constexpr auto
 just_shuffle_test(Selector selector)
 {
-  return just_shuffle_test_ {eve::detail::make_shuffle_v2(just_shuffle_test_selector {selector})};
+  return just_shuffle_test_ {eve::_::make_shuffle_v2(just_shuffle_test_selector {selector})};
 }
 
 TTS_CASE("shuffle_driver with lambdas")
@@ -99,7 +99,7 @@ TTS_CASE("shuffle_driver propagates not found")
   constexpr auto op = []<typename T, typename N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
   requires(sizeof(T) > 1)
   {
-    if constexpr( sizeof(T) == 4 ) return eve::detail::no_matching_shuffle;
+    if constexpr( sizeof(T) == 4 ) return eve::_::no_matching_shuffle;
     else return x;
   };
   constexpr auto shuffle = just_shuffle_test(op);
@@ -153,7 +153,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
 
     TTS_EQUAL(numTimesCalled, eve::has_aggregated_abi_v<T> ? 2 : 1);
     TTS_TYPE_IS(decltype(r), eve::logical<T>);
-    auto notFound = just_shuffle_test([](auto...) { return eve::detail::no_matching_shuffle; });
+    auto notFound = just_shuffle_test([](auto...) { return eve::_::no_matching_shuffle; });
 
     TTS_CONSTEXPR_EXPECT((std::invocable<decltype(hasShuffle), eve::logical<T>, P>));
     TTS_CONSTEXPR_EXPECT(
@@ -229,7 +229,7 @@ TTS_CASE_TPL("Check shuffle_driver, bundle", eve::test::simd::all_types)
       []<std::ptrdiff_t... i>(eve::pattern_t<i...>, eve::fixed<1>, auto x, auto...)
       {
         TTS_CONSTEXPR_EXPECT(eve::plain_simd_value<decltype(x)>);
-        if constexpr( sizeof(e_t) == 2 ) return eve::detail::no_matching_shuffle;
+        if constexpr( sizeof(e_t) == 2 ) return eve::_::no_matching_shuffle;
         else return x;
       });
   using P  = some_p_t<w_t>;
@@ -294,7 +294,7 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
   }
   else
   {
-    auto         shuffle = eve::detail::make_shuffle_v2([] { TTS_FAIL("should not be reached"); });
+    auto         shuffle = eve::_::make_shuffle_v2([] { TTS_FAIL("should not be reached"); });
     eve::wide<T> x {1, 2};
     {
       auto [shuffled, l] = shuffle(x, [](int i, int size) { return size - i - 1; });
@@ -338,7 +338,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
         return (std::ptrdiff_t)i;
       };
 
-      auto shuffle = eve::detail::make_shuffle_v2(
+      auto shuffle = eve::_::make_shuffle_v2(
           [&]<typename G, typename U>(auto p, G, U x, auto...)
           {
             constexpr std::ptrdiff_t cardinal        = U::size() / G {}();

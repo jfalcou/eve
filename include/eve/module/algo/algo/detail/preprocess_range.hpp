@@ -19,12 +19,12 @@
 
 namespace eve::algo
 {
-  namespace detail
+  namespace _
   {
     template <typename I, typename S>
     concept pointer_iterator_sentinel =
-      (std::is_pointer_v<I> || eve::detail::instance_of<I, aligned_ptr>) &&
-      (std::is_pointer_v<S> || eve::detail::instance_of<S, aligned_ptr>) &&
+      (std::is_pointer_v<I> || eve::_::instance_of<I, aligned_ptr>) &&
+      (std::is_pointer_v<S> || eve::_::instance_of<S, aligned_ptr>) &&
       std::same_as<typename eve::pointer_traits<I>::value_type,
                    typename eve::pointer_traits<S>::value_type>;
   }
@@ -32,7 +32,7 @@ namespace eve::algo
   struct preprocess_range_
   {
     template <typename Traits, typename I, typename S>
-      requires  detail::pointer_iterator_sentinel<I, S>
+      requires  _::pointer_iterator_sentinel<I, S>
     EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
 
     template <typename Traits, std::contiguous_iterator I, typename S>
@@ -40,13 +40,13 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
 
     template <typename Traits, typename I, typename S>
-      requires eve::detail::tag_dispatchable<preprocess_range_, Traits, I, S>
+      requires eve::_::tag_dispatchable<preprocess_range_, Traits, I, S>
     EVE_FORCEINLINE auto operator()(Traits traits, I f, S l) const {
       return tagged_dispatch(*this, traits, f, l);
     }
 
     template <typename Traits, typename Rng>
-      requires eve::detail::tag_dispatchable<preprocess_range_, Traits, Rng>
+      requires eve::_::tag_dispatchable<preprocess_range_, Traits, Rng>
     EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
       return tagged_dispatch(*this, traits_, EVE_FWD(rng));
     }

@@ -23,7 +23,7 @@ namespace eve
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
     constexpr EVE_FORCEINLINE
-    detail::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
@@ -87,13 +87,13 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fanm_(EVE_REQUIRES(emulated_), O const& o, T const& a, U const& b, V const& c)
-      requires (detail::fp16_should_apply<common_value_t<T, U, V>>)
+      requires (_::fp16_should_apply<common_value_t<T, U, V>>)
     {
-      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(fanm[o], a, b, c);
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fanm[o], a, b, c);
       else                                                                            return apply_fp16_as_fp32(fanm[o], a, b, c);
     }
 

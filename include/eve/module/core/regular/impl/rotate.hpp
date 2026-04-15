@@ -10,7 +10,7 @@
 #include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<std::ptrdiff_t M> struct rotate_lambda

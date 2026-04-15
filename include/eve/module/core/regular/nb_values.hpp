@@ -74,7 +74,7 @@ namespace eve
 //!  @godbolt{doc/core/nb_values.cpp}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr auto nb_values_(EVE_REQUIRES(cpu_), O const&, T a, T b)
@@ -82,8 +82,8 @@ namespace eve
       using ui_t = as_integer_t<T, unsigned>;
       if constexpr( floating_value<T> )
       {
-        auto aa = eve::detail::bitinteger(a);
-        auto bb = eve::detail::bitinteger(b);
+        auto aa = eve::_::bitinteger(a);
+        auto bb = eve::_::bitinteger(b);
         auto z  = if_else(is_unordered(a, b), eve::valmax(eve::as<ui_t>()), bit_cast(dist(bb, aa), as<ui_t>()));
         return if_else(is_ltz(signnz(a) * signnz(b)), call_add(z, one(as(z))), z);
       }

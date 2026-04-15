@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
@@ -29,7 +29,7 @@ namespace eve::detail
 
       if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec, v);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec, v);
         else if constexpr (cat == category::float16x8)        return vrecpeq_f16(v);
         else if constexpr (cat == category::float16x4)        return vrecpe_f16(v);
       }

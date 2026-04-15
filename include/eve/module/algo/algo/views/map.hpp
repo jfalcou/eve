@@ -18,7 +18,7 @@
 
 namespace eve::algo::views
 {
-  namespace detail
+  namespace _
   {
     template <typename LoadOp, typename Base>
     using map_value_type_t = decltype(std::declval<LoadOp>()(std::declval<value_type_t<Base>>()));
@@ -86,8 +86,8 @@ namespace eve::algo::views
   concept map_store_op = std::same_as<nothing_t, Op> || (
        std::copyable<Op>
     && map_load_op<LoadOp, Base>
-    && std::regular_invocable<Op, detail::map_value_type_t<LoadOp, Base>, as<value_type_t<Base>>>
-    && std::regular_invocable<Op, as_wide_t<detail::map_value_type_t<LoadOp, Base>>, as<value_type_t<Base>>>);
+    && std::regular_invocable<Op, _::map_value_type_t<LoadOp, Base>, as<value_type_t<Base>>>
+    && std::regular_invocable<Op, as_wide_t<_::map_value_type_t<LoadOp, Base>>, as<value_type_t<Base>>>);
 
   //================================================================================================
   //! @addtogroup views
@@ -195,7 +195,7 @@ namespace eve::algo::views
 
     using is_non_owning = void;
 
-    using types_to_consider = typename detail::map_types_to_consider<LoadOp, R>;
+    using types_to_consider = typename _::map_types_to_consider<LoadOp, R>;
 
     EVE_FORCEINLINE auto begin() const { return map_convert(base.begin(), load_op, store_op); }
     EVE_FORCEINLINE auto end()   const { return map_convert(base.end(),   load_op, store_op); }
@@ -217,8 +217,8 @@ namespace eve::algo::views
   template <relaxed_iterator I, map_load_op<I> LoadOp, map_store_op<LoadOp, I> StoreOp>
   struct map_iterator : operations_with_distance
   {
-    using value_type = detail::map_value_type_t<LoadOp, I>;
-    using types_to_consider = typename detail::map_types_to_consider<LoadOp, I>;
+    using value_type = _::map_value_type_t<LoadOp, I>;
+    using types_to_consider = typename _::map_types_to_consider<LoadOp, I>;
 
     // need to define this to workaround a clang bug.
     using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_t<I>>;
@@ -253,7 +253,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE void write(value_type v) const noexcept
     requires (!std::same_as<StoreOp, nothing_t>)
     {
-      eve::write(detail::bind_store_op<I>(store_op)(v),base);
+      eve::write(_::bind_store_op<I>(store_op)(v),base);
     }
 
     template <relaxed_sentinel_for<I> I1>
@@ -348,7 +348,7 @@ namespace eve::algo::views
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
       auto c = opts[condition_key];
-      auto bound_store = detail::bind_store_op<I>(store_op);
+      auto bound_store = _::bind_store_op<I>(store_op);
       auto c1 = map_alternative( c, bound_store );
       eve::store[c1](bound_store(v), base);
     }
@@ -359,7 +359,7 @@ namespace eve::algo::views
                                                 map_iterator self)
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
-      auto bound_store = detail::bind_store_op<I>(self.store_op);
+      auto bound_store = _::bind_store_op<I>(self.store_op);
       auto c1 = map_alternative( c, bound_store );
       auto v1 = bound_store(v);
       return kumi::make_tuple(c1, v1, self.base);

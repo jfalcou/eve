@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     inline constexpr struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } return_2nd = {};
 

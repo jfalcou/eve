@@ -28,7 +28,7 @@ template<typename I1, typename I2, typename O> struct set_intersection_result
 template<typename I1, typename I2, typename O>
 set_intersection_result(I1, I2, O) -> set_intersection_result<I1, I2, O>;
 
-namespace detail
+namespace _
 {
   template<typename TraitsSupport> struct set_intersection_r1_small_ : TraitsSupport
   {
@@ -310,17 +310,17 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
   {
     if constexpr( expect_smaller == 0 )
     {
-      return detail::set_intersection_r1_small[TraitsSupport::get_traits()](
+      return _::set_intersection_r1_small[TraitsSupport::get_traits()](
           EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
     else if constexpr( expect_smaller == 1 )
     {
-      return detail::set_intersection_r2_small[TraitsSupport::get_traits()](
+      return _::set_intersection_r2_small[TraitsSupport::get_traits()](
           EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
     else
     {
-      return detail::set_intersection_basic[TraitsSupport::get_traits()](
+      return _::set_intersection_basic[TraitsSupport::get_traits()](
           EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
   }

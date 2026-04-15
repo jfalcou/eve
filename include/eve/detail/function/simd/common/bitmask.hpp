@@ -11,7 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <bitset>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Logical to Bits
@@ -70,14 +70,14 @@ namespace eve::detail
       else
       {
         std::size_t res{0};
-        detail::apply<Wide::size()>( [&](auto... I) { ((res|=(std::size_t{p.get(I)} << I)),...); });
+        _::apply<Wide::size()>( [&](auto... I) { ((res|=(std::size_t{p.get(I)} << I)),...); });
         return std::bitset<Wide::size()>{res};
       }
     }
     else
     {
       std::bitset<Wide::size()> res{0};
-      detail::apply<Wide::size()>( [&](auto... I) { (res.set(I,p.get(I)),...); });
+      _::apply<Wide::size()>( [&](auto... I) { (res.set(I,p.get(I)),...); });
       return res;
     }
   }

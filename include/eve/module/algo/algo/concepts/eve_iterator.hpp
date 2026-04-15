@@ -25,7 +25,7 @@ namespace eve::algo
     using type = partially_aligned_t<T>;
   };
 
-  namespace detail
+  namespace _
   {
     template <typename I>
     concept unaligned_check = std::same_as<unaligned_t<I>, I>;
@@ -42,11 +42,11 @@ namespace eve::algo
     } &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&
     std::totally_ordered_with<std::remove_cvref_t<I>, unaligned_t<std::remove_cvref_t<I>>> &&
-    detail::iterator_operations<I> &&
+    _::iterator_operations<I> &&
     requires(I i) {
-       { unalign(i) } -> detail::unaligned_check;
-       { i.previous_partially_aligned() } -> detail::partially_aligned_check;
-       { i.next_partially_aligned() } -> detail::partially_aligned_check;
+       { unalign(i) } -> _::unaligned_check;
+       { i.previous_partially_aligned() } -> _::partially_aligned_check;
+       { i.next_partially_aligned() } -> _::partially_aligned_check;
     };
 
   template <typename I>
@@ -59,10 +59,10 @@ namespace eve::algo
     };
 
   template <typename I>
-  concept unaligned_iterator = iterator<I> && detail::unaligned_check<I>;
+  concept unaligned_iterator = iterator<I> && _::unaligned_check<I>;
 
   template <typename I>
-  concept partially_aligned_iterator = iterator<I> && detail::partially_aligned_check<I>;
+  concept partially_aligned_iterator = iterator<I> && _::partially_aligned_check<I>;
 
   // We don't yet have examples;
   template <typename I>

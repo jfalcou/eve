@@ -17,7 +17,7 @@ namespace eve
 EVE_REGISTER_CALLABLE(native_shuffle_lookup_)
 EVE_DECLARE_CALLABLE(native_shuffle_lookup_, native_shuffle_lookup)
 
-namespace detail
+namespace _
 {
   //==============================================================
   //! native_shuffle_lookup is the component of shuffle_v2
@@ -25,7 +25,7 @@ namespace detail
   //! It is called after all generic simpliifications.
   //==============================================================
   EVE_ALIAS_CALLABLE(native_shuffle_lookup_, native_shuffle_lookup);
-} // namespace detail
+} // namespace _
 
 EVE_CALLABLE_API(native_shuffle_lookup_, native_shuffle_lookup)
 
@@ -98,7 +98,7 @@ namespace eve
 //!    We also rely on the compiler to merge the masking into an adjucent insrtuction.
 //! @}
 //================================================================================================
-constexpr auto shuffle_v2_core = detail::make_shuffle_v2(detail::native_shuffle_lookup);
+constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 
 //================================================================================================
 //! @addtogroup core

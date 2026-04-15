@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<int group_size, simd_value Wide, typename Op>
   EVE_FORCEINLINE Wide scan_common_impl(Wide x, Op op)

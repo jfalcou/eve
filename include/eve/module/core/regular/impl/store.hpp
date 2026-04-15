@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/store_equivalent.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<relative_conditional_expr C, simd_value T, typename Dst>
   EVE_FORCEINLINE void store_common(auto api, C const& cx, T value, Dst dst) noexcept

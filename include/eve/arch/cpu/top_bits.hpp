@@ -24,7 +24,7 @@
 
 namespace eve
 {
-namespace detail
+namespace _
 {
   template<std::ptrdiff_t size,
            std::ptrdiff_t bits_per_e,
@@ -35,20 +35,20 @@ namespace detail
     constexpr std::ptrdiff_t static_bits_size = bits_per_e * size;
     if constexpr( C::is_complete && C::is_inverted )
     {
-      return detail::set_lower_n_bits<Int>(static_bits_size);
+      return _::set_lower_n_bits<Int>(static_bits_size);
     }
     else if constexpr( C::is_complete && !C::is_inverted ) return Int {0};
     else if constexpr( std::same_as<C, keep_last> )
     {
-      Int res = ~detail::set_lower_n_bits<Int>((size - ignore.count_) * bits_per_e);
-      res &= detail::set_lower_n_bits<Int>(static_bits_size);
+      Int res = ~_::set_lower_n_bits<Int>((size - ignore.count_) * bits_per_e);
+      res &= _::set_lower_n_bits<Int>(static_bits_size);
       res &= cond_to_int<size, bits_per_e, Int>(ignore_none);
       return res;
     }
     else if constexpr( std::same_as<C, keep_first> )
     {
-      Int res = ~detail::set_lower_n_bits<Int>(0);
-      res &= detail::set_lower_n_bits<Int>(ignore.count_ * bits_per_e);
+      Int res = ~_::set_lower_n_bits<Int>(0);
+      res &= _::set_lower_n_bits<Int>(ignore.count_ * bits_per_e);
       res &= cond_to_int<size, bits_per_e, Int>(ignore_none);
       return res;
     }
@@ -178,7 +178,7 @@ namespace detail
     EVE_FORCEINLINE constexpr explicit top_bits(C c)
     {
       if constexpr( !is_aggregated )
-        storage = detail::cond_to_int<static_size, bits_per_element, storage_type>(c);
+        storage = _::cond_to_int<static_size, bits_per_element, storage_type>(c);
       else if constexpr( C::is_complete ) storage[0] = storage[1] = top_bits<half_logical> {c};
       else if constexpr( std::same_as<C, keep_last> )
       {
@@ -237,7 +237,7 @@ namespace detail
         top_bits<half_logical> l, h;
         using half_storage = typename top_bits<half_logical>::storage_type;
 
-        l.storage = detail::set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
+        l.storage = _::set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
         h.storage = storage >> (static_bits_size / 2);
 
         return {l, h};
@@ -263,7 +263,7 @@ namespace detail
     {
       if constexpr ( !is_aggregated )
       {
-        storage_type ith_element_mask = detail::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
+        storage_type ith_element_mask = _::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
         if ( x ) storage |= ith_element_mask;
         else     storage &= ~ith_element_mask;
       }
@@ -406,7 +406,7 @@ namespace detail
 // to_logical(top_bits)
 //
 
-namespace eve::detail {
+namespace eve::_ {
 
 template <logical_simd_value Logical>
 EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
@@ -432,7 +432,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
-    static constexpr auto element_mask = detail::set_lower_n_bits<bits_et>(bits_per_element);
+    static constexpr auto element_mask = _::set_lower_n_bits<bits_et>(bits_per_element);
 
     fit_wide true_mmask([&](int i, int) {
       int shift = 0;
@@ -485,4 +485,4 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
   }
 }
 
-}  // namespace eve::detail
+}  // namespace eve::_

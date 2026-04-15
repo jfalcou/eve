@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, wide<S, N> s) noexcept

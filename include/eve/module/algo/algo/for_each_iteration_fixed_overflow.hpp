@@ -11,7 +11,7 @@
 
 namespace eve::algo
 {
-namespace detail
+namespace _
 {
   struct for_each_iteration_fixed_overflow_common
   {
@@ -75,7 +75,7 @@ namespace detail
         // single steps
         bool should_break = false;
 
-        if( eve::detail::for_until_<0, 1, unrolling>(
+        if( eve::_::for_until_<0, 1, unrolling>(
                 for_each_iteration_common::small_steps_lambda<I, S, Delegate> {
                     should_break, f, l, delegate}) )
         {
@@ -89,7 +89,7 @@ namespace detail
         while( big_steps_count )
         {
           std::array<I, unrolling> arr;
-          eve::detail::for_<0, 1, unrolling>(
+          eve::_::for_<0, 1, unrolling>(
               [&](auto idx) mutable
               {
                 arr[idx()] = f;
@@ -208,10 +208,10 @@ struct
   {
     EVE_ASSERT(f != l, "for_each_iteration_fixed_overflow requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )
-      return detail::for_each_iteration_fixed_overflow_aligning {traits, f, l};
+      return _::for_each_iteration_fixed_overflow_aligning {traits, f, l};
     else if constexpr( Traits::contains(divisible_by_cardinal) )
-      return detail::for_each_iteration_fixed_overflow_precise_f_l {traits, f, l};
-    else return detail::for_each_iteration_fixed_overflow_precise_f {traits, f, l};
+      return _::for_each_iteration_fixed_overflow_precise_f_l {traits, f, l};
+    else return _::for_each_iteration_fixed_overflow_precise_f {traits, f, l};
   }
 } inline constexpr for_each_iteration_fixed_overflow;
 

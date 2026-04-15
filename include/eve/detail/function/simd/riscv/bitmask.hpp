@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 //================================================================================================
 // Logical to Bits

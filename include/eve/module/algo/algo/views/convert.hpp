@@ -81,14 +81,14 @@ namespace eve::algo::views
         using Rng = decltype(rng);
 
              if constexpr( std::same_as<value_type_t<Rng>, T>              ) return rng;
-        else if constexpr( eve::detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
+        else if constexpr( eve::_::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
         else                                                                 return converting_range<Rng, T> {rng};
       }
       else
       {
         using I = std::remove_cvref_t<Wrapped>;
              if constexpr( std::same_as<value_type_t<I>, T>                 ) return wrapped;
-        else if constexpr( eve::detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
+        else if constexpr( eve::_::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
         else                                                                  return converting_iterator<I, T> {wrapped};
       }
     }
@@ -96,7 +96,7 @@ namespace eve::algo::views
     template <typename Wrapped, typename T>
     auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const
     {
-      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(EVE_FWD(wrapped)), as<T>>)
+      if constexpr (eve::_::tag_dispatchable<convert_, decltype(EVE_FWD(wrapped)), as<T>>)
       {
         return tagged_dispatch(*this, EVE_FWD(wrapped), tgt);
       }

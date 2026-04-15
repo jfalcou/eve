@@ -10,7 +10,7 @@
 namespace eve::algo
 {
 
-namespace detail
+namespace _
 {
   struct two_stage_iteration_common
   {
@@ -137,10 +137,10 @@ struct
   {
     EVE_ASSERT(f != l, "two_stage_iteration requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )
-      return detail::two_stage_iteration_aligning {traits, f, l};
+      return _::two_stage_iteration_aligning {traits, f, l};
     else if constexpr( Traits::contains(divisible_by_cardinal) )
-      return detail::two_stage_iteration_precise_f_l {traits, f, l};
-    else return detail::two_stage_iteration_precise_f {traits, f, l};
+      return _::two_stage_iteration_precise_f_l {traits, f, l};
+    else return _::two_stage_iteration_precise_f {traits, f, l};
   }
 } inline constexpr two_stage_iteration;
 

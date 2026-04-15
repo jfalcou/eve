@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // 2*128-bits regular combine

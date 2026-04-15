@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<floating_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(neon128_),
@@ -24,7 +24,7 @@ requires arm_abi<abi_t<T, N>>
 
   if constexpr (match(cat, category::float16))
   {
-    if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(nearest, v);
+    if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(nearest, v);
     else if constexpr (cat == category::float16x4)        return vrndn_f16(v);
     else if constexpr (cat == category::float16x8)        return vrndnq_f16(v);
   }

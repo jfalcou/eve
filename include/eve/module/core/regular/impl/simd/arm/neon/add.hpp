@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
@@ -73,7 +73,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4  ) return vaddq_f32(v, w);
       else  if constexpr (match(c, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(add, v, w);
         else if constexpr (c == category::float16x4)          return vadd_f16(v, w);
         else if constexpr (c == category::float16x8)          return vaddq_f16(v, w);
       }

@@ -19,7 +19,7 @@
     At the moment we don't have an avx-512 implementation, since the logical is different.
 */
 
-namespace eve::detail
+namespace eve::_
 {
   template <std::unsigned_integral T>
   constexpr auto idxs_dwords = [] {

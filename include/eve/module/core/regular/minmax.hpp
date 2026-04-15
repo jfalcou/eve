@@ -20,7 +20,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename Callable>
     constexpr auto build_minmax_callable(Callable const& f) noexcept;
@@ -47,7 +47,7 @@ namespace eve
     template<typename Callable>
     requires(!eve::product_type<Callable> && !eve::value<Callable>)
     EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept
-    { return detail::build_minmax_callable(f); }
+    { return _::build_minmax_callable(f); }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
   };
@@ -123,7 +123,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename W>
     constexpr bool prefer_min_max() noexcept

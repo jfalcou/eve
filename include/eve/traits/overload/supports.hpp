@@ -11,7 +11,7 @@
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   struct accumulate_decorations
   {
@@ -79,7 +79,7 @@ namespace eve
   template <typename... Options>
   options(rbr::settings<Options...> const&)  -> options<rbr::settings<Options...>>;
 
-  namespace detail
+  namespace _
   {
     template <rbr::concepts::settings S0, rbr::concepts::settings S1>
     constexpr static EVE_FORCEINLINE auto merge_prefer_first(options<S0> const& base, options<S1> const& new_opts) noexcept
@@ -169,7 +169,7 @@ namespace eve
     /// Retrieves the current options' state, including processed default
     EVE_FORCEINLINE constexpr auto options() const
     {
-      return kumi::fold_left( detail::accumulate_decorations{}
+      return kumi::fold_left( _::accumulate_decorations{}
                             , kumi::tuple<Options...>{}
                             , static_cast<OptionsValues const&>(*this)
                             );
@@ -182,7 +182,7 @@ namespace eve
 //======================================================================================================================
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     //==================================================================================================================
     // Internal option carrying conditional mask or conditional expressions
@@ -210,7 +210,7 @@ namespace eve
   //!   @see eve::supports
   //! @}
   //====================================================================================================================
-  inline constexpr detail::condition_key_t condition_key = {};
+  inline constexpr _::condition_key_t condition_key = {};
 
   //====================================================================================================================
   //! @addtogroup extensions
@@ -277,7 +277,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto process(auto const& base, O opt) const
     {
       // Just delay the evaluation of the type by injecting some templates
-      using type = detail::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
+      using type = _::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
       return process(base, condition_key = if_(logical<type>(opt)) );
     }
 
@@ -314,7 +314,7 @@ namespace eve
   };
 }
 
-namespace eve::detail
+namespace eve::_
 {
   // Internal helper for decorator setup
   template<auto Decorator> struct exact_option

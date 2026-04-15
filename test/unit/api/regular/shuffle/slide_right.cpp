@@ -22,7 +22,7 @@ TTS_CASE_TPL("Check behavior of slide_right shuffle", eve::test::simd::all_types
   eve::logical<T> lx = x < -3;
   eve::logical<T> ly = y < 4;
 
-  eve::detail::for_<0, 1, T::size()>(
+  eve::_::for_<0, 1, T::size()>(
     [&]<int Shift>(std::integral_constant<int, Shift>) {
       T expected([](int i, int) { return i - Shift; });
       T actual = eve::slide_right(x, y, eve::index<Shift>);

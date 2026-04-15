@@ -20,7 +20,7 @@ namespace eve
     constexpr EVE_FORCEINLINE typename T::combined_type operator()(T a, T b) const noexcept
     {
       return translate_into(
-        detail::combine(eve::current_api, translate(a), translate(b)),
+        _::combine(eve::current_api, translate(a), translate(b)),
         as<typename T::combined_type>{});
     }
 
@@ -30,7 +30,7 @@ namespace eve
       requires (combinable<T0, T1, T2, Ts...>)
     {
       return translate_into(
-        detail::combine(eve::current_api, translate(a), translate(b), translate(c), translate(ts)...),
+        _::combine(eve::current_api, translate(a), translate(b), translate(c), translate(ts)...),
         as<typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>>{});
     }
   };

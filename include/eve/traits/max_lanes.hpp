@@ -9,7 +9,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename... Ts>
     consteval auto compute_max_lanes()
@@ -34,7 +34,7 @@ namespace eve
   //! @}
   //================================================================================================
   template <typename... Ts>
-  inline constexpr auto max_lanes_v = detail::compute_max_lanes<Ts...>();
+  inline constexpr auto max_lanes_v = _::compute_max_lanes<Ts...>();
 
   //================================================================================================
   //! @addtogroup traits
@@ -47,5 +47,5 @@ namespace eve
   //! @}
   //================================================================================================
   template <typename... Ts>
-  using max_lanes_t = fixed<max_lanes_v<Ts...>>; 
+  using max_lanes_t = fixed<max_lanes_v<Ts...>>;
 }

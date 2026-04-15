@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 //================================================================================================
@@ -63,7 +63,7 @@ namespace eve::detail
       else if constexpr( c_o == category::uint32x2           ) return vcvt_u32_f32(v);
       else if constexpr( std::same_as<U, eve::float16_t> )
       {
-        if constexpr (detail::supports_fp16_vector_conversion && (N{} == 2)) return vcvt_f16_f32(simd_cast(v, as<wide<float>>{}));
+        if constexpr (_::supports_fp16_vector_conversion && (N{} == 2)) return vcvt_f16_f32(simd_cast(v, as<wide<float>>{}));
         else                                                                 return map(convert, v, tgt);
       }
       else if constexpr( sizeof(U) == 8                      ) return map(convert, v, tgt);
@@ -79,7 +79,7 @@ namespace eve::detail
       else if constexpr( c_o == category::uint32x4 ) return vcvtq_u32_f32(v);
       else if constexpr( std::same_as<U, eve::float16_t> )
       {
-        if constexpr (detail::supports_fp16_vector_conversion) return vcvt_f16_f32(v);
+        if constexpr (_::supports_fp16_vector_conversion) return vcvt_f16_f32(v);
         else                                                   return map(convert, v, tgt);
       }
       else if constexpr( c_o == category::int16x4  ) return convert(convert(v, t_i32), tgt);
@@ -183,14 +183,14 @@ namespace eve::detail
     else if constexpr ( c_i == category::uint16x4 && c_o == category::float32x4 ) return convert(convert(v, u32_t {}), tgt);
     else if constexpr ( std::same_as<U, eve::float16_t> )
     {
-      if constexpr (detail::supports_fp16_vector_ops)
+      if constexpr (_::supports_fp16_vector_ops)
       {
         if      constexpr ( c_i == category::int16x4  )                           return vcvt_f16_s16(v);
         else if constexpr ( c_i == category::uint16x4 )                           return vcvt_f16_u16(v);
         else if constexpr ( c_i == category::int16x8  )                           return vcvtq_f16_s16(v);
         else if constexpr ( c_i == category::uint16x8 )                           return vcvtq_f16_u16(v);
       }
-      else if constexpr (detail::supports_fp16_vector_conversion)                 return convert(convert(v, f32_t{}), tgt);
+      else if constexpr (_::supports_fp16_vector_conversion)                 return convert(convert(v, f32_t{}), tgt);
       else                                                                        return map(convert, v, tgt);
     }
     else if constexpr ( c_i == category::int16x8  && c_o == category::int8x8    ) return vmovn_s16(v);

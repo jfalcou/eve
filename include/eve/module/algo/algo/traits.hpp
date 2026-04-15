@@ -465,7 +465,7 @@ namespace eve::algo
   using get_types_to_consider_for =
     kumi::result::cat_t<extra_types_to_consider<Traits>, types_to_consider_for_t<RorI>>;
 
-  namespace detail {
+  namespace _ {
     template <typename Traits, typename RorI>
     using default_cardinal_to_use_t = eve::fixed<
       Traits::contains(allow_frequency_scaling) ?
@@ -481,7 +481,7 @@ namespace eve::algo
   //================================================================================================
   template <typename Traits, typename RorI>
   using iteration_cardinal_t =
-    rbr::result::fetch_t< (force_cardinal_key | detail::default_cardinal_to_use_t<Traits, RorI>{})
+    rbr::result::fetch_t< (force_cardinal_key | _::default_cardinal_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
 
@@ -509,7 +509,7 @@ namespace eve::algo
     return got == -1 ? std::optional<std::ptrdiff_t>{} : got;
   }
 
-  namespace detail {
+  namespace _ {
 
   template<typename RorI>
   constexpr auto default_index_type_to_use() {
@@ -520,7 +520,7 @@ namespace eve::algo
     else                               return std::type_identity<std::uint64_t>{};
   }
 
-  }  // namespace detail
+  }  // namespace _
 
   //================================================================================================
   //! @addtogroup algo_traits
@@ -529,7 +529,7 @@ namespace eve::algo
   //================================================================================================
   template<typename Traits, typename RorI>
   using get_index_type_t =
-    typename rbr::result::fetch_t<(index_type_key | detail::default_index_type_to_use<RorI>()),
+    typename rbr::result::fetch_t<(index_type_key | _::default_index_type_to_use<RorI>()),
                            Traits>::type;
 
   //================================================================================================
@@ -632,7 +632,7 @@ namespace eve::algo
   inline constexpr algo::traits no_traits{};
 
   // Function helper
-  namespace detail
+  namespace _
   {
     template <template<typename> typename F, typename Traits>
     struct supports_traits
@@ -670,5 +670,5 @@ namespace eve::algo
   //! eve/module/algo/algo if necessary.
   //================================================================================================
   template <template<typename> typename F>
-  constexpr auto function_with_traits = F<detail::supports_traits<F, decltype(no_traits)>>{};
+  constexpr auto function_with_traits = F<_::supports_traits<F, decltype(no_traits)>>{};
 }

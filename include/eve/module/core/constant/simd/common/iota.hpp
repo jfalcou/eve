@@ -12,7 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<eve::arithmetic_simd_value T>

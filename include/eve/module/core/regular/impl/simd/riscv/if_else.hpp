@@ -11,7 +11,7 @@
 #include <eve/detail/function/simd/riscv/make.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<callable_options O, scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>

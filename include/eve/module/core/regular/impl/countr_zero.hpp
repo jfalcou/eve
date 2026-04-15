@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <bit>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T countr_zero_(EVE_REQUIRES(cpu_),

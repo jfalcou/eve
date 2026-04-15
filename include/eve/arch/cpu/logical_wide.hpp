@@ -34,7 +34,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T, typename N>
     struct logical_split_type_helper
@@ -67,10 +67,10 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
-          detail::logical_split_type_helper<Type, Cardinal>
+        : _::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
+          _::logical_split_type_helper<Type, Cardinal>
   {
-    using storage_base = detail::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
+    using storage_base = _::wide_storage<as_logical_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
 
     //! The type resulting from translating the current logical's elements type.
     using translated_element_type = logical<translate_t<Type>>;
@@ -94,7 +94,7 @@ namespace eve
     using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
-    using bits_type = wide<detail::make_integer_t<sizeof(translated_element_type), unsigned>, Cardinal>;
+    using bits_type = wide<_::make_integer_t<sizeof(translated_element_type), unsigned>, Cardinal>;
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Cardinal>;
@@ -130,7 +130,7 @@ namespace eve
     //
     // [internal] The requires clause is needed to avoid ambiguity with the storage_type constructor
     //            in emulated mode.
-    template<detail::range Range>
+    template<_::range Range>
     EVE_FORCEINLINE explicit logical(Range &&r) noexcept
       requires (std::same_as<value_type_t<Range>, value_type> && !std::same_as<storage_type, Range>)
                   : logical(std::begin(EVE_FWD(r)))
@@ -151,11 +151,11 @@ namespace eve
     //! Construct from a scalar logical
     template<scalar_value U>
     EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
-                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
+                  : storage_base(_::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Construct from a `bool`
     EVE_FORCEINLINE explicit logical(std::same_as<bool> auto v) noexcept
-                  : storage_base(detail::make(eve::as<translated_type>{}, translate(v))) {}
+                  : storage_base(_::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
@@ -165,7 +165,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts, value_type>)
                     &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
-        : storage_base(detail::make(eve::as<translated_type>{}, translate(v0), translate(v1), translate(vs)...))
+        : storage_base(_::make(eve::as<translated_type>{}, translate(v0), translate(v1), translate(vs)...))
     {}
 
     //==============================================================================================
@@ -203,7 +203,7 @@ namespace eve
     //==============================================================================================
     template<eve::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                  : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
+                  : storage_base(_::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
     //==============================================================================================
@@ -240,7 +240,7 @@ namespace eve
     //==============================================================================================
     template<eve::invocable<size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                  : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
+                  : storage_base(_::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
@@ -302,14 +302,14 @@ namespace eve
     //==============================================================================================
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of unsigned integral.
-    EVE_FORCEINLINE bits_type bits()   const noexcept { return detail::to_bits(eve::current_api,*this); }
+    EVE_FORCEINLINE bits_type bits()   const noexcept { return _::to_bits(eve::current_api,*this); }
 
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of `Type`.
-    EVE_FORCEINLINE mask_type mask()   const noexcept { return detail::to_mask(eve::current_api,*this); }
+    EVE_FORCEINLINE mask_type mask()   const noexcept { return _::to_mask(eve::current_api,*this); }
 
     //! Returns a bitset corresponding to the current logical values.
-    EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(eve::current_api,*this); }
+    EVE_FORCEINLINE auto bitmap() const noexcept { return _::to_bitmap(eve::current_api,*this); }
 
     //==============================================================================================
     // Logical operations
@@ -388,13 +388,13 @@ namespace eve
     //! Set the value of a given lane
     EVE_FORCEINLINE void set(std::size_t i, std::convertible_to<bool> auto v) noexcept
     {
-      detail::insert(*this, i, v);
+      _::insert(*this, i, v);
     }
 
     //! Retrieve the value from a given lane
     EVE_FORCEINLINE auto get(std::size_t i) const noexcept
     {
-      return detail::extract(*this, i);
+      return _::extract(*this, i);
     }
 
     //! Retrieve the value of the first lanes
@@ -433,7 +433,7 @@ namespace eve
     requires(Cardinal::value > 1)
 #endif
     {
-      return detail::slice(*this);
+      return _::slice(*this);
     }
 
     //==============================================================================================
@@ -473,7 +473,7 @@ namespace eve
     requires(Cardinal::value > 1)
 #endif
     {
-      return detail::slice(*this, s);
+      return _::slice(*this, s);
     }
 
     //==============================================================================================

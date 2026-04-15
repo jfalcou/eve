@@ -12,7 +12,7 @@
 #    error __riscv_v_fixed_vlen must be defined
 #  endif
 
-namespace eve::detail
+namespace eve::_
 {
 // natural lmul if > 0, frac otherwise
 template<plain_scalar_value scalar_type, typename cardinal>

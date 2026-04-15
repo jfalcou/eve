@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>

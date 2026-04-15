@@ -23,7 +23,7 @@ TTS_CASE_TPL( "Check behavior of rotate swizzle", eve::test::scalar::all_types)
                                             };
                               };
 
-  eve::detail::for_<0,1,w_t::size()>
+  eve::_::for_<0,1,w_t::size()>
   ( [&]<typename M>(M)
   {
     eve::wide<s_t> ref = [&](auto i, auto)

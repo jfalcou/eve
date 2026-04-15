@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
@@ -155,7 +155,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 {
-  constexpr auto pos = eve::detail::idxm::is_just_setting_one_zero(P::idxs);
+  constexpr auto pos = eve::_::idxm::is_just_setting_one_zero(P::idxs);
   if constexpr( !pos ) return no_matching_shuffle;
   else if constexpr( P::reg_size == 16 )
   {

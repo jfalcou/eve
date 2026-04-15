@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(sse2_),
@@ -33,7 +33,7 @@ namespace eve::detail
     if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, o, v);
     else if constexpr (std::same_as<T, eve::float16_t> && !O::contains(pedantic))
     {
-      if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec, v);
+      if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec, v);
       else if constexpr (c == category::float16x8)          return _mm_rcp_ph(v);
       else if constexpr (c == category::float16x16)         return _mm256_rcp_ph(v);
       else if constexpr (c == category::float16x32)         return _mm512_rcp_ph(v);
@@ -73,7 +73,7 @@ namespace eve::detail
     {
       if constexpr (std::same_as<T, eve::float16_t>)
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec[pedantic], v);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(eve::rec[pedantic], v);
         else if constexpr (c == category::float16x8)          return _mm_div_ph(one(eve::as(v)), v);
         else if constexpr (c == category::float16x16)         return _mm256_div_ph(one(eve::as(v)), v);
         else if constexpr (c == category::float16x32)         return _mm512_div_ph(one(eve::as(v)), v);
@@ -136,7 +136,7 @@ namespace eve::detail
 
       if constexpr (std::same_as<T, eve::float16_t> && !O::contains(pedantic))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rec, mask, a0);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rec, mask, a0);
         else if constexpr (c == category::float16x8)          return _mm_mask_rcp_ph(src, m, a0);
         else if constexpr (c == category::float16x16)         return _mm256_mask_rcp_ph(src, m, a0);
         else if constexpr (c == category::float16x32)         return _mm512_mask_rcp_ph(src, m, a0);
@@ -166,7 +166,7 @@ namespace eve::detail
           return _mm_mask_div_pd(src, m, one(eve::as(a0)), a0);
         else if constexpr (std::same_as<T, eve::float16_t>)
         {
-          if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rec[pedantic], mask, a0);
+          if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(eve::rec[pedantic], mask, a0);
           else if constexpr (c == category::float16x8)          return _mm_mask_div_ph(src, m, one(eve::as(a0)), a0);
           else if constexpr (c == category::float16x16)         return _mm256_mask_div_ph(src, m, one(eve::as(a0)), a0);
           else if constexpr (c == category::float16x32)         return _mm512_mask_div_ph(src, m, one(eve::as(a0)), a0);

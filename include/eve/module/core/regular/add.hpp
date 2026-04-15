@@ -134,7 +134,7 @@ namespace eve
   // Required for optimisation detections
   using callable_add_ = tag_t<add>;
 
-  namespace detail
+  namespace _
   {
     // This function is forward declared limited wrapper around add, so that internally we can call it anywhere.
     template<typename T, typename U>

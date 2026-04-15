@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sse2_),
@@ -70,7 +70,7 @@ namespace eve::detail
       else if constexpr( cat == category::float32x16 )  return _mm512_fnmadd_ps(a, b, c);
       else  if constexpr ( match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(fnma, a, b, c);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(fnma, a, b, c);
         else if constexpr (cat == category::float16x32)       return _mm512_fmnadd_ph(a, b, c);
         else if constexpr (cat == category::float16x16)       return _mm256_fmnadd_ph(a, b, c);
         else if constexpr (cat == category::float16x8)        return _mm_fmnadd_ph(a, b, c);
@@ -139,7 +139,7 @@ namespace eve::detail
       else if constexpr( cx == category::float64x2  ) return _mm_mask_fnmadd_pd   (a, m, b, c);
       else if constexpr ( match(cx, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fnma, mask, a, b, c);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fnma, mask, a, b, c);
         else if constexpr (cx == category::float16x32)        return _mm512_mask_fnmadd_ph(a,m,b,c);
         else if constexpr (cx == category::float16x16)        return _mm256_mask_fnmadd_ph(a,m,b,c);
         else if constexpr (cx == category::float16x8)         return _mm_mask_fnmadd_ph(a,m,b,c);

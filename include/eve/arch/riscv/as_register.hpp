@@ -33,7 +33,7 @@ namespace eve
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T>
     using wrap = T;
@@ -42,9 +42,9 @@ namespace eve
   template<typename T, typename N, rvv_abi ABI>
   consteval auto find_register_type(as<T>, N, ABI)
   {
-    using detail::wrap;
+    using _::wrap;
 
-    constexpr auto lmul = detail::rvv_lmul_v<T, N>;
+    constexpr auto lmul = _::rvv_lmul_v<T, N>;
     constexpr size_t element_bit_size = sizeof(T) * 8;
 
     static_assert((element_bit_size * N::value) <= (__riscv_v_fixed_vlen * ABI::max_lmul),
@@ -185,9 +185,9 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, rvv_abi auto)
   {
-    using detail::wrap;
+    using _::wrap;
 
-    constexpr size_t ratio = detail::rvv_logical_ratio_v<T, N>;
+    constexpr size_t ratio = _::rvv_logical_ratio_v<T, N>;
 
     if      constexpr (ratio == 1 ) return wrap<EVE_RVV_MF(vbool1_t, 1)>{};
     else if constexpr (ratio == 2 ) return wrap<EVE_RVV_MF(vbool2_t, 2)>{};

@@ -87,7 +87,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acot_(EVE_REQUIRES(cpu_), O const& o, T const& a)
@@ -99,7 +99,7 @@ namespace eve
       else if constexpr(O::contains(radpi))
         return radinpi(acot[o.drop(radpi)](a));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::acot[o], a);
+        return eve::_::apply_fp16_as_fp32(eve::acot[o], a);
       else
       {
         auto x = eve::abs(a);

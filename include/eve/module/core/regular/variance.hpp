@@ -115,12 +115,12 @@ namespace eve
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, typename... Ts>
   EVE_FORCEINLINE constexpr auto variance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
-  requires (O::contains(widen) && detail::fp16_should_apply<common_value_t<Ts...>>)
+  requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return variance[o.drop(widen)](upgrade(ts)...);
   }

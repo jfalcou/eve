@@ -13,7 +13,7 @@
   {
     for (uint16_t f16_bits = 0u; f16_bits < eve::valmax(eve::as<uint16_t>{}); ++f16_bits)
     {
-      float f32 = eve::detail::emulated_fp16_to_fp32(f16_bits);
+      float f32 = eve::_::emulated_fp16_to_fp32(f16_bits);
 
       if (std::isnan(f32))
       {
@@ -42,7 +42,7 @@
     {
       float f32 = std::bit_cast<float>(f32_bits);
 
-      uint16_t mf16 = eve::detail::emulated_fp32_to_fp16(f32);
+      uint16_t mf16 = eve::_::emulated_fp32_to_fp16(f32);
       uint16_t cf16 = std::bit_cast<uint16_t>(static_cast<_Float16>(f32));
 
       if (eve::is_nan(f32)) TTS_EXPECT(is_nan(mf16) && is_nan(cf16));
@@ -66,7 +66,7 @@
         for (uint64_t base = 0u; base < eve::valmax(eve::as<uint32_t>{}); base += N)
         {
           wf32_t f32 = [&](auto i) { return std::bit_cast<float>(static_cast<uint32_t>(base + i)); };
-          wf16_t mf16 = eve::detail::emulated_simd_fp32_to_fp16(f32);
+          wf16_t mf16 = eve::_::emulated_simd_fp32_to_fp16(f32);
 
           wu16_t expected = [&](auto i) {
             float scalar_f32 = std::bit_cast<float>(static_cast<uint32_t>(base + i));
@@ -97,8 +97,8 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
 
   for (uint16_t f16_bits = 0u; f16_bits < eve::valmax(eve::as<uint16_t>{}); ++f16_bits)
   {
-    float f32 = eve::detail::emulated_fp16_to_fp32(f16_bits);
-    uint16_t roundtrip = eve::detail::emulated_fp32_to_fp16(f32);
+    float f32 = eve::_::emulated_fp16_to_fp32(f16_bits);
+    uint16_t roundtrip = eve::_::emulated_fp32_to_fp16(f32);
 
     // special case for NaN: payload is not conserved
     if (is_nan(f16_bits)) TTS_EXPECT(is_nan(roundtrip));
@@ -120,8 +120,8 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
           return eve::bit_cast(static_cast<uint16_t>(base + i), eve::as<eve::float16_t>{});
         };
 
-        wf32_t f32       = eve::detail::emulated_simd_fp16_to_fp32(input);
-        wf16_t roundtrip = eve::detail::emulated_simd_fp32_to_fp16(f32);
+        wf32_t f32       = eve::_::emulated_simd_fp16_to_fp32(input);
+        wf16_t roundtrip = eve::_::emulated_simd_fp32_to_fp16(f32);
 
         TTS_IEEE_EQUAL(input, roundtrip);
       }
@@ -140,85 +140,85 @@ TTS_CASE("emulated float16 conversion - f16 special")
 {
   auto cases = tts::limits(tts::type<float>{});
 
-  TTS_EXPECT(eve::is_nan(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.nan))));
+  TTS_EXPECT(eve::is_nan(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.nan))));
 
-  TTS_EXPECT(eve::is_infinite(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.inf))));
-  TTS_EXPECT(eve::is_positive(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.inf))));
+  TTS_EXPECT(eve::is_infinite(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.inf))));
+  TTS_EXPECT(eve::is_positive(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.inf))));
 
-  TTS_EXPECT(eve::is_infinite(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.minf))));
-  TTS_EXPECT(eve::is_negative(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.minf))));
+  TTS_EXPECT(eve::is_infinite(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.minf))));
+  TTS_EXPECT(eve::is_negative(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.minf))));
 
-  TTS_EQUAL(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.mzero)), -0.0f);
-  TTS_EXPECT(eve::is_negative(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.mzero))));
+  TTS_EQUAL(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.mzero)), -0.0f);
+  TTS_EXPECT(eve::is_negative(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.mzero))));
 
-  TTS_EQUAL(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.zero)), 0.0f);
-  TTS_EXPECT(eve::is_positive(eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(cases.zero))));
+  TTS_EQUAL(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.zero)), 0.0f);
+  TTS_EXPECT(eve::is_positive(eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(cases.zero))));
 
   // Smallest positive denormal in FP16: 2^-24 ≈ 5.960464477539063e-08
   float smallest_denormal = 5.960464477539063e-08f;
-  std::uint16_t fp16_bits = eve::detail::emulated_fp32_to_fp16(smallest_denormal);
-  float converted_back = eve::detail::emulated_fp16_to_fp32(fp16_bits);
+  std::uint16_t fp16_bits = eve::_::emulated_fp32_to_fp16(smallest_denormal);
+  float converted_back = eve::_::emulated_fp16_to_fp32(fp16_bits);
   TTS_EXPECT(converted_back > 0.0f);
   TTS_EXPECT(converted_back < 6.103515625e-05f);
 
   // Test a few denormal values
   float denormal1 = 1.0e-07f;  // Should become denormal
-  std::uint16_t bits1 = eve::detail::emulated_fp32_to_fp16(denormal1);
-  float back1 = eve::detail::emulated_fp16_to_fp32(bits1);
+  std::uint16_t bits1 = eve::_::emulated_fp32_to_fp16(denormal1);
+  float back1 = eve::_::emulated_fp16_to_fp32(bits1);
   TTS_EXPECT(back1 > 0.0f);
   TTS_EXPECT(back1 < 6.103515625e-05f);
 
   float denormal2 = 3.0e-06f;  // Should become denormal
-  std::uint16_t bits2 = eve::detail::emulated_fp32_to_fp16(denormal2);
-  float back2 = eve::detail::emulated_fp16_to_fp32(bits2);
+  std::uint16_t bits2 = eve::_::emulated_fp32_to_fp16(denormal2);
+  float back2 = eve::_::emulated_fp16_to_fp32(bits2);
   TTS_EXPECT(back2 > 0.0f);
   TTS_EXPECT(back2 < 6.103515625e-05f);
 
   // Test negative denormals
   float neg_denormal = -1.0e-07f;
-  std::uint16_t neg_bits = eve::detail::emulated_fp32_to_fp16(neg_denormal);
-  float neg_back = eve::detail::emulated_fp16_to_fp32(neg_bits);
+  std::uint16_t neg_bits = eve::_::emulated_fp32_to_fp16(neg_denormal);
+  float neg_back = eve::_::emulated_fp16_to_fp32(neg_bits);
   TTS_EXPECT(neg_back < 0.0f);
   TTS_EXPECT(neg_back > -6.103515625e-05f);
 
   // Test positive values too small to represent (should round to zero)
   float too_small = 1.0e-10f;
-  std::uint16_t zero_bits = eve::detail::emulated_fp32_to_fp16(too_small);
-  float zero_back = eve::detail::emulated_fp16_to_fp32(zero_bits);
+  std::uint16_t zero_bits = eve::_::emulated_fp32_to_fp16(too_small);
+  float zero_back = eve::_::emulated_fp16_to_fp32(zero_bits);
   TTS_EQUAL(zero_back, 0.0f);
   TTS_EXPECT(eve::is_positive(zero_back));
 
   // Test negative values too small to represent (should round to zero)
   float neg_too_small = -1.0e-10f;
-  std::uint16_t neg_zero_bits = eve::detail::emulated_fp32_to_fp16(neg_too_small);
-  float neg_zero_back = eve::detail::emulated_fp16_to_fp32(neg_zero_bits);
+  std::uint16_t neg_zero_bits = eve::_::emulated_fp32_to_fp16(neg_too_small);
+  float neg_zero_back = eve::_::emulated_fp16_to_fp32(neg_zero_bits);
   TTS_EQUAL(neg_zero_back, -0.0f);
   TTS_EXPECT(eve::is_negative(neg_zero_back));
 
   // overflow to +infinity
-  float overflow_pos = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(65520.0f));
+  float overflow_pos = eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(65520.0f));
   TTS_EXPECT(eve::is_infinite(overflow_pos));
   TTS_EXPECT(eve::is_positive(overflow_pos));
 
   // overflow to +infinity - valmax rounding edge case
-  float overflow_pos_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(65519.0f));
+  float overflow_pos_r = eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(65519.0f));
   TTS_EXPECT(!eve::is_infinite(overflow_pos_r));
   TTS_EXPECT(eve::is_positive(overflow_pos_r));
 
   // underflow to -infinity
-  float overflow_neg = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(-65520.0f));
+  float overflow_neg = eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(-65520.0f));
   TTS_EXPECT(eve::is_infinite(overflow_neg));
   TTS_EXPECT(eve::is_negative(overflow_neg));
 
   // underflow to -infinity - valmax rounding edge case
-  float overflow_neg_r = eve::detail::emulated_fp16_to_fp32(eve::detail::emulated_fp32_to_fp16(-65519.0f));
+  float overflow_neg_r = eve::_::emulated_fp16_to_fp32(eve::_::emulated_fp32_to_fp16(-65519.0f));
   TTS_EXPECT(!eve::is_infinite(overflow_neg_r));
   TTS_EXPECT(eve::is_negative(overflow_neg_r));
 };
 
 TTS_CASE("test emulated float16 comparison")
 {
-  auto cmp = [](uint16_t a, uint16_t b) { return eve::detail::emulated_fp16_compare(a, b); };
+  auto cmp = [](uint16_t a, uint16_t b) { return eve::_::emulated_fp16_compare(a, b); };
 
   auto expect_eq = [&](uint16_t a, uint16_t b) {
     TTS_EXPECT(cmp(a, b) == std::partial_ordering::equivalent);

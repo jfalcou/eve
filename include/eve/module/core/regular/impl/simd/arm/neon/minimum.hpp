@@ -13,7 +13,7 @@
 #include <eve/traits/overload/supports.hpp>
 #include <eve/module/core/regular/min.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto minimum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
@@ -82,7 +82,7 @@ namespace eve::detail
       if constexpr( eve::current_api >= eve::asimd )
       {
         using ec_t = expected_cardinal_t<T, abi_t<T, N>>;
-        constexpr auto fp16v = detail::supports_fp16_vector_ops;
+        constexpr auto fp16v = _::supports_fp16_vector_ops;
 
         if constexpr( N::value == 1 ) return v.get(0);
         else if constexpr( N::value < ec_t::value ) return butterfly_reduction(v, eve::min).get(0);

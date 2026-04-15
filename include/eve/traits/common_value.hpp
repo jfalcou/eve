@@ -14,7 +14,7 @@
 #include <eve/traits/as_arithmetic.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T>
   struct find_common_value_reducer;
@@ -62,9 +62,9 @@ namespace eve::detail
   struct common_value_impl {};
 
   template<typename... Ts>
-  struct common_value_impl<std::void_t<decltype(detail::find_common_value<Ts...>())>, Ts...>
+  struct common_value_impl<std::void_t<decltype(_::find_common_value<Ts...>())>, Ts...>
   {
-    using type = std::remove_cvref_t<decltype(detail::find_common_value<Ts...>())>;
+    using type = std::remove_cvref_t<decltype(_::find_common_value<Ts...>())>;
   };
 }
 
@@ -72,14 +72,14 @@ namespace eve
 {
   /// Computes the SIMD-compatible common type between all `Ts`.
   template<typename... Ts>
-  using common_value_t = typename eve::detail::common_value_impl<void, Ts...>::type;
+  using common_value_t = typename eve::_::common_value_impl<void, Ts...>::type;
 
   template<typename... Ts>
-  struct common_value : eve::detail::common_value_impl<void, Ts...>
+  struct common_value : eve::_::common_value_impl<void, Ts...>
   {};
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T>
   struct find_common_logical_reducer;
@@ -151,18 +151,18 @@ namespace eve::detail
   struct common_logical_impl {};
 
   template<typename... Ts>
-  struct common_logical_impl<std::void_t<decltype(detail::find_common_logical<Ts...>())>, Ts...>
+  struct common_logical_impl<std::void_t<decltype(_::find_common_logical<Ts...>())>, Ts...>
   {
-    using type = std::remove_cvref_t<decltype(detail::find_common_logical<Ts...>())>;
+    using type = std::remove_cvref_t<decltype(_::find_common_logical<Ts...>())>;
   };
 }
 
 namespace eve
 {
   template<typename... Ts>
-  using common_logical_t = typename eve::detail::common_logical_impl<void, Ts...>::type;
+  using common_logical_t = typename eve::_::common_logical_impl<void, Ts...>::type;
 
   template<typename... Ts>
-  struct common_logical : eve::detail::common_logical_impl<void, Ts...>
+  struct common_logical : eve::_::common_logical_impl<void, Ts...>
   {};
 }

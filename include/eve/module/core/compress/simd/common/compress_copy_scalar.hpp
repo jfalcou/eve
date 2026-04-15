@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/write.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename I, typename O> struct copy_by_one_checking_each_lambda_unsafe
@@ -253,11 +253,11 @@ struct compress_copy_scalar_core
     else if constexpr( COut::is_complete && !COut::is_inverted ) return o;
     else if constexpr( !Settings::is_safe && !CIn::is_complete && !COut::is_complete )
     {
-      auto settings2 = detail::compress_callable_settings {
+      auto settings2 = _::compress_callable_settings {
           safe, settings.density, settings.c_in, settings.c_out};
       return operator()(settings2, f, m, o);
     }
-    else return detail::compress_copy_scalar_impl(settings, f, m, o);
+    else return _::compress_copy_scalar_impl(settings, f, m, o);
   }
 
   template<typename Settings, typename I, logical_simd_value L, typename O>
@@ -272,6 +272,6 @@ struct compress_copy_scalar_core
 };
 
 inline constexpr auto compress_copy_scalar =
-    detail::compress_callable<compress_copy_scalar_core> {};
+    _::compress_callable<compress_copy_scalar_core> {};
 
 }

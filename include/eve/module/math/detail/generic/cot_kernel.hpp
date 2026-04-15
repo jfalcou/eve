@@ -43,7 +43,7 @@ namespace eve
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_value T, callable_options O>
   constexpr EVE_NOINLINE T cot_kernel_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept

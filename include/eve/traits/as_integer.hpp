@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename T>
     struct  default_as_integer_sign : std::conditional<signed_value<T>, signed, unsigned>
@@ -29,10 +29,10 @@ namespace eve
     using default_as_integer_sign_t = typename default_as_integer_sign<T>::type;
   }
 
-  template<typename T, typename Sign = detail::default_as_integer_sign_t<T>>
+  template<typename T, typename Sign = _::default_as_integer_sign_t<T>>
   struct as_integer
   {
-    using type = detail::make_integer_t<sizeof(T), Sign>;
+    using type = _::make_integer_t<sizeof(T), Sign>;
   };
 
   template<typename T, typename N, typename Sign>
@@ -47,7 +47,7 @@ namespace eve
     using type = logical< typename as_integer<T,Sign>::type >;
   };
 
-  template<typename T, typename Sign = detail::default_as_integer_sign_t<T>>
+  template<typename T, typename Sign = _::default_as_integer_sign_t<T>>
   using as_integer_t = typename as_integer<T, Sign>::type;
 
   template<typename T>

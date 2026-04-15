@@ -46,7 +46,7 @@ namespace eve::algo::views
   template <relaxed_range ...Rngs>
   struct zip_range;
 
-  namespace detail
+  namespace _
   {
     template <typename Self, typename T>
     auto convert_zipped(Self self, eve::as<T> tgt);
@@ -206,13 +206,13 @@ namespace eve::algo::views
     template <typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
     {
-      return detail::preprocess_zip_range(tr, self);
+      return _::preprocess_zip_range(tr, self);
     }
 
     template <typename T>
     EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_range self, eve::as<T> tgt)
     {
-      return detail::convert_zipped(self, tgt);
+      return _::convert_zipped(self, tgt);
     }
   };
 }
@@ -232,7 +232,7 @@ namespace std
   };
 }
 
-namespace eve::algo::views::detail
+namespace eve::algo::views::_
 {
   template<typename Self, typename T>
   EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)

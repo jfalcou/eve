@@ -70,7 +70,7 @@ namespace eve
 //================================================================================================
   inline constexpr auto veltkamp = functor<veltkamp_t>;
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr auto

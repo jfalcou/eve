@@ -19,7 +19,7 @@
 
 #include <bit>
 
-namespace eve::detail
+namespace eve::_
 {
 // permutation masks ------------------
 

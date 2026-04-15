@@ -33,7 +33,7 @@ namespace eve
   //================================================================================================
   // Special case : product_type
   //================================================================================================
-  namespace detail
+  namespace _
   {
     template<typename N>
     struct apply_as_wide
@@ -47,10 +47,10 @@ namespace eve
   consteval auto find_register_type(as<T>, N, eve::bundle_)
     requires (eve::product_type<T>)
   {
-    return kumi::as_tuple_t<T, detail::apply_as_wide<N>::template type>{};
+    return kumi::as_tuple_t<T, _::apply_as_wide<N>::template type>{};
   }
 
-  namespace detail
+  namespace _
   {
     template<typename Type, typename Cardinal>
     struct  blob
@@ -116,24 +116,24 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::aggregated_)
   {
-    return detail::blob<T, N>{};
+    return _::blob<T, N>{};
   }
 
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, eve::aggregated_)
   {
-    return detail::blob<logical<T>, N>{};
+    return _::blob<logical<T>, N>{};
   }
 }
 
 template<std::size_t I, typename T, typename C>
-struct std::tuple_element<I, eve::detail::blob<T, C>>
+struct std::tuple_element<I, eve::_::blob<T, C>>
 {
-  using type = typename eve::detail::blob<T, C>::value_type;
+  using type = typename eve::_::blob<T, C>::value_type;
 };
 
 template<typename T, typename C>
-struct  std::tuple_size<eve::detail::blob<T, C>>
-      : std::integral_constant<std::size_t, eve::detail::blob<T, C>::replication>
+struct  std::tuple_size<eve::_::blob<T, C>>
+      : std::integral_constant<std::size_t, eve::_::blob<T, C>::replication>
 {
 };

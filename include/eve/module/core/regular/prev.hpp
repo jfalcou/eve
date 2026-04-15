@@ -104,11 +104,11 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto prev_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
-      requires (detail::fp16_should_apply<common_value_t<Ts...>>)
+      requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return prev_(EVE_TARGETS(cpu_), o, ts...);
     }

@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<std::uint8_t K, scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>

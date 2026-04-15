@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, callable_options O>
   EVE_FORCEINLINE constexpr auto

@@ -65,7 +65,7 @@ namespace eve
   EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_)
   EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)
 
-  namespace detail
+  namespace _
   {
     EVE_ALIAS_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num);
   }

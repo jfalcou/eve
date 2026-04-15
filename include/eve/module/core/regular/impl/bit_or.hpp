@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_or_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
@@ -56,7 +56,7 @@ namespace eve::detail
                                 bit_cast(args, as<r_t>{})...);
 
       auto s = bit_or(head);
-      return detail::call_butterfly_reduction(s, bit_or).get(0);
+      return _::call_butterfly_reduction(s, bit_or).get(0);
     }
     else
     {

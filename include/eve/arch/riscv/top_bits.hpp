@@ -91,14 +91,14 @@ struct top_bits<Logical>
   requires(static_bits_size <= 64)
   {
     constexpr unsigned byte_size = std::max<std::ptrdiff_t>(1, static_bits_size / 8);
-    using u_type                 = detail::make_integer_t<byte_size, unsigned>;
+    using u_type                 = _::make_integer_t<byte_size, unsigned>;
     auto raw_value               = std::bit_cast<u_type>(storage);
     if constexpr( static_bits_size >= 8 ) return raw_value;
     else
     {
       // if static_bit_size < 8, we have some dirty bits in resulted unsigned,
       // so cleanning them.
-      u_type mask = raw_value & detail::set_lower_n_bits<u_type>(static_bits_size);
+      u_type mask = raw_value & _::set_lower_n_bits<u_type>(static_bits_size);
       return mask;
     }
   }

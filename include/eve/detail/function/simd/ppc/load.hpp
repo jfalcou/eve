@@ -14,7 +14,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(vmx_, Ptr ptr, as<wide<T, N>> tgt) noexcept

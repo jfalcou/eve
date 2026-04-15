@@ -14,7 +14,7 @@
 
 #include <eve/arch/top_bits.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template <typename U, typename N>

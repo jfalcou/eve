@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr as_logical_t<T> is_less_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept

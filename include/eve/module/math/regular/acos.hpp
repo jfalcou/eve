@@ -24,7 +24,7 @@ namespace eve
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
-    
+
     EVE_CALLABLE_OBJECT(acos_t, acos_);
   };
 
@@ -93,7 +93,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
@@ -105,7 +105,7 @@ namespace eve
       else if constexpr(O::contains(radpi))
         return radinpi(acos[o.drop(radpi)](a0));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::acos[o], a0);
+        return eve::_::apply_fp16_as_fp32(eve::acos[o], a0);
       else if constexpr(O::contains(raw))
       {
         auto tmp  = pio_2(eve::as(a0))
@@ -143,13 +143,13 @@ namespace eve
           else if constexpr( std::same_as<T, double> )
           {
             if( a0 > 0.5 ) return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
-            
+
             T const pio4 = pio_4(eve::as<T>());
-            
+
             T z = pio4 - eve::asin(a0);
             z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
             z += pio4;
-            
+
             return z;
           }
         }

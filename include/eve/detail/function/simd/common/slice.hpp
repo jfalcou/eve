@@ -18,7 +18,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Full slice

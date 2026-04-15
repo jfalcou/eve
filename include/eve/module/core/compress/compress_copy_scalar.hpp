@@ -15,7 +15,7 @@ namespace eve
 EVE_REGISTER_CALLABLE(compress_copy_scalar_impl_)
 EVE_DECLARE_CALLABLE(compress_copy_scalar_impl_, compress_copy_scalar_impl)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(compress_copy_scalar_impl_, compress_copy_scalar_impl);
 }

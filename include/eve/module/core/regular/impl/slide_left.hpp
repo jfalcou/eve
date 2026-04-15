@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<simd_value Wide, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto

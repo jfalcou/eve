@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/logical_ornot.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>

@@ -21,15 +21,15 @@
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/any.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(emulated_), O const& o, T a) noexcept
-    requires (detail::fp16_should_apply<common_value_t<T>>)
+    requires (_::fp16_should_apply<common_value_t<T>>)
   {
     if      constexpr (O::contains(widen))                       return rec[o.drop(widen)](upgrade(a));
-    else if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(rec[o], a);
+    else if constexpr (O::contains(upper) || O::contains(lower)) return _::map(rec[o], a);
     else                                                         return apply_fp16_as_fp32(rec[o], a);
   }
 

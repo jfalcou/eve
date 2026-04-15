@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/abi.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T, typename N>
 EVE_FORCEINLINE wide<T, typename N::combined_type>

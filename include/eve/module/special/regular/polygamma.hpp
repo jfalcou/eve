@@ -81,7 +81,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename N, typename T, callable_options O>
     constexpr T  polygamma_(EVE_REQUIRES(cpu_), O const&, N m, T z) noexcept

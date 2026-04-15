@@ -13,7 +13,7 @@
 #include <eve/traits.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
   // Check if a given ABI is native
   template<typename X>
@@ -69,8 +69,8 @@ namespace eve::detail
 namespace eve
 {
   // concepts related to above traits
-  template<typename T> concept bundle     = detail::is_bundle_v<T>;
-  template<typename T> concept emulated   = detail::is_emulated_v<T>;
-  template<typename T> concept aggregated = detail::is_aggregated_v<T>;
-  template<typename T> concept native     = detail::is_native_v<T>;
+  template<typename T> concept bundle     = _::is_bundle_v<T>;
+  template<typename T> concept emulated   = _::is_emulated_v<T>;
+  template<typename T> concept aggregated = _::is_aggregated_v<T>;
+  template<typename T> concept native     = _::is_native_v<T>;
 }

@@ -23,7 +23,7 @@ struct sparse_type
 
 }
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename Safety, typename Density, typename CondIn, typename CondOut>

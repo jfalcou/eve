@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/minmag.hpp>
 
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T, callable_options O>
   constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(avx512_), O const& opts, T a, T b)

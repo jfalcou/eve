@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #pragma once
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename T>

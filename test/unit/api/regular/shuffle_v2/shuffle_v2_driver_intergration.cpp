@@ -16,7 +16,7 @@ constexpr auto perfect_native_shuffler =
   if constexpr( !eve::supports_simd ) { TTS_FAIL("should not be called: " + tts::as_string(p)); }
   else
   {
-    auto shuffled = get<0>(eve::detail::shuffle_emulated(p, g, kumi::tuple {xs...}));
+    auto shuffled = get<0>(eve::_::shuffle_emulated(p, g, kumi::tuple {xs...}));
     // mock level matches to size of the pattern
     constexpr std::array idxs {I...};
     constexpr int complexity = decltype(p)::size() - std::count(idxs.begin(), idxs.end(), eve::we_);
@@ -24,9 +24,9 @@ constexpr auto perfect_native_shuffler =
   }
 };
 
-constexpr auto perfect_shuffler = eve::detail::make_shuffle_v2(perfect_native_shuffler);
+constexpr auto perfect_shuffler = eve::_::make_shuffle_v2(perfect_native_shuffler);
 
-constexpr auto never_native_shuffler = eve::detail::make_shuffle_v2(
+constexpr auto never_native_shuffler = eve::_::make_shuffle_v2(
     []<std::ptrdiff_t... I>(eve::pattern_t<I...> p, auto g, auto... xs)
     {
       TTS_FAIL("should not be called: " + tts::as_string(p));

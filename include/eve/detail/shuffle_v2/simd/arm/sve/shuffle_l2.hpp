@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>

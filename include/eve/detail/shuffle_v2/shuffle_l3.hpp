@@ -14,10 +14,10 @@ namespace eve
 EVE_REGISTER_CALLABLE(shuffle_l3_)
 EVE_DECLARE_CALLABLE(shuffle_l3_, shuffle_l3)
 
-namespace detail
+namespace _
 {
   EVE_ALIAS_CALLABLE(shuffle_l3_, shuffle_l3);
-} // namespace detail
+} // namespace _
 
 // level 3 is allowed one instruction with no mask
 EVE_CALLABLE_API(shuffle_l3_, shuffle_l3)

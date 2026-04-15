@@ -79,7 +79,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //! @}
 //================================================================================================
 
-namespace detail
+namespace _
 {
 template<typename T, callable_options O>
 EVE_FORCEINLINE constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept

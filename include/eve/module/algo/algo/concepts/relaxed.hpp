@@ -38,7 +38,7 @@ namespace eve::algo
 
   template <typename I>
   concept relaxed_iterator =
-    detail::iterator_operations<I> &&
+    _::iterator_operations<I> &&
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), I, I>;
 
   //================================================================================================
@@ -79,7 +79,7 @@ namespace eve::algo
 
   template <typename R>
   concept relaxed_range =
-    detail::has_begin_end<R> &&
+    _::has_begin_end<R> &&
     relaxed_sentinel_for<sentinel_t<R>, iterator_t<R>> &&
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), R>;
 }

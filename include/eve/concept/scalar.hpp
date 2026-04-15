@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::_
 {
 // This is not directly a concept to prevent some compiler bugs about concepts depending
 // on themselves. This should go away at one point in the future.
@@ -47,7 +47,7 @@ template<typename Type> struct logical;
 //! - `int`
 //==================================================================================================
 template<typename T>
-concept plain_scalar_value = detail::is_plain<translate_t<T>>();
+concept plain_scalar_value = _::is_plain<translate_t<T>>();
 //================================================================================================
 //! @}
 //================================================================================================
@@ -65,14 +65,14 @@ concept plain_scalar_value = detail::is_plain<translate_t<T>>();
 //! - `logical<int>`
 //==================================================================================================
 template<typename T>
-concept logical_scalar_value = detail::instance_of<T, logical>
+concept logical_scalar_value = _::instance_of<T, logical>
                                && plain_scalar_value<typename T::value_type>;
 //================================================================================================
 //! @}
 //================================================================================================
 }
 
-namespace eve::detail
+namespace eve::_
 {
 template<typename T>
 constexpr bool
@@ -105,7 +105,7 @@ namespace eve
 //! - `kumi::tuple<logical<double>, char>`
 //==================================================================================================
 template<typename T>
-concept product_scalar_value = detail::scalar_tuple<T>();
+concept product_scalar_value = _::scalar_tuple<T>();
 
 //==================================================================================================
 //! @ingroup simd_concepts

@@ -12,7 +12,7 @@
 #include <eve/traits/product_type.hpp>
 #include <eve/detail/function/slice.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   //================================================================================================
   // Interleave pairs of wides

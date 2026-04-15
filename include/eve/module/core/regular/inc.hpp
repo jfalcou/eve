@@ -110,13 +110,13 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto inc_(EVE_REQUIRES(emulated_), O const& o, T v) noexcept
-      requires (detail::fp16_should_apply<common_value_t<T>>)
+      requires (_::fp16_should_apply<common_value_t<T>>)
     {
-      if constexpr (O::contains(upper) || O::contains(lower)) return detail::map(inc[o], v);
+      if constexpr (O::contains(upper) || O::contains(lower)) return _::map(inc[o], v);
       else                                                    return apply_fp16_as_fp32(inc[o], v);
     }
 

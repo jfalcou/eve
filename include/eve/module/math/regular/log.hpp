@@ -80,7 +80,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename T, callable_options O>
     constexpr T
@@ -91,11 +91,11 @@ namespace eve
       T Log_2hi   = ieee_constant<0x1.62e42fee00000p-1 , 0x1.6300000p-1f  >(eve::as<T>{});
       T Log_2lo   = ieee_constant<0x1.a39ef35793c76p-33, -0x1.bd01060p-13f>(eve::as<T>{});
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::log[o], a0);
+        return eve::_::apply_fp16_as_fp32(eve::log[o], a0);
       else if constexpr(simd_value<T>)
       {
         constexpr bool is_avx = current_api == avx;
-        using TT =  detail::conditional_t<is_avx, T, iT >;
+        using TT =  _::conditional_t<is_avx, T, iT >;
         using elt_t = element_type_t<T>;
         if constexpr( std::is_same_v<elt_t, float> )
         {

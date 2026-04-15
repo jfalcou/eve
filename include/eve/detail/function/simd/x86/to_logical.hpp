@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 //================================================================================================
 // Wide to Logical
@@ -32,6 +32,6 @@ auto EVE_FORCEINLINE to_logical(C c, eve::as<T>) noexcept
 {
   using type = as_logical_t<T>;
   auto value = top_bits<type>(c);
-  return detail::to_logical(value);
+  return _::to_logical(value);
 }
 }

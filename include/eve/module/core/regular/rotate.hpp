@@ -66,7 +66,7 @@ namespace eve
     }
   );
 
-  namespace detail
+  namespace _
   {
     template<std::ptrdiff_t N, std::ptrdiff_t... I>
     inline constexpr auto is_rotate = []() -> std::ptrdiff_t

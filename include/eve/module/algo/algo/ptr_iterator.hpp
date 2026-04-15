@@ -30,12 +30,12 @@ namespace eve::algo
   template <typename Ptr, typename Cardinal>
   struct ptr_iterator;
 
-  namespace detail
+  namespace _
   {
     template <typename Ptr, typename Cardinal>
     constexpr bool check_aligned_ptr_validity()
     {
-      if constexpr (!eve::detail::instance_of<Ptr, aligned_ptr>) return true;
+      if constexpr (!eve::_::instance_of<Ptr, aligned_ptr>) return true;
       else return sizeof(value_type_t<Ptr>) * Cardinal{}() == Ptr::alignment();
     }
   }
@@ -43,7 +43,7 @@ namespace eve::algo
   template <typename Ptr, typename Cardinal>
   struct ptr_iterator : operations_with_distance
   {
-    static_assert(detail::check_aligned_ptr_validity<Ptr, Cardinal>());
+    static_assert(_::check_aligned_ptr_validity<Ptr, Cardinal>());
 
     using value_type = value_type_t<Ptr>;
     using ptr_type   = Ptr;
@@ -64,7 +64,7 @@ namespace eve::algo
 
     auto previous_partially_aligned() const
     {
-      if constexpr (eve::detail::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
       else
       {
         auto a_ptr = eve::previous_aligned_address(ptr, Cardinal{});
@@ -74,7 +74,7 @@ namespace eve::algo
 
     auto next_partially_aligned() const
     {
-      if constexpr (eve::detail::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
       else
       {
         auto a_ptr = eve::next_aligned_address(ptr, Cardinal{});
@@ -87,7 +87,7 @@ namespace eve::algo
     template <typename _Cardinal>
     auto cardinal_cast(_Cardinal c) const
     {
-           if constexpr (!eve::detail::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
+           if constexpr (!eve::_::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
       else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unalign().cardinal_cast(c);
       else
       {

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::detail
+namespace eve::_
 {
 template<callable_options O, logical_simd_value T, logical_simd_value U>
 EVE_FORCEINLINE constexpr U

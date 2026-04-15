@@ -12,7 +12,7 @@
 
 #include <bit>
 
-namespace eve::detail
+namespace eve::_
 {
 
 template<typename F> struct plus_offset_lambda

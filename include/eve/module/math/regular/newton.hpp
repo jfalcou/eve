@@ -37,7 +37,7 @@ namespace eve
       return EVE_DISPATCH_CALL(x, t1, t2);
     }
 
-    template<floating_value X, eve::detail::range R1, eve::detail::range R2>
+    template<floating_value X, eve::_::range R1, eve::_::range R2>
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, typename R1::value_type, typename R2::value_type>
     operator()(X x, R1 const& t1,  R2 const & t2) const noexcept
@@ -118,7 +118,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename X, typename ...Coefs, typename... Nodes, callable_options O >
     EVE_FORCEINLINE constexpr auto

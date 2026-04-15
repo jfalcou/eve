@@ -80,7 +80,7 @@ namespace eve
 //================================================================================================
 inline constexpr auto two_sub = functor<two_sub_t>;
 
-  namespace detail
+  namespace _
   {
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE auto

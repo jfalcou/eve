@@ -97,5 +97,5 @@ namespace eve
 //================================================================================================
   inline constexpr auto tchebeval = functor<tchebeval_t>;
 
-  namespace detail
+  namespace _
   {

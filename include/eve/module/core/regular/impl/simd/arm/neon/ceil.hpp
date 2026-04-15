@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> ceil_(EVE_REQUIRES(neon128_),
@@ -26,7 +26,7 @@ namespace eve::detail
 
       if constexpr (match(cat, category::float16))
       {
-        if      constexpr (!detail::supports_fp16_vector_ops) return apply_fp16_as_fp32(ceil, v);
+        if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(ceil, v);
         else if constexpr (cat == category::float16x4)        return vrndp_f16(v);
         else if constexpr (cat == category::float16x8)        return vrndpq_f16(v);
       }

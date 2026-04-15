@@ -90,13 +90,13 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<callable_options O, typename... Ts>
     EVE_FORCEINLINE constexpr auto sum_of_prod_(EVE_REQUIRES(emulated_), O const & o, Ts const&... ts) noexcept
-      requires(detail::fp16_should_apply<common_value_t<Ts...>>)
+      requires(_::fp16_should_apply<common_value_t<Ts...>>)
     {
-      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return detail::map(sum_of_prod[o], ts...);
+      if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(sum_of_prod[o], ts...);
       else                                                                            return apply_fp16_as_fp32(sum_of_prod[o], ts...);
     }
 

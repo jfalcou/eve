@@ -10,7 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/options.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<callable_options O, typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, Slice) noexcept

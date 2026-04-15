@@ -58,7 +58,7 @@ namespace eve
   };
 }
 
-namespace eve::detail
+namespace eve::_
 {
   struct no_common_type
   {
@@ -148,7 +148,7 @@ namespace eve
   };
 
   template<typename T, typename ...Ts> struct common_type<T, Ts...> :
-    decltype((detail::common_type_reduction<T>{} + ... + as<Ts>{}))
+    decltype((_::common_type_reduction<T>{} + ... + as<Ts>{}))
   {
   };
 }

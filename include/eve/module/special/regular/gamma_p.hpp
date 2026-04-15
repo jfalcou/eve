@@ -79,7 +79,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<typename T, callable_options O>

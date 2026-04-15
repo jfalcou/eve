@@ -283,7 +283,7 @@ TTS_CASE_TPL("cardinal/type manipulation", algo_test::selected_types)
   }
 
   {
-    using cardinal_n = eve::detail::cache_line_cardinal<e_t>;
+    using cardinal_n = eve::_::cache_line_cardinal<e_t>;
     auto processed = eve::algo::preprocess_range(
     eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
 

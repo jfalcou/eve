@@ -10,7 +10,7 @@
 #include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/arch/wide.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 // Logical-wide conversions.
 // For interal utils for RVV, not expected to be used outsize of this file.
@@ -84,7 +84,7 @@ EVE_FORCEINLINE logical<wide<U, M>>
                            as<logical<wide<U, M>>> const                &tgt) noexcept
 requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>)
 {
-  using part_type_cast = detail::rvv_m1_wide<std::uint32_t>;
+  using part_type_cast = _::rvv_m1_wide<std::uint32_t>;
   auto u_casted_in     = rvv_simd_cast(x, as<part_type_cast> {});
   auto to_ret          = rvv_simd_cast(u_casted_in, tgt);
   return to_ret;

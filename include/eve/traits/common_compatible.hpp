@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_floating_point.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   template<typename T,int S,int V> struct cmn
   {
@@ -40,7 +40,7 @@ namespace eve::detail
   {};
 
   template<typename T>
-  using cmn_t = detail::cmn<T, scalar_value<T>, simd_value<T>>;
+  using cmn_t = _::cmn<T, scalar_value<T>, simd_value<T>>;
 
   template<typename... Ts>
   auto compact(){ return (cmn_t<Ts>{} % ... ); }
@@ -110,7 +110,7 @@ namespace eve
   };
 
   template<typename T0, typename... Ts>
-  struct common_compatible<T0,Ts...> : detail::common_compatible_impl<detail::types<T0,Ts...>>
+  struct common_compatible<T0,Ts...> : _::common_compatible_impl<_::types<T0,Ts...>>
   {};
 
   template<typename... Ts>

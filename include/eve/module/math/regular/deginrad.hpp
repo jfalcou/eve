@@ -69,7 +69,7 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T

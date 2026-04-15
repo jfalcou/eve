@@ -87,7 +87,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<floating_value T, callable_options O>
     auto jacobi_elliptic_(EVE_REQUIRES(cpu_), O const& o, T u, T x) noexcept

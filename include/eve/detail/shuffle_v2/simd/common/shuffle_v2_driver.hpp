@@ -10,7 +10,7 @@
 #include <eve/detail/shuffle_v2/simplify_plain_shuffle.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
 
 // We'd like to avoid this because it leads to infinite recursions

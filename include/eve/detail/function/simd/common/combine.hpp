@@ -15,7 +15,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
+namespace eve::_
 {
   struct local_combiner
   {

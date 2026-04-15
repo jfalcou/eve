@@ -88,14 +88,14 @@ namespace eve
 //!  @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T
     exp2_(EVE_REQUIRES(cpu_), O const& o, T x) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::exp2[o], x);
+        return eve::_::apply_fp16_as_fp32(eve::exp2[o], x);
       else
       {
         if constexpr(floating_value<T>)
@@ -166,7 +166,7 @@ namespace eve
     exp2_(EVE_REQUIRES(cpu_), O const& o, T xx, as<U> const & trgt) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::detail::apply_fp16_as_fp32(eve::exp[o], xx, trgt);
+        return eve::_::apply_fp16_as_fp32(eve::exp[o], xx, trgt);
       else
       {
         using b_t = as_wide_as_t<U, T>;

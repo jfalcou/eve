@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  namespace detail
+  namespace _
   {
     template<typename Callable>
     constexpr auto build_min_callable(Callable const& f) noexcept;
@@ -42,7 +42,7 @@ namespace eve
     template<typename Callable>
     requires(!eve::product_type<Callable> && !eve::value<Callable>)
     EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept
-    { return detail::build_min_callable(f); }
+    { return _::build_min_callable(f); }
 
     EVE_CALLABLE_OBJECT(min_t, min_);
   };

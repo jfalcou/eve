@@ -78,7 +78,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
     template<typename U, typename Target, callable_options O>
     EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
