@@ -157,9 +157,9 @@ $(function(){initNavTree('_2__w_2eve_2eve_2include_2eve_2traits_2as_translation_
 <div class="line">  <span class="comment">//================================================================================================</span></div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> <a id="a2" name="a2"></a><a class="code hl_typedef" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t&lt;V&gt;</a> <a class="code hl_function" href="namespaceeve_a2ca18720b2c0736de236fbbd8b003ab8.html#a2ca18720b2c0736de236fbbd8b003ab8">translate</a>(V <span class="keyword">const</span>&amp; val)</div>
+<div class="line">  <span class="keyword">constexpr</span> <a id="a2" name="a2"></a><a class="code hl_typedef" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t&lt;V&gt;</a> <a class="code hl_function" href="namespaceeve_a2ca18720b2c0736de236fbbd8b003ab8.html#a2ca18720b2c0736de236fbbd8b003ab8">translate</a>(V <span class="keyword">const</span>&amp; val)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (has_plain_translation&lt;element_type_t&lt;V&gt;&gt;) <span class="keywordflow">return</span> std::bit_cast&lt;<a class="code hl_typedef" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t&lt;V&gt;</a>&gt;(val);</div>
+<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (has_plain_translation&lt;element_type_t&lt;V&gt;&gt;) <span class="keywordflow">return</span> std::bit_cast&lt;<a class="code hl_typedef" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t&lt;V&gt;</a>&gt;(val);</div>
 <div class="line">    <span class="keywordflow">else</span>                                                    <span class="keywordflow">return</span> val;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -168,16 +168,16 @@ $(function(){initNavTree('_2__w_2eve_2eve_2include_2eve_2traits_2as_translation_
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line">  <span class="keyword">constexpr</span> std::array&lt;translate_t&lt;T&gt;, N&gt; <a class="code hl_function" href="namespaceeve_a2ca18720b2c0736de236fbbd8b003ab8.html#a2ca18720b2c0736de236fbbd8b003ab8">translate</a>(std::array&lt;T, N&gt; val)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (has_plain_translation&lt;element_type_t&lt;T&gt;&gt;) <span class="keywordflow">return</span> std::bit_cast&lt;std::array&lt;<a class="code hl_typedef" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t&lt;T&gt;</a>, N&gt;&gt;(val);</div>
+<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (has_plain_translation&lt;element_type_t&lt;T&gt;&gt;) <span class="keywordflow">return</span> std::bit_cast&lt;std::array&lt;<a class="code hl_typedef" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t&lt;T&gt;</a>, N&gt;&gt;(val);</div>
 <div class="line">    <span class="keywordflow">else</span>                                                    <span class="keywordflow">return</span> val;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t&lt;V&gt;</a>&amp; <a class="code hl_function" href="namespaceeve_a2ca18720b2c0736de236fbbd8b003ab8.html#a2ca18720b2c0736de236fbbd8b003ab8">translate</a>(V&amp; val)</div>
+<div class="line">  <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t&lt;V&gt;</a>&amp; <a class="code hl_function" href="namespaceeve_a2ca18720b2c0736de236fbbd8b003ab8.html#a2ca18720b2c0736de236fbbd8b003ab8">translate</a>(V&amp; val)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_typedef" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t&lt;V&gt;</a>&amp;<span class="keyword">&gt;</span>(val);</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_typedef" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t&lt;V&gt;</a>&amp;<span class="keyword">&gt;</span>(val);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
@@ -190,12 +190,12 @@ $(function(){initNavTree('_2__w_2eve_2eve_2include_2eve_2traits_2as_translation_
 <div class="line"> </div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
 <div class="line">  <span class="comment">//================================================================================================</span></div>
-<div class="line">  <span class="keyword">template</span> &lt;detail::scalar_po<span class="keywordtype">int</span>er Ptr&gt;</div>
+<div class="line">  <span class="keyword">template</span> &lt;_::scalar_po<span class="keywordtype">int</span>er Ptr&gt;</div>
 <div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> translate_ptr(Ptr ptr)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (has_plain_translation&lt;value_type_t&lt;Ptr&gt;&gt;)</div>
 <div class="line">    {</div>
-<div class="line">      <span class="keyword">using </span>trans_t = detail::copy_qualifiers_t&lt;translated_value_type_t&lt;Ptr&gt;, Ptr&gt;;</div>
+<div class="line">      <span class="keyword">using </span>trans_t = _::copy_qualifiers_t&lt;translated_value_type_t&lt;Ptr&gt;, Ptr&gt;;</div>
 <div class="line"> </div>
 <div class="line">      <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_pointer_v&lt;Ptr&gt;)</div>
 <div class="line">      {</div>
@@ -220,7 +220,7 @@ $(function(){initNavTree('_2__w_2eve_2eve_2include_2eve_2traits_2as_translation_
 <div class="line">    <span class="keywordflow">return</span> std::bit_cast&lt;Dst&gt;(val);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32_html_a3eb0b3881b25ed34188cfdbb3e30db32"><div class="ttname"><a href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">eve::translate_t</a></div><div class="ttdeci">typename decltype(detail::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
+<div class="ttc" id="anamespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d_html_a7f168aef1d16a9b1d923d0a26a20ef7d"><div class="ttname"><a href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">eve::translate_t</a></div><div class="ttdeci">typename decltype(_::as_translated_type(as&lt; T &gt;{}))::type translate_t</div><div class="ttdoc">Returns the final translated type of T.</div><div class="ttdef"><b>Definition</b> translation.hpp:107</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->

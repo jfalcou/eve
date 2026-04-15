@@ -92,7 +92,7 @@ $(function() { codefold.init(); });
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('group__traits_gabfdb81765f4035b90ff37b999cc958a5.html','',''); });
+$(function(){initNavTree('group__traits_gaae6fbba5b56b9fab940a05b444c15e6f.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -118,8 +118,8 @@ $(function(){initNavTree('group__traits_gabfdb81765f4035b90ff37b999cc958a5.html'
 </div>
 
 <div class="contents">
-<a id="gabfdb81765f4035b90ff37b999cc958a5" name="gabfdb81765f4035b90ff37b999cc958a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabfdb81765f4035b90ff37b999cc958a5">&#9670;&#160;</a></span>value_type_t</h2>
+<a id="gaae6fbba5b56b9fab940a05b444c15e6f" name="gaae6fbba5b56b9fab940a05b444c15e6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae6fbba5b56b9fab940a05b444c15e6f">&#9670;&#160;</a></span>value_type_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(function(){initNavTree('group__traits_gabfdb81765f4035b90ff37b999cc958a5.html'
 template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#gabfdb81765f4035b90ff37b999cc958a5">eve::value_type_t</a> = typename decltype(detail::value_type_impl&lt;T&gt;())::type</td>
+          <td class="memname">using <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -137,11 +137,11 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
-<p><a class="el" href="#gabfdb81765f4035b90ff37b999cc958a5" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t&lt;T&gt;</a> is computed as follows:</p><ul>
-<li>If T has begin/end - <a class="el" href="#gabfdb81765f4035b90ff37b999cc958a5" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> for return type of begin</li>
+<p><a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t&lt;T&gt;</a> is computed as follows:</p><ul>
+<li>If T has begin/end - <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> for return type of begin</li>
 <li>If T is std::iterator -&gt; returns iterator_traits&lt;T&gt;::value_type</li>
 <li>If T has nested <span class="tt">value_type</span> -&gt; returns it</li>
-<li>If T is a product type and all elements have <a class="el" href="#gabfdb81765f4035b90ff37b999cc958a5" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> defined for them -</li>
+<li>If T is a product type and all elements have <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> defined for them -</li>
 <li>kumi::tuple for the individual product types.</li>
 <li>Otherwise it's undefined.</li>
 </ul>

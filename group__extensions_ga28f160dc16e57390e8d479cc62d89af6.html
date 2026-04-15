@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::plain_scalar_value Concept Reference</title>
+<title>E.V.E: eve::condition_key</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,7 +92,7 @@ $(function() { codefold.init(); });
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('concepteve_1_1plain__scalar__value.html','',''); });
+$(function(){initNavTree('group__extensions_ga28f160dc16e57390e8d479cc62d89af6.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -117,34 +117,40 @@ $(function(){initNavTree('concepteve_1_1plain__scalar__value.html','',''); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">eve::plain_scalar_value Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
-</div><!--header-->
 <div class="contents">
+<a id="ga28f160dc16e57390e8d479cc62d89af6" name="ga28f160dc16e57390e8d479cc62d89af6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga28f160dc16e57390e8d479cc62d89af6">&#9670;&#160;</a></span>condition_key</h2>
 
-<p>Specify that a type represents a plain scalar value The concept <span class="tt">plain_scalar_value&lt;T&gt;</span> is satisfied if and only if the translation of T is an instance of any non-bool, non-long double, arithmetic types.  
-<a href="#details">More...</a></p>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_::condition_key_t eve::condition_key = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>When a eve::decorated_callable is called with an option provided via eve::conditional, the value of the conditional can be retrieved using <a class="el" href="#ga28f160dc16e57390e8d479cc62d89af6" title="Keyword for retrieving conditionals decorator.">eve::condition_key</a> </p><dl class="section see"><dt>See also</dt><dd>eve::supports </dd></dl>
 
-<p><code>#include &lt;eve/concept/scalar.hpp&gt;</code></p>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-Example Types</h2>
-<ul>
-<li><span class="tt">float</span></li>
-<li><span class="tt">int</span> </li>
-</ul>
-</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value</a> = _::is_plain&lt;translate_t&lt;T&gt;&gt;()</div>
-<div class="ttc" id="aconcepteve_1_1plain__scalar__value_html"><div class="ttname"><a href="concepteve_1_1plain__scalar__value.html">eve::plain_scalar_value</a></div><div class="ttdoc">Specify that a type represents a plain scalar value The concept plain_scalar_value&lt;T&gt; is satisfied if...</div><div class="ttdef"><b>Definition</b> scalar.hpp:50</div></div>
-</div><!-- fragment --></div><!-- contents -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespaceeve.html">eve</a></li><li class="navelem"><a href="concepteve_1_1plain__scalar__value.html">plain_scalar_value</a></li>
+    <li class="navelem"><a href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

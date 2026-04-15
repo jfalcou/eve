@@ -128,7 +128,7 @@ $(function(){initNavTree('concepteve_1_1only__if.html','',''); });
 <p><code>#include &lt;eve/concept/options.hpp&gt;</code></p>
 <h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Choices&gt;</div>
-<div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1only__if.html">only_if</a> = detail::is_one_of&lt;T&gt;(detail::types&lt;Choices...&gt; {})</div>
+<div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1only__if.html">only_if</a> = _::is_one_of&lt;T&gt;(_::types&lt;Choices...&gt; {})</div>
 <div class="ttc" id="aconcepteve_1_1only__if_html"><div class="ttname"><a href="concepteve_1_1only__if.html">eve::only_if</a></div><div class="ttdoc">Checks if the type is one of the Choices.</div><div class="ttdef"><b>Definition</b> options.hpp:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

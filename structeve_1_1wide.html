@@ -120,6 +120,7 @@ $(function(){initNavTree('structeve_1_1wide.html','','structeve_1_1wide-members'
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="structeve_1_1wide-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">eve::wide&lt; Type, Cardinal &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
@@ -148,7 +149,7 @@ Public Types</h2></td></tr>
 using&#160;</td><td class="memItemRight"><b>value_type</b> = Type</td></tr>
 <tr class="memdesc:ad6e0f9fd221ca191f42484f47660662c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type stored in the register. <br /></td></tr>
 <tr class="memitem:a6f964ba2b4950d9916b5d280c88e8d6f" id="r_a6f964ba2b4950d9916b5d280c88e8d6f"><td class="memItemLeft"><a id="a6f964ba2b4950d9916b5d280c88e8d6f" name="a6f964ba2b4950d9916b5d280c88e8d6f"></a>
-using&#160;</td><td class="memItemRight"><b>translated_element_type</b> = <a class="el" href="namespaceeve_a3eb0b3881b25ed34188cfdbb3e30db32.html#a3eb0b3881b25ed34188cfdbb3e30db32">translate_t</a>&lt;Type&gt;</td></tr>
+using&#160;</td><td class="memItemRight"><b>translated_element_type</b> = <a class="el" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;Type&gt;</td></tr>
 <tr class="memdesc:a6f964ba2b4950d9916b5d280c88e8d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current wide's elements type. <br /></td></tr>
 <tr class="memitem:aa09188474474c521bce2199283dd0557" id="r_aa09188474474c521bce2199283dd0557"><td class="memItemLeft"><a id="aa09188474474c521bce2199283dd0557" name="aa09188474474c521bce2199283dd0557"></a>
 using&#160;</td><td class="memItemRight"><b>translated_type</b> = <a class="el" href="#a361d5a9fd15f6b2e4a86ec5ae2880e06">wide</a>&lt;<a class="el" href="#a6f964ba2b4950d9916b5d280c88e8d6f">translated_element_type</a>, Cardinal&gt;</td></tr>
@@ -182,6 +183,24 @@ template&lt;typename N&gt; </td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ae243fa6aac6a91ab5981865b306bce5d" id="r_ae243fa6aac6a91ab5981865b306bce5d"><td class="memItemLeft"><a id="ae243fa6aac6a91ab5981865b306bce5d" name="ae243fa6aac6a91ab5981865b306bce5d"></a>
+<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;&#160;</td><td class="memItemRight"><b>storage</b> () const &amp;noexcept</td></tr>
+<tr class="memdesc:ae243fa6aac6a91ab5981865b306bce5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="memitem:a6e5b57453be18b7ab65c76db1f3a69e1" id="r_a6e5b57453be18b7ab65c76db1f3a69e1"><td class="memItemLeft"><a id="a6e5b57453be18b7ab65c76db1f3a69e1" name="a6e5b57453be18b7ab65c76db1f3a69e1"></a>
+<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> &amp;&#160;</td><td class="memItemRight"><b>storage</b> () &amp;noexcept</td></tr>
+<tr class="memdesc:a6e5b57453be18b7ab65c76db1f3a69e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="memitem:a41a9064f838f216eb9f0c2e41e13a1df" id="r_a41a9064f838f216eb9f0c2e41e13a1df"><td class="memItemLeft"><a id="a41a9064f838f216eb9f0c2e41e13a1df" name="a41a9064f838f216eb9f0c2e41e13a1df"></a>
+<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>&#160;</td><td class="memItemRight"><b>storage</b> () &amp;&amp;noexcept</td></tr>
+<tr class="memdesc:a41a9064f838f216eb9f0c2e41e13a1df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="memitem:a9c3e7c0e98b4e52924e117c51030cbc1" id="r_a9c3e7c0e98b4e52924e117c51030cbc1"><td class="memItemLeft"><a id="a9c3e7c0e98b4e52924e117c51030cbc1" name="a9c3e7c0e98b4e52924e117c51030cbc1"></a>
+&#160;</td><td class="memItemRight"><b>operator storage_type const &amp;</b> () const &amp;noexcept</td></tr>
+<tr class="memdesc:a9c3e7c0e98b4e52924e117c51030cbc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="memitem:a1fc129d7b9dd250be0d466b3450cc815" id="r_a1fc129d7b9dd250be0d466b3450cc815"><td class="memItemLeft"><a id="a1fc129d7b9dd250be0d466b3450cc815" name="a1fc129d7b9dd250be0d466b3450cc815"></a>
+&#160;</td><td class="memItemRight"><b>operator storage_type &amp;</b> () &amp;noexcept</td></tr>
+<tr class="memdesc:a1fc129d7b9dd250be0d466b3450cc815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
+<tr class="memitem:a24c364353e6976cead7dcecebdfa788e" id="r_a24c364353e6976cead7dcecebdfa788e"><td class="memItemLeft"><a id="a24c364353e6976cead7dcecebdfa788e" name="a24c364353e6976cead7dcecebdfa788e"></a>
+&#160;</td><td class="memItemRight"><b>operator storage_type</b> () &amp;&amp;noexcept</td></tr>
+<tr class="memdesc:a24c364353e6976cead7dcecebdfa788e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion to the architecture-specific storage help by wide. <br /></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:a361d5a9fd15f6b2e4a86ec5ae2880e06" id="r_a361d5a9fd15f6b2e4a86ec5ae2880e06"><td class="memItemLeft"><a id="a361d5a9fd15f6b2e4a86ec5ae2880e06" name="a361d5a9fd15f6b2e4a86ec5ae2880e06"></a>
 &#160;</td><td class="memItemRight"><b>wide</b> ()</td></tr>
@@ -193,8 +212,8 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight"><b>wide</b> (<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r) noexcept</td></tr>
 <tr class="memdesc:a4ad46a6f998bb898592da9625181634d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
 <tr class="memitem:aa4cbde97fec5ebba311f78f757384bb3" id="r_aa4cbde97fec5ebba311f78f757384bb3"><td class="memTemplParams" colspan="2"><a id="aa4cbde97fec5ebba311f78f757384bb3" name="aa4cbde97fec5ebba311f78f757384bb3"></a>
-template&lt;detail::range Range&gt; <br />
-requires (std::same_as&lt;<a class="el" href="group__traits_gabfdb81765f4035b90ff37b999cc958a5.html#gabfdb81765f4035b90ff37b999cc958a5">value_type_t</a>&lt;Range&gt;, Type&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, Range&gt;)</td></tr>
+template&lt;_::range Range&gt; <br />
+requires (std::same_as&lt;<a class="el" href="group__traits_gaae6fbba5b56b9fab940a05b444c15e6f.html#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;Range&gt;, Type&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, Range&gt;)</td></tr>
 <tr class="memitem:aa4cbde97fec5ebba311f78f757384bb3 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><b>wide</b> (Range &amp;&amp;r) noexcept</td></tr>
 <tr class="memdesc:aa4cbde97fec5ebba311f78f757384bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <span class="tt">r</span> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
 <tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be" id="r_a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplParams" colspan="2"><a id="a9e8f8635331b18d7ce9e1c28019722be" name="a9e8f8635331b18d7ce9e1c28019722be"></a>
@@ -202,7 +221,7 @@ template&lt;simd_compatible_ptr&lt; wide &gt; Ptr&gt; </td></tr>
 <tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><b>wide</b> (Ptr ptr) noexcept</td></tr>
 <tr class="memdesc:a9e8f8635331b18d7ce9e1c28019722be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
 <tr class="memitem:a31d05c169f1e12cad3c2818ef506261d" id="r_a31d05c169f1e12cad3c2818ef506261d"><td class="memTemplParams" colspan="2"><a id="a31d05c169f1e12cad3c2818ef506261d" name="a31d05c169f1e12cad3c2818ef506261d"></a>
-template&lt;detail::data_source... Ptr&gt; </td></tr>
+template&lt;_::data_source... Ptr&gt; </td></tr>
 <tr class="memitem:a31d05c169f1e12cad3c2818ef506261d template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><b>wide</b> (<a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr</a>&lt; Ptr... &gt; ptr) noexcept</td></tr>
 <tr class="memdesc:a31d05c169f1e12cad3c2818ef506261d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
 <tr class="memitem:a6c8db8292774ad2de873023619cf1456" id="r_a6c8db8292774ad2de873023619cf1456"><td class="memTemplParams" colspan="2"><a id="a6c8db8292774ad2de873023619cf1456" name="a6c8db8292774ad2de873023619cf1456"></a>

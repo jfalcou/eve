@@ -140,7 +140,7 @@ template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">                                       =</div>
-<div class="line">(std::same_as&lt;ABI, x86_512_&gt; &amp;&amp; !detail::avx512_default_64_bytes)</div>
+<div class="line">(std::same_as&lt;ABI, x86_512_&gt; &amp;&amp; !_::avx512_default_64_bytes)</div>
 <div class="line"> ? expected_cardinal_v&lt;T, x86_256_&gt; : expected_cardinal_v&lt;T, ABI&gt;</div>
 </div><!-- fragment --><p>You can find more explanations in the 'frequency scaling tutorial'. This refers to extreme frequency scaling one encounters when working with 64 byte registers on intel. The processor scales frequency drammatically for a substantial period of time. So even if the algorithm itself will run faster the overall perf will go down. Generally speaking, 64 byte registers on intel make sense only for really big data sets. <span class="tt">nofs_cardinal</span> will produce 32 byte registers on avx512. If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES. This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.</p>
 <dl class="section note"><dt>Note</dt><dd>frquency scaling exists for avx2 as well but is generally considered acceptable. For example popular implementations of libc use avx2, so you are very likely already have it. You can always set the width manually if needed.</dd>
