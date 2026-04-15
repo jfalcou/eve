@@ -17,7 +17,8 @@
 TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-   if constexpr(N < 64)
+  constexpr auto N = eve::cardinal_v<T>;
+  if constexpr(N < 64)
   {
     using v_t = eve::element_type_t<T>;
 
