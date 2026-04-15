@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
 {
   using v_t = eve::element_type_t<T>;
   constexpr auto N = eve::cardinal_v<T>;
-  if constexpr(N < 64)
+  if constexpr(N <= 64)
   {
     auto gen =  [](auto x){
       auto g = [x](auto i){ return x.get(i); };
