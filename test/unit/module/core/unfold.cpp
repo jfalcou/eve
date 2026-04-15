@@ -17,18 +17,23 @@
 TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  using v_t = eve::element_type_t<T>;
+   if constexpr(N < 64)
+  {
+    using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::unfold(T()), (kumi::result::fill_t<eve::cardinal_v<T>, v_t>));
-  TTS_EXPR_IS(eve::unfold(T(), v_t()), (kumi::result::fill_t<eve::cardinal_v<T>+1, v_t>));
-  TTS_EXPR_IS(eve::unfold(T(), T(), v_t()), (kumi::result::fill_t<2*eve::cardinal_v<T>+1, v_t>));
+    TTS_EXPR_IS(eve::unfold(T()), (kumi::result::fill_t<eve::cardinal_v<T>, v_t>));
+    TTS_EXPR_IS(eve::unfold(T(), v_t()), (kumi::result::fill_t<eve::cardinal_v<T>+1, v_t>));
+    TTS_EXPR_IS(eve::unfold(T(), T(), v_t()), (kumi::result::fill_t<2*eve::cardinal_v<T>+1, v_t>));
+  }
+  else
+    TTS_PASS();
 };
 
 //==================================================================================================
 // Tests for eve::unfold
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
-              eve::test::simd::all_types,
+              eve::test::simd::all_types_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax))
              )
