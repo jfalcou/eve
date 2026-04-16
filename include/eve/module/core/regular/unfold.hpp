@@ -100,7 +100,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-  namespace detail
+  namespace _
   {
 
     template<typename T, typename ...Ts, callable_options O>
