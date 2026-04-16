@@ -110,7 +110,7 @@ namespace eve
         auto t0 = get<0>(chks);
         auto t1 = get<1>(chks);
         auto v0 = eve::sub(t0, eve::slide_left(t0, t1, eve::index<1>));
-        return kumi::cat(eve::unfold(v0), internal_diff(pop_front(chks)));
+        return kumi::cat(eve::unfold(v0), internal_dif(pop_front(chks)));
       }
       else  if constexpr(SZ == 3)
       {
