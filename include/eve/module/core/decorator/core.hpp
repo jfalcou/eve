@@ -37,7 +37,7 @@ namespace eve
   struct mod_mode             {};
   struct modular_mode         {};
   struct numeric_mode         {};
-  struct drastic_mode       {};
+  struct drastic_mode         {};
   struct p_kind_mode          {};
   struct promote_mode         {};
   struct q_kind_mode          {};

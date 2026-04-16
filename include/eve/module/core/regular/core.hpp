@@ -237,6 +237,7 @@
 #include <eve/module/core/regular/two_sub.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/unfold.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
