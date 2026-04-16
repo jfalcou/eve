@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
+#include <eve/module/core/regular/unfold.hpp>
 
 namespace eve
 {
@@ -21,11 +22,13 @@ namespace eve
     template<std::size_t N, typename... Ts>
     struct result;
 
+    template < size_t N,  size_t SZ> static constexpr size_t sz = SZ > N ? SZ-N : 0;
+
     template<std::size_t N, floating_value... Ts>
-    struct result<N,Ts...> : kumi::result::iota<sizeof...(Ts)-N, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> {};
+    struct result<N,Ts...> : kumi::result::fill<sz<N, sizeof...(Ts)>, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> {};
 
     template<std::size_t N, eve::same_lanes_or_scalar_tuple Tup>
-    struct result<N, Tup> : kumi::result::iota<kumi::size_v<Tup>-N,  eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> {};
+    struct result<N, Tup> : kumi::result::fill<sz<N, kumi::size_v<Tup>>, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> {};
 
     template<eve::same_lanes_or_scalar_tuple Tup>
     EVE_FORCEINLINE typename result<1, Tup>::type constexpr operator()(Tup const& t) const noexcept
@@ -98,14 +101,71 @@ namespace eve
 
   namespace _
   {
+
+    template<eve::non_empty_product_type CHKS> auto internal_dif(CHKS chks)
+    {
+      constexpr auto SZ = CHKS::size();
+      if constexpr(SZ > 3)
+      {
+        auto t0 = get<0>(chks);
+        auto t1 = get<1>(chks);
+        auto v0 = eve::sub(t0, eve::slide_left(t0, t1, eve::index<1>));
+        return kumi::cat(eve::unfold(v0), internal_diff(pop_front(chks)));
+      }
+      else  if constexpr(SZ == 3)
+      {
+        auto t0 = get<0>(chks);
+        auto t1 = get<1>(chks);
+        auto t2 = get<2>(chks);
+        auto v0 = eve::sub(t0, eve::slide_left(t0, t1, eve::index<1>));
+        auto v1 = eve::sub(t1, eve::slide_left(t1, t2, eve::index<1>));
+        auto v2 = eve::sub(t2, eve::slide_left(t2    , eve::index<1>));
+        return eve::unfold(v0, v1, v2);
+      }
+      else if constexpr(SZ == 2)
+      {
+        auto t0 = get<0>(chks);
+        auto t1 = get<1>(chks);
+        auto v0 = eve::sub(t0, eve::slide_left(t0, t1, eve::index<1>));
+        auto v1 = eve::sub(t1, eve::slide_left(t1    , eve::index<1>));
+        return eve::unfold(v0, v1);
+      }
+      else //if constexpr(SZ == 1)
+      {
+        auto t0 = get<0>(chks);
+        return eve::unfold(eve::sub(t0, eve::slide_left(t0, eve::index<1>)));
+      }
+    }
+
+    template<eve::non_empty_product_type PT>
+    EVE_NOINLINE constexpr auto dif(PT const& x) noexcept
+    requires(eve::scalar_value<kumi::apply_traits_t<eve::common_value, PT>>)
+    {
+      using r_t = kumi::apply_traits_t<eve::common_value, PT>;
+      constexpr auto S = PT::size();
+      constexpr auto nblanes = eve::cardinal_v<eve::wide<r_t>>;
+      constexpr auto remain = S % nblanes;
+      constexpr auto del = remain == 0 ? 0 :nblanes-remain;
+      auto chks = eve::as_wides(eve::zero(eve::as<r_t>()), x);
+      auto z = internal_dif(chks);
+      constexpr auto sz = kumi::size_v<decltype(z)>;
+      return kumi::extract(z, kumi::index_t<0>(), kumi::index_t<sz-del-1>());
+    }
+
+
     template<eve::non_empty_product_type PT , callable_options O>
     EVE_NOINLINE constexpr auto
     diff_(EVE_REQUIRES(cpu_), O const &, PT const& x) noexcept
     requires(!O::contains(widen))
     {
       using r_t = kumi::apply_traits_t<common_value, PT>;
-      auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
-      return kumi::map(eve::sub, kumi::pop_back(xx), kumi::pop_front(xx));
+      if constexpr(eve::scalar_value<r_t>)
+        return  dif(x);
+      else
+      {
+        auto xx =  kumi::map([](auto m){ return r_t(m); }, x);
+        return kumi::map(eve::sub, kumi::pop_back(xx), kumi::pop_front(xx));
+      }
     }
 
     template<eve::non_empty_product_type PT , callable_options O>
