@@ -11,7 +11,7 @@
 // version of operations to implement a case-insensetive string comparison.
 //
 // NOTE: if we replace `eve::algo::equal` with `eve::algo::mismatch` with a modification
-//       we can get lexicograpgical case-insesetive compare.
+//       we can get lexicograpgical case-insensitive compare.
 
 #include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>

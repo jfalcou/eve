@@ -63,8 +63,8 @@ namespace eve
   //!   @tparam Opt   The options to check for support
   //! @}
   //====================================================================================================================
-  template<auto Func, auto... Opt>
-  inline constexpr bool supports_options = requires{ (Func[Opt], ...); };
+  template<typename Func, auto... Opt>
+  inline constexpr bool supports_options = requires{ (std::declval<Func>()[Opt], ...); };
 }
 
 //======================================================================================================================
