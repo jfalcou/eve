@@ -16,5 +16,10 @@ int main()
   std::cout << "eve::cumsum[eve::saturated](ta)     " << eve::cumsum[eve::saturated](ta)    << std::endl;
   std::cout << "eve::cumsum(ta)                     " << eve::cumsum(ta)                    << std::endl;
   std::cout << "eve::cumsum[eve::widen](ta)         " << eve::cumsum[eve::widen](ta)        << std::endl;
+  using wf_t = eve::wide<float>;
+  auto e = wf_t([](auto i,  auto){return eve::sqr(float(i)); });
+  kumi::tuple wt{wf_t(e), 2.0f, 30000.0f, 10000.0f};
+  std::cout << "wt                                  " << wt                                 << std::endl;
+  std::cout << "eve::cumsum(wt)                     " << eve::cumsum(wt)                    << std::endl;
 
 };

@@ -16,7 +16,7 @@ namespace eve::_
   {
     using r_t = kumi::apply_traits_t<eve::common_value, PT>;
     using a_t = std::array<r_t, PT::size()>;
-    return std::bit_cast<a_t>(t);
+    return std::bit_cast<a_t>(kumi::map([](auto m){return r_t(m); }, t));
   };
 
   // return a tuple containing the elements of the input tuple

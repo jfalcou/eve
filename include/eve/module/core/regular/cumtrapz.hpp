@@ -13,6 +13,7 @@
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/regular/average.hpp>
 #include <eve/module/core/regular/cumsum.hpp>
+#include <eve/module/core/detail/tuple_array_utils.hpp>
 #include <iostream>
 
 namespace eve
@@ -43,6 +44,34 @@ namespace eve
       return EVE_DISPATCH_CALL(t);
     }
 
+    template<floating_value X, non_empty_product_type Y>
+    EVE_FORCEINLINE constexpr tuple_result<Y>
+    operator()(X dx, Y y) const noexcept
+    {
+      return EVE_DISPATCH_CALL(dx, y);
+    }
+
+    template<non_empty_product_type X, non_empty_product_type Y>
+    EVE_FORCEINLINE constexpr tuple_result<Y>
+    operator()(X x, Y y) const noexcept
+    {
+      return EVE_DISPATCH_CALL(x, y);
+    }
+
+    template<std::invocable F, non_empty_product_type X>
+    EVE_FORCEINLINE constexpr tuple_result<X>
+    operator()(F f, X x) const noexcept
+    {
+      return EVE_DISPATCH_CALL(f, x);
+    }
+
+    template<std::invocable F, value ...Ts>
+    EVE_FORCEINLINE constexpr result<Ts...>
+    operator()(F f, Ts ... ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(f, ts...);
+    }
+
     EVE_CALLABLE_OBJECT(cumtrapz_t, cumtrapz_);
   };
 
@@ -67,15 +96,15 @@ namespace eve
 //!      // Regular overloads
 //!      constexpr auto trapz(eve::non_empty_product_type auto const& x,
 //!                           eve::non_empty_product_type auto const& y)                   noexcept; // 1
-//!      constexpr auto trapz(floating_value auto ... ys)                                   noexcept; // 2
+//!      constexpr auto trapz(floating_value auto ... ys)                                  noexcept; // 2
 //!      constexpr auto trapz(eve::non_empty_product_type auto const& y)                   noexcept; // 2
 //!      constexpr auto trapz(floating_value h,
 //!                           eve::non_empty_product_type auto const& y)                   noexcept; // 2
-//!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                 noexcept; // 4
+//!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                noexcept; // 4
 //!      constexpr auto trapz(eve::invocable f, eve::non_empty_product_type auto const& x) noexcept; // 4
 //!
 //!      // Semantic options
-//!      constexpr auto trapz[widen](/*any of the above overloads*/)                        noexcept; // 4
+//!      constexpr auto trapz[widen](/*any of the above overloads*/)                       noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -107,7 +136,7 @@ namespace eve
   {
 
     template <eve::product_type PT, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & , PT tup) noexcept
+    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
@@ -115,24 +144,32 @@ namespace eve
       {
         if constexpr(PT::size() == 0)
           return kumi::make_tuple();
+        else if constexpr(O::contains(widen))
+          return cumsum[o.drop(widen)](upg(tup));
         else
         {
-          using c_t = kumi::apply_traits_t<eve::common_value, PT>;
-          using r_t = eve::upgrade_if_t<O, c_t>;
-          auto constexpr SZ = PT::size();
-          using a_t = std::array<r_t, SZ>;
-          auto cvt =  []<typename Y>(Y y){
-            if constexpr(O::contains(widen)) return upgrade(r_t(y));
-            else                             return r_t(y);
-          };
-          a_t a =  std::bit_cast<a_t>(tup);
-          a_t b;
-          b[0] = 0;
-          for(std::size_t i=1; i < SZ; ++i) b[i] = b[i-1]+eve::average(a[i-1], a[i]);
-          return (std::bit_cast<PT>(b));
+          using r_t = kumi::apply_traits_t<eve::common_value, PT>;
+          auto w = kumi::windows<2>(tup);
+          auto r = kumi::map(eve::average, w);
+          return push_front(eve::cumsum(r), r_t(0));
         }
       }
     }
+
+    template <floating_value DX, eve::product_type PT, callable_options O>
+    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, DX dx, PT tup) noexcept
+    {
+      if constexpr(PT::size() == 0)
+        return kumi::make_tuple();
+      else
+      {
+//        using r_t = common_value_t<kumi::apply_traits_t<eve::common_value, PT>, DX>;
+        auto dxtup =  kumi::map([dx](auto m){return dx*m; }, tup);
+        return cumtrapz[o](dxtup);
+       }
+    }
+
+
 
     template<value T, value ...Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
