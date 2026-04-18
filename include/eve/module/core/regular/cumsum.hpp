@@ -11,11 +11,12 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
+#include <eve/module/core/detail/tuple_array_utils.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct cumsum_t : callable<cumsum_t, Options, widen_option>
+  struct cumsum_t : callable<cumsum_t, Options, widen_option, saturated_option>
   {
     template<typename T>
     using return_type = eve::element_type_t<eve::upgrade_if_t<Options,T>>;
@@ -81,7 +82,7 @@ namespace eve
 //!     1. return a kumi tuple of the values of the cumulated sums of all `xs` converted to
 //!         the element type of the common value of the `xs`.
 //!     2. same as 1., using the tuple elements.
-//!     3. same of 1. or 2., but upgrading the elements of the result.
+//!     3. same of 1. or 2., but the computation is made on upgraded elements.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/cumsum.cpp}
@@ -99,18 +100,14 @@ namespace eve
     {
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
+      else if constexpr(O::contains(widen))
+        return cumsum[o.drop(widen)](upg(tup));
       else
       {
-        using r_t = kumi::apply_traits_t<eve::common_value, PT>;
-        auto cvt =  []<typename Y>(Y y){
-          if constexpr(O::contains(widen)) return upgrade(r_t(y));
-          else                             return r_t(y);
-        };
-        auto htup = kumi::map([cvt](auto i){return cvt(i); }, tup);
-        PT htupl =  kumi::pop_back(kumi::push_front(htup, r_t(0)));
-        auto doit = [o](auto &m, auto ml) {  m += ml; };
-        kumi::for_each(doit, htup, htupl);
-        return htup;
+        auto constexpr SZ = PT::size();
+        auto a = to_array(tup);
+        for(std::size_t i=1; i < SZ; ++i) a[i] = add[o](a[i-1], a[i]);
+        return to_tuple(a);
       }
     }
 
