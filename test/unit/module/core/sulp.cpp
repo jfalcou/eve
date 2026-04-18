@@ -40,11 +40,12 @@ TTS_CASE_WITH("Check behavior of eve::sulp(simd)",
       TTS_ULP_EQUAL(eve::sulp[eve::harrisson](eve::inf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
       TTS_ULP_EQUAL(eve::sulp[eve::harrisson](eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
     }
-    using e_t = eve::element_type_t<T>;
-    constexpr e_t nbmb(eve::nbmantissabits(eve::as<e_t>()));
-    constexpr e_t mexp(eve:: minexponent(eve::as<e_t>())-1);
-
+    
     auto ulp = [](auto x){
+      using e_t = eve::element_type_t<T>;
+      constexpr e_t nbmb(eve::nbmantissabits(eve::as<e_t>()));
+      constexpr e_t mexp(eve:: minexponent(eve::as<e_t>())-1);
+
       return eve::if_else(eve::is_denormal(x), T(eve::exp2(mexp-nbmb)), eve::exp2(eve::floor(eve::log2(eve::abs(x)))-nbmb));
     };
     TTS_IEEE_EQUAL(eve::sulp(T(1)), ulp(T(1)));

@@ -139,10 +139,10 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
   {
     std::ptrdiff_t numTimesCalled = 0;
     auto           hasShuffle     = just_shuffle_test(
-        [&numTimesCalled]<std::ptrdiff_t... i>(eve::pattern_t<i...>,
+        [&numTimesCalled]<std::ptrdiff_t... i, eve::plain_simd_value X>(eve::pattern_t<i...>,
                                                eve::fixed<1>,
-                                               eve::plain_simd_value auto x,
-                                               std::same_as<decltype(x)> auto...)
+                                               X x,
+                                               std::same_as<X> auto...)
         {
           ++numTimesCalled;
           return x;
@@ -341,12 +341,13 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
       auto shuffle = eve::_::make_shuffle_v2(
           [&]<typename G, typename U>(auto p, G, U x, auto...)
           {
-            constexpr std::ptrdiff_t cardinal        = U::size() / G {}();
-            constexpr std::ptrdiff_t end_of_original = T::size() * sizeof(eve::element_type_t<T>)
-                                                       / sizeof(eve::element_type_t<U>) / G {}();
-
+            constexpr std::ptrdiff_t cardinal = U::size() / G {}();
+            
             auto expected = [](int i, int)
             {
+              constexpr std::ptrdiff_t end_of_original = T::size() * sizeof(eve::element_type_t<T>)
+                                                       / sizeof(eve::element_type_t<U>) / G {}();
+
               std::ptrdiff_t instead_of_na =
                   (free_masking && eve::arithmetic_value<U>) ? eve::we_ : eve::na_;
               if( i == 0 ) return instead_of_na;
