@@ -19,7 +19,7 @@ namespace eve
   struct cumsum_t : callable<cumsum_t, Options, widen_option, saturated_option>
   {
     template<typename T>
-    using return_type = eve::element_type_t<eve::upgrade_if_t<Options,T>>;
+    using return_type = eve::upgrade_if_t<Options,T>;
 
     template<value... Ts>
     using result = kumi::result::fill_t<sizeof...(Ts), return_type<eve::common_value_t<Ts...>>>;
