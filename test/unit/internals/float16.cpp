@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#ifdef SPY_SUPPORTS_FP16_TYPE && !defined(_MSC_VER)
+#if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(_MSC_VER)
   // if the compiler provides fp16 softfloat support, use it to check the fp16 to fp32 routine
   TTS_CASE("emulated float16 conversion - f16 to f32")
   {
