@@ -77,15 +77,16 @@ namespace eve
 //!      // Regular overloads
 //!      constexpr auto trapz(eve::non_empty_product_type auto const& x,
 //!                           eve::non_empty_product_type auto const& y)                   noexcept; // 1
-//!      constexpr auto trapz(floating_value auto ... ys)                                   noexcept; // 2
+//!      constexpr auto trapz(floating_value auto ... ys)                                  noexcept; // 2
 //!      constexpr auto trapz(eve::non_empty_product_type auto const& y)                   noexcept; // 2
 //!      constexpr auto trapz(floating_value h,
 //!                           eve::non_empty_product_type auto const& y)                   noexcept; // 2
-//!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                 noexcept; // 4
-//!      constexpr auto trapz(eve::invocable f, eve::non_empty_product_type auto const& x) noexcept; // 4
+//!      constexpr auto trapz(eve::invocable f, floating_value auto ... xs)                noexcept; // 3
+//!      constexpr auto trapz(eve::invocable f, eve::non_empty_product_type auto const& x) noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto trapz[widen](/*any of the above overloads*/)                        noexcept; // 4
+//!      constexpr auto trapz[widen](/*any of the above overloads*/)                       noexcept; // 5
+//!      constexpr auto trapz[kahan](/*any of the above overloads*/)                       noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -99,18 +100,20 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      * 1. Computes elementwise the integral of the piecewise linear function defined by \$f(x_i) = y_i\f$ (trapezoidal rule)
-//!      * 2. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference h (1 if h is omitted).
-//!      * 3. the missing `y` parameter is assumed equal to the call of f applied to the x elements
-//!      * 3. the tuple `x` must have its elements sorted in increasing order.
+//!       1. Computes elementwise the integral of the piecewise linear function defined by \$f(x_i) = y_i\f$ (trapezoidal rule)
+//!       2. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference h (1 if h is omitted).
+//!       3. the missing `y` parameter is assumed equal to the call of f applied to the x elements
+//!       4. the computation is made with the upgraded types
+//!       5. Internal summation use kahan algorithm for better accuracy
 //!
 //!  @note definition of `f` or of `y` ?
 //!      - If `f` is a paramater the `y` values are defined by  \$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
 //!      - If `y` (or `ys...`) is a parameter `f` is defined by  \$f(x_i) = y_i\f$. and the values of \f$x_i\f$ are not needed
 //!        as thet are equally spaced with space `h` (defaulted to one).
+//!      - If `x` (or `xs ...`) is a parameter its must be sorted in increasing order.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia taxicab norm](https://en.wikipedia.org/wiki/Norm_(mathematics))
+//!   *  [Wikipedia trapezoidal rule](https://en.wikipedia.org/wiki/Trapezoidal_rule)
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/trapz.cpp}
 //================================================================================================
