@@ -406,7 +406,7 @@ jobs:
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }} 
         run: |
           mkdir build && cd build
-          cmake -G "Visual Studio 17 2022" -A x64 .. matrix.cfg.toolchain -DEVE_USE_PCH=OFF -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+          cmake -G "Visual Studio 17 2022" -A x64 .. matrix.cfg.toolchain -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
 
       - name: Arch Tests
         run: |
