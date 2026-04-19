@@ -15,6 +15,7 @@
 
 namespace eve
 {
+
   template<typename Options>
   struct two_div_approx_t : elementwise_callable<two_div_approx_t, Options>
   {
