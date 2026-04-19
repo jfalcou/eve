@@ -85,7 +85,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
   [[maybe_unused]] inline constexpr auto modular          = ::rbr::flag( modular_mode{}         );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
-  [[maybe_unused]] inline constexpr auto drastic        = ::rbr::flag( drastic_mode{}       );
+  [[maybe_unused]] inline constexpr auto drastic          = ::rbr::flag( drastic_mode{}         );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
