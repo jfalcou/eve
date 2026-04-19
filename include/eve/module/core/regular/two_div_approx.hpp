@@ -12,7 +12,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/module/core/regular/fms.hpp>
-#include <iostream>
 
 namespace eve
 {
