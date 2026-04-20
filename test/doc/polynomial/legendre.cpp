@@ -26,4 +26,22 @@ int main()
   std::cout << "-> legendre[spherical](n, z, xd)     = " << eve::legendre[eve::spherical](n, z, xd) << '\n';
   std::cout << "-> legendre[associated(n, z, xd)     = " << eve::legendre[eve::associated](n, z, xd) << '\n';
   std::cout << "-> legendre[condon_shortley(n, z, xd = " << eve::legendre[eve::condon_shortley](n, z, xd) << '\n';
+
+  using T = eve::wide<double>;
+  T a0([](auto i, auto c){return double(i)/c; });
+  std::cout << a0 << std::endl; 
+  auto cse__legendrev = [](auto m, auto n, auto x)
+  { return eve::legendre[eve::condon_shortley](m, n, x); };
+
+  for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+  {
+    for( unsigned int ne = 0; ne < 3; ++ne )
+    {
+      for( unsigned int p = 0; p < 3; ++p )
+      {
+        std::cout << cse__legendrev(ne, p, a0.get(0))<< '\n';
+      }
+    }
+  }
+
 }
