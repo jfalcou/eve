@@ -107,7 +107,7 @@ namespace eve
         auto constexpr SZ = PT::size();
         auto a = to_array(tup);
         for(std::size_t i=1; i < SZ; ++i) a[i] = add[o](a[i-1], a[i]);
-        return to_tuple(a);
+        return kumi::to_tuple(a);
       }
     }
 
