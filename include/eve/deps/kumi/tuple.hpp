@@ -2704,7 +2704,7 @@ namespace kumi::function
     {
       return function::foldable{invoke(c, f.value)};
     }
-    constexpr auto operator()() const noexcept { return value; }
+    KUMI_ABI constexpr decltype(auto) operator()() const noexcept { return value; }
   };
   template<typename F, typename V> struct scannable
   {
