@@ -31,11 +31,4 @@ namespace eve::_
       return kumi::map([](auto m){return upgrade(r_t(m)); }, t);
     }
   };
-
-  // return a tuple containing the elements of the input array
-  template <eve::value T, auto N> auto to_tuple(std::array<T, N> a)
-  {
-    using f_t = kumi::result::fill_t<N, T>;
-    return std::bit_cast<f_t>(a);
-  };
 }

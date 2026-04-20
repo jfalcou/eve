@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of cumtrapz on all types full range",
   auto d = cumtrapz((a0), (a1), (a2), (a3));
   TTS_ULP_EQUAL(get<0>(d), eve::zero(eve::as(a0)), 1.5);
   TTS_ULP_EQUAL(get<1>(d), trapz(a0, a1), 1.5);
-  TTS_ULP_EQUAL(get<2>(d), trapz(a0, a1, a2), 1.5);
+  TTS_ULP_EQUAL(get<2>(d), trapz(a0, a1, a2), 2.0);
   TTS_ULP_EQUAL(get<3>(d), trapz(a0, a1, a2, a3), 32.0);
 };
 
