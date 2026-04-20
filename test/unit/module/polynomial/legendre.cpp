@@ -11,8 +11,11 @@
 #include <eve/module/core.hpp>
 #include <eve/module/polynomial.hpp>
 
+#if __has_include(<boost/math/special_functions/airy.hpp>)
 #include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
+#define EVE_HAS_BOOST
+#endif
 
 //==================================================================================================
 //== Types tests
@@ -29,6 +32,8 @@ TTS_CASE_TPL("Check return types of legendre on wide", eve::test::simd::ieee_rea
   TTS_EXPR_IS(eve::legendre(wi_t(), v_t()), T);
 };
 
+
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 //== legendre tests
 //==================================================================================================
@@ -130,6 +135,7 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
     TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), tts::map(boost_legendrev, i0, j0, a0), 100);
   }
 };
+#endif
 
 /////////////spherical legendre
 TTS_CASE_WITH("Check behavior of spherical legendre on wide",
@@ -172,4 +178,3 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
   TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), tts::map(boost_slegendre, i0, j0, a0), 0.01);
 #endif
 };
-
