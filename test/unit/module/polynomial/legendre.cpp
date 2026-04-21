@@ -11,7 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/polynomial.hpp>
 
-#if __has_include(<boost/math/special_functions/airy.hpp>)
+#if __has_include(<boost/math/special_functions/legendre.hpp>)
 #include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
 #define EVE_HAS_BOOST
@@ -135,7 +135,6 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
     TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), tts::map(boost_legendrev, i0, j0, a0), 100);
   }
 };
-#endif
 
 /////////////spherical legendre
 TTS_CASE_WITH("Check behavior of spherical legendre on wide",
@@ -180,3 +179,4 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
 #endif
   }
 };
+#endif
