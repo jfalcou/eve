@@ -146,7 +146,7 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
   <typename T, typename I>(T a0, I i0, I j0)
 {
   using e_t = eve::element_type_t<T>;
-  if constexpr-std::same_as(e_t, double)
+  if constexpr(std::same_as(e_t, double))
   {
     auto eve__slegendre = [](auto m, auto n, auto x) { return eve::legendre[eve::spherical](m, n, x); };
 
