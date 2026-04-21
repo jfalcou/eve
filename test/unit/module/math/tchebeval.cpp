@@ -14,7 +14,10 @@
 #include <cmath>
 #include <vector>
 
+#if __has_include(<boost/math/special_functions/chebyshev.hpp>)
 #include <boost/math/special_functions/chebyshev.hpp>
+#define EVE_HAS_BOOST
+#endif
 
 //==================================================================================================
 //== Types tests
@@ -35,6 +38,7 @@ TTS_CASE_TPL("Check return types of tchebeval on wide", eve::test::simd::ieee_re
   TTS_EXPR_IS(eve::tchebeval(v_t(), v_t(), v_t()), v_t);
 };
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 //== tchebeval tests
 //==================================================================================================
@@ -82,3 +86,4 @@ TTS_CASE_WITH("Check behavior of tchebeval on wide",
   TTS_ULP_EQUAL((tchebeval)(v_t(0.70), v_t(-1), v_t(1), c3), bcl3(v_t(0.70)), 0.5);
   TTS_ULP_EQUAL((tchebeval)(v_t(-0.70), v_t(-1), v_t(1), c3), bcl3(v_t(-0.70)), 2.0);
 };
+#endif

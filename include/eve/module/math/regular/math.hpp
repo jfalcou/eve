@@ -78,3 +78,4 @@
 #include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/tanh.hpp>
+#include <eve/module/math/regular/tchebeval.hpp>

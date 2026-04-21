@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-
+#include <eve/module/polynomial/detail_/tchebeval_impl.hpp>
 namespace eve
 {
   template<typename Options>
@@ -99,3 +99,36 @@ namespace eve
 
   namespace _
   {
+
+    //================================================================================================
+    //== Tchebeval with ranges
+    //================================================================================================
+    template<value T0, range R>
+    EVE_FORCEINLINE constexpr auto
+    tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, R const& r)
+      requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+    {
+      return _::tchebeval_impl(regular_type(), xx, r);
+    }
+
+    template<value T0, value T1, value T2, range R>
+    EVE_FORCEINLINE constexpr auto
+    tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, T1 a, T2 b, R const& r)
+      requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+    {
+      return _::tchebeval_impl(regular_type(), xx, a, b, r);
+    }
+
+    //================================================================================================
+    //== N parameters
+    //================================================================================================
+
+    template<value T0, value... Ts>
+    EVE_FORCEINLINE constexpr auto
+    tchebeval_(EVE_SUPPORTS(cpu_), T0 x, Ts... args)
+    {
+      return tchebeval_impl(regular_type(), x, args...);
+    }
+
+  }
+}
