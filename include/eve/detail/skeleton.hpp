@@ -157,7 +157,7 @@ namespace eve::_
   }
 
   template<typename Func, typename... Ts>
-  /*EVE_FORCEINLINE*/ auto aggregate(Func f, Ts... ts)
+  EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
   {
     if constexpr (has_same_replication<Ts...>())
     {

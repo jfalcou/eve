@@ -245,7 +245,7 @@ namespace eve::_
   }
 
   template<callable_options O, _::data_source DS, typename Wide>
-  /*SPY_DISABLE_SANITIZERS*/ Wide load_unsafe_(O const& opts, DS src, as<Wide> tgt) noexcept
+  SPY_DISABLE_SANITIZERS Wide load_unsafe_(O const& opts, DS src, as<Wide> tgt) noexcept
   {
     if constexpr (spy::supports::sanitizers_status)
     {
