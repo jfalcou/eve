@@ -112,7 +112,6 @@ namespace eve
       T ab = x;
       T ba = eve::swap_adjacent(ab, g);
       auto [aa, bb] = eve::minmax(less)(ab, ba);
-
       x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
 
       if constexpr (G > 1) return bitonic_merge_impl(x, less, full, lane<G / 2>);
