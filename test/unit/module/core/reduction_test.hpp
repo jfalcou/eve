@@ -60,7 +60,7 @@ struct LogicalTestRunner : TestRunner<TruthFn>
     {
       if constexpr (SupportsTopBits) TTS_EQUAL(callable(eve::top_bits{v}), manual_res);
 
-      if constexpr (eve::supports_options<callable, eve::splat>)
+      if constexpr (eve::supports_options<Callable, eve::splat>)
       {
         auto splat_res = callable[eve::splat](v);
         for (std::ptrdiff_t i = 0; i < T::size(); ++i)
@@ -83,7 +83,7 @@ struct LogicalTestRunner : TestRunner<TruthFn>
     {
       if constexpr (SupportsTopBits)  TTS_EQUAL(callable[cx](eve::top_bits{v}), manual_res);
 
-      if constexpr (eve::supports_options<callable, eve::splat>)
+      if constexpr (eve::supports_options<Callable, eve::splat>)
       {
         auto splat_res = callable[eve::splat][cx](v);
         for (std::ptrdiff_t i = 0; i < T::size(); ++i)

@@ -167,7 +167,7 @@ TTS_CASE("identites and 0s masking integration tests")
 
   if( !free_masking )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
 

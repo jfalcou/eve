@@ -386,36 +386,78 @@ jobs:
         run: cd build && ctest --output-on-failure -j 2 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
-  ## Windows Targets - Deactivated for now
+  ## Windows Targets
   ##################################################################################################
-  # msvc:
-  #   runs-on: [windows-2022]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { mode: Debug, options: "-DEVE_NO_FORCEINLINE"}
+  windows:
+    runs-on: [windows-2022]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
+        - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL"}
+  
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }} 
+        run: |
+          mkdir build && cd build
+          cmake -G "Visual Studio 17 2022" -A x64 .. matrix.cfg.toolchain -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
 
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
-  #     - name: Running CMake for MSVC ${{ matrix.cfg.mode }} ${{ matrix.cfg.options }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake -G "Visual Studio 17 2022" -A x64 .. -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
-  #     - name: Compiling Unit Tests
-  #       run:  |
-  #         cd build
-  #         cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }} --parallel 2
-  #         cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }} --parallel 2
-  #         cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }} --parallel 2
-  #     - name: Running Tests
-  #       run: |
-  #         cd build
-  #         ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
-  #         ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
-  #         ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
+      - name: Arch Tests
+        run: |
+          cd build
+          cmake --build . --target unit.arch.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
+          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
 
+      - name: API Tests
+        run: |
+          cd build
+          cmake --build . --target unit.api.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.api.*.exe              
+
+      - name: Bessel, Combinatorial, Elliptic and Polynomial Tests
+        run: |
+          cd build
+          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.bessel.exe          --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.combinatorial.exe   --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.elliptic.exe        --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.polynomial.exe      --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.bessel.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.combinatorial.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.elliptic.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.polynomial.*.exe
+
+      - name: Core Tests
+        run: |
+          cd build
+          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.core.exe            --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.internals.exe       --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.meta.exe            --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.core.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
+
+      - name: Math Tests
+        run: |
+          cd build
+          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
+
+      #- name: Memory and special Tests
+      #  run: |
+      #    cd build
+      #    cmake --build . --target clean --config ${{ matrix.cfg.mode }}
+      #    cmake --build . --target unit.memory.exe      --config ${{ matrix.cfg.mode }} --parallel 2
+      #    cmake --build . --target unit.special.exe     --config ${{ matrix.cfg.mode }} --parallel 2
+      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.memory.*.exe
+      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.special.*.exe
+    
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################

@@ -62,11 +62,11 @@ namespace eve::_
       using e_t = element_type_t<T>;
 
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
+      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.data()));
 
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});
-      std::memcpy((void *)(dst + offset), (void *)(storage.begin() + offset), sizeof(e_t) * count);
+      std::memcpy((void *)(dst + offset), (void *)(storage.data() + offset), sizeof(e_t) * count);
     }
   }
 

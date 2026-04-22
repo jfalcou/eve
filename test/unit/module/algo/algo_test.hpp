@@ -13,6 +13,7 @@
 #include <eve/module/algo.hpp>
 
 #include <vector>
+#include <numeric>
 
 namespace algo_test
 {

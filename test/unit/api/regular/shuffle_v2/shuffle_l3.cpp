@@ -41,7 +41,7 @@ void
 run(auto pattern)
 {
   if constexpr( eve::current_api >= api ) { run_any_api<T, N, G>(pattern); }
-  else { TTS_PASS(); }
+  else { TTS_PASS(""); }
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
@@ -63,7 +63,7 @@ void
 run2(auto pattern)
 {
   if constexpr( eve::current_api >= api ) { run2_any_api<T, N, G>(pattern); }
-  else { TTS_PASS(); }
+  else { TTS_PASS(""); }
 }
 
 // named common patterns ------------------------------
@@ -98,7 +98,7 @@ TTS_CASE("and 0s")
   if constexpr( eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv
                 || eve::current_api >= eve::sve )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   run_any_api_expected_cardinal<std::uint8_t>(
@@ -118,7 +118,7 @@ TTS_CASE("full table lookup with 0s")
                 && !(eve::current_api >= eve::sve)                               //
   )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   run_any_api_expected_cardinal<std::uint8_t>(
@@ -234,7 +234,7 @@ TTS_CASE("_mm_blendv_epi8")
 {
   if constexpr( eve::current_api >= eve::avx512 )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
 

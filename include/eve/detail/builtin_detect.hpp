@@ -18,7 +18,7 @@ namespace eve::_
 
   auto inline builtin_bswap32(auto x) noexcept
   {
-    if constexpr(spy::compiler== spy::msvc_) return _bswap_ulong(x);
+    if constexpr(spy::compiler== spy::msvc_) return _byteswap_ulong(x);
     else return __builtin_bswap32(x);
   }
 
@@ -30,7 +30,7 @@ namespace eve::_
 
   auto inline builtin_bswap64(auto x) noexcept
   {
-    if constexpr(spy::compiler== spy::msvc_) return _bswap_uint64(x);
+    if constexpr(spy::compiler== spy::msvc_) return _byteswap_uint64(x);
     else return __builtin_bswap64(x);
   }
 

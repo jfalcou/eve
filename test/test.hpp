@@ -45,7 +45,7 @@ namespace tts
   double absolute_distance(T const &l, U const &r);
 
   template<>
-  double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
+  inline double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
   {
     return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
   }

@@ -41,7 +41,7 @@
         &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  \
         &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  )
 #    undef SPY_SIMD_IS_X86_AVX512
-#    undef SPY_SIMD_DETECTED ::spy::_::simd_version::avx512_
+#    undef SPY_SIMD_DETECTED
 #    define EVE_INCOMPLETE_AVX512_SUPPORT
 #    define SPY_SIMD_IS_X86_AVX2
 #    define SPY_SIMD_DETECTED ::spy::_::simd_version::avx2_
