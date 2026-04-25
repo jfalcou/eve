@@ -26,6 +26,7 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(b...);
     }
+
     template<eve::integral_value T0, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, Ts...>)
     constexpr EVE_FORCEINLINE
@@ -33,6 +34,7 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(convert(a, as<element_type_t<common_value_t<Ts...>>>{}), b...);
     }
+
     template<eve::integral_value T0, eve::integral_value T1, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, T1, Ts...>)
     constexpr EVE_FORCEINLINE
@@ -93,7 +95,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n`, `m`, `ln`, `lnm1` : [integral positive arguments](@ref eve::integral_value).
-//!     * `x` : [floating argument](@ref eve::floating_value).
+//!     * `x` : [floating argument](@ref eve::floating_value). (prefer double elements for accuracy)
 //!
 //!    **Return value**
 //!

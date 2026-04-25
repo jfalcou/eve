@@ -11,8 +11,11 @@
 #include <eve/module/core.hpp>
 #include <eve/module/polynomial.hpp>
 
+#if __has_include(<boost/math/special_functions/legendre.hpp>)
 #include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
+#define EVE_HAS_BOOST
+#endif
 
 //==================================================================================================
 //== Types tests
@@ -29,6 +32,8 @@ TTS_CASE_TPL("Check return types of legendre on wide", eve::test::simd::ieee_rea
   TTS_EXPR_IS(eve::legendre(wi_t(), v_t()), T);
 };
 
+
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 //== legendre tests
 //==================================================================================================
@@ -73,7 +78,7 @@ TTS_CASE_WITH("Check behavior of legendre q on wide",
 <typename T, typename I>(T const& a0, I const& i0)
 {
   using v_t           = eve::element_type_t<T>;
-  auto eve__legendrev = [](auto n, auto x) { return eve::q_kind(eve::legendre)(n, x); };
+  auto eve__legendrev = [](auto n, auto x) { return eve::legendre[eve::q_kind](n, x); };
   for( unsigned int n = 0; n < 5; ++n )
   {
     auto boost_legendre = [&](auto i, auto) { return boost::math::legendre_q(n, a0.get(i)); };
@@ -107,34 +112,28 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::between(-1.0, 1.0),
                             tts::as_integer(tts::ramp(0)),
-                            tts::as_integer(tts::reverse_ramp(0))))
-<typename T, typename I>(T a0, I i0, I j0)
+                            tts::as_integer(tts::reverse_ramp(0)))
+             )
+<typename T, typename I>(T a0, I i0 , I j0)
 {
-  auto cse__legendrev = [](auto m, auto n, auto x)
-  { return eve::condon_shortey(eve::legendre)(m, n, x); };
-  auto boost_legendrev = [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
-
-#if defined(__cpp_lib_math_special_functions)
-  auto eve__legendrev = [](auto m, auto n, auto x) { return eve::legendre(m, n, x); };
-  auto std_assoc      = [](auto m, auto n, auto x) { return std::assoc_legendre(m, n, x); };
-#endif
-
-  for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+  if constexpr(std::same_as<eve::element_type_t<T>,  double>)
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
+    auto cse__legendrev = [](auto m, auto n, auto x)
+      { return eve::legendre[eve::condon_shortley](m, n, x); };
+    auto boost_legendrev = [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
+
+    for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
     {
-      for( unsigned int p = 0; p < eve::cardinal_v<I>; ++p )
+      for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
       {
-        TTS_RELATIVE_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 0.01);
+        for( unsigned int p = 0; p < eve::cardinal_v<I>; ++p )
+        {
+          TTS_RELATIVE_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 0.01);
+        }
       }
     }
+    TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), tts::map(boost_legendrev, i0, j0, a0), 100);
   }
-
-#if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), tts::map(std_assoc, j0, i0, a0), 100);
-#endif
-
-  TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), tts::map(boost_legendrev, i0, j0, a0), 100);
 };
 
 /////////////spherical legendre
@@ -143,38 +142,41 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
               tts::generate(tts::between(0, 3.14159),
                             tts::as_integer(tts::ramp(0)),
                             tts::as_integer(tts::reverse_ramp(0))))
-<typename T, typename I>(T a0, I i0, I j0)
+  <typename T, typename I>(T a0, I i0, I j0)
 {
   using e_t = eve::element_type_t<T>;
-
-  auto eve__slegendre = [](auto m, auto n, auto x) { return eve::sph(eve::legendre)(m, n, x); };
-
-#if defined(__cpp_lib_math_special_functions)
-  auto std_slegendre = [](auto m, auto n, auto x) -> e_t { return std::sph_legendre(m, n, x); };
-#else
-  auto boost_slegendre = [](auto m, auto n, auto x) -> e_t
-  { return boost::math::spherical_harmonic_r(m, n, x, 0); };
-#endif
-
-  for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+  if constexpr(std::same_as<e_t, double>)
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
-    {
-      for( unsigned int p = 0; p < n; ++p )
-      {
+    auto eve__slegendre = [](auto m, auto n, auto x) { return eve::legendre[eve::spherical](m, n, x); };
+
 #if defined(__cpp_lib_math_special_functions)
-        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 0.01);
+    auto std_slegendre = [](auto m, auto n, auto x) -> e_t { return std::sph_legendre(m, n, x); };
 #else
-        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), boost_slegendre(n, p, a0.get(k)), 0.01);
+    auto boost_slegendre = [](auto m, auto n, auto x) -> e_t
+      { return boost::math::spherical_harmonic_r(m, n, x, 0); };
 #endif
+
+    for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+    {
+      for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
+      {
+        for( unsigned int p = 0; p < n; ++p )
+        {
+#if defined(__cpp_lib_math_special_functions)
+          TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 0.01);
+#else
+          TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), boost_slegendre(n, p, a0.get(k)), 0.01);
+#endif
+        }
       }
     }
-  }
 
-  j0 = eve::min(i0, j0);
+    j0 = eve::min(i0, j0);
 #if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL(eve__slegendre(i0, j0, a0), tts::map(std_slegendre, i0, j0, a0), 100);
+    TTS_ULP_EQUAL(eve__slegendre(i0, j0, a0), tts::map(std_slegendre, i0, j0, a0), 100);
 #else
-  TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), tts::map(boost_slegendre, i0, j0, a0), 0.01);
+    TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), tts::map(boost_slegendre, i0, j0, a0), 0.01);
 #endif
+  }
 };
+#endif
