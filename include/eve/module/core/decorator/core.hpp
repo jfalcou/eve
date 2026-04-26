@@ -126,7 +126,7 @@ namespace eve
   struct kind_2_option          : _::exact_option<kind_2>          {};
   struct left_option            : _::exact_option<left>            {};
   struct modular_option         : _::exact_option<modular>         {};
-  struct drastic_option       : _::exact_option<drastic>       {};
+  struct drastic_option         : _::exact_option<drastic>         {};
   struct numeric_option         : _::exact_option<numeric>         {};
   struct p_kind_option          : _::exact_option<p_kind>          {};
   struct promote_option         : _::exact_option<promote>         {};
