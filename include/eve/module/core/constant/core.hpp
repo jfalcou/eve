@@ -23,6 +23,7 @@
 #include <eve/module/core/constant/maxexponentm1.hpp>
 #include <eve/module/core/constant/maxexponentp1.hpp>
 #include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/constant/max_safe_integer.hpp>
 #include <eve/module/core/constant/mhalf.hpp>
 #include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/module/core/constant/minexponent.hpp>
