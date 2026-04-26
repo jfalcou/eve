@@ -88,7 +88,7 @@ namespace eve
   //!                    architecture is selected.
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
-  struct EVE_MAY_ALIAS wide
+  struct EVE_MAY_ALIAS EVE_STRUCT_ABI wide
       : _::wide_split_type_helper<Type, Cardinal>,
         _::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>
   {
