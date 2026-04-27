@@ -16,4 +16,12 @@ int main()
 
   std::cout << "<- w                     = " << w << "\n";
   std::cout << "-> nextint(w)            = " << eve::nextint(w) << "\n";
+  std::cout << "-> nextint[saturated](w) = " << eve::nextint[eve::saturated](w) << "\n";
+  std::cout << "-> nextint[raw](w)       = " << eve::nextint[eve::raw](w) << "\n";
+
+  eve::wide<std::int16_t, eve::fixed<4>> iw{0, 1, 32767, -32768};
+  std::cout << "<- iw                     = " << iw << "\n";
+  std::cout << "-> nextint(iw)            = " << eve::nextint(iw) << "\n";
+  std::cout << "-> nextint[saturated](iw) = " << eve::nextint[eve::saturated](iw) << "\n";
+  std::cout << "-> nextint[raw](iw)       = " << eve::nextint[eve::raw](iw) << "\n";
 }

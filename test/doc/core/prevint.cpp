@@ -16,4 +16,12 @@ int main()
 
   std::cout << "<- w                     = " << w << "\n";
   std::cout << "-> prevint(w)            = " << eve::prevint(w) << "\n";
+  std::cout << "-> prevint[saturated](w) = " << eve::prevint[eve::saturated](w) << "\n";
+  std::cout << "-> prevint[raw](w)       = " << eve::prevint[eve::raw](w) << "\n";
+
+  eve::wide<std::int16_t, eve::fixed<4>> iw{0, 1, 32767, -32768};
+  std::cout << "<- iw                     = " << iw << "\n";
+  std::cout << "-> prevint(iw)            = " << eve::prevint(iw) << "\n";
+  std::cout << "-> prevint[saturated](iw) = " << eve::prevint[eve::saturated](iw) << "\n";
+  std::cout << "-> prevint[raw](iw)       = " << eve::prevint[eve::raw](iw) << "\n";
 }

@@ -11,24 +11,12 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_eqpz.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
-#include <eve/module/core/regular/is_pinf.hpp>
-#include <eve/module/core/regular/is_positive.hpp>
-#include <eve/module/core/regular/is_negative.hpp>
-#include <eve/module/core/regular/is_normal.hpp>
-#include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct prevint_t : strict_elementwise_callable<prevint_t, Options, raw_option>
+  struct prevint_t : strict_elementwise_callable<prevint_t, Options, raw_option, saturated_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -43,7 +31,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var prevint
-//!   @brief Computes the previous representable integer.
+//!   @brief Computes the previous representable integer if it exists.
 //!
 //!   **Defined in Header**
 //!
@@ -65,12 +53,13 @@ namespace eve
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto prevint[raw](value auto x)                                         noexcept; // 3
+//!      constexpr auto prevint[saturated](value auto x)                                   noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [floating argument](@ref eve::floating_value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
@@ -78,8 +67,9 @@ namespace eve
 //!
 //!       1. The greatest representable integer value less than `x` is returned.
 //!       2. [The operation is performed conditionnaly](@ref conditional)
-//!       3. works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite).
-//!          the option has no influence on the two parameters calls
+//!       3. same as 1. but inf returns nan.
+//!       4. ensures that the input is never less than the result of the call.
+//!          (It can be equal for minimal representable value)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/prevint.cpp}
@@ -103,11 +93,12 @@ namespace eve
     {
       if constexpr (eve::floating_value<T>)
       {
-        auto ni = floor(prev[opts](v));
+        auto ni = floor(prev[opts.drop(raw)](v));
         if (!O::contains(raw)) ni = if_else(is_nan(v), nan(as(v)), ni);
         return ni;
       }
-      else                                  return prev[opts](v);
+      else
+        return prev[opts](v);
     }
   }
 }
