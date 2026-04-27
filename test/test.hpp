@@ -133,7 +133,7 @@ namespace tts
 
   template<typename T, typename V> auto as_value(V const&);
 
-template<typename T, typename V>
+  template<typename T, typename V>
   auto as_value(V const& v)
   requires( requires { v(eve::as<T>{}); } )
   {
