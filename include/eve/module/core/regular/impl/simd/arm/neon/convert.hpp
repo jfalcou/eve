@@ -97,17 +97,29 @@ namespace eve::_
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<eve::float16_t, N> v, as<U> tgt) noexcept
     requires arm_abi<abi_t<eve::float16_t, N>>
   {
-    constexpr auto of = std::same_as<U, float>;
-
-    if      constexpr (of && (N{} <= 2))
+    if constexpr (std::same_as<U, float>
+                  || ((std::same_as<U, int16_t> || std::same_as<U, uint16_t>) && _::supports_fp16_vector_ops))
     {
-      using tmp_t = typename wide<eve::float16_t, N>::template rebind<float>;
-      auto tmp = tmp_t { vcvt_f32_f16(simd_cast(v, as<wide<eve::float16_t, fixed<4>>>{})) };
-      return slice(tmp, lower_).storage();
+      if constexpr (N{} <= 2)
+      {
+        auto tmp = convert(simd_cast(v, as<wide<eve::float16_t, fixed<4>>>{}), as<U>{});
+        return slice(tmp, lower_).storage();
+      }
+      else if constexpr (N{} <= 4)
+      {
+        if      constexpr (std::same_as<U, float>)    return vcvt_f32_f16(v);
+        else if constexpr (std::same_as<U, int16_t>)  return vcvt_s16_f16(v);
+        else if constexpr (std::same_as<U, uint16_t>) return vcvt_u16_f16(v);
+      }
+      else if constexpr (N{} <= 8)
+      {
+        if      constexpr (std::same_as<U, int16_t>)  return vcvtq_s16_f16(v);
+        else if constexpr (std::same_as<U, uint16_t>) return vcvtq_u16_f16(v);
+        // Clang is not able to emit fcvtl2 with vcvt_high_f32_f16 in this case. GCC is able to even without it.
+        else                                          return convert_slice(v, tgt);
+      }
     }
-    else if constexpr (of && (N{} <= 4)) return vcvt_f32_f16(v);
-    else if constexpr (of)               return convert_slice(v, tgt);
-    else                                 return convert(convert(v, as<float>{}), tgt);
+    else                                              return convert(convert(v, as<float>{}), tgt);
   }
 
 //================================================================================================
@@ -190,7 +202,7 @@ namespace eve::_
         else if constexpr ( c_i == category::int16x8  )                           return vcvtq_f16_s16(v);
         else if constexpr ( c_i == category::uint16x8 )                           return vcvtq_f16_u16(v);
       }
-      else if constexpr (_::supports_fp16_vector_conversion)                 return convert(convert(v, f32_t{}), tgt);
+      else if constexpr (_::supports_fp16_vector_conversion)                      return convert(convert(v, f32_t{}), tgt);
       else                                                                        return map(convert, v, tgt);
     }
     else if constexpr ( c_i == category::int16x8  && c_o == category::int8x8    ) return vmovn_s16(v);
