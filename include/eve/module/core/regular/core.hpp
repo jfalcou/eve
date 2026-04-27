@@ -179,11 +179,13 @@
 #include <eve/module/core/regular/negminabs.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/nextafter.hpp>
+#include <eve/module/core/regular/nextint.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/of_class.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/prevint.hpp>
 #include <eve/module/core/regular/rat.hpp>
 #include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/rec.hpp>
