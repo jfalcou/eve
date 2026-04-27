@@ -104,10 +104,8 @@ namespace eve
         return cumprod[o.drop(widen)](upg(tup));
       else
       {
-        auto constexpr SZ = PT::size();
-        auto a = to_array(tup);
-        for(std::size_t i=1; i < SZ; ++i) a[i] = mul[o](a[i-1], a[i]);
-        return kumi::to_tuple(a);
+        using r_t = kumi::apply_traits_t<eve::common_value, PT>;
+        return kumi::inclusive_scan_left(eve::mul[o], tup, r_t(1));
       }
     }
 

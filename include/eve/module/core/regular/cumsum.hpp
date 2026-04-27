@@ -12,6 +12,8 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/detail/tuple_array_utils.hpp>
+#include <numeric>
+#include <eve/arch/nofs.hpp>
 
 namespace eve
 {
@@ -104,10 +106,8 @@ namespace eve
         return cumsum[o.drop(widen)](upg(tup));
       else
       {
-        auto constexpr SZ = PT::size();
-        auto a = to_array(tup);
-        for(std::size_t i=1; i < SZ; ++i) a[i] = add[o](a[i-1], a[i]);
-        return kumi::to_tuple(a);
+        using r_t = kumi::apply_traits_t<eve::common_value, PT>;
+        return kumi::inclusive_scan_left(eve::add[o], tup, r_t(0));
       }
     }
 
