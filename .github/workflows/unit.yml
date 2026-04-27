@@ -398,7 +398,7 @@ jobs:
       matrix:
         cfg:
         - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
-        - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL"}
+        - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL -DEVE_USE_PCH=OFF"}
   
     steps:
       - name: Fetch current branch
