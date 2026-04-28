@@ -46,7 +46,8 @@ TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
   {
     auto gen =  [](auto x){
       auto g = [x](auto i){ return x.get(i); };
-      return kumi::generate<N>(g) ;
+      constexpr auto card = eve::cardinal_v<T>;
+      return kumi::generate<card>(g) ;
     };
     TTS_EQUAL(eve::unfold(a0), gen(a0));
     TTS_EQUAL(eve::unfold(a1), gen(a1));
@@ -54,5 +55,5 @@ TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
 //    TTS_EQUAL(eve::unfold(a1, v_t(1), a0),  kumi::cat(kumi::push_back(gen(a1), v_t(1)), gen(a0)));
   }
   else
-    TTS_PASS();
+    TTS_PASS("");
 };

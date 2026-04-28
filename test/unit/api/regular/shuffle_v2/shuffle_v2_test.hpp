@@ -262,7 +262,7 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... extra_args_g
 {
   if( T::size() == 1 && !supports_G_eq_T_Size )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
 
@@ -280,7 +280,7 @@ named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto e
 {
   if( N::value == 1 && !supports_G_eq_T_Size )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
 

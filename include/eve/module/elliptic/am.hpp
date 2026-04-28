@@ -151,7 +151,7 @@ namespace eve
           return if_else(is_infinite(u) && is_eqz(k), u, phi);
         };
 
-      T r;
+      T r{};
       if (eve::any(xxisone)) r = fms(T(2), atan(exp(u)), pio_2(as(xx)));
       if (eve::all(xxisone)) return r;
       return if_else(xxisone, r, am_kernel());

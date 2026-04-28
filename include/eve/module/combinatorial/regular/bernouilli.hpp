@@ -11,7 +11,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <array>
 
 namespace eve
 {
@@ -83,8 +82,8 @@ namespace eve
     constexpr EVE_FORCEINLINE auto
     bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
     {
-      constexpr std::array<double, 130> dbernouilli_b2ns = {
-        {+1.00000000000000000000000000000000000000000,
+      constexpr double dbernouilli_b2ns[130] = {
+         +1.00000000000000000000000000000000000000000,
          +0.166666666666666666666666666666666666666667,
          -0.0333333333333333333333333333333333333333333,
          +0.0238095238095238095238095238095238095238095,
@@ -213,7 +212,7 @@ namespace eve
          -2.95368261729680829728014917350525183485207e296,
          +4.80793212775015697668878704043264072227967e299,
          -7.95021250458852528538243631671158693036798e302,
-         +1.33527841873546338750122832017820518292039e306}};
+         +1.33527841873546338750122832017820518292039e306};
 
       if constexpr( scalar_value<T> )
       {
@@ -230,7 +229,7 @@ namespace eve
         auto nlt130 = no2 < T(130);
         auto test   = nlt130 && even_n;
         auto nn     = if_else(test, no2, zero);
-        auto r      = gather(&dbernouilli_b2ns[0], nn);
+        auto r      = gather(dbernouilli_b2ns, nn);
         r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
         r           = if_else(n == one(as(n)), mhalf(as(r)), r);
         if constexpr( sizeof(element_type_t<T>) == 1 ) return r;

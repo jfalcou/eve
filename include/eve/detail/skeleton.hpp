@@ -172,7 +172,7 @@ namespace eve::_
 
       // Build the lists of all ready-to-aggregate values
       auto parts = kumi::make_tuple(slicer(ts)...);
-      auto process = [&](auto i) { return kumi::apply([&](auto... p) { return f( get<i>(p)... ); }, parts); };
+      auto process = [&]<std::size_t I>(kumi::index_t<I>) { return kumi::apply([&](auto... p) { return f( get<I>(p)... ); }, parts); };
 
       using small_result_t = decltype(process(kumi::index<0>));
       using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
@@ -199,17 +199,17 @@ namespace eve::_
         // The check on range is used due to arrays now being considered `product types`
         if constexpr (!range<storage_t> && eve::product_type<storage_t> && !instance_of<storage_t, blob>)
         {
-          return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
+          return kumi::generate<kumi::size_v<storage_t>>([&]<std::size_t I>(kumi::index_t<I>)
             {
-              using inner_wide_t = typename kumi::element_t<i, storage_t>;
+              using inner_wide_t = kumi::element_t<I, storage_t>;
               // Whether we should re-wrap the inner storage into the proper product type.
               if constexpr (has_aggregated_abi_v<inner_wide_t> || eve::product_type<kumi::element_t<0, decltype(inner)>>)
               {
-                return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<i>(m.storage())... }; }, inner);
+                return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<I>(m.storage())... }; }, inner);
               }
               else
               {
-                return kumi::get<i>(inner);
+                return kumi::get<I>(inner);
               }
             });
         }

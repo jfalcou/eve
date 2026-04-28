@@ -32,7 +32,7 @@ namespace eve
     template<eve::value T0, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, Ts...>)
     EVE_FORCEINLINE constexpr
-    zipped<common_value_t<T0, Ts...>,common_value_t<T0, Ts...>>
+    zipped<eve::common_value_t<T0, Ts...>,eve::common_value_t<T0, Ts...>>
     operator()(T0 t0, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, ts...);
@@ -182,7 +182,7 @@ namespace eve
         return [f](auto x, auto y)
         {
           auto check = f(y, x);
-          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
+          return zip(if_else(check, y, x), if_else(check, x, y));
         };
       }
     }
