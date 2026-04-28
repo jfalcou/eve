@@ -33,6 +33,9 @@ namespace eve
 //!   @var nextint
 //!   @brief Computes the next representable integer if it exists.
 //!
+//!   This function is equivalent to [inc](@ref eve::inc) for integral types. For floating point types, it will skip
+//!   over the non-representable values between the input and the next representable integer.
+//!
 //!   **Defined in Header**
 //!
 //!   @code

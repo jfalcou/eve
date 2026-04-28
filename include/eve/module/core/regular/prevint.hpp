@@ -33,6 +33,9 @@ namespace eve
 //!   @var prevint
 //!   @brief Computes the previous representable integer if it exists.
 //!
+//!   This function is equivalent to [dec](@ref eve::dec) for integral types. For floating point types, it will skip
+//!   over the non-representable values between the input and the previous representable integer.
+//!
 //!   **Defined in Header**
 //!
 //!   @code
