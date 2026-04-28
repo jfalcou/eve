@@ -12,8 +12,8 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/detail/tuple_array_utils.hpp>
-#include <numeric>
-#include <eve/arch/nofs.hpp>
+#include <eve/module/core/regular/scan.hpp>
+#include <eve/module/core/regular/unfold.hpp>
 
 namespace eve
 {
@@ -106,8 +106,32 @@ namespace eve
         return cumsum[o.drop(widen)](upg(tup));
       else
       {
-        using r_t = kumi::apply_traits_t<eve::common_value, PT>;
-        return kumi::inclusive_scan_left(eve::add[o], tup, r_t(0));
+        using e_t =  kumi::apply_traits_t<eve::common_value, PT>;
+        if constexpr(scalar_value<e_t>)
+        {
+          using w_t = eve::wide<e_t>;
+          if constexpr((PT::size() >= eve::expected_cardinal_v<w_t>) && !O::contains(saturated))
+          {
+            constexpr auto Last = w_t::size()-1;
+            auto head = eve::as_wides(eve::zero(eve::as<e_t>()), tup);
+            e_t neutral(0);
+            auto sc =  [ neutral, o](auto h){return eve::scan(h, eve::add[o], neutral); };
+            auto xxx = kumi::map(sc, head);
+            auto last =  [](auto g){return g.get(Last); };
+            auto yyy =  kumi::push_front(kumi::pop_back(kumi::map(last, xxx)), neutral);
+            auto r = kumi::map(eve::add[o], xxx, yyy);
+            auto rr = kumi::extract(eve::unfold(r),  kumi::index_t<0>(), kumi::index_t<PT::size()>());;
+            return rr;
+          }
+          else
+          {
+            return kumi::inclusive_scan_left(eve::add[o], tup, e_t(0));
+          }
+        }
+        else
+        {
+          return kumi::inclusive_scan_left(eve::add[o], tup, e_t(0));
+        }
       }
     }
 
