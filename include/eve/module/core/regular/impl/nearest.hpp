@@ -52,9 +52,9 @@ namespace eve::_
   {
     auto z = nearest(a0);
     if constexpr(unsigned_value<U>)
-      return convert(z, uint_from<T>());
+      return convert[saturated](z, uint_from<T>());
     else if constexpr(signed_integral_value<U>)
-      return convert(z, int_from<T>());
+      return convert[saturated](z, int_from<T>());
     else
       return z;
   }

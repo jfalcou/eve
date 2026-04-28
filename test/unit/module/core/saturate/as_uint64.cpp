@@ -9,17 +9,17 @@
 
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL("Check eve::saturate return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::saturate return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>) { TTS_EXPR_IS(eve::saturate(T(), eve::as<std::uint64_t>()), T); };
 
-TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::uint64_t>()), T(0));
     TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::uint64_t>()),
-              T(eve::valmax(eve::as<std::uint64_t>())));
+                eve::_::valmax_in(eve::as<std::uint64_t>(), eve::as<T>()));
   }
   else
   {

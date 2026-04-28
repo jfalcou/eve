@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL("Check eve::saturate return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::saturate return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>) { TTS_EXPR_IS(eve::saturate(T(), eve::as<std::int8_t>()), T); };
 
-TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   if constexpr( eve::signed_value<T> )

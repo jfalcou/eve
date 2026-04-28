@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t = eve::wide<double, eve::cardinal_t<T>>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
 //==================================================================================================
 // Value tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<double, eve::cardinal_t<T>>;
@@ -42,7 +42,7 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
             static_cast<t_t>(eve::valmax(eve::as<v_t>())));
 };
 
-TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<double, eve::cardinal_t<T>>;
