@@ -6,7 +6,7 @@
 
 int main()
 {
-  kumi::tuple t{ 2.0f, 3.0f, 1.0f,10000.0f};
+  kumi::tuple t{ 2.0f, 3.0f, 1.0f,10000.0f, 10.0f};
   std::cout << "t                                        " << t                                             << std::endl;
   std::cout << "eve::cumfun(add, t)                      " << eve::cumfun(eve::add, t)                      << std::endl;
   std::cout << "eve::cumfun(add, 1.0, 2.0, 3.0, 10000.0) " << eve::cumfun(eve::add, 1.0, 2.0, 3.0, 10000.0) << std::endl;

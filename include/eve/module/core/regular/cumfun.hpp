@@ -112,20 +112,17 @@ namespace eve
         if constexpr(scalar_value<e_t>)
         {
           using w_t = eve::wide<e_t>;
-          if constexpr((PT::size() >= eve::expected_cardinal_v<w_t>) && !O::contains(saturated))
+          constexpr auto Last = w_t::size()-1;
+          if constexpr((PT::size() > Last) && !O::contains(saturated))
           {
             auto head = eve::as_wides(eve::zero(eve::as<e_t>()), tup);
             auto sc =  [ n, f, o](auto h){return eve::scan(h, f[o], n); };
             auto xxx = kumi::map(sc, head);
-//             auto last =  [](auto g){return g.get(w_t::size()-1); };
-//             auto yyy =  kumi::push_front(kumi::pop_back(kumi::map(last, xxx)), n);
-            auto yyy = kumi::exclusive_scan_left([f, o](auto pp, auto nn)
-                                                 {
-                                                   return f[o](pp.get(w_t::size()-1),nn.get(w_t::size()-1));
-                                                 }, xxx, n);
+            auto yyy = kumi::exclusive_scan_left([f, o](auto nn, auto x)
+                                                 { return f[o](nn, x.get(Last)); }
+                                                , xxx, n);
             auto r = kumi::map(f[o], xxx, yyy);
-            auto rr = eve::unfold(r);
-            return  kumi::extract(rr,  kumi::index_t<0>(), kumi::index_t<PT::size()>());;
+            return  kumi::extract(eve::unfold(r),  kumi::index_t<0>(), kumi::index_t<PT::size()>());;
           }
           else
           {
