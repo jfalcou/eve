@@ -119,9 +119,9 @@ namespace eve
             auto xxx = kumi::map(sc, head);
 //             auto last =  [](auto g){return g.get(w_t::size()-1); };
 //             auto yyy =  kumi::push_front(kumi::pop_back(kumi::map(last, xxx)), n);
-            auto yyy = kumi::exclusive_scan_left([f, o](auto p, auto n)
+            auto yyy = kumi::exclusive_scan_left([f, o](auto pp, auto nn)
                                                  {
-                                                   return f[o](p.get(w_t::size()-1),n.get(w_t::size()-1));
+                                                   return f[o](pp.get(w_t::size()-1),nn.get(w_t::size()-1));
                                                  }, xxx, n);
             auto r = kumi::map(f[o], xxx, yyy);
             auto rr = eve::unfold(r);
