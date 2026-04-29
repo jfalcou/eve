@@ -69,7 +69,7 @@ namespace eve
 //!      constexpr auto cumfun(typename f, non_empty_product_type tup) noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto cumfun[widen](/*any of the above overloads*/)        noexcept; // 3
+//!      constexpr auto cumfun[widen](/*any of the above overloads*/)  noexcept; // 3
 //!   }
 //!   @endcode
 //!

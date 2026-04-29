@@ -29,4 +29,7 @@ int main()
   std::cout << "eve::cumfun(add, wt)                     " << eve::cumfun(eve::add, wt)                     << std::endl;
   std::cout << "eve::cumfun(min, wt)                     " << eve::cumfun(eve::min, wt)                     << std::endl;
   std::cout << "eve::cumfun(max, wt)                     " << eve::cumfun(eve::max, wt)                     << std::endl;
+  std::cout << "eve::cumfun(bit_and, wt)                 " << eve::cumfun(eve::bit_and, wt)                 << std::endl;
+  std::cout << "eve::cumfun(bit_or, wt)                  " << eve::cumfun(eve::bit_or, wt)                  << std::endl;
+  std::cout << "eve::cumfun(logical_and, wt)             " << eve::cumfun(eve::logical_and, wt)                  << std::endl;
 };

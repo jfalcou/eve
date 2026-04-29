@@ -10,10 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/traits/updown.hpp>
-#include <eve/module/core/detail/tuple_array_utils.hpp>
-#include <eve/module/core/regular/scan.hpp>
-#include <eve/module/core/regular/unfold.hpp>
+#include <eve/module/core/regular/cumfun.hpp>
+
 
 namespace eve
 {
@@ -100,42 +98,7 @@ namespace eve
     template <eve::product_type PT, callable_options O>
     EVE_FORCEINLINE constexpr auto cumsum_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
-      if constexpr(PT::size() == 0)
-        return kumi::make_tuple();
-      else if constexpr(O::contains(widen))
-        return cumsum[o.drop(widen)](upg(tup));
-      else
-      {
-        using e_t =  kumi::apply_traits_t<eve::common_value, PT>;
-        if constexpr(scalar_value<e_t>)
-        {
-          using w_t = eve::wide<e_t>;
-          if constexpr((PT::size() >= eve::expected_cardinal_v<w_t>) && !O::contains(saturated))
-          {
-            constexpr auto Last = w_t::size()-1;
-            auto head = eve::as_wides(eve::zero(eve::as<e_t>()), tup);
-            auto n = neutral(eve::add)(eve::as<e_t>());
-            auto sc =  [n , o](auto h){return eve::scan(h, eve::add[o], n); };
-            auto xxx = kumi::map(sc, head);
-            auto last =  [](auto g){return g.get(Last); };
-            auto yyy =  kumi::push_front(kumi::pop_back(kumi::map(last, xxx)), n);
-//            auto zzz =  kumi::fold_left(kumi::pop_back(kumi::map(last, xxx)), n);
-            std::cout << "yyy " << yyy << std::endl;
-//            std::cout << "zzz " << zzz << std::endl;
-            auto r = kumi::map(eve::add[o], xxx, yyy);
-            auto rr = kumi::extract(eve::unfold(r),  kumi::index_t<0>(), kumi::index_t<PT::size()>());;
-            return rr;
-          }
-          else
-          {
-            return kumi::inclusive_scan_left(eve::add[o], tup, e_t(0));
-          }
-        }
-        else
-        {
-          return kumi::inclusive_scan_left(eve::add[o], tup, e_t(0));
-        }
-      }
+      return cumfun[o](eve::add, tup);
     }
 
     template<value T, value ...Ts, callable_options O>

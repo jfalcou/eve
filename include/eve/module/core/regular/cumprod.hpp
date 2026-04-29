@@ -10,8 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/traits/updown.hpp>
-#include <eve/module/core/detail/tuple_array_utils.hpp>
+#include <eve/module/core/regular/cumfun.hpp>
 
 namespace eve
 {
@@ -98,40 +97,7 @@ namespace eve
     template <eve::product_type PT, callable_options O>
     EVE_FORCEINLINE constexpr auto cumprod_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
-      if constexpr(PT::size() == 0)
-        return kumi::make_tuple();
-      else if constexpr(O::contains(widen))
-        return cumprod[o.drop(widen)](upg(tup));
-      else
-      {
-        using e_t = kumi::apply_traits_t<eve::common_value, PT>;
-        if constexpr(scalar_value<e_t>)
-        {
-          using w_t = eve::wide<e_t>;
-          if constexpr((PT::size() >= eve::expected_cardinal_v<w_t>) && !O::contains(saturated))
-          {
-
-            constexpr auto Last = w_t::size()-1;
-            auto head = eve::as_wides(eve::zero(eve::as<e_t>()), tup);
-            e_t neutral(1);
-            auto sc =  [ neutral, o](auto h){return eve::scan(h, eve::mul[o], neutral); };
-            auto xxx = kumi::map(sc, head);
-            auto last =  [](auto g){return g.get(Last); };
-            auto yyy =  kumi::push_front(kumi::pop_back(kumi::map(last, xxx)), neutral);
-            auto r = kumi::map(eve::mul[o], xxx, yyy);
-            auto rr = kumi::extract(eve::unfold(r),  kumi::index_t<0>(), kumi::index_t<PT::size()>());;
-            return rr;
-          }
-          else
-          {
-            return kumi::inclusive_scan_left(eve::mul[o], tup, e_t(1));
-          }
-        }
-        else
-        {
-          return kumi::inclusive_scan_left(eve::mul[o], tup, e_t(1));
-        }
-      }
+      return cumfun[o](eve::mul, tup);
     }
 
     template<value T, value ...Ts, callable_options O>
