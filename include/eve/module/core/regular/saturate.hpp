@@ -125,8 +125,8 @@ namespace eve
             if constexpr( sizeof(Target) >= sizeof(U) ) { return a0; }
             else
             {
-              auto mn = static_cast<double>(valmin(tgt));
-              auto mx = static_cast<double>(valmax(tgt));
+              auto mn = static_cast<U>(valmin(tgt));
+              auto mx = static_cast<U>(valmax(tgt));
               return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
             }
           }
