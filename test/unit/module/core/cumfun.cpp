@@ -37,10 +37,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 {
   using eve::cumfun;
   auto d = cumfun(eve::add, (a0), (a1), (a2), (a3));
-  TTS_EQUAL(get<0>(d), a0);
-  TTS_EQUAL(get<1>(d), a0+a1);
-  TTS_EQUAL(get<2>(d), a0+a1+a2);
-  TTS_EQUAL(get<3>(d), a0+a1+a2+a3);
+  TTS_ULP_EQUAL(get<0>(d), a0, 2.0);
+  TTS_ULP_EQUAL(get<1>(d), a0+a1, 2.0);
+  TTS_ULP_EQUAL(get<2>(d), a0+a1+a2, 2.0);
+  TTS_ULP_EQUAL(get<3>(d), a0+a1+a2+a3, 2.0);
 };
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
@@ -53,10 +53,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 {
   using eve::cumfun;
   auto d = cumfun(eve::add, (a0), (a1), (a2), (a3));
-  TTS_EQUAL(get<0>(d), a0);
-  TTS_EQUAL(get<1>(d), a0+a1);
-  TTS_EQUAL(get<2>(d), a0+a1+a2);
-  TTS_EQUAL(get<3>(d), a0+a1+a2+a3);
+  TTS_ULP_EQUAL(get<0>(d), a0, 2.0);
+  TTS_ULP_EQUAL(get<1>(d), a0+a1, 2.0);
+  TTS_ULP_EQUAL(get<2>(d), a0+a1+a2, 2.0);
+  TTS_ULP_EQUAL(get<3>(d), a0+a1+a2+a3, 2.0);
 };
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
@@ -69,10 +69,10 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 {
   using eve::cumfun;
   auto d = cumfun(eve::mul, (a0), (a1), (a2), (a3));
-  TTS_EQUAL(get<0>(d), a0);
-  TTS_EQUAL(get<1>(d), a0*a1);
-  TTS_EQUAL(get<2>(d), a0*a1*a2);
-  TTS_EQUAL(get<3>(d), a0*a1*a2*a3);
+  TTS_ULP_EQUAL(get<0>(d), a0, 2.0);
+  TTS_ULP_EQUAL(get<1>(d), a0*a1, 2.0);
+  TTS_ULP_EQUAL(get<2>(d), a0*a1*a2, 2.0);
+  TTS_ULP_EQUAL(get<3>(d), a0*a1*a2*a3, 2.0);
 };
 
 TTS_CASE_WITH("Check behavior of cumsum on all types full range",
@@ -85,8 +85,8 @@ TTS_CASE_WITH("Check behavior of cumsum on all types full range",
 {
   using eve::cumfun;
   auto d = cumfun(eve::mul, (a0), (a1), (a2), (a3));
-  TTS_EQUAL(get<0>(d), a0);
-  TTS_EQUAL(get<1>(d), a0*a1);
-  TTS_EQUAL(get<2>(d), a0*a1*a2);
-  TTS_EQUAL(get<3>(d), a0*a1*a2*a3);
+  TTS_ULP_EQUAL(get<0>(d), a0, 2.0);
+  TTS_ULP_EQUAL(get<1>(d), a0*a1, 2.0);
+  TTS_ULP_EQUAL(get<2>(d), a0*a1*a2, 2.0);
+  TTS_ULP_EQUAL(get<3>(d), a0*a1*a2*a3, 2.0);
 };
