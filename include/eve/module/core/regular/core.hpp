@@ -57,6 +57,7 @@
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/covariance.hpp>
+#include <eve/module/core/regular/cumfun.hpp>
 #include <eve/module/core/regular/cumprod.hpp>
 #include <eve/module/core/regular/cumsum.hpp>
 #include <eve/module/core/regular/cumtrapz.hpp>
