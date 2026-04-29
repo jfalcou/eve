@@ -51,7 +51,8 @@ namespace eve
 //! @{
 //!   @var cumfun
 ///!   @brief `callable` converting a pack of values into
-//!     a tuple of the cumulative application of a two parameter function to its values.
+//!     a tuple of the cumulative application of a two parameter eve fonction defining
+//!     an abelian monoid.
 //!
 //!   @groupheader{Header file}
 //!
@@ -86,6 +87,10 @@ namespace eve
 //!         the element type of the common value of the `xs` using f.
 //!     2. same as 1., using the tuple elements.
 //!     3. same of 1. or 2., but the computation is made on upgraded elements.
+//!
+//!  @note currently cumfun can be applied with `f` being one of these EVE fonctors :
+//!   `eve::add`, `eve::mul`, `eve::min`, `eve::max``eve::bit_and`, `eve::bit_or`,
+//!   `eve::bit_xor` that define abelian monoids and each possess a well defined neutral element.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/cumfun.cpp}
