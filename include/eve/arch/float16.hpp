@@ -205,6 +205,7 @@ namespace eve
 
         constexpr EVE_FORCEINLINE explicit operator float()              const noexcept { return into<float>(); }
         constexpr EVE_FORCEINLINE explicit operator double()             const noexcept { return into<double>(); }
+        constexpr EVE_FORCEINLINE explicit operator long double()        const noexcept { return into<long double>(); }
 
         constexpr EVE_FORCEINLINE explicit operator char()               const noexcept { return into<char>(); }
         constexpr EVE_FORCEINLINE explicit operator signed char()        const noexcept { return into<signed char>(); }
