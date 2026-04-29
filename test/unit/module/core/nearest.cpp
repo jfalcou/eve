@@ -49,9 +49,9 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
     TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return v_t(std_nearbyint(a0.get(i))); }));
 
     auto r = wi_t([&](auto i, auto) {
-      auto v = eve::convert[eve::saturated](std_nearbyint(a0.get(i)), eve::as<i_t>{});
-      auto vm = eve::valmax(eve::as(v));
-      return a0.get(i) > static_cast<v_t>(vm) ? vm : v;
+      i_t v = eve::convert[eve::saturated](std_nearbyint(a0.get(i)), eve::as<i_t>{});
+      v_t vm = eve::_::valmax_in(eve::as<i_t>{}, eve::as<v_t>{});
+      return a0.get(i) > vm ? static_cast<i_t>(vm) : v;
     });
     TTS_EQUAL(eve::nearest(a0, eve::as<signed>()), r);
 
