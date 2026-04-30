@@ -88,12 +88,18 @@ namespace eve::_
       if constexpr (floating_scalar_value<In> && integral_scalar_value<Out>)
       {
         EVE_ASSERT(is_finite(v0), "[EVE] - Convert to integral from floating point called on non finite value");
-      }
 
-      if constexpr (O::contains(saturated))
-        return saturate(v0, tgt) < v0 ? valmax(tgt) : static_cast<Out>(v0);
+        if constexpr (O::contains(saturated))
+        {
+          auto s = saturate(v0, tgt);
+          return s < v0 ? valmax(tgt) : s > v0 ? valmin(tgt) : static_cast<Out>(v0);
+        }
+        else return static_cast<Out>(v0);
+        }
       else
-        return static_cast<Out>(v0);
+      {
+        return static_cast<Out>(maybe_saturate(v0));
+      }
     }
     else // simd_value
     {

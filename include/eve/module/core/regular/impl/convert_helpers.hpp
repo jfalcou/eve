@@ -31,9 +31,14 @@ template<value In, scalar_value Out>
 EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
   if constexpr (floating_value<In> && integral_scalar_value<Out>)
-    return if_else(saturate(v0, tgt) < v0, valmax(tgt), convert(v0, tgt));
+  {
+    auto s = saturate(v0, tgt);
+    return if_else(s < v0, valmax(tgt), if_else(s > v0, valmin(tgt), convert(v0, tgt)));
+  }
   else
+  {
     return convert(saturate(v0, tgt), tgt);
+  }
 }
 
 //================================================================================================
