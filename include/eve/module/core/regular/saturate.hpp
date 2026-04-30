@@ -164,7 +164,7 @@ namespace eve
           {
             if constexpr( floating_scalar_value<U> )
             {
-              return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(eve::as<Target>())));
+              return clamp(a0, static_cast<U>(0), valmax_in(eve::as<Target>(), eve::as<U>{}));
             }
             if constexpr( !std::is_signed_v<U> ) // from a unsigned
             {
