@@ -30,7 +30,10 @@ namespace eve::_
 template<value In, scalar_value Out>
 EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
-  return convert(saturate(v0, tgt), tgt);
+  if constexpr (floating_value<In> && integral_scalar_value<Out>)
+    return if_else(saturate(v0, tgt) < v0, valmax(tgt), convert(v0, tgt));
+  else
+    return convert(saturate(v0, tgt), tgt);
 }
 
 //================================================================================================

@@ -90,7 +90,10 @@ namespace eve::_
         EVE_ASSERT(is_finite(v0), "[EVE] - Convert to integral from floating point called on non finite value");
       }
 
-      return static_cast<Out>(maybe_saturate(v0));
+      if constexpr (O::contains(saturated))
+        return saturate(v0, tgt) < v0 ? valmax(tgt) : static_cast<Out>(v0);
+      else
+        return static_cast<Out>(v0);
     }
     else // simd_value
     {
