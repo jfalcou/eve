@@ -18,6 +18,8 @@
 #include <eve/module/core/regular/is_not_infinite.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/prevint.hpp>
+#include <eve/module/core/regular/nextint.hpp>
 
 namespace eve
 {
@@ -80,6 +82,32 @@ namespace eve
 
   namespace _
   {
+    template <typename T, floating_value Tgt>
+    constexpr Tgt valmax_in(as<T>, as<Tgt>) {
+      using e_t = element_type_t<T>;
+      using e_tgt = element_type_t<Tgt>;
+
+      auto vm = static_cast<long double>(valmax(as<e_t>{}));
+      auto vm_in = static_cast<e_tgt>(vm);
+      auto vm_rt = static_cast<long double>(vm_in);
+
+      if  (vm_rt > vm) return Tgt { prevint(vm_in) };
+      else             return Tgt { vm_in };
+    }
+
+    template <typename T, floating_value Tgt>
+    constexpr Tgt valmin_in(as<T>, as<Tgt>) {
+      using e_t = element_type_t<T>;
+      using e_tgt = element_type_t<Tgt>;
+
+      auto vm = static_cast<long double>(valmin(as<e_t>{}));
+      auto vm_in = static_cast<e_tgt>(vm);
+      auto vm_rt = static_cast<long double>(vm_in);
+
+      if  (vm_rt < vm) return Tgt { nextint(vm_in) };
+      else             return Tgt { vm_in };
+    }
+
     template<typename U, typename Target, callable_options O>
     EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
                                                O const &,
@@ -97,8 +125,8 @@ namespace eve
             if constexpr( sizeof(Target) >= sizeof(U) ) { return a0; }
             else
             {
-              auto mn = static_cast<double>(valmin(tgt));
-              auto mx = static_cast<double>(valmax(tgt));
+              auto mn = static_cast<U>(valmin(tgt));
+              auto mx = static_cast<U>(valmax(tgt));
               return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
             }
           }
@@ -113,9 +141,9 @@ namespace eve
           {
             if constexpr( floating_scalar_value<U> )
             {
-              return clamp(a0,
-                           static_cast<U>(valmin(eve::as<Target>())),
-                           static_cast<U>(valmax(eve::as<Target>())));
+              // fix for low-precision floating point types such as float16 when valmax(tgt) may not be not exactly
+              // representable in U
+              return clamp(a0, valmin_in(tgt, as<U>{}), valmax_in(tgt, as<U>{}));
             }
             else if constexpr( std::is_signed_v<U> ) // from a signed
             {
@@ -136,7 +164,7 @@ namespace eve
           {
             if constexpr( floating_scalar_value<U> )
             {
-              return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(eve::as<Target>())));
+              return clamp(a0, static_cast<U>(0), valmax_in(eve::as<Target>(), eve::as<U>{}));
             }
             if constexpr( !std::is_signed_v<U> ) // from a unsigned
             {
@@ -183,9 +211,11 @@ namespace eve
             {
               if constexpr( floating_scalar_value<elt_u> )
               {
-                return clamp(a0,
-                             static_cast<U>(valmin(eve::as<Target>())),
-                             static_cast<U>(valmax(eve::as<Target>())));
+                // fix for low-precision floating point types such as float16 when valmax(tgt) may not be not exactly
+                // representable in U
+                auto mn = U { valmin_in(tgt, as<elt_u>{}) };
+                auto mx = U { valmax_in(tgt, as<elt_u>{}) };
+                return clamp(a0, mn, mx);
               }
               else if constexpr( std::is_signed_v<elt_u> ) // from a signed
               {
@@ -203,7 +233,7 @@ namespace eve
               {
                 return clamp(a0,
                              static_cast<U>(zero(eve::as<Target>())),
-                             static_cast<U>(valmax(eve::as<Target>())));
+                             static_cast<U>(valmax_in(eve::as<Target>(), eve::as<elt_u>{})));
               }
               else if constexpr( !std::is_signed_v<elt_u> ) // from a unsigned
               {

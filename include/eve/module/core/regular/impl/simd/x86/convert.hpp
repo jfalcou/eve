@@ -21,11 +21,6 @@ namespace eve::_
 // Saturated conversions
 //#######################
 
-// {
-//         if constexpr(c_o == category::int8x16 ) return _mm_packs_epi16(v,v);
-//   else  if constexpr(c_o == category::uint8x16) return _mm_packus_epi16(v,v);
-// }
-
 // 128 bits <-> 128 bits
 template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(sse2_), wide<In, N> v0, as<Out> tgt) noexcept

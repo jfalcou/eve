@@ -42,16 +42,16 @@ namespace eve::_
 
   template<callable_options O, typename U, typename N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
-    requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t>)
+    requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t> && !O::contains(saturated))
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
     // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
-    if constexpr( has_aggregated_abi_v<wide<float,N>> )
+    if constexpr( has_aggregated_abi_v<wide<float, N>> )
     {
       using card_t = expected_cardinal_t<float>;
-      using base  = typename wide<eve::float16_t, N>::template rescale<card_t>;
-      auto parts  = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card_t::value>(v.storage()));
-      auto cvt    = kumi::map([](auto p) { return convert(p, as<U>{}); }, parts);
+      using base   = typename wide<eve::float16_t, N>::template rescale<card_t>;
+      auto parts   = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card_t::value>(v.storage()));
+      auto cvt     = kumi::map([](auto p) { return convert(p, as<U>{}); }, parts);
       return kumi::apply([&](auto... m) { return wide<U, N>{m...}; }, cvt);
     }
     else
@@ -62,7 +62,7 @@ namespace eve::_
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
-    requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t>)
+    requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t> && !O::contains(saturated))
   {
     return _::emulated_simd_fp32_to_fp16(convert(v, as<float>{}));
   }
@@ -88,9 +88,18 @@ namespace eve::_
       if constexpr (floating_scalar_value<In> && integral_scalar_value<Out>)
       {
         EVE_ASSERT(is_finite(v0), "[EVE] - Convert to integral from floating point called on non finite value");
-      }
 
-      return static_cast<Out>(maybe_saturate(v0));
+        if constexpr (O::contains(saturated))
+        {
+          auto s = saturate(v0, tgt);
+          return s < v0 ? valmax(tgt) : s > v0 ? valmin(tgt) : static_cast<Out>(v0);
+        }
+        else return static_cast<Out>(v0);
+        }
+      else
+      {
+        return static_cast<Out>(maybe_saturate(v0));
+      }
     }
     else // simd_value
     {

@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t = eve::wide<std::uint32_t, eve::cardinal_t<T>>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
 //==================================================================================================
 // Value tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<std::uint32_t, eve::cardinal_t<T>>;
@@ -46,7 +46,7 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
   }
 };
 
-TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<std::uint32_t, eve::cardinal_t<T>>;
@@ -62,15 +62,19 @@ TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd
   TTS_EQUAL(eve::convert[eve::saturated]((T(0)), tgt), static_cast<t_t>(0));
   TTS_EQUAL(eve::convert[eve::saturated]((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
 
-  if constexpr( eve::integral_value<T> && sizeof(T) < sizeof(std::uint32_t) )
+  if constexpr (eve::floating_value<T> && (sizeof(v_t) > 2))
   {
-    // with floating value this test produces undefined behaviour
+    TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
+              eve::valmax(eve::as<t_t>()));
+  }
+  else
+  {
     TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
               static_cast<t_t>(eve::valmax(eve::as<v_t>())));
   }
 };
 
-TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::logical<eve::wide<std::uint32_t, eve::cardinal_t<T>>>;

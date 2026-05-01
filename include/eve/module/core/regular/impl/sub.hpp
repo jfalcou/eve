@@ -21,7 +21,6 @@
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/regular/saturate.hpp>
 
 namespace eve::_
 {
@@ -90,7 +89,9 @@ namespace eve::_
           {
             // small scalar signed integral case uses C++ promotion
             auto r = a - b;
-            return static_cast<T>(saturate(r, as<T>()));
+            auto lo = static_cast<decltype(r)>(valmin(as<T>()));
+            auto hi = static_cast<decltype(r)>(valmax(as<T>()));
+            return static_cast<T>(max(min(r, hi), lo));
           }
         }
         else //unsigned

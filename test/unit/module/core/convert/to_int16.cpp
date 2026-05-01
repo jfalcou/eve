@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t = eve::wide<std::int16_t, eve::cardinal_t<T>>;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
 //==================================================================================================
 // Value tests
 //==================================================================================================
-TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<std::int16_t, eve::cardinal_t<T>>;
@@ -51,7 +51,7 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
   }
 };
 
-TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::wide<std::int16_t, eve::cardinal_t<T>>;
@@ -66,45 +66,41 @@ TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd
   TTS_EQUAL(eve::convert[eve::saturated]((T(0)), tgt), static_cast<t_t>(0));
   TTS_EQUAL(eve::convert[eve::saturated]((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
 
-  if constexpr( eve::integral_value<T> )
+  if constexpr( eve::signed_value<T> )
   {
-    // with floating value this test produces undefined behaviour
-    if constexpr( eve::signed_value<T> )
+    if constexpr( (sizeof(v_t) > 2) || eve::floating_value<T> )
     {
-      if constexpr( sizeof(v_t) > 2 )
-      {
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
-                  (eve::valmin(eve::as<t_t>())));
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
-                  (eve::valmax(eve::as<t_t>())));
-      }
-      else
-      {
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
-                  t_t(eve::valmin(eve::as<v_t>())));
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
-                  t_t(eve::valmax(eve::as<v_t>())));
-      }
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
+                (eve::valmin(eve::as<t_t>())));
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
+                (eve::valmax(eve::as<t_t>())));
     }
-    else // if constexpr(std::is_unsigned_v<v_t>)
+    else
     {
-      if constexpr( sizeof(v_t) >= 2 )
-      {
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt), (t_t(0)));
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
-                  (eve::valmax(eve::as<t_t>())));
-      }
-      else if constexpr( sizeof(v_t) < 2 )
-      {
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt), t_t(0));
-        TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
-                  t_t(eve::valmax(eve::as<v_t>())));
-      }
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
+                t_t(eve::valmin(eve::as<v_t>())));
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
+                t_t(eve::valmax(eve::as<v_t>())));
+    }
+  }
+  else // if constexpr(std::is_unsigned_v<v_t>)
+  {
+    if constexpr( sizeof(v_t) >= 2 )
+    {
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt), (t_t(0)));
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
+                (eve::valmax(eve::as<t_t>())));
+    }
+    else if constexpr( sizeof(v_t) < 2 )
+    {
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt), t_t(0));
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
+                t_t(eve::valmax(eve::as<v_t>())));
     }
   }
 };
 
-TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using t_t          = eve::logical<eve::wide<std::int16_t, eve::cardinal_t<T>>>;

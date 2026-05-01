@@ -10,8 +10,11 @@
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/constant/nan.hpp>
 
 namespace eve
 {
@@ -96,7 +99,7 @@ namespace eve
     {
       if constexpr (eve::floating_value<T>)
       {
-        auto ni = floor(prev[opts.drop(raw)](v));
+        auto ni = eve::floor(prev[opts.drop(raw)](v));
         if (!O::contains(raw)) ni = if_else(is_nan(v), nan(as(v)), ni);
         return ni;
       }

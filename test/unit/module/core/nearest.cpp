@@ -31,6 +31,7 @@ TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types_wf16)
   }
 };
 
+
 //==================================================================================================
 // nearest signed tests
 //==================================================================================================
@@ -47,8 +48,13 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
   if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return v_t(std_nearbyint(a0.get(i))); }));
-    TTS_EQUAL(eve::nearest(a0, eve::as<signed>()),
-              wi_t([&](auto i, auto) { return i_t(std_nearbyint(a0.get(i))); }));
+
+    auto r = wi_t([&](auto i, auto) {
+      i_t v = eve::convert[eve::saturated](std_nearbyint(a0.get(i)), eve::as<i_t>{});
+      return v;
+    });
+    TTS_EQUAL(eve::nearest(a0, eve::as<signed>()), r);
+
     TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
               uwi_t([&](auto i, auto) { return ui_t(std_nearbyint(std_abs(a0.get(i)))); }));
   }
