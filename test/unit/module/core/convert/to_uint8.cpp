@@ -57,15 +57,11 @@ TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd
   TTS_EQUAL(eve::convert[eve::saturated]((T(0)), tgt), static_cast<t_t>(0));
   TTS_EQUAL(eve::convert[eve::saturated]((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
 
-  if constexpr( eve::integral_value<T> )
+  if constexpr( std::is_same_v<v_t, std::int8_t> )
   {
-    // with floating value this test produces undefined behaviour
-    if constexpr( std::is_same_v<v_t, std::int8_t> )
-    {
-      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt), t_t(127));
-    }
-    else { TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt), t_t(255)); }
+    TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt), t_t(127));
   }
+  else { TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt), t_t(255)); }
 };
 
 TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types_wf16)

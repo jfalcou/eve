@@ -82,7 +82,7 @@ namespace eve
 
   namespace _
   {
-    template <typename T, typename Tgt>
+    template <typename T, floating_value Tgt>
     constexpr Tgt valmax_in(as<T>, as<Tgt>) {
       using e_t = element_type_t<T>;
       using e_tgt = element_type_t<Tgt>;
@@ -92,10 +92,10 @@ namespace eve
       auto vm_rt = static_cast<long double>(vm_in);
 
       if  (vm_rt > vm) return Tgt { prevint(vm_in) };
-      else                      return Tgt { vm_in };
+      else             return Tgt { vm_in };
     }
 
-    template <typename T, typename Tgt>
+    template <typename T, floating_value Tgt>
     constexpr Tgt valmin_in(as<T>, as<Tgt>) {
       using e_t = element_type_t<T>;
       using e_tgt = element_type_t<Tgt>;
@@ -105,7 +105,7 @@ namespace eve
       auto vm_rt = static_cast<long double>(vm_in);
 
       if  (vm_rt < vm) return Tgt { nextint(vm_in) };
-      else                      return Tgt { vm_in };
+      else             return Tgt { vm_in };
     }
 
     template<typename U, typename Target, callable_options O>

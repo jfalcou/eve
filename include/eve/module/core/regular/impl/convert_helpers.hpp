@@ -32,8 +32,11 @@ EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) n
 {
   if constexpr (floating_value<In> && integral_scalar_value<Out>)
   {
-    auto s = saturate(v0, tgt);
-    return if_else(s < v0, valmax(tgt), if_else(s > v0, valmin(tgt), convert(v0, tgt)));
+    return if_else(v0 > _::valmax_in(tgt, as(v0)),
+                  valmax(tgt),
+                  if_else(v0 < _::valmin_in(tgt, as(v0)),
+                         valmin(tgt),
+                          convert(v0, tgt)));
   }
   else
   {

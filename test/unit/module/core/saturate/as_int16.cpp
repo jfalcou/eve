@@ -23,6 +23,11 @@ TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types_wf16)
       TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()),
                 eve::valmin(eve::as<T>()));
     }
+    else if constexpr (eve::integral_value<T>)
+    {
+      TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()),
+                T{eve::valmin(eve::as<std::int16_t>())});
+    }
     else
     {
       TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()),
@@ -39,6 +44,11 @@ TTS_CASE_TPL("Check eve::saturate behavior", eve::test::simd::all_types_wf16)
   {
     TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()),
               eve::valmax(eve::as<T>()));
+  }
+  else if constexpr (eve::integral_value<T>)
+  {
+    TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()),
+              T{eve::valmax(eve::as<std::int16_t>())});
   }
   else
   {
