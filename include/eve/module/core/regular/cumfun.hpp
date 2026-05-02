@@ -109,7 +109,7 @@ namespace eve
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
       else if constexpr(O::contains(widen))
-        return cumfun[o.drop(widen)](f, upg(tup));
+        return cumfun[o.drop(widen)](f, upgrade_tuple(tup));
       else
       {
         using e_t =  kumi::apply_traits_t<eve::common_value, PT>;

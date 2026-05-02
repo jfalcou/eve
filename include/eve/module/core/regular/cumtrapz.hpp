@@ -152,7 +152,7 @@ namespace eve
         if constexpr(PT::size() == 0)
           return kumi::make_tuple();
         else if constexpr(O::contains(widen))
-          return cumsum[o.drop(widen)](upg(tup));
+          return cumsum[o.drop(widen)](upgrade_tuple(tup));
         else
         {
           using r_t = kumi::apply_traits_t<eve::common_value, PT>;
@@ -182,7 +182,7 @@ namespace eve
       if constexpr(PTX::size() == 0)
         return kumi::make_tuple();
       else if constexpr(O::contains(widen))
-        return cumsum[o.drop(widen)](upg(x), upg(tup));
+        return cumsum[o.drop(widen)](upgrade_tuple(x), upgrade_tuple(tup));
       else
       {
         using r1_t = kumi::apply_traits_t<eve::common_value, PTX>;
@@ -202,7 +202,7 @@ namespace eve
       if constexpr(PTX::size() == 0)
         return kumi::make_tuple();
       else if constexpr(O::contains(widen))
-        return cumsum[o.drop(widen)](f, upg(x));
+        return cumsum[o.drop(widen)](f, upgrade_tuple(x));
       else
       {
         auto fx = kumi::map(f, x);;
