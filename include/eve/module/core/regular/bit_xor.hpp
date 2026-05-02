@@ -87,6 +87,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(bit_xor_t<Options>) noexcept { return eve::zero; }
 }
 
 #include <eve/module/core/regular/impl/bit_xor.hpp>
