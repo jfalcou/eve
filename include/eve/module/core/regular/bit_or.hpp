@@ -89,6 +89,9 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+
+  template <typename Options>
+  constexpr auto neutral(bit_or_t<Options>) noexcept { return eve::zero; }
 }
 
 #include <eve/module/core/regular/impl/bit_or.hpp>
