@@ -36,5 +36,9 @@ var searchData=
   ['countr_5fzero_33',['countr_zero',['../group__core__bitops_ga6d1332c0e797bcc8980f62da2b781edb.html#ga6d1332c0e797bcc8980f62da2b781edb',1,'eve']]],
   ['covariance_34',['covariance',['../group__core__arithmetic_gad85b8e8aca48a5e1db5ada47d8300950.html#gad85b8e8aca48a5e1db5ada47d8300950',1,'eve']]],
   ['csc_35',['csc',['../group__math__trig_ga58de56369367394561f438e248bb51d7.html#ga58de56369367394561f438e248bb51d7',1,'eve']]],
-  ['csch_36',['csch',['../group__math__hyper_ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e.html#ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e',1,'eve']]]
+  ['csch_36',['csch',['../group__math__hyper_ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e.html#ga0c5b7f148a4cce5c8a2ec8ba6bc2bb8e',1,'eve']]],
+  ['cumfun_37',['cumfun',['../group__core__arithmetic_ga20f1f4d4503b8bdb9ce9aa854fde697f.html#ga20f1f4d4503b8bdb9ce9aa854fde697f',1,'eve']]],
+  ['cumprod_38',['cumprod',['../group__core__arithmetic_ga54ac3f9e05632d33033e149d784627f1.html#ga54ac3f9e05632d33033e149d784627f1',1,'eve']]],
+  ['cumsum_39',['cumsum',['../group__core__arithmetic_ga6e39a9b0ba3dd0581d60a537c0b09e5e.html#ga6e39a9b0ba3dd0581d60a537c0b09e5e',1,'eve']]],
+  ['cumtrapz_40',['cumtrapz',['../group__core__arithmetic_ga7f3104b5fdabcc5a06157c869cb4cfc1.html#ga7f3104b5fdabcc5a06157c869cb4cfc1',1,'eve']]]
 ];

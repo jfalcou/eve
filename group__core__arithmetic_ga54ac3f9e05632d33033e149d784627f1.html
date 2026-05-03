@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::two_div_approx</title>
+<title>E.V.E: eve::cumprod</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,7 +92,7 @@ $(function() { codefold.init(); });
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('group__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda2f.html','',''); });
+$(function(){initNavTree('group__core__arithmetic_ga54ac3f9e05632d33033e149d784627f1.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -118,8 +118,8 @@ $(function(){initNavTree('group__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda
 </div>
 
 <div class="contents">
-<a id="gadd6ab7f52e4d422e1edddc72e49cda2f" name="gadd6ab7f52e4d422e1edddc72e49cda2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadd6ab7f52e4d422e1edddc72e49cda2f">&#9670;&#160;</a></span>two_div_approx</h2>
+<a id="ga54ac3f9e05632d33033e149d784627f1" name="ga54ac3f9e05632d33033e149d784627f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54ac3f9e05632d33033e149d784627f1">&#9670;&#160;</a></span>cumprod</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,7 +128,7 @@ $(function(){initNavTree('group__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::two_div_approx = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_div_approx_t&gt;</td>
+          <td class="memname">auto eve::cumprod = <a class="el" href="group__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;cumprod_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -142,46 +142,56 @@ $(function(){initNavTree('group__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">two_div_approx</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">cumprod</a>(<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> ... xs)                <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">cumprod</a>(non_empty_product_type tup)            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">cumprod</a>[widen](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
-<div class="ttc" id="agroup__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda2f_html_gadd6ab7f52e4d422e1edddc72e49cda2f"><div class="ttname"><a href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a></div><div class="ttdeci">constexpr auto two_div_approx</div><div class="ttdoc">Computes the elementwise pair of division and error,.</div><div class="ttdef"><b>Definition</b> two_div_approx.hpp:70</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga54ac3f9e05632d33033e149d784627f1_html_ga54ac3f9e05632d33033e149d784627f1"><div class="ttname"><a href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a></div><div class="ttdeci">constexpr auto cumprod</div><div class="ttdoc">callable converting a pack of values into a tuple of the cumulative product of its values.</div><div class="ttdef"><b>Definition</b> cumprod.hpp:89</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a> arguments.</li>
+<li><span class="tt">xs...</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a> arguments.</li>
+<li><span class="tt">tup</span>: kumi tuple of values.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a,e]</span> such that:</p><ul>
-<li><span class="tt">a</span> is <span class="tt">x/y</span></li>
-<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is an approximation in doubled precision to <span class="tt">x</span> \(\odiv\)<span class="tt">y</span>, where \(\oplus\) (resp. \(\odiv\)) adds (resp. divides) its two parameters with infinite precision.</li>
-</ul>
+<ol type="1">
+<li>return a kumi tuple of the values of the cumulated products of all <span class="tt">xs</span> converted to the element type of the common value of the <span class="tt">xs</span>.</li>
+<li>same as 1., using the tuple elements.</li>
+<li>same of 1. or 2., but the computation is made on upgraded elements.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;bit&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, -32.7f, 1.0f};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2f, 1.5f, -100.834f, <a class="code hl_variable" href="group__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2};</div>
+<div class="line">  kumi::tuple t{1.0f, 2.0f, 3.0f, 10000.0f};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;t                                    &quot;</span> &lt;&lt; t                                    &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod(t)                      &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>(t)                      &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod(1.0, 2.0, 3.0, 10000.0) &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>(1.0, 2.0, 3.0, 10000.0) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod(t)                      &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>(t)                      &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod[eve::widen](t)          &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>[eve::widen](t)          &lt;&lt; std::endl;</div>
+<div class="line">  std::array&lt;std::int16_t, 4&gt; a{1, 2, 3, 10000};</div>
+<div class="line">  <span class="keyword">auto</span> ta = std::bit_cast&lt;kumi::result::fill_t&lt;4, std::int16_t&gt;&gt;(a);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod[eve::saturated](ta)     &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>[eve::saturated](ta)    &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod(ta)                     &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>(ta)                    &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod[eve::widen](ta)         &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>[eve::widen](ta)        &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
+<div class="line">  <span class="keyword">auto</span> e = wf_t([](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__arithmetic_ga044101b90ab7a146067d8cb1f76889eb.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a>(<span class="keywordtype">float</span>(i)); });</div>
+<div class="line">  kumi::tuple wt{wf_t(e), 2.0f, 30000.0f, 10000.0f};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;wt                                   &quot;</span> &lt;&lt; wt                                  &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cumprod(wt)                     &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga54ac3f9e05632d33033e149d784627f1">eve::cumprod</a>(wt)                    &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_div_approx(wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> [d, e] = <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a>(1.0f, 3.0f);</div>
-<div class="line">  std::cout &lt;&lt; std::setprecision(15);</div>
-<div class="line">  std::cout &lt;&lt; double(d) &lt;&lt; <span class="stringliteral">&quot; + &quot;</span> &lt;&lt; double(e) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; double(e)+double(d) &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; 1.0/3.0 &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; 1.0f/3.0f &lt;&lt;  std::endl;</div>
-<div class="line">  std::cout &lt;&lt;  1.0/3.0 - (double(e)+double(d))&lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="line">};</div>
+<div class="ttc" id="agroup__core__arithmetic_ga044101b90ab7a146067d8cb1f76889eb_html_ga044101b90ab7a146067d8cb1f76889eb"><div class="ttname"><a href="group__core__arithmetic_ga044101b90ab7a146067d8cb1f76889eb.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition</b> sqr.hpp:98</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
