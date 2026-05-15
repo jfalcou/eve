@@ -100,15 +100,15 @@ namespace eve
         constexpr _::local_converter_t<cve_t> s_cvt{};
 
         constexpr bool is_callable = !std::same_as< _::ignore
-                                                  , decltype(base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...))
+                                                  , decltype(base_t::behavior(arch, opts, s_cvt(x), s_cvt(xs)...))
                                                   >;
 
-        if constexpr (is_callable)     return base_t::adapt_call(arch, opts, s_cvt(x), s_cvt(xs)...);
+        if constexpr (is_callable)     return base_t::behavior(arch, opts, s_cvt(x), s_cvt(xs)...);
         else
         {
-          constexpr bool is_convertible = requires{ func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...); };
+          constexpr bool is_convertible = requires{ base_t::behavior(arch, opts, cv_t{x}, cv_t{xs}...); };
 
-          if constexpr(is_convertible) return func_t::deferred_call(arch, opts, cv_t{x}, cv_t{xs}...);
+          if constexpr(is_convertible) return base_t::behavior(arch, opts, cv_t{x}, cv_t{xs}...);
           else                         return _::ignore{};
         }
       }
@@ -131,16 +131,9 @@ namespace eve
     template<callable_options O, typename T, typename... Ts>
     EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
-      if constexpr (match_option<condition_key, O, ignore_none_>)
-      {
-        constexpr bool supports_call = !std::same_as<_::ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-        static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
-        return adapt_call(arch, opts, x0, xs...);
-      }
-      else
-      {
-        return base_t::behavior(arch, opts, x0, xs...);
-      }
+      constexpr bool supports_call = !std::same_as<_::ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
+      static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
+      return adapt_call(arch, opts, x0, xs...);
     }
   };
 }
