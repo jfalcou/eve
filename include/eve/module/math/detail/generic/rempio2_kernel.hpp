@@ -159,8 +159,8 @@ namespace eve::_
       };
       using i32_ts  = _::conditional_t<std::endian::native == std::endian::little, i32_tl, i32_tb>;
       using ui64_ts = std::uint64_t;
-      using ui64_tv = as_wide_t<uint64_t, cardinal_t<T>>;
-      using i32_tv  = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
+      using ui64_tv = as_wide_t<uint64_t, cardinal_v<T>>;
+      using i32_tv  = as_wide_t<int32_t, 2 * cardinal_v<T>>;
       using i32_t   = _::conditional_t<scalar_value<T>, i32_ts, i32_tv>;
       using ui64_t  = _::conditional_t<scalar_value<T>, ui64_ts, ui64_tv>;
 
@@ -285,9 +285,9 @@ namespace eve::_
       using ui_ts  = std::uint32_t;
       using wui_ts = std::uint64_t;
       using i_ts   = std::int64_t;
-      using ui_tv  = as_wide_t<uint32_t, cardinal_t<T>>;
-      using wui_tv = as_wide_t<uint64_t, cardinal_t<T>>;
-      using i_tv   = as_wide_t<int64_t, cardinal_t<T>>;
+      using ui_tv  = as_wide_t<uint32_t, cardinal_v<T>>;
+      using wui_tv = as_wide_t<uint64_t, cardinal_v<T>>;
+      using i_tv   = as_wide_t<int64_t, cardinal_v<T>>;
       using i_t    = _::conditional_t<scalar_value<T>, i_ts, i_tv>;
       using ui_t   = _::conditional_t<scalar_value<T>, ui_ts, ui_tv>;
       using wui_t  = _::conditional_t<scalar_value<T>, wui_ts, wui_tv>;

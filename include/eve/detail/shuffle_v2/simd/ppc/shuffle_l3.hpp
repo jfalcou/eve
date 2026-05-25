@@ -19,7 +19,7 @@ ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
   return vec_perm(x.storage(), y.storage(), table.storage());
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
@@ -49,7 +49,7 @@ shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -61,7 +61,7 @@ shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -80,7 +80,7 @@ shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)

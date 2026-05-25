@@ -13,25 +13,25 @@
 
 namespace eve::_
 {
-template<callable_options O, scalar_value T, typename N>
+template<callable_options O, scalar_value T, size N>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, wide<T, N> vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  return __riscv_vmerge_tu(vt, vf, vt, c, N::value);
+  return __riscv_vmerge_tu(vt, vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, typename N, scalar_value U>
+template<callable_options O, scalar_value T, size N, scalar_value U>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
   if constexpr( !std::same_as<T, U> ) return if_else(c, static_cast<T>(vt), vf);
-  else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
-  else return __riscv_vmerge(vf, vt, c, N::value);
+  else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N);
+  else return __riscv_vmerge(vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, typename N>
+template<callable_options O, scalar_value T, size N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 if_else_( EVE_REQUIRES(rvv_),
                           O const&,
@@ -41,10 +41,10 @@ EVE_FORCEINLINE logical<wide<T, N>>
                         ) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  auto needed_vt = __riscv_vmand(c, vt, N::value);
-  auto neg_mask  = __riscv_vmnot(c, N::value);
-  auto needed_vf = __riscv_vmand(neg_mask, vf, N::value);
-  return __riscv_vmor(needed_vt, needed_vf, N::value);
+  auto needed_vt = __riscv_vmand(c, vt, N);
+  auto neg_mask  = __riscv_vmnot(c, N);
+  auto needed_vf = __riscv_vmand(neg_mask, vf, N);
+  return __riscv_vmor(needed_vt, needed_vf, N);
 }
 
 }

@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
@@ -25,7 +25,7 @@ namespace eve::_
     else                                                            return wide<T,N>(svmul_x(sve_true<T>(), a, b));
   }
 
-  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires(sve_abi<abi_t<T, N>> && !O::contains(mod))
   {

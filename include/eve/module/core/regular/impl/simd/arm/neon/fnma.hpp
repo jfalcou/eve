@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, typename N, callable_options O>
+template<arithmetic_scalar_value T, size N, callable_options O>
 EVE_FORCEINLINE wide<T, N>
                 fnma_(EVE_REQUIRES(neon128_),
                       O const& o,

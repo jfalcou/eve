@@ -11,18 +11,18 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, typename N>
+template<arithmetic_scalar_value T, size N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 rvv_true()
 {
   static constexpr size_t ratio = rvv_logical_ratio_v<T, N>;
-  if constexpr( ratio == 1 ) return __riscv_vmset_m_b1(N::value);
-  else if constexpr( ratio == 2 ) return __riscv_vmset_m_b2(N::value);
-  else if constexpr( ratio == 4 ) return __riscv_vmset_m_b4(N::value);
-  else if constexpr( ratio == 8 ) return __riscv_vmset_m_b8(N::value);
-  else if constexpr( ratio == 16 ) return __riscv_vmset_m_b16(N::value);
-  else if constexpr( ratio == 32 ) return __riscv_vmset_m_b32(N::value);
-  else if constexpr( ratio == 64 ) return __riscv_vmset_m_b64(N::value);
+  if constexpr( ratio == 1 ) return __riscv_vmset_m_b1(N);
+  else if constexpr( ratio == 2 ) return __riscv_vmset_m_b2(N);
+  else if constexpr( ratio == 4 ) return __riscv_vmset_m_b4(N);
+  else if constexpr( ratio == 8 ) return __riscv_vmset_m_b8(N);
+  else if constexpr( ratio == 16 ) return __riscv_vmset_m_b16(N);
+  else if constexpr( ratio == 32 ) return __riscv_vmset_m_b32(N);
+  else if constexpr( ratio == 64 ) return __riscv_vmset_m_b64(N);
 }
 
 }

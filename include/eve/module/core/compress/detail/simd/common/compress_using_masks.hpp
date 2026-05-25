@@ -122,7 +122,7 @@ namespace eve::_
     }
   };
 
-  template <typename T, typename N>
+  template <typename T, auto N>
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
@@ -133,9 +133,9 @@ namespace eve::_
     else
     {
       using u_t   = eve::as_integer_t<T, unsigned>;
-      using bytes = typename wide<T, N>::template rebind<std::uint8_t, fixed<sizeof(T) * N()>>;
+      using bytes = typename wide<T, N>::template rebind<std::uint8_t, sizeof(T) * N>;
 
-      if constexpr ( N() == 4 )
+      if constexpr ( N == 4 )
       {
         u_t const* pattern_p = pattern_4_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
@@ -148,7 +148,7 @@ namespace eve::_
 
         return v;
       }
-      else if constexpr ( N() == 8 )
+      else if constexpr ( N == 8 )
       {
         u_t const* pattern_p = pattern_8_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
@@ -165,7 +165,7 @@ namespace eve::_
     }
   }
 
-  template <typename T, typename N>
+  template <typename T, auto N>
   EVE_FORCEINLINE
   auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
   {
@@ -176,18 +176,18 @@ namespace eve::_
     }
   }
 
-  template <typename T, typename N, typename U>
+  template <typename T, auto N, typename U>
   constexpr bool compress_using_masks_should_aggregate()
   {
-    constexpr std::size_t reg_size = max_scalar_size_v<T> * N();
+    constexpr std::size_t reg_size = max_scalar_size_v<T> * N;
 
-         if constexpr ( N() > 8                               ) return true;
+         if constexpr ( N > 8                                 ) return true;
     else if constexpr ( reg_size <= 16                        ) return false;
     else if constexpr ( reg_size <= 32 && current_api == avx2 ) return false;
     else                                                        return true;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, typename N>
+  template<relative_conditional_expr C, typename T, typename U, auto N>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
                              C c,
@@ -202,7 +202,7 @@ namespace eve::_
       return kumi::tuple<decltype(cur)> { cur };
     }
     // In all of these cases we should remove ignore
-    else if constexpr ( (treat_like_aggregate || N() != 4) && !C::is_complete )
+    else if constexpr ( (treat_like_aggregate || N != 4) && !C::is_complete )
     {
       mask = mask && c.mask(as(mask));
       return compress_using_masks_(EVE_RETARGET(cpu_), ignore_none, v, mask);
@@ -217,12 +217,12 @@ namespace eve::_
 
       return kumi::cat(lr, hr);
     }
-    else if constexpr ( N() == 1 )
+    else if constexpr ( N == 1 )
     {
       kumi::tuple cur{ v, (std::ptrdiff_t) mask.get(0) };
       return kumi::tuple<decltype(cur)> { cur };
     }
-    else if constexpr ( N() == 2 )
+    else if constexpr ( N == 2 )
     {
       auto to_left     = eve::slide_left( v, eve::index<1> );
       auto compressed  = eve::if_else(mask, v, to_left );
@@ -230,13 +230,13 @@ namespace eve::_
       kumi::tuple cur{ compressed, eve::count_true(mask) };
       return kumi::tuple<decltype(cur)> { cur };
     }
-    else if constexpr ( N() == 4 )
+    else if constexpr ( N == 4 )
     {
       auto [num, count] = compress_store_swizzle_mask_num[c](mask);
       kumi::tuple cur { compress_using_masks_shuffle(v, num), count };
       return kumi::tuple<decltype(cur)> { cur };
     }
-    else if constexpr ( N() == 8 )
+    else if constexpr ( N == 8 )
     {
       // Reduce variations: in each pair from 4 to 3. 10 and 01 become the same.
       // Two last elements don't matter.

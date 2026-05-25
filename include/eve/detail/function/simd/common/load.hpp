@@ -90,7 +90,7 @@ namespace eve::_
     auto cast = []<typename Ptr, typename Sub>(Ptr p, as<Sub>)
     {
       using type = value_type_t<Ptr>;
-      using a_p = eve::aligned_ptr<const type, cardinal_t<Sub>>;
+      using a_p = eve::aligned_ptr<const type, Sub::size()>;
       if constexpr (std::is_pointer_v<Ptr>) return p;
       else                                  return a_p{p.get()};
     };
@@ -111,7 +111,7 @@ namespace eve::_
   // Load impl
   //================================================================================================
 
-  template<_::data_source DS, typename T, typename N>
+  template<_::data_source DS, typename T,  size N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
     using w_src = wide_value_type_t<DS>;
@@ -138,7 +138,7 @@ namespace eve::_
       if constexpr (C::has_alternative) return Wide {cx.alternative};
       else                              return Wide {};
     }
-    else if constexpr (instance_of<DS, aligned_ptr>)
+    else if constexpr (is_aligned_ptr_v<DS>)
     {
       constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= DS::alignment();
 

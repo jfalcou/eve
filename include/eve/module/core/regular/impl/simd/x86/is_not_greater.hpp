@@ -20,7 +20,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_not_greater_(EVE_REQUIRES(sse2_),
                                                       O          const & opts,
                                                       wide<T, N> const &a,
@@ -64,7 +64,7 @@ namespace eve::_
   }
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, arithmetic_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_not_greater_(EVE_REQUIRES(avx512_),
                                                       C          const& mask,
                                                       O          const& opts,

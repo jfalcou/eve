@@ -28,7 +28,7 @@ namespace eve::_
     else if constexpr (simd_value<U>)
     {
       // T scalar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
-      return bit_and(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
+      return bit_and(bit_cast(b, as<wide<T, U::size()>>{}), a);
     }
     else
     {

@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-template<relative_conditional_expr C, typename T, typename U, typename N>
+template<relative_conditional_expr C, typename T, typename U, size N>
 EVE_FORCEINLINE auto
 compress_(EVE_SUPPORTS(sse2_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 requires(current_api < ssse3)
@@ -21,7 +21,7 @@ requires(current_api < ssse3)
   return compress_using_switch[c](v, mask);
 }
 
-template<relative_conditional_expr C, typename T, typename U, typename N>
+template<relative_conditional_expr C, typename T, typename U, size N>
 EVE_FORCEINLINE auto
 compress_(EVE_SUPPORTS(avx2_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 requires(N() >= 4 && supports_bmi_well)

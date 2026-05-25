@@ -97,11 +97,11 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
   else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename T, auto N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::as_wide_t<T, eve::fixed<N>>;
+  using Wide = eve::as_wide_t<T, N>;
 
   Wide input;
 
@@ -114,11 +114,11 @@ run(auto expected_level, eve::pattern_t<I...> p = {})
   run_one_case(expected_level(std::array {I...}), input, eve::lane<G>, p);
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename T, auto N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run2(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::as_wide_t<T, eve::fixed<N * 2>>;
+  using Wide = eve::as_wide_t<T, N * 2>;
 
   Wide input;
 
@@ -134,7 +134,7 @@ run2(auto expected_level, eve::pattern_t<I...> p = {})
   run2_one_case(expected_level(std::array {I...}), x, y, eve::lane<G>, p);
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+template<typename T, auto N, std::ptrdiff_t G, auto tests>
 void
 run_all(auto expected_level)
 {
@@ -143,7 +143,7 @@ run_all(auto expected_level)
   }(std::make_index_sequence<tests.size()> {});
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+template<typename T, auto N, std::ptrdiff_t G, auto tests>
 void
 run2_all(auto expected_level)
 {
@@ -152,7 +152,7 @@ run2_all(auto expected_level)
   }(std::make_index_sequence<tests.size()> {});
 }
 
-template<int i, typename T, std::ptrdiff_t N, std::ptrdiff_t G>
+template<int i, typename T, auto N, std::ptrdiff_t G>
 void
 run_all_4_element_test(auto expected_l)
 {
@@ -163,7 +163,7 @@ run_all_4_element_test(auto expected_l)
   run<T, N, G, i0, i1, i2, i3>(expected_l);
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G>
+template<typename T, auto N, std::ptrdiff_t G>
 void
 run_all_4_element_tests(auto expected_l)
 {
@@ -274,17 +274,17 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... extra_args_g
   named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, extra_args_gen...);
 }
 
-template<bool supports_G_eq_T_Size, typename T, typename N, typename NamedShuffle>
+template<bool supports_G_eq_T_Size, typename T, auto N, typename NamedShuffle>
 void
 named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto extra_args_gen)
 {
-  if( N::value == 1 && !supports_G_eq_T_Size )
+  if( N == 1 && !supports_G_eq_T_Size )
   {
     TTS_PASS();
     return;
   }
 
-  using wide2 = eve::wide<T, eve::fixed<N::value * 2>>;
+  using wide2 = eve::wide<T, N * 2>;
 
   {
     wide2 xy {[](int i, int) { return i + 1; }};
@@ -302,11 +302,11 @@ named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto e
 }
 
 #if !defined(EVE_NO_SIMD)
-template<int l, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<int l, typename T, auto N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 debug_call_shuffle_l_directly()
 {
-  using w_t = eve::as_wide_t<T, eve::fixed<N>>;
+  using w_t = eve::as_wide_t<T, N>;
 
   auto p = eve::_::expanded_pattern<w_t, G, I...>;
   auto g = eve::lane<G>;

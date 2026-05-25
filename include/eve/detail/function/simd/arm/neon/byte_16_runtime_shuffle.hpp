@@ -9,14 +9,14 @@
 
 namespace eve::_
 {
-  template <typename N>
+  template <size N>
   EVE_FORCEINLINE
   wide<std::uint8_t, N> byte_16_runtime_shuffle_(EVE_SUPPORTS(neon128_)
                                                , wide<std::uint8_t, N> what
                                                , wide<std::uint8_t, N> pattern) noexcept
-    requires ( N() <= 16 )
+    requires ( N <= 16 )
   {
-         if constexpr ( N() <= 8                       ) return vtbl1_u8  (what, pattern);
+         if constexpr ( N <= 8                         ) return vtbl1_u8  (what, pattern);
     else if constexpr ( eve::current_api == eve::asimd ) return vqtbl1q_u8(what, pattern);
     else
     {

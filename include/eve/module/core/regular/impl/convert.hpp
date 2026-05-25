@@ -30,7 +30,7 @@ namespace eve::_
     }
     else
     {
-      using out_t = _::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
+      using out_t = _::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_v<T>>>;
       out_t res;
 
       auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
@@ -42,7 +42,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename U, typename N>
+  template<callable_options O, typename U, size N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t> && !O::contains(saturated))
   {
@@ -62,7 +62,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t> && !O::contains(saturated))
   {
@@ -137,7 +137,7 @@ namespace eve::_
           }
           else if constexpr (std::is_unsigned_v<in_ea_t> || floating_scalar_value<in_ea_t>)
           {
-            using i_t = as<logical<wide<as_integer_t<in_ea_t, signed>, cardinal_t<In>>>>;
+            using i_t = as<logical<wide<as_integer_t<in_ea_t, signed>, In::size()>>>;
             return convert(bit_cast(v0, i_t {}), tgt);
           }
           else if constexpr (std::is_unsigned_v<out_ae_t> || floating_scalar_value<out_ae_t>)
@@ -153,8 +153,7 @@ namespace eve::_
       }
       else // wide
       {
-        using N = cardinal_t<In>;
-
+        constexpr auto N   = cardinal_v<In>;
         constexpr auto c_i = categorize<In>();
         constexpr auto c_o = categorize<wide<Out, N>>();
 

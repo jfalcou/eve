@@ -103,11 +103,11 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
       if (!eve::is_aligned(f,eve::cardinal_t<T>{})) continue;
 
-      run_all_ignores(eve::aligned_ptr<e_t, eve::cardinal_t<T>>(f));
+      run_all_ignores(eve::aligned_ptr<e_t, eve::cardinal_v<T>>(f));
 
       if (!eve::is_aligned(f, typename eve::cardinal_t<T>::combined_type{})) continue;
 
-      run_all_ignores(eve::aligned_ptr<e_t, typename eve::cardinal_t<T>::combined_type>(f));
+      run_all_ignores(eve::aligned_ptr<e_t, eve::cardinal_v<T> * 2>(f));
     }
   }
 }

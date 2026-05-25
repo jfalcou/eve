@@ -12,7 +12,7 @@
 
 //================================================================================================
 // Premade pattern generator
-template<std::ptrdiff_t G, std::ptrdiff_t I, std::ptrdiff_t N>
+template<std::ptrdiff_t G, std::ptrdiff_t I, size N>
 inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) { return I*G + i%G; } );
 
 //==================================================================================================

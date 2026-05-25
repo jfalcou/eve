@@ -24,7 +24,7 @@ namespace eve::_
 //================================================================================================
 // Wide to Logical
 //================================================================================================
-template<typename T, typename N>
+template<typename T, auto N>
 EVE_FORCEINLINE auto
 to_logical(wide<T, N> const& v) noexcept
 {
@@ -97,7 +97,7 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
     // Use the most full type to be sure to fill outside values of small wide with false
     using e_t   = eve::element_type_t<i_t>;
     using abi_t = typename i_t::abi_type;
-    using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t>>;
+    using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t>>;
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
     {

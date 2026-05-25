@@ -74,8 +74,8 @@ TTS_CASE_TPL("Check with edge cases", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   constexpr auto tgt = eve::as<T>{};
-  eve::wide<T, eve::fixed<4>> in{ static_cast<T>(-1), eve::inf(tgt), eve::minf(tgt), eve::nan(tgt) };
-  eve::wide<T, eve::fixed<4>> ref{ eve::nan(tgt), eve::inf(tgt), eve::nan(tgt), eve::nan(tgt) };
+  eve::wide<T, 4> in{ static_cast<T>(-1), eve::inf(tgt), eve::minf(tgt), eve::nan(tgt) };
+  eve::wide<T, 4> ref{ eve::nan(tgt), eve::inf(tgt), eve::nan(tgt), eve::nan(tgt) };
 
   // regression test for bug exposed in tgamma doc example (at least one minf and one nan)
   TTS_IEEE_EQUAL(eve::tgamma(in), ref);

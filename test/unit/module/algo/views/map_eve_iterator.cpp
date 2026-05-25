@@ -45,11 +45,10 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using N = eve::fixed<T::size()>;
-    using aligned_p = eve::aligned_ptr<U, N>;
+    using aligned_p = eve::aligned_ptr<U, T::size()>;
 
-    using u_it = eve::algo::ptr_iterator<U*, N>;
-    using a_it = eve::algo::ptr_iterator<aligned_p, N>;
+    using u_it = eve::algo::ptr_iterator<U*, T::size()>;
+    using a_it = eve::algo::ptr_iterator<aligned_p, T::size()>;
 
     u_it u_f(f);
     u_it u_l(l);
@@ -79,14 +78,13 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
 
 TTS_CASE("eve.algo map iterator non const to const")
 {
-  using N = eve::fixed<4>;
-  using aligned_p  = eve::aligned_ptr<int      , N>;
-  using aligned_cp = eve::aligned_ptr<int const, N>;
+  using aligned_p  = eve::aligned_ptr<int      , 4>;
+  using aligned_cp = eve::aligned_ptr<int const, 4>;
 
-  using u_it  = eve::views::map_iterator<eve::algo::ptr_iterator<int*      , N>, load_op, store_op>;
-  using uc_it = eve::views::map_iterator<eve::algo::ptr_iterator<int const*, N>, load_op, store_op>;
-  using a_it  = eve::views::map_iterator<eve::algo::ptr_iterator<aligned_p , N>, load_op, store_op>;
-  using ac_it = eve::views::map_iterator<eve::algo::ptr_iterator<aligned_cp, N>, load_op, store_op>;
+  using u_it  = eve::views::map_iterator<eve::algo::ptr_iterator<int*      , 4>, load_op, store_op>;
+  using uc_it = eve::views::map_iterator<eve::algo::ptr_iterator<int const*, 4>, load_op, store_op>;
+  using a_it  = eve::views::map_iterator<eve::algo::ptr_iterator<aligned_p , 4>, load_op, store_op>;
+  using ac_it = eve::views::map_iterator<eve::algo::ptr_iterator<aligned_cp, 4>, load_op, store_op>;
 
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<u_it, uc_it>) );
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, ac_it>) );

@@ -17,7 +17,7 @@
 namespace eve::_
 {
 
-  template <typename U, typename N>
+  template <typename U, size N>
   struct do_compress_bmi_avx2
   {
     top_bits<logical<wide<U, N>>> mask;
@@ -116,7 +116,7 @@ namespace eve::_
     }
   };
 
-  template <typename U, typename N>
+  template <typename U, size N>
   struct do_compress_bmi_avx512
   {
     top_bits<logical<wide<U, N>>> mask;
@@ -158,7 +158,7 @@ namespace eve::_
     }
   };
 
-  template<typename T, typename N> constexpr bool compress_bmi_should_split()
+  template<typename T, auto N> constexpr bool compress_bmi_should_split()
   {
     std::size_t max_field_size = kumi::max_flat( kumi::as_tuple_t<T> {}, [](auto m) { return sizeof(m); });
 
@@ -168,7 +168,7 @@ namespace eve::_
     else                  return false;
   }
 
-  template<typename T, typename U, typename N>
+  template<typename T, typename U, size N>
   EVE_FORCEINLINE
   auto compress_using_bmi_(EVE_SUPPORTS(avx2_),
                            wide<T, N> v,

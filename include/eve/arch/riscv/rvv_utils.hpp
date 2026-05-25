@@ -15,26 +15,26 @@
 namespace eve::_
 {
 // natural lmul if > 0, frac otherwise
-template<plain_scalar_value scalar_type, typename cardinal>
+template<plain_scalar_value scalar_type, std::ptrdiff_t Cardinal>
 constexpr auto rvv_lmul_v = []
 {
   constexpr std::ptrdiff_t m1_len       = __riscv_v_fixed_vlen;
   constexpr std::ptrdiff_t min_len      = m1_len * sizeof(scalar_type) / 8;
-  std::ptrdiff_t           expected_len = sizeof(scalar_type) * 8 * cardinal::value;
+  std::ptrdiff_t           expected_len = sizeof(scalar_type) * 8 * Cardinal;
   std::ptrdiff_t           reg_len      = std::max(min_len, expected_len);
   if( reg_len >= m1_len ) return static_cast<int>(reg_len / m1_len);
   else return -static_cast<int>(m1_len / reg_len);
 }();
 
-template<plain_scalar_value scalar_type, typename cardinal>
+template<plain_scalar_value scalar_type, std::ptrdiff_t Cardinal>
 constexpr auto rvv_logical_ratio_v = []
 {
-  auto           lmul         = rvv_lmul_v<scalar_type, cardinal>;
+  auto           lmul         = rvv_lmul_v<scalar_type, Cardinal>;
   constexpr auto element_size = sizeof(scalar_type) * 8;
   return lmul > 0 ? element_size / lmul : element_size * (-lmul);
 }();
 
 template<plain_scalar_value T>
-using rvv_m1_wide = wide<T, fixed<__riscv_v_fixed_vlen / 8 / sizeof(T)>>;
+using rvv_m1_wide = wide<T, __riscv_v_fixed_vlen / 8 / sizeof(T)>;
 }
 #endif

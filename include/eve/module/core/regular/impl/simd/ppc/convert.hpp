@@ -15,7 +15,7 @@
 namespace eve::_
 {
 
-template<typename N, arithmetic_scalar_value U>
+template<arithmetic_scalar_value U, size N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vsx_), wide<double, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<double, N>>
 {
@@ -27,7 +27,7 @@ requires ppc_abi<abi_t<double, N>>
   else return map(convert, v, tgt);
 }
 
-template<typename N, arithmetic_scalar_value U>
+template<arithmetic_scalar_value U, size N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vmx_), wide<float, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<float, N>>
 {
@@ -39,7 +39,7 @@ requires ppc_abi<abi_t<float, N>>
   else return map(convert, v, tgt);
 }
 
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, size N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vmx_), wide<T, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<T, N>>
 {

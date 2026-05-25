@@ -12,8 +12,8 @@ TTS_CASE_TPL("Check converting_iterator", algo_test::selected_types)
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);
 
-  eve::wide<std::int8_t  , eve::fixed<T::size()>> char_values ([](int i, int) { return i; });
-  eve::wide<std::uint64_t, eve::fixed<T::size()>> int64_values([](int i, int) { return i; });
+  eve::wide<std::int8_t  , T::size()> char_values ([](int i, int) { return i; });
+  eve::wide<std::uint64_t, T::size()> int64_values([](int i, int) { return i; });
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, decltype(v){0}); };
 
   auto run_test_one_pair = [&](auto f, auto l) {
@@ -33,11 +33,10 @@ TTS_CASE_TPL("Check converting_iterator", algo_test::selected_types)
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using N = eve::fixed<T::size()>;
-    using aligned_p = eve::aligned_ptr<U, N>;
+    using aligned_p = eve::aligned_ptr<U, T::size()>;
 
-    using u_it = eve::algo::ptr_iterator<U*, N>;
-    using a_it = eve::algo::ptr_iterator<aligned_p, N>;
+    using u_it = eve::algo::ptr_iterator<U*, T::size()>;
+    using a_it = eve::algo::ptr_iterator<aligned_p, T::size()>;
 
     u_it u_f(f);
     u_it u_l(l);

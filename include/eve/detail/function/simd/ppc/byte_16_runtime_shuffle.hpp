@@ -9,7 +9,7 @@
 
 namespace eve::_
 {
-  template <typename N>
+  template <size N>
   EVE_FORCEINLINE
   wide<std::uint8_t, N> byte_16_runtime_shuffle_(EVE_SUPPORTS(vmx_)
                                                , wide<std::uint8_t, N> what

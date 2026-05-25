@@ -97,7 +97,7 @@ namespace _
     static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
 
     //! logical of half size (or 1 if size is 1)
-    using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
+    using half_logical = logical<wide<scalar_type, half_size>>;
 
    private:
     EVE_FORCEINLINE static auto storage_type_impl()
@@ -429,7 +429,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
 
     //  Use the most full type to be sure to fill outside values of small wide with false
     using abi_t     = typename bits_wide::abi_type;
-    using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
+    using fit_wide  = wide<bits_et, expected_cardinal_v<bits_et, abi_t>>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
     static constexpr auto element_mask = _::set_lower_n_bits<bits_et>(bits_per_element);
@@ -478,7 +478,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     else
     {
       using bits_et   = element_type_t<bits_wide>;
-      using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
+      using fit_wide  = logical<wide<bits_et, expected_cardinal_v<bits_et, abi_t>>>;
       fit_wide mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
       return call_simd_cast( mask, as<Logical>{} );
     }

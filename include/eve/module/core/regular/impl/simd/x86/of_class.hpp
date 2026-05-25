@@ -16,7 +16,7 @@
 namespace eve::_
 {
 
-  template<std::uint8_t I, floating_scalar_value T, typename N, callable_options O>
+  template<std::uint8_t I, floating_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> of_class_(EVE_REQUIRES(avx512_),
                                                   O const& opts,
                                                   wide<T, N> a,
@@ -57,7 +57,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-  template<std::uint8_t I, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
+  template<std::uint8_t I, conditional_expr C, floating_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE auto of_class_(EVE_REQUIRES(avx512_),
                                    C const& cx,
                                    O const& o,

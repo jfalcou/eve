@@ -82,7 +82,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 
     using I = decltype(processed.begin());
 
-    using sum_wide_t        = wide<U, iterator_cardinal_t<I>>;
+    using sum_wide_t        = wide<U, iterator_cardinal_v<I>>;
     sum_wide_t init_as_wide = eve::as_value(add_zero.second, as<sum_wide_t> {});
     init_as_wide.set(0, init);
 

@@ -21,7 +21,7 @@ namespace eve::_
 //================================================================================================
 // convert[saturated]: floating -> U
 //================================================================================================
-template<floating_scalar_value In, typename N, arithmetic_scalar_value Out>
+template<floating_scalar_value In, size N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, N> v0, as<Out> tgt) noexcept
   requires arm_abi<abi_t<Out, N>>
 {
@@ -54,7 +54,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
-  template<typename N, arithmetic_scalar_value U>
+  template<size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<double, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<double, N>>
   {
@@ -77,7 +77,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: float32 -> U
 //================================================================================================
-  template<typename N, arithmetic_scalar_value U>
+  template<size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<float, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<float, N>>
   {
@@ -86,7 +86,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
     constexpr auto t_i32 = as<std::int32_t> {};
     constexpr auto t_u32 = as<std::uint32_t> {};
 
-    if constexpr( N {} <= 2 )
+    if constexpr( N <= 2 )
     {
       if constexpr( c_o == category::float64x2 && api64 ) return vcvt_f64_f32(v);
       else if constexpr( c_o == category::int64x2   && api64 ) return convert(convert(v, as<double> {}), tgt);
@@ -95,14 +95,14 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
       else if constexpr( c_o == category::uint32x2           ) return vcvt_u32_f32(v);
       else if constexpr( std::same_as<U, eve::float16_t> )
       {
-        if constexpr (_::supports_fp16_vector_conversion && (N{} == 2)) return vcvt_f16_f32(simd_cast(v, as<wide<float>>{}));
+        if constexpr (_::supports_fp16_vector_conversion && (N == 2)) return vcvt_f16_f32(simd_cast(v, as<wide<float>>{}));
         else                                                                 return map(convert, v, tgt);
       }
       else if constexpr( sizeof(U) == 8                      ) return map(convert, v, tgt);
       else if constexpr( match(c_o, category::signed_   )    ) return convert(convert(v, t_i32), tgt);
       else if constexpr( match(c_o, category::unsigned_ )    ) return convert(convert(v, t_u32), tgt);
     }
-    else if constexpr( N {} == 4 )
+    else if constexpr( N == 4 )
     {
       constexpr auto t_i16 = as<std::int16_t> {};
       constexpr auto t_u16 = as<std::uint16_t> {};
@@ -125,25 +125,25 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
   //================================================================================================
   // convert: float16 -> U
   //================================================================================================
-  template<typename N, arithmetic_scalar_value U>
+  template<size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<eve::float16_t, N> v, as<U> tgt) noexcept
     requires arm_abi<abi_t<eve::float16_t, N>>
   {
     if constexpr (std::same_as<U, float>
                   || ((std::same_as<U, int16_t> || std::same_as<U, uint16_t>) && _::supports_fp16_vector_ops))
     {
-      if constexpr (N{} <= 2)
+      if constexpr (N <= 2)
       {
-        auto tmp = convert(simd_cast(v, as<wide<eve::float16_t, fixed<4>>>{}), as<U>{});
+        auto tmp = convert(simd_cast(v, as<wide<eve::float16_t, 4>>{}), as<U>{});
         return slice(tmp, lower_).storage();
       }
-      else if constexpr (N{} <= 4)
+      else if constexpr (N <= 4)
       {
         if      constexpr (std::same_as<U, float>)    return vcvt_f32_f16(v);
         else if constexpr (std::same_as<U, int16_t>)  return vcvt_s16_f16(v);
         else if constexpr (std::same_as<U, uint16_t>) return vcvt_u16_f16(v);
       }
-      else if constexpr (N{} <= 8)
+      else if constexpr (N <= 8)
       {
         if      constexpr (std::same_as<U, int16_t>)  return vcvtq_s16_f16(v);
         else if constexpr (std::same_as<U, uint16_t>) return vcvtq_u16_f16(v);
@@ -157,7 +157,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int64 -> U
 //================================================================================================
-  template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 8)
   {
@@ -184,7 +184,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-  template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
   {
@@ -210,7 +210,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 
 //================================================================================================
 // convert: (u)int16 -> U
-  template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 2)
   {
@@ -222,7 +222,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 
     if constexpr ( std::same_as<double, U>                                 ) return convert(convert(v, f32_t {}), tgt);
     else if constexpr ( sizeof(U) == 8                                          ) return convert_integers_chain(v, tgt);
-    else if constexpr ( N {} == 8 && sizeof(U) == 4                             ) return convert_slice(v, tgt);
+    else if constexpr ( N == 8 && sizeof(U) == 4                             ) return convert_slice(v, tgt);
     else if constexpr ( c_i == category::int16x4  && c_o == category::float32x4 ) return convert(convert(v, i32_t {}), tgt);
     else if constexpr ( c_i == category::uint16x4 && c_o == category::float32x4 ) return convert(convert(v, u32_t {}), tgt);
     else if constexpr ( std::same_as<U, eve::float16_t> )
@@ -241,14 +241,14 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
     else if constexpr ( c_i == category::int16x4  && c_o == category::int32x4   ) return vmovl_s16(v);
     else if constexpr ( c_i == category::uint16x8 && c_o == category::uint8x8   ) return vmovn_u16(v);
     else if constexpr ( c_i == category::uint16x4 && c_o == category::uint32x4  ) return vmovl_u16(v);
-    else if constexpr ( N {} < 4 )
+    else if constexpr ( N < 4 )
     {
-      return wide<U, N>(convert(wide<T, fixed<4>> {v.storage()}, tgt).slice(lower_).storage());
+      return wide<U, N>(convert(wide<T, 4> {v.storage()}, tgt).slice(lower_).storage());
     }
     else
     {
       // Zero is optimized out by the compiler
-      wide<T, fixed<4>> base = v.storage(), z {0};
+      wide<T, 4> base = v.storage(), z {0};
       return wide<U, N> {convert(eve::combine(base, z), tgt).storage()};
     }
   }
@@ -256,7 +256,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-  template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 1)
   {

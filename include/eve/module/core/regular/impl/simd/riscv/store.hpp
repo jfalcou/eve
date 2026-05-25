@@ -15,32 +15,32 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
 riscv_store(logical<wide<T, N>> mask, wide<T, N> v, Ptr p)
 requires rvv_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  if constexpr( match(c, category::size8_) ) return __riscv_vse8(mask, p, v, N::value);
-  if constexpr( match(c, category::size16_) ) return __riscv_vse16(mask, p, v, N::value);
-  if constexpr( match(c, category::size32_) ) return __riscv_vse32(mask, p, v, N::value);
-  if constexpr( match(c, category::size64_) ) return __riscv_vse64(mask, p, v, N::value);
+  if constexpr( match(c, category::size8_) ) return __riscv_vse8(mask, p, v, N);
+  if constexpr( match(c, category::size16_) ) return __riscv_vse16(mask, p, v, N);
+  if constexpr( match(c, category::size32_) ) return __riscv_vse32(mask, p, v, N);
+  if constexpr( match(c, category::size64_) ) return __riscv_vse64(mask, p, v, N);
 }
 
-template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
 riscv_store(wide<T, N> v, Ptr p)
 requires rvv_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  if constexpr( match(c, category::size8_) ) return __riscv_vse8(p, v, N::value);
-  if constexpr( match(c, category::size16_) ) return __riscv_vse16(p, v, N::value);
-  if constexpr( match(c, category::size32_) ) return __riscv_vse32(p, v, N::value);
-  if constexpr( match(c, category::size64_) ) return __riscv_vse64(p, v, N::value);
+  if constexpr( match(c, category::size8_) ) return __riscv_vse8(p, v, N);
+  if constexpr( match(c, category::size16_) ) return __riscv_vse16(p, v, N);
+  if constexpr( match(c, category::size32_) ) return __riscv_vse32(p, v, N);
+  if constexpr( match(c, category::size64_) ) return __riscv_vse64(p, v, N);
 }
 
 // Regular store
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void store_impl(rvv_, C const& cx, wide<T, N> v, Ptr ptr)
   requires (rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {

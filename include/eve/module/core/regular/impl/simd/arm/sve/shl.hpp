@@ -12,21 +12,21 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N, integral_scalar_value S>
+  template<callable_options O, typename T, auto N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, wide<S, N> s) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     return svlsl_x(sve_true<T>(), v, convert(s, as<as_integer_t<T, unsigned>>{}));
   }
 
-  template<callable_options O, typename T, typename N, integral_scalar_value S>
+  template<callable_options O, typename T, auto N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(sve_), O const&, wide<T,N> v, S s) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     return svlsl_x(sve_true<T>(), v, wide<as_integer_t<T, unsigned>, N>{s});
   }
 
-  template<callable_options O, typename T, typename N, std::ptrdiff_t S>
+  template<callable_options O, typename T, auto N, std::ptrdiff_t S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(sve_), O const&, wide<T,N> v, index_t<S>) noexcept
     requires sve_abi<abi_t<T, N>>
   {

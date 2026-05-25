@@ -11,7 +11,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
   {
     using L = logical<wide<T, N>>;
@@ -61,7 +61,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
   {
     return last_true.behavior(current_api, opts, to_logical(m));

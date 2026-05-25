@@ -17,7 +17,7 @@ namespace eve::_
   template<typename T> struct fec_box { using type = always<T>; };
 
   template<typename Type, regular_abi ABI>
-  constexpr std::ptrdiff_t find_expected_cardinal()
+  constexpr size find_expected_cardinal()
   {
     if constexpr(eve::product_type<Type>)
     {

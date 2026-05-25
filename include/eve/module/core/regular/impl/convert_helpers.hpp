@@ -74,7 +74,7 @@ struct maybe_saturated
 template<value In, scalar_value Out>
 EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_unused]] as<logical<Out>> tgt) noexcept
 {
-  using out_t = as_wide_t<logical<Out>, cardinal_t<In>>;
+  using out_t = as_wide_t<logical<Out>, cardinal_v<In>>;
 
   if constexpr( has_aggregated_abi_v<In> )
   {
@@ -84,7 +84,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_un
   else
   {
     using s_in_t  = std::make_signed_t<typename logical<In>::bits_type::value_type>;
-    using v_int_t = typename logical<In>::bits_type::template rebind<s_in_t, cardinal_t<out_t>>;
+    using v_int_t = typename logical<In>::bits_type::template rebind<s_in_t, cardinal_v<out_t>>;
     using s_out_t = std::make_signed_t<typename logical<Out>::bits_type>;
 
     // Just convert the bit and bitcast back to the proper output
@@ -100,7 +100,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_un
 template<typename In, typename Out>
 EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
-  using out_t = as_wide_t<Out, cardinal_t<In>>;
+  using out_t = as_wide_t<Out, cardinal_v<In>>;
 
   if constexpr( has_aggregated_abi_v<In> && !has_emulated_abi_v<out_t> )
   {
@@ -137,11 +137,11 @@ EVE_FORCEINLINE auto convert_integers_chain(In v0, as<Out> tgt) noexcept
     using next_t = make_integer_t<sizeof(in_t) * 2, s_t>;
     return convert(convert(v0, as<next_t> {}), tgt);
   }
-  else { return bit_cast(v0, as<wide<Out, typename In::cardinal_type>> {}); }
+  else { return bit_cast(v0, as<wide<Out, In::size()>> {}); }
 }
 
 // Convert helpers : large->small integers via a single shuffle
-template<integral_scalar_value T, integral_scalar_value U, typename N>
+template<integral_scalar_value T, integral_scalar_value U, size N>
 EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 {
   static_assert((sizeof(T) / sizeof(U) >= 2),
@@ -157,14 +157,14 @@ EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
         return (idx < c) ? idx : i;
       }};
 
-  using c_t = fixed<N::value * sizeof(T) / sizeof(U)>;
-  return bit_cast(shuffle(bit_cast(v, as<wide<U, c_t>> {}), shuffler), as<wide<U, N>> {});
+  constexpr auto c = N * sizeof(T) / sizeof(U);
+  return bit_cast(shuffle(bit_cast(v, as<wide<U, c>> {}), shuffler), as<wide<U, N>> {});
 }
 
-template<typename T, typename N, typename U>
+template<typename T, auto N, typename U>
 EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
 {
-  if constexpr( N::value > 1 )
+  if constexpr( N > 1 )
   {
     auto [l, h] = v.slice();
     return wide<U, N>(convert(l, tgt), convert(h, tgt));
@@ -173,13 +173,13 @@ EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
 }
 
 // Convert integer from 2^n -> 2^n+1
-template<typename T, typename N, typename U>
+template<typename T, auto N, typename U>
 EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)
 {
   static_assert((sizeof(U) / sizeof(T) == 2),
                 "[eve::convert] - Interleave conversion requires ration of 2:1 between types");
 
-  if constexpr( N::value == 1 ) { return wide<U, N> {static_cast<U>(v.get(0))}; }
+  if constexpr( N == 1 ) { return wide<U, N> {static_cast<U>(v.get(0))}; }
   else
   {
     auto pieces = [](auto w)
@@ -197,8 +197,8 @@ EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)
     };
 
     auto [l, h] = pieces(v);
-    eve::wide<U, N> that {eve::bit_cast(l, eve::as<eve::wide<U, typename N::split_type>> {}),
-                          eve::bit_cast(h, eve::as<eve::wide<U, typename N::split_type>> {})};
+    eve::wide<U, N> that {eve::bit_cast(l, eve::as<eve::wide<U, N / 2>> {}),
+                          eve::bit_cast(h, eve::as<eve::wide<U, N / 2>> {})};
     return that;
   }
 }

@@ -10,7 +10,7 @@
 namespace eve::_
 {
 
-template<typename N, std::ptrdiff_t... I>
+template<size N, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 x86_pshuvb(pattern_t<I...>, wide<std::uint8_t, N> x)
 {
@@ -20,7 +20,7 @@ x86_pshuvb(pattern_t<I...>, wide<std::uint8_t, N> x)
   else return _mm512_shuffle_epi8(x, mask);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
 {
@@ -38,7 +38,7 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
 {
@@ -68,7 +68,7 @@ shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
@@ -85,7 +85,7 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle;
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -104,7 +104,7 @@ shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -134,7 +134,7 @@ shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)

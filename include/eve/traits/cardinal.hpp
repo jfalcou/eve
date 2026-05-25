@@ -53,10 +53,10 @@ namespace eve
   struct cardinal : fixed<1>
   {};
 
-  template<typename Type, typename Size>
-  struct cardinal<wide<Type, Size>> : Size
+  template<typename Type, std::ptrdiff_t Size>
+  struct cardinal<wide<Type, Size>> : fixed<Size>
   {
-     using type = Size;
+    using type = fixed<Size>;
   };
 
   template<typename Type>

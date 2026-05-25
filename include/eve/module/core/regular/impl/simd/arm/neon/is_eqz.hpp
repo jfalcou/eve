@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
+  template<arithmetic_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_eqz_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept requires arm_abi<abi_t<T, N>>
   {

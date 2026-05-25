@@ -11,7 +11,7 @@
 #include <eve/wide.hpp>
 #include <bit>
 
-template<std::ptrdiff_t Shift, std::ptrdiff_t N>
+template<std::ptrdiff_t Shift, size N>
 inline constexpr
 auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
                                                 {

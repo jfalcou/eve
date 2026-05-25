@@ -18,7 +18,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -47,7 +47,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {

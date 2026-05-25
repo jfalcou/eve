@@ -26,7 +26,7 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
   using e_t = eve::element_type_t<T>;
   using lanes_t = eve::cardinal_t<T>;
 
-  auto [ldata ,lidx ] = logical_page<v_t, lanes_t>();
+  auto [ldata ,lidx ] = logical_page<v_t, lanes_t::value>();
 
   auto l_ptr        = eve::as_aligned(&ldata[lidx], lanes_t{});
   auto l_const_ptr  = eve::as_aligned((e_t const*)(&ldata[lidx]), lanes_t{});

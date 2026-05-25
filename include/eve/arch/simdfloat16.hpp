@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<typename N>
+  template<size N>
   EVE_NOINLINE auto emulated_simd_fp16_to_fp32(wide<eve::float16_t, N> v) noexcept
   {
     auto u16      = bit_cast(v, as<wide<uint16_t, N>>{});
@@ -44,7 +44,7 @@ namespace eve::_
     return bit_cast(result, as<wide<float, N>>{});
   }
 
-  template<typename N>
+  template<size N>
   EVE_NOINLINE auto emulated_simd_fp32_to_fp16(wide<float, N> v) noexcept
   {
     auto bits     = bit_cast(v, as<wide<uint32_t, N>>{});

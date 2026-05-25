@@ -24,7 +24,7 @@ namespace eve
       return EVE_DISPATCH_CALL(ptr, idx);
     }
 
-    template<arithmetic_value T, integral_value U, typename N>
+    template<arithmetic_value T, integral_value U, size N>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, U> operator()(aligned_ptr<T, N> ptr, U idx) const noexcept
     {
       static_assert(_::validate_mask_for<decltype(this->options()), as_wide_as_t<T, U>>(),

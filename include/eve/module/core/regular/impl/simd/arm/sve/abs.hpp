@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
+  template<arithmetic_scalar_value T, size N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> abs_(EVE_REQUIRES(sve_),
                                   C          const& mask,
                                   O          const&,
@@ -30,7 +30,7 @@ namespace eve::_
     else                                                return svabs_m(src,expand_mask(mask, as(v)),v);
   }
 
-  template<arithmetic_scalar_value T, typename N, callable_options O>
+  template<arithmetic_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N> abs_(EVE_REQUIRES(sve_),
                                   O          const& opts,
                                   wide<T, N> const& v) noexcept

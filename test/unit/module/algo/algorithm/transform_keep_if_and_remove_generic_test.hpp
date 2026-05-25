@@ -50,8 +50,8 @@ template <typename T, typename Algo>
 void remove_generic_test_page_ends(eve::as<T>, Algo alg)
 {
   using e_t     = eve::element_type_t<T>;
-  using card_t  = eve::fixed<4096/ sizeof(e_t)>;
-  std::vector<e_t, eve::aligned_allocator<e_t, card_t>> page(card_t::value, e_t{0});
+  constexpr auto card = 4096/ sizeof(e_t);
+  std::vector<e_t, eve::aligned_allocator<e_t, card>> page(card, e_t{0});
 
   constexpr int elements_to_test  = std::min( int(T::size() * 10), 300);
 

@@ -13,7 +13,7 @@ namespace eve::_
 {
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), C c, logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), C c, logical<wide<T, 4>> mask)
     requires (current_api < avx512) && (sizeof(T) <= 4)
   {
     if constexpr (sizeof(T) == 4 && eve::current_api >= sse4_1)
@@ -27,7 +27,7 @@ namespace eve::_
     }
     else
     {
-      using bits_type = typename logical<wide<T, fixed<4>>>::bits_type;
+      using bits_type = typename logical<wide<T, 4>>::bits_type;
       mask = mask && c.mask(eve::as(mask));
 
       bits_type sad_mask {0x81, 0x82, 0x84, 0x80};
@@ -43,11 +43,11 @@ namespace eve::_
 
   template<typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<8>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, 8>> mask)
     requires (current_api < avx512)
   {
     // aggregated
-    if constexpr ( eve::has_aggregated_abi_v<wide<T, fixed<8>>> )
+    if constexpr ( eve::has_aggregated_abi_v<wide<T, 8>> )
     {
       using half_t = make_integer_t<sizeof(T) / 2, unsigned>;
       auto half = eve::convert(mask, eve::as<logical<half_t>>{});
@@ -66,7 +66,7 @@ namespace eve::_
       // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
       // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
 
-      using u8_32 = typename wide<T, fixed<8>>::template rebind<std::uint8_t, eve::fixed<32>>;
+      using u8_32 = typename wide<T, 8>::template rebind<std::uint8_t, eve::fixed<32>>;
       auto as_bytes = eve::bit_cast(mask, as<logical<u8_32>>{});
 
       std::uint32_t mmask = top_bits{as_bytes}.as_int();
@@ -105,8 +105,8 @@ namespace eve::_
 
   template<typename T>
   EVE_FORCEINLINE auto
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<16>>> mask)
-    requires (current_api < avx512) && x86_abi<abi_t<T, fixed<16>>> // For aggregated 16 elements
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, 16>> mask)
+    requires (current_api < avx512) && x86_abi<abi_t<T, 16>> // For aggregated 16 elements
   // just do the base case.
   {
     if constexpr ( sizeof(T) == 2 )

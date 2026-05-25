@@ -291,3 +291,39 @@ namespace eve::_
   template <bool test, typename T, typename U>
   using conditional_t = conditional_impl_<test>:: template type<T, U>;
 }
+
+namespace eve
+{
+  namespace _
+  {
+    template<typename T>
+    constexpr auto extract_constant_value(T v)
+    {
+      if constexpr( requires{v.value;}) return v.value;
+      else return v;
+    }
+
+    template<typename T, auto v>
+    consteval auto rebuild_constant_value()
+    {
+      if constexpr( requires{T{v};}) return T{v};
+      else return T{};
+    }
+  }
+
+  template<typename T, auto V>
+  struct as_type_t
+  {
+    using                     type  = T;
+    static constexpr    auto  value = V;
+    consteval operator  type() const
+    {
+      return _::rebuild_constant_value<type,value>();
+    }
+  };
+
+  template<auto Value>
+  inline constexpr as_type_t < decltype(Value)
+                              , Value
+                              > as_type = {};
+}

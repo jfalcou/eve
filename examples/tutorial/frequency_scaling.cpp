@@ -35,7 +35,7 @@ auto find_use_4_ints(std::span<const int> a)
   -> std::span<const int>::iterator
 {
   return eve::algo::find_if[eve::algo::force_cardinal<4>](a,
-    [](eve::wide<int, eve::fixed<4>> x) { return x < 0; });
+    [](eve::wide<int, 4> x) { return x < 0; });
 }
 //! [frequency_scaling_code]
 

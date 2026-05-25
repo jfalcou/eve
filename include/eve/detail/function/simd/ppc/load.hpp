@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, auto N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(vmx_, Ptr ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -54,7 +54,7 @@ namespace eve::_
     }
   }
 
-  template<typename T, typename U, typename N, typename Lanes>
+  template<typename T, typename U, size N, std::ptrdiff_t Lanes>
   EVE_FORCEINLINE wide<T, N> load_impl(vmx_, aligned_ptr<U, Lanes> ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>, wide<T, N>>
   {

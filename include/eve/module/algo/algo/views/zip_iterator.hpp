@@ -232,7 +232,7 @@ namespace eve::algo::views
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
-      template <callable_options O, typename N>
+      template <callable_options O, std::ptrdiff_t N>
       EVE_FORCEINLINE auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
@@ -250,7 +250,7 @@ namespace eve::algo::views
         }
       }
 
-      template <relative_conditional_expr C, typename N>
+      template <relative_conditional_expr C, std::ptrdiff_t N>
       EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::store_equivalent_,
                                                    C c,
                                                    wide<value_type, N> v,

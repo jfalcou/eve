@@ -12,7 +12,7 @@
 namespace eve::_
 {
 
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, auto N, std::ptrdiff_t G>
 auto
 shuffle_l2_svdup(P, eve::fixed<G>, eve::wide<T, N> x)
 {
@@ -44,7 +44,7 @@ shuffle_l2_svrev(P, eve::fixed<G>, T x)
   }
 }
 
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, auto N, std::ptrdiff_t G>
 auto
 shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
 {
@@ -64,7 +64,7 @@ shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
   }
 }
 
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, auto N, std::ptrdiff_t G>
 auto
 shuffle_l2_svext_self(P, eve::fixed<G>, eve::wide<T, N> x)
 {
@@ -78,7 +78,7 @@ shuffle_l2_svext_self(P, eve::fixed<G>, eve::wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 {
@@ -96,7 +96,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
   else return no_matching_shuffle;
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
 {
@@ -104,7 +104,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
   else return no_matching_shuffle;
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -117,7 +117,7 @@ shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
@@ -131,7 +131,7 @@ shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)

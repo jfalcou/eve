@@ -22,8 +22,8 @@ struct fixture
 
   auto aligned_begin() const
   {
-    using ap = eve::aligned_ptr<const int, eve::fixed<4>>;
-    return eve::algo::ptr_iterator<ap, eve::fixed<4>> {ap(data.begin())};
+    using ap = eve::aligned_ptr<const int, 4>;
+    return eve::algo::ptr_iterator<ap, 4> {ap(data.begin())};
   }
 
   auto aligned_end() const { return aligned_begin() + data.size(); }
@@ -117,7 +117,7 @@ struct ignore
 
   std::ptrdiff_t count() const
   {
-    auto as = eve::as<eve::wide<int, eve::fixed<4>>> {};
+    auto as = eve::as<eve::wide<int, 4>> {};
     return std::visit([&](auto elem) { return elem.count(as); }, body);
   }
 };

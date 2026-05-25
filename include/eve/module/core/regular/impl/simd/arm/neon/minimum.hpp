@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE auto minimum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
@@ -48,16 +48,16 @@ namespace eve::_
 
         using type = wide<T, N>;
 
-        if constexpr( N::value == 1 ) return v;
-        else if constexpr( N::value == 2 ) return type(eve::min(v.get(0), v.get(1)));
+        if constexpr( N == 1 ) return v;
+        else if constexpr( N == 2 ) return type(eve::min(v.get(0), v.get(1)));
         else if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
         {
-          if( N::value == expected_cardinal_v<T, abi_t<T, N>> )
+          if( N == expected_cardinal_v<T, abi_t<T, N>> )
           {
             wide<T, N> s = pairwise_min(v, v);
-            if constexpr( N::value >= 2 ) s = pairwise_min(s, s);
-            if constexpr( N::value >= 4 ) s = pairwise_min(s, s);
-            if constexpr( N::value >= 8 ) s = pairwise_min(s, s);
+            if constexpr( N >= 2 ) s = pairwise_min(s, s);
+            if constexpr( N >= 4 ) s = pairwise_min(s, s);
+            if constexpr( N >= 8 ) s = pairwise_min(s, s);
             return s;
           }
           else { return butterfly_reduction(v, eve::min); }
@@ -65,9 +65,9 @@ namespace eve::_
         else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
         {
           auto [l, h] = v.slice();
-          if constexpr( N::value >= 4 ) l = pairwise_min(l, h);
-          if constexpr( N::value >= 8 ) l = pairwise_min(l, l);
-          if constexpr( N::value >= 16 ) l = pairwise_min(l, l);
+          if constexpr( N >= 4 ) l = pairwise_min(l, h);
+          if constexpr( N >= 8 ) l = pairwise_min(l, l);
+          if constexpr( N >= 16 ) l = pairwise_min(l, l);
           l = pairwise_min(l, l);
 
           return wide<T, N>(l, l);
@@ -84,8 +84,8 @@ namespace eve::_
         using ec_t = expected_cardinal_t<T, abi_t<T, N>>;
         constexpr auto fp16v = _::supports_fp16_vector_ops;
 
-        if constexpr( N::value == 1 ) return v.get(0);
-        else if constexpr( N::value < ec_t::value ) return butterfly_reduction(v, eve::min).get(0);
+        if constexpr( N == 1 ) return v.get(0);
+        else if constexpr( N < ec_t::value ) return butterfly_reduction(v, eve::min).get(0);
         else if constexpr( c == category::float64x2 ) return vminvq_f64(v);
         else if constexpr( c == category::float32x2 ) return vminv_f32(v);
         else if constexpr( c == category::float32x4 ) return vminvq_f32(v);

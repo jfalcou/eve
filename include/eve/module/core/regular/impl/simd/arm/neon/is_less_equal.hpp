@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE logical<wide<T, N>> is_less_equal_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires arm_abi<abi_t<T, N>>
   {

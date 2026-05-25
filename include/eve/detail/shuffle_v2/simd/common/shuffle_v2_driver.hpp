@@ -34,8 +34,7 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
   auto shuffled = kumi::map(
       [&]<std::ptrdiff_t... I>(pattern_t<I...>)
       {
-        using N1 = eve::fixed<(std::ptrdiff_t)sizeof...(I)>;
-        using T1 = typename T::template rescale<N1>;
+        using T1 = typename T::template rescale<sizeof...(I)>;
         T1 res{};
 
         int res_i = 0;
@@ -191,8 +190,7 @@ shuffle_v2_try_common_l0_l1(NativeSelector        selector,
   // l1
   else if constexpr( idxm::is_zero(idxs) )
   {
-    using N1 = eve::fixed<pattern_t<I...>::size() * G>;
-    using T1 = typename T::template rescale<N1>;
+    using T1 = typename T::template rescale<pattern_t<I...>::size() * G>;
     return kumi::tuple {T1 {typename T1::value_type(0)}, eve::index<1>};
   }
   else return shuffle_v2_free_masking(selector, p, g, xs);
@@ -214,8 +212,7 @@ shuffle_v2_simplify_pattern(NativeSelector        selector,
   if constexpr( decltype(l)::value == -1 ) return r;
   else
   {
-    using N1 = eve::fixed<sizeof...(I) * G>;
-    using T1 = typename T::template rescale<N1>;
+    using T1 = typename T::template rescale<sizeof...(I) * G>;
     return kumi::tuple {eve::bit_cast(shuffled, as<T1> {}), l};
   }
 }
@@ -261,8 +258,7 @@ shuffle_v2_driver_wide_logicals(NativeSelector        selector,
     if constexpr( decltype(l)::value == -1 ) return r;
     else
     {
-      using N1 = typename decltype(bits)::cardinal_type;
-      using L1 = typename T::template rescale<N1>;
+      using L1 = typename T::template rescale<decltype(bits)::size()>;
       return kumi::make_tuple(eve::bit_cast(bits, as<L1> {}), l);
     }
   }
@@ -435,8 +431,7 @@ struct shuffle_v2_driver_bundle
     return kumi::map(
         []<typename Field, typename... Fields>(kumi::tuple<Field, Fields...> field_res)
         {
-          using N1 = typename Field::cardinal_type;
-          using T1 = typename Bundle::template rescale<N1>;
+          using T1 = typename Bundle::template rescale<Field::size()>;
           return T1 {field_res};
         },
         field_results);
@@ -517,8 +512,7 @@ shuffle_v2_driver_construct_result(kumi::tuple<T, Ts...> shuffled)
   else
   {
     using e_t = kumi::tuple<element_type_t<T>, element_type_t<Ts>...>;
-    using N   = typename T::cardinal_type;
-    return eve::as_wide_t<e_t, N> {shuffled};
+    return eve::as_wide_t<e_t, T::size()> {shuffled};
   }
 }
 

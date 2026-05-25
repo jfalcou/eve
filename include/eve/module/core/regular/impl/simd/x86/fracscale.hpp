@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<auto S, floating_scalar_value T, typename N, callable_options O>
+  template<auto S, floating_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_REQUIRES(avx512_),
                                         O          const & o,
                                         wide<T, N> const & a0,
@@ -41,7 +41,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<auto S, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
+  template<auto S, conditional_expr C, floating_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fracscale_(EVE_REQUIRES(avx512_),
                                         C          const &mask,
                                         O          const &o,

@@ -19,10 +19,10 @@ namespace eve::_
   {
     return as_wide_t<T>{v};
   }
-  template<callable_options O, scalar_value T, std::ptrdiff_t N>
+  template<callable_options O, scalar_value T, size N>
   EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v, fixed<N>) noexcept
   {
-    return as_wide_t<T, fixed<N>>{v};
+    return as_wide_t<T, N>{v};
   }
 
   //==============================================================================================
@@ -41,10 +41,10 @@ namespace eve::_
     else { return Wide {v.get(Index)}; }
   }
 
-  template<callable_options O, simd_value Wide, std::ptrdiff_t N>
+  template<callable_options O, simd_value Wide, size N>
   EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index, fixed<N>) noexcept
   {
-    using that_t = as_wide_t<Wide, fixed<N>>;
+    using that_t = as_wide_t<Wide, N>;
 
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {

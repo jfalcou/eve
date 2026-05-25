@@ -57,10 +57,10 @@ TTS_CASE("Check remove spaces") {
 
 TTS_CASE("Slice Example") {
   // On most platforms is 2 registers or even 4.
-  using i32x16 = eve::wide<int, eve::fixed<16>>;
+  using i32x16 = eve::wide<int, 16>;
 
   // half type
-  using i32x8  = eve::wide<int, eve::fixed<8>>;
+  using i32x8  = eve::wide<int, 8>;
 
   i32x16 ints {0,  1,   2,   3,
                4,  5,   6,   7,

@@ -19,7 +19,7 @@ namespace eve::_
 //================================================================================================
 // Wide to Logical
 //================================================================================================
-template<typename T, typename N>
+template<typename T, auto N>
 EVE_FORCEINLINE auto
 to_logical(wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
 {

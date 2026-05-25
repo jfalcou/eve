@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-template<scalar_value T, typename N, callable_options O>
+template<scalar_value T, size N, callable_options O>
 EVE_FORCEINLINE auto
 any_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
 requires sve_abi<abi_t<T, N>>

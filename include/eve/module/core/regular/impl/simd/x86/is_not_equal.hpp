@@ -19,7 +19,7 @@
 
 namespace eve::_
 {
-  template <callable_options O, arithmetic_scalar_value T, typename N>
+  template <callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_not_equal_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires x86_abi<abi_t<T, N>>
@@ -81,7 +81,7 @@ namespace eve::_
     }
   }
 
-  template <callable_options O, arithmetic_scalar_value T, typename N>
+  template <callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_not_equal_(EVE_REQUIRES(sse2_), O const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept
     requires x86_abi<abi_t<T, N>>
@@ -90,7 +90,7 @@ namespace eve::_
     else                                         return bit_cast(v.bits() ^ w.bits(), as(v));
   }
 
-  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE logical<wide<T, N>> is_not_equal_(EVE_REQUIRES(avx512_),
                                                          C          const &mask,
                                                          O          const &opts,

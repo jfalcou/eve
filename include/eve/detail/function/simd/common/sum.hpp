@@ -17,7 +17,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
                             ) noexcept
     requires (O::contains(splat))
@@ -26,7 +26,7 @@ namespace eve::_
 
     if constexpr (std::same_as<C, ignore_none_>)
     {
-            if constexpr( N::value == 1 )               return v;
+            if constexpr( N == 1 )                      return v;
       else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::_::sum(v) );
       else  if constexpr( is_aggregated_v<abi_t<T, N>>)
       {
@@ -53,15 +53,15 @@ namespace eve::_
       if constexpr (scalar_value<T>) return v;
       else
       {
-        using N   = typename T::cardinal_type;
+        constexpr auto N = T::size();
         using r_t = element_type_t<T>;
 
-          if constexpr( N::value == 1 )         return v.get(0);
+          if constexpr( N == 1 )         return v.get(0);
         else  if constexpr( is_emulated_v<abi_t<r_t, N>> )
         {
           r_t r = v.get(0);
 
-          for_<1, 1, N::value>([&](auto i) {
+          for_<1, 1, N>([&](auto i) {
             r += v.get(i);
           });
 

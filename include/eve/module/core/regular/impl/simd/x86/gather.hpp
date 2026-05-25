@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename U, integral_scalar_value T, typename N>
+  template<callable_options O, typename U, integral_scalar_value T, size N>
   EVE_FORCEINLINE wide<U, N> gather_(EVE_REQUIRES(avx2_), O const& opts, U const* p, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {

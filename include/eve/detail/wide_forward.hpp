@@ -19,7 +19,7 @@ namespace eve
   inline namespace EVE_ABI_NAMESPACE
   {
     // Wrapper for SIMD registers holding arithmetic types with compile-time size
-    template<arithmetic_scalar_value Type, typename Size = expected_cardinal_t<Type>>
+    template<arithmetic_scalar_value Type, size Size = expected_cardinal_v<Type>>
     struct wide;
   }
 }

@@ -38,16 +38,16 @@ namespace eve::_
   EVE_FORCEINLINE auto slice_impl(P const &a, Slice s) noexcept
   {
     using abi_t   = typename P::abi_type;
-    using card_t  = typename P::cardinal_type;
     using value_t = typename P::value_type;
+    constexpr auto card = P::size();
 
-    using sub_t = as_wide_t<value_t, typename card_t::split_type>;
+    using sub_t = as_wide_t<value_t, card / 2>;
 
     if constexpr( is_emulated_v<abi_t> )
     {
       auto eval = [&](auto... I) { return sub_t {a.get(I + (Slice::value * sub_t::size()))...}; };
 
-      return apply<card_t::value / 2>(eval);
+      return apply<card / 2>(eval);
     }
     else if constexpr( is_aggregated_v<abi_t> )
     {
@@ -62,12 +62,12 @@ namespace eve::_
   //================================================================================================
   // Logical slices
   //================================================================================================
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
-      using l_t   = logical<wide<T, typename N::split_type>>;
+      using l_t   = logical<wide<T, N / 2>>;
       using s_t   = typename l_t::storage_type;
       using t_t   = std::array<l_t, 2>;
       auto [l, h] = a.mask().slice();
@@ -79,12 +79,12 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, typename N, typename Slice>
+  template<callable_options O, typename T, auto N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
-      using l_t = logical<wide<T, typename N::split_type>>;
+      using l_t = logical<wide<T, N / 2>>;
       using s_t = typename l_t::storage_type;
       return l_t{ bit_cast(a.mask().slice(s).storage(), as<s_t>()) };
     }
@@ -97,14 +97,14 @@ namespace eve::_
   //================================================================================================
   // Arithmetic slices
   //================================================================================================
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<callable_options O, arithmetic_scalar_value T, typename N, typename Slice>
+  template<callable_options O, arithmetic_scalar_value T, size N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, Slice s) noexcept
       requires non_native_abi<abi_t<T, N>>
   {

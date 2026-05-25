@@ -13,10 +13,10 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE logical<wide<T, N>> logical_and_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
     requires (rvv_abi<abi_t<T, N>>)
   {
-    return __riscv_vmand(a, b, N::value);
+    return __riscv_vmand(a, b, N);
   }
 }

@@ -42,7 +42,7 @@ namespace eve::_
   template<typename Pack, typename V0, typename... Vs>
   EVE_FORCEINLINE Pack make_aggregated(V0 v0, Vs... vs) noexcept
   {
-    using sub_t = typename Pack::template rescale<typename Pack::cardinal_type::split_type>;
+    using sub_t = typename Pack::template rescale<Pack::size() / 2>;
 
     // Package all values then split in 2 sides
     auto values = kumi::make_tuple(v0,vs...);
@@ -101,7 +101,7 @@ namespace eve::_
           };
 
           return type { val(v, N)... };
-        }(std::make_index_sequence<Target::cardinal_type::value>());
+        }(std::make_index_sequence<Target::size()>());
       }
       else
       {

@@ -12,7 +12,7 @@
 namespace eve::_
 {
 
-template<relative_conditional_expr C, typename T, typename U, typename N>
+template<relative_conditional_expr C, typename T, typename U, auto N>
 EVE_FORCEINLINE auto
 compress_(EVE_SUPPORTS(cpu_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 {
@@ -27,7 +27,7 @@ compress_(EVE_SUPPORTS(cpu_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexc
 template<typename L> struct compress_bits_to_logical
 {
   // unfortunately, we are not consistent with integer types
-  template<typename T, typename N, std::integral I>
+  template<typename T, auto N, std::integral I>
   EVE_FORCEINLINE auto operator()(kumi::tuple<wide<T, N>, I> bits_offset)
   {
     auto [bits, offset] = bits_offset;

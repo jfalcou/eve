@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<scalar_value T, typename N, callable_options O>
+  template<scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
   min_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> const& a, wide<T, N> const& b) noexcept
   requires sve_abi<abi_t<T, N>>

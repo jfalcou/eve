@@ -62,7 +62,7 @@ namespace eve::_
       using e_t = element_type_t<T>;
 
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.begin()));
+      store(value, eve::aligned_ptr<e_t, T::size()>(storage.begin()));
 
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});
@@ -124,7 +124,7 @@ namespace eve::_
     else store_common(current_api, opts[condition_key], value, dst);
   }
 
-  template<callable_options O, typename T, typename N, typename Dst>
+  template<callable_options O, typename T, auto N, typename Dst>
   EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
     if constexpr (std::is_pointer_v<Dst>)

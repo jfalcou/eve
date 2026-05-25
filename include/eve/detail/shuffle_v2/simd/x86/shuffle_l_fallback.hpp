@@ -32,7 +32,7 @@ shuffle_l_fallback_try_sse2_group_plus_u8(P)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
 {
@@ -65,7 +65,7 @@ shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
 }
 
 // sse2 char shuffles
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
@@ -79,7 +79,7 @@ requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size) && (P::g_size <= 2)
@@ -108,7 +108,7 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size)
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size) && (P::g_size <= 2)

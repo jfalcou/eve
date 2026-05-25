@@ -22,8 +22,8 @@ template<> struct eve::comparisons<udt::point>
 
 int main()
 {
-  eve::wide<float, eve::fixed<8>> a{1.2,2.3,3.4,4.5,5.6,6.7,7.8,8.9}, b{0.2,0.2,0.4,0.4,0.6,0.6,0.7,0.7};
-  eve::wide<int  , eve::fixed<8>> i{1,2,3,4,5,6,7,8};
+  eve::wide<float, 8> a{1.2,2.3,3.4,4.5,5.6,6.7,7.8,8.9}, b{0.2,0.2,0.4,0.4,0.6,0.6,0.7,0.7};
+  eve::wide<int  , 8> i{1,2,3,4,5,6,7,8};
 
   auto p1 = eve::zip(eve::as<udt::point>{}, i,a);
   auto p2 = eve::zip(eve::as<udt::point>{},i,b);

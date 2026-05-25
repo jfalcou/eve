@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, signed_scalar_value T, typename N>
+  template<callable_options O, signed_scalar_value T, size N>
   EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), O const& o, wide<T, N> v) noexcept
   requires(sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
@@ -22,7 +22,7 @@ namespace eve::_
     else                                                                             return svneg_x(sve_true<T>(),v);
   }
 
-  template<callable_options O, conditional_expr C, signed_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, signed_scalar_value T, size N>
   EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), C const& mask, O const& o, wide<T, N> v) noexcept
   requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {

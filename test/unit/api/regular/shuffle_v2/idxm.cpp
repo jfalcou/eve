@@ -110,7 +110,7 @@ TTS_CASE("validate_pattern")
 {
   auto test = [](auto g, auto p, bool expected)
   {
-    using T     = eve::wide<std::int32_t, eve::fixed<2>>;
+    using T     = eve::wide<std::int32_t, 2>;
     bool actual = eve::_::idxm::validate_pattern(g, p, eve::as<T> {}, eve::as<T> {});
     TTS_EQUAL(expected, actual) << "p: " << p << " g: " << g;
   };
@@ -175,7 +175,7 @@ TTS_CASE("shuffle_within_halves")
 
 TTS_CASE("shuffle_within_n")
 {
-  auto test = [](auto _in, std::ptrdiff_t n, bool expected)
+  auto test = [](auto _in, size N, bool expected)
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::shuffle_within_n(in, n);

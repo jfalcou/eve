@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
@@ -27,11 +27,11 @@ namespace eve::_
     {
       // s/uaddv is expensive on some architectures.
       // The scalar approach should be faster for <=2 lanes on Neoverse at least up to V3.
-      if constexpr (match_option<condition_key, O, ignore_none_> && (N::value <= 2))
+      if constexpr (match_option<condition_key, O, ignore_none_> && (N <= 2))
       {
         T r = v.get(0);
 
-        for_<1, 1, N::value>([&](auto i)
+        for_<1, 1, N>([&](auto i)
         {
           r += v.get(i);
         });

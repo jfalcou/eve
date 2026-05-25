@@ -37,7 +37,7 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
 
     if constexpr ( eve::has_aggregated_abi_v<T> )
     {
-      using half_t = as_wide_t<v_t, eve::fixed<T::size() / 2>>;
+      using half_t = as_wide_t<v_t, T::size() / 2>;
       half_t half = sve_true(cond, eve::as<half_t>{});
       return T{half, half};
     }

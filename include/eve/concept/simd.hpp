@@ -16,11 +16,20 @@ namespace eve
 {
   inline namespace EVE_ABI_NAMESPACE
   {
-    template<arithmetic_scalar_value Type, typename Size> struct wide;
+    template<arithmetic_scalar_value Type, size Size> struct wide;
+  }
+
+  namespace _
+  {
+    template<typename T>
+    struct is_wide_impl : std::false_type {};
+
+    template<arithmetic_scalar_value Type, size Size>
+    struct is_wide_impl<wide<Type, Size>> : std::true_type {};
   }
 
   template<typename T>
-  concept arithmetic_simd_value = _::instance_of<T,wide>;
+  concept arithmetic_simd_value = _::is_wide_impl<std::remove_cvref_t<T>>::value;
 
   template<typename T>
   concept plain_simd_value =  arithmetic_simd_value<T> && plain_scalar_value<element_type_t<T>>;

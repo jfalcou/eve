@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T, N>> v) noexcept
     requires std::same_as<abi_t<T, N>, arm_128_>
   {

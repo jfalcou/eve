@@ -14,7 +14,7 @@ namespace eve::_
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> p, std::size_t i) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -40,7 +40,7 @@ namespace eve::_
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE void insert_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>>& p, std::size_t i, auto v) noexcept
     requires x86_abi<abi_t<T, N>>
   {

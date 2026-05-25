@@ -9,7 +9,7 @@ int main()
   std::cout << eve::load(doubles.data() + 3) << "\n";
 
   std::vector<float> vec = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f};
-  std::cout << eve::load(vec.data(), eve::as<eve::wide<float, eve::fixed<4>>>{}) << "\n";
+  std::cout << eve::load(vec.data(), eve::as<eve::wide<float, 4>>{}) << "\n";
 
   std::list<float> lst = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f};
   std::cout << eve::load(lst.begin(), eve::lane<8>) << "\n";

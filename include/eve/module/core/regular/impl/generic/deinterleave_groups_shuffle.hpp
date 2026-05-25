@@ -33,11 +33,11 @@ inline constexpr auto is_deinterleave_groups_shuffle = []()
   return fixed<sz / (1 << (idx + 1))> {};
 }();
 
-template<typename T, typename N, std::ptrdiff_t G>
+template<typename T, auto N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
 {
-  using doubles = wide<double, fixed<N() * sizeof(T) / 8>>;
+  using doubles = wide<double, N * sizeof(T) / 8>;
 
   auto cast_v = bit_cast(v, eve::as<doubles> {});
 
@@ -46,25 +46,25 @@ deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
   return bit_cast(res, as(v));
 }
 
-template<typename N, std::ptrdiff_t G>
+template<size N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fixed<G>)
 {
-  using doubles = wide<double, typename N::split_type>;
+  using doubles = wide<double, N / 2>;
 
   auto cast_v0 = bit_cast(v0, eve::as<doubles> {});
   auto cast_v1 = bit_cast(v1, eve::as<doubles> {});
 
   auto res = deinterleave_groups_shuffle(cast_v0, cast_v1, lane<G / 2>);
 
-  return bit_cast(res, as<wide<float, typename N::combined_type>> {});
+  return bit_cast(res, as<wide<float, N * 2>> {});
 }
 
-template<typename T, typename N, std::ptrdiff_t G>
+template<typename T, auto N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) requires(G <= N())
+deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) requires(G <= N)
 {
-  if constexpr( G >= N() / 2 ) return v;
+  if constexpr( G >= N / 2 ) return v;
   else if constexpr( has_aggregated_abi_v<wide<T, N>> )
   {
     auto [v0, v1] = v.slice();
@@ -75,25 +75,25 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) require
     return wide<T, N>(
         kumi::map([](auto _v) { return deinterleave_groups_shuffle(_v, lane<G>); }, v));
   }
-  else { return basic_shuffle(v, deinterleave_groups_shuffle_pattern<G, N {}()>); }
+  else { return basic_shuffle(v, deinterleave_groups_shuffle_pattern<G, N>); }
 }
 
-template<typename T, typename N, std::ptrdiff_t G>
+template<typename T, auto N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
                              wide<T, N> v0,
                              wide<T, N> v1,
-                             fixed<G>) requires(G <= N() * 2)
+                             fixed<G>) requires(G <= N * 2)
 {
-  using res_t = wide<T, typename N::combined_type>;
+  using res_t = wide<T, N * 2>;
 
-  if constexpr( G >= N() ) return eve::combine(v0, v1);
+  if constexpr( G >= N ) return eve::combine(v0, v1);
   else if constexpr( is_bundle_v<abi_t<T, N>> )
   {
     return res_t(kumi::map(
         [](auto _v0, auto _v1) { return deinterleave_groups_shuffle(_v0, _v1, lane<G>); }, v0, v1));
   }
-  else if constexpr( !has_emulated_abi_v<wide<T, N>> && G == (N() / 2) )
+  else if constexpr( !has_emulated_abi_v<wide<T, N>> && G == (N / 2) )
   {
     auto [a0, b0] = v0.slice();
     auto [a1, b1] = v1.slice();
@@ -105,7 +105,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
   {
     v0 = deinterleave_groups_shuffle(v0, lane<G>);
     v1 = deinterleave_groups_shuffle(v1, lane<G>);
-    return deinterleave_groups_shuffle(v0, v1, lane<N() / 2>);
+    return deinterleave_groups_shuffle(v0, v1, lane<N / 2>);
   }
   else
   {
@@ -114,21 +114,21 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
     int o = 0;
 
     // Set first half
-    for( int i = 0; i != N(); i += 2 * G )
+    for( int i = 0; i != N; i += 2 * G )
     {
       for( int j = 0; j != G; ++j ) r.set(o++, v0.get(i + j));
     }
-    for( int i = 0; i != N(); i += 2 * G )
+    for( int i = 0; i != N; i += 2 * G )
     {
       for( int j = 0; j != G; ++j ) r.set(o++, v1.get(i + j));
     }
 
     // Set second half
-    for( int i = 0; i != N(); i += 2 * G )
+    for( int i = 0; i != N; i += 2 * G )
     {
       for( int j = 0; j != G; ++j ) r.set(o++, v0.get(i + j + G));
     }
-    for( int i = 0; i != N(); i += 2 * G )
+    for( int i = 0; i != N; i += 2 * G )
     {
       for( int j = 0; j != G; ++j ) r.set(o++, v1.get(i + j + G));
     }

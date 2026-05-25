@@ -73,7 +73,7 @@ run_test(auto traits, int offset, int length, std::vector<int> left, int stop_at
 
   std::fill(buf.begin(), buf.begin() + offset, '_');
 
-  auto f = eve::algo::ptr_iterator<char *, eve::fixed<4>> {buf.data() + offset};
+  auto f = eve::algo::ptr_iterator<char *, 4> {buf.data() + offset};
   auto l = f + length;
 
   auto          iteration = eve::algo::two_stage_iteration(traits, f, l);

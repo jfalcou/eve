@@ -8,13 +8,12 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-
 namespace eve::_
 {
 //================================================================================================
 // Logical to Bits
 //================================================================================================
-template<typename T, typename N>
+template<typename T, auto N>
 EVE_FORCEINLINE typename logical<wide<T, N>>::bits_type
 to_bits(rvv_ const&, logical<wide<T, N>> p) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -23,13 +22,13 @@ requires rvv_abi<abi_t<T, N>>
   auto z = wide<u_t, N>(0);
   auto a = allbits(as<wide<u_t, N>>{});
 
-  return __riscv_vmerge_tu(a.storage(), z.storage(), a.storage(), p.storage(), N::value);
+  return __riscv_vmerge_tu(a.storage(), z.storage(), a.storage(), p.storage(), N);
 }
 
 //================================================================================================
 // Logical to Mask
 //================================================================================================
-template<typename T, typename N>
+template<typename T, auto N>
 EVE_FORCEINLINE auto
 to_mask(rvv_ const&, logical<wide<T, N>> p) noexcept
 {

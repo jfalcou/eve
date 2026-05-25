@@ -14,7 +14,7 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<arithmetic_scalar_value T, size N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, fixed<G> g, logical<wide<T, N>> x)
 requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), g, p); }
@@ -25,7 +25,7 @@ requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), 
   return kumi::tuple {to_logical(shuffled), eve::index<decltype(l)::value + 4>};
 }
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<arithmetic_scalar_value T, size N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_),
                     pattern_t<I...>     p,

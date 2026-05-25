@@ -17,12 +17,12 @@ namespace eve::_
   //================================================================================================
   // 2*128-bits regular combine
   //================================================================================================
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, typename N::combined_type>
+  template<typename T, auto N>
+  EVE_FORCEINLINE wide<T, N * 2>
   combine(sse2_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    using t_t = wide<T, typename N::combined_type>;
+    using t_t = wide<T, N * 2>;
     using s_t = typename t_t::storage_type;
 
          if constexpr ( has_aggregated_abi_v<t_t>                 )  return s_t {l , h};
@@ -87,14 +87,14 @@ namespace eve::_
   //================================================================================================
   // Non aggregated, skinny logicals
   //================================================================================================
-  template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, typename N::combined_type>>
+  template<typename T, auto N>
+  EVE_FORCEINLINE logical<wide<T, N * 2>>
   combine ( avx512_ const & , logical<wide<T, N>> const &l
                             , logical<wide<T, N>> const &h
           ) noexcept
-      requires x86_abi<abi_t<T, typename N::combined_type>>
+      requires x86_abi<abi_t<T, N * 2>>
   {
-    using s_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
+    using s_t = typename logical<wide<T, N * 2>>::storage_type;
     using i_t  = typename s_t::type;
     return s_t{ static_cast<i_t>((h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong())};
   }

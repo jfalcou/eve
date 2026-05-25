@@ -14,14 +14,14 @@
 
 namespace eve::_
 {
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, auto N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(neon128_),
                wide<T, N> const& v,
                Pattern const&) requires arm_abi<abi_t<T, N>>
 {
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   constexpr Pattern q = {};
 
@@ -32,7 +32,7 @@ basic_shuffle_(EVE_SUPPORTS(neon128_),
     if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
     {
       using that_abi_t = typename that_t::abi_type;
-      using bytes_t    = typename that_t::template rebind<std::uint8_t, fixed<8>>;
+      using bytes_t    = typename that_t::template rebind<std::uint8_t, 8>;
       auto b0          = bit_cast(v, as<bytes_t>());
 
       if constexpr( std::same_as<that_abi_t, arm_64_> )
@@ -42,7 +42,7 @@ basic_shuffle_(EVE_SUPPORTS(neon128_),
       }
       else
       {
-        using out_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
+        using out_t = typename that_t::template rebind<std::uint8_t, 16>;
 
         auto    sp = pattern_view<sz / 2, sz, sz / 2>(q);
         bytes_t h  = vtbl1_u8(b0, as_bytes<wide<T, N>>(sp, as<bytes_t>()));
@@ -53,14 +53,14 @@ basic_shuffle_(EVE_SUPPORTS(neon128_),
     }
     else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
     {
-      using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
+      using bytes_t = typename that_t::template rebind<std::uint8_t, 16>;
       bytes_t b0    = bit_cast(v, as<bytes_t>());
       auto    mask  = as_bytes<that_t>(q, as<bytes_t>());
 
       using that_abi_t = typename that_t::abi_type;
       if constexpr( std::same_as<that_abi_t, arm_64_> )
       {
-        using out_t    = typename that_t::template rebind<std::uint8_t, fixed<8>>;
+        using out_t    = typename that_t::template rebind<std::uint8_t, 8>;
         uint8x8x2_t lh = {{vget_low_u8(b0), vget_high_u8(b0)}};
         return bit_cast(out_t {vtbl2_u8(lh, vget_low_u8(mask))}, as<that_t>());
       }

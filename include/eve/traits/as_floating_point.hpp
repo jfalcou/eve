@@ -30,7 +30,7 @@ namespace eve
     using type = eve::float16_t;
   };
 
-  template<typename T, typename N>
+  template<typename T, auto N>
   struct as_floating_point<wide<T,N>>
   {
     using type = wide<typename as_floating_point<T>::type, N>;

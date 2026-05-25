@@ -88,7 +88,7 @@ namespace algo_test
   template <typename I, typename S>
   void unaligned_iteration_test(I f, S l)
   {
-    std::ptrdiff_t n = l - f;
+    size N = l - f;
     while (n) { f += 1; --n; }
     TTS_EQUAL(f, l);
   }
@@ -192,7 +192,7 @@ namespace algo_test
     T expected = or_;
     expected.set(0, v.back());
 
-    eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>> mask{false};
+    eve::logical<eve::wide<std::uint16_t, T::size()>> mask{false};
     mask.set(T::size() - 1, true);
     eve::unaligned_t<I> res = eve::compress_store[eve::safe](v, mask, f);
     TTS_EQUAL(eve::load(f), expected);

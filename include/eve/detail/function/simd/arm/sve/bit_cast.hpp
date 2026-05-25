@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<scalar_value T, typename N, scalar_value U, typename M>
+  template<scalar_value T, size N, scalar_value U, typename M>
   requires( sve_abi<abi_t<T, N>> )
   EVE_FORCEINLINE wide<U, M> bit_cast_impl(sve_, wide<T,N> x, as<wide<U,M>>) noexcept
   {

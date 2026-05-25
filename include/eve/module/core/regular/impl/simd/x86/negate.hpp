@@ -14,7 +14,7 @@ namespace eve::_
 {
 // -----------------------------------------------------------------------------------------------
 // 128 bits implementation
-  template<signed_integral_scalar_value T, typename N, callable_options O>
+  template<signed_integral_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N> negate_(EVE_REQUIRES(ssse3_),
                                      O const& opts,
                                      wide<T, N> a0,
@@ -29,7 +29,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // 256 bits implementation
-  template<signed_integral_scalar_value T, typename N, callable_options O>
+  template<signed_integral_scalar_value T, size N, callable_options O>
   EVE_FORCEINLINE wide<T, N> negate_(EVE_REQUIRES(avx2_),
                                      O const& opts,
                                      wide<T, N> a0,

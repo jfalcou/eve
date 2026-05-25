@@ -96,7 +96,7 @@ TTS_CASE("shuffle_driver propagates not found")
   }
 
   // Propagate sfinae
-  constexpr auto op = []<typename T, typename N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
+  constexpr auto op = []<typename T, auto N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
   requires(sizeof(T) > 1)
   {
     if constexpr( sizeof(T) == 4 ) return eve::_::no_matching_shuffle;
@@ -137,7 +137,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
   }
   else
   {
-    std::ptrdiff_t numTimesCalled = 0;
+    size NumTimesCalled = 0;
     auto           hasShuffle     = just_shuffle_test(
         [&numTimesCalled]<std::ptrdiff_t... i>(eve::pattern_t<i...>,
                                                eve::fixed<1>,
@@ -169,7 +169,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
     // below to 8 identity logic kicks in
     if constexpr( T::size() >= 8 )
     {
-      using half_T = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() / 2>>;
+      using half_T = eve::wide<eve::element_type_t<T>, T::size() / 2>;
       TTS_CONSTEXPR_EXPECT_NOT(
           (std::invocable<decltype(notFound), eve::logical<T>, eve::fixed<2>, some_p_t<half_T>>));
       TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(notFound),
@@ -193,7 +193,7 @@ TTS_CASE_TPL("Check shuffle_driver, half", eve::test::simd::all_types)
   {
     auto half_shuffle = just_shuffle_test([](auto, auto, auto x) { return x.slice(eve::lower_); });
 
-    using half_t = typename T::template rescale<eve::fixed<T::size() / 2>>;
+    using half_t = typename T::template rescale<T::size() / 2>;
 
     auto p = eve::fix_pattern<T::size() / 2>([](int i, int) { return i; });
 
@@ -222,8 +222,8 @@ TTS_CASE_TPL("Check shuffle_driver, bundle", eve::test::simd::all_types)
   }
   using e_t  = eve::element_type_t<T>;
   using s_t  = kumi::tuple<std::int8_t, e_t, double>;
-  using w_t  = eve::wide<s_t, eve::fixed<T::size()>>;
-  using ww_t = eve::wide<kumi::tuple<e_t, s_t>, eve::fixed<T::size()>>;
+  using w_t  = eve::wide<s_t, T::size()>;
+  using ww_t = eve::wide<kumi::tuple<e_t, s_t>, T::size()>;
 
   auto shuffle = just_shuffle_test(
       []<std::ptrdiff_t... i>(eve::pattern_t<i...>, eve::fixed<1>, auto x, auto...)
@@ -265,7 +265,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
   }
 
   auto shuffle = just_shuffle_test(
-      []<typename U, typename N, std::ptrdiff_t G>(
+      []<typename U, size N, std::ptrdiff_t G>(
           auto, eve::fixed<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
       {
         TTS_CONSTEXPR_EXPECT(std::unsigned_integral<U>);

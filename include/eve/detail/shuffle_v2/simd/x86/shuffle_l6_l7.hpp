@@ -46,7 +46,7 @@ shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 shuffle_l6_l7_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)

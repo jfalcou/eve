@@ -39,8 +39,8 @@ TTS_CASE_TPL("Check eve::lookup behavior on product type wide", eve::test::scala
 <typename T>(tts::type<T>)
 {
   using s_t = tuple_t<T>;
-  using w_t = eve::wide<tuple_t<T>, eve::fixed<4>>;
-  using i_t = eve::wide<short, eve::cardinal_t<w_t>>;
+  using w_t = eve::wide<tuple_t<T>, 4>;
+  using i_t = eve::wide<short, w_t::size()>;
 
   i_t indexes {[](auto i, auto c) { return i % 2 ? i : c - i - 1; }};
 

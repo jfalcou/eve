@@ -16,8 +16,8 @@ namespace eve::_
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<callable_options O, typename T, typename N, typename Slice>
-  EVE_FORCEINLINE wide<T, typename N::split_type>
+  template<callable_options O, typename T, auto N, typename Slice>
+  EVE_FORCEINLINE wide<T, N / 2>
   slice_(EVE_REQUIRES(sse2_), O const&, wide<T,N> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -41,7 +41,7 @@ namespace eve::_
         {
           constexpr auto size = N::value * sizeof(T);
 
-          if constexpr( N::value == 2          )  return wide<T, typename N::split_type>{a.get(1)};
+          if constexpr( N::value == 2          )  return wide<T, N / 2>{a.get(1)};
           if constexpr( size == abi_t<T, N>::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
           if constexpr( 2 * size == abi_t<T, N>::bytes )  return _mm_shuffle_epi32(a, 0x01);
           else                                    return _mm_shufflelo_epi16(a, 0x01);
@@ -68,18 +68,18 @@ namespace eve::_
         // Slice bits via uint64 then go back
         using retarget_t = typename wide<T, N>::template rebind<std::uint64_t>;
         return bit_cast ( slice( bit_cast(a, as<retarget_t>()),Slice{})
-                        , as<wide<T, typename N::split_type>>()
+                        , as<wide<T, N / 2>>()
                         );
       }
     }
   }
 
-  template<callable_options O, typename T, typename N, typename Slice>
-  EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
+  template<callable_options O, typename T, auto N, typename Slice>
+  EVE_FORCEINLINE logical<wide<T, N / 2>>
   slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
   {
-    using type  = logical<wide<T, typename N::split_type>>;
+    using type  = logical<wide<T, N / 2>>;
     using mask  = typename type::storage_type;
     using value = typename mask::type;
 
@@ -92,19 +92,19 @@ namespace eve::_
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, N / 2>, 2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a) noexcept
       requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {
-    std::array<logical<wide<T, typename N::split_type>>,2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<logical<wide<T, N / 2>>,2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }

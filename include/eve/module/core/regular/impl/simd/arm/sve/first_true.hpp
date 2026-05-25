@@ -12,7 +12,7 @@ namespace eve::_
   // There are some explanations
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/
   // Or: https://www.stonybrook.edu/commcms/ookami/support/_docs/5%20-%20Advanced%20SVE.pdf
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
   {
     using L = logical<wide<T, N>>;
@@ -70,7 +70,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
   {
     return first_true.behavior(current_api, opts, to_logical(m));

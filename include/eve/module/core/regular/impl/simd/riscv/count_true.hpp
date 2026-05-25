@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, scalar_value T, typename N>
+  template<callable_options O, scalar_value T, size N>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
@@ -22,16 +22,16 @@ namespace eve::_
     if constexpr (C::is_complete)
     {
       if constexpr (!C::is_inverted) return 0;
-      else return __riscv_vcpop(v, N::value);
+      else return __riscv_vcpop(v, N);
     }
     else
     {
       const auto m = expand_mask(opts[condition_key], as<wide<T, N>>{});
-      return __riscv_vcpop(m, v, N::value);
+      return __riscv_vcpop(m, v, N);
     }
   }
 
-  template<callable_options O, scalar_value T, typename N>
+  template<callable_options O, scalar_value T, size N>
   EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {

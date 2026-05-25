@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename N>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size N>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
@@ -23,9 +23,9 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr)
   {
     store_common(cpu_{}, cx, value, ptr);
   }
-  else if constexpr( std::is_same_v<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
+  else if constexpr( std::is_same_v<abi_t<T, N>, arm_64_> && (N * sizeof(T) != arm_64_::bytes) )
   {
-    memcpy(ptr, (T const *)(&value), N::value * sizeof(T));
+    memcpy(ptr, (T const *)(&value), N * sizeof(T));
   }
   else
   {
@@ -57,7 +57,7 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr)
 }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, typename Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size N, typename Lanes>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
@@ -65,9 +65,9 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned
   {
     store_common(cpu_{}, cx, value, ptr);
   }
-  else if constexpr( std::is_same<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
+  else if constexpr( std::is_same<abi_t<T, N>, arm_64_> && (N * sizeof(T) != arm_64_::bytes) )
   {
-    memcpy(ptr, (T const *)(&value), N::value * sizeof(T));
+    memcpy(ptr, (T const *)(&value), N * sizeof(T));
   }
   else
   {
@@ -98,7 +98,7 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned
   }
 }
 #else
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename S, typename Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, std::ptrdiff_t S, std::ptrdiff_t Lanes>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, S> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, S>>
 {

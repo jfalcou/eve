@@ -19,17 +19,17 @@
 namespace eve::_
 {
 
-template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, size N, typename V0, typename... Vs>
 requires sve_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
 {
   if constexpr (sizeof...(Vs) == 0)
   {
     // This may be suboptimal, we a one instruction iota on sve
-    if constexpr(N::value <  fundamental_cardinal_t<T>::value)
+    if constexpr(N <  fundamental_cardinal_t<T>::value)
     {
       // Use svdup then mask using optimized iota comparison
-      return wide<T>{v} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();
+      return wide<T>{v} & (iota(as<wide<as_integer_t<T>>>{}) < N).mask();
     }
     else
     {
@@ -50,7 +50,7 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
   }
   else
   {
-    static_assert((sizeof...(Vs) + 1) == N::value, "[eve::make] - Invalid number of arguments");
+    static_assert((sizeof...(Vs) + 1) == N, "[eve::make] - Invalid number of arguments");
 
     if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
     {
@@ -58,26 +58,26 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
       {
         return make(as<wide<T, fundamental_cardinal_t<T>>> {}, v, vs..., ((void)i, 0)...);
       }
-      (std::make_index_sequence<fundamental_cardinal_v<T> - N::value> {});
+      (std::make_index_sequence<fundamental_cardinal_v<T> - N> {});
     }
     else
     {
       std::array on_stack {v, static_cast<T>(vs)...};
-      return load(on_stack.data(), N {});
+      return load(on_stack.data(), fixed<N> {});
     }
   }
 }
 
-template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, size N, typename V0, typename... Vs>
 requires sve_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
 {
   if constexpr (sizeof...(Vs) == 0)
   {
-    if constexpr(N::value < fundamental_cardinal_t<T>::value)
+    if constexpr(N < fundamental_cardinal_t<T>::value)
     {
       // Use svdup then mask using optimized iota comparison
-      return logical<wide<T>>{(bool) v} && (iota(as<wide<as_integer_t<T>>>{}) < N::value);
+      return logical<wide<T>>{(bool) v} && (iota(as<wide<as_integer_t<T>>>{}) < N);
     }
     else
     {

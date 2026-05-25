@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, auto N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {

@@ -17,21 +17,21 @@
 namespace eve::_
 {
 
-template<callable_options O, typename T, typename N>
+template<callable_options O, typename T, auto N>
 EVE_FORCEINLINE T extract_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, std::size_t i) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   return v.storage()[i];
 }
 
-template<callable_options O, typename T, typename N>
+template<callable_options O, typename T, auto N>
 EVE_FORCEINLINE void insert_(EVE_REQUIRES(sve_), O const&, wide<T, N>& v, std::size_t i, T x) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   v.storage()[i] = x;
 }
 
-template<callable_options O, typename T, typename N>
+template<callable_options O, typename T, auto N>
 EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
   requires sve_abi<abi_t<T, N>>
 {
@@ -48,7 +48,7 @@ EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sve_), O const&, logical<wide<T
   return logical<T> {bits.get(i)};
 }
 
-template<callable_options O, typename T, typename N>
+template<callable_options O, typename T, auto N>
 EVE_FORCEINLINE void insert_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>>& v, std::size_t i, auto x) noexcept
   requires sve_abi<abi_t<T, N>>
 {

@@ -11,14 +11,14 @@
 
 namespace eve::_
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, typename N::combined_type>
+  template<typename T, auto N>
+  EVE_FORCEINLINE wide<T, N * 2>
   combine(neon128_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires std::same_as<abi_t<T, N>, arm_64_>
   {
-    using that_t = wide<T, typename N::combined_type>;
+    using that_t = wide<T, N * 2>;
 
-    if constexpr( N::value * sizeof(T) == eve::arm_64_::bytes )
+    if constexpr( N * sizeof(T) == eve::arm_64_::bytes )
     {
       if constexpr( std::is_same_v<T, eve::float16_t> )
       {
@@ -80,7 +80,7 @@ namespace eve::_
       };
 
       uint8x8x2_t lh   = {{(uint8x8_t)l.storage(), (uint8x8_t)h.storage()}};
-      auto        that = vtbl2_u8(lh, apply<(sizeof(T) * N::value)>(mask));
+      auto        that = vtbl2_u8(lh, apply<(sizeof(T) * N)>(mask));
 
       return that_t(typename that_t::storage_type(that));
     }

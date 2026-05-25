@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-  template <typename U, typename N>
+  template <typename U, size N>
   struct do_compress_sve
   {
     eve::logical<eve::wide<U, N>> mask;
@@ -41,7 +41,7 @@ namespace eve::_
     }
   };
 
-  template<typename T, typename N> constexpr bool compress_sve_should_split()
+  template<typename T, auto N> constexpr bool compress_sve_should_split()
   {
     std::size_t min_size = kumi::min_flat( kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
     std::size_t max_size = kumi::max_flat( kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
@@ -52,7 +52,7 @@ namespace eve::_
     return N() > eve::expected_cardinal_v<std::int32_t>;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, typename N>
+  template<relative_conditional_expr C, typename T, typename U, size N>
   EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(sve_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
   {

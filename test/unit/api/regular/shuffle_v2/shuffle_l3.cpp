@@ -15,14 +15,14 @@ using eve::we_;
 
 auto return3 = [](auto...) { return 3; };
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
+template<typename T, auto N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
 void
 run_any_api(eve::pattern_t<I...> p)
 {
   shuffle_test::run<T, N, G>(return3, p);
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+template<typename T, auto N, std::ptrdiff_t G = 1>
 void
 run_any_api(eve::pattern_formula auto formula)
 {
@@ -36,7 +36,7 @@ run_any_api_expected_cardinal(auto pattern)
   run_any_api<T, eve::expected_cardinal_v<T>, G>(pattern);
 }
 
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+template<auto api, typename T, auto N, std::ptrdiff_t G = 1>
 void
 run(auto pattern)
 {
@@ -44,21 +44,21 @@ run(auto pattern)
   else { TTS_PASS(); }
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
+template<typename T, auto N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
 void
 run2_any_api(eve::pattern_t<I...> p)
 {
   shuffle_test::run2<T, N, G>(return3, p);
 }
 
-template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+template<typename T, auto N, std::ptrdiff_t G = 1>
 void
 run2_any_api(eve::pattern_formula auto formula)
 {
   run2_any_api<T, N, G>(eve::fix_pattern<N>(formula));
 }
 
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
+template<auto api, typename T, auto N, std::ptrdiff_t G = 1>
 void
 run2(auto pattern)
 {

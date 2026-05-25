@@ -22,13 +22,10 @@ sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
 
   if constexpr( has_aggregated_abi_v<T> )
   {
-    using e_t    = eve::element_type_t<T>;
-    using N      = typename T::cardinal_type;
-    using half_N = typename N::split_type;
-    using half_T = wide<e_t, half_N>;
+    using half_T = T::split_type;
 
     half_T lo = sveindex<half_T>(start, step);
-    half_T hi = sveindex<half_T>(start + step * half_N{}(), step);
+    half_T hi = sveindex<half_T>(start + step * half_T::size(), step);
     return T{lo, hi};
   }
   else if constexpr( match(c, category::int8) ) return T {svindex_s8(start, step)};
