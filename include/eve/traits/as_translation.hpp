@@ -52,7 +52,7 @@ namespace eve
   //! @return A mutable reference to the translated representation of `val`
   //================================================================================================
   template <typename V>
-  constexpr translate_t<V>& translate(V& val)
+  constexpr translate_t<V>& translate_ref(V& val)
   {
     return reinterpret_cast<translate_t<V>&>(val);
   }
