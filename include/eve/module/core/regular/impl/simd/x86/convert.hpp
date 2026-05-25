@@ -22,61 +22,61 @@ namespace eve::_
 //#######################
 
 // 128 bits <-> 128 bits
-template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
+template<arithmetic_scalar_value In, size_type N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(sse2_), wide<In, N> v0, as<Out> tgt) noexcept
 {
-  if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N::value <= 16))
+  if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N <= 16))
   {
-    if constexpr (N::value == 16)
+    if constexpr (N == 16)
     {
       auto [low, high] = v0.slice();
       return _mm_packs_epi16(low, high);
     }
-    else if constexpr (N::value == 8)
+    else if constexpr (N == 8)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm_packs_epi16(v0, v0);
+      wide<Out, 2 * N> tmp = _mm_packs_epi16(v0, v0);
       auto [low, hi]                    = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 8)
+    else if constexpr (N <= 8)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
     }
   }
-  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, int16_t> && (N::value <= 8))
+  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, int16_t> && (N <= 8))
   {
-    if constexpr (N::value == 8)
+    if constexpr (N == 8)
     {
       auto [low, high] = v0.slice();
       return _mm_packs_epi32(low, high);
     }
-    else if constexpr (N::value == 4)
+    else if constexpr (N == 4)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm_packs_epi16(v0, v0);
-      auto [low, hi]                    = tmp.slice();
+      wide<Out, 2 * N> tmp = _mm_packs_epi16(v0, v0);
+      auto [low, hi]       = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 4)
+    else if constexpr (N <= 4)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
     }
   }
-  else if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, uint8_t> && (N::value <= 16))
+  else if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, uint8_t> && (N <= 16))
   {
-    if constexpr (N::value == 16)
+    if constexpr (N == 16)
     {
       auto [low, high] = v0.slice();
       return _mm_packus_epi16(low, high);
     }
-    else if constexpr (N::value == 8)
+    else if constexpr (N == 8)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm_packus_epi16(v0, v0);
-      auto [low, hi]                    = tmp.slice();
+      wide<Out, 2 * N> tmp = _mm_packus_epi16(v0, v0);
+      auto [low, hi]       = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 8)
+    else if constexpr (N <= 8)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
@@ -91,80 +91,80 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(sse2_), wide<In, N> 
 
 //================================================================================================
 // 256 bits <-> 256 bits
-template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
+template<arithmetic_scalar_value In, size_type N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(avx2_), wide<In, N> v0, as<Out> tgt) noexcept
 {
-  if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N::value <= 32))
+  if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N <= 32))
   {
-    if constexpr (N::value == 32)
+    if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
       return _mm256_packs_epi16(low, high);
     }
-    else if constexpr (N::value == 16)
+    else if constexpr (N == 16)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm256_packs_epi16(v0, v0);
-      auto [low, high]                  = tmp.slice();
+      wide<Out, 2 * N> tmp = _mm256_packs_epi16(v0, v0);
+      auto [low, high]     = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 8)
+    else if constexpr (N <= 8)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(sse2_), v0, tgt);
     }
   }
-  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, int16_t> && (N::value <= 16))
+  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, int16_t> && (N <= 16))
   {
-    if constexpr(N::value == 16)
+    if constexpr(N == 16)
     {
       auto [low, high] = v0.slice();
       return _mm256_packs_epi32(low, high);
     }
-    else if constexpr( N::value == 8 )
+    else if constexpr( N == 8 )
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm256_packs_epi32(v0, v0);
-      auto [low, hi]                    = tmp.slice();
+      wide<Out, 2 * N> tmp = _mm256_packs_epi32(v0, v0);
+      auto [low, hi]       = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 4)
+    else if constexpr (N <= 4)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(sse2_), v0, tgt);
     }
   }
-  else if constexpr(std::is_same_v<In, int16_t> && std::is_same_v<Out, uint8_t> && (N::value <= 32))
+  else if constexpr(std::is_same_v<In, int16_t> && std::is_same_v<Out, uint8_t> && (N <= 32))
   {
-    if constexpr (N::value == 32)
+    if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
       return _mm256_packus_epi16(low, high);
     }
-    else if constexpr (N::value == 16)
+    else if constexpr (N == 16)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm256_packus_epi16(v0, v0);
-      auto [low, hi]                    = tmp.slice();
+      wide<Out, 2 * N> tmp = _mm256_packus_epi16(v0, v0);
+      auto [low, hi]       = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 16)
+    else if constexpr (N <= 16)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(sse2_), v0, tgt);
     }
   }
-  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, uint16_t> && (N::value <= 16))
+  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, uint16_t> && (N <= 16))
   {
-    if constexpr (N::value == 16)
+    if constexpr (N == 16)
     {
       auto [low, high] = v0.slice();
       return _mm256_packus_epi32(low, high);
     }
-    else if constexpr (N::value == 8)
+    else if constexpr (N == 8)
     {
-      wide<Out, fixed<2 *N::value>> tmp = _mm256_packus_epi32(v0, v0);
+      wide<Out, 2 * N> tmp = _mm256_packus_epi32(v0, v0);
       auto [low, hi]                    = tmp.slice();
       return low;
     }
-    else if constexpr (N::value <= 4)
+    else if constexpr (N <= 4)
     {
       // emulated fallback
       return convert_saturated(EVE_TARGETS(sse2_), v0, tgt);
@@ -184,7 +184,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(avx2_), wide<In, N> 
 //================================================================================================
 // convert: logical -> logical
 //================================================================================================
-template<signed_integral_scalar_value T, typename N, signed_integral_scalar_value U>
+template<signed_integral_scalar_value T, size_type N, signed_integral_scalar_value U>
 EVE_FORCEINLINE logical<wide<U, N>> convert_impl(EVE_REQUIRES(sse2_), logical<wide<T, N>> v, as<logical<U>> tgt) noexcept
 {
   using out_t         = logical<wide<U, N>>;
@@ -226,7 +226,7 @@ EVE_FORCEINLINE logical<wide<U, N>> convert_impl(EVE_REQUIRES(sse2_), logical<wi
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
-template<typename N, arithmetic_scalar_value U>
+template<arithmetic_scalar_value U, size_type N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, as<U> tgt) noexcept
 {
   constexpr auto c_i  = categorize<wide<double, N>>();
@@ -266,7 +266,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, 
 //================================================================================================
 // convert: float32 -> U
 //================================================================================================
-template<typename N, arithmetic_scalar_value U>
+template<arithmetic_scalar_value U, size_type N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, as<U> tgt) noexcept
 {
   constexpr auto c_i  = categorize<wide<float, N>>();
@@ -316,7 +316,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, a
 //================================================================================================
 // convert: float16 -> U
 //================================================================================================
-template<typename N, arithmetic_scalar_value U>
+template<arithmetic_scalar_value U, size_type N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<eve::float16_t, N> v, as<U> tgt) noexcept
 {
   constexpr auto c_i  = categorize<wide<eve::float16_t, N>>();
@@ -373,7 +373,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<eve::float16_t
 //================================================================================================
 // convert: (u)int64 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 8)
 {
@@ -404,14 +404,14 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   }
   // ===============================================================================================================
-  else if constexpr( N {} <= 2 && c_o == category::int16x8  && a512 ) return _mm_cvtepi64_epi16(v);
-  else if constexpr( N {} <= 2 && c_o == category::uint16x8 && a512 ) return _mm_cvtepi64_epi16(v);
-  else if constexpr( N {} <= 2 && c_o == category::int8x16  && a512 ) return _mm_cvtepi64_epi8(v);
-  else if constexpr( N {} <= 2 && c_o == category::uint8x16 && a512 ) return _mm_cvtepi64_epi8(v);
-  else if constexpr( N {} <= 2 && mo32x4 && a512                    ) return _mm_cvtepi64_epi32(v);
-  else if constexpr( N {} <= 2 && mo32x4                            ) return convert_integers_shuffle(v, tgt);
-  else if constexpr( N {} <= 2 && (match(c_o, category::integer_))  ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
-  else if constexpr( N {} <= 2                                      ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
+  else if constexpr( N <= 2 && c_o == category::int16x8  && a512 ) return _mm_cvtepi64_epi16(v);
+  else if constexpr( N <= 2 && c_o == category::uint16x8 && a512 ) return _mm_cvtepi64_epi16(v);
+  else if constexpr( N <= 2 && c_o == category::int8x16  && a512 ) return _mm_cvtepi64_epi8(v);
+  else if constexpr( N <= 2 && c_o == category::uint8x16 && a512 ) return _mm_cvtepi64_epi8(v);
+  else if constexpr( N <= 2 && mo32x4 && a512                    ) return _mm_cvtepi64_epi32(v);
+  else if constexpr( N <= 2 && mo32x4                            ) return convert_integers_shuffle(v, tgt);
+  else if constexpr( N <= 2 && (match(c_o, category::integer_))  ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
+  else if constexpr( N <= 2                                      ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   // ===============================================================================================================
   else if constexpr( c_i == category::int64x4  && c_o == category::float64x4 && a512 ) return _mm256_cvtepi64_pd(v);
   else if constexpr( c_i == category::uint64x4 && c_o == category::float64x4 && a512 ) return _mm256_cvtepu64_pd(v);
@@ -463,14 +463,14 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr ( mi64x8 && sizeof(U) == 4                                ) return _mm512_cvtepi64_epi32(v);
   else if constexpr ( mi64x8 && sizeof(U) == 2                                ) return _mm512_cvtepi64_epi16(v);
   else if constexpr ( mi64x8 && sizeof(U) == 1                                ) return _mm512_cvtepi64_epi8(v);
-  else if constexpr ( (sizeof(U) == 1) && (N::value >= 4)                     ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
+  else if constexpr ( (sizeof(U) == 1) && (N >= 4)                     ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
   else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 4)
 {
@@ -523,23 +523,23 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr ( c_i == category::uint32x4 && match(c_o, category::int64x2, category::uint64x2) && asse4 ) return _mm_cvtepu32_epi64(v);
   else if constexpr ( c_i == category::int32x8  && match(c_o, category::int64x8, category::uint64x8) && a512  ) return _mm512_cvtepi32_epi64(v);
   else if constexpr ( c_i == category::uint32x8 && match(c_o, category::int64x8, category::uint64x8) && a512  ) return _mm512_cvtepu32_epi64(v);
-  else if constexpr ( N {} <= 2  && std::is_signed_v<T>   && sizeof(U) == 8) return _mm_unpacklo_epi32(v, _mm_srai_epi32(v,31));
-  else if constexpr ( N {} <= 2  && std::is_unsigned_v<T> && sizeof(U) == 8) return _mm_unpacklo_epi32(v, zero(as(v)));
-  else if constexpr ( N {} <= 4  && sizeof(U) == 2 && a512 ) return _mm_cvtepi32_epi16(v);
-  else if constexpr ( N {} <= 2  && sizeof(U) == 2         ) return _mm_shufflelo_epi16(v, 8);
-  else if constexpr ( N {} == 8  && sizeof(U) == 2 && a512 ) return _mm256_cvtepi32_epi16(v);
-  else if constexpr ( N {} <= 4  && sizeof(U) == 1 && a512 ) return _mm_cvtepi32_epi8(v);
-  else if constexpr ( N {} <= 4  && sizeof(U) == 1 )return convert(convert(v, as<upgrade_t<U>> {}), tgt);
-  else if constexpr ( N {} == 8  && sizeof(U) == 1 && a512 ) return _mm256_cvtepi32_epi8(v);
-  else if constexpr ( N {} == 16 && sizeof(U) == 2 && a512 ) return _mm512_cvtepi32_epi16(v);
-  else if constexpr ( N {} == 16 && sizeof(U) == 1 && a512 ) return _mm512_cvtepi32_epi8(v);
+  else if constexpr ( N <= 2  && std::is_signed_v<T>   && sizeof(U) == 8) return _mm_unpacklo_epi32(v, _mm_srai_epi32(v,31));
+  else if constexpr ( N <= 2  && std::is_unsigned_v<T> && sizeof(U) == 8) return _mm_unpacklo_epi32(v, zero(as(v)));
+  else if constexpr ( N <= 4  && sizeof(U) == 2 && a512 ) return _mm_cvtepi32_epi16(v);
+  else if constexpr ( N <= 2  && sizeof(U) == 2         ) return _mm_shufflelo_epi16(v, 8);
+  else if constexpr ( N == 8  && sizeof(U) == 2 && a512 ) return _mm256_cvtepi32_epi16(v);
+  else if constexpr ( N <= 4  && sizeof(U) == 1 && a512 ) return _mm_cvtepi32_epi8(v);
+  else if constexpr ( N <= 4  && sizeof(U) == 1 )return convert(convert(v, as<upgrade_t<U>> {}), tgt);
+  else if constexpr ( N == 8  && sizeof(U) == 1 && a512 ) return _mm256_cvtepi32_epi8(v);
+  else if constexpr ( N == 16 && sizeof(U) == 2 && a512 ) return _mm512_cvtepi32_epi16(v);
+  else if constexpr ( N == 16 && sizeof(U) == 1 && a512 ) return _mm512_cvtepi32_epi8(v);
   else return convert_slice(v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int16 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 2)
 {
@@ -593,7 +593,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   }
   else if constexpr( mi16x8 && floating_scalar_value<U>          ) return convert(convert(v, as<upgrade_t<element_type_t<T>>> {}), tgt);
   else if constexpr( mi16x8 && sizeof(U) == 8                    ) return convert_integers_chain(v, tgt);
-  else if constexpr( mi16x8 && (sizeof(U) >= 4) && N::value == 8 ) return convert_slice(v, tgt);
+  else if constexpr( mi16x8 && (sizeof(U) >= 4) && N == 8 ) return convert_slice(v, tgt);
   else if constexpr( mi16x16 && match(c_o, category::float_)     ) return convert(convert(v, as<upgrade_t<element_type_t<T>>> {}), tgt);
   else if constexpr( mi16x16 && mo8x16 && a512                   ) return _mm256_cvtepi16_epi8(v);
   else if constexpr( c_i == category::int16x16 && mo32x16        ) return _mm512_cvtepi16_epi32(v);
@@ -607,7 +607,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 1)
 {
@@ -656,7 +656,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr ( c_i == category::uint8x16 && mo32x4          ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && mo64x2                             ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && mo64x4                             ) return convert(convert(v, d_t {}), tgt);
-  else if constexpr ( mi8x16 && (sizeof(U) * N {} >= 16)           ) return convert_slice(v, tgt);
+  else if constexpr ( mi8x16 && (sizeof(U) * N >= 16)              ) return convert_slice(v, tgt);
   else if constexpr ( mi8x16                                       ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   else                                                               return convert_slice(v, tgt);
 }

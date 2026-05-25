@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check behavior of slide_right shuffle", eve::test::simd::all_types
 TTS_CASE("Check behaviour of slide_right, 4 ints")
 {
   // Special case to check if everything makes sense
-  using T = eve::wide<int, eve::fixed<4>>;
+  using T = eve::wide<int, 4>;
 
   T x{-4, -3, -2, -1};
   T y{0,   1,  2,  3};

@@ -24,7 +24,7 @@ int main()
   std::cout << "eve::cosine_similarity(b, b) = " << eve::cosine_similarity(b, b) << std::endl;
 
   // simd cosine_similarity eve::wide<vec3<float>, eve::fixed<4>>;
-  using wv3_t = eve::wide<vec3<float>, eve::fixed<4>>;
+  using wv3_t = eve::wide<vec3<float>, 4>;
   auto wa = wv3_t(a, a, b, b);
   auto wb = wv3_t(b, a, a, b);
    std::cout << "wa " << wa << std::endl;
@@ -38,7 +38,7 @@ int main()
   std::cout << eve::cosine_similarity(x, y) <<  std::endl;
   std::cout << eve::cosine_similarity(y, x) <<  std::endl;
 
-  using w_t = eve::wide<float, eve::fixed<4>>;
+  using w_t = eve::wide<float, 4>;
   auto wt1 = kumi::generate<11>([](auto p){return w_t([p](auto q){return float(p+q); }); });
   auto wt2 = kumi::generate<11>([](auto p){return w_t([p](auto q){return p*p/float((q+1)); }); });
   std::cout << wt1 << std::endl;

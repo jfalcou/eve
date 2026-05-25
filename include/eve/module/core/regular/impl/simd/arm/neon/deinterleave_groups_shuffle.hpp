@@ -13,13 +13,13 @@
 
 namespace eve::_
 {
-template<typename T, typename N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>
-    deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>) requires(N() / G
+    deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>) requires(N / G
                                                                                           > 2)
     && arm_abi<abi_t<T, N>>
 {
-  static_assert(sizeof(T) <= 4 && N() >= 4);
+  static_assert(sizeof(T) <= 4 && N >= 4);
   constexpr auto c = categorize<wide<T, N>>();
 
   // There is no one instruction that I could find.
@@ -30,20 +30,20 @@ template<typename T, typename N, std::ptrdiff_t G>
   // from asimd.
 
   // We need to split for table lookup here anyways
-  if constexpr( sizeof(T) * N() == 16 && current_api < asimd )
+  if constexpr( sizeof(T) * N == 16 && current_api < asimd )
   {
     auto [l, h] = v.slice();
     return deinterleave_groups_shuffle(l, h, lane<G>);
   }
   // Just always do a table lookup for arm-v7 and 4 chars
-  else if constexpr( current_api < asimd || (sizeof(T) == 1 && N() == 4) )
+  else if constexpr( current_api < asimd || (sizeof(T) == 1 && N == 4) )
   {
     return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
   }
   else if constexpr( G > 1 )
   {
     using up_t    = upgrade_t<T>;
-    auto const up = bit_cast(v, as<wide<up_t, typename N::split_type>>());
+    auto const up = bit_cast(v, as<wide<up_t, N / 2>>());
     return bit_cast(deinterleave_groups_shuffle(up, fixed<G / 2> {}), as(v));
   }
   else
@@ -68,16 +68,16 @@ template<typename T, typename N, std::ptrdiff_t G>
   }
 }
 
-template<typename T, typename N, std::ptrdiff_t G>
-    EVE_FORCEINLINE wide<T, typename N::combined_type>
+template<typename T, size_type N, std::ptrdiff_t G>
+    EVE_FORCEINLINE wide<T, N * 2>
                     deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_),
                                                  wide<T, N> v0,
                                                  wide<T, N> v1,
-                                                 fixed<G>) requires(G < N())
+                                                 fixed<G>) requires(G < N)
     && arm_abi<abi_t<T, N>>
 {
   using w_t = wide<T, N>;
-  using r_t = wide<T, typename N::combined_type>;
+  using r_t = wide<T, N * 2>;
 
   constexpr auto c = categorize<w_t>();
 
@@ -95,8 +95,8 @@ template<typename T, typename N, std::ptrdiff_t G>
   else if constexpr( G > 1 )
   {
     using up_t     = upgrade_t<T>;
-    auto const up0 = bit_cast(v0, as<wide<up_t, typename N::split_type>>());
-    auto const up1 = bit_cast(v1, as<wide<up_t, typename N::split_type>>());
+    auto const up0 = bit_cast(v0, as<wide<up_t, N / 2>>());
+    auto const up1 = bit_cast(v1, as<wide<up_t, N / 2>>());
     return bit_cast(deinterleave_groups_shuffle(up0, up1, fixed<G / 2> {}), as<r_t> {});
   }
   // ===================================================================================================
@@ -119,31 +119,31 @@ template<typename T, typename N, std::ptrdiff_t G>
   else if constexpr( c == category::int32x4 ) return neon_struct_to_wide(vuzpq_s32(v0, v1));
   else if constexpr( c == category::uint32x4 ) return neon_struct_to_wide(vuzpq_u32(v0, v1));
   // sizeof(T) == 2 ==============================================
-  else if constexpr( c == category::int16x4 && N() == 2 && current_api >= asimd )
+  else if constexpr( c == category::int16x4 && N == 2 && current_api >= asimd )
     return vzip1_s16(v0, v1);
-  else if constexpr( c == category::uint16x4 && N() == 2 && current_api >= asimd )
+  else if constexpr( c == category::uint16x4 && N == 2 && current_api >= asimd )
     return vzip1_u16(v0, v1);
-  else if constexpr( c == category::int16x4 && N() == 2 ) return vzip_s16(v0, v1).val[0];
-  else if constexpr( c == category::uint16x4 && N() == 2 ) return vzip_u16(v0, v1).val[0];
+  else if constexpr( c == category::int16x4 && N == 2 ) return vzip_s16(v0, v1).val[0];
+  else if constexpr( c == category::uint16x4 && N == 2 ) return vzip_u16(v0, v1).val[0];
   else if constexpr( c == category::int16x4 ) return neon_struct_to_wide(vuzp_s16(v0, v1));
   else if constexpr( c == category::uint16x4 ) return neon_struct_to_wide(vuzp_u16(v0, v1));
   else if constexpr( c == category::int16x8 ) return neon_struct_to_wide(vuzpq_s16(v0, v1));
   else if constexpr( c == category::uint16x8 ) return neon_struct_to_wide(vuzpq_u16(v0, v1));
   // sizeof(T) == 1 ==============================================
-  else if constexpr( c == category::int8x8 && N() == 2 && current_api >= asimd )
+  else if constexpr( c == category::int8x8 && N == 2 && current_api >= asimd )
     return vzip1_s8(v0, v1);
-  else if constexpr( c == category::uint8x8 && N() == 2 && current_api >= asimd )
+  else if constexpr( c == category::uint8x8 && N == 2 && current_api >= asimd )
     return vzip1_u8(v0, v1);
-  else if constexpr( c == category::int8x8 && N() == 2 ) return vzip_s8(v0, v1).val[0];
-  else if constexpr( c == category::uint8x8 && N() == 2 ) return vzip_u8(v0, v1).val[0];
-  else if constexpr( c == category::int8x8 && N() == 8 )
+  else if constexpr( c == category::int8x8 && N == 2 ) return vzip_s8(v0, v1).val[0];
+  else if constexpr( c == category::uint8x8 && N == 2 ) return vzip_u8(v0, v1).val[0];
+  else if constexpr( c == category::int8x8 && N == 8 )
     return neon_struct_to_wide(vuzp_s8(v0, v1));
-  else if constexpr( c == category::uint8x8 && N() == 8 )
+  else if constexpr( c == category::uint8x8 && N == 8 )
     return neon_struct_to_wide(vuzp_u8(v0, v1));
   else if constexpr( c == category::int8x16 ) return neon_struct_to_wide(vuzpq_s8(v0, v1));
   else if constexpr( c == category::uint8x16 ) return neon_struct_to_wide(vuzpq_u8(v0, v1));
-  // didn't come up with anything for N() == 4 other than table lookup
-  else if constexpr( N() == 4 )
+  // didn't come up with anything for N == 4 other than table lookup
+  else if constexpr( N == 4 )
   {
     r_t  idx {0, 2, 8, 10, 1, 3, 9, 11};
     auto s = wide_to_neon_struct(v0, v1);

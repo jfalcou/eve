@@ -3,7 +3,7 @@
 
 int main()
 {
-  eve::wide<eve::float16_t, eve::fixed<8>> w{
+  eve::wide<eve::float16_t, 8> w{
     static_cast<eve::float16_t>(-0.0f),
     static_cast<eve::float16_t>(0.0f),
     static_cast<eve::float16_t>(32768.0f),
@@ -19,7 +19,7 @@ int main()
   std::cout << "-> prevint[saturated](w) = " << eve::prevint[eve::saturated](w) << "\n";
   std::cout << "-> prevint[raw](w)       = " << eve::prevint[eve::raw](w) << "\n";
 
-  eve::wide<std::int16_t, eve::fixed<4>> iw{0, 1, 32767, -32768};
+  eve::wide<std::int16_t, 4> iw{0, 1, 32767, -32768};
   std::cout << "<- iw                     = " << iw << "\n";
   std::cout << "-> prevint(iw)            = " << eve::prevint(iw) << "\n";
   std::cout << "-> prevint[saturated](iw) = " << eve::prevint[eve::saturated](iw) << "\n";

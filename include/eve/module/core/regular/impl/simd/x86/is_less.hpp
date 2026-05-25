@@ -20,7 +20,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> is_less_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -102,7 +102,7 @@ namespace eve::_
           else if constexpr (use_avx2 && c == category::uint16x16)      return eve::min(a, b) != b;
           else if constexpr (use_avx2 && c == category::int8x32)        return _mm256_cmpgt_epi8(b, a);
           else if constexpr (use_avx2 && c == category::uint8x32)       return eve::min(a, b) != b;
-          else if constexpr (use_avx && ((sizeof(T) * N::value) == 32)) return slice_apply(is_less, a, b);
+          else if constexpr (use_avx && ((sizeof(T) * N) == 32))        return slice_apply(is_less, a, b);
           else if constexpr (use_sse4_2 && c == category::int64x2)      return _mm_cmpgt_epi64(b, a);
           else if constexpr (c == category::int32x4)                    return _mm_cmplt_epi32(a, b);
           else if constexpr (c == category::int16x8)                    return _mm_cmplt_epi16(a, b);
@@ -130,7 +130,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // masked  implementation
-  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
+  template<callable_options O, conditional_expr C, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> is_less_(EVE_REQUIRES(avx512_), C const &mask, O const &opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {

@@ -14,7 +14,7 @@ namespace
 TTS_CASE_TPL("Check has_equal_in", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr ( std::same_as<T, eve::wide<std::int8_t, eve::fixed<128>>> ) {
+  if constexpr ( std::same_as<T, eve::wide<std::int8_t, 128>> ) {
     // Overflows
     TTS_PASS();
     return;
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check has_equal_in", eve::test::simd::all_types)
 TTS_CASE_TPL("Check has_equal_in, different type", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr ( std::same_as<T, eve::wide<std::int8_t, eve::fixed<128>>> ) {
+  if constexpr ( std::same_as<T, eve::wide<std::int8_t, 128>> ) {
     // Overflows
     TTS_PASS();
     return;

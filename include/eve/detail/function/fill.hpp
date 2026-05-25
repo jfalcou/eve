@@ -14,11 +14,9 @@
 
 namespace eve::_
 {
-  template<typename Pack, eve::invocable<typename Pack::size_type, typename Pack::size_type> Generator>
+  template<typename Pack, eve::invocable<size_type, size_type> Generator>
   EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
-    using size_type = typename Pack::size_type;
-
     // MSVC emits a spurious error trying to interpret the Pack construction as an
     // initializer_list when it should not. We then manually split the two cases.
     if constexpr(cardinal_v<Pack> > 1)
@@ -35,11 +33,9 @@ namespace eve::_
     }
   }
 
-  template<typename Pack, eve::invocable<typename Pack::size_type> Generator>
+  template<typename Pack, eve::invocable<size_type> Generator>
   EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
-    using size_type = typename Pack::size_type;
-
     // MSVC emits a spurious error trying to interpret the Pack construction as an
     // initializer_list when it should not. We then manually split the two cases.
     if constexpr(cardinal_v<Pack> > 1)

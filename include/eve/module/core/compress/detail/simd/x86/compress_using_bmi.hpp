@@ -17,7 +17,7 @@
 namespace eve::_
 {
 
-  template <typename U, typename N>
+  template <typename U, size_type N>
   struct do_compress_bmi_avx2
   {
     top_bits<logical<wide<U, N>>> mask;
@@ -70,7 +70,7 @@ namespace eve::_
     {
       std::uint32_t m = mask.as_int();
 
-      if constexpr ( sizeof(T) * N() <= 8 )
+      if constexpr ( sizeof(T) * N <= 8 )
       {
         std::int64_t v_raw    = _mm_cvtsi128_si64 (v);
         std::int64_t m_spread = expanded_mask_8_bytes<T>(m);
@@ -79,10 +79,10 @@ namespace eve::_
 
         return _mm_cvtsi64_si128(r);
       }
-      else if constexpr ( sizeof(T) * N() == 16 )
+      else if constexpr ( sizeof(T) * N == 16 )
       {
-        using u8x8 = typename wide<T,N>::template rebind <std::uint8_t,  fixed<8>>;
-        using u8x16 = typename wide<T,N>::template rebind <std::uint8_t, fixed<16>>;
+        using u8x8 = typename wide<T,N>::template rebind <std::uint8_t, 8>;
+        using u8x16 = typename wide<T,N>::template rebind <std::uint8_t, 16>;
 
         std::uint64_t m_expanded       = expanded_mask_16_bytes<T>(m);
         std::uint64_t compressed_idxes = _pext_u64(0xfedcba9876543210, m_expanded);
@@ -97,9 +97,9 @@ namespace eve::_
 
         return bit_cast(v_bytes, as(v));
       }
-      else if constexpr ( sizeof(T) * N() == 32 )
+      else if constexpr ( sizeof(T) * N == 32 )
       {
-        using u32x8 = typename wide<T,N>::template rebind <std::uint32_t, fixed<8>>;
+        using u32x8 = typename wide<T,N>::template rebind <std::uint32_t, 8>;
 
         std::uint64_t m_expanded       = expanded_mask_8_qwords<T>(m);
         std::uint64_t compressed_idxes = _pext_u64(0x0706050403020100, m_expanded);
@@ -107,7 +107,7 @@ namespace eve::_
 
         if constexpr ( !floating_scalar_value<T> ) return _mm256_permutevar8x32_epi32(v, to_qwords);
         else {
-          using f32x8 = typename wide<T,N>::template rebind <float, fixed<8>>;
+          using f32x8 = typename wide<T,N>::template rebind <float, 8>;
           f32x8 v_floats = bit_cast(v, as<f32x8>{});
           v_floats = _mm256_permutevar8x32_ps(v_floats, to_qwords);
           return bit_cast(v_floats, as(v));
@@ -116,7 +116,7 @@ namespace eve::_
     }
   };
 
-  template <typename U, typename N>
+  template <typename U, size_type N>
   struct do_compress_bmi_avx512
   {
     top_bits<logical<wide<U, N>>> mask;
@@ -144,7 +144,7 @@ namespace eve::_
       else if constexpr ( match(c, category::float64x4                     ) ) return _mm256_maskz_compress_pd   (m, v);
       else if constexpr ( match(c, category::int64x2  , category::uint64x2 ) ) return _mm_maskz_compress_epi64   (m, v);
       else if constexpr ( match(c, category::int64x4  , category::uint64x4 ) ) return _mm256_maskz_compress_epi64(m, v);
-      else if constexpr ( match(c, category::int16x8  , category::uint16x8 ) && N() == 8 )
+      else if constexpr ( match(c, category::int16x8  , category::uint16x8 ) && N == 8 )
       {
         auto cvt       = eve::convert(v, eve::as<std::int32_t>{});
         auto cmpressed = (*this)(cvt);
@@ -158,22 +158,22 @@ namespace eve::_
     }
   };
 
-  template<typename T, typename N> constexpr bool compress_bmi_should_split()
+  template<typename T, size_type N> constexpr bool compress_bmi_should_split()
   {
     std::size_t max_field_size = kumi::max_flat( kumi::as_tuple_t<T> {}, [](auto m) { return sizeof(m); });
 
-         if ( N() > 16  ) return true;
-    else if ( N() == 16 ) return max_field_size > 1;
-    else if ( N() == 8  ) return max_field_size > 4;
+         if ( N > 16  ) return true;
+    else if ( N == 16 ) return max_field_size > 1;
+    else if ( N == 8  ) return max_field_size > 4;
     else                  return false;
   }
 
-  template<typename T, typename U, typename N>
+  template<typename T, typename U, size_type N>
   EVE_FORCEINLINE
   auto compress_using_bmi_(EVE_SUPPORTS(avx2_),
                            wide<T, N> v,
                            top_bits<logical<wide<U, N>>> mask) noexcept
-    requires (N() >= 4)
+    requires (N >= 4)
   {
     if constexpr ( compress_bmi_should_split<T, N>() )
     {

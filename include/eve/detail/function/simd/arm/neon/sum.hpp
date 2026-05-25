@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE wide<T,N> arm_sum_impl(wide<T,N> v) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -27,14 +27,14 @@ namespace eve::_
     else  if constexpr( c== category::int8x8    ) return vpadd_s8(v,v);
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(neon128_), O const& opts, wide<T,N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     if      constexpr (!match_option<condition_key, O, ignore_none_>) return sum.behavior(cpu_{}, opts, v);
     else if constexpr (O::contains(splat))
     {
-            if constexpr(N::value == 1)  return v;
+            if constexpr(N == 1)  return v;
       else  if constexpr(current_api >= asimd)
       {
         return wide<T,N>(sum(v));
@@ -63,7 +63,7 @@ namespace eve::_
     }
     else
     {
-      if constexpr(N::value == 1)  return v.get(0);
+      if constexpr(N == 1)  return v.get(0);
       else
       {
         if constexpr(current_api >= asimd)
@@ -92,7 +92,7 @@ namespace eve::_
         }
         else
         {
-              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return sum[splat](v).get(0);
+              if constexpr( std::same_as<abi_t<T, N>, arm_64_> ) return sum[splat](v).get(0);
           else  if constexpr(sizeof(T) == 8)                      return v.get(0)+v.get(1);
           else
           {

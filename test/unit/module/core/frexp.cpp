@@ -43,9 +43,9 @@ TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_rea
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::frexp(T()), (eve::wide<kumi::tuple<v_t,v_t>, typename T::cardinal_type>));
+  TTS_EXPR_IS(eve::frexp(T()), (eve::wide<kumi::tuple<v_t,v_t>, T::size()>));
   TTS_EXPR_IS(eve::frexp(v_t()), (kumi::tuple<v_t, v_t>));
-  TTS_EXPR_IS(eve::frexp[eve::pedantic](T()), (eve::wide<kumi::tuple<v_t,v_t>, typename T::cardinal_type>));
+  TTS_EXPR_IS(eve::frexp[eve::pedantic](T()), (eve::wide<kumi::tuple<v_t,v_t>, T::size()>));
   TTS_EXPR_IS(eve::frexp[eve::pedantic](v_t()), (kumi::tuple<v_t, v_t>));
 };
 

@@ -71,7 +71,7 @@ EVE_CALLABLE_API(compress_copy_scalar_impl_, compress_copy_scalar_impl)
 //!        [safe/unsafe][sparse/dense]
 //!        [C1 ignore_in][C2 ignore_out](
 //!           I in,
-//!           wide<value_type_t<I>, fixed<L::size()>> preloaded,
+//!           wide<value_type_t<I>, L::size()> preloaded,
 //!           L mask,
 //!           O out) -> unaligned_t<O>;   // (2)
 //!   }

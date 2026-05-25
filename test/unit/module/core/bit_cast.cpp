@@ -15,7 +15,7 @@
 // we get the number of Scalar elements that we need to occupy the same size.
 template<eve::arithmetic_simd_value Wide, typename Scalar>
 using same_size_of =
-    eve::wide<Scalar, eve::fixed<std::max<size_t>(1, sizeof(Wide) / sizeof(Scalar))>>;
+    eve::wide<Scalar, std::max<size_t>(1, sizeof(Wide) / sizeof(Scalar))>;
 
 TTS_CASE_TPL("Check return types of bit_cast", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)

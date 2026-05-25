@@ -64,7 +64,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
                           index_t<Index> i,
                           fixed<Size>    sz)
 {
-  using that_t        = as_wide_t<Wide, fixed<Size>>;
+  using that_t        = as_wide_t<Wide, Size>;
   using v_t           = element_type_t<Wide>;
   constexpr auto card = cardinal_v<Wide>;
 
@@ -80,7 +80,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
     else if constexpr( sizeof(v_t) * Group <= 8 )
     {
       using outer_type = _::make_integer_t<sizeof(v_t) * Group>;
-      using w_t        = as_wide_t<outer_type, fixed<card / Group>>;
+      using w_t        = as_wide_t<outer_type, card / Group>;
       return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Size / Group>), as<that_t>());
     }
     // If the output Greater than the Group size, we slice by half

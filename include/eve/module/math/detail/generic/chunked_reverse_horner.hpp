@@ -28,7 +28,7 @@ namespace eve::_
     using e_t =  eve::common_value_t<X, C, Cs...>;
     using w_t = eve::wide<e_t>;
     auto t = kumi::make_tuple(c0, cs...);
-    constexpr auto nblanes = w_t::size();
+    constexpr int nblanes = w_t::size();
     auto small_pow = [](auto z){ auto n = nblanes; while (n-1){ z*= z;  n >>= 1; }; return z; };
 
     auto head = eve::as_wides(eve::zero(eve::as<e_t>()), t);

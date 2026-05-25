@@ -16,15 +16,15 @@ namespace eve::_
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<callable_options OO, scalar_value T, typename N>
+  template<callable_options OO, scalar_value T, size_type N>
   EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(vmx_), OO const & o, wide<T,N> v0, wide<T,N> v1) noexcept
-  requires (N::value > 1) && ppc_abi<abi_t<T,N>>
+  requires (N > 1) && ppc_abi<abi_t<T, N>>
   {
     using type = wide<T,N>;
 
     auto ptn = []<typename O, std::size_t... I>( O, std::index_sequence<I...> )
     {
-      __vector unsigned char v =  { ( I<(N::value*sizeof(T))
+      __vector unsigned char v =  { ( I<(N*sizeof(T))
                                     ? O::value
                                       + ( ((I/sizeof(T)) % 2 == 0) ? 0 : 16)
                                       + I%sizeof(T)
@@ -40,7 +40,7 @@ namespace eve::_
       __vector unsigned char const sl = ptn ( std::integral_constant<int,0>{}
                                             , std::make_index_sequence<16>{}
                                             );
-      __vector unsigned char const sh = ptn ( std::integral_constant<int,(N::value*sizeof(T))/2>{}
+      __vector unsigned char const sh = ptn ( std::integral_constant<int,(N*sizeof(T))/2>{}
                                             , std::make_index_sequence<16>{}
                                             );
       return kumi::make_tuple ( type(vec_perm(v0.storage(),v1.storage(),sl))

@@ -17,19 +17,19 @@
 namespace eve::_
 {
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
   else
   {
-    using u8xN = wide<std::uint8_t, eve::fixed<N::value * sizeof(T)>>;
+    using u8xN = wide<std::uint8_t, N * sizeof(T)>;
     auto bytes = eve::bit_cast(x, eve::as<u8xN> {});
 
     // Out of range idxs become 0
     constexpr auto no_we        = idxm::replace_we(P::idxs, na_);
-    constexpr auto no_na        = idxm::replace_na(no_we, N::value);
+    constexpr auto no_na        = idxm::replace_na(no_we, N);
     constexpr auto expanded     = idxm::expand_group<P::g_size>(no_na);
     auto           shuffle_mask = make_idx_mask<expanded>(as(bytes));
 
@@ -38,11 +38,11 @@ shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
-  if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle_t {};
+  if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle_t {};
   else
   {
     eve::logical<wide<T, N>> m([](int i, int size) { return P::idxs[i / G] >= size / G; });
@@ -50,20 +50,20 @@ shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
   else
   {
-    using u8xN  = wide<std::uint8_t, eve::fixed<N::value * sizeof(T)>>;
+    using u8xN  = wide<std::uint8_t, N * sizeof(T)>;
     auto xbytes = eve::bit_cast(x, eve::as<u8xN> {});
     auto ybytes = eve::bit_cast(y, eve::as<u8xN> {});
 
     // Out of range idxs become 0
     constexpr auto no_we        = idxm::replace_we(P::idxs, na_);
-    constexpr auto no_na        = idxm::replace_na(no_we, 2 * N::value);
+    constexpr auto no_na        = idxm::replace_na(no_we, 2 * N);
     constexpr auto expanded     = idxm::expand_group<P::g_size>(no_na);
     auto           shuffle_mask = make_idx_mask<expanded>(as(xbytes));
 
@@ -80,7 +80,7 @@ shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
@@ -93,7 +93,7 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle_t {};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)

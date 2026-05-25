@@ -19,10 +19,10 @@ namespace eve::_
     return W{vec_splat(v.storage(), Index::value)};
   }
 
-  template<callable_options O, simd_value W, typename Index, std::ptrdiff_t N>
+  template<callable_options O, simd_value W, typename Index, size_type N>
   EVE_FORCEINLINE auto
   broadcast_(EVE_SUPPORTS(vmx_), O const&, W v, Index, fixed<N>) noexcept requires ppc_abi<typename W::abi_type>
   {
-    return as_wide_t<W, fixed<N>>{vec_splat(v.storage(), Index::value)};
+    return as_wide_t<W, N>{vec_splat(v.storage(), Index::value)};
   }
 }

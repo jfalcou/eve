@@ -12,7 +12,7 @@
 namespace eve::_
 {
 
-  template<relative_conditional_expr C, typename T, typename U, typename N>
+  template<relative_conditional_expr C, typename T, typename U, size_type N>
   EVE_FORCEINLINE
   auto compress_using_switch_(EVE_SUPPORTS(sse2_),
                                  C c,

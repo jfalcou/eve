@@ -25,13 +25,13 @@ namespace eve
     }
 
     template<simd_value T0, simd_value T1, simd_value T2, simd_value... Ts>
-    constexpr EVE_FORCEINLINE typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>
+    constexpr EVE_FORCEINLINE typename T0::template rescale<(T0::size() * (3 + sizeof...(Ts)))>
     operator()(T0 a, T1 b, T2 c, Ts... ts) const noexcept
       requires (combinable<T0, T1, T2, Ts...>)
     {
       return translate_into(
         _::combine(eve::current_api, translate(a), translate(b), translate(c), translate(ts)...),
-        as<typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>>{});
+        as<typename T0::template rescale<(T0::size() * (3 + sizeof...(Ts)))>>{});
     }
   };
 

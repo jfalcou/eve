@@ -120,7 +120,7 @@ namespace eve
           using d_t = eve::downgrade_t<v_t>;
           constexpr auto N = cardinal_v<T>;
           constexpr auto N2 = N*2;
-          using spd_t = wide<d_t, fixed<N2>>;
+          using spd_t = wide<d_t, N2>;
           return spd_t();
         }
       };

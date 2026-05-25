@@ -39,16 +39,16 @@ TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 TTS_CASE_TPL( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using c_t = eve::cardinal_t<eve::wide<udt::grid2d>>;
-  using d_t = eve::cardinal_t<eve::wide<udt::label_position>>;
+  constexpr auto c_v = eve::cardinal_v<eve::wide<udt::grid2d>>;
+  constexpr auto d_v = eve::cardinal_v<eve::wide<udt::label_position>>;
 
   TTS_EQUAL ( sizeof(eve::wide<udt::grid2d>)
-            , sizeof(kumi::tuple<eve::wide<int,c_t>,eve::wide<int,c_t>>)
+            , sizeof(kumi::tuple<eve::wide<int,c_v>,eve::wide<int,c_v>>)
             , REQUIRED
             );
 
   TTS_EQUAL ( sizeof(eve::wide<udt::label_position>)
-            , sizeof(kumi::tuple<eve::wide<float,d_t>,eve::wide<std::uint8_t,d_t>>)
+            , sizeof(kumi::tuple<eve::wide<float,d_v>,eve::wide<std::uint8_t,d_v>>)
             , REQUIRED
             );
 };
@@ -173,16 +173,15 @@ TTS_CASE_TPL( "Check eve::wide extract<Idx...>", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   using w_t = eve::wide<udt::label_position>;
-  using c_t = eve::cardinal_t<w_t>;
 
   auto gen_f  = [](auto i, auto) { return 1.f/(1+i); };
   auto gen_i8 = [](auto i, auto) { return std::uint8_t('A'+i); };
 
   w_t w(gen_f,gen_i8);
 
-  eve::wide<kumi::tuple<std::uint8_t,float>, c_t> revert(gen_i8,gen_f);
+  eve::wide<kumi::tuple<std::uint8_t,float>, w_t::size()> revert(gen_i8,gen_f);
 
-  eve::wide<kumi::tuple<std::uint8_t,float,std::uint8_t>, eve::cardinal_t<w_t>>
+  eve::wide<kumi::tuple<std::uint8_t,float,std::uint8_t>, w_t::size()>
   mirror(gen_i8,gen_f,gen_i8);
 
   TTS_EQUAL ( revert, (eve::get<1,0>(w)) );
@@ -198,12 +197,11 @@ TTS_CASE( "Check eve::wide<udt> slice behavior")
 
   if constexpr( w_t::size() > 1 )
   {
-    using c_t = typename w_t::cardinal_type::split_type;
-    constexpr int s = c_t::value;
+    constexpr int s = w_t::size() / 2;
 
-    eve::wide<udt::grid2d>      vp  = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
-    eve::wide<udt::grid2d, c_t> vl  = [](int i, int c) { return udt::grid2d{  i, c+s-i-1}; };
-    eve::wide<udt::grid2d, c_t> vh  = [](int i, int  ) { return udt::grid2d{s+i,   s-i-1}; };
+    eve::wide<udt::grid2d>    vp  = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
+    eve::wide<udt::grid2d, s> vl  = [](int i, int c) { return udt::grid2d{  i, c+s-i-1}; };
+    eve::wide<udt::grid2d, s> vh  = [](int i, int  ) { return udt::grid2d{s+i,   s-i-1}; };
 
     auto[lo,hi] = vp.slice();
 
@@ -225,8 +223,7 @@ TTS_CASE( "Check eve::wide<udt> combine behavior")
 
   if constexpr(w_t::size() < 64)
   {
-    using comb_t  = typename eve::cardinal_t<w_t>::combined_type;
-    using ref_t   = typename w_t::template rescale<comb_t>;
+    using ref_t   = typename w_t::template rescale<w_t::size() * 2>;
 
     w_t vp = [](int i, int c) { return udt::grid2d{  i, c  -i-1}; };
 

@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N, callable_options O>
+  template<typename T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> max_(EVE_REQUIRES(neon128_),
                                   O          const & opts,
                                   wide<T, N> const & v0,

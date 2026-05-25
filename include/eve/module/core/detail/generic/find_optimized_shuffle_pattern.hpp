@@ -56,7 +56,7 @@ struct identity_swizzle
   {
     constexpr auto cd = cardinal_v<Wide>;
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<Wide, fixed<sz>>;
+    using that_t      = as_wide_t<Wide, sz>;
 
     if constexpr( sz >= cd ) return that_t(v.storage());
     else if constexpr( cd / sz == 2 ) return that_t(v.slice(lower_).storage());
@@ -69,8 +69,8 @@ struct zero_swizzle
   template<typename C, typename Ct>
   friend auto& operator<<(std::basic_ostream<C, Ct>& os, zero_swizzle) { return os << "zero_swizzle"; }
 
-  template<typename Wide, typename Cardinal>
-  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
+  template<typename Wide, std::ptrdiff_t Cardinal>
+  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, fixed<Cardinal>) const
   {
     using w_t = as_wide_t<Wide, Cardinal>;
     if constexpr( is_bundle_v<typename Wide::abi_type> )
@@ -104,7 +104,7 @@ template<typename Callable, typename... Args> struct bound
 
 // Part time migration to shuffle_v2
 
-template<std::ptrdiff_t G, std::ptrdiff_t N>
+template<std::ptrdiff_t G, size_type N>
 inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
     [](auto i, auto)
     {

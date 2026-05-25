@@ -25,7 +25,7 @@ namespace eve::_
       using e_t =  element_type_t<T>;
       constexpr auto S = sizeof(e_t);
       constexpr size_t C = cardinal_v<T>;
-      using u8_t = wide<std::uint8_t, fixed<S*C>>;
+      using u8_t = wide<std::uint8_t, S * C>;
       auto p = [](auto i,  auto){
         auto ii = i%S;
         auto jj = (i/S)*S;

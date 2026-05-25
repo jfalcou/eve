@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_minf_(EVE_REQUIRES(avx512_),
                                                    O          const &opts,
                                                    wide<T, N> const &a) noexcept
@@ -44,7 +44,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-  template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto is_minf_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,

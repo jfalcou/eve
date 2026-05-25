@@ -33,16 +33,16 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
   if constexpr(C::is_complete && C::is_inverted)
   {
     using v_t   = element_type_t<T>;
-    using fc_t  = fundamental_cardinal_t<v_t>;
+    constexpr auto fc  = fundamental_cardinal_v<v_t>;
 
     if constexpr ( eve::has_aggregated_abi_v<T> )
     {
-      using half_t = as_wide_t<v_t, eve::fixed<T::size() / 2>>;
+      using half_t = as_wide_t<v_t, T::size() / 2>;
       half_t half = sve_true(cond, eve::as<half_t>{});
       return T{half, half};
     }
-    else if constexpr (T::size() == fc_t::value) return sve_true<v_t>();
-    else                                         return keep_first(T::size()).mask(tgt);
+    else if constexpr (T::size() == fc) return sve_true<v_t>();
+    else                                return keep_first(T::size()).mask(tgt);
   }
   else
   {

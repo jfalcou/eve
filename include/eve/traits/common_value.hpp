@@ -12,6 +12,7 @@
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/as_arithmetic.hpp>
+#include <eve/arch/cardinals.hpp>
 #include <type_traits>
 
 namespace eve::_

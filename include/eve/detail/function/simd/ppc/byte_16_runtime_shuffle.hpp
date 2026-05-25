@@ -9,12 +9,12 @@
 
 namespace eve::_
 {
-  template <typename N>
+  template <size_type N>
   EVE_FORCEINLINE
   wide<std::uint8_t, N> byte_16_runtime_shuffle_(EVE_SUPPORTS(vmx_)
                                                , wide<std::uint8_t, N> what
                                                , wide<std::uint8_t, N> pattern) noexcept
-    requires ( N() <= 16 )
+    requires ( N <= 16 )
   {
     return vec_perm(what.storage(), what.storage(), pattern.storage());
   }

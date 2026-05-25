@@ -17,12 +17,12 @@ namespace eve::_
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<callable_options O, scalar_value T, typename N>
+  template<callable_options O, scalar_value T, size_type N>
   EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(neon128_),
                                    O const& o,
                                    wide<T,N> v0,
                                    wide<T,N> v1) noexcept
-  requires (N::value > 1) && arm_abi<abi_t<T,N>>
+  requires (N > 1) && arm_abi<abi_t<T, N>>
   {
     using type = wide<T,N>;
 
@@ -46,50 +46,50 @@ namespace eve::_
     else  if constexpr( c == category::int16x4  )
     {
       auto s = vzip_s16(v0,v1);
-      if constexpr(N::value == 4 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
+      if constexpr(N == 4 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
       else
       {
-        auto[l,h] = wide<T,fixed<4>>(s.val[0]).slice();
+        auto[l,h] = wide<T, 4>(s.val[0]).slice();
         return kumi::make_tuple(l,h);
       }
     }
     else  if constexpr( c == category::uint16x4 )
     {
       auto s = vzip_u16(v0,v1);
-      if constexpr(N::value == 4 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
+      if constexpr(N == 4 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
       else
       {
-        auto[l,h] = wide<T,fixed<4>>(s.val[0]).slice();
+        auto[l,h] = wide<T, 4>(s.val[0]).slice();
         return kumi::make_tuple(l,h);
       }
     }
     else  if constexpr( c == category::int8x8   )
     {
       auto const s =  vzip_s8 (v0,v1);
-      if constexpr(N::value == 8 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
-      else if constexpr(N::value == 4 )
+      if constexpr(N == 8 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
+      else if constexpr(N == 4 )
       {
-        auto[l,h] = wide<T,fixed<8>>(s.val[0]).slice();
+        auto[l,h] = wide<T, 8>(s.val[0]).slice();
         return kumi::make_tuple(l,h);
       }
       else
       {
-        auto[l,h] = wide<T,fixed<8>>(s.val[0]).slice(lower_).slice();
+        auto[l,h] = wide<T, 8>(s.val[0]).slice(lower_).slice();
         return kumi::make_tuple(l,h);
       }
     }
     else  if constexpr( c == category::uint8x8  )
     {
       auto const s =  vzip_u8 (v0,v1);
-      if constexpr(N::value == 8 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
-      else if constexpr(N::value == 4 )
+      if constexpr(N == 8 ) return kumi::make_tuple(type(s.val[0]), type(s.val[1]));
+      else if constexpr(N == 4 )
       {
-        auto[l,h] = wide<T,fixed<8>>(s.val[0]).slice();
+        auto[l,h] = wide<T, 8>(s.val[0]).slice();
         return kumi::make_tuple(l,h);
       }
       else
       {
-        auto[l,h] = wide<T,fixed<8>>(s.val[0]).slice(lower_).slice();
+        auto[l,h] = wide<T, 8>(s.val[0]).slice(lower_).slice();
         return kumi::make_tuple(l,h);
       }
     }

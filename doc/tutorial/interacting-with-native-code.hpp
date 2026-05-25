@@ -23,7 +23,7 @@ But, unfortunately views still require a templated callback.
 # What about non-native sizes?
 
 If the number is less than the one that can be natively represented, it's internally
-still represented as a full register. For example wide<int, eve::fixed<2>>
+still represented as a full register. For example wide<int, 2>
 on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can
 be garbage.
 

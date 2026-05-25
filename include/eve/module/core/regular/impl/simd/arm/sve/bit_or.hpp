@@ -13,17 +13,17 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> bit_or_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     // no svorr_x for floating point types
     using i_t = wide<as_integer_t<T, signed>, N>;
     constexpr auto tgt = as<i_t>();
-    return bit_cast(i_t(svorr_x(expand_mask(keep_first(N::value), tgt), bit_cast(a, tgt), bit_cast(b, tgt))), as(a));
+    return bit_cast(i_t(svorr_x(expand_mask(keep_first(N), tgt), bit_cast(a, tgt), bit_cast(b, tgt))), as(a));
   }
 
-  template<callable_options O, conditional_expr C, typename T, typename N>
+  template<callable_options O, conditional_expr C, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> bit_or_(EVE_REQUIRES(sve_), C& cx, O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && !C::has_alternative)
   {

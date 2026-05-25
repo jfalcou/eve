@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
@@ -27,8 +27,8 @@ namespace eve::_
     {
       using u_t  = upgrade_t<T>;
       using uw_t = upgrade_t<wide<T, N>>;
-      if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
-      else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
+      if constexpr(N == expected_cardinal_v<u_t>) return uw_t{r};
+      else                                        return simd_cast(wide<u_t>{r}, as<uw_t>{});
     };
 
     if      constexpr( c == category::int32x2  ) return fix(vaddl_s32(v, w));
@@ -40,7 +40,7 @@ namespace eve::_
     else return add.behavior(cpu_{}, opts, v, w);
   }
 
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts,
                                                wide<T, N> v, wide<T, N> w) noexcept
     requires (arm_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))

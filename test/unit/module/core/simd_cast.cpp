@@ -20,13 +20,13 @@ constexpr bool is_castable = (std::invocable<decltype(eve::simd_cast), T, eve::a
 TTS_CASE("simd_cast: check is invocable tests")
 {
   TTS_CONSTEXPR_EXPECT((is_castable<eve::wide<int>, eve::wide<std::int8_t>>));
-  TTS_CONSTEXPR_EXPECT((is_castable<eve::wide<int>, eve::wide<std::int8_t, eve::fixed<1>>>));
+  TTS_CONSTEXPR_EXPECT((is_castable<eve::wide<int>, eve::wide<std::int8_t, 1>>));
   TTS_CONSTEXPR_EXPECT((!is_castable<eve::wide<int>, int>));
   TTS_CONSTEXPR_EXPECT((is_castable<eve::wide<kumi::tuple<int16_t, int64_t>>,
-                                    eve::wide<kumi::tuple<int32_t, int32_t>, eve::fixed<16>>>));
+                                    eve::wide<kumi::tuple<int32_t, int32_t>, 16>>));
 
   TTS_CONSTEXPR_EXPECT((!is_castable<eve::wide<kumi::tuple<int16_t, int16_t, int16_t>>,
-                                     eve::wide<kumi::tuple<int32_t, int32_t>, eve::fixed<16>>>));
+                                     eve::wide<kumi::tuple<int32_t, int32_t>, 16>>));
 
   TTS_CONSTEXPR_EXPECT(
       (is_castable<eve::logical<eve::wide<int>>, eve::logical<eve::wide<double>>>));
@@ -39,7 +39,7 @@ TTS_CASE("simd_cast: check is invocable tests")
   if constexpr( EVE_CURRENT_ABI::is_wide_logical )
   {
     TTS_CONSTEXPR_EXPECT(
-        (is_castable<eve::logical<eve::wide<int>>, eve::wide<std::int8_t, eve::fixed<1>>>));
+        (is_castable<eve::logical<eve::wide<int>>, eve::wide<std::int8_t, 1>>));
   }
 };
 
@@ -124,10 +124,10 @@ TTS_CASE_TPL("simd_cast, plain", eve::test::simd::all_types)
   eve::_::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
       []<typename Idx>(Idx)
       {
-        simd_cast_test<T, eve::wide<std::uint8_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_test<T, eve::wide<std::uint16_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_test<T, eve::wide<std::uint32_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_test<T, eve::wide<std::uint64_t, eve::fixed<1 << Idx::value>>>();
+        simd_cast_test<T, eve::wide<std::uint8_t, 1 << Idx::value>>();
+        simd_cast_test<T, eve::wide<std::uint16_t, 1 << Idx::value>>();
+        simd_cast_test<T, eve::wide<std::uint32_t, 1 << Idx::value>>();
+        simd_cast_test<T, eve::wide<std::uint64_t, 1 << Idx::value>>();
       });
 };
 
@@ -137,10 +137,10 @@ TTS_CASE_TPL("simd_cast, logical", eve::test::simd::all_types)
   eve::_::for_<0, 1, std::bit_width((std::size_t)T::size() * 2)>(
       []<typename Idx>(Idx)
       {
-        simd_cast_logical_test<T, eve::wide<std::uint8_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_logical_test<T, eve::wide<std::uint16_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_logical_test<T, eve::wide<std::uint32_t, eve::fixed<1 << Idx::value>>>();
-        simd_cast_logical_test<T, eve::wide<std::uint64_t, eve::fixed<1 << Idx::value>>>();
+        simd_cast_logical_test<T, eve::wide<std::uint8_t, 1 << Idx::value>>();
+        simd_cast_logical_test<T, eve::wide<std::uint16_t, 1 << Idx::value>>();
+        simd_cast_logical_test<T, eve::wide<std::uint32_t, 1 << Idx::value>>();
+        simd_cast_logical_test<T, eve::wide<std::uint64_t, 1 << Idx::value>>();
       });
 };
 

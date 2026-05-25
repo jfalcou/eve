@@ -13,7 +13,7 @@
 TTS_CASE_TPL("aligned_allocator behavior", eve::test::cardinals)
 <typename Lanes>(tts::type<Lanes>)
 {
-  using alloc_t = eve::aligned_allocator<char, Lanes>;
+  using alloc_t = eve::aligned_allocator<char, Lanes::value>;
   std::vector<char, alloc_t> x(1337);
 
   TTS_EXPECT(eve::is_aligned(x.data(), Lanes{}));
@@ -22,9 +22,9 @@ TTS_CASE_TPL("aligned_allocator behavior", eve::test::cardinals)
 TTS_CASE_TPL("aligned_allocator comparisons", eve::test::cardinals)
 <typename Lanes>(tts::type<Lanes>)
 {
-  eve::aligned_allocator<double , Lanes>     a1, a2;
-  eve::aligned_allocator<float  , Lanes>     b1;
-  eve::aligned_allocator<double , typename Lanes::combined_type> c1;
+  eve::aligned_allocator<double , Lanes::value>     a1, a2;
+  eve::aligned_allocator<float  , Lanes::value>     b1;
+  eve::aligned_allocator<double , Lanes::value * 2> c1;
 
   TTS_EQUAL(a1, a2);
   TTS_NOT_EQUAL(a1, b1);
@@ -34,7 +34,7 @@ TTS_CASE_TPL("aligned_allocator comparisons", eve::test::cardinals)
 TTS_CASE_TPL("aligned_allocator rebind", eve::test::cardinals)
 <typename Lanes>(tts::type<Lanes>)
 {
-  TTS_TYPE_IS ( (typename eve::aligned_allocator<double, Lanes>::template rebind<float>::other)
-              , (eve::aligned_allocator<float, Lanes>)
+  TTS_TYPE_IS ( (typename eve::aligned_allocator<double, Lanes::value>::template rebind<float>::other)
+              , (eve::aligned_allocator<float, Lanes::value>)
               );
 };

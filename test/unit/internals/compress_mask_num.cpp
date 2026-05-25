@@ -20,7 +20,7 @@ TTS_CASE("compress_store helpers")
 TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using mask_t = eve::logical<eve::wide<T, eve::fixed<4>>>;
+  using mask_t = eve::logical<eve::wide<T, 4>>;
 
   auto expected_shuffle_num = [](mask_t mask) {
     int res = 0;
@@ -66,7 +66,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all
 TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using mask_t = eve::logical<eve::wide<T, eve::fixed<8>>>;
+  using mask_t = eve::logical<eve::wide<T, 8>>;
 
   std::array<int, 6> count_for_element {1, 1, 3, 3, 9, 9};
 
@@ -125,7 +125,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all
 TTS_CASE_TPL("compress_store_swizzle_mask_num 16 elements",eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using mask_t = eve::logical<eve::wide<T, eve::fixed<16>>>;
+  using mask_t = eve::logical<eve::wide<T, 16>>;
 
   std::array<int, 1000> test_cases;
 

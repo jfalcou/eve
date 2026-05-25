@@ -83,7 +83,7 @@ namespace eve::_
     }
     else // N > 2 parameters
     {
-      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= expected_cardinal_v<element_type_t<r_t>>))
       {
         auto head = eve::as_wides(eve::majorant(eve::as<r_t>()), aa0, as...);
         auto s = eve::min[o](head);

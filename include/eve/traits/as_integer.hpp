@@ -35,7 +35,7 @@ namespace eve
     using type = _::make_integer_t<sizeof(T), Sign>;
   };
 
-  template<typename T, typename N, typename Sign>
+  template<typename T, size_type N, typename Sign>
   struct as_integer<wide<T,N>, Sign>
   {
     using type = wide<typename as_integer<T,Sign>::type, N>;

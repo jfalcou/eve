@@ -1,7 +1,7 @@
 #include <eve/eve.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
+using wide_ft = eve::wide<float, 4>;
 
 int main()
 {

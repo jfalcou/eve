@@ -2,9 +2,8 @@
 
 #include <tts/tts.hpp>
 
-using n    = eve::fixed<4>;
-using i32s = eve::wide<int, n>;
-using f64s = eve::wide<double, n>;
+using i32s = eve::wide<int, 4>;
+using f64s = eve::wide<double, 4>;
 
 template<typename T>
 concept iota_supports = std::invocable<decltype(eve::iota), eve::as<T>>;

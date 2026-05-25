@@ -43,7 +43,7 @@ TTS_CASE("eve::views::backward, backward of backward")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, eve::fixed<4>>, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, 4>, 4>;
     ap_it                                in;
     eve::views::backward_iterator<ap_it> rev = eve::views::backward(in);
     ap_it                                back = eve::views::backward(rev);
@@ -68,8 +68,8 @@ TTS_CASE("eve::views::backward, preprocess_range")
 {
   using ap = eve::nofs_aligned_ptr<int>;
   using up = int*;
-  using a_it = eve::algo::ptr_iterator<ap, eve::fixed<eve::nofs_cardinal_v<int>>>;
-  using u_it = eve::algo::ptr_iterator<up, eve::fixed<eve::nofs_cardinal_v<int>>>;
+  using a_it = eve::algo::ptr_iterator<ap, eve::nofs_cardinal_v<int>>;
+  using u_it = eve::algo::ptr_iterator<up, eve::nofs_cardinal_v<int>>;
 
   {
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::backward(eve::algo::as_range(ap{}, up{})));

@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_finite_(EVE_REQUIRES(avx512_),
                                                  O          const &o,
                                                  wide<T, N> const &a) noexcept

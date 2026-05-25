@@ -19,7 +19,7 @@ int main()
   std::cout << "eve::welford_covariance[eve::unbiased](b, b) = " << eve::welford_covariance[eve::unbiased](b, b) << std::endl;
 
   // simd welford_covariance eve::wide<vec3<float>, eve::fixed<4>>;
-  using wv3_t = eve::wide<vec3<float>, eve::fixed<4>>;
+  using wv3_t = eve::wide<vec3<float>, 4>;
   auto wa = wv3_t(a, a, b, b);
   auto wb = wv3_t(b, a, a, b);
    std::cout << "wa " << wa << std::endl;

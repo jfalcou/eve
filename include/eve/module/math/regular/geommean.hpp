@@ -138,7 +138,7 @@ namespace eve
         {
           elt_t invn  = rec(elt_t(sz));
           auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);
-          if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= eve::expected_cardinal_v<r_t>))
+          if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= expected_cardinal_v<element_type_t<r_t>>))
           {
             auto head = eve::as_wides(eve::one(as<r_t>()), r_t(ldexp[o](a0, e)), r_t(ldexp[o](args, e))...);
             auto s = eve::mul[o](head);

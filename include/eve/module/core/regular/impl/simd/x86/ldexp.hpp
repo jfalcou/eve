@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, value U, typename N, callable_options O>
+  template<floating_scalar_value T, value U, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> ldexp_(EVE_REQUIRES(avx512_), O const& opts, wide<T, N> a0, U a1)
     requires (x86_abi<abi_t<T, N>> && same_lanes_or_scalar<wide<T, N>, U>)
   {
@@ -47,7 +47,7 @@ namespace eve::_
     }
   }
 
-  template<floating_scalar_value T, value U, typename N, conditional_expr C, callable_options O>
+  template<floating_scalar_value T, value U, size_type N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> ldexp_(EVE_REQUIRES(avx512_), C const& mask, O const& opts, wide<T, N> a0, U a1) noexcept
     requires (x86_abi<abi_t<T, N>> && same_lanes_or_scalar<wide<T, N>, U>)
   {

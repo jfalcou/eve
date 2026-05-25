@@ -32,7 +32,7 @@ namespace eve
 
     template<eve::product_type Target, simd_value V0, simd_value... Vs>
     requires((sizeof...(Vs)+1 == kumi::size_v<Target>) && same_lanes<V0,Vs...>)
-    EVE_FORCEINLINE wide<Target, cardinal_t<V0>>
+    EVE_FORCEINLINE wide<Target, cardinal_v<V0>>
     operator()(as<Target> const& tgt, V0 v0, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(tgt, v0, vs...); }
 
     EVE_CALLABLE_OBJECT(zip_t, zip_);
@@ -120,6 +120,6 @@ namespace eve::_
   template<callable_options O, eve::product_type Target, simd_value V0, simd_value... Vs>
   EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, V0 v0, Vs... vs) noexcept
   {
-    return wide<Target, cardinal_t<V0>>{v0, vs...};
+    return wide<Target, cardinal_v<V0>>{v0, vs...};
   }
 }

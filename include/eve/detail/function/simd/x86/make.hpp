@@ -22,11 +22,11 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
   {
-    static_assert((sizeof...(Vs) + 1) <= N::value, "[eve::make] - Invalid number of arguments");
+    static_assert((sizeof...(Vs) + 1) <= N, "[eve::make] - Invalid number of arguments");
 
     constexpr auto c = categorize<wide<T, N>>();
     using abi = abi_t<T, N>;
@@ -39,7 +39,7 @@ namespace eve::_
       {
         return [&]<std::size_t... I>(std::index_sequence<I...> const&)
         {
-          return make(as<wide<T, fundamental_cardinal_t<T>>>{}, (I < N::value ? v : 0)...);
+          return make(as<wide<T, fundamental_cardinal_v<T>>>{}, (I < N ? v : 0)...);
         }(std::make_index_sequence<fundamental_cardinal_v<T>>());
       }
       else
@@ -252,7 +252,7 @@ namespace eve::_
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
   {
@@ -265,7 +265,7 @@ namespace eve::_
       {
         constexpr i_t false_bits =  i_t{0};
         constexpr i_t true_bits  = []{
-          if constexpr ( N() < s_t::bits ) return i_t{ (1ULL << N::value) -1 };
+          if constexpr ( N < s_t::bits ) return i_t{ (1ULL << N) -1 };
           else                             return ~i_t{0};
         }();
 

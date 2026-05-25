@@ -13,7 +13,7 @@ TTS_CASE_TPL("Check return types of airy_ai", eve::test::simd::ieee_reals)
 {
   using v_t  = eve::element_type_t<T>;
   using kv_t = kumi::tuple<v_t, v_t>;
-  using kT   = eve::wide<kv_t, typename T::cardinal_type>;
+  using kT   = eve::wide<kv_t, T::size()>;
   TTS_EXPR_IS(eve::airy(T(0)), kT);
   TTS_EXPR_IS(eve::airy(v_t(0)), kv_t);
 };

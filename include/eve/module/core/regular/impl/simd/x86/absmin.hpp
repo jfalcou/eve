@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> absmin_(EVE_REQUIRES(avx512_),
                                      O          const & opts,
                                      wide<T, N> const & v0,
@@ -47,7 +47,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> absmin_(EVE_REQUIRES(avx512_),
                                      C          const &cx,
                                      O          const &opts,

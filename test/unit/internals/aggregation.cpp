@@ -34,8 +34,8 @@ namespace eve
 	template <typename Options>
 	struct test_upgrade_t : strict_elementwise_callable<test_upgrade_t, Options>
 	{
-		template <typename T, typename N>
-		wide<upgrade_t<T>, typename N::split_type> operator()(wide<T, N> a) const {
+		template <typename T, size_type N>
+		wide<upgrade_t<T>, N / 2> operator()(wide<T, N> a) const {
 			return EVE_DISPATCH_CALL(a);
 		}
 
@@ -45,7 +45,7 @@ namespace eve
 	template <typename Options>
 	struct test_downgrade_t : strict_elementwise_callable<test_downgrade_t, Options>
 	{
-		template <typename T, typename N>
+		template <typename T, size_type N>
 		wide<downgrade_t<T>, N> operator()(wide<T, N> a) const
 		{
 			return EVE_DISPATCH_CALL(a);
@@ -57,7 +57,7 @@ namespace eve
 	template <typename Options>
 	struct test_pt_t : strict_elementwise_callable<test_pt_t, Options>
 	{
-		template <typename T, typename N>
+		template <typename T, size_type N>
 		zipped<wide<upgrade_t<T>, N>, wide<std::uint8_t, N>> operator()(wide<T, N> a, zipped<wide<T, N>, wide<T, N>> b) const
 		{
 			return EVE_DISPATCH_CALL(a, b);
@@ -69,7 +69,7 @@ namespace eve
 	template <typename Options>
 	struct test_mixed_t : strict_elementwise_callable<test_mixed_t, Options>
 	{
-		template <typename T, typename U, typename N>
+		template <typename T, typename U, size_type N>
 		wide<U, N> operator()(wide<T, N> a, wide<U, N> b) const {
 			return EVE_DISPATCH_CALL(a, b);
 		}
@@ -85,10 +85,10 @@ namespace eve
 
 namespace eve::_
 {
-	template <callable_options O, typename T, typename N>
-	wide<upgrade_t<T>, typename N::split_type> test_upgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)
+	template <callable_options O, typename T, size_type N>
+	wide<upgrade_t<T>, N / 2> test_upgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)
 	{
-		using r_t = wide<upgrade_t<T>, typename N::split_type>;
+		using r_t = wide<upgrade_t<T>, N / 2>;
 		using out_t = upgrade_t<T>;
 
 		for (std::ptrdiff_t i = 1; i < v.size(); ++i)
@@ -99,13 +99,13 @@ namespace eve::_
 		return r_t{ [&](auto i, auto){ return out_t(v.get(i * 2)); } };
 	}
 
-	template <callable_options O, typename T, typename N>
+	template <callable_options O, typename T, size_type N>
 	wide<downgrade_t<T>, N> test_downgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)
 	{
 		return eve::convert(v, eve::as<downgrade_t<T>>{});
 	}
 
-	template <callable_options O, typename T, typename N>
+	template <callable_options O, typename T, size_type N>
 	zipped<wide<upgrade_t<T>, N>, wide<std::uint8_t, N>> test_pt_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, zipped<wide<T, N>, wide<T, N>> b)
 	{
 		auto x = eve::convert(a, eve::as<upgrade_t<T>>{});
@@ -114,7 +114,7 @@ namespace eve::_
 		return zip(x, y);
 	}
 
-	template <callable_options O, typename T, typename U, typename N>
+	template <callable_options O, typename T, typename U, size_type N>
 	wide<U, N> test_mixed_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, wide<U, N> b)
 	{
 		return wide<U, N>{ [&](auto i, auto) { return U(a.get(i) + b.get(i)); } };
@@ -165,10 +165,10 @@ TTS_CASE_TPL("aggregate stress test - product type", eve::test::simd::all_types)
 TTS_CASE_TPL("aggregate stress test - mixed type", tts::cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
 <typename T0, typename T1>(tts::type<kumi::tuple<T0, T1>>)
 {
-	using W0 = eve::wide<T0, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+	using W0 = eve::wide<T0, eve::expected_cardinal_v<T0> * 2>;
 
 	// T0's exepected cardinal to ensure the same lane count
-	using W1 = eve::wide<T1, eve::fixed<eve::expected_cardinal_v<T0> * 2>>;
+	using W1 = eve::wide<T1, eve::expected_cardinal_v<T0> * 2>;
 
 	W0 a{ [](auto i, auto){ return T0(i * 3 + 7); } };
 	W1 b{ [](auto i, auto){ return T1(i + 1); } };

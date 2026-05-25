@@ -50,9 +50,8 @@ simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts
     if constexpr( !eve::unsigned_value<typename T::mask_type> )
     {
       using e_t = eve::element_type_t<typename T::mask_type>;
-      using N   = eve::fixed<T::size()>;
 
-      using u_t = typename T::template rebind<_::make_integer_t<sizeof(e_t), unsigned>, N>;
+      using u_t = typename T::template rebind<_::make_integer_t<sizeof(e_t), unsigned>, T::size()>;
       return simplify_plain_up_the_type(p, g, bit_cast_tuple(xs, as<u_t> {}));
     }
     else return simplified_pattern {xs, g, p};
@@ -60,15 +59,13 @@ simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts
   else if constexpr( !std::unsigned_integral<eve::element_type_t<T>> )
   {
     using e_t = eve::element_type_t<T>;
-    using N   = eve::fixed<T::size()>;
-    using u_t = eve::wide<_::make_integer_t<sizeof(e_t), unsigned>, N>;
+    using u_t = eve::wide<_::make_integer_t<sizeof(e_t), unsigned>, T::size()>;
     return simplify_plain_up_the_type(p, g, bit_cast_tuple(xs, as<u_t> {}));
   }
   else if constexpr( G >= 2 && sizeof(eve::element_type_t<T>) < 8 )
   {
     using e_t  = eve::element_type_t<T>;
-    using N    = eve::fixed<T::size() / 2>;
-    using up_t = eve::wide<_::make_integer_t<sizeof(e_t) * 2, unsigned>, N>;
+    using up_t = eve::wide<_::make_integer_t<sizeof(e_t) * 2, unsigned>, T::size() / 2>;
     return simplify_plain_up_the_type(p, eve::lane<G / 2>, bit_cast_tuple(xs, as<up_t> {}));
   }
   else { return simplified_pattern {xs, g, p}; }
@@ -110,8 +107,7 @@ simplify_plain_pad_fundamental(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T
         idxm::fix_indexes_to_fundamental<f_n / G>(std::array {I...}, T::size() / G);
     constexpr auto p2 = idxm::to_pattern<p2_arr>();
 
-    using N1 = fixed<std::max(T::size(), f_n)>;
-    using T1 = typename T::template rescale<N1>;
+    using T1 = typename T::template rescale<std::max(T::size(), f_n)>;
     return simplify_plain_shuffle_upscale_pattern(p2, g, bit_cast_tuple(xs, as<T1> {}));
   }
   else return simplify_plain_shuffle_upscale_pattern(p, g, xs);

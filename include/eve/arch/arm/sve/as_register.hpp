@@ -20,10 +20,10 @@ namespace eve
 
 namespace eve
 {
-  template<typename T, typename N, sve_abi ABI>
-  consteval auto find_register_type(as<T>, N, ABI)
+  template<typename T, size_type N, sve_abi ABI>
+  consteval auto find_register_type(as<T>, fixed<N>, ABI)
   {
-    constexpr auto width = sizeof(T) * N::value * 8;
+    constexpr auto width = sizeof(T) * N * 8;
 
     if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {
@@ -93,10 +93,10 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, sve_abi auto)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, sve_abi auto)
   {
-    constexpr size_t width = sizeof(T) * N::value * 8;
+    constexpr size_t width = sizeof(T) * N * 8;
 
     if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {

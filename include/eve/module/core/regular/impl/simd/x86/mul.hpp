@@ -16,14 +16,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && O::contains(widen))
   {
     return mul.behavior(cpu_{}, opts, v, w);
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {
@@ -88,8 +88,8 @@ namespace eve::_
         }
         else
         {
-          static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
-          using htype  = wide<std::int64_t, fixed<half_size>>;
+          static constexpr auto half_size = ((N / 2) > 0) ? N / 2 : 1;
+          using htype  = wide<std::int64_t, half_size>;
 
           htype mhi    = _mm_setr_epi32(-1, 0, -1, 0);
           htype mlo    = mhi;
@@ -113,9 +113,9 @@ namespace eve::_
       else  if constexpr( c == category::uint16x8   ) return _mm_mullo_epi16(a, b);
       else  if constexpr ((c == category::int8x16) || (c == category::uint8x16))
       {
-        static constexpr auto half_size = ((N::value / 2) > 0) ? N::value / 2 : 1;
+        static constexpr auto half_size = ((N / 2) > 0) ? N / 2 : 1;
 
-        using htype  = wide<std::int16_t, fixed<half_size>>;
+        using htype  = wide<std::int16_t, half_size>;
 
         htype mhi    = _mm_set1_epi16(0x00FF);
         htype mlo    = mhi;
@@ -133,13 +133,13 @@ namespace eve::_
         auto s = a;
         constexpr auto smul = [](auto va, auto vb) { return va * vb; };
 
-        if constexpr (N::value >= 2) return slice_apply(smul, s, b);
+        if constexpr (N >= 2) return slice_apply(smul, s, b);
         else                         return map(smul, s, b);
       }
     }
   }
 
-  template<callable_options O, conditional_expr C, typename T, typename N>
+  template<callable_options O, conditional_expr C, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {

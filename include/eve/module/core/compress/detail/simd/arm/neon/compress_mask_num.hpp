@@ -13,7 +13,7 @@ namespace eve::_
 {
   // FIX-#965: most of this should be in reduce, except for 64 bits on arm-v7
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE T sum4(wide<T, eve::fixed<4>> v)
+  EVE_FORCEINLINE T sum4(wide<T, 4> v)
   {
     if constexpr ( current_api >= asimd )
     {
@@ -67,18 +67,18 @@ namespace eve::_
 
   // FIX-#965: most of this should be in reduce, except for uint8_t
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE auto sum8(wide<T, eve::fixed<8>> v)
+  EVE_FORCEINLINE auto sum8(wide<T, 8> v)
   {
          if constexpr ( current_api >= asimd && sizeof(T) == 1 ) return vaddlv_u8(v);
     else if constexpr ( current_api >= asimd && sizeof(T) == 2 ) return vaddvq_u16(v);
     else if constexpr ( sizeof(T) == 1 )
     {
-      using u16_4 = typename wide<T, fixed<8>>::template rebind<std::uint16_t, fixed<4>>;
+      using u16_4 = typename wide<T, 8>::template rebind<std::uint16_t, 4>;
       return sum4(u16_4(vpaddl_u8(v)));
     }
     else if constexpr ( sizeof(T) == 2 )
     {
-      using u32_4 = typename wide<T, fixed<8>>::template rebind<std::uint32_t, fixed<4>>;
+        using u32_4 = typename wide<T, 8>::template rebind<std::uint32_t, 4>;
       return sum4(u32_4(vpaddlq_u16(v)));
     }
     else // aggrgated
@@ -91,13 +91,13 @@ namespace eve::_
 
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, 4>> mask)
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {0, 0};
     else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num(ignore_none, mask && c.mask(as(mask)));
     else
     {
-      using l_t = logical<wide<T, fixed<4>>>;
+      using l_t = logical<wide<T, 4>>;
       using bits_type = typename l_t::bits_type;
 
       bits_type bits = mask.bits();
@@ -113,10 +113,10 @@ namespace eve::_
 
   template<typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), logical<wide<T, fixed<8>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), logical<wide<T, 8>> mask)
   {
     // the sums we do won't fit into a char - needs to be converted to short
-    using l_t = logical<wide<T, fixed<8>>>;
+    using l_t = logical<wide<T, 8>>;
 
     using bits_type = typename l_t::bits_type;
 

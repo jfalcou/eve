@@ -31,10 +31,10 @@ TTS_CASE_WITH( "Check behavior of identity swizzle"
   {
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
               {
-                constexpr typename S::size_type sz = 1ULL << N;
+                constexpr eve::size_type sz = 1ULL << N;
                 if constexpr(sz <= S::size())
                 {
-                  eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
+                  eve::as_wide_t<S, sz> ref = [&](auto i, auto) { return simd.get(i); };
                   TTS_EQUAL(eve::shuffle(simd,identity<sz>), ref);
                 }
               };

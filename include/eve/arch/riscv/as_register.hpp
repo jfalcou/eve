@@ -39,15 +39,15 @@ namespace eve
     using wrap = T;
   }
 
-  template<typename T, typename N, rvv_abi ABI>
-  consteval auto find_register_type(as<T>, N, ABI)
+  template<typename T, size_type N, rvv_abi ABI>
+  consteval auto find_register_type(as<T>, fixed<N>, ABI)
   {
     using _::wrap;
 
     constexpr auto lmul = _::rvv_lmul_v<T, N>;
     constexpr size_t element_bit_size = sizeof(T) * 8;
 
-    static_assert((element_bit_size * N::value) <= (__riscv_v_fixed_vlen * ABI::max_lmul),
+    static_assert((element_bit_size * N) <= (__riscv_v_fixed_vlen * ABI::max_lmul),
       "[eve riscv] Type is not usable in SIMD register (too big)");
 
     if constexpr (floating_scalar_value<T>)
@@ -182,8 +182,8 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, rvv_abi auto)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, rvv_abi auto)
   {
     using _::wrap;
 

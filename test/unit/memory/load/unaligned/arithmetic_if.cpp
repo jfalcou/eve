@@ -20,7 +20,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
 {
   using v_t = eve::element_type_t<T>;
 
-  auto [data  ,idx  ] = page<v_t , eve::fixed<T::size()>>();
+  auto [data  ,idx  ] = page<v_t , T::size()>();
 
   auto* ptr               = &data[idx] - 1;
   auto const* const_ptr   = ptr;

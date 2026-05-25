@@ -221,7 +221,7 @@ namespace eve::algo::views
     using types_to_consider = typename _::map_types_to_consider<LoadOp, I>;
 
     // need to define this to workaround a clang bug.
-    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_t<I>>;
+    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_v<I>>;
 
     using unaligned_me = map_iterator<unaligned_t<I>, LoadOp, StoreOp>;
 

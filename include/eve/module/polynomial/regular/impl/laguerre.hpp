@@ -50,7 +50,7 @@ namespace eve::_
     {
       if constexpr(scalar_value<T>)
       {
-        return laguerre(n, as_wide_t<T, cardinal_t<I>>(x));
+        return laguerre(n, as_wide_t<T, cardinal_v<I>>(x));
       }
       else if constexpr(simd_value<T>)
       {

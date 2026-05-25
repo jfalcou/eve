@@ -50,7 +50,7 @@ namespace eve::_
   constexpr auto pattern_8_elements_dwords_v alignas(sizeof(T) * 8) =
     pattern_8_elements(idxs_dwords<T>);
 
-  template <typename T, typename N>
+  template <typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
     requires (current_api >= avx2)
   {
@@ -64,31 +64,31 @@ namespace eve::_
     }
   }
 
-  template <typename T, typename N>
+  template <typename T, size_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(avx2_), wide<T, N> v, std::ptrdiff_t num) noexcept
     requires ( std::same_as<abi_t<T, N>, x86_256_> )
   {
     using u_t = eve::as_integer_t<T, unsigned>;
 
-    if constexpr ( N() == 4 )
+    if constexpr ( N == 4 )
     {
       u_t const* pattern_p = pattern_4_elements_dwords_v<u_t>[num].data();
 
-      wide<u_t, N> pattern { eve::as_aligned(pattern_p, N()) };
+      wide<u_t, N> pattern { eve::as_aligned(pattern_p, fixed<N>{}) };
       return permvar8(v, pattern);
     }
-    else if constexpr ( N() == 8 )
+    else if constexpr ( N == 8 )
     {
       u_t const* pattern_p = pattern_8_elements_dwords_v<u_t>[num].data();
 
-      wide<u_t, N> pattern {eve::as_aligned(pattern_p, N())};
+      wide<u_t, N> pattern {eve::as_aligned(pattern_p, fixed<N>{})};
       return permvar8(v, pattern);
     }
   }
 
 
-  template <typename T, typename N>
+  template <typename T, size_type N>
   EVE_FORCEINLINE
   wide<T, N> compress_using_masks_to_left_(EVE_SUPPORTS(avx_), wide<T, N> v)
     requires ( std::same_as<abi_t<T, N>, x86_256_> && sizeof(T) <= 4 )
@@ -115,10 +115,10 @@ namespace eve::_
   {
     std::ptrdiff_t lo_idx, hi_idx;
 
-    template <typename T, typename N>
+    template <typename T, size_type N>
     EVE_FORCEINLINE auto operator()(wide<T, N> v) const
     {
-      using half_wide = wide<T, eve::fixed<N() / 2>>;
+      using half_wide = wide<T, N / 2>;
 
       if constexpr ( eve::product_type<T> )
       {
@@ -130,7 +130,7 @@ namespace eve::_
       else
       {
         using u_t = eve::as_integer_t<T, unsigned>;
-        using pattern8 = wide<u_t, eve::fixed<8>>;
+        using pattern8 = wide<u_t, 8>;
 
         auto lo_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[lo_idx].data(), eve::lane<8>);
         auto hi_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[hi_idx].data(), eve::lane<8>);
@@ -161,10 +161,10 @@ namespace eve::_
   };
 
 
-  template <typename T, typename N, typename U>
+  template <typename T, size_type N, typename U>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(ssse3_), ignore_none_ c, wide<T, N> v, logical<wide<U, N>> mask)
-    requires ( N() == 16 ) && (max_scalar_size_v<T> <= 2)
+    requires ( N == 16 ) && (max_scalar_size_v<T> <= 2)
   {
     if constexpr ( max_scalar_size_v<T> == 2 && current_api < avx ) return compress_using_masks_(EVE_RETARGET(cpu_), c, v, mask);
     else

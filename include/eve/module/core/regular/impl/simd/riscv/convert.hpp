@@ -22,7 +22,7 @@ EVE_FORCEINLINE auto
 convert_impl(EVE_REQUIRES(rvv_), logical<In> v, as<logical<Out>>) noexcept
 requires rvv_abi<typename In::abi_type>
 {
-  using out_t = as_wide_t<logical<Out>, cardinal_t<In>>;
+  using out_t = as_wide_t<logical<Out>, cardinal_v<In>>;
   return simd_cast(v, as<out_t> {});
 }
 

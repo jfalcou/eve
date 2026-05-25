@@ -13,13 +13,13 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename I, typename N>
+  template<callable_options O, typename T, typename I, size_type N>
   EVE_FORCEINLINE wide<T, N>
   lookup_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, wide<I, N> idx) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
-    using t8_t = typename type::template rebind<std::uint8_t, fixed<16>>;
+    using t8_t = typename type::template rebind<std::uint8_t, 16>;
 
     if constexpr( sizeof(I) == 1 && sizeof(T) == 1 )
     {

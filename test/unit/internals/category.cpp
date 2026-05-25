@@ -13,7 +13,7 @@ template<typename T, typename Cardinals> struct natives_impl;
 
 template<typename T, std::size_t... N> struct natives_impl<T, std::index_sequence<N...>>
 {
-  using types_list = tts::types<eve::wide<T, eve::fixed<(1 << N)>>...>;
+  using types_list = tts::types<eve::wide<T, (1 << N)>...>;
 };
 
 template<typename T>

@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types_wf16)
 
   if constexpr( eve::floating_value<T> )
   {
-    using wi_t = eve::as_wide_t<int, eve::cardinal_t<T>>;
+    using wi_t = eve::as_wide_t<int, T::size()>;
     TTS_EXPR_IS(eve::fma(T(), int(), int()), T);
     TTS_EXPR_IS(eve::fma(T(), v_t(), int()), T);
     TTS_EXPR_IS(eve::fma(v_t(), int(), T()), T);
@@ -118,19 +118,19 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
   using eve::promote;
 
   constexpr int N = eve::cardinal_v<T>;
-  eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
+  eve::wide<float, N> fa([](auto i,  auto){return float(i)/2; });
   auto r1 = fma[promote](a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;
   auto refr1 = eve::fma(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
   TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
-  eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
+  eve::wide<double, N> da([](auto i,  auto){return double(i)/3; });
   auto r2 = fma[promote](a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
   auto refr2 = eve::fma(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
   TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
-  eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
+  eve::wide<int, N> ia([](auto i,  auto){return int(i); });
   auto r3 = fma[promote](ia, a0, a1);
   using er3_t =  eve::element_type_t<decltype(r3)>;
   auto refr3 = eve::fma(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));

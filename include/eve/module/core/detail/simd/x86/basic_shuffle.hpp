@@ -27,7 +27,7 @@ namespace eve::_
 //================================================================================================
 // Unary basic shuffle - logical on AVX512 ABI, call general case on others
 //================================================================================================
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(sse2_),
                logical<wide<T, N>> const& v,
@@ -59,14 +59,14 @@ is_x86_shuffle_compatible(pattern_t<I...> p)
 //================================================================================================
 // SSE2-SSSE3 variant
 //================================================================================================
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(sse2_),
                wide<T, N> const& v,
                Pattern const&) requires std::same_as<abi_t<T, N>, x86_128_>
 {
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   constexpr Pattern q = {};
 
@@ -82,7 +82,7 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
   else if constexpr( current_api >= ssse3 )
   {
     using st_t    = typename that_t::storage_type;
-    using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
+    using bytes_t = typename that_t::template rebind<std::uint8_t, 16>;
     using i_t     = as_integer_t<wide<T, N>>;
 
     return that_t((st_t)_mm_shuffle_epi8(bit_cast(v, as<i_t> {}).storage(),
@@ -128,15 +128,15 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
 //================================================================================================
 // AVX+ variant
 //================================================================================================
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(avx_),
                wide<T, N> const& v,
                Pattern const&) requires x86_abi<abi_t<T, N>>
 {
-  constexpr auto cd = N::value;
+  constexpr auto cd = N;
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   constexpr auto width_in  = cd * sizeof(T);
   constexpr auto width_out = sz * sizeof(T);
@@ -247,7 +247,7 @@ basic_shuffle_(EVE_SUPPORTS(avx_),
           // Fix the pattern to fit the non-obvious control mask for _mm256_permutevar_pd
           // which read bits 1/65/129/193 instead of the obvious 0/64/128/192
           //======================================================================================
-          constexpr auto fixed_pattern = fix_pattern<N::value>(
+          constexpr auto fixed_pattern = fix_pattern<N>(
               [](auto i, auto c)
               {
                 Pattern r;

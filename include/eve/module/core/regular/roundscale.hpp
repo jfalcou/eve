@@ -23,7 +23,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, n);
     }
 
-    template<floating_value T0, auto N>
+    template<floating_value T0, size_type N>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, n);

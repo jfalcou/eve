@@ -24,21 +24,21 @@ namespace eve
     using wrap = T;
   }
 
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, eve::ppc_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::ppc_)
   {
     using _::wrap;
 
     constexpr auto size_check = [](std::size_t t, std::size_t n)
     {
-      return (sizeof(T) == t) && (N::value <= n);
+      return (sizeof(T) == t) && (N <= n);
     };
 
-    if constexpr (std::same_as<T, float> && (N::value <= 4))
+    if constexpr (std::same_as<T, float> && (N <= 4))
     {
       return wrap<__vector float>{};
     }
-    else if constexpr (std::same_as<T, double> && (N::value <= 2))
+    else if constexpr (std::same_as<T, double> && (N <= 2))
     {
       if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector double>{};
       else                                                  return emulated_{};
@@ -73,21 +73,21 @@ namespace eve
     }
   }
 
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, eve::ppc_)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::ppc_)
   {
     using _::wrap;
 
     constexpr auto size_check = [](std::size_t t, std::size_t n)
     {
-      return (sizeof(T) == t) && (N::value <= n);
+      return (sizeof(T) == t) && (N <= n);
     };
 
-    if constexpr (std::is_same_v<T, float> && (N::value <= 4))
+    if constexpr (std::is_same_v<T, float> && (N <= 4))
     {
       return wrap<__vector __bool int>{};
     }
-    else if constexpr (std::is_same_v<T, double> && (N::value <= 2))
+    else if constexpr (std::is_same_v<T, double> && (N <= 2))
     {
       if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector __bool long>{};
       else                                                  return emulated_{};
