@@ -19,7 +19,7 @@
 
 namespace eve::_
 {
-  template<unsigned_scalar_value T, size N, callable_options O>
+  template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sse2_),
                                           O const& opts,
                                           wide<T, N> a0) noexcept
@@ -42,7 +42,7 @@ namespace eve::_
       {
         //Inspired from: https://stackoverflow.com/questions/58823140/count-leading-zero-bits-for-each-element-in-avx2-vector-emulate-mm256-lzcnt-ep
         using ri_t       = wide<std::int32_t,N>;
-        using ru_t2      = wide< std::uint16_t, fixed< N::value*2>>;
+        using ru_t2      = wide< std::uint16_t, N * 2>;
         if constexpr( match(c, category::uint32x8, category::uint32x4 ))
         {
           auto    v   = bit_notand(bit_shr(a0, 8), a0);
@@ -64,7 +64,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-  template<int S, conditional_expr C, integral_scalar_value T, size N, callable_options O>
+  template<int S, conditional_expr C, integral_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(avx512_),
                                           C const          & cx,
                                           O const          & opts,

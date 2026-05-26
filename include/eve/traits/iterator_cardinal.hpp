@@ -49,5 +49,5 @@ namespace eve
   using iterator_cardinal_t = decltype(_::iterator_cardinal_impl<T>());
 
   template <typename T>
-  constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<T>::value;
+  constexpr size_type iterator_cardinal_v = iterator_cardinal_t<T>::value;
 }

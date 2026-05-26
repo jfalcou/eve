@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -26,7 +26,7 @@ namespace eve::_
       // We don't use AVX512 compound intrinsic _mm512_reduce_* as it generates worse code than us
       // https://stackoverflow.com/questions/60108658/fastest-method-to-calculate-sum-of-all-packed-32-bit-integers-using-avx512-or-av
 
-      if constexpr( N::value == 1  )
+      if constexpr( N == 1  )
       {
         return v.get(0);
       }

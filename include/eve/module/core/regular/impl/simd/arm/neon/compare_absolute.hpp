@@ -19,7 +19,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, floating_scalar_value T, size N, typename F>
+  template<callable_options O, floating_scalar_value T, size_type N, typename F>
   EVE_FORCEINLINE logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(neon128_), O const& o,
                                                         wide<T, N> v, wide<T, N> w, F f) noexcept
   requires (arm_abi<abi_t<T, N>>)

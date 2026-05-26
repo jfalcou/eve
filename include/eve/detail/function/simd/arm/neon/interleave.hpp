@@ -17,7 +17,7 @@ namespace eve::_
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<callable_options O, scalar_value T, size N>
+  template<callable_options O, scalar_value T, size_type N>
   EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(neon128_),
                                    O const& o,
                                    wide<T,N> v0,

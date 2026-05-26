@@ -15,14 +15,14 @@
 
 namespace eve::_
 {
-  template<scalar_value T, size N, callable_options O>
+  template<scalar_value T, size_type N, callable_options O>
   requires sve_abi<abi_t<T, N>>
   EVE_FORCEINLINE wide<T, N> fms_(EVE_REQUIRES(sve_), O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     return fma[o](a, b, -c);
   }
 
-  template<conditional_expr C, scalar_value T, size N, callable_options O>
+  template<conditional_expr C, scalar_value T, size_type N, callable_options O>
   requires sve_abi<abi_t<T, N>>
   EVE_FORCEINLINE wide<T, N> fms_(EVE_REQUIRES(sve_), C const& cx, O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {

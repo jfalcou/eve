@@ -122,7 +122,7 @@ namespace eve::_
     }
   };
 
-  template <typename T, auto N>
+  template <typename T, size_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
@@ -139,7 +139,7 @@ namespace eve::_
       {
         u_t const* pattern_p = pattern_4_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
-        auto       bytes_ap  = eve::as_aligned(bytes_p, eve::fixed<bytes::size()>{});
+        auto       bytes_ap  = eve::as_aligned(bytes_p, fixed<bytes::size()>{});
         bytes pattern{bytes_ap};
 
         bytes bytes_v = bit_cast(v, eve::as<bytes>{});
@@ -152,7 +152,7 @@ namespace eve::_
       {
         u_t const* pattern_p = pattern_8_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
-        auto       bytes_ap  = eve::as_aligned(bytes_p, eve::fixed<bytes::size()>{});
+        auto       bytes_ap  = eve::as_aligned(bytes_p, fixed<bytes::size()>{});
         bytes pattern{bytes_ap};
 
         // Shuffle
@@ -165,7 +165,7 @@ namespace eve::_
     }
   }
 
-  template <typename T, auto N>
+  template <typename T, size_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
   {
@@ -176,7 +176,7 @@ namespace eve::_
     }
   }
 
-  template <typename T, auto N, typename U>
+  template <typename T, size_type N, typename U>
   constexpr bool compress_using_masks_should_aggregate()
   {
     constexpr std::size_t reg_size = max_scalar_size_v<T> * N;
@@ -187,7 +187,7 @@ namespace eve::_
     else                                                        return true;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, auto N>
+  template<relative_conditional_expr C, typename T, typename U, size_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
                              C c,

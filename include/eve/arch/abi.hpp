@@ -18,7 +18,7 @@
 namespace eve::_
 {
   // Types that are too big and are not emulated require aggregation
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   inline constexpr bool require_aggregation = (Size > expected_cardinal_v<Type>)
                                               && !std::is_same_v
                                                         < abi_of_t< Type
@@ -58,49 +58,49 @@ namespace eve
   //! #### Helper types
   //!
   //! @code{.cpp}
-  //! template<typename Type, size Size>
+  //! template<typename Type, size_type Size>
   //! using abi_t = typename abi<Type, Size>::type;
   //! @endcode
   //!
   //! @}
   //================================================================================================
-  template<typename Type, size Size> struct abi {};
+  template<typename Type, size_type Size> struct abi {};
 
 #if !defined(EVE_DOXYGEN_INVOKED)
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   requires( arithmetic<Type> && _::require_aggregation<Type, Size> )
   struct abi<Type, Size>
   {
     using type = eve::aggregated_;
   };
 
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   requires( eve::product_type<Type> )
   struct abi<Type, Size>
   {
     using type = eve::bundle_;
   };
 
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   requires( arithmetic<Type> && !_::require_aggregation<Type, Size> )
   struct abi<Type, Size> : abi_of<Type, Size>
   {};
 
   // Wrapper for SIMD registers holding logical type
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   requires( arithmetic<Type> && _::require_aggregation<Type, Size> )
   struct abi<logical<Type>, Size>
   {
     using type = eve::aggregated_;
   };
 
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   requires( arithmetic<Type> && !_::require_aggregation<Type, Size> )
   struct abi<logical<Type>, Size> : abi_of<logical<Type>, Size>
   {};
 #endif
 
   // Type short-cut
-  template<typename Type, size Size>
+  template<typename Type, size_type Size>
   using abi_t = typename abi<translate_t<Type>, Size>::type;
 }

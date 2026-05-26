@@ -11,7 +11,7 @@ namespace
 {
 
 // This is enough
-template<size N>
+template<std::ptrdiff_t N>
 constexpr auto
 all_blend_patterns_to_test_for(eve::fixed<N>)
 {

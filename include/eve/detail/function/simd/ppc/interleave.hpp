@@ -16,7 +16,7 @@ namespace eve::_
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<callable_options OO, scalar_value T, size N>
+  template<callable_options OO, scalar_value T, size_type N>
   EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(vmx_), OO const & o, wide<T,N> v0, wide<T,N> v1) noexcept
   requires (N > 1) && ppc_abi<abi_t<T, N>>
   {

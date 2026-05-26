@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-  template<relative_conditional_expr C, arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(sve_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
     requires sve_abi<abi_t<T, N>>
   {

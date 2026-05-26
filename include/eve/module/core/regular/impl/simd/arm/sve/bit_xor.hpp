@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {

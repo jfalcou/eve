@@ -28,7 +28,7 @@ namespace eve
   //! @groupheader{Examples}
   //!   - `eve::logical<eve::wide<short>>`
   //!   - `eve::wide<float>`
-  //!   - `eve::wide<int, eve::fixed<1>>`
+  //!   - `eve::wide<int, 1>`
   //================================================================================================
   template<typename T>
   concept simd_value = arithmetic_simd_value<T> || logical_simd_value<T>;
@@ -47,7 +47,7 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //!  - `eve::logical<eve::wide<short>>`
-  //!  - `eve::wide<unsigned int, eve::fixed<1>>`
+  //!  - `eve::wide<unsigned int, 1>`
   //================================================================================================
   template<typename T>
   concept integral_simd_value = arithmetic_simd_value<T> && std::integral<translated_element_type_t<T>>;
@@ -66,7 +66,7 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //!  - `eve::logical<eve::wide<short>>`
-  //!  - `eve::wide<std::int64_t, eve::fixed<4>>`
+  //!  - `eve::wide<std::int64_t, 4>`
   //================================================================================================
   template<typename T>
   concept signed_simd_value = arithmetic_simd_value<T> && (std::is_signed_v<translated_element_type_t<T>>
@@ -86,7 +86,7 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //!  - `eve::logical<eve::wide<unsigned int>>`
-  //!  - `eve::wide<std::uint8_t, eve::fixed<8>>`
+  //!  - `eve::wide<std::uint8_t, 8>`
   //================================================================================================
   template<typename T>
   concept unsigned_simd_value =     arithmetic_simd_value<T>
@@ -106,7 +106,7 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //!  - `eve::logical<eve::wide<signed int>>`
-  //!  - `eve::wide<std::int16_t, eve::fixed<8>>`
+  //!  - `eve::wide<std::int16_t, 8>`
   //================================================================================================
   template<typename T>
   concept signed_integral_simd_value  =     arithmetic_simd_value<T>
@@ -126,7 +126,7 @@ namespace eve
   //!
   //! @groupheader{Examples}
   //!  - `eve::logical<eve::wide<signed int>>`
-  //!  - `eve::wide<std::int16_t, eve::fixed<8>>`
+  //!  - `eve::wide<std::int16_t, 8>`
   //================================================================================================
   template<typename T>
   concept floating_simd_value = arithmetic_simd_value<T>

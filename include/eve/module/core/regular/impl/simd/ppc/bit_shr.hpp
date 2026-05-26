@@ -19,14 +19,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value S>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE auto bit_shr_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, wide<S, N> s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return vec_sr(v.storage(), convert(s, as<as_integer_t<T, unsigned>>{}).storage());
   }
 
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value S>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE auto bit_shr_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, S s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

@@ -43,7 +43,7 @@ namespace eve::_
     return vget_lane_u32(dwords, 0);
   }
 
-  template<arithmetic_scalar_value T, auto N>
+  template<arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
     requires std::same_as<abi_t<T, N>, arm_64_>
   {
@@ -81,7 +81,7 @@ namespace eve::_
     }
   }
 
-  template<arithmetic_scalar_value T, size N>
+  template<arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
     requires std::same_as<abi_t<T, N>, arm_128_>
   {

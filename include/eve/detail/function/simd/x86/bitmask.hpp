@@ -15,7 +15,7 @@ namespace eve::_
   //================================================================================================
   // Logical to Bits
   //================================================================================================
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE auto to_bits( sse2_ const&, logical<wide<T, N>> const& p ) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -26,7 +26,7 @@ namespace eve::_
   //================================================================================================
   // Logical to Mask
   //================================================================================================
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> to_mask(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -100,8 +100,8 @@ namespace eve::_
   //================================================================================================
   // Logical to Bitmap - use movemask variant
   //================================================================================================
-  template<typename T, auto N> EVE_FORCEINLINE
-  std::bitset<N::value> to_bitmap(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
+  template<typename T, size_type N> EVE_FORCEINLINE
+  std::bitset<N> to_bitmap(sse2_ const&, logical<wide<T, N>> const& p ) noexcept
       requires x86_abi<abi_t<T, N>>
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )

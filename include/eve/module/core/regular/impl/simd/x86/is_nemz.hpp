@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, size N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_nemz_(EVE_REQUIRES(avx512_),
                                                O          const &opts,
                                                wide<T, N> const &a) noexcept

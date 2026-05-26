@@ -12,14 +12,14 @@
 
 namespace eve::_
 {
-  template<typename T, auto N, callable_options O>
+  template<typename T, size_type N, callable_options O>
   requires sve_abi<abi_t<T, N>>
   EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_), O const& o, wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
   {
     return fms[o](b, c, a);
   }
 
-  template<conditional_expr C, typename T, auto N, callable_options O>
+  template<conditional_expr C, typename T, size_type N, callable_options O>
   requires sve_abi<abi_t<T, N>>
   EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_), C const& cx, O const&o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {

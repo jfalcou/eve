@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<unsigned_scalar_value T, size N, callable_options O>
+  template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
   bit_reverse_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v)
     noexcept requires (arm_abi<abi_t<T, N>>)

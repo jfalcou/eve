@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, size N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
   rec_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
   requires (arm_abi<abi_t<T, N>>)

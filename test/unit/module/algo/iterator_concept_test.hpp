@@ -88,7 +88,7 @@ namespace algo_test
   template <typename I, typename S>
   void unaligned_iteration_test(I f, S l)
   {
-    size N = l - f;
+    std::ptrdiff_t n = l - f;
     while (n) { f += 1; --n; }
     TTS_EQUAL(f, l);
   }

@@ -22,7 +22,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
   {
@@ -39,7 +39,7 @@ namespace eve::_
       {
         return [&]<std::size_t... I>(std::index_sequence<I...> const&)
         {
-          return make(as<wide<T, fundamental_cardinal_t<T>>>{}, (I < N ? v : 0)...);
+          return make(as<wide<T, fundamental_cardinal_v<T>>>{}, (I < N ? v : 0)...);
         }(std::make_index_sequence<fundamental_cardinal_v<T>>());
       }
       else
@@ -252,7 +252,7 @@ namespace eve::_
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<callable_options O, arithmetic_scalar_value T, size N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
   {

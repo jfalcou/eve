@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N, integral_scalar_value S>
+  template<callable_options O, typename T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w, S s) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -42,7 +42,7 @@ namespace eve::_
     else                                                       return shr.behavior(cpu_{}, opts, w, s);
   }
 
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value S>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w, wide<S, N> s) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -73,7 +73,7 @@ namespace eve::_
   }
 
   // shr[mask](wide_val, wide_mask)
-  template<callable_options O, conditional_expr C, integral_scalar_value T, typename S, size N>
+  template<callable_options O, conditional_expr C, integral_scalar_value T, typename S, size_type N>
   EVE_FORCEINLINE wide<T,N> shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, wide<S, N> s) noexcept
     requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {
@@ -110,7 +110,7 @@ namespace eve::_
   }
 
   // shr[mask](wide_val, imm_mask)
-  template<callable_options O, conditional_expr C, integral_scalar_value T, size N>
+  template<callable_options O, conditional_expr C, integral_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T,N> shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, unsigned int s) noexcept
     requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {

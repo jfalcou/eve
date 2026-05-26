@@ -7,47 +7,19 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
-
 #include <cstddef>
 #include <type_traits>
-#include <concepts>
-#include <compare>
-#include <bit>
 
 namespace eve
 {
-  template<typename T>
-  concept natural = std::integral<T> && !std::same_as<T, bool>;
+  namespace _ {
+    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
+  }
 
-  struct size
-  {
-    consteval size(natural auto v) : value(v)
-    {
-      if (!std::has_single_bit(static_cast<std::size_t>(v)))
-      {
-        throw "[eve] Size must be a non-zero power of 2";
-      }
-    }
+  using size_type = std::ptrdiff_t;
 
-    constexpr operator int() const { return value; }
-
-    friend constexpr bool operator==(size l, size r) noexcept { return l.value == r.value; }
-    friend constexpr bool operator==(size s, natural auto n) noexcept { return s.value == static_cast<int>(n); }
-    friend constexpr bool operator==(natural auto n, size s) noexcept { return s.value == static_cast<int>(n); }
-
-    friend constexpr auto operator<=>(size l, size r) noexcept { return l.value <=> r.value; }
-    friend constexpr auto operator<=>(size s, natural auto n) noexcept { return s.value <=> static_cast<int>(n); }
-    friend constexpr auto operator<=>(natural auto n, size s) noexcept { return static_cast<int>(n) <=> s.value; }
-
-    int value;
-  };
-
-  template<>
-  struct translation_of<size>
-  {
-    using type = int;
-  };
+  template<size_type Size>
+  concept is_valid_size = (Size > 0) && _::is_pow2(Size);
 
   //================================================================================================
   //! @addtogroup simd_types
@@ -71,18 +43,17 @@ namespace eve
   //!   | `combined_type` | `eve::fixed``<Cardinal * 2>`                                  |
   //!
   //================================================================================================
-  template<std::ptrdiff_t Cardinal>
-  struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
+  template<size_type Cardinal>
+  struct fixed : std::integral_constant<size_type, Cardinal>
   {
-    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
-    static_assert((Cardinal > 0) && is_pow2(Cardinal), "Cardinal must be a non-zero power of 2");
+    static_assert(is_valid_size<Cardinal>, "Cardinal must be a non-zero power of 2");
 
     using type          = fixed<Cardinal>;
     using split_type    = fixed<Cardinal / 2>;
     using combined_type = fixed<Cardinal * 2>;
   };
 
-  template<> struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
+  template<> struct fixed<1ULL> : std::integral_constant<size_type, 1ULL>
   {
     using type          = fixed<1ULL>;
     using combined_type = fixed<2>;
@@ -123,7 +94,7 @@ namespace eve
   namespace _
   {
     template<typename T>
-    constexpr size cache_line_cardinal = 64 / sizeof(T);
+    constexpr size_type cache_line_cardinal = 64 / sizeof(T);
   }
 
   //================================================================================================

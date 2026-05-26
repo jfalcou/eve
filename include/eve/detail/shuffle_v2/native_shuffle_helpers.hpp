@@ -91,7 +91,7 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr auto shuffle_4in4   = idxm::group_within_group<4 / g_size>(idxs);
   static constexpr auto shuffle_2in2   = idxm::group_within_group<2 / g_size>(idxs);
 
-  template<size N> static constexpr auto shuffle_NinN(eve::fixed<N>)
+  template<std::ptrdiff_t N> static constexpr auto shuffle_NinN(eve::fixed<N>)
   {
     if constexpr( N == 16 ) return shuffle_16in16;
     if constexpr( N == 8 ) return shuffle_8in8;

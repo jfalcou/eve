@@ -49,11 +49,11 @@
 
 namespace eve::_
 {
-  template<typename T, auto N>
+  template<typename T, size_type N>
   struct wide_split_type_helper
   { };
 
-  template<typename T, auto N>
+  template<typename T, size_type N>
   requires(N > 1)
   struct wide_split_type_helper<T, N>
   {
@@ -87,7 +87,8 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<arithmetic_scalar_value Type, size Size>
+  template<arithmetic_scalar_value Type, size_type Size>
+  requires (is_valid_size<Size>)
   struct EVE_MAY_ALIAS wide
       : _::wide_storage<as_register_t<translate_t<Type>, Size, abi_t<translate_t<Type>, Size>>>,
         _::wide_split_type_helper<Type, Size>
@@ -109,8 +110,8 @@ namespace eve
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
 
-    //! Type representing the size of the current wide
-    using size_type = int;
+    //! Type describing the size of the current wide
+    using cardinal_type = fixed<Size>;
 
     //! Opt-in for like concept
     using is_like = value_type;
@@ -119,11 +120,11 @@ namespace eve
     using combined_type = wide<Type, Size * 2>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
-    //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
-    template<typename T, auto N = expected_cardinal_v<T>> using rebind = wide<T, N>;
+    //! If unspecified, `N` is computed as `expected_cardinal_v<T>`.
+    template<typename T, size_type N = expected_cardinal_v<T>> using rebind = wide<T, N>;
 
     //! Generates a eve::wide type from a different cardinal `N`.
-    template<size N> using rescale = wide<Type, N>;
+    template<size_type N> using rescale = wide<Type, N>;
 
     static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type) * Size; }
 
@@ -157,14 +158,14 @@ namespace eve
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
-    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, as_type<Size>))
+    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, fixed<Size>{}))
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<_::data_source... Ptr>
     requires(eve::product_type<Type>)
     EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
-      : storage_base(load(ptr, as_type<Size>))
+      : storage_base(load(ptr, fixed<Size>{}))
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
@@ -434,7 +435,7 @@ namespace eve
     //=============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr struct size size() noexcept { return Size; }
+    static EVE_FORCEINLINE constexpr size_type size() noexcept { return Size; }
 
     //==============================================================================================
     //! @}
@@ -467,7 +468,7 @@ namespace eve
 
     //! @brief Performs a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
-    template<scalar_value U, struct size M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -512,7 +513,7 @@ namespace eve
 
     //! @brief Performs a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<scalar_value U, struct size M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator|(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -556,7 +557,7 @@ namespace eve
 
     //! @brief Performs a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<scalar_value U, struct size M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator^(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -1088,13 +1089,13 @@ namespace eve
   //==============================================================================================
   // Product type Support
   //==============================================================================================
-  template<std::size_t I, eve::product_type T, size N>
+  template<std::size_t I, eve::product_type T, size_type N>
   EVE_FORCEINLINE auto& get(wide<T, N>& w) noexcept
   {
     return kumi::get<I>(w.storage());
   }
 
-  template<std::size_t... Idx, eve::product_type T, size N>
+  template<std::size_t... Idx, eve::product_type T, size_type N>
 #if !defined(EVE_DOXYGEN_INVOKED)
   requires((Idx < kumi::size<T>::value) && ...)
 #endif
@@ -1119,12 +1120,12 @@ namespace eve
 //================================================================================================
 // Product type Support
 //================================================================================================
-template<std::size_t I, eve::product_type T, eve::size N>
+template<std::size_t I, eve::product_type T, eve::size_type N>
 struct std::tuple_element<I, eve::wide<T, N>>
     : std::tuple_element<I, typename eve::wide<T, N>::storage_type>
 {};
 
-template<eve::product_type T, eve::size N>
+template<eve::product_type T, eve::size_type N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
 #endif

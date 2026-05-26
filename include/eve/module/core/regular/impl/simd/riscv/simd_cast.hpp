@@ -18,7 +18,7 @@ namespace eve::_
 // as RISC-V needs to have an intermediate vector register type.
 // These functions cast logical to wide or wide to logical.
 // No additional work (e.g. filling with zeros undefined bits) is expected.
-template<scalar_value T, size N, scalar_value U, std::ptrdiff_t M>
+template<scalar_value T, size_type N, scalar_value U, std::ptrdiff_t M>
 EVE_FORCEINLINE logical<wide<U, M>>
                 rvv_simd_cast(wide<T, N> x, as<logical<wide<U, M>>> const                &tgt) noexcept
 requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>>
@@ -48,7 +48,7 @@ requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>>
   }
 }
 
-template<scalar_value T, size N, scalar_value U, std::ptrdiff_t M>
+template<scalar_value T, size_type N, scalar_value U, std::ptrdiff_t M>
 EVE_FORCEINLINE wide<U, M>
                 rvv_simd_cast(logical<wide<T, N>> x, as<wide<U, M>> const&) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -76,7 +76,7 @@ requires rvv_abi<abi_t<T, N>>
 // * N >= M: when we have is_full false, we first work with full_type, that bitcast it to smaller
 // type.
 // * N < M: is_full false, we could cast from not full type to full one.
-template<callable_options O, scalar_value T, size N, scalar_value U, std::ptrdiff_t M>
+template<callable_options O, scalar_value T, size_type N, scalar_value U, std::ptrdiff_t M>
 EVE_FORCEINLINE logical<wide<U, M>>
                 simd_cast_(EVE_REQUIRES(rvv_),
                            const O&,
@@ -90,7 +90,7 @@ requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>> )
   return to_ret;
 }
 
-template<size N, std::ptrdiff_t M>
+template<size_type N, std::ptrdiff_t M>
 EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_trunc(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires rvv_abi<abi_t<std::int8_t, fixed<N>>>
@@ -104,7 +104,7 @@ requires rvv_abi<abi_t<std::int8_t, fixed<N>>>
   else if constexpr( out_lmul == 4 ) return __riscv_vlmul_trunc_i8m4(a);
 }
 
-template<size N, std::ptrdiff_t M>
+template<size_type N, std::ptrdiff_t M>
 EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_extend(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires(rvv_abi<abi_t<std::int8_t, fixed<N>>> && rvv_abi<abi_t<std::int8_t, fixed<M>>> )

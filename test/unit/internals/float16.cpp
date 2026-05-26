@@ -56,7 +56,7 @@
       return ((bits & uint16_t(0x7C00)) == 0x7C00u) && ((bits & uint16_t(0x03FF)) != 0u);
     };
 
-    auto run_for = [&]<size N>(std::integral_constant<std::ptrdiff_t, N>) {
+    auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
       TTS_WHEN("cardinal = " << N)
       {
         using wf16_t = eve::wide<eve::float16_t, N>;
@@ -108,7 +108,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
 
 TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
 {
-  auto run_for = [&]<size N>(std::integral_constant<std::ptrdiff_t, N>) {
+  auto run_for = [&]<uint32_t N>(std::integral_constant<uint32_t, N>) {
     TTS_WHEN("cardinal = " << N)
     {
       using wf16_t = eve::wide<eve::float16_t, N>;
@@ -132,7 +132,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
   constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
   [&]<std::size_t... I>(std::index_sequence<I...>) {
-    (run_for(std::integral_constant<std::ptrdiff_t, 1LL << I>{}), ...);
+    (run_for(std::integral_constant<uint32_t, 1LL << I>{}), ...);
   }(std::make_index_sequence<seq_size>{});
 };
 

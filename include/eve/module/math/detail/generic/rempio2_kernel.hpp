@@ -227,7 +227,7 @@ namespace eve::_
 
           for( int i = 0; i < 6; ++i )
           {
-            auto values = gather(eve::as_aligned(&toverp[0], cardinal_t<T> {}), inds);
+            auto values = gather(eve::as_aligned(&toverp[0], cardinal_t<T>{}), inds);
             inds        = inc(inds);
             r[i]        = vx1 * values * tmp1;
             tmp1 *= tm24;
@@ -304,9 +304,9 @@ namespace eve::_
       auto [sn, sr, dsr]          = rempio2_full_circle(xx);
       auto xi                     = bit_cast(xx, as<ui_t>());
       auto index                  = ((xi >> 26) & 15);
-      auto arr0                   = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index);
-      auto arr4 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 4), as<uint64_t>());
-      auto arr8 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 8), as<uint64_t>());
+      auto arr0                   = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index);
+      auto arr4 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index + 4), as<uint64_t>());
+      auto arr8 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T>{}), index + 8), as<uint64_t>());
 
       auto shift = ((xi >> 23) & 7);
       auto xii   = bit_or(bit_and(xi, 0xffffff), 0x800000);

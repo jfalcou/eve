@@ -74,7 +74,7 @@ namespace eve
     using type = logical<typename underlying_type<T>::type>;
   };
 
-  template<typename T, auto N>
+  template<typename T, size_type N>
   struct underlying_type<wide<T,N>> : underlying_type<T>
   {};
 

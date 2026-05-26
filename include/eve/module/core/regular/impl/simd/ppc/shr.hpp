@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value U>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value U>
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(vmx_), O const&, wide<T,N> v, wide<U,N> s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -24,7 +24,7 @@ namespace eve::_
     else                              return vec_sr (v.storage(), s_c.storage());
   }
 
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value U>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value U>
   EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(vmx_), O const& opts, wide<T,N> v, U s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

@@ -9,6 +9,7 @@
 
 #include <eve/arch/cardinals.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/scalar.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
 
@@ -16,8 +17,8 @@ namespace eve::_
 {
   template<typename T> struct fec_box { using type = always<T>; };
 
-  template<typename Type, regular_abi ABI>
-  constexpr size find_expected_cardinal()
+  template<scalar_value Type, regular_abi ABI>
+  consteval size_type find_expected_cardinal()
   {
     if constexpr(eve::product_type<Type>)
     {
@@ -34,8 +35,8 @@ namespace eve::_
 
 namespace eve
 {
-  template<typename Type, regular_abi ABI = eve::current_abi_type>
-  constexpr inline auto expected_cardinal_v = _::find_expected_cardinal<Type, ABI>();
+  template<scalar_value Type, regular_abi ABI = eve::current_abi_type>
+  constexpr inline size_type expected_cardinal_v = _::find_expected_cardinal<Type, ABI>();
 
   //================================================================================================
   //! @addtogroup arch

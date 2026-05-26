@@ -18,7 +18,6 @@ TTS_CASE_TPL( "Check return types of logical operators on wide", eve::test::simd
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  using c_t = eve::cardinal_t<T>;
 
   TTS_EXPR_IS( eve::logical<T>()    && eve::logical<T>()  , eve::logical<T>);
   TTS_EXPR_IS( eve::logical<T>()    && eve::logical<v_t>(), eve::logical<T>);
@@ -28,7 +27,7 @@ TTS_CASE_TPL( "Check return types of logical operators on wide", eve::test::simd
   TTS_EXPR_IS( eve::logical<v_t>()  || eve::logical<T>()  , eve::logical<T>);
   TTS_EXPR_IS( !eve::logical<T>()                         , eve::logical<T>);
 
-  if constexpr (c_t::value == 1)
+  if constexpr (T::size() == 1)
   {
     auto x = eve::logical<T>{};
     TTS_EXPECT_NOT_COMPILES(x, { test_split(x); });

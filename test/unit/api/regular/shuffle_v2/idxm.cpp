@@ -175,7 +175,7 @@ TTS_CASE("shuffle_within_halves")
 
 TTS_CASE("shuffle_within_n")
 {
-  auto test = [](auto _in, size N, bool expected)
+  auto test = [](auto _in, std::ptrdiff_t n, bool expected)
   {
     auto in     = to_idxs(_in);
     bool actual = eve::_::idxm::shuffle_within_n(in, n);

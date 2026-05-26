@@ -19,21 +19,21 @@ ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
   return vec_perm(x.storage(), y.storage(), table.storage());
 }
 
-template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else
   {
-    using u8x16 = wide<std::uint8_t, eve::fixed<16>>;
+    using u8x16 = wide<std::uint8_t, 16>;
     auto bytes  = eve::bit_cast(x, eve::as<u8x16> {});
 
     constexpr auto no_we = idxm::replace_we(P::idxs, 0);
 
     if constexpr( P::has_zeroes )
     {
-      constexpr auto no_na      = idxm::replace_na(no_we, N::value);
+      constexpr auto no_na      = idxm::replace_na(no_we, N);
       constexpr auto expanded   = idxm::expand_group<P::g_size>(no_na);
       constexpr auto table_idxs = idxm::to_pattern<expanded>();
 
@@ -49,11 +49,11 @@ shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
-  if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
+  if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle;
   else
   {
     eve::logical<wide<T, N>> m([](int i, int size) { return P::idxs[i / G] >= size / G; });
@@ -61,14 +61,14 @@ shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::has_zeroes ) return no_matching_shuffle;
   else
   {
-    using u8x16 = wide<std::uint8_t, eve::fixed<16>>;
+    using u8x16 = wide<std::uint8_t, 16>;
     auto xbytes = eve::bit_cast(x, eve::as<u8x16> {});
     auto ybytes = eve::bit_cast(y, eve::as<u8x16> {});
 
@@ -80,7 +80,7 @@ shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, size N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)

@@ -16,11 +16,11 @@
 
 namespace eve::_
 {
-  template<typename T, auto N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(vmx_, Ptr ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
+    if constexpr( N * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api >= eve::vsx )
       {
@@ -49,16 +49,16 @@ namespace eve::_
     else
     {
       typename wide<T, N>::storage_type that{};
-      std::memcpy(&that, ptr, N::value * sizeof(T));
+      std::memcpy(&that, ptr, N * sizeof(T));
       return that;
     }
   }
 
-  template<typename T, typename U, size N, std::ptrdiff_t Lanes>
+  template<typename T, typename U, size_type N, std::ptrdiff_t Lanes>
   EVE_FORCEINLINE wide<T, N> load_impl(vmx_, aligned_ptr<U, Lanes> ptr, as<wide<T, N>> tgt) noexcept
     requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>, wide<T, N>>
   {
-    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
+    if constexpr( N * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api >= eve::vsx )
       {
@@ -84,7 +84,7 @@ namespace eve::_
     else
     {
       typename wide<T, N>::storage_type that{};
-      std::memcpy(&that, ptr.get(), N::value * sizeof(T));
+      std::memcpy(&that, ptr.get(), N * sizeof(T));
       return that;
     }
   }

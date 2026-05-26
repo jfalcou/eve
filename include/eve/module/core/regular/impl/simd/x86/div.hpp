@@ -17,7 +17,7 @@
 namespace eve::_
 {
 
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {
@@ -84,7 +84,7 @@ namespace eve::_
       {
         auto s = a;
         constexpr auto sdiv = [](auto va, auto vb) { return va /= vb; };
-        if constexpr( N::value >= 2  )  return slice_apply(sdiv, s, b);
+        if constexpr( N >= 2  )  return slice_apply(sdiv, s, b);
         else                            return map(sdiv, s, b);
       }
     }
@@ -92,7 +92,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<callable_options O, conditional_expr C, floating_scalar_value T, size N>
+  template<callable_options O, conditional_expr C, floating_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(avx512_), C const& cx, O const& o, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod) && !O::contains(widen))
   {

@@ -28,7 +28,7 @@ template<typename TraitsSupport> struct transfrom_reduce_2_reduce_fuse_ : Traits
   EVE_FORCEINLINE auto operator()(auto&& rng, auto init) const
   {
     return eve::algo::transform_reduce[TraitsSupport::get_traits()][eve::algo::fuse_operations](
-        EVE_FWD(rng), []<typename Sum, size N>(auto x, eve::wide<Sum, N> sum) {
+        EVE_FWD(rng), []<typename Sum, eve::size_type N>(auto x, eve::wide<Sum, N> sum) {
           return eve::convert(x, eve::as<Sum>{}) + sum; }, init);
   }
 };

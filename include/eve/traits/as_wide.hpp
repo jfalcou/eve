@@ -23,32 +23,32 @@ namespace eve
     using type = void;
   };
 
-  template<typename Type, std::ptrdiff_t Size>
+  template<typename Type, size_type Size>
   requires (arithmetic_scalar_value<Type>)
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
   };
 
-  template<typename T, std::ptrdiff_t Size>
+  template<typename T, size_type Size>
   struct as_wide<eve::logical<T>,Size>
   {
     using type = eve::logical< typename as_wide<T,Size>::type >;
   };
 
-  template<typename Type, size N, std::ptrdiff_t Size>
+  template<typename Type, size_type N, size_type Size>
   struct as_wide<eve::wide<Type,N>,Size>
   {
     using type = eve::wide<Type,Size>;
   };
 
-  template<typename Type, size N, std::ptrdiff_t Size>
+  template<typename Type, size_type N, size_type Size>
   struct as_wide<eve::logical<eve::wide<Type,N>>,Size>
   {
     using type = eve::logical<eve::wide<Type,Size>>;
   };
 
-  template<typename Type, std::ptrdiff_t Size = expected_cardinal_v<Type> >
+  template<typename Type, size_type Size = expected_cardinal_v<Type> >
   using as_wide_t = typename as_wide<Type, Size>::type;
 
   template<typename T, typename U>

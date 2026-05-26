@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE wide<T,N> bit_not_(EVE_REQUIRES(neon128_), O const&, wide<T,N> w) noexcept
       requires arm_abi<abi_t<T, N>>
   {

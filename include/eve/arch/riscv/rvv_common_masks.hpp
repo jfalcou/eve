@@ -11,7 +11,7 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, size N>
+template<arithmetic_scalar_value T, size_type N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 rvv_true()
 {

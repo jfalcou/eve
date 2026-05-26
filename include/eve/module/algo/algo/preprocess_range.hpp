@@ -22,7 +22,7 @@ namespace eve::algo
 {
   namespace _
   {
-    template <typename T, std::ptrdiff_t A>
+    template <typename T, size_type A>
     EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
     {
       return ptr_iterator<eve::aligned_ptr<T, A>, A>{ptr};
@@ -31,7 +31,8 @@ namespace eve::algo
     template <typename T>
     EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
     {
-      return ptr_iterator<T*, eve::nofs_cardinal_v<std::remove_const_t<T>>>{ptr};
+      constexpr auto N = eve::nofs_cardinal_v<std::remove_const_t<T>>;
+      return ptr_iterator<T*, N>{ptr};
     }
 
     template <typename Traits, typename I>

@@ -155,8 +155,7 @@ shuffle_v2_free_masking(NativeSelector        selector,
     if constexpr( decltype(l)::value == -1 ) return kumi::tuple {shuffled, l};
     else
     {
-      using N1 = eve::fixed<pattern_t<I...>::size() * G>;
-      using T1 = typename T::template rescale<N1>;
+      using T1 = typename T::template rescale<pattern_t<I...>::size() * G>;
 
       T1   back = eve::bit_cast(shuffled, eve::as<T1> {});
       auto mask = is_na_logical_mask(p, g, as(back));
@@ -431,7 +430,7 @@ struct shuffle_v2_driver_bundle
     return kumi::map(
         []<typename Field, typename... Fields>(kumi::tuple<Field, Fields...> field_res)
         {
-          using T1 = typename Bundle::template rescale<Field::size()>;
+          using T1 = typename Bundle::template rescale<Field::cardinal_type::value>;
           return T1 {field_res};
         },
         field_results);

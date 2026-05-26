@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, integral_scalar_value T, size N>
+  template<callable_options O, integral_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T, N> sign_(EVE_REQUIRES(ssse3_), O const &o, wide<T, N> a) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -33,7 +33,7 @@ namespace eve::_
       else if constexpr((current_api >= avx2) && (c == category::int32x8))  return _mm256_sign_epi32(one(tgt), a);
       else if constexpr((current_api >= avx2) && (c == category::int16x16)) return _mm256_sign_epi16(one(tgt), a);
       else if constexpr((current_api >= avx2) && (c == category::int8x32))  return _mm256_sign_epi8 (one(tgt), a);
-      else if constexpr((current_api >= avx) && (N::value > 1))
+      else if constexpr((current_api >= avx) && (N > 1))
       {
         auto [ l, h ] = a.slice();
         return wide<T,N>(sign(l), sign(h));

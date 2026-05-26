@@ -15,7 +15,7 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
 riscv_store(logical<wide<T, N>> mask, wide<T, N> v, Ptr p)
 requires rvv_abi<abi_t<T, N>>
@@ -27,7 +27,7 @@ requires rvv_abi<abi_t<T, N>>
   if constexpr( match(c, category::size64_) ) return __riscv_vse64(mask, p, v, N);
 }
 
-template<arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
 riscv_store(wide<T, N> v, Ptr p)
 requires rvv_abi<abi_t<T, N>>
@@ -40,7 +40,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 // Regular store
-template<relative_conditional_expr C, arithmetic_scalar_value T, size N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void store_impl(rvv_, C const& cx, wide<T, N> v, Ptr ptr)
   requires (rvv_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {

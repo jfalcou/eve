@@ -21,7 +21,7 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, size N>
+template<arithmetic_scalar_value T, size_type N>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
                 rvv_make_splat(eve::as<wide<T, N>>, T x) noexcept
@@ -130,7 +130,7 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<arithmetic_scalar_value T, size N, arithmetic_scalar_value... Vs>
+template<arithmetic_scalar_value T, size_type N, arithmetic_scalar_value... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
                 rvv_make_enumerated(eve::as<wide<T, N>>, Vs... vs)
@@ -140,7 +140,7 @@ EVE_FORCEINLINE wide<T, N>
   return load(on_stack.data(), as<wide<T, N>>{});
 }
 
-template<callable_options O, arithmetic_scalar_value T, size N, typename V1, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, size_type N, typename V1, typename... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto
 make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) noexcept
@@ -152,7 +152,7 @@ make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) no
 //================================================================================================
 // logical cases
 //================================================================================================
-template<callable_options O, arithmetic_scalar_value T, size N, typename V1, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, size_type N, typename V1, typename... Vs>
 EVE_FORCEINLINE logical<wide<T, N>>
 make_(EVE_REQUIRES(rvv_), O const&, as<logical<wide<T, N>>>, V1 v1, Vs... vs) noexcept
 requires rvv_abi<abi_t<T, N>>

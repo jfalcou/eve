@@ -19,7 +19,7 @@
 
 namespace eve
 {
-  template<typename T, auto N>
+  template<typename T, size_type N>
   inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
   {
     return eve::all(l == r);
@@ -50,7 +50,7 @@ namespace tts
     return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
   }
 
-  template<typename T, eve::size N>
+  template<typename T, eve::size_type N>
   inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
@@ -66,7 +66,7 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
   }
 
-  template<typename T, eve::size N>
+  template<typename T, eve::size_type N>
   inline bool is_ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
   {
     for(auto i = 0; i < a.size(); ++i)
@@ -83,7 +83,7 @@ namespace tts
     return eve::compare_equal(l,r);
   }
 
-  template<typename T, eve::size N>
+  template<typename T, eve::size_type N>
   inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_dr = 0;
@@ -109,7 +109,7 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : 1;
   }
 
-  template<typename T, eve::size N>
+  template<typename T, eve::size_type N>
   inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_d = 0;
@@ -363,7 +363,7 @@ namespace tts
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
 
     using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::as_type<T::size()>);
+    eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::fixed<T::size()>{});
 
     return poison(that);
   }
@@ -381,7 +381,7 @@ namespace tts
     }
   }
 
-  template<eve::size N>
+  template<eve::size_type N>
   auto produce(type<eve::wide<eve::float16_t, N>> const&, auto g, auto& rng, auto... args)
   {
     auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);

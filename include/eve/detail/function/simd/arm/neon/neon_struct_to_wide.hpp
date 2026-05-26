@@ -15,7 +15,7 @@ namespace eve::_
   struct neon_struct_to_wide_type_res
   {
     using type = T;
-    static constexpr size N = card;
+    static constexpr size_type N = card;
   };
 
   template <typename Struct>
@@ -47,7 +47,7 @@ namespace eve::_
 #endif
   }
 
-  template <typename T, auto N>
+  template <typename T, size_type N>
   auto neon_wide_to_struct_of_2_type()
   {
     // <= 8 bytes
@@ -86,7 +86,7 @@ namespace eve::_
    return eve::combine(half(s.val[0]), half(s.val[1]));
   }
 
-  template <typename T, auto N>
+  template <typename T, size_type N>
   auto wide_to_neon_struct(wide<T, N> a, wide<T, N> b)
   {
     using r_t = decltype(neon_wide_to_struct_of_2_type<T, N>());

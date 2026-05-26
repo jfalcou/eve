@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T, N> bit_not_(EVE_REQUIRES(vmx_), O const&, wide<T, N> w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

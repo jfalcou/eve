@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, size N, callable_options O>
+  template<arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_select_(EVE_REQUIRES(neon128_),
                                          O const          &,
                                          wide<T, N> const &m,

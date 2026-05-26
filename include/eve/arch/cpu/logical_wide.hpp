@@ -36,11 +36,11 @@ namespace eve
 {
   namespace _
   {
-    template<typename T, auto N>
+    template<typename T, size_type N>
     struct logical_split_type_helper
     { };
 
-    template<typename T, auto N>
+    template<typename T, size_type N>
     requires(N > 1)
     struct logical_split_type_helper<T, N>
     {
@@ -65,7 +65,8 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                   architecture is selected.
   //================================================================================================
-  template<arithmetic_scalar_value Type, size Size>
+  template<arithmetic_scalar_value Type, size_type Size>
+  requires (is_valid_size<Size>)
   struct  EVE_MAY_ALIAS  logical<wide<Type, Size>>
         : _::wide_storage<as_logical_register_t<translate_t<Type>, Size, abi_t<translate_t<Type>, Size>>>,
           _::logical_split_type_helper<Type, Size>
@@ -87,8 +88,8 @@ namespace eve
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
 
-    //! Type representing the size of the current wide
-    using size_type     = int;
+    //! Type describing the size of the current wide
+    using cardinal_type = fixed<Size>;
 
     //! Type representing the bits of the logical value
     using bits_type = wide<_::make_integer_t<sizeof(translated_element_type), unsigned>, Size>;
@@ -96,15 +97,15 @@ namespace eve
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Size>;
 
-    //! Type representing a logical wide of the same type but with a cardinal twice the size
+    //! Type representing a logical wide of the same type but with a cardinal twice the
     using combined_type = logical<wide<Type, Size * 2>>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
-    //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
-    template<typename T, auto N = expected_cardinal_v<T>> using rebind = logical<wide<T,N>>;
+    //! If unspecified, `N` is computed as `expected_cardinal_v<T>`.
+    template<typename T, size_type N = expected_cardinal_v<T>> using rebind = logical<wide<T,N>>;
 
     //! Generates a eve::wide type from a different cardinal `N`.
-    template<size N> using rescale = logical<wide<Type,N>>;
+    template<size_type N> using rescale = logical<wide<Type,N>>;
 
     //! Returns the alignment expected to be used to store a eve::logical
     static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type) * Size; }
@@ -282,13 +283,7 @@ namespace eve
     //==============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr struct size size()     noexcept { return Size; }
-
-    //! @brief Maximal number of lanes for a given wide
-    static EVE_FORCEINLINE constexpr struct size max_size() noexcept { return Size; }
-
-    //! @brief Check if a wide contains 0 lanes
-    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
+    static EVE_FORCEINLINE constexpr size_type size() noexcept { return Size; }
 
     //==============================================================================================
     //! @}
@@ -517,7 +512,7 @@ namespace eve
 
 
   //! @brief Element-wise equality comparison of two eve::logical
-  template<arithmetic_scalar_value T, arithmetic_scalar_value U, struct size Size>
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, size_type Size>
   EVE_FORCEINLINE auto operator==(logical<wide<T,Size>> a, logical<wide<U, Size>> b) noexcept
     -> decltype(is_equal(a,b))
   {
@@ -526,17 +521,17 @@ namespace eve
 
 
   //! @brief Element-wise inequality comparison of two eve::logical
-  template<arithmetic_scalar_value T, arithmetic_scalar_value U, struct size Size>
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, size_type Size>
   EVE_FORCEINLINE auto operator!=(logical<wide<T,Size>> a, logical<wide<U, Size>> b) noexcept
     -> decltype(is_not_equal(a,b))
   {
     return is_not_equal(a, b);
   }
 
-  template<arithmetic_scalar_value T, arithmetic_scalar_value U, struct size C1, struct size C2>
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, size_type C1, size_type C2>
   auto operator==(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
 
-  template<arithmetic_scalar_value T, arithmetic_scalar_value U, struct size C1, struct size C2>
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, size_type C1, size_type C2>
   auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
 
   //================================================================================================

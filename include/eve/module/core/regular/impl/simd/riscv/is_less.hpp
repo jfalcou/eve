@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N, typename U>
+  template<callable_options O, typename T, size_type N, typename U>
   EVE_FORCEINLINE logical<wide<T, N>> is_less_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
     requires (rvv_abi<abi_t<T, N>> && same_element_type<T, U>)
   {

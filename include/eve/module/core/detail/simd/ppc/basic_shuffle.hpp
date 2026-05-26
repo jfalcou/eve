@@ -14,14 +14,14 @@
 
 namespace eve::_
 {
-template<typename T, auto N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(vmx_),
                wide<T, N> const& v,
                Pattern const&) requires ppc_abi<abi_t<T, N>>
 {
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   constexpr Pattern q = {};
 

@@ -12,15 +12,15 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(vmx_), wide<T, N> v, index_t<Shift>) noexcept
-    requires(Shift <= N::value)
+    requires(Shift <= N)
     && ppc_abi<abi_t<T, N>>
 {
   using that_t = wide<T, N>;
 
-  if constexpr( Shift == N::value ) { return that_t {0}; }
+  if constexpr( Shift == N ) { return that_t {0}; }
   else if constexpr( Shift == 0 ) { return v; }
   else
   {

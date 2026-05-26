@@ -136,7 +136,7 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //!        the result is as_wide_t<element_type_t<T>, eve::fixed<pattern_t<>::size()>>
 //!     * `pattern_t<>::size()` == `T::size()` -> T
 //!     * `pattern_t<>::size()` > `T::size()` -> wide<kumi::tuple<eve::element_type_t<T> ...>,
-//!     T::Size()>
+//!     T::cardinal_type>
 //!        You can use just decompones it as a tuple: `auto [r0, r1, r2] = shuffle(pattern, x)`
 //!        if all you want is the produced registers.
 //!        But in a common case of deconstructing incoming data with some semantic,

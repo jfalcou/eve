@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-template<callable_options O, scalar_value T, size N>
+template<callable_options O, scalar_value T, size_type N>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, wide<T, N> vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -21,7 +21,7 @@ requires rvv_abi<abi_t<T, N>>
   return __riscv_vmerge_tu(vt, vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, size N, scalar_value U>
+template<callable_options O, scalar_value T, size_type N, scalar_value U>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -31,7 +31,7 @@ requires rvv_abi<abi_t<T, N>>
   else return __riscv_vmerge(vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, size N>
+template<callable_options O, scalar_value T, size_type N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 if_else_( EVE_REQUIRES(rvv_),
                           O const&,

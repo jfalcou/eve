@@ -66,7 +66,7 @@ namespace eve::_
       // sum from popcount:   [ 1, 1, 3, 3, 4, 1]
       // sum from extra mask: [ 0, 0, 0, 0, 5, 8]
 
-      using u8_32 = typename wide<T, 8>::template rebind<std::uint8_t, eve::fixed<32>>;
+      using u8_32 = typename wide<T, 8>::template rebind<std::uint8_t, 32>;
       auto as_bytes = eve::bit_cast(mask, as<logical<u8_32>>{});
 
       std::uint32_t mmask = top_bits{as_bytes}.as_int();

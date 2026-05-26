@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-template<relative_conditional_expr C, arithmetic_scalar_value T, size N>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size_type N>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
@@ -57,7 +57,7 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr)
 }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-template<relative_conditional_expr C, arithmetic_scalar_value T, size N, typename Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, size_type N, typename Lanes>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {

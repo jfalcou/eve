@@ -62,7 +62,7 @@ namespace eve::_
   //================================================================================================
   // Logical slices
   //================================================================================================
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
@@ -79,7 +79,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, auto N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
@@ -97,14 +97,14 @@ namespace eve::_
   //================================================================================================
   // Arithmetic slices
   //================================================================================================
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<callable_options O, arithmetic_scalar_value T, size N, typename Slice>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, Slice s) noexcept
       requires non_native_abi<abi_t<T, N>>
   {

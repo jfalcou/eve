@@ -12,14 +12,14 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(sse2_), wide<T, N> v, index_t<Shift>) noexcept
-    requires(Shift <= N::value)
+    requires(Shift <= N)
     && x86_abi<abi_t<T, N>>
 {
   if constexpr( Shift == 0 ) return v;
-  else if constexpr( Shift == N::value ) return wide<T, N> {0};
+  else if constexpr( Shift == N ) return wide<T, N> {0};
   else
   {
     if constexpr( std::same_as<abi_t<T, N>, x86_128_> )
@@ -93,7 +93,7 @@ template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
           }
           else
           {
-            using byte_t = typename wide<T, N>::template rebind<std::uint8_t, fixed<16>>;
+            using byte_t = typename wide<T, N>::template rebind<std::uint8_t, 16>;
             using tgt_t  = as<byte_t>;
 
             // Slide lower parts as normal
@@ -101,7 +101,7 @@ template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
             auto l0     = slide_right(l, index<Shift>);
 
             // Compute how many bytes to realign
-            constexpr auto sz = sizeof(T) * (N::value / 2 - Shift);
+            constexpr auto sz = sizeof(T) * (N / 2 - Shift);
 
             // Slide lower parts using _mm_alignr_epi8
             byte_t bytes = _mm_alignr_epi8(bit_cast(h, tgt_t {}), bit_cast(l, tgt_t {}), sz);
@@ -113,17 +113,17 @@ template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
     else if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
     {
       // Generates vperm + pand, good enough for now
-      return basic_shuffle(v, slide_right_pattern<Shift, N::value>);
+      return basic_shuffle(v, slide_right_pattern<Shift, N>);
     }
   }
 }
 
-template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(sse2_),
                                  wide<T, N> x,
                                  wide<T, N> y,
-                                 index_t<Shift>) requires(0 < Shift && Shift < N::value)
+                                 index_t<Shift>) requires(0 < Shift && Shift < N)
     && native_simd_for_abi<wide<T, N>, x86_128_, x86_256_, x86_512_>
 {
   constexpr auto shifted_bytes = sizeof(T) * Shift;
@@ -202,7 +202,7 @@ template<arithmetic_scalar_value T, size N, std::ptrdiff_t Shift>
     }
     else
     {
-      auto s        = index<Shift - N {}() / 2>;
+      auto s        = index<Shift - N / 2>;
       auto [xl, xh] = x.slice();
       auto yl       = y.slice(lower_);
       return eve::combine(slide_right(xl, xh, s), slide_right(xh, yl, s));

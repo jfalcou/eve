@@ -185,19 +185,20 @@ TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
   using t1 = std::int8_t;
   using t2 = eve::element_type_t<T>;
   using t3 = std::uint64_t;
+  constexpr auto N = T::size();
 
   using tuple_t = kumi::tuple<t1, t2, t3>;
 
-  alignas(sizeof(t1) * T::size()) std::array<t1, T::size()> data_1;
-  alignas(sizeof(t2) * T::size()) std::array<t2, T::size()> data_2;
-  alignas(sizeof(t3) * T::size()) std::array<t3, T::size()> data_3;
+  alignas(sizeof(t1) * N) std::array<t1, N> data_1;
+  alignas(sizeof(t2) * N) std::array<t2, N> data_2;
+  alignas(sizeof(t3) * N) std::array<t3, N> data_3;
 
   std::iota(data_1.begin(), data_1.end(), 0);
   std::iota(data_2.begin(), data_2.end(), 0);
   std::iota(data_3.begin(), data_3.end(), 0);
 
-  eve::wide<tuple_t, T::size()> values { [](int i, int) { return tuple_t{(t1)i, (t2)i, (t3)i}; }};
-  eve::wide<tuple_t, T::size()> zeroes { tuple_t{t1{}, t2{}, t3{}} };
+  eve::wide<tuple_t, N> values { [](int i, int) { return tuple_t{(t1)i, (t2)i, (t3)i}; }};
+  eve::wide<tuple_t, N> zeroes { tuple_t{t1{}, t2{}, t3{}} };
 
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, zeroes); };
 
@@ -209,9 +210,9 @@ TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
     algo_test::iterator_supports_compress(f, values, replace);
   };
 
-  eve::algo::ptr_iterator<t1*, T::size()> u_f_1{data_1.begin()};
-  eve::algo::ptr_iterator<t2*, T::size()> u_f_2{data_2.begin()};
-  eve::algo::ptr_iterator<t3*, T::size()> u_f_3{data_3.begin()};
+  eve::algo::ptr_iterator<t1*, N> u_f_1{data_1.begin()};
+  eve::algo::ptr_iterator<t2*, N> u_f_2{data_2.begin()};
+  eve::algo::ptr_iterator<t3*, N> u_f_3{data_3.begin()};
 
   auto u_l_1 = u_f_1 + T::size();
 

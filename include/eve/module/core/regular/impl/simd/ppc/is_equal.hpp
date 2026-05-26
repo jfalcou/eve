@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

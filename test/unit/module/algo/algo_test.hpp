@@ -76,7 +76,7 @@ namespace algo_test
     return std::vector<T, alloc>(ts_in_page, 0);
   }
 
-  template <size N, typename T>
+  template<eve::size_type N, typename T>
   auto optional_aligned_ptr(T* ptr) {
     static constexpr std::ptrdiff_t alignment = sizeof(T) * N;
     if (eve::is_aligned<alignment>(ptr)) return eve::aligned_ptr<T, N>{ptr};
@@ -132,7 +132,7 @@ namespace algo_test
     run_f_l();
   }
 
-  template <size N>
+  template <eve::size_type N>
   auto select_offsets() {
     if constexpr ( N <= 7 )
     {

@@ -17,7 +17,7 @@ namespace eve::_
 //================================================================================================
 // Single slice
 //================================================================================================
-template<callable_options O, typename T, auto N, typename Slice>
+template<callable_options O, typename T, size_type N, typename Slice>
 EVE_FORCEINLINE wide<T, N / 2> slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
@@ -25,7 +25,7 @@ EVE_FORCEINLINE wide<T, N / 2> slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a
   else return svext(a, a, N / 2);
 }
 
-template<callable_options O, typename T, auto N, typename Slice>
+template<callable_options O, typename T, size_type N, typename Slice>
 EVE_FORCEINLINE logical<wide<T, N / 2>> slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
@@ -40,7 +40,7 @@ EVE_FORCEINLINE logical<wide<T, N / 2>> slice_(EVE_REQUIRES(sve_), O const&, log
 //================================================================================================
 // Both slice
 //================================================================================================
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE auto
 slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -49,7 +49,7 @@ slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a) noexcept
   return that;
 }
 
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE auto
 slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a) noexcept
   requires sve_abi<abi_t<T, N>>

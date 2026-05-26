@@ -17,7 +17,7 @@
 namespace eve::_
 {
 
-template<scalar_value U, size N>
+template<scalar_value U, size_type N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<float, N> v, as<U> tgt) noexcept
 requires sve_abi<abi_t<float, N>>
 {
@@ -34,7 +34,7 @@ requires sve_abi<abi_t<float, N>>
 
   auto sve_split = [&](auto w)
   {
-    if constexpr(N::value == 1)
+    if constexpr(N == 1)
     {
       return wide<U, N>{from_f32(w)};
     }
@@ -58,7 +58,7 @@ requires sve_abi<abi_t<float, N>>
   else                                              return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
-template<scalar_value T, scalar_value U, size N>
+template<scalar_value T, scalar_value U, size_type N>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<T, N> v, as<U> tgt) noexcept
 requires sve_abi<abi_t<T, N>>
 {
@@ -66,7 +66,7 @@ requires sve_abi<abi_t<T, N>>
   return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
-template<scalar_value T, scalar_value U, size N>
+template<scalar_value T, scalar_value U, size_type N>
 EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(sve_), logical<wide<T, N>> v, as<logical<U>>) noexcept
 requires sve_abi<abi_t<T, N>>
 {

@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE wide<T, N> maximum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v) noexcept
     requires (O::contains(splat))
   {

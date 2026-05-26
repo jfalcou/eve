@@ -14,14 +14,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N, integral_scalar_value S>
+  template<callable_options O, typename T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, wide<S, N> s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return vec_sl(v.storage(), convert(s, as<as_integer_t<T, unsigned>>{}).storage());
   }
 
-  template<callable_options O, typename T, auto N, integral_scalar_value S>
+  template<callable_options O, typename T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> v, S s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

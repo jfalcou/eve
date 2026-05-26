@@ -29,7 +29,7 @@ namespace eve::_
 
       return [&]<std::size_t... I>(std::index_sequence<I...>) mutable
       {
-        ((v = f(v,swap_adjacent(v, fixed<(1<<I)>{} ))),...);
+        ((v = f(v,swap_adjacent(v, lane<(1<<I)> ))),...);
         return v;
       }(std::make_index_sequence<depth>{});
     }

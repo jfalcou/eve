@@ -109,7 +109,7 @@ namespace _
     EVE_FORCEINLINE static constexpr std::ptrdiff_t bits_per_element_impl()
     {
       if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
-      else                           return decltype(movemask(logical_type{}).second){}();
+      else                           return decltype(movemask(logical_type{}).second)::value;
     }
 
     static constexpr bool is_cheap_impl()

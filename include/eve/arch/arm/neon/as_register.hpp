@@ -22,8 +22,8 @@ namespace eve
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64
-  template<typename T, auto N>
-  consteval auto find_register_type(as<T>, as_type_t<size, N>, eve::arm_64_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::arm_64_)
   {
     if constexpr (std::same_as<T, eve::float16_t> && (N <= 4))
     {
@@ -63,8 +63,8 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // NEON 128
-  template<typename T, auto N>
-  consteval auto find_register_type(as<T>, as_type_t<size, N>, eve::arm_128_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::arm_128_)
   {
     if constexpr (std::same_as<T, eve::float16_t>)
     {
@@ -95,17 +95,17 @@ namespace eve
     }
     else if constexpr (std::unsigned_integral<T>)
     {
-        if      constexpr ((sizeof(T) == 1) && (N == 16)) return uint8x16_t{};
-        else if constexpr ((sizeof(T) == 2) && (N == 8 )) return uint16x8_t{};
-        else if constexpr ((sizeof(T) == 4) && (N == 4 )) return uint32x4_t{};
-        else if constexpr ((sizeof(T) == 8) && (N == 2 )) return uint64x2_t{};
+      if      constexpr ((sizeof(T) == 1) && (N == 16)) return uint8x16_t{};
+      else if constexpr ((sizeof(T) == 2) && (N == 8 )) return uint16x8_t{};
+      else if constexpr ((sizeof(T) == 4) && (N == 4 )) return uint32x4_t{};
+      else if constexpr ((sizeof(T) == 8) && (N == 2 )) return uint64x2_t{};
     }
   }
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, auto N>
-  consteval auto find_logical_register_type(as<T>, as_type_t<size, N> n, arm_abi auto abi)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N> n, arm_abi auto abi)
   {
     return find_register_type(as<as_integer_t<T, unsigned>>{}, n, abi);
   }

@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, size N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> ceil_(EVE_REQUIRES(sve_),
                                    O const& opts,
                                    wide<T, N> const& v) noexcept
@@ -22,7 +22,7 @@ namespace eve::_
     return ceil_(adl_helper_t{}, sve_{}, ignore_none, opts, v);
   }
 
-  template<conditional_expr C,floating_scalar_value T, size N, callable_options O>
+  template<conditional_expr C,floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto ceil_(EVE_REQUIRES(sve_),
                              C          const& cond,
                              O          const& opts,

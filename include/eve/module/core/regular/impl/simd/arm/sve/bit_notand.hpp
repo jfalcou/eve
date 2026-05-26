@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<scalar_value T, size N, callable_options O>
+  template<scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sve_),
                                          O const         &,
                                          wide<T, N> const& v0,

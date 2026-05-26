@@ -14,7 +14,7 @@
 namespace eve::_
 {
 
-  template<callable_options O, arithmetic_scalar_value T, size N, conditional_expr C>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, conditional_expr C>
   EVE_FORCEINLINE auto add_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
@@ -55,7 +55,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto add_(EVE_REQUIRES(sve_), O const& opts,
                                  wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>> && !O::contains(mod))

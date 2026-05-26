@@ -20,7 +20,7 @@ namespace eve::_
 // Single slice
 //================================================================================================
 
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE wide<T, N / 2>
                 slice_(EVE_REQUIRES(rvv_), O const&, wide<T, N> a, lower_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -31,7 +31,7 @@ requires rvv_abi<abi_t<T, N>>
   else { return simd_cast(a, as<wide<T, N / 2>> {}); }
 }
 
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE wide<T, N / 2>
                 slice_(EVE_REQUIRES(rvv_), O const&, wide<T, N> a, upper_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -48,7 +48,7 @@ requires rvv_abi<abi_t<T, N>>
   }
 }
 
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE logical<wide<T, N / 2>>
                 slice_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, lower_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -56,7 +56,7 @@ requires rvv_abi<abi_t<T, N>>
   return simd_cast(a, as<logical<wide<T, N / 2>>> {});
 }
 
-template<callable_options O, typename T, auto N>
+template<callable_options O, typename T, size_type N>
 EVE_FORCEINLINE logical<wide<T, N / 2>>
                 slice_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, upper_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>

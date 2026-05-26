@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto maximum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
@@ -77,11 +77,11 @@ namespace eve::_
     {
       if constexpr( eve::current_api >= eve::asimd )
       {
-        using ec_t = expected_cardinal_t<T, abi_t<T, N>>;
+        constexpr auto ec = expected_cardinal_v<T, abi_t<T, N>>;
         constexpr auto fp16v = _::supports_fp16_vector_ops;
 
         if constexpr( N == 1 ) return v.get(0);
-        else if constexpr( N < ec_t::value ) return butterfly_reduction(v, eve::max).get(0);
+        else if constexpr( N < ec ) return butterfly_reduction(v, eve::max).get(0);
         else if constexpr( c == category::float64x2 ) return vmaxvq_f64(v);
         else if constexpr( c == category::float32x2 ) return vmaxv_f32(v);
         else if constexpr( c == category::float32x4 ) return vmaxvq_f32(v);

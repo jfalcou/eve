@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> logical_not_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {

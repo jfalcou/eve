@@ -13,21 +13,21 @@
 
 namespace eve::_
 {
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value S>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> rshl_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<S, N> s) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     return shl.behavior(current_api, opts, v, s);
   }
 
-  template<callable_options O, integral_scalar_value T, size N, integral_scalar_value S>
+  template<callable_options O, integral_scalar_value T, size_type N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> rshl_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, S s) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     return shl.behavior(current_api, opts, v, s);
   }
 
-  template<callable_options O, integral_scalar_value T, size N, std::ptrdiff_t S>
+  template<callable_options O, integral_scalar_value T, size_type N, std::ptrdiff_t S>
   EVE_FORCEINLINE wide<T, N> rshl_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, index_t<S> s) noexcept
     requires arm_abi<abi_t<T, N>>
   {

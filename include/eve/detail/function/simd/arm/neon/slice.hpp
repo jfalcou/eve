@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, Slice) noexcept
       requires arm_abi<abi_t<T, N>>
   {
@@ -67,7 +67,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a) noexcept
       requires arm_abi<abi_t<T, N>>
   {

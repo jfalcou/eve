@@ -16,7 +16,7 @@ namespace eve::_
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<callable_options O, typename T, auto N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE wide<T, N / 2>
   slice_(EVE_REQUIRES(sse2_), O const&, wide<T,N> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>>
@@ -34,14 +34,14 @@ namespace eve::_
               if constexpr( std::same_as<T, double> ) return _mm_shuffle_pd(a, a, 0x01);
         else  if constexpr( std::same_as<T, float> )
         {
-          if constexpr( N::value == 4 ) return _mm_shuffle_ps(a, a, 0x0E);
-          if constexpr( N::value == 2 ) return _mm_shuffle_ps(a, a, 0x11);
+          if constexpr( N == 4 ) return _mm_shuffle_ps(a, a, 0x0E);
+          if constexpr( N == 2 ) return _mm_shuffle_ps(a, a, 0x11);
         }
         else
         {
-          constexpr auto size = N::value * sizeof(T);
+          constexpr auto size = N * sizeof(T);
 
-          if constexpr( N::value == 2          )  return wide<T, N / 2>{a.get(1)};
+          if constexpr( N == 2          )  return wide<T, N / 2>{a.get(1)};
           if constexpr( size == abi_t<T, N>::bytes     )  return _mm_shuffle_epi32(a, 0xEE);
           if constexpr( 2 * size == abi_t<T, N>::bytes )  return _mm_shuffle_epi32(a, 0x01);
           else                                    return _mm_shufflelo_epi16(a, 0x01);
@@ -74,7 +74,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, auto N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, N / 2>>
   slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
@@ -92,7 +92,7 @@ namespace eve::_
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -100,7 +100,7 @@ namespace eve::_
     return that;
   }
 
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a) noexcept
       requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {

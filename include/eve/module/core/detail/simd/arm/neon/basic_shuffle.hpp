@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-template<typename T, auto N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(neon128_),
                wide<T, N> const& v,

@@ -16,7 +16,9 @@ namespace eve
 {
   inline namespace EVE_ABI_NAMESPACE
   {
-    template<arithmetic_scalar_value Type, size Size> struct wide;
+    template<arithmetic_scalar_value Type, size_type Size>
+    requires (is_valid_size<Size>)
+    struct wide;
   }
 
   namespace _
@@ -24,8 +26,14 @@ namespace eve
     template<typename T>
     struct is_wide_impl : std::false_type {};
 
-    template<arithmetic_scalar_value Type, size Size>
+    template<arithmetic_scalar_value Type, size_type Size>
     struct is_wide_impl<wide<Type, Size>> : std::true_type {};
+
+    template<typename T>
+    struct is_wide_logical_impl : std::false_type {};
+
+    template<arithmetic_scalar_value Type, size_type Size>
+    struct is_wide_logical_impl<logical<wide<Type, Size>>> : std::true_type {};
   }
 
   template<typename T>
@@ -49,11 +57,10 @@ namespace eve
   //!
   //! ## Example Types
   //! - eve::logical<eve::wide<float>>
-  //! - eve::logical<eve::wide<int,eve::fixed<2>>>
+  //! - eve::logical<eve::wide<int, 2>>
   //================================================================================================
   template<typename T>
-  concept logical_simd_value  =   _::instance_of<T,logical>
-                              &&  plain_simd_value<typename T::mask_type>;
+  concept logical_simd_value  =  _::is_wide_logical_impl<std::remove_cvref_t<T>>::value;
   //================================================================================================
   //! @}
   //================================================================================================

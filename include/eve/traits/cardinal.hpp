@@ -68,5 +68,5 @@ namespace eve
   using cardinal_t = typename cardinal<std::remove_cvref_t<Type>>::type;
 
   template<typename Type>
-  inline constexpr auto cardinal_v = cardinal<std::remove_cvref_t<Type>>::value;
+  inline constexpr size_type cardinal_v = cardinal<std::remove_cvref_t<Type>>::value;
 }

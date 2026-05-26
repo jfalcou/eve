@@ -200,7 +200,7 @@ TTS_CASE("preprocess zip range, common_type")
   std::array<std::uint32_t, 64> i;
 
   {
-    constexpr auto N  = eve::nofs_cardinal_v<std::uint32_t>;
+    constexpr auto N = eve::nofs_cardinal_v<std::uint32_t>;
     using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
     using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, std::uint32_t>;
@@ -215,8 +215,9 @@ TTS_CASE("preprocess zip range, common_type")
   }
 
   {
-    using uc_it       = eve::algo::ptr_iterator<std::int8_t*, 2>;
-    using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, 2>;
+    constexpr auto N = 2;
+    using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
+    using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, float>;
     using conv_ui_it  = eve::views::converting_iterator<ui_it, float>;
     using expected_it = eve::views::zip_iterator<conv_uc_it, conv_ui_it>;

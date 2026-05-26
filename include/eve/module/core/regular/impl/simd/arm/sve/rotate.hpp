@@ -13,18 +13,18 @@
 
 namespace eve::_
 {
-  template<typename T, auto N, std::ptrdiff_t M>
+  template<typename T, size_type N, std::ptrdiff_t M>
   EVE_FORCEINLINE wide<T, N> rotate_(EVE_SUPPORTS(sve_), wide<T, N> x, index_t<M>)
-    requires (sve_abi<abi_t<T, N>> && (M <= N::value))
+    requires (sve_abi<abi_t<T, N>> && (M <= N))
   {
-    if constexpr (N::value == fundamental_cardinal_v<T>)
+    if constexpr (N == fundamental_cardinal_v<T>)
     {
       return svext(x, x, M);
     }
     else
     {
-      wide<make_integer_t<sizeof(T), unsigned>, fundamental_cardinal_t<T>> indices{
-        [](auto i) { return (i + M) % N::value; }
+      wide<make_integer_t<sizeof(T), unsigned>, fundamental_cardinal_v<T>> indices{
+        [](auto i) { return (i + M) % N; }
       };
       return svtbl(x, indices);
     }

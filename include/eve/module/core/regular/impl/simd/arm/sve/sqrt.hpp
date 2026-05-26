@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, size N, conditional_expr C, callable_options O>
+  template<floating_scalar_value T, size_type N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    C          const& mask,
                                    O          const& opts,
@@ -39,7 +39,7 @@ namespace eve::_
     }
   }
 
-  template<floating_scalar_value T, size N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    O          const& opts,
                                    wide<T, N> const& v) noexcept
@@ -50,7 +50,7 @@ namespace eve::_
       return sqrt.behavior(cpu_{}, opts, v);
     }
     else
-      return svsqrt_z(expand_mask(keep_first(N::value), as(v)), v);
+      return svsqrt_z(expand_mask(keep_first(N), as(v)), v);
   }
 
 }

@@ -17,7 +17,7 @@
 namespace eve::_
 {
 
-template<callable_options O, arithmetic_scalar_value T, size N>
+template<callable_options O, arithmetic_scalar_value T, size_type N>
 EVE_FORCEINLINE auto
 all_(EVE_REQUIRES(neon128_),
     O const           & opts,
@@ -43,7 +43,7 @@ all_(EVE_REQUIRES(neon128_),
   }
 }
 
-template<callable_options O, arithmetic_scalar_value T, size N>
+template<callable_options O, arithmetic_scalar_value T, size_type N>
 EVE_FORCEINLINE auto
 all_(EVE_REQUIRES(neon128_),
     O const            & opts,

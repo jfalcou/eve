@@ -29,10 +29,12 @@ TTS_CASE_TPL("Check reverse_iterator", algo_test::selected_types)
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using aligned_p = eve::aligned_ptr<U, T::size()>;
+    constexpr auto N = T::size();
 
-    using u_it = eve::algo::ptr_iterator<U*, T::size()>;
-    using a_it = eve::algo::ptr_iterator<aligned_p, T::size()>;
+    using aligned_p = eve::aligned_ptr<U, N>;
+
+    using u_it = eve::algo::ptr_iterator<U*, N>;
+    using a_it = eve::algo::ptr_iterator<aligned_p, N>;
 
     u_it u_f(f);
     u_it u_l(l);

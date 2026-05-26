@@ -32,7 +32,7 @@ namespace eve
 //================================================================================================
 EVE_MAKE_CALLABLE(deinterleave_groups_shuffle_, deinterleave_groups_shuffle);
 
-template<std::ptrdiff_t G, size N>
+template<std::ptrdiff_t G, size_type N>
 requires(G <= N) inline constexpr auto deinterleave_groups_shuffle_pattern = fix_pattern<N>(
     [](int i, int size)
     {

@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<unsigned_scalar_value T, size N, callable_options O>
+  template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countr_zero_(EVE_REQUIRES(sve_),
                                           O          const&,
                                           wide<T, N> const& v) noexcept
@@ -22,7 +22,7 @@ namespace eve::_
     return countl_zero(wide<T, N>(svrbit_x(sve_true<T>(),v)));
   }
 
-  template<conditional_expr C, unsigned_scalar_value T, size N, callable_options O>
+  template<conditional_expr C, unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countr_zero_(EVE_REQUIRES(sve_),
                                           C          const& mask,
                                           wide<T, N> const& v) noexcept

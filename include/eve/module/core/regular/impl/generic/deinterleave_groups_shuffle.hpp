@@ -33,7 +33,7 @@ inline constexpr auto is_deinterleave_groups_shuffle = []()
   return fixed<sz / (1 << (idx + 1))> {};
 }();
 
-template<typename T, auto N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
 {
@@ -46,7 +46,7 @@ deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
   return bit_cast(res, as(v));
 }
 
-template<size N, std::ptrdiff_t G>
+template<size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fixed<G>)
 {
@@ -60,7 +60,7 @@ deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fix
   return bit_cast(res, as<wide<float, N * 2>> {});
 }
 
-template<typename T, auto N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) requires(G <= N)
 {
@@ -78,7 +78,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) require
   else { return basic_shuffle(v, deinterleave_groups_shuffle_pattern<G, N>); }
 }
 
-template<typename T, auto N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
                              wide<T, N> v0,

@@ -17,14 +17,14 @@
 
 namespace eve::_
 {
-  template<relative_conditional_expr C, typename T, typename U, size N>
+  template<relative_conditional_expr C, typename T, typename U, size_type N>
   EVE_FORCEINLINE
   auto compress_using_switch_(EVE_SUPPORTS(cpu_),
                               C c,
                               wide<T, N> v,
                               logical<wide<U, N>> mask) noexcept
   {
-    constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
+    constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N > 8;
 
     if constexpr ( C::is_complete && !C::is_inverted )
     {
@@ -54,12 +54,12 @@ namespace eve::_
 
       const int mmask = top_bits{mask, c}.as_int();
 
-      if constexpr ( N() == 1 )
+      if constexpr ( N == 1 )
       {
         kumi::tuple cur{ v, (std::ptrdiff_t) mmask & 1 };
         return kumi::tuple<decltype(cur)> { cur };
       }
-      else if constexpr ( N() == 2 )
+      else if constexpr ( N == 2 )
       {
         if (mmask == 2) v = eve::slide_left( v, eve::index<1> );
         std::ptrdiff_t count = mmask & 1;
@@ -67,7 +67,7 @@ namespace eve::_
         kumi::tuple cur { v, count };
         return kumi::tuple<decltype(cur)> { cur };
       }
-      else if constexpr ( N() == 4 )
+      else if constexpr ( N == 4 )
       {
         const int  num       = mmask & 7;
         const bool last_set  = (bool) (mmask & 8);
@@ -93,7 +93,7 @@ namespace eve::_
 
         return kumi::tuple<decltype(cur)> { cur };
       }
-      else if constexpr ( N() == 8 )
+      else if constexpr ( N == 8 )
       {
         const int  num1       = mmask & 7;
         const bool last_set1  = (bool) (mmask & 8);

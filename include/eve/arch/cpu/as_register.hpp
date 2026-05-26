@@ -18,14 +18,14 @@
 
 namespace eve
 {
-  template<typename T, auto N>
-  consteval auto find_register_type(as<T>, as_type_t<size, N>, eve::emulated_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::emulated_)
   {
     return std::array<T, N>{};
   }
 
-  template<typename T, auto N>
-  consteval auto find_logical_register_type(as<T>, as_type_t<size, N>, eve::emulated_)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::emulated_)
   {
     return std::array<logical<T>, N>{};
   }
@@ -35,24 +35,24 @@ namespace eve
   //================================================================================================
   namespace _
   {
-    template<auto S>
+    template<size_type N>
     struct apply_as_wide
     {
       template<typename T>
-      using type = as_wide<T, S>;
+      using type = as_wide<T, N>;
     };
   }
 
-  template<typename T, auto S>
-  consteval auto find_register_type(as<T>, as_type_t<size, S>, eve::bundle_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::bundle_)
     requires (eve::product_type<T>)
   {
-    return kumi::as_tuple_t<T, _::apply_as_wide<S>::template type>{};
+    return kumi::as_tuple_t<T, _::apply_as_wide<N>::template type>{};
   }
 
   namespace _
   {
-    template<typename Type, auto Size>
+    template<typename Type, size_type Size>
     struct blob
     {
       static constexpr auto replication = Size / expected_cardinal_v<Type>;
@@ -121,27 +121,27 @@ namespace eve
     concept is_blob = is_blob_impl<std::remove_cvref_t<T>>::value;
   }
 
-  template<typename T, auto S>
-  consteval auto find_register_type(as<T>, as_type_t<size, S>, eve::aggregated_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::aggregated_)
   {
-    return _::blob<T, S>{};
+    return _::blob<T, N>{};
   }
 
-  template<typename T, auto S>
-  consteval auto find_logical_register_type(as<T>, as_type_t<size, S>, eve::aggregated_)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::aggregated_)
   {
-    return _::blob<logical<T>, S>{};
+    return _::blob<logical<T>, N>{};
   }
 }
 
-template<std::size_t I, typename T, auto S>
-struct std::tuple_element<I, eve::_::blob<T, S>>
+template<std::size_t I, typename T, eve::size_type N>
+struct std::tuple_element<I, eve::_::blob<T, N>>
 {
-  using type = typename eve::_::blob<T, S>::value_type;
+  using type = typename eve::_::blob<T, N>::value_type;
 };
 
-template<typename T, auto S>
-struct  std::tuple_size<eve::_::blob<T, S>>
-      : std::integral_constant<std::size_t, eve::_::blob<T, S>::replication>
+template<typename T, eve::size_type N>
+struct  std::tuple_size<eve::_::blob<T, N>>
+      : std::integral_constant<std::size_t, eve::_::blob<T, N>::replication>
 {
 };

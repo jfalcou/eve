@@ -21,7 +21,7 @@ namespace eve::_
 //================================================================================================
 // convert[saturated]: floating -> U
 //================================================================================================
-template<floating_scalar_value In, size N, arithmetic_scalar_value Out>
+template<floating_scalar_value In, size_type N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, N> v0, as<Out> tgt) noexcept
   requires arm_abi<abi_t<Out, N>>
 {
@@ -54,7 +54,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
-  template<size N, arithmetic_scalar_value U>
+  template<size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<double, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<double, N>>
   {
@@ -77,7 +77,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: float32 -> U
 //================================================================================================
-  template<size N, arithmetic_scalar_value U>
+  template<size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<float, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<float, N>>
   {
@@ -125,7 +125,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
   //================================================================================================
   // convert: float16 -> U
   //================================================================================================
-  template<size N, arithmetic_scalar_value U>
+  template<size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<eve::float16_t, N> v, as<U> tgt) noexcept
     requires arm_abi<abi_t<eve::float16_t, N>>
   {
@@ -157,7 +157,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int64 -> U
 //================================================================================================
-  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 8)
   {
@@ -184,7 +184,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
   {
@@ -210,7 +210,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 
 //================================================================================================
 // convert: (u)int16 -> U
-  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 2)
   {
@@ -256,7 +256,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(neon128_), wide<In, 
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-  template<integral_scalar_value T, size N, arithmetic_scalar_value U>
+  template<integral_scalar_value T, size_type N, arithmetic_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
   requires arm_abi<abi_t<T, N>> && (sizeof(T) == 1)
   {

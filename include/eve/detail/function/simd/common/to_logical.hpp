@@ -24,7 +24,7 @@ namespace eve::_
 //================================================================================================
 // Wide to Logical
 //================================================================================================
-template<typename T, auto N>
+template<typename T, size_type N>
 EVE_FORCEINLINE auto
 to_logical(wide<T, N> const& v) noexcept
 {

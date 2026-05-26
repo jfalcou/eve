@@ -162,7 +162,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 
         // the unsigned cast removes some negative number checks.
         auto remainder   = ((std::size_t)needle_len) % iterator_cardinal_v<I2>;
-        long_tail_offset = (remainder != 0) ? remainder : iterator_cardinal_v<I2>;
+        long_tail_offset = (remainder != 0) ? remainder : (std::size_t) iterator_cardinal_v<I2>;
 
         long_tail_start = eve::unalign(f) + long_tail_offset;
         long_tail_n     = (std::size_t)(needle_len - long_tail_offset) / iterator_cardinal_v<I2>;
@@ -321,7 +321,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 
     if( haystack_len > iterator_cardinal_v<I1> )
     {
-      haystack_main_part_l += haystack_len - std::max(needle_len, iterator_cardinal_v<I1>) + 1;
+      haystack_main_part_l += haystack_len - std::max(needle_len, static_cast<std::ptrdiff_t>(iterator_cardinal_v<I1>)) + 1;
 
       if( auto res = main_part(processed_haystack.traits(),
                                haystack_f,

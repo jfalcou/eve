@@ -14,7 +14,7 @@ namespace eve::_
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> p, std::size_t i) noexcept
     requires x86_abi<abi_t<T, N>>
   {
@@ -26,7 +26,7 @@ namespace eve::_
     else
     {
       // g++ need that
-      logical<T> data[N::value];
+      logical<T> data[N];
 
       using bits_type = typename logical<T>::bits_type;
       static_assert(sizeof(bits_type) == sizeof(logical<T>));
@@ -40,7 +40,7 @@ namespace eve::_
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE void insert_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>>& p, std::size_t i, auto v) noexcept
     requires x86_abi<abi_t<T, N>>
   {

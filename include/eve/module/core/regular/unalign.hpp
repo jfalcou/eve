@@ -31,7 +31,7 @@ namespace eve
       return EVE_DISPATCH_CALL(p);
     }
 
-    template<typename T, auto N>
+    template<typename T, size_type N>
     constexpr EVE_FORCEINLINE T* operator()(aligned_ptr<T, N> p) const noexcept
     {
       return EVE_DISPATCH_CALL(p);
@@ -70,7 +70,7 @@ namespace eve
 //!     template<eve::relaxed_iterator Ptr>
 //!     constexpr auto unalign(Ptr p) noexcept;                 // 2
 //!
-//!     template<typename T, auto N>
+//!     template<typename T, size_type N>
 //!     constexpr T* unalign(aligned_ptr<T, N> p) noexcept;     // 3
 //!
 //!     template<typename... Ptrs>
@@ -127,7 +127,7 @@ namespace eve::_
     return p.unalign();
   }
 
-  template<typename T, auto N, callable_options O>
+  template<typename T, size_type N, callable_options O>
   constexpr EVE_FORCEINLINE T* unalign_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<T, N> p) noexcept
   {
     return p.get();

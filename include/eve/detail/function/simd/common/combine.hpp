@@ -25,12 +25,11 @@ namespace eve::_
     }
   };
 
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
-    using cardinal_t = fixed<N>;
-    using that_t = wide<T, cardinal_t::combined_type::value>;
+    using that_t = wide<T, N * 2>;
 
     if constexpr( is_emulated_v<abi_t<T, N>> )
     {
@@ -48,12 +47,11 @@ namespace eve::_
     }
   }
 
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {
-    using cardinal_t = fixed<N>;
-    using that_t = logical<wide<T, cardinal_t::combined_type::value>>;
+    using that_t = logical<wide<T, N * 2>>;
 
     if constexpr( is_emulated_v<abi_t<T, N>> )
     {
@@ -67,7 +65,7 @@ namespace eve::_
     }
     else
     {
-      wide<T, cardinal_t::combined_type::value> cb(l.mask(),h.mask());
+      wide<T, N * 2> cb(l.mask(),h.mask());
       return bit_cast(cb, as<that_t>());
     }
   }

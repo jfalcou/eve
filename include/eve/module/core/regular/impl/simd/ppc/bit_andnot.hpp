@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, size N, callable_options O>
+  template<arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_andnot_(EVE_REQUIRES(vmx_),
                                          O const          &,
                                          wide<T, N> const &v0,

@@ -31,7 +31,7 @@ aggregate_shuffler(Wide const& v, Pattern p) noexcept
 //================================================================================================
 // Unary basic shuffle - logical
 //================================================================================================
-template<typename T, auto N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noexcept
 {
@@ -39,7 +39,7 @@ basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noex
   return bit_cast(shuffle(v.mask(), p), as<logical<wide<T, sz>>>());
 }
 
-template<typename T, auto N, std::ptrdiff_t... I>
+template<typename T, size_type N, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 {
@@ -52,7 +52,7 @@ basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 //================================================================================================
 // Emulation
 //================================================================================================
-template<typename T, auto N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
 {

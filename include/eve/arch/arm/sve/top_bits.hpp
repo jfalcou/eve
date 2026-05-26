@@ -24,7 +24,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   static constexpr bool           is_aggregated = false;
 
   static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
-  using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
+  using half_logical = logical<wide<scalar_type, half_size>>;
   using storage_type = logical<wide<scalar_type>>;
 
   static constexpr std::ptrdiff_t bits_per_element = sizeof(scalar_type);

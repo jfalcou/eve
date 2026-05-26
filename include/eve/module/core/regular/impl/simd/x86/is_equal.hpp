@@ -23,7 +23,7 @@ namespace eve::_
   //====================================================================================================================
   // Regular is_equal x86
   //====================================================================================================================
-  template<arithmetic_scalar_value T, size N, callable_options O>
+  template<arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
                                                      O          const &opts,
                                                      wide<T, N> const &v,
@@ -100,7 +100,7 @@ namespace eve::_
         else if constexpr( use_avx2 && c == category::uint8x32 ) return _mm256_cmpeq_epi8(v, w);
         else if constexpr( c == category::int64x2 )
         {
-          if constexpr( N::value == 2 )
+          if constexpr( N == 2 )
             return as_logical_t<wide<T, N>> {v.get(0) == w.get(0), v.get(1) == w.get(1)};
           else return as_logical_t<wide<T, N>> {v.get(0) == w.get(0)};
         }
@@ -109,7 +109,7 @@ namespace eve::_
         else if constexpr( c == category::int8x16 ) return _mm_cmpeq_epi8(v, w);
         else if constexpr( c == category::uint64x2 )
         {
-          if constexpr( N::value == 2 )
+          if constexpr( N == 2 )
             return as_logical_t<wide<T, N>> {v.get(0) == w.get(0), v.get(1) == w.get(1)};
           else return as_logical_t<wide<T, N>> {v.get(0) == w.get(0)};
         }
@@ -124,7 +124,7 @@ namespace eve::_
   //====================================================================================================================
   // Logical regular is_equal x86
   //====================================================================================================================
-  template<arithmetic_scalar_value T, size N, callable_options O>
+  template<arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
                                                      O const &,
                                                      logical<wide<T, N>> const &v,
@@ -147,7 +147,7 @@ namespace eve::_
   //====================================================================================================================
   // masked  implementation for AVX512+
   //====================================================================================================================
-  template<conditional_expr C, arithmetic_scalar_value T, size N, callable_options O>
+  template<conditional_expr C, arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_),
                                                      C          const &mask,
                                                      O          const &opts,

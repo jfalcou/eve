@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE wide<T, N * 2>
   combine(sve_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -34,7 +34,7 @@ namespace eve::_
     }
   }
 
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N * 2>>
   combine(sve_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   requires sve_abi<abi_t<T, N>>

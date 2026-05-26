@@ -65,7 +65,7 @@ constexpr eve::pattern_t bgra_to_rgb_pattern_v = eve::fix_pattern<Size>(
 // We don't have to mask load and store version
 struct
 {
-  template<size N>
+  template<eve::size_type N>
   EVE_FORCEINLINE void operator()(std::uint8_t const *&f, std::uint8_t *&o, eve::fixed<N> n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load(f, n);
@@ -80,7 +80,7 @@ struct
 // We have to mask load and store version
 struct
 {
-  template<size N>
+  template<eve::size_type N>
   EVE_FORCEINLINE void operator()(eve::relative_conditional_expr auto ignore,
                                   std::uint8_t const                *&f,
                                   std::uint8_t                      *&o,

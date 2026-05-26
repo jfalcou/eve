@@ -41,7 +41,7 @@ namespace eve
   //!               current SIMD ABI requirements.
   //================================================================================================
   template< typename Type
-          , size Lanes = expected_cardinal_v<Type>
+          , size_type Lanes = expected_cardinal_v<Type>
           >
 #if !defined(EVE_DOXYGEN_INVOKED)
   requires (!std::same_as<Type, void>)
@@ -81,7 +81,7 @@ namespace eve
     }
 
     //! Construct an aligned_ptr from another one with a compatible alignment constraint
-    template<typename UType, size L>
+    template<typename UType, size_type L>
     aligned_ptr(aligned_ptr<UType, L> p) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( L >= Lanes ) &&
@@ -102,7 +102,7 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Assign from another aligned_ptr with a compatible alignment constraint
-    template<size L>
+    template<size_type L>
     aligned_ptr &operator=(aligned_ptr<Type, L> p) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( L >= Lanes )
@@ -250,7 +250,7 @@ namespace eve
   //! @tparam A   Alignment constraint to verify
   //! @return A boolean indicating if `ptr` is compatible with the `Other` alignment.
   //================================================================================================
-  template<std::size_t A, typename T, size Other>
+  template<std::size_t A, typename T, size_type Other>
   constexpr bool is_aligned(aligned_ptr<T, Other> const &ptr) noexcept
   {
     return is_aligned<A>(ptr.get());
@@ -260,108 +260,108 @@ namespace eve
   //! @}
   //================================================================================================
 
-  template<typename T, size A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
+  template<typename T, size_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
   template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
-  template<typename T1, size A1, typename T2, size A2>
+  template<typename T1, size_type A1, typename T2, size_type A2>
   bool operator==(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
   {
     return lhs.get() == rhs.get();
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator==(aligned_ptr<T, A> lhs, T* rhs) noexcept
   {
     return lhs.get() == rhs;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator==(T* lhs, aligned_ptr<T, A> rhs) noexcept
   {
     return rhs.get() == lhs;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator==(aligned_ptr<T, A> lhs, std::nullptr_t) noexcept
   {
     return lhs.get() == nullptr;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator==(std::nullptr_t, aligned_ptr<T, A> rhs) noexcept
   {
     return rhs.get() == nullptr;
   }
 
-  template<typename T1, size A1, typename T2, size A2>
+  template<typename T1, size_type A1, typename T2, size_type A2>
   bool operator!=(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
   {
     return lhs.get() != rhs.get();
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator!=(aligned_ptr<T, A> lhs, T* rhs) noexcept
   {
     return lhs.get() != rhs;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator!=(T* lhs, aligned_ptr<T, A> rhs) noexcept
   {
     return rhs.get() != lhs;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator!=(aligned_ptr<T, A> lhs, std::nullptr_t) noexcept
   {
     return lhs.get() !=nullptr;
   }
 
-  template<typename T, size A>
+  template<typename T, size_type A>
   bool operator!=(std::nullptr_t, aligned_ptr<T, A> rhs) noexcept
   {
     return rhs.get()!= nullptr;
   }
 
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
   void swap(aligned_ptr<Type, Lanes> &lhs, aligned_ptr<Type, Lanes> &rhs) noexcept
   {
     lhs.swap(rhs);
   }
 
-  template<typename Type, size Lanes>
-  aligned_ptr<Type, Lanes> operator-(aligned_ptr<Type, Lanes> const &p, size o) noexcept
+  template<typename Type, size_type Lanes>
+  aligned_ptr<Type, Lanes> operator-(aligned_ptr<Type, Lanes> const &p, size_type o) noexcept
   {
     auto that = p;
     return that -= o;
   }
 
-  template <typename Type, size Lanes>
+  template <typename Type, size_type Lanes>
   std::ptrdiff_t operator-(aligned_ptr<Type, Lanes> const& lhs, aligned_ptr<Type, Lanes> const& rhs) noexcept
   {
     return lhs.get() - rhs.get();
   }
 
-  template <typename Type, size Lanes>
+  template <typename Type, size_type Lanes>
   std::ptrdiff_t operator-(aligned_ptr<Type, Lanes> const& lhs, Type* rhs) noexcept
   {
     return lhs.get() - rhs;
   }
 
-  template <typename Type, size Lanes>
+  template <typename Type, size_type Lanes>
   std::ptrdiff_t operator-(Type* lhs, aligned_ptr<Type, Lanes> const& rhs) noexcept
   {
     return lhs - rhs.get();
   }
 
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
   aligned_ptr<Type, Lanes> operator+(aligned_ptr<Type, Lanes> const &p, std::ptrdiff_t o) noexcept
   {
     auto that = p;
     return that += o;
   }
 
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
   aligned_ptr<Type, Lanes> operator+(std::ptrdiff_t                      o,
                                          aligned_ptr<Type, Lanes> const &p) noexcept
   {
@@ -379,11 +379,11 @@ namespace eve
   //! @param lanes  Lanes count to satisfy
   //! @return An aligned_ptr holding`ptr` with the proper alignment constraint.
   //================================================================================================
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
 #if !defined(EVE_DOXYGEN_INVOKED)
-  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, as_type_t<size, Lanes> ) noexcept
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, fixed<Lanes>) noexcept
 #else
-  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, as_type_t<size, Lanes> lanes) noexcept
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, fixed<Lanes> lanes) noexcept
 #endif
   {
     return aligned_ptr<Type, Lanes>{ptr};
@@ -405,7 +405,7 @@ namespace eve
   }
 
   //! @overload
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
   aligned_ptr<Type const, Lanes> as_aligned(Type const *ptr, fixed<Lanes>) noexcept
   {
     return aligned_ptr<Type const, Lanes>{ptr};
@@ -429,7 +429,7 @@ namespace eve
   //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
   //! @see previous_aligned_address(T*)
   //================================================================================================
-  template <typename T, size Lanes>
+  template <typename T, size_type Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
   EVE_FORCEINLINE auto previous_aligned_address(T* p, fixed<Lanes>) noexcept
   #else
@@ -452,7 +452,7 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
   {
-    return previous_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
+    return previous_aligned_address(p, fixed<eve::expected_cardinal_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================
@@ -466,7 +466,7 @@ namespace eve
   //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
   //! @see next_aligned_address(T*)
   //================================================================================================
-  template <typename T, size Lanes>
+  template <typename T, size_type Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
   EVE_FORCEINLINE auto next_aligned_address(T* p, fixed<Lanes>) noexcept
   #else
@@ -489,13 +489,13 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
   {
-    return next_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
+    return next_aligned_address(p, fixed<eve::expected_cardinal_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================
   //  Specialisation for pointer_alignment
   //================================================================================================
-  template<typename Type, size Lanes>
+  template<typename Type, size_type Lanes>
   struct  pointer_alignment<aligned_ptr<Type, Lanes>>
         : std::integral_constant<std::size_t,aligned_ptr<Type, Lanes>::alignment()>
   {};

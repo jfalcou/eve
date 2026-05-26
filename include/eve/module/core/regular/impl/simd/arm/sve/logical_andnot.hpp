@@ -13,14 +13,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> logical_andnot_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    return svbic_z(expand_mask(keep_first(N::value), as(a)), a, b);
+    return svbic_z(expand_mask(keep_first(N), as(a)), a, b);
   }
 
-  template<callable_options O, conditional_expr C, typename T, auto N>
+  template<callable_options O, conditional_expr C, typename T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> logical_andnot_(EVE_REQUIRES(sve_), C const& cx, O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {

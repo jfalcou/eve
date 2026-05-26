@@ -104,7 +104,7 @@ template<typename Callable, typename... Args> struct bound
 
 // Part time migration to shuffle_v2
 
-template<std::ptrdiff_t G, size N>
+template<std::ptrdiff_t G, size_type N>
 inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
     [](auto i, auto)
     {

@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-template<typename T, auto N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>
     deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>) requires(N / G
                                                                                           > 2)
@@ -68,7 +68,7 @@ template<typename T, auto N, std::ptrdiff_t G>
   }
 }
 
-template<typename T, auto N, std::ptrdiff_t G>
+template<typename T, size_type N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N * 2>
                     deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_),
                                                  wide<T, N> v0,

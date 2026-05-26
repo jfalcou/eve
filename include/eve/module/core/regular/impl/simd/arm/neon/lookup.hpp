@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename I, size N>
+  template<callable_options O, typename T, typename I, size_type N>
   EVE_FORCEINLINE wide<T, N> lookup_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, wide<I, N> idx) noexcept
   requires(arm_abi<abi_t<I, N>>&& arm_abi<abi_t<T, N>>)
   {

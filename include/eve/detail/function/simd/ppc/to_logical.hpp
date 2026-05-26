@@ -16,7 +16,7 @@ namespace eve::_
   //================================================================================================
   // Wide to Logical
   //================================================================================================
-  template<typename T, auto N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

@@ -19,7 +19,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, size N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_),
                                  O          const& o,
                                  wide<T, N> const& a0) noexcept
@@ -31,7 +31,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-  template<conditional_expr C, floating_scalar_value T, size N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_),
                                  C const         & mask,
                                  O          const& o,

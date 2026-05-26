@@ -120,27 +120,27 @@ TTS_CASE("Check simplification, types")
   }
 };
 
-template<typename T, auto N>
+template<typename T, typename N>
 void
 simplify_test_pad_to_fundamental()
 {
   auto p0 = [](int i, int size) { return size - i - 1; };
   auto p1 = [](int i, int)
   {
-    if( i < N ) return N - i - 1;
+    if( i < N::value ) return N::value - i - 1;
     else return eve::we_;
   };
-  simplify_test<eve::wide<T, N>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0, p1);
+  simplify_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0, p1);
 
   if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
-    simplify_test<eve::logical<eve::wide<T, N>>,
+    simplify_test<eve::logical<eve::wide<T, N::value>>,
                   1,
                   eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
                   1>(p0, p1);
   }
 
-  if( N == 1 ) return;
+  if( N::value == 1 ) return;
 
   auto p0x2 = [](int i, int size)
   {
@@ -150,16 +150,16 @@ simplify_test_pad_to_fundamental()
 
   auto p1x2 = [](int i, int size)
   {
-    if( i >= N ) return (int)eve::we_;
+    if( i >= N::value ) return (int)eve::we_;
     if( i % 2 == 0 ) return i;
     else return i + size;
   };
 
-  simplify2_test<eve::wide<T, N>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0x2, p1x2);
+  simplify2_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0x2, p1x2);
 
   if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
-    simplify2_test<eve::logical<eve::wide<T, N>>,
+    simplify2_test<eve::logical<eve::wide<T, N::value>>,
                    1,
                    eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
                    1>(p0x2, p1x2);
@@ -175,10 +175,10 @@ TTS_CASE("Check simplification, pad to fundamental")
   }
   else
   {
-    // simplify_test_pad_to_fundamental<std::uint8_t, 1>();
-    simplify_test_pad_to_fundamental<std::uint8_t, 2>();
-    simplify_test_pad_to_fundamental<std::uint16_t, 2>();
-    simplify_test_pad_to_fundamental<std::uint32_t, 2>();
+    // simplify_test_pad_to_fundamental<std::uint8_t, eve::fixed<1>>();
+    simplify_test_pad_to_fundamental<std::uint8_t, eve::fixed<2>>();
+    simplify_test_pad_to_fundamental<std::uint16_t, eve::fixed<2>>();
+    simplify_test_pad_to_fundamental<std::uint32_t, eve::fixed<2>>();
   }
 };
 

@@ -65,7 +65,7 @@ namespace eve
   //================================================================================================
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  constexpr size nofs_cardinal_v =
+  constexpr size_type nofs_cardinal_v =
     (std::same_as<ABI, x86_512_> && !_::avx512_default_64_bytes)
      ? expected_cardinal_v<T, x86_256_> : expected_cardinal_v<T, ABI>;
 
@@ -79,5 +79,5 @@ namespace eve
   using nofs_logical = logical<nofs_wide<T>>;
 
   template <typename T>
-  using nofs_aligned_ptr = aligned_ptr<T, nofs_cardinal_t<T>::value>;
+  using nofs_aligned_ptr = aligned_ptr<T, nofs_cardinal_v<T>>;
 }

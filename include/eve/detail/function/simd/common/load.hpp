@@ -111,7 +111,7 @@ namespace eve::_
   // Load impl
   //================================================================================================
 
-  template<_::data_source DS, typename T,  size N>
+  template<_::data_source DS, typename T,  size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
     using w_src = wide_value_type_t<DS>;
@@ -130,7 +130,6 @@ namespace eve::_
   EVE_FORCEINLINE Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
   {
     using e_t = typename pointer_traits<Wide>::value_type;
-    using c_t = cardinal_t<Wide>;
 
     // If the ignore/keep is complete we can jump over if_else
     if constexpr (C::is_complete)
@@ -140,7 +139,7 @@ namespace eve::_
     }
     else if constexpr (is_aligned_ptr_v<DS>)
     {
-      constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= DS::alignment();
+      constexpr bool is_aligned_enough = cardinal_v<Wide> * sizeof(e_t) >= DS::alignment();
 
       if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {

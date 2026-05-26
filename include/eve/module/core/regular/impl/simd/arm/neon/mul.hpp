@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> mul_(EVE_REQUIRES(neon128_), O const& opts,
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
@@ -39,7 +39,7 @@ namespace eve::_
     else return mul.behavior(cpu_{}, opts, v, w);
   }
 
-  template<callable_options O, arithmetic_scalar_value T, size N, typename U>
+  template<callable_options O, arithmetic_scalar_value T, size_type N, typename U>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N> a, U b) noexcept
   requires (arm_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))
   {

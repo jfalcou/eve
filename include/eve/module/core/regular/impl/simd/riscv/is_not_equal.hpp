@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, auto N, typename U>
+  template<callable_options O, typename T, size_type N, typename U>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_not_equal_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
   requires(rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>))
@@ -35,14 +35,14 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, auto N, scalar_value U>
+  template<callable_options O, typename T, size_type N, scalar_value U>
   EVE_FORCEINLINE logical<wide<T, N>> is_not_equal_(EVE_REQUIRES(rvv_), O const& opts, U a, wide<T, N> b) noexcept
     requires (rvv_abi<abi_t<T, N>> )
   {
     return is_not_equal.behavior(current_api, opts, b, a);
   }
 
-  template<callable_options O, typename T, auto N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_not_equal_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
   requires(rvv_abi<abi_t<T, N>>)

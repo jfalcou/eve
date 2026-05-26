@@ -141,7 +141,7 @@ EVE_FORCEINLINE auto convert_integers_chain(In v0, as<Out> tgt) noexcept
 }
 
 // Convert helpers : large->small integers via a single shuffle
-template<integral_scalar_value T, integral_scalar_value U, size N>
+template<integral_scalar_value T, integral_scalar_value U, size_type N>
 EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 {
   static_assert((sizeof(T) / sizeof(U) >= 2),
@@ -161,7 +161,7 @@ EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
   return bit_cast(shuffle(bit_cast(v, as<wide<U, c>> {}), shuffler), as<wide<U, N>> {});
 }
 
-template<typename T, auto N, typename U>
+template<typename T, size_type N, typename U>
 EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
 {
   if constexpr( N > 1 )
@@ -173,7 +173,7 @@ EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
 }
 
 // Convert integer from 2^n -> 2^n+1
-template<typename T, auto N, typename U>
+template<typename T, size_type N, typename U>
 EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)
 {
   static_assert((sizeof(U) / sizeof(T) == 2),
