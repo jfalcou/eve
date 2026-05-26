@@ -12,7 +12,7 @@ add_library(eve_test INTERFACE)
 target_compile_features ( eve_test INTERFACE cxx_std_20 )
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT MATCHES "MSVC")
     target_compile_options( eve_test INTERFACE /bigobj /EHsc /W3 /wd4244 /wd4267 /wd4146 /utf-8 /WX )
   else()
     target_compile_options( eve_test INTERFACE -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics

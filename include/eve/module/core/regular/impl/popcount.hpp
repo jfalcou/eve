@@ -14,10 +14,6 @@
 #include <eve/traits.hpp>
 #include <bit>
 
-#if defined(SPY_COMPILER_IS_MSVC)
-#  include <intrin.h>
-#endif
-
 namespace eve::_
 {
   template<typename T, callable_options O>

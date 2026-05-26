@@ -11,9 +11,6 @@
 #include <type_traits>
 
 #ifndef EVE_NO_STRICT_ALIASING
-#  if defined(EVEV_COMP_IS_MSVC)
-#    define EVE_NO_STRICT_ALIASING
-#  endif
 #  if defined(SPY_COMPILER_IS_GNUC)
 #    define EVE_MAY_ALIAS __attribute__((may_alias))
 #  endif

@@ -35,11 +35,6 @@
 #include <cfenv>
 #include <type_traits>
 
-#ifdef EVE_COMP_IS_MSVC
-#  pragma warning(push)
-#  pragma warning(disable : 4723) // potential divide by 0
-#endif
-
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
@@ -267,7 +262,3 @@ namespace eve::_
     return if_else(cond, eve::div[o](t, g), t);
   }
 }
-
-#ifdef EVE_COMP_IS_MSVC
-#  pragma warning(pop)
-#endif
