@@ -17,7 +17,7 @@ namespace eve::_
     template<typename Wide, typename Val>
     EVE_FORCEINLINE constexpr void operator()(Wide& w, std::size_t idx, Val v) const noexcept
     {
-      return EVE_DISPATCH_CALL(w, idx, v);
+      return EVE_DISPATCH_CALL_NT(translate_ref(w), idx, v);
     }
 
     EVE_CALLABLE_OBJECT(insert_t, insert_);
