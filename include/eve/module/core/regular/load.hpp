@@ -33,7 +33,7 @@ namespace eve
   //!     wide_value_type_t<Ptr> load(Ptr ptr) const noexcept;                                                           // 1
   //!
   //!     template<_::data_source Ptr, size_type N>
-  //!     as_wide_t<value_type_t<Ptr>, fixed<N>> load(Ptr ptr, fixed<N>) const noexcept;                                 // 1
+  //!     as_wide_t<value_type_t<Ptr>, N> load(Ptr ptr, fixed<N>) const noexcept;                                        // 1
   //!
   //!     template<_::data_source Ptr, arithmetic_simd_value Wide>
   //!     requires std::same_as<value_type_t<Ptr>, element_type_t<Wide>>

@@ -17,8 +17,8 @@ namespace eve::_
   template <typename T>
   EVE_FORCEINLINE std::uint32_t every_2nd_byte_arm64(T const& v) noexcept
   {
-    using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
-    using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
+    using u8_8  = typename T::template rebind<std::uint8_t,  8>;
+    using u32_2 = typename T::template rebind<std::uint32_t, 2>;
 
     auto bytes    = eve::bit_cast(v, eve::as<u8_8>{});
     auto selected = vtbl1_u8(bytes, u8_8(0, 2, 4, 6, 0, 0, 0, 0));

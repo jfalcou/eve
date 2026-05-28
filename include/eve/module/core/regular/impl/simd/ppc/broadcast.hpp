@@ -23,6 +23,6 @@ namespace eve::_
   EVE_FORCEINLINE auto
   broadcast_(EVE_SUPPORTS(vmx_), O const&, W v, Index, fixed<N>) noexcept requires ppc_abi<typename W::abi_type>
   {
-    return as_wide_t<W, fixed<N>>{vec_splat(v.storage(), Index::value)};
+    return as_wide_t<W, N>{vec_splat(v.storage(), Index::value)};
   }
 }

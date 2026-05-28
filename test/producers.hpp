@@ -47,7 +47,7 @@ namespace eve
 
 namespace tts
 {
-  template<typename T,size_type N> struct adapter<eve::wide<T,N>>
+  template<typename T, eve::size_type N> struct adapter<eve::wide<T,N>>
   {
     using type = eve::wide<T,N>;
 
@@ -76,7 +76,7 @@ namespace tts
     }
   };
 
-  template<typename T,size_type N> struct adapter<eve::logical<eve::wide<T,N>>>
+  template<typename T, eve::size_type N> struct adapter<eve::logical<eve::wide<T,N>>>
   {
     using type = eve::logical<eve::wide<T,N>>;
 
