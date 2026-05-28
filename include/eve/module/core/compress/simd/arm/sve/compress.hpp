@@ -47,9 +47,9 @@ namespace eve::_
     std::size_t max_size = kumi::max_flat( kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
 
     // We can compress 1 full register of at least 4 bytes elements.
-    if (min_size == 1U                  ) return N() > eve::expected_cardinal_v<std::int32_t> / 4;
-    if (min_size == 2U || max_size == 8U) return N() > eve::expected_cardinal_v<std::int32_t> / 2;
-    return N() > eve::expected_cardinal_v<std::int32_t>;
+    if (min_size == 1U                  ) return N > eve::expected_cardinal_v<std::int32_t> / 4;
+    if (min_size == 2U || max_size == 8U) return N > eve::expected_cardinal_v<std::int32_t> / 2;
+    return N > eve::expected_cardinal_v<std::int32_t>;
   }
 
   template<relative_conditional_expr C, typename T, typename U, size_type N>

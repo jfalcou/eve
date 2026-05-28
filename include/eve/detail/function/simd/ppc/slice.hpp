@@ -28,7 +28,7 @@ namespace eve::_
         return vec_perm(v.storage(), v.storage(), apply<16>(mask));
       };
 
-      return wide<T, N / 2>(select(a, N {}));
+      return wide<T, N / 2>(select(a, N));
     }
     else
     {

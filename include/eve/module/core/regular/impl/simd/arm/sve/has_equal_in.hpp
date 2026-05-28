@@ -39,7 +39,7 @@ namespace eve::_
       else if constexpr (byte_size < 16)
       {
         const fw_t haystack{x};
-        const fw_t needle = broadcast_lane(fw_t{match_against}, N{}, index<0>);
+        const fw_t needle = broadcast_lane(fw_t{match_against}, fixed<N>{}, index<0>);
 
         return svmatch(keep_first(N).mask(as<fw_t>{}), haystack, needle);
       }
