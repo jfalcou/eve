@@ -29,7 +29,7 @@ basic_shuffle_(EVE_SUPPORTS(vmx_),
   if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
   else
   {
-    using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
+    using bytes_t = typename that_t::template rebind<std::uint8_t, 16>;
     that_t that =
         vec_perm(v.storage(), v.storage(), as_bytes<wide<T, N>>(q, as<bytes_t>()).storage());
 

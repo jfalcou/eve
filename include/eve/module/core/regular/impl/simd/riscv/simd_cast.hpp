@@ -21,7 +21,7 @@ namespace eve::_
 template<scalar_value T, size_type N, scalar_value U, std::ptrdiff_t M>
 EVE_FORCEINLINE logical<wide<U, M>>
                 rvv_simd_cast(wide<T, N> x, as<logical<wide<U, M>>> const                &tgt) noexcept
-requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>>
+requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>
 {
   constexpr auto in_lmul = rvv_lmul_v<T, N>;
   if constexpr( in_lmul != 1 )
@@ -82,7 +82,7 @@ EVE_FORCEINLINE logical<wide<U, M>>
                            const O&,
                            logical<wide<T, N>>            x,
                            as<logical<wide<U, M>>> const                &tgt) noexcept
-requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>> )
+requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>> )
 {
   using part_type_cast = _::rvv_m1_wide<std::uint32_t>;
   auto u_casted_in     = rvv_simd_cast(x, as<part_type_cast> {});
@@ -93,7 +93,7 @@ requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, fixed<M>>> )
 template<size_type N, std::ptrdiff_t M>
 EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_trunc(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
-requires rvv_abi<abi_t<std::int8_t, fixed<N>>>
+requires rvv_abi<abi_t<std::int8_t, N>>
 {
   constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
   if constexpr( out_lmul == -8 ) return __riscv_vlmul_trunc_i8mf8(a);
@@ -107,7 +107,7 @@ requires rvv_abi<abi_t<std::int8_t, fixed<N>>>
 template<size_type N, std::ptrdiff_t M>
 EVE_FORCEINLINE wide<std::int8_t, M>
                 rvv_lmul_extend(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
-requires(rvv_abi<abi_t<std::int8_t, fixed<N>>> && rvv_abi<abi_t<std::int8_t, fixed<M>>> )
+requires(rvv_abi<abi_t<std::int8_t, N>> && rvv_abi<abi_t<std::int8_t, M>> )
 {
   constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
   if constexpr( out_lmul == -4 ) return __riscv_vlmul_ext_i8mf4(a);

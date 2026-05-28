@@ -162,7 +162,7 @@ namespace eve::_
       type uh_lanes = sizeof(T) == 2 ? _mm512_unpackhi_epi16(v0, v1) : _mm512_unpackhi_epi8(v0, v1);
 
       // Can't use shuffle_i32x4, only applies within lanes
-      using idx_t = typename type::template rebind<std::uint64_t, fixed<8>>;
+      using idx_t = typename type::template rebind<std::uint64_t, 8>;
       idx_t lo_idx { 0, 1,  8,  9, 2, 3, 10, 11 };
       idx_t hi_idx { 4, 5, 12, 13, 6, 7, 14, 15 };
 
