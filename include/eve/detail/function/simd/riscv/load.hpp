@@ -27,7 +27,7 @@ EVE_FORCEINLINE wide<T, N>
   wide<T, N> zero_init {0};
   if constexpr( N < eve::fundamental_cardinal_v<T> )
   {
-    auto tgt              = as<wide<T, eve::fundamental_cardinal<T>>> {};
+    auto tgt              = as<wide<T, eve::fundamental_cardinal_v<T>>> {};
     auto fundamental_zero = rvv_make_splat(tgt, static_cast<T>(0));
     zero_init             = bit_cast(fundamental_zero, eve::as<wide<T, N>> {});
   }

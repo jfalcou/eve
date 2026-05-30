@@ -50,9 +50,8 @@ simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts
     if constexpr( !eve::unsigned_value<typename T::mask_type> )
     {
       using e_t = eve::element_type_t<typename T::mask_type>;
-      using N   = eve::fixed<T::size()>;
 
-      using u_t = typename T::template rebind<_::make_integer_t<sizeof(e_t), unsigned>, N>;
+      using u_t = typename T::template rebind<_::make_integer_t<sizeof(e_t), unsigned>, T::size()>;
       return simplify_plain_up_the_type(p, g, bit_cast_tuple(xs, as<u_t> {}));
     }
     else return simplified_pattern {xs, g, p};

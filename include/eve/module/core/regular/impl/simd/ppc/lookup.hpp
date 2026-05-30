@@ -19,7 +19,7 @@ namespace eve::_
   requires ppc_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
-    using t8_t = typename type::template rebind<std::uint8_t, fixed<16>>;
+    using t8_t = typename type::template rebind<std::uint8_t, 16>;
 
     if constexpr( sizeof(I) == 1 && sizeof(T) == 1 )
     {

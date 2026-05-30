@@ -31,7 +31,7 @@ EVE_FORCEINLINE wide<T, N>
   wide<T, N>     fill_zero;
   if constexpr( N < eve::fundamental_cardinal_v<T> )
   {
-    auto tgt              = as<wide<T, eve::fundamental_cardinal<T>>> {};
+    auto tgt              = as<wide<T, eve::fundamental_cardinal_v<T>>> {};
     auto fundamental_zero = rvv_make_splat(tgt, static_cast<T>(0));
     fill_zero             = bit_cast(fundamental_zero, eve::as<wide<T, N>> {});
   }
@@ -170,7 +170,7 @@ requires rvv_abi<abi_t<T, N>>
   auto logic_tgt = as<logical<wide<T, N>>> {};
   if constexpr( N < eve::fundamental_cardinal_v<T> )
   {
-    auto tgt          = as<wide<e_t, fundamental_cardinal<T>>> {};
+    auto tgt          = as<wide<e_t, fundamental_cardinal_v<T>>> {};
     auto full_bits    = bit_cast(bits, tgt);
     auto full_logical = full_bits > static_cast<e_t>(0);
     return simd_cast(full_logical, logic_tgt);
