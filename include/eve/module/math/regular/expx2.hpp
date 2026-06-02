@@ -74,8 +74,8 @@ namespace eve
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::expx2[o], a0);
-      elseif constexpr(O::contains(raw))
-        return exp[o](eve::sqr(x));
+      else if constexpr(O::contains(raw))
+        return exp[o](eve::sqr(a0));
       else
       {
         if constexpr( eve::platform::supports_invalids && scalar_value<T> )

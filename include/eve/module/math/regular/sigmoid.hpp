@@ -81,7 +81,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    sigmoid_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
+    sigmoid_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
     {
       return rec[pedantic](inc(exp[o](-x)));
     }

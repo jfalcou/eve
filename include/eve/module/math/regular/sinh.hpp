@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinh_t : elementwise_callable<sinh_t, Option, pedantic_option, raw_options>
+  struct sinh_t : elementwise_callable<sinh_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sinh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T sinh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {

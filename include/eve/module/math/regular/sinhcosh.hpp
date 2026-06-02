@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       T    ovflimit = maxlog(as<T>());
       auto x        = eve::abs(a0);
