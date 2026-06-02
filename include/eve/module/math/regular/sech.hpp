@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sech_t : elementwise_callable<sech_t, Options>
+  struct sech_t : elementwise_callable<sech_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -100,7 +100,7 @@ namespace eve
         T    x     = eve::abs(a0);
         auto test1 = (x > maxlog(eve::as<T>()) - log_2(eve::as<T>()));
         auto fac   = if_else(test1, half(eve::as<T>()), eve::one);
-        T    tmp1  = exp(-x * fac);
+        T    tmp1  = exp[o](-x * fac);
         T    tmp   = T(2) * tmp1;
         if constexpr( scalar_value<T> ) { return test1 ? tmp1 * tmp : tmp / fma(tmp1, tmp1, T(1)); }
         else { return if_else(test1, tmp1 * tmp, tmp / fma(tmp1, tmp1, T(1))); }

@@ -175,7 +175,7 @@ namespace eve
       }
       else if constexpr(O::contains(raw))
       {
-        return exp(a1*log(a0));
+        return exp[o](a1*log(a0));
       }
       else
       {

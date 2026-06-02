@@ -12,11 +12,13 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
+#include <eve/module/core.hpp>
+
 namespace eve
 {
 
   template<typename Options>
-  struct exp_t : elementwise_callable<exp_t, Options, pedantic_option>
+  struct exp_t : elementwise_callable<exp_t, Options, pedantic_option, raw_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
@@ -48,6 +50,7 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto exp[raw](floating_value auto x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -66,12 +69,16 @@ namespace eve
 //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!       * If the element is a `NaN`, `NaN` is returned
 //!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   3. The raw option uses the very fast and quite inacurate Schraudolph's algorithm.
+//!      and the implementation is largely inspired by primeiro library
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
 //!   *  [DLMF](https://dlmf.nist.gov/4.2)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+//!   *  [Primeiro fastapprox](github.com/pmineiro/fastapprox/tree/master/fastapprox)
+//!   *  [Schraudolph algorithm](https://nic.schraudolph.org/pubs/Schraudolph99.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/exp.cpp}
@@ -87,8 +94,19 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     exp_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+      using e_t = eve::element_type_t<T>;
+      if constexpr(std::same_as<e_t, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::exp[o], x);
+      else if constexpr(O::contains(raw))
+      {
+        // Schraudolph's algorithm
+        using ui_t  =  eve::as_integer_t<e_t, unsigned>;
+        constexpr e_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<e_t>());
+        constexpr e_t mx = eve::maxexponentm1(eve::as<e_t>());
+        constexpr auto nb = eve::nbmantissabits(as<e_t>());
+        auto a =   eve::convert((ui_t(1) << nb)*fma(x, eve::invlog_2(eve::as<e_t>()),  mx + perturbation), eve::as<ui_t>());
+        return  eve::bit_cast(a, eve::as<T>());
+      }
       else
       {
         auto isnan = is_nan(x);

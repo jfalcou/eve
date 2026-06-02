@@ -14,7 +14,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct sigmoid_t : elementwise_callable<sigmoid_t, Options>
+  struct sigmoid_t : elementwise_callable<sigmoid_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
@@ -83,7 +83,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     sigmoid_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
     {
-      return rec[pedantic](inc(exp(-x)));
+      return rec[pedantic](inc(exp[o](-x)));
     }
   }
 }

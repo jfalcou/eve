@@ -18,7 +18,8 @@ int main()
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf      = " << xf << '\n'
-            << "-> exp(xf) = " << eve::exp(xf) << '\n';
+            << "<- xf           = " << xf << '\n'
+            << "-> exp(xf)      = " << eve::exp(xf) << '\n'
+            << "-> exp[raw](xf) = " << eve::exp[eve::raw](xf) << '\n';
   return 0;
 }

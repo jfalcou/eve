@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct logspace_add_t : tuple_callable<logspace_add_t, Options>
+  struct logspace_add_t : tuple_callable<logspace_add_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -102,7 +102,7 @@ namespace eve
         auto r0 = r_t(a0);
         auto r1 = r_t(a1);
         auto tmp = -eve::abs(r0 - r1);
-        auto r   = eve::max(r0, r1) + eve::log1p(eve::exp(tmp));
+        auto r   = eve::max(r0, r1) + eve::log1p(eve::exp[o](tmp));
         if constexpr( eve::platform::supports_invalids ) r = if_else(is_nan(tmp), r0 + r1, r);
         return r;
       }
