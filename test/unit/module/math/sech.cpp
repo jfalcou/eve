@@ -70,3 +70,16 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sech)(eve::wide)",
   TTS_IEEE_EQUAL(eve::sech[mask](a0),
             eve::if_else(mask, eve::sech(a0), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of sech on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(mini, maxi), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.05, 0.05);
+   TTS_RELATIVE_EQUAL(eve::sech(a0), eve::sech[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::sech(a1), eve::sech[raw](a1), prec);
+
+};

@@ -13,7 +13,7 @@
 #include <cmath>
 
 //==================================================================================================
-// Types tests
+Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
@@ -139,7 +139,7 @@ TTS_CASE_TPL("Check conversion behavior", eve::test::simd::integers)
 
 
 //==================================================================================================
-// Tests for masked exp2
+Tests for masked exp2
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
@@ -153,10 +153,14 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
 };
 
 
-TTS_CASE_TPL("Check conversion behavior", eve::test::simd::signed_integers)
-<typename T>(tts::type<T>)
+TTS_CASE_WITH("Check behavior of exp2 on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::minlog2, eve::maxlog2), tts::randoms(-1.0, 1.0)))
+<typename T>(T const& a0, T const& a1)
 {
-   using v_t  = eve::element_type_t<T>;
-   TTS_IEEE_EQUAL(eve::exp2(v_t(-1)), v_t(0));
-   TTS_IEEE_EQUAL(eve::exp2(T(-1)), T(0));
+   using eve::raw;
+   auto prec = tts::prec<T>(0.05, 0.05);
+   TTS_RELATIVE_EQUAL(eve::exp2(a0), eve::exp2[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::exp2(a1), eve::exp2[raw](a1), prec);
+
 };

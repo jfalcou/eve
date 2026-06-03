@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/constant/invlog_10.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
 #include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/math/constant/minlog10.hpp>
@@ -19,7 +20,7 @@
 namespace eve
 {
   template<typename Options>
-  struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
+  struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -84,6 +85,18 @@ namespace eve
     {
        if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::exp10[o], x);
+      else if constexpr(O::contains(raw))
+      {
+        // Schraudolph's algorithm
+        using e_t = eve::element_type_t<T>;
+        using ui_t  =  eve::as_integer_t<e_t, unsigned>;
+        constexpr e_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<e_t>());
+        constexpr e_t mx = eve::maxexponentm1(eve::as<e_t>());
+        constexpr auto nb = eve::nbmantissabits(as<e_t>());
+        T v = (ui_t(1) << nb)*fma(x, eve::invlog10_2(eve::as<e_t>()),  mx + perturbation);
+        auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
+        return  eve::bit_cast(a, eve::as<T>());
+      }
       else
       {
         using elt_t  = element_type_t<T>;

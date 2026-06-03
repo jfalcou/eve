@@ -66,3 +66,17 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sigmoid)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::sigmoid[mask](a0), eve::if_else(mask, eve::sigmoid(a0), a0));
 };
+
+
+
+TTS_CASE_WITH("Check behavior of sigmoid on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms-10, 10), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.05, 0.05);
+   TTS_RELATIVE_EQUAL(eve::sigmoid(a0), eve::sigmoid[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::sigmoid(a1), eve::sigmoid[raw](a1), prec);
+
+};

@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct tanh_t : elementwise_callable<tanh_t, Options>
+  struct tanh_t : elementwise_callable<tanh_t, Options, pedantic_option, raw_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
