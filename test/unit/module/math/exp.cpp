@@ -13,8 +13,8 @@
 
 #include <cmath>
 
-/==================================================================================================
-Types tests
+//==================================================================================================
+//Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 };
 
 //==================================================================================================
-exp  tests
+// exp  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of exp on wide",
               eve::test::simd::ieee_reals_wf16,
@@ -91,7 +91,7 @@ TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee
 
 
 //==================================================================================================
- Tests for masked exp
+// Tests for masked exp
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::exp)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
