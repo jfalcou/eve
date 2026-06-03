@@ -109,7 +109,8 @@ namespace eve
             constexpr elt_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
             constexpr elt_t mx = eve::maxexponentm1(eve::as<elt_t>());
             constexpr auto nb = eve::nbmantissabits(as<elt_t>());
-            auto a =   eve::convert((ui_t(1) << nb) *( x + mx + perturbation), eve::as<ui_t>());
+            T v = (ui_t(1) << nb)*(x + mx + perturbation);
+            auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
             return  eve::bit_cast(a, eve::as<T>());
           }
           else
