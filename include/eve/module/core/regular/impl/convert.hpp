@@ -13,6 +13,8 @@
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/arch/simdfloat16.hpp>
@@ -89,6 +91,10 @@ namespace eve::_
       {
         if constexpr (O::contains(saturated))
         {
+          EVE_ASSERT(is_not_nan(v0),
+            "[EVE] - Convert to integral from floating point called on NaN value, this is a source of undefined behavior."
+          );
+
           auto s = saturate(v0, tgt);
           return s < v0 ? valmax(tgt) : s > v0 ? valmin(tgt) : static_cast<Out>(v0);
         }
@@ -97,6 +103,7 @@ namespace eve::_
           EVE_ASSERT(is_finite(v0),
             "[EVE] - Convert to integral from floating point called on non finite value, this is a source of undefined behavior."
           );
+
           return static_cast<Out>(v0);
         }
       }
