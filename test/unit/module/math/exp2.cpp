@@ -13,7 +13,7 @@
 #include <cmath>
 
 //==================================================================================================
-Types tests
+//==Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
@@ -139,7 +139,7 @@ TTS_CASE_TPL("Check conversion behavior", eve::test::simd::integers)
 
 
 //==================================================================================================
-Tests for masked exp2
+//==Tests for masked exp2
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
