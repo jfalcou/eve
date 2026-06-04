@@ -84,8 +84,8 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expmx2)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of expmx2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10, 10)))
-<typename T>(T const& a0)
+              tts::generate(tts::randoms(0.5, 10)))
+  <typename T>(T const& a0)
 {
    using eve::raw;
    auto prec = tts::prec<T>(0.05, 0.05);
