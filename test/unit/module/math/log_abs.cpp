@@ -58,7 +58,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs)(eve::wide)",
 // Tests for fast and raw  log_abs
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of log_abs on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.01)))
 <typename T>(T const& a0, T const& a1)
 {
