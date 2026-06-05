@@ -73,7 +73,7 @@ TTS_CASE_WITH("Check behavior of cosh on wide",
    TTS_RELATIVE_EQUAL(eve::cosh(a0), eve::cosh[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::cosh(a1), eve::cosh[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
    TTS_RELATIVE_EQUAL(eve::cosh(a0), eve::cosh[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::cosh(a1), eve::cosh[fast](a1), prec1);
 

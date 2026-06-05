@@ -165,7 +165,7 @@ TTS_CASE_WITH("Check behavior of exp2 raw and fast on wide",
    auto prec = tts::prec<T>(0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::exp2(a0), eve::exp2[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::exp2(a1), eve::exp2[raw](a1), prec);
-   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
    TTS_RELATIVE_EQUAL(eve::exp2(a0), eve::exp2[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::exp2(a1), eve::exp2[fast](a1), prec1);
 

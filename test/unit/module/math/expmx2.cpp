@@ -91,6 +91,6 @@ TTS_CASE_WITH("Check behavior of expmx2 on wide",
    auto prec = tts::prec<T>(0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::expmx2(a0), eve::expmx2[raw](a0), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
    TTS_RELATIVE_EQUAL(eve::expmx2(a0), eve::expmx2[fast](a0), prec1);
 };

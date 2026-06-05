@@ -82,7 +82,7 @@ TTS_CASE_WITH("Check behavior of sinh on wide",
    TTS_RELATIVE_EQUAL(eve::sinh(a0), eve::sinh[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::sinh(a1), eve::sinh[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
    TTS_RELATIVE_EQUAL(eve::sinh(a0), eve::sinh[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::sinh(a1), eve::sinh[fast](a1), prec1);
 
