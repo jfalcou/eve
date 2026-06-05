@@ -78,5 +78,9 @@ TTS_CASE_WITH("Check behavior of sigmoid on wide",
    auto prec = tts::prec<T>(0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::sigmoid(a0), eve::sigmoid[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::sigmoid(a1), eve::sigmoid[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   TTS_RELATIVE_EQUAL(eve::sigmoid(a0), eve::sigmoid[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::sigmoid(a1), eve::sigmoid[fast](a1), prec1);
 
 };

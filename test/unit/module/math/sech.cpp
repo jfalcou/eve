@@ -81,5 +81,9 @@ TTS_CASE_WITH("Check behavior of sech on wide",
    auto prec = tts::prec<T>(0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::sech(a0), eve::sech[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::sech(a1), eve::sech[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   TTS_RELATIVE_EQUAL(eve::sech(a0), eve::sech[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::sech(a1), eve::sech[fast](a1), prec1);
 
 };

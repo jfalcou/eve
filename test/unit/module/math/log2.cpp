@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of log2 on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   using eve::fast;
+   using eve::fast;;
    auto prec = tts::prec<T>(0.07, 0.07);
    TTS_RELATIVE_EQUAL(eve::log2(a0), eve::log2[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::log2(a1), eve::log2[raw](a1), prec);

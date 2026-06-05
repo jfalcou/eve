@@ -74,5 +74,9 @@ TTS_CASE_WITH("Check behavior of csch on wide",
    auto prec = tts::prec<T>(0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::csch(a0), eve::csch[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::csch(a1), eve::csch[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00009, 0.00009);
+   TTS_RELATIVE_EQUAL(eve::csch(a0), eve::csch[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::csch(a1), eve::csch[fast](a1), prec1);
 
 };
