@@ -101,45 +101,33 @@ namespace eve
       using elt_t = eve::element_type_t<T>;
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::log2[o], a0);
-      else if constexpr(O::contains(fast) && std::same_as<elt_t, float>)
+      else if constexpr(O::contains(raw) || O::contains(fast))
       {
-//        std::cout << "icitte" << std::endl;
-        using ui_t  =  eve::as_integer_t<elt_t, unsigned>;
-        using ui1_t =  eve::as_integer_t<T, unsigned>;
-//         constexpr elt_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
-//         constexpr elt_t mx = eve::maxexponent(eve::as<elt_t>());
-        constexpr ui_t nb = eve::nbmantissabits(eve::as<elt_t>());
-//         constexpr elt_t fac =   eve::rec(ui_t(1) <<nb);
-        auto uix = eve::bit_cast(a0, eve::as<ui1_t>());
-        auto mx  = eve::bit_cast((uix & 0x007FFFFF) | (0x7e << nb),  eve::as<T>());
-
-
-//         std::cout << "uix " << uix << std::endl;
-        auto y = convert(uix, as<elt_t>{});
-//         std::cout << "ny0 " << y << std::endl;
-        y /= (ui_t(1) <<nb);
-
-        return eve::fnms(1.498030302f, mx, 1.72587999f / (0.3520887068f + mx)- (y - 124.22544637f));
-
-      }
-      else if constexpr(O::contains(raw))
-      {
-//        std::cout << "latte" << std::endl;
-        using ui_t  =  eve::as_integer_t<elt_t, unsigned>;
-        using ui1_t =  eve::as_integer_t<T, unsigned>;
-        constexpr elt_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
-        constexpr elt_t mx = eve::maxexponentm1(eve::as<elt_t>());
-        constexpr ui_t nb = eve::nbmantissabits(eve::as<elt_t>());
-//         constexpr elt_t fac =   eve::rec(ui_t(1) <<nb);
-        auto uix = eve::bit_cast(a0, eve::as<ui1_t>());
-//         std::cout << "uix " << uix << std::endl;
-        auto y = eve::convert(uix, as<elt_t>{});
-        //        std::cout << "ny0 " << y << std::endl;
-        y /= (ui_t(1) <<nb);
-//         std::cout << "ny1 " << y << std::endl;
-//         std::cout << "mx+p " << mx-perturbation << std::endl;
-
-        return y - (mx+perturbation);
+        if constexpr(std::same_as<elt_t,  float>)
+        {
+          using ui_t  =  eve::as_integer_t<elt_t, unsigned>;
+          using ui1_t =  eve::as_integer_t<T, unsigned>;
+          constexpr ui_t nb = eve::nbmantissabits(eve::as<elt_t>());
+          auto uix = eve::bit_cast(a0, eve::as<ui1_t>());
+          auto y = convert(uix, as<elt_t>{});
+          y /= (ui_t(1) <<nb);
+          if constexpr(O::contains(fast))
+          {
+            auto mx  = eve::bit_cast((uix & 0x007FFFFF) | (0x7e << nb),  eve::as<T>());
+            return eve::fnms(1.498030302f, mx, 1.72587999f / (0.3520887068f + mx)- (y - 124.22544637f));
+          }
+          else if constexpr(O::contains(raw))
+          {
+            constexpr elt_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
+            constexpr elt_t mx = eve::maxexponentm1(eve::as<elt_t>());
+            return y - (mx+perturbation);
+          }
+        }
+        else // constexpr(std::same_as<elt_t,  double>)
+        {
+          auto xf = eve::convert(a0, eve::as<float>());
+          return convert(log2[o](xf),  eve::as<double>());
+        }
       }
       else
       {

@@ -107,27 +107,12 @@
 //!
 //!  They can be classified in the following way:
 //!   * general behaviour
-//!       - `raw`: indicates that the operation is performed to gain speed generally at the expanse of some accuracy
-//!           or/and proper treament of limting values.
-//!
-//!           Concerned functions are eve::average, eve::diff_of_prod, eve::exponent, eve::frac, eve::frexp, eve::ifrexp,
-//!           eve::mantissa, eve::modf, eve::next, eve::prev, eve::rec, eve::rsqrt, eve::sqrt, eve::sum_of_prod, eve::trunc,
+//!       - `raw`: indicates that the operation is performed minimally to gain speed generally at the expanse of accuracy
+//!          or/and proper treatment of corner cases values.
+//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed impovement against the regular call.
 //!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
-//!
-//!           Concerned functions are eve::absmax, eve::absmin, eve::is_equal, eve::is_not_equal, eve::max, eve::maxabs,
-//!           eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::negabsmax, eve::negabsmin, eve::negmaxabs,
-//!           eve::negminabs,
-//!
 //!       - `pedantic` : indicates that the operation will aim to follow existing **C++** standard.
-//!
-//!          Concerned functions are eve::absmax, eve::absmin, eve::diff_of_prod, eve::dist, eve::fam, eve::fanm,
-//!          eve::fma, eve::fms, eve::fnma, eve::fnms, eve::frac, eve::frexp, eve::fsm, eve::fsnm, eve::ifrexp, eve::is_flint,
-//!          eve::is_negative, eve::is_not_flint, eve::is_not_infinite, eve::is_unit, eve::ldexp, eve::lerp, eve::manhattan, eve::max,
-//!          eve::maxabs, eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::modf, eve::negabsmax,
-//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist,
-//!          eve::rsqrt, eve::signnz, eve::sum_of_prod,
-//!
-//!       -  `upper`, `lower`  : when available enforce that the operation will lead to a result that will be guaranted less or
+//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranted less or
 //!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
 //!
 //!   * integer roundings :
@@ -184,6 +169,9 @@
 //!       eve::dec, eve::dist,
 //!       eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
 //!       eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
+//!
+//! @note It must be noticed that the availabity of `raw`, `fast` does not guaranty speed improvement but
+//!        only no speed degradation against regular calls.
 //!
 //! @defgroup core_fma_family  Fused multiply add family
 //! @ingroup core
