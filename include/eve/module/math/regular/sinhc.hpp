@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinhc_t : elementwise_callable<sinhc_t, Options, pedantic_option, raw_option>
+  struct sinhc_t : elementwise_callable<sinhc_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }

@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct powm1_t : elementwise_callable<powm1_t, Options, raw_option>
+  struct powm1_t : elementwise_callable<powm1_t, Options, raw_option, fast_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept

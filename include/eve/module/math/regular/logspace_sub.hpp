@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct logspace_sub_t : tuple_callable<logspace_sub_t, Options, pedantic_option, raw_option>
+  struct logspace_sub_t : tuple_callable<logspace_sub_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)

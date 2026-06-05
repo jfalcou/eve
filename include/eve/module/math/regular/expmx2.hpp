@@ -16,7 +16,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct expmx2_t : elementwise_callable<expmx2_t, Options, pedantic_option, raw_option>
+  struct expmx2_t : elementwise_callable<expmx2_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }

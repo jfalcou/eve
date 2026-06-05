@@ -17,7 +17,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct pow1p_t : elementwise_callable<pow1p_t, Options, pedantic_option, raw_option>
+  struct pow1p_t : elementwise_callable<pow1p_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
@@ -96,7 +96,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<T, U>
     pow1p_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
-      if constexpr(O::contains(raw) || integral_value<U>)
+      if constexpr(O::contains(fast) ||O::contains(raw) || integral_value<U>)
          return pow[o](inc(a), b);
       else
       {

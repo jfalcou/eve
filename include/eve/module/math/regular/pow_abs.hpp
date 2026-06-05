@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option, pedantic_option>
+  struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option, fast_option, pedantic_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept

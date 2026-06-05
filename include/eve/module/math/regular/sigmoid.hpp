@@ -14,7 +14,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct sigmoid_t : elementwise_callable<sigmoid_t, Options, pedantic_option, raw_option>
+  struct sigmoid_t : elementwise_callable<sigmoid_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
