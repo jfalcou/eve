@@ -52,3 +52,23 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs)(eve::wide)",
   TTS_IEEE_EQUAL(eve::log_abs[mask](a0),
             eve::if_else(mask, eve::log_abs(a0), a0));
 };
+
+
+//==================================================================================================
+// Tests for fast and raw  log_abs
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of log_abs on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.01)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+    auto prec = tts::prec<T>(0.07, 0.07);
+   TTS_RELATIVE_EQUAL(eve::log_abs(a0), eve::log_abs[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::log_abs(a1), eve::log_abs[raw](a1), prec);
+   using eve::fast;;
+   auto prec1 = tts::prec<T>(0.0009, 0.0009);
+   TTS_RELATIVE_EQUAL(eve::log_abs(a0), eve::log_abs[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::log_abs(a1), eve::log_abs[fast](a1), prec1);
+
+};
