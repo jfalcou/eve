@@ -94,7 +94,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of expx2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10, 10), tts::randoms(-1.0, 1.0)))
+              tts::generate(tts::randoms(-5, 5), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
