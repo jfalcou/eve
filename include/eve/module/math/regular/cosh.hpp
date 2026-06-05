@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct cosh_t : elementwise_callable<cosh_t, Options>
+  struct cosh_t : elementwise_callable<cosh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -97,6 +97,12 @@ namespace eve
       //////////////////////////////////////////////////////////////////////////////
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::cosh[o], a0);
+      else if constexpr(O::contains(raw))
+      {
+        auto x = eve::abs(a0);
+        auto e = exp[raw](x);
+        return eve::average(e, rec[pedantic](e));
+      }
       else
       {
         T ovflimitmln2 = maxlog(as(a0))-log_2(as(a0));
@@ -106,22 +112,22 @@ namespace eve
           if(is_not_finite(x)) return x;
           else if( x >= ovflimitmln2 )
           {
-            auto w = exp(x * half(eve::as<T>()));
+            auto w = exp[o](x * half(eve::as<T>()));
             auto t = half(eve::as<T>()) * w;
             t *= w;
             return t;
           }
-          auto t = exp(x);
+          auto t = exp[o](x);
           return (x > 22) ? t * half(eve::as<T>()) : average(t, rec[pedantic](t));
         }
         else
         {
-          auto t    = exp(x);
+          auto t    = exp[o](x);
           auto invt = if_else(x > 22, eve::zero, rec[pedantic](t));
           auto c    = average(t, invt);
           auto test = x < ovflimitmln2;
           if( eve::all(test) ) return c;
-          auto w = exp(x * half(eve::as<T>()));
+          auto w = exp[o](x * half(eve::as<T>()));
           t      = half(eve::as<T>()) * w;
           t *= w;
 

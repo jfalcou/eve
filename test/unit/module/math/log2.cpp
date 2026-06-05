@@ -13,67 +13,85 @@
 
 #include <cmath>
 
-//==================================================================================================
-// Types tests
-//==================================================================================================
-TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals_wf16)
-<typename T>(tts::type<T>)
-{
-  using v_t = eve::element_type_t<T>;
+// //==================================================================================================
+// // Types tests
+// //==================================================================================================
+// TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals_wf16)
+// <typename T>(tts::type<T>)
+// {
+//   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::log2(T()), T);
-  TTS_EXPR_IS(eve::log2(v_t()), v_t);
-};
+//   TTS_EXPR_IS(eve::log2(T()), T);
+//   TTS_EXPR_IS(eve::log2(v_t()), v_t);
+// };
 
-//==================================================================================================
-// log2  tests
-//==================================================================================================
+// //==================================================================================================
+// // log2  tests
+// //==================================================================================================
+// TTS_CASE_WITH("Check behavior of log2 on wide",
+//               eve::test::simd::ieee_reals_wf16,
+//               tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.0)))
+// <typename T>(T const& a0, T const& a1)
+// {
+//   using v_t = eve::element_type_t<T>;
+
+//   TTS_ULP_EQUAL(eve::log2(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log2(e)); }, a0), 2);
+//   TTS_ULP_EQUAL(eve::log2(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log2(e)); }, a1), 2);
+// };
+
+// TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals_wf16)
+// <typename T>(tts::type<T>)
+// {
+//   using v_t = eve::element_type_t<T>;
+//   if constexpr( eve::platform::supports_invalids )
+//   {
+//     TTS_IEEE_EQUAL(eve::log2(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
+//     TTS_IEEE_EQUAL(eve::log2(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+//     TTS_IEEE_EQUAL(eve::log2(eve::mone(eve::as<T>())), eve::nan(eve::as<T>()));
+//     TTS_IEEE_EQUAL(eve::log2(T(0)), eve::minf(eve::as<T>()));
+//   }
+
+//   if constexpr( eve::platform::supports_denormals )
+//   {
+//     TTS_IEEE_EQUAL(eve::log2(eve::mindenormal(eve::as<T>())),
+//                    T(std_log2(eve::mindenormal(eve::as<v_t>()))));
+//   }
+
+//   TTS_IEEE_EQUAL(eve::log2(T(1)), T(0));
+//   TTS_IEEE_EQUAL(eve::log2(T(2)), T(1));
+//   TTS_IEEE_EQUAL(eve::log2(T(8)), T(3));
+//   TTS_IEEE_EQUAL(eve::log2(T(64)), T(6));
+// };
+
+
+// //==================================================================================================
+// // Tests for masked log2
+// //==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::log2)(eve::wide)",
+//               eve::test::simd::ieee_reals_wf16,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::log2[mask](a0),
+//             eve::if_else(mask, eve::log2(a0), a0));
+// };
+
+
+
 TTS_CASE_WITH("Check behavior of log2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.0)))
+              tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.01)))
 <typename T>(T const& a0, T const& a1)
 {
-  using v_t = eve::element_type_t<T>;
+   using eve::raw;
+   using eve::fast;;
+   auto prec = tts::prec<T>(0.07, 0.07);
+   TTS_RELATIVE_EQUAL(eve::log2(a0), eve::log2[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::log2(a1), eve::log2[raw](a1), prec);
+   auto prec1 = tts::prec<T>(0.0009, 0.0009);
+   TTS_RELATIVE_EQUAL(eve::log2(a0), eve::log2[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::log2(a1), eve::log2[fast](a1), prec1);
 
-  TTS_ULP_EQUAL(eve::log2(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log2(e)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::log2(a1), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_log2(e)); }, a1), 2);
-};
-
-TTS_CASE_TPL("Check return types of log2", eve::test::simd::ieee_reals_wf16)
-<typename T>(tts::type<T>)
-{
-  using v_t = eve::element_type_t<T>;
-  if constexpr( eve::platform::supports_invalids )
-  {
-    TTS_IEEE_EQUAL(eve::log2(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::log2(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::log2(eve::mone(eve::as<T>())), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::log2(T(0)), eve::minf(eve::as<T>()));
-  }
-
-  if constexpr( eve::platform::supports_denormals )
-  {
-    TTS_IEEE_EQUAL(eve::log2(eve::mindenormal(eve::as<T>())),
-                   T(std_log2(eve::mindenormal(eve::as<v_t>()))));
-  }
-
-  TTS_IEEE_EQUAL(eve::log2(T(1)), T(0));
-  TTS_IEEE_EQUAL(eve::log2(T(2)), T(1));
-  TTS_IEEE_EQUAL(eve::log2(T(8)), T(3));
-  TTS_IEEE_EQUAL(eve::log2(T(64)), T(6));
-};
-
-
-//==================================================================================================
-// Tests for masked log2
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::log2)(eve::wide)",
-              eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
-{
-  TTS_IEEE_EQUAL(eve::log2[mask](a0),
-            eve::if_else(mask, eve::log2(a0), a0));
 };

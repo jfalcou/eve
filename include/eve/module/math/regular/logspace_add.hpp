@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct logspace_add_t : tuple_callable<logspace_add_t, Options>
+  struct logspace_add_t : tuple_callable<logspace_add_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -94,7 +94,7 @@ namespace eve
   {
     template<typename T0, typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    logspace_add_(EVE_REQUIRES(cpu_), O const &, T0 a0, T1 a1, Ts... args) noexcept
+    logspace_add_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       if constexpr(sizeof...(Ts) == 0)
@@ -102,7 +102,7 @@ namespace eve
         auto r0 = r_t(a0);
         auto r1 = r_t(a1);
         auto tmp = -eve::abs(r0 - r1);
-        auto r   = eve::max(r0, r1) + eve::log1p(eve::exp(tmp));
+        auto r   = eve::max(r0, r1) + eve::log1p(eve::exp[o](tmp));
         if constexpr( eve::platform::supports_invalids ) r = if_else(is_nan(tmp), r0 + r1, r);
         return r;
       }

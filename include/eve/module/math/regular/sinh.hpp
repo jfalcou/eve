@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinh_t : elementwise_callable<sinh_t, Options>
+  struct sinh_t : elementwise_callable<sinh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sinh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T sinh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {
@@ -92,7 +92,7 @@ namespace eve
         T h = (a0 > T(0)) ? T(1) : T(-1);
         if( x >= maxlog(as<T>()) )
         {
-          T w = exp(x * half(eve::as<T>()));
+          T w = exp[o](x * half(eve::as<T>()));
           T t = half(eve::as<T>()) * w;
           t *= w;
           return t * h;
@@ -116,7 +116,7 @@ namespace eve
         s         = if_else(is_eqz(a0), a0, s);
         auto test = x < maxlog(as<T>());
         if( eve::all(test) ) return s;
-        auto w = exp(x * half(eve::as<T>()));
+        auto w = exp[o](x * half(eve::as<T>()));
         t      = half(eve::as<T>()) * w;
         t *= w;
 

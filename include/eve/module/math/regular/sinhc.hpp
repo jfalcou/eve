@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinhc_t : elementwise_callable<sinhc_t, Options>
+  struct sinhc_t : elementwise_callable<sinhc_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sinhc_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T sinhc_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {
@@ -121,7 +121,7 @@ namespace eve
         }
         auto test1 = is_greater(x, maxlog(eve::as<T>()) - log_2(eve::as<T>()));
         T    fac   = if_else(test1, half(eve::as<T>()), one(eve::as<T>()));
-        T    tmp   = exp(x * fac);
+        T    tmp   = exp[o](x * fac);
         T    tmp1  = (half(eve::as<T>()) * tmp) / x;
         T    r     = if_else(test1, tmp1 * tmp, average(tmp, -rec[pedantic](tmp)) / x);
         if constexpr( eve::platform::supports_infinites ) r = if_else(x == inf(eve::as<T>()), x, r);

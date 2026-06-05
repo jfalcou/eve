@@ -23,5 +23,7 @@ int main()
   run<EVE_VALUE>(EVE_NAME(std__exp) , xp, std__exp , arg0);
   run<EVE_VALUE>(EVE_NAME(exp) , xp, eve::exp , arg0);
   run<EVE_TYPE> (EVE_NAME(exp) , xp, eve::exp , arg0);
+  run<EVE_VALUE>(EVE_NAME(exp[raw]) , xp, eve::exp[eve::raw] , arg0);
+  run<EVE_TYPE> (EVE_NAME(exp[raw]) , xp, eve::exp[eve::raw] , arg0);
 
 }

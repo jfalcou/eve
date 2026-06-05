@@ -81,3 +81,16 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expmx2)(eve::wide)",
   TTS_IEEE_EQUAL(eve::expmx2[mask](a0),
             eve::if_else(mask, eve::expmx2(a0), a0));
 };
+
+TTS_CASE_WITH("Check behavior of expmx2 on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(0.5, 5)))
+  <typename T>(T const& a0)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.05, 0.05);
+   TTS_RELATIVE_EQUAL(eve::expmx2(a0), eve::expmx2[raw](a0), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
+   TTS_RELATIVE_EQUAL(eve::expmx2(a0), eve::expmx2[fast](a0), prec1);
+};

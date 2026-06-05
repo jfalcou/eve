@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct csch_t : elementwise_callable<csch_t, Options>
+  struct csch_t : elementwise_callable<csch_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -77,9 +77,9 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T csch_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T csch_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      return rec[pedantic](sinh(a0));
+      return rec[pedantic](sinh[o](a0));
     }
   }
 }

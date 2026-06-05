@@ -22,10 +22,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinhcosh_t : elementwise_callable< sinhcosh_t, Options
-                                          , quarter_circle_option, half_circle_option, full_circle_option
-                                          , medium_option, big_option
-                                          >
+  struct sinhcosh_t : elementwise_callable< sinhcosh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -85,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       T    ovflimit = maxlog(as<T>());
       auto x        = eve::abs(a0);
@@ -96,7 +93,7 @@ namespace eve
         auto h = (a0 > T(0)) ? T(1) : T(-1);
         if( x >= ovflimit )
         {
-          auto w = exp(x * half(eve::as<T>()));
+          auto w = exp[o](x * half(eve::as<T>()));
           auto t = half(eve::as<T>()) * w;
           t *= w;
           return eve::zip(t * h, t);
@@ -122,7 +119,7 @@ namespace eve
         auto test = x < ovflimit;
         if( eve::all(test) ) return eve::zip(s, c);
 
-        auto w = exp(x * half(eve::as<T>()));
+        auto w = exp[o](x * half(eve::as<T>()));
         t      = half(eve::as<T>()) * w;
         t *= w;
 

@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option>
+  struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option, fast_option, pedantic_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
@@ -137,7 +137,7 @@ namespace eve
           auto [yf, yi]          = eve::modf(eve::abs(y));
           auto test              = yf > r_t(0.5);
           yf                     = dec[test](yf);
-          auto z                 = eve::exp(yf*eve::log(ax));
+          auto z                 = eve::exp[o](yf*eve::log(ax));
           yi                     = inc[test](yi);
           yi                     = if_else(ax_is1, eve::one, yi);
           auto large             = (yi > r_t(largelimit));

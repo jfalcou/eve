@@ -54,11 +54,27 @@ TTS_CASE_WITH("Check behavior of cosh on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cosh)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(mini, maxi),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cosh[mask](a0),
             eve::if_else(mask, eve::cosh(a0), a0));
+};
+
+TTS_CASE_WITH("Check behavior of cosh on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.05, 0.05);
+   TTS_RELATIVE_EQUAL(eve::cosh(a0), eve::cosh[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::cosh(a1), eve::cosh[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00009, 0.001);
+   TTS_RELATIVE_EQUAL(eve::cosh(a0), eve::cosh[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::cosh(a1), eve::cosh[fast](a1), prec1);
+
 };

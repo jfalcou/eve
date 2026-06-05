@@ -19,7 +19,7 @@
 namespace eve
 {
   template<typename Options>
-  struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option, mod_option>
+  struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option, fast_option, mod_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
@@ -175,7 +175,7 @@ namespace eve
       }
       else if constexpr(O::contains(raw))
       {
-        return exp(a1*log(a0));
+        return exp[o](a1*log(a0));
       }
       else
       {

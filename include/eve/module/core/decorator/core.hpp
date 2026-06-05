@@ -28,6 +28,7 @@ namespace eve
   struct decreasing_mode      {};
   struct definitely_mode      {};
   struct eccentric_mode       {};
+  struct fast                 {};
   struct increasing_mode      {};
   struct harrisson_mode       {};
   struct kahan_mode           {};
@@ -66,6 +67,7 @@ namespace eve
 
   struct pedantic_mode    {};
   struct raw_mode         {};
+  struct fast_mode        {};
   struct saturated_mode   {};
 
   struct splat_mode       {};
@@ -75,6 +77,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto decreasing       = ::rbr::flag( decreasing_mode{}      );
+  [[maybe_unused]] inline constexpr auto fast             = ::rbr::flag( fast_mode{}            );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
   [[maybe_unused]] inline constexpr auto eccentric        = ::rbr::flag( eccentric_mode{}       );
   [[maybe_unused]] inline constexpr auto harrisson        = ::rbr::flag( harrisson_mode{}       );
@@ -85,7 +88,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
   [[maybe_unused]] inline constexpr auto modular          = ::rbr::flag( modular_mode{}         );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
-  [[maybe_unused]] inline constexpr auto drastic        = ::rbr::flag( drastic_mode{}       );
+  [[maybe_unused]] inline constexpr auto drastic          = ::rbr::flag( drastic_mode{}         );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
@@ -119,6 +122,7 @@ namespace eve
   struct cylindrical_option     : _::exact_option<cylindrical>     {};
   struct decreasing_option      : _::exact_option<decreasing>      {};
   struct eccentric_option       : _::exact_option<eccentric>       {};
+  struct fast_option            : _::exact_option<fast>            {};
   struct harrisson_option       : _::exact_option<harrisson>       {};
   struct increasing_option      : _::exact_option<increasing>      {};
   struct kahan_option           : _::exact_option<kahan>           {};

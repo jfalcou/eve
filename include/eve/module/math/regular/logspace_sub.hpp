@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct logspace_sub_t : tuple_callable<logspace_sub_t, Options>
+  struct logspace_sub_t : tuple_callable<logspace_sub_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -97,7 +97,7 @@ namespace eve
   {
     template<typename T0, typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    logspace_sub_(EVE_REQUIRES(cpu_), O const &, T0 a0, T1 a1, Ts... args) noexcept
+    logspace_sub_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       if constexpr(sizeof...(Ts) == 0)
@@ -109,9 +109,9 @@ namespace eve
         if( eve::all(test) )
           return r0 + eve::log(-expm1(x));
         else if( eve::any(test) )
-          return r0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
+          return r0+ if_else(test, log(-expm1(x)), log1p(-exp[o](x)));
         else
-          return r0 + log1p(-exp(x));
+          return r0 + log1p(-exp[o](x));
       }
       else
       {

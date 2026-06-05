@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct expx2_t : elementwise_callable<expx2_t, Options>
+  struct expx2_t : elementwise_callable<expx2_t, Options, raw_option, pedantic_option, fast_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -74,6 +74,8 @@ namespace eve
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::expx2[o], a0);
+      else if constexpr(O::contains(raw))
+        return exp[o](eve::sqr(a0));
       else
       {
         if constexpr( eve::platform::supports_invalids && scalar_value<T> )
@@ -82,7 +84,7 @@ namespace eve
         }
         if constexpr( scalar_value<T> && eve::platform::supports_infinites )
           if( is_infinite(a0) ) return inf(as<T>());
-        T       x       = eve::abs(a0);
+        T x = eve::abs(a0);
         using u_t = underlying_type_t<T>;
         const u_t Expx2c1 = ieee_constant<0x1.0000000000000p+7, 0x1.0p+5f>(eve::as<u_t>{});
         const u_t Expx2c2 = ieee_constant<0x1.0000000000000p-7, 0x1.0p-5f>(eve::as<u_t>{});
@@ -97,11 +99,11 @@ namespace eve
         if constexpr( scalar_value<T> )
         {
           if( gtmxlg ) return inf(as<T>());
-          return eve::exp(u) * eve::exp(u1);
+          return eve::exp[o](u) * eve::exp[o](u1);
         }
         else if constexpr( simd_value<T> )
         {
-          T r = eve::if_else(gtmxlg, eve::inf(as<T>()), eve::exp(u) * eve::exp(u1));
+          T r = eve::if_else(gtmxlg, eve::inf(as<T>()), eve::exp[o](u) * eve::exp[o](u1));
           if constexpr( eve::platform::supports_infinites ) r = eve::if_else((x == inf(as<T>())), x, r);
           if constexpr( eve::platform::supports_invalids )
             r = eve::if_else(is_nan(a0), eve::allbits, r);
