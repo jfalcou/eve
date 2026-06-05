@@ -200,7 +200,7 @@ namespace eve
     exp2_(EVE_REQUIRES(cpu_), O const& o, T xx, as<U> const & trgt) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-        return eve::_::apply_fp16_as_fp32(eve::exp[o], xx, trgt);
+        return eve::_::apply_fp16_as_fp32(eve::exp2[o], xx, trgt);
       else
       {
         using b_t = as_wide_as_t<U, T>;

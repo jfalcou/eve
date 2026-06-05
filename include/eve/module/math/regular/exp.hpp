@@ -12,6 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
+#include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/core.hpp>
 
 namespace eve
@@ -101,7 +102,7 @@ namespace eve
         return eve::_::apply_fp16_as_fp32(eve::exp[o], x);
       else if constexpr(O::contains(raw) || O::contains(fast))
       {
-        return exp2[o](invlog_2(eve::as<e_t>())*x); 
+        return eve::exp2[o](invlog_2(eve::as<e_t>())*x);
       }
       else
       {
