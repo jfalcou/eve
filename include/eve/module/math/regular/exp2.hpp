@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, raw_option, saturated_option>
+  struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, raw_option, fast_option, saturated_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
@@ -95,33 +95,53 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     exp2_(EVE_REQUIRES(cpu_), O const& o, T x) noexcept
     {
-      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+      using elt_t = eve::element_type_t<T>;
+       if constexpr(std::same_as<elt_t, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::exp2[o], x);
       else
       {
         if constexpr(floating_value<T>)
         {
-          using elt_t    = element_type_t<T>;
-          if constexpr(O::contains(raw))
+          if constexpr(O::contains(raw) || O::contains(fast))
           {
-            // Schraudolph's algorithm
-            using ui_t  =  eve::as_integer_t<elt_t, unsigned>;
-            constexpr elt_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
-            constexpr elt_t mx = eve::maxexponentm1(eve::as<elt_t>());
-            constexpr auto nb = eve::nbmantissabits(as<elt_t>());
-            T v = (ui_t(1) << nb)*(x + mx + perturbation);
-            auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
-            return  eve::bit_cast(a, eve::as<T>());
+            if constexpr(std::same_as<elt_t,  float>)
+            {
+              using ui_t  =  eve::as_integer_t<elt_t, unsigned>;
+              constexpr auto nb = eve::nbmantissabits(as<elt_t>());
+              constexpr elt_t mx = eve::maxexponentm1(eve::as<elt_t>());
+              auto perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<elt_t>());
+              auto fac =  (ui_t(1) << nb);
+              auto xc = if_else(x < -mx, -mx, x);
+              if constexpr(O::contains(raw))
+              {
+                T v = fac*(xc +  mx + perturbation);
+                auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
+                return  eve::bit_cast(a, eve::as<T>());
+              }
+              else if constexpr(O::contains(fast))
+              {
+                auto z = inc[is_ltz(x)](frac(xc));
+                auto v = fac*(xc + 121.2740575f + 27.7280233f / (4.84252568f - z) - 1.49012907f * z) ;
+
+
+                auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
+                return  eve::bit_cast(a, eve::as<T>());
+              }
+            }
+            else // constexpr(std::same_as<elt_t,  double>)
+            {
+              auto xf = eve::convert(x, eve::as<float>());
+              return convert(exp2[o](xf),  eve::as<double>());
+            }
           }
           else
           {
-            auto minlogval = []()
-              {
-                if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
-                return minlog2denormal(eve::as<T>());
-                else
-                  return minlog2(eve::as<T>());
-              };
+            auto minlogval = [](){
+              if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
+              return minlog2denormal(eve::as<T>());
+              else
+                return minlog2(eve::as<T>());
+            };
             auto xltminlog2 = x <= minlogval();
             auto xgemaxlog2 = x >= maxlog2(eve::as(x));
             if constexpr( scalar_value<T> )
@@ -167,14 +187,13 @@ namespace eve
           auto tmp                        = if_else(test, eve::zero, shl(one(eve::as(x)), x));
           if constexpr( O::contains(saturated))
           {
-            using elt_t = element_type_t<T>;
             return if_else(is_gez(x, T(sizeof(elt_t))), valmax(eve::as<T>()), tmp);
           }
           else
             return tmp;
         }
+        }
       }
-    }
 
     template<value T, floating_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T>

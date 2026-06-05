@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct exp_t : elementwise_callable<exp_t, Options, pedantic_option, raw_option>
+  struct exp_t : elementwise_callable<exp_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
@@ -51,6 +51,7 @@ namespace eve
 //!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!      constexpr auto exp[raw](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto exp[fast ](floating_value auto x)                   noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -69,8 +70,9 @@ namespace eve
 //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!       * If the element is a `NaN`, `NaN` is returned
 //!   2. [The operation is performed conditionnaly](@ref conditional).
-//!   3. The raw option uses the very fast and quite inacurate Schraudolph's algorithm.
-//!      and the implementation is largely inspired by pmineiro library
+//!   3. The `raw` and `fast` options use the very fast and quite inacurate Schraudolph's algorithm.
+//!      and the implementation is largely inspired by pmineiro library. `raw` generally provides around 5%
+//       relative accuracy and `fast` 0.005%.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
@@ -97,16 +99,9 @@ namespace eve
       using e_t = eve::element_type_t<T>;
       if constexpr(std::same_as<e_t, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::exp[o], x);
-      else if constexpr(O::contains(raw))
+      else if constexpr(O::contains(raw) || O::contains(fast))
       {
-        // Schraudolph's algorithm
-        using ui_t  =  eve::as_integer_t<e_t, unsigned>;
-        constexpr e_t perturbation = ieee_constant<0x1.e2a8ec9dcd85ep-1, 0x1.e2a8ecp-1>(as<e_t>());
-        constexpr e_t mx = eve::maxexponentm1(eve::as<e_t>());
-        constexpr auto nb = eve::nbmantissabits(as<e_t>());
-        T v = (ui_t(1) << nb)*fma(x, eve::invlog_2(eve::as<e_t>()),  mx + perturbation);
-        auto a = eve::convert(saturate(v, as<ui_t>{}), eve::as<ui_t>());
-        return  eve::bit_cast(a, eve::as<T>());
+        return exp2[o](invlog_2(eve::as<e_t>())*x); 
       }
       else
       {

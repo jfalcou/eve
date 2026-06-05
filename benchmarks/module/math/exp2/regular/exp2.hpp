@@ -23,5 +23,9 @@ int main()
   run<EVE_VALUE>(EVE_NAME(std__exp2) , xp, std__exp2 , arg0);
   run<EVE_VALUE>(EVE_NAME(exp2) , xp, eve::exp2 , arg0);
   run<EVE_TYPE> (EVE_NAME(exp2) , xp, eve::exp2 , arg0);
+  run<EVE_VALUE>(EVE_NAME(exp2[raw]) , xp, eve::exp2[eve::raw] , arg0);
+  run<EVE_TYPE> (EVE_NAME(exp2[raw]) , xp, eve::exp2[eve::raw] , arg0);
+  run<EVE_VALUE>(EVE_NAME(exp2[fast]) , xp, eve::exp2[eve::fast] , arg0);
+  run<EVE_TYPE> (EVE_NAME(exp2[fast]) , xp, eve::exp2[eve::fast] , arg0);
 
 }

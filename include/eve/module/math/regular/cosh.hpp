@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct cosh_t : elementwise_callable<cosh_t, Options, pedantic_option, raw_option>
+  struct cosh_t : elementwise_callable<cosh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
