@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <iostream>
 
 namespace eve
 {
