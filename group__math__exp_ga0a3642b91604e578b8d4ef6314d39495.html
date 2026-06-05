@@ -184,6 +184,7 @@ $(function(){initNavTree('group__math__exp_ga0a3642b91604e578b8d4ef6314d39495.ht
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {0.0f, -0.0f, -1.0f, 1.0f, 2.0f,</div>
@@ -192,10 +193,11 @@ $(function(){initNavTree('group__math__exp_ga0a3642b91604e578b8d4ef6314d39495.ht
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
 <div class="line"> </div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi = &quot;</span> &lt;&lt; wi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- wi = &quot; &lt;&lt; wi &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- wu = &quot; &lt;&lt; wu &lt;&lt; &quot;\n&quot;;</span></div>
 <div class="line"> </div>
-<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(wf)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2[raw](wf)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>[eve::raw](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(wi)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>(wi) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(wu)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>(wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -204,6 +206,7 @@ $(function(){initNavTree('group__math__exp_ga0a3642b91604e578b8d4ef6314d39495.ht
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2[wf != 2.0f](wf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>[wf != 2.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2[wi != 4](wi)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>[wi != -2](wi) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2[wu != 2u](wu)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a>[wu != 2u](wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56_html_ga34b67924fa53bec83dfc96b51bd8fe56"><div class="ttname"><a href="group__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition</b> nan.hpp:67</div></div>
 <div class="ttc" id="agroup__core__constants_ga8a568ccc9a870bc971851209c836bc63_html_ga8a568ccc9a870bc971851209c836bc63"><div class="ttname"><a href="group__core__constants_ga8a568ccc9a870bc971851209c836bc63.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition</b> inf.hpp:67</div></div>
