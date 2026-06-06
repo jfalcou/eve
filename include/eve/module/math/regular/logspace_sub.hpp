@@ -107,18 +107,18 @@ namespace eve
         auto x    = r1-r0;
         auto test = x > -log_2(as(x));
         if( eve::all(test) )
-          return r0 + eve::log(-expm1(x));
+          return r0 + eve::log[o](-expm1[o](x));
         else if( eve::any(test) )
-          return r0+ if_else(test, log(-expm1(x)), log1p(-exp[o](x)));
+          return r0+ if_else(test, log[o](-expm1[o](x)), log1p[o](-exp[o](x)));
         else
-          return r0 + log1p(-exp[o](x));
+          return r0 + log1p[o](-exp[o](x));
       }
       else
       {
-        r_t  that(logspace_sub(a0, a1));
-        auto lsub = [](auto that_, auto next) -> r_t
+        r_t  that(logspace_sub[o](a0, a1));
+        auto lsub = [o](auto that_, auto next) -> r_t
           {
-            that_ = logspace_sub(that_, next);
+            that_ = logspace_sub[o](that_, next);
             return that_;
           };
         ((that = lsub(that, args)), ...);

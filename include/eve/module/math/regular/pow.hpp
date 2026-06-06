@@ -173,9 +173,9 @@ namespace eve
         }
         return result;
       }
-      else if constexpr(O::contains(raw))
+      else if constexpr(O::contains(raw)||O::contains(fast) )
       {
-        return exp[o](a1*log(a0));
+        return exp[o](a1*log[o](a0));
       }
       else
       {

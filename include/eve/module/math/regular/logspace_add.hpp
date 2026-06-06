@@ -102,16 +102,16 @@ namespace eve
         auto r0 = r_t(a0);
         auto r1 = r_t(a1);
         auto tmp = -eve::abs(r0 - r1);
-        auto r   = eve::max(r0, r1) + eve::log1p(eve::exp[o](tmp));
+        auto r   = eve::max(r0, r1) + eve::log1p[o](eve::exp[o](tmp));
         if constexpr( eve::platform::supports_invalids ) r = if_else(is_nan(tmp), r0 + r1, r);
         return r;
       }
       else
       {
-        r_t  that(logspace_add(a0, a1));
-        auto ladd = [](auto that_, auto next) -> r_t
+        r_t  that(logspace_add[o](a0, a1));
+        auto ladd = [o](auto that_, auto next) -> r_t
           {
-            that_ = logspace_add(that_, next);
+            that_ = logspace_add[o](that_, next);
             return that_;
           };
         ((that = ladd(that, args)), ...);
