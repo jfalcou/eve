@@ -37,15 +37,12 @@ namespace eve::_
     else                                                         return apply_fp16_as_fp32(add[o], ts...);
   }
 
-  template<callable_options O, typename T0, typename T1>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T0 a0, T1 b0) noexcept
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    using r_t =  eve::common_value_t<T0, T1>;
-    auto a = r_t(a0);
-    auto b = r_t(b0);
     if constexpr(O::contains(mod))
     {
-      auto p = o[mod].value(as<r_t>{});
+      auto p = o[mod].value(as<T>{});
       auto s = a+b;
       return eve::if_else(s >= p, s-p, p);
     }
@@ -53,15 +50,15 @@ namespace eve::_
     {
       return add[o.drop(widen)](upgrade(a), upgrade(b));
     }
-    else if constexpr(floating_value<r_t> && (O::contains(to_nearest_odd)))
+    else if constexpr(floating_value<T> && (O::contains(to_nearest_odd)))
     {
       auto d = eve::add[lower](a, b);
       auto u = eve::add[upper](a, b);
       auto e = u+d;
-      constexpr auto hf = eve::half(eve::as<eve::element_type_t<r_t>>());
+      constexpr auto hf = eve::half(eve::as<eve::element_type_t<T>>());
       return eve::fnma(e, hf, u)+d;
     }
-    else if constexpr(floating_value<r_t> && (O::contains(lower) || O::contains(upper) ))
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -80,9 +77,9 @@ namespace eve::_
           return eve::next[eve::is_gtz(e)](r);
       }
     }
-    else if constexpr(O::contains(saturated) && integral_value<r_t>)
+    else if constexpr(O::contains(saturated) && integral_value<T>)
     {
-      if constexpr( signed_integral_value<r_t> )
+      if constexpr( signed_integral_value<T> )
       {
         auto test = is_ltz(b);
         auto pos  = min(sub(valmax(as(a)), b), a);
@@ -92,7 +89,7 @@ namespace eve::_
       else
       {
         // Triggers conditional MOV that directly read the flag register
-        r_t r = add(a, b);
+        T r = add(a, b);
         return bit_or(r, bit_mask(is_less(r, a)));
       }
     }
@@ -102,14 +99,14 @@ namespace eve::_
       //  - a + b is done in scalar
       //  - emulation occurs and again, a + b is done in scalar
       //  - a product_type with custom operator+ is used
-      if constexpr(signed_integral_scalar_value<r_t>)
+      if constexpr(signed_integral_scalar_value<T>)
       {
-        using u_t = as_integer_t<r_t, unsigned>;
-        return r_t(u_t(a)+u_t(b));
+        using u_t = as_integer_t<T, unsigned>;
+        return static_cast<T>(u_t(a) + u_t(b));
       }
       else
       {
-        return r_t(a+b);
+        return static_cast<T>(a + b);
       }
     }
   }

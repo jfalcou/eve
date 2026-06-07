@@ -46,14 +46,33 @@ namespace eve::_
     requires (arm_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr((O::contains_any(lower, upper)  && floating_value<T>) ||
-                 (O::contains(saturated) && std::integral<T>))
+
+    if constexpr ((O::contains_any(lower, upper) && floating_value<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
+    else if constexpr (O::contains(saturated) && std::integral<T>)
+    {
+      if      constexpr (c == category::int64x1    ) return vqadd_s64 (v, w);
+      else if constexpr (c == category::int64x2    ) return vqaddq_s64(v, w);
+      else if constexpr (c == category::uint64x1   ) return vqadd_u64 (v, w);
+      else if constexpr (c == category::uint64x2   ) return vqaddq_u64(v, w);
+      else if constexpr (c == category::int32x2    ) return vqadd_s32 (v, w);
+      else if constexpr (c == category::int32x4    ) return vqaddq_s32(v, w);
+      else if constexpr (c == category::uint32x2   ) return vqadd_u32 (v, w);
+      else if constexpr (c == category::uint32x4   ) return vqaddq_u32(v, w);
+      else if constexpr (c == category::int16x4    ) return vqadd_s16 (v, w);
+      else if constexpr (c == category::int16x8    ) return vqaddq_s16(v, w);
+      else if constexpr (c == category::uint16x4   ) return vqadd_u16 (v, w);
+      else if constexpr (c == category::uint16x8   ) return vqaddq_u16(v, w);
+      else if constexpr (c == category::int8x8     ) return vqadd_s8  (v, w);
+      else if constexpr (c == category::int8x16    ) return vqaddq_s8 (v, w);
+      else if constexpr (c == category::uint8x8    ) return vqadd_u8  (v, w);
+      else if constexpr (c == category::uint8x16   ) return vqaddq_u8 (v, w);
+    }
     else
     {
-      if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
+      if      constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
       else if constexpr( c == category::int64x2    ) return vaddq_s64(v, w);
       else if constexpr( c == category::uint64x1   ) return vadd_u64 (v, w);
       else if constexpr( c == category::uint64x2   ) return vaddq_u64(v, w);

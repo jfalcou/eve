@@ -110,6 +110,15 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   }
 };
 
+TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integers)
+<typename T>(tts::type<T>)
+{
+  auto vmax = eve::valmax(eve::as<T>{});
+  auto vmin = eve::valmin(eve::as<T>{});
+
+  TTS_EQUAL(eve::sub[eve::saturated](vmin, vmax), vmin);
+};
+
 //==================================================================================================
 //==  sub widen tests
 //==================================================================================================
