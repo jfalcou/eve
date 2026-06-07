@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct log_abs_gamma_t : elementwise_callable<log_abs_gamma_t, Options>
+  struct log_abs_gamma_t : elementwise_callable<log_abs_gamma_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE constexpr

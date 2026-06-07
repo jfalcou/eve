@@ -12,7 +12,6 @@
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
-#include <iostream>
 
 namespace eve
 {
@@ -123,7 +122,7 @@ namespace eve
             return y - (mx+perturbation);
           }
         }
-        else // constexpr(std::same_as<elt_t,  double>)
+        else if  constexpr(std::same_as<elt_t,  double>)
         {
           auto xf = eve::convert(a0, eve::as<float>());
           return convert(log2[o](xf),  eve::as<double>());

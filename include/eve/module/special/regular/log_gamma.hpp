@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct log_gamma_t : elementwise_callable<log_gamma_t, Options>
+  struct log_gamma_t : elementwise_callable<log_gamma_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
@@ -78,10 +78,47 @@ namespace eve
 
     template<typename T, callable_options O>
     constexpr T
-    log_gamma_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    log_gamma_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
-      auto aa0 = if_else(a0 == minf(as(a0)) || is_lez(signgam(a0)) ||(is_ltz(a0) && is_flint(a0)), allbits, a0);
-      return log_abs_gamma(aa0);
+      using elt_t = element_type_t<T>;
+      if constexpr(O::contains(raw) || O::contains(fast))
+      {
+        if constexpr(std::same_as<elt_t, float>)
+        {
+//          auto a0pos = eve::is_gtz(a0) || eve::is_nan(a0);
+//           if (eve::all(a0pos))
+//           {
+            if constexpr(O::contains(raw))
+            {
+              auto r = elt_t(-0.0810614667f) - a0 - log[o](a0) + (eve::half(as<elt_t>()) + a0) * eve::log[o](inc(a0));
+              return r;
+            }
+            else if constexpr(O::contains(fast))
+            {
+              T logterm = eve::log[o](a0*eve::inc(a0)*(2 + a0));
+              T a0p3 = 3 + a0;
+              auto r = elt_t(-2.081061466f) - a0 +  5/(6*a0p3) - logterm  + (elt_t(2.5) + a0) * eve::log[o](a0p3);
+              return r;
+            }
+//           }
+//           else
+//           {
+//             auto rp = log_gamma[o](a0);
+//             auto rn = log_gamma[o](inc(a0))+ log[o](pi(as<elt_t>())*eve::csc[eve::radpi](-a0));
+//             return eve::if_else(a0pos, rp, rn);
+//           }
+        }
+        else if constexpr(std::same_as<elt_t,  double>)
+        {
+          auto xf = eve::convert(a0, eve::as<float>());
+          return convert(log_gamma[o](xf),  eve::as<double>());
+        }
+      }
+      else
+      {
+        auto aa0 = if_else(a0 == minf(as(a0)) || is_lez(signgam(a0)) ||(is_ltz(a0) && is_flint(a0)), allbits, a0);
+        return log_abs_gamma(aa0);
+      }
     }
   }
 }
