@@ -75,16 +75,38 @@
 
 TTS_CASE_WITH("Check behavior of log_gamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(10.0, eve::valmax), tts::randoms(5.0, 20.0)))
-<typename T>(T const& a0, T const& a1)
+              tts::generate(tts::randoms(10.0, eve::valmax)
+                           , tts::randoms(5.0, 20.0)
+                           , tts::randoms(9.0, 10.0)
+                           )
+             )
+  <typename T>(T const& a0, T const& a1, T  a2)
 {
-   using eve::raw;
-   using eve::fast;;
-   auto prec = tts::prec<T>(0.2, 0.2);
-   TTS_RELATIVE_EQUAL(eve::log_gamma(a0), eve::log_gamma[raw](a0), prec);
-   TTS_RELATIVE_EQUAL(eve::log_gamma(a1), eve::log_gamma[raw](a1), prec);
-   auto prec1 = tts::prec<T>(0.04, 0.03);
-   TTS_RELATIVE_EQUAL(eve::log_gamma(a0), eve::log_gamma[fast](a0), prec1);
-   TTS_RELATIVE_EQUAL(eve::log_gamma(a1), eve::log_gamma[fast](a1), prec1);
+  using eve::raw;
+  using eve::fast;;
+  a2 = -a2;
+  auto prec = tts::prec<T>(0.2, 0.2);
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a0), eve::log_gamma[raw](a0), prec);
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a1), eve::log_gamma[raw](a1), prec);
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a2), eve::log_gamma[raw](a2), prec);
+  auto prec1 = tts::prec<T>(0.04, 0.03);
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a0), eve::log_gamma[fast](a0), prec1);
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a1), eve::log_gamma[fast](a1), prec1);
+//   std::cout << "a0 " << a0 << std::endl;
+//   std::cout << "a1 " << a1 << std::endl;
+//   std::cout << "a2 " << a2 << std::endl;
+  TTS_RELATIVE_EQUAL(eve::log_gamma(a2), eve::log_gamma[fast](a2), prec1);
 
 };
+
+// TTS_CASE_WITH("pipo",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(-10.0, -9.0)
+//                            , tts::randoms(9.0, 10.0)
+//                            )
+//              )
+//   <typename T>(T const& a0, T const& a1)
+// {
+//   std::cout << "a0 " << a0 << std::endl;
+//   std::cout << "-a1 "<< -a1<< std::endl;
+// };

@@ -85,28 +85,29 @@ namespace eve
       {
         if constexpr(std::same_as<elt_t, float>)
         {
-//          auto a0pos = eve::is_gtz(a0) || eve::is_nan(a0);
-//           if (eve::all(a0pos))
-//           {
+          auto a0pos = eve::is_gez(a0) || eve::is_nan(a0);
+          if (eve::all(a0pos))
+          {
             if constexpr(O::contains(raw))
             {
-              auto r = elt_t(-0.0810614667f) - a0 - log[o](a0) + (eve::half(as<elt_t>()) + a0) * eve::log[o](inc(a0));
+              auto r = eve::fam(elt_t(-0.0810614667f) - a0 - log[o](a0), (eve::half(as<elt_t>()) + a0), eve::log[o](inc(a0)));
               return r;
             }
             else if constexpr(O::contains(fast))
             {
-              T logterm = eve::log[o](a0*eve::inc(a0)*(2 + a0));
+              T l = eve::log[o](a0*eve::inc(a0)*(2 + a0));
               T a0p3 = 3 + a0;
-              auto r = elt_t(-2.081061466f) - a0 +  5/(6*a0p3) - logterm  + (elt_t(2.5) + a0) * eve::log[o](a0p3);
+              auto r =eve::fam(elt_t(-2.081061466f) - a0 +  5/(6*a0p3) - l,  (elt_t(2.5) + a0), eve::log[o](a0p3));
               return r;
             }
-//           }
-//           else
-//           {
-//             auto rp = log_gamma[o](a0);
-//             auto rn = log_gamma[o](inc(a0))+ log[o](pi(as<elt_t>())*eve::csc[eve::radpi](-a0));
-//             return eve::if_else(a0pos, rp, rn);
-//           }
+          }
+          else
+          {
+            auto aa0 = if_else(a0 == minf(as(a0)) || is_lez(signgam(a0)) ||(is_ltz(a0) && is_flint(a0)), allbits, a0);
+            auto rp = log_gamma[o](eve::abs(aa0));
+            auto rn = -log_gamma[fast](eve::abs(eve::oneminus(aa0))) + elt_t(1.144729885849400) -log[o](eve::sin[eve::radpi](aa0));
+            return eve::if_else(a0pos, rp, rn);
+          }
         }
         else if constexpr(std::same_as<elt_t,  double>)
         {
