@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html
-//!   *  [Zhen-Hang Yang & alias](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
+//!   *  [Zhen-Hang Yang & al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/log_gamma.cpp}

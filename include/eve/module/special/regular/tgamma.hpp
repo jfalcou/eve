@@ -72,7 +72,7 @@ namespace eve
 //!   *  [Wikipedia: Gamma function](https://en.wikipedia.org/wiki/Gamma_function)
 //!   *  [Wolfram MathWorld: Gamma Function](https://mathworld.wolfram.com/GammaFunction.html)
 //!   *  [DLMF: gamma function](https://dlmf.nist.gov/5.2)
-//!   *  [Zhen-Hang Yang & alias](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
+//!   *  [Zhen-Hang Yang & al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/tgamma.cpp}
