@@ -81,7 +81,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T tanh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr EVE_FORCEINLINE T tanh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {
@@ -89,7 +89,7 @@ namespace eve
       }
       auto x    = eve::abs(a0 + a0);
       auto test = x > T(0.5493) * 2;
-      auto t    = expm1(x);
+      auto t    = expm1[o](x);
       auto rt2  = rec[pedantic](t + T(2));
       if constexpr( scalar_value<T> )
       {

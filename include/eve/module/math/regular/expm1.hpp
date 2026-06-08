@@ -82,6 +82,10 @@ namespace eve
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::expm1[o], xx);
+      else if constexpr(O::contains(raw)|| O::contains(fast))
+      {
+        return dec(exp[o](xx));
+      }
       else
       {
         using elt_t       = element_type_t<T>;

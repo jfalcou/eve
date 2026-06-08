@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct erf_t : elementwise_callable<erf_t, Options>
+  struct erf_t : elementwise_callable<erf_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -86,116 +86,137 @@ namespace eve
   {
     template<typename T, callable_options O>
     T
-    erf_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    erf_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
-      if constexpr(scalar_value<T>)
+      using elt_t = element_type_t<T>;
+      if constexpr(O::contains(raw))
       {
-        if constexpr( eve::platform::supports_invalids )
-          if( is_nan(a0) ) return a0;
-        if constexpr( eve::platform::supports_infinites )
-          if( eve::is_infinite(a0) ) return signnz(a0);
-        if constexpr( std::is_same_v<T, double> )
+        return eve::tanh[o](a0*elt_t(1.282549830161864));
+      }
+      else if constexpr(O::contains(fast))
+      {
+        return tanh(elt_t(1.128379167095513)*eve::fam(a0, a0, elt_t(9.107984824505425e-02)*sqr(a0)));
+
+//         auto aa0 = abs(a0);
+//         return sign(a0)*tanh[o](1.152*aa0+0.064*sqr(sqr(aa0)));
+//         auto sinsin =  elt_t(1.128379167095513)*sin[full_circle](sin[full_circle](a0));
+//         auto aa0 = abs(a0);
+//         auto a0le1 = aa0 <= 1;
+//         if (eve::all(a0le1))
+//           return sinsin;
+//         else
+//           return if_else(a0le1, sinsin, eve::erf[raw](a0));
+      }
+      else
+      {
+        if constexpr(scalar_value<T>)
         {
-          T y = eve::abs(a0);
-          if( y <= 0.46875 ) // 15/32
+          if constexpr( eve::platform::supports_invalids )
+            if( is_nan(a0) ) return a0;
+          if constexpr( eve::platform::supports_infinites )
+            if( eve::is_infinite(a0) ) return signnz(a0);
+          if constexpr( std::is_same_v<T, double> )
           {
-            T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
-            return kernel1_erf1(a0, ysq);
+            T y = eve::abs(a0);
+            if( y <= 0.46875 ) // 15/32
+            {
+              T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
+              return kernel1_erf1(a0, ysq);
+            }
+            else
+            {
+              if( a0 > 26.543 ) return sign(a0);
+              else if( y <= 4 )
+              {
+                T res = kernel1_erf2(a0, y);
+                res   = kernel1_finalize2(res, y);
+                res   = (half(as<T>()) - res) + half(as<T>());
+                if( is_ltz(a0) ) res = -res;
+                return res;
+              }
+              else // if  (y <= 26.543)
+              {
+                T res = kernel1_erf3(a0, y);
+                res   = kernel1_finalize2(res, y);
+                res   = (half(as<T>()) - res) + half(as<T>());
+                if( is_ltz(a0) ) res = -res;
+                return res;
+              }
+            }
           }
-          else
+          else if constexpr( std::is_same_v<T, float> )
           {
-            if( a0 > 26.543 ) return sign(a0);
-            else if( y <= 4 )
+            T x = eve::abs(a0);
+            if( x < 6.6666667e-01f ) // 2/3
+            {
+              return a0 * kernel_erf1(sqr(x));
+            }
+            else
+            {
+              T z  = x / inc(x) - 0.4f; // Ratio<T, 2, 5>();
+              T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
+              if( is_ltz(a0) ) r2 = -r2;
+              return r2;
+            }
+          }
+        }
+        else //simd case
+        {
+          if constexpr( std::is_same_v<elt_t, double> )
+          {
+            T y        = eve::abs(a0);
+            y          = if_else(y > T(26.543), T(26.543), y);
+            T    sqry  = eve::sqr(y);
+            auto test1 = eve::is_less(y, T(0.46875)); // 15/32;
+            T    r1    = eve::zero(as<T>());
+            auto nb    = eve::count_true(test1);
+            if( nb > 0 ) // here y < 0.46875
+            {
+              T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
+              r1    = kernel1_erf1(a0, ysq);
+              if( nb == T::size() ) return r1;
+            }
+            auto test2 = (y <= T(4));
+            auto test3 = logical_andnot(test2, test1);
+
+            auto nb1 = eve::count_true(test3);
+            if( nb1 > 0 ) // here we treat 0.46875 <= y and y <= 4
             {
               T res = kernel1_erf2(a0, y);
               res   = kernel1_finalize2(res, y);
               res   = (half(as<T>()) - res) + half(as<T>());
-              if( is_ltz(a0) ) res = -res;
-              return res;
+              res   = minus[is_ltz(a0)](res);
+              r1    = if_else(test3, res, r1);
+              if( nb + nb1 == T::size() ) return r1;
             }
-            else // if  (y <= 26.543)
-            {
-              T res = kernel1_erf3(a0, y);
-              res   = kernel1_finalize2(res, y);
-              res   = (half(as<T>()) - res) + half(as<T>());
-              if( is_ltz(a0) ) res = -res;
-              return res;
-            }
-          }
-        }
-        else if constexpr( std::is_same_v<T, float> )
-        {
-          T x = eve::abs(a0);
-          if( x < 6.6666667e-01f ) // 2/3
-          {
-            return a0 * kernel_erf1(sqr(x));
-          }
-          else
-          {
-            T z  = x / inc(x) - 0.4f; // Ratio<T, 2, 5>();
-            T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
-            if( is_ltz(a0) ) r2 = -r2;
-            return r2;
-          }
-        }
-      }
-      else //simd case
-      {
-        using elt_t = element_type_t<T>;
-        if constexpr( std::is_same_v<elt_t, double> )
-        {
-          T y        = eve::abs(a0);
-          y          = if_else(y > T(26.543), T(26.543), y);
-          T    sqry  = eve::sqr(y);
-          auto test1 = eve::is_less(y, T(0.46875)); // 15/32;
-          T    r1    = eve::zero(as<T>());
-          auto nb    = eve::count_true(test1);
-          if( nb > 0 ) // here y < 0.46875
-          {
-            T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
-            r1    = kernel1_erf1(a0, ysq);
-            if( nb == T::size() ) return r1;
-          }
-          auto test2 = (y <= T(4));
-          auto test3 = logical_andnot(test2, test1);
-
-          auto nb1 = eve::count_true(test3);
-          if( nb1 > 0 ) // here we treat 0.46875 <= y and y <= 4
-          {
-            T res = kernel1_erf2(a0, y);
+            // here we treat y > 4
+            T res = kernel1_erf3(a0, y);
             res   = kernel1_finalize2(res, y);
             res   = (half(as<T>()) - res) + half(as<T>());
             res   = minus[is_ltz(a0)](res);
-            r1    = if_else(test3, res, r1);
-            if( nb + nb1 == T::size() ) return r1;
+            r1    = if_else(test2, r1, res);
+            return r1;
           }
-          // here we treat y > 4
-          T res = kernel1_erf3(a0, y);
-          res   = kernel1_finalize2(res, y);
-          res   = (half(as<T>()) - res) + half(as<T>());
-          res   = minus[is_ltz(a0)](res);
-          r1    = if_else(test2, r1, res);
-          return r1;
-        }
-        else if constexpr( std::is_same_v<elt_t, float> )
-        {
-          T    x     = eve::abs(a0);
-          T    r1    = eve::zero(as<T>());
-          auto test1 = eve::is_less(x, 6.6666667e-01f); // Ratio<T, 2, 3>());
-          auto nb    = eve::count_true(test1);
-          if( nb > 0 )
+          else if constexpr( std::is_same_v<elt_t, float> )
           {
-            r1 = a0 * kernel_erf1(sqr(x));
-            if( nb >= T::size() ) return r1;
+            T    x     = eve::abs(a0);
+            T    r1    = eve::zero(as<T>());
+            auto test1 = eve::is_less(x, 6.6666667e-01f); // Ratio<T, 2, 3>());
+            auto nb    = eve::count_true(test1);
+            if( nb > 0 )
+            {
+              r1 = a0 * kernel_erf1(sqr(x));
+              if( nb >= T::size() ) return r1;
+            }
+            T z = x / inc(x);
+            z -= T(0.4);
+            T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
+            r2   = minus[is_ltz(a0)](r2);
+            r1   = if_else(test1, r1, r2);
+            if constexpr( eve::platform::supports_infinites )
+              r1 = eve::if_else(eve::is_infinite(a0), eve::sign(a0), r1);
+            return r1;
           }
-          T z = x / inc(x);
-          z -= T(0.4);
-          T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
-          r2   = minus[is_ltz(a0)](r2);
-          r1   = if_else(test1, r1, r2);
-          if constexpr( eve::platform::supports_infinites )
-            r1 = eve::if_else(eve::is_infinite(a0), eve::sign(a0), r1);
-          return r1;
         }
       }
     }
