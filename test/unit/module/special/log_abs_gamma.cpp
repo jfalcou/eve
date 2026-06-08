@@ -68,3 +68,27 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs_gamma)(eve::wide)",
   TTS_IEEE_EQUAL(eve::log_abs_gamma[mask](a0),
                  eve::if_else(mask, eve::log_abs_gamma(a0), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of log_abs_gamma on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(10.0, eve::valmax)
+                           , tts::randoms(5.0, 20.0)
+                           , tts::randoms(9.0, 11.0)
+                           )
+             )
+  <typename T>(T const& a0, T const& a1, T  a2)
+{
+  using eve::raw;
+  using eve::fast;;
+  a2 = -a2;
+  auto prec = tts::prec<T>(0.2, 0.2);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a0), eve::log_abs_gamma[raw](a0), prec);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a1), eve::log_abs_gamma[raw](a1), prec);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a2), eve::log_abs_gamma[raw](a2), prec);
+  auto prec1 = tts::prec<T>(0.04, 0.03);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a0), eve::log_abs_gamma[fast](a0), prec1);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a1), eve::log_abs_gamma[fast](a1), prec1);
+  TTS_RELATIVE_EQUAL(eve::log_abs_gamma(a2), eve::log_abs_gamma[fast](a2), prec1);
+
+};

@@ -11,6 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/special/regular/signgam.hpp>
 
 namespace eve
 {
