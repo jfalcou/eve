@@ -80,3 +80,26 @@ TTS_CASE_TPL("Check with edge cases", eve::test::scalar::ieee_reals)
   // regression test for bug exposed in tgamma doc example (at least one minf and one nan)
   TTS_IEEE_EQUAL(eve::tgamma(in), ref);
 };
+
+
+TTS_CASE_WITH("Check behavior of tgamma on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(1.0, 40.0)
+                           , tts::randoms(0.5, 20.0)
+                           , tts::randoms(9.0, 11.0)
+                           )
+             )
+  <typename T>(T const& a0, T const& a1, T  a2)
+{
+  using eve::raw;
+  using eve::fast;;
+  a2 = -a2;
+  auto prec = tts::prec<T>(0.3, 0.3);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a0), eve::tgamma[raw](a0), prec);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a1), eve::tgamma[raw](a1), prec);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a2), eve::tgamma[raw](a2), prec);
+  auto prec1 = tts::prec<T>(0.00001, 0.00001);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a0), eve::tgamma[fast](a0), prec1);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a1), eve::tgamma[fast](a1), prec1);
+  TTS_RELATIVE_EQUAL(eve::tgamma(a2), eve::tgamma[fast](a2), prec1);
+};
