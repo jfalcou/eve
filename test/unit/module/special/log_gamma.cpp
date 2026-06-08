@@ -13,7 +13,7 @@
 #include <cmath>
 
 //==================================================================================================
-Types tests
+// Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of log_gamma", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of log_gamma", eve::test::simd::ieee_reals)
 };
 
 //==================================================================================================
-log_gamma  tests
+//==log_gamma  tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of log_gamma on wide",
               eve::test::simd::ieee_reals,
@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check behavior of log_gamma on wide",
 
 
 //==================================================================================================
-Tests for masked log_gamma
+//==Tests for masked log_gamma
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::log_gamma)(eve::wide)",
               eve::test::simd::ieee_reals,

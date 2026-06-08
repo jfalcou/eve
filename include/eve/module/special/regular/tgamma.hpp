@@ -100,13 +100,14 @@ namespace eve
         constexpr elt_t tp = eve::two_pi(as < elt_t>());
         constexpr elt_t inve  = 1/eve::euler(as<elt_t>());
         auto fac = eve::exp[o](7/(134*xx2*(35*xx2+33)));
-        auto r = eve::sqrt(tp*xx)*eve::pow[o](xx*inve, xx)*eve::pow[o](xx*eve::sinh[o](eve::rec(xx)), xx/2)*fac;
-        r = eve::if_else(lex1, r/(x*(x+1)*(x+2)), r);
+        auto rx = eve::rec(xx);
+        auto r = eve::sqrt(tp*xx)*eve::pow[o](xx*inve, xx)*eve::pow[o](xx*eve::sinh[o](rx), xx/2)*fac;
+        r = eve::if_else(lex1, r*rx/(inc(x)*(x+2)), r);
         r = eve::if_else(a0 > T(32.4), inf(as(a0)), r);
         if (eve::none(nega0))
           return r;
         else
-          return if_else(nega0, pi(as<elt_t>())/(sin[radpi](a0)*r), r);
+          return if_else(nega0, pi(as<elt_t>())/(sin[radpi][medium](a0)*r), r);
       }
       else
       {

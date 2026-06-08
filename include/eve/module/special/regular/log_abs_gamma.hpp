@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/log_gamma.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/special/regular/signgam.hpp>
 
@@ -137,9 +136,34 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr(O::contains(raw) || O::contains(fast))
       {
+        auto lg = [o](auto z){
+          auto zpos = eve::is_gez(z) || eve::is_nan(z);
+          if (eve::all(zpos))
+          {
+            if constexpr(O::contains(raw))
+            {
+              auto r = eve::fam(elt_t(-0.0810614667f) - z - log[o](z), (eve::half(as<elt_t>()) + z), eve::log[o](inc(z)));
+              return r;
+            }
+            else if constexpr(O::contains(fast))
+            {
+              T l = eve::log[o](z*eve::inc(z)*(2 + z));
+              T zp3 = 3 + z;
+              auto r =eve::fam(elt_t(-2.081061466f) - z +  5/(6*zp3) - l,  (elt_t(2.5) + z), eve::log[o](zp3));
+              return r;
+            }
+          }
+          else
+          {
+            auto az = if_else(z == minf(as(z)) || is_lez(signgam(z)) ||(is_ltz(z) && is_flint(z)), allbits, z);
+            auto rp = log_abs_gamma[o](eve::abs(az));
+            auto rn = -log_abs_gamma[fast](eve::abs(eve::oneminus(az))) + elt_t(1.144729885849400) -log[o](eve::sin[eve::radpi](az));
+            return eve::if_else(zpos, rp, rn);
+          }
+        };
         auto gneg = is_lez(signgam(a0));
         auto aa0 = dec[gneg](a0);
-        auto r = log_gamma[o](aa0);
+        auto r = lg(aa0);
         return add[gneg](r, eve::log[o](-aa0));
       }
       else

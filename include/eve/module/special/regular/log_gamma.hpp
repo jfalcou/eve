@@ -12,6 +12,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/signgam.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve
 {
