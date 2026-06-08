@@ -46,8 +46,10 @@ namespace eve
 //!      constexpr auto log_abs_gamma(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto log_abs_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto log_abs_gamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto log_abs_gamma[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto log_abs_gamma[fast](floating_value auto x)                    noexcept; // 2
+//!      constexpr auto log_abs_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 3
+//!      constexpr auto log_abs_gamma[logical_value auto m](floating_value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -60,10 +62,13 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. speedier computations at accuracy price based on  "An accurate approximation formula for
+//!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html
+//!   *  [Zhen-Hang Yang & alias](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/log_abs_gamma.cpp}
@@ -462,7 +467,7 @@ namespace eve
                 r2 += helpers::log_abs_gammaA(p) / xx;
                 return if_else(test, r1, r2);
               };
-            auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);
+
             ;
             T x = if_else(inf_result, eve::allbits, a0);
             T q = abs(x);

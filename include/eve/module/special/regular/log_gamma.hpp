@@ -47,8 +47,10 @@ namespace eve
 //!      constexpr auto log_gamma(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto log_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto log_gamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto log_gamma[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto log_gamma[fast](floating_value auto x)                    noexcept; // 2
+//!      constexpr auto log_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 3
+//!      constexpr auto log_gamma[logical_value auto m](floating_value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -62,10 +64,13 @@ namespace eve
 //!
 //!      1. The value of the  logarithm of the \f$\Gamma\f$ function is returned.
 //!         this callable returns NaN if `eve::gamma(x)` is less than zero.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. speedier computations at accuracy price based on  "An accurate approximation formula for
+//!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html
+//!   *  [Zhen-Hang Yang & alias](https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/log_gamma.cpp}
