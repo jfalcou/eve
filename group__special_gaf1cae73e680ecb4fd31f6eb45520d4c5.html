@@ -146,13 +146,15 @@ $(function(){initNavTree('group__special_gaf1cae73e680ecb4fd31f6eb45520d4c5.html
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[raw](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[fast](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">tgamma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
-<div class="ttc" id="agroup__special_gaf1cae73e680ecb4fd31f6eb45520d4c5_html_gaf1cae73e680ecb4fd31f6eb45520d4c5"><div class="ttname"><a href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">eve::tgamma</a></div><div class="ttdeci">constexpr auto tgamma</div><div class="ttdoc">elementwise_callable object computing .</div><div class="ttdef"><b>Definition</b> tgamma.hpp:75</div></div>
+<div class="ttc" id="agroup__special_gaf1cae73e680ecb4fd31f6eb45520d4c5_html_gaf1cae73e680ecb4fd31f6eb45520d4c5"><div class="ttname"><a href="#gaf1cae73e680ecb4fd31f6eb45520d4c5">eve::tgamma</a></div><div class="ttdeci">constexpr auto tgamma</div><div class="ttdoc">elementwise_callable object computing .</div><div class="ttdef"><b>Definition</b> tgamma.hpp:80</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -163,6 +165,8 @@ $(function(){initNavTree('group__special_gaf1cae73e680ecb4fd31f6eb45520d4c5.html
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The value of \(\Gamma\) is returned.</li>
+<li>speedier computations at accuracy price based on "An accurate approximation formula for
+        gamma function" of Zhen-Hang Yang and Jing-Feng Tian.</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
@@ -171,6 +175,7 @@ $(function(){initNavTree('group__special_gaf1cae73e680ecb4fd31f6eb45520d4c5.html
 <li><a href="https://en.wikipedia.org/wiki/Gamma_function">Wikipedia: Gamma function</a></li>
 <li><a href="https://mathworld.wolfram.com/GammaFunction.html">Wolfram MathWorld: Gamma Function</a></li>
 <li><a href="https://dlmf.nist.gov/5.2">DLMF: gamma function</a></li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5840229/pdf/13660_2018_Article_1646.pdf">Zhen-Hang Yang &amp; al.</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
