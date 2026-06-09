@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct beta_t : elementwise_callable<beta_t, Options>
+  struct beta_t : elementwise_callable<beta_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
@@ -49,8 +49,10 @@ namespace eve
 //!      constexpr auto beta(floating_value auto x, floating_value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto beta[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
-//!      constexpr auto beta[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto beta[raw](floating_value auto x)                                            noexcept; // 2
+//!      constexpr auto beta[fast](floating_value auto x)                                           noexcept; // 2
+//!      constexpr auto beta[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 3
+//!      constexpr auto beta[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -63,7 +65,8 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. \f$\displaystyle \mathbf{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. speedier computations at accuracy price.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Beta Function](https://dlmf.nist.gov/5.12)
@@ -82,11 +85,11 @@ namespace eve
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    auto beta_(EVE_REQUIRES(cpu_), O const&, T a0,  T a1) noexcept
+    auto beta_(EVE_REQUIRES(cpu_), O const& o, T a0,  T a1) noexcept
     {
       auto y    = a0 + a1;
       auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
-      return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
+      return sign * exp[o](log_abs_gamma[o](a0) + log_abs_gamma[o](a1) - log_abs_gamma[o](y));
     }
   }
 }
