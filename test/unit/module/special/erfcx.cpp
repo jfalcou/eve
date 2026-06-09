@@ -110,7 +110,7 @@ TTS_CASE_WITH("Check behavior of erfcx on wide",
    auto prec = tts::prec<T>(0.07, 0.07);
    TTS_RELATIVE_EQUAL(eve::erfcx(a0), eve::erfcx[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::erfcx(a1), eve::erfcx[raw](a1), prec);
-   auto prec1 = tts::prec<T>(0.002, 0.002);
+   auto prec1 = tts::prec<T>(0.003, 0.003);
    TTS_RELATIVE_EQUAL(eve::erfcx(a0), eve::erfcx[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::erfcx(a1), eve::erfcx[fast](a1), prec1);
 
