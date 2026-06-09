@@ -65,7 +65,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tanh)(eve::wide)",
 
 
 TTS_CASE_WITH("Check behavior of tanh on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(mini, maxi), tts::randoms(-1, 1)))
 <typename T>(T const& a0, T const& a1)
 {
