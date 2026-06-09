@@ -48,6 +48,8 @@ namespace eve
 //!      constexpr auto erfc(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
+//!      constexpr auto erfc[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto erfc[fast](floating_value auto x)                    noexcept; // 2
 //!      constexpr auto erfc[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto erfc[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
@@ -68,7 +70,8 @@ namespace eve
 //!          * If the argument is \f$\infty\f$, \f$1\f$ is returned.
 //!          * If the argument is \f$-\infty\f$,\f$2\f$ is returned.
 //!          * If the argument is Nan, nan is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. speedier computations at accuracy price, based on `atanh(erf(x))` expansion.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: erfc](https://en.cppreference.com/w/cpp/numeric/math/erfc)
@@ -92,7 +95,7 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr(O::contains(raw)|| O::contains(fast))
       {
-        return eve::oneminus(eve::tanh[o](x*elt_t(1.282549830161864)));
+        return eve::oneminus(erf[o](x));
       }
       else
       {

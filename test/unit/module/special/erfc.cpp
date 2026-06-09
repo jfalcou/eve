@@ -70,3 +70,21 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::erfc)(eve::wide)",
   TTS_IEEE_EQUAL(eve::erfc[mask](a0),
             eve::if_else(mask, eve::erfc(a0), a0));
 };
+
+
+
+TTS_CASE_WITH("Check behavior of erfc on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(-2.0, 2.0)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   using eve::fast;;
+   auto prec = tts::prec<T>(0.07, 0.07);
+   TTS_RELATIVE_EQUAL(eve::erfc(a0), eve::erfc[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::erfc(a1), eve::erfc[raw](a1), prec);
+   auto prec1 = tts::prec<T>(0.0009, 0.0009);
+   TTS_RELATIVE_EQUAL(eve::erfc(a0), eve::erfc[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::erfc(a1), eve::erfc[fast](a1), prec1);
+
+};

@@ -47,8 +47,11 @@ namespace eve
 //!      constexpr auto erf(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto erf[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto erf[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      // Lanes masking
+//!      constexpr auto erf[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto erf[fast](floating_value auto x)                    noexcept; // 2
+//!      constexpr auto erf[conditional_expr auto c](floating_value auto x) noexcept; // 3
+//!      constexpr auto erf[logical_value auto m](floating_value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -66,7 +69,8 @@ namespace eve
 //!          * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!          * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!          * If the argument is Nan, nan returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. speedier computations at accuracy price, based on `atanh(erf(x))` expansion.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
@@ -95,17 +99,7 @@ namespace eve
       }
       else if constexpr(O::contains(fast))
       {
-        return tanh(elt_t(1.128379167095513)*eve::fam(a0, a0, elt_t(9.107984824505425e-02)*sqr(a0)));
-
-//         auto aa0 = abs(a0);
-//         return sign(a0)*tanh[o](1.152*aa0+0.064*sqr(sqr(aa0)));
-//         auto sinsin =  elt_t(1.128379167095513)*sin[full_circle](sin[full_circle](a0));
-//         auto aa0 = abs(a0);
-//         auto a0le1 = aa0 <= 1;
-//         if (eve::all(a0le1))
-//           return sinsin;
-//         else
-//           return if_else(a0le1, sinsin, eve::erf[raw](a0));
+        return tanh[o](elt_t(1.128379167095513)*eve::fam(a0, a0, elt_t(9.107984824505425e-02)*sqr(a0)));
       }
       else
       {

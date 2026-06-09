@@ -175,6 +175,7 @@ namespace eve
       {
         const T Logsqrt2pi = T(0.91893853320467274178032973640561763986139747363777);
         const elt_t Maxlog_abs_gamma = ieee_constant<0x1.74c5dd06d2516p+1014, 0x1.87f1d40p+120f>(eve::as<elt_t>{});
+        auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);
         if constexpr( std::is_same_v<elt_t, float> )
         {
           if constexpr( scalar_value<T> )
@@ -255,7 +256,6 @@ namespace eve
           }
           else if constexpr( simd_value<T> )
           {
-            auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);
             T    x          = if_else(inf_result, eve::allbits, a0);
             T    q          = abs(x);
             if constexpr( eve::platform::supports_infinites )
@@ -428,47 +428,46 @@ namespace eve
           }
           else if constexpr( simd_value<T> )
           {
-            auto other = [Logsqrt2pi](T xx)
+            auto other = [Logsqrt2pi](T xx) {
+              T              x    = xx;
+              auto           test = (x < T(13.0));
+              std::ptrdiff_t nb   = eve::count_true(test);
+              T              r1   = zero(as<T>());
+              if( nb > 0 )
               {
-                T              x    = xx;
-                auto           test = (x < T(13.0));
-                std::ptrdiff_t nb   = eve::count_true(test);
-                T              r1   = zero(as<T>());
-                if( nb > 0 )
+                T    z     = one(as<T>());
+                T    p     = zero(as<T>());
+                T    u     = if_else(test, x, eve::zero);
+                auto test1 = (u > T(3));
+                while( eve::any(test1) )
                 {
-                  T    z     = one(as<T>());
-                  T    p     = zero(as<T>());
-                  T    u     = if_else(test, x, eve::zero);
-                  auto test1 = (u > T(3));
-                  while( eve::any(test1) )
-                  {
-                    p     = dec[test1](p);
-                    u     = if_else(test1, x + p, u);
-                    z     = if_else(test1, z * u, z);
-                    test1 = (u >= T(3));
-                  }
-
-                  auto test2 = (u < T(2));
-
-                  while( eve::any(test2) )
-                  {
-                    z     = if_else(test2, z / u, z);
-                    p     = inc[test2](p);
-                    u     = if_else(test2, x + p, u);
-                    test2 = (u < T(2));
-                  }
-                  z = abs(z);
-                  x += p - T(2);
-                  r1 = x * helpers::log_abs_gamma1(x) + log(z);
-                  if( nb >= T::size() ) return r1;
+                  p     = dec[test1](p);
+                  u     = if_else(test1, x + p, u);
+                  z     = if_else(test1, z * u, z);
+                  test1 = (u >= T(3));
                 }
-                T r2 = fma(xx - half(as<T>()), log(xx), Logsqrt2pi - xx);
-                T p  = rec[pedantic](sqr(xx));
-                r2 += helpers::log_abs_gammaA(p) / xx;
-                return if_else(test, r1, r2);
-              };
 
-            ;
+                auto test2 = (u < T(2));
+
+                while( eve::any(test2) )
+                {
+                  z     = if_else(test2, z / u, z);
+                  p     = inc[test2](p);
+                  u     = if_else(test2, x + p, u);
+                  test2 = (u < T(2));
+                }
+                z = abs(z);
+                x += p - T(2);
+                r1 = x * helpers::log_abs_gamma1(x) + log(z);
+                if( nb >= T::size() ) return r1;
+              }
+              T r2 = fma(xx - half(as<T>()), log(xx), Logsqrt2pi - xx);
+              T p  = rec[pedantic](sqr(xx));
+              r2 += helpers::log_abs_gammaA(p) / xx;
+              return if_else(test, r1, r2);
+            };
+
+
             T x = if_else(inf_result, eve::allbits, a0);
             T q = abs(x);
             if( eve::platform::supports_infinites ) inf_result = inf_result || (q == inf(as<T>()));
