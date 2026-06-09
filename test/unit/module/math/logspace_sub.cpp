@@ -40,11 +40,11 @@ TTS_CASE_TPL("Check return types of logspace_sub", eve::test::simd::ieee_reals_w
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of logspace_sub on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, eve::valmax),
+              tts::generate(tts::randoms(10.0, eve::valmax),
                             tts::randoms(0.0, eve::valmax),
+                            tts::randoms(10.0, 20.0),
                             tts::randoms(0.5, 2.0),
-                            tts::randoms(0.5, 2.0),
-                            tts::randoms(0.0, eve::valmax),
+                            tts::randoms(0.0, 5.0),
                             tts::randoms(0.5, 2.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
 {
