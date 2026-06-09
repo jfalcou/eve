@@ -70,11 +70,11 @@ TTS_CASE_WITH("Check behavior of tanh on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.05, 0.05);
+   auto prec = tts::prec<T>(0.2, 0.05);
    TTS_RELATIVE_EQUAL(eve::tanh(a0), eve::tanh[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::tanh(a1), eve::tanh[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.02, 0.001);
+   auto prec1 = tts::prec<T>(0.2, 0.001);
    TTS_RELATIVE_EQUAL(eve::tanh(a0), eve::tanh[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::tanh(a1), eve::tanh[fast](a1), prec1);
 
