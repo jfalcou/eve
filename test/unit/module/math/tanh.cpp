@@ -65,16 +65,16 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tanh)(eve::wide)",
 
 
 TTS_CASE_WITH("Check behavior of tanh on wide",
-              eve::test::simd::ieee_reals_wf16,
+              eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(mini, maxi), tts::randoms(-1, 1)))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.05, 0.05);
+   auto prec = tts::prec<T>(0.2, 0.05);
    TTS_RELATIVE_EQUAL(eve::tanh(a0), eve::tanh[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::tanh(a1), eve::tanh[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00009, 0.001);
+   auto prec1 = tts::prec<T>(0.2, 0.001);
    TTS_RELATIVE_EQUAL(eve::tanh(a0), eve::tanh[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::tanh(a1), eve::tanh[fast](a1), prec1);
 

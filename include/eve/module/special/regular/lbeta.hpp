@@ -16,7 +16,7 @@
 namespace eve
 {
 template<typename Options>
-struct lbeta_t : elementwise_callable<lbeta_t, Options>
+struct lbeta_t : elementwise_callable<lbeta_t, Options, pedantic_option, raw_option, fast_option>
 {
   template<eve::floating_value T0, eve::floating_value T1>
   requires (same_lanes_or_scalar<T0, T1>)
@@ -48,8 +48,10 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!      constexpr auto lbeta(floating_value auto x, floating_value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto lbeta[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
-//!      constexpr auto lbeta[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto lbeta[raw](floating_value auto x)                                            noexcept; // 2
+//!      constexpr auto lbeta[fast](floating_value auto x)                                           noexcept; // 2
+//!      constexpr auto lbeta[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 3
+//!      constexpr auto lbeta[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -62,7 +64,8 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!   **Return value**
 //!
 //!     1. the natural logarithm of the [beta](@ref beta) function.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. faster computations at accuracy price.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Beta Function](https://dlmf.nist.gov/5.12)
@@ -80,10 +83,10 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
   namespace _
   {
     template< typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto lbeta_(EVE_REQUIRES(cpu_), O const&, T a0, T a1)
+    constexpr EVE_FORCEINLINE auto lbeta_(EVE_REQUIRES(cpu_), O const& o, T a0, T a1)
     {
       auto s = eve::signgam(a0)*eve::signgam(a1)*eve::signgam(a0+a1);
-      return eve::if_else(eve::is_gez(s), log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(a0 + a1), allbits);
+      return eve::if_else(eve::is_gez(s), log_abs_gamma[o](a0) + log_abs_gamma[o](a1) - log_abs_gamma[o](a0 + a1), allbits);
     }
   }
 }
