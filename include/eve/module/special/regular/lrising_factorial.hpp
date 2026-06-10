@@ -19,7 +19,7 @@ namespace eve
 {
   template<typename Options>
   struct lrising_factorial_t : strict_elementwise_callable < lrising_factorial_t, Options
-                                                            , raw_option, pedantic_option
+                                                            , raw_option, fast_option, pedantic_option
                                                             >
   {
     template<value I, floating_value T>
@@ -56,6 +56,7 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto lrising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
+//!      constexpr auto lrising_factoriale[fast]/*any of the above overloads*/)                    noexcept; // 3
 //!      constexpr auto lrising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
 //!   }
 //!   @endcode
@@ -71,8 +72,7 @@ namespace eve
 //!
 //!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
 //!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
-//!        not both positive.
+//!     3. speedier,  less accurate and return a Nan if `a` and `a+x` are  not both positive.
 //!     4. The `pedantic` option  uses reflection tricks and computes
 //!        the function for all real `a` and `x`, and in fact computes the logarithm of the absolute
 //!        value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
@@ -173,11 +173,11 @@ namespace eve
       }
       else
       {
-        if constexpr(O::contains(raw))
+        if constexpr(O::contains(raw)||O::contains(fast))
         {
           // raw direct computation not matter why. nan if a+x or x is non positive
           auto notdone = is_nlez(x) && is_nlez(a + x);
-          return if_else(notdone, log_abs_gamma(x + a) - log_abs_gamma(a), allbits);
+          return if_else(notdone, log_abs_gamma[d](x + a) - log_abs_gamma[d](a), allbits);
         }
         else if constexpr(O::contains(pedantic))
         {
