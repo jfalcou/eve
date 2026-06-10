@@ -21,7 +21,7 @@
 namespace eve
 {
   template<typename Options>
-  struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options>
+  struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
     requires (same_lanes_or_scalar<T0, T1, T2>)
@@ -50,14 +50,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
+//!      // Regular overload
 //!      constexpr auto betainc_inv(floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)       noexcept; // 1
+//!                             floating_value auto x, floating_value auto y)              noexcept; // 1
+//!
+//!      // semantic modifyers
+//!      constexpr auto betainc_inv[raw](/*any previous overload*/)                        noexcept; // 2
+//!      constexpr auto betainc_inv[fast](/*any previous overload*/)                       noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto betainc_inv[conditional_expr auto c](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)       noexcept; // 2
-//!      constexpr auto betainc_inv[logical_value auto m](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)       noexcept; // 2
+//!      constexpr auto betainc_inv[conditional_expr auto c](/*any previous overload*/)    noexcept; // 3
+//!      constexpr auto betainc_inv[logical_value auto m](*any previous overload*/)        noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -90,60 +93,64 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr auto
-    betainc_inv_(EVE_REQUIRES(cpu_), O const&, T pp, T pa, T pb) noexcept
+    betainc_inv_(EVE_REQUIRES(cpu_), O const& o, T pp, T pa, T pb) noexcept
     {
-      auto large = [](auto p, auto a, auto b){
+      using elt_t = element_type_t<T>;
+      auto large = [o](auto p, auto a, auto b){
         //  Set initial guess.
-        auto const FiveoSix = T(5. / 6.);
+        auto constexpr FiveoSix = elt_t(5. / 6.);
         auto       a1       = dec(a);
         auto       b1       = dec(b);
-        auto       mp       = oneminus[p >= T(0.5)](p);
-        auto       t        = sqrt(-2 * log(mp));
+        auto       mp       = oneminus[p >= elt_t(0.5)](p);
+        auto       t        = sqrt(-2 * log[o](mp));
         auto       x =
         fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as(p))) - t;
-        x         = minus[p < T(0.5)](x);
-        auto al   = (sqr(x) - T(3)) * T(1.0 / 6.0);
+        x         = minus[p < elt_t(0.5)](x);
+        auto al   = (sqr(x) - elt_t(3))/6;
         auto r2a1 = rec[pedantic](a + a1);
         auto r2b1 = rec[pedantic](b + b1);
         auto h    = rec[pedantic](average(r2a1, r2b1));
         auto w    = (x * sqrt(al + h) / h) - (r2b1 - r2a1) * (al + FiveoSix - T(2.0 / 3.0) / h);
-        return a / fma(exp(w + w), b, a);
+        return a / fma(exp[o](w + w), b, a);
       };
 
-      auto small = [](auto p, auto a, auto b){
-        auto lna  = log(a / (a + b));
-        auto lnb  = log(b / (a + b));
-        auto t    = exp(a * lna) / a;
-        auto u    = exp(b * lnb) / b;
+      auto small = [o](auto p, auto a, auto b){
+        auto lna  = log[o](a / (a + b));
+        auto lnb  = log[o](b / (a + b));
+        auto t    = exp[o](a * lna) / a;
+        auto u    = exp[o](b * lnb) / b;
         auto w    = t + u;
         auto test = p < t / w;
         auto z    = if_else(test, a * w * p, b * w * oneminus(p));
-        auto po   = pow(z, rec[pedantic](if_else(test, a, b)));
+        auto po   = pow[o](z, rec[pedantic](if_else(test, a, b)));
         return if_else(test, po, oneminus(po));
       };
       auto       a1      = dec(pa);
       auto       b1      = dec(pb);
-      auto const o       = one(as(pp));
-      const auto epsi    = 10 * eps(as(pp));
-      auto       test    = (pa > o) && (pb > o);
+      constexpr auto un  = one(as<elt_t>());
+      auto epsi = 10*eps(as<elt_t>());
+      if constexpr(O::contains(fast))  epsi  = sqrt(epsi);
+      if constexpr(O::contains(raw))   epsi  = sqrt(sqrt(epsi));
+
+      auto       test    = (pa > un) && (pb > un);
       auto       x       = nan(as(pp));
       auto       notdone = is_not_nan(pp);
       notdone            = next_interval(large, notdone, test, x, pp, pa, pb);
       if( eve::any(notdone) ) { last_interval(small, notdone, x, pp, pa, pb); }
-      auto afac = -lbeta(pa, pb);
+      auto afac = -lbeta[o](pa, pb);
       ;
       for( std::size_t j = 0; j < 10; ++j )
       {
-        auto err = betainc(x, pa, pb) - pp;
-        auto t   = exp(fma(a1, log(x), b1 * log1p(-x)) + afac);
+        auto err = betainc[o](x, pa, pb) - pp;
+        auto t   = exp[o](fma(a1, log[o](x), b1 * log1p[o](-x)) + afac);
         auto u   = err / t; // Halley:
-        auto m   = eve::min(o, u * (a1 / x - b1 / (oneminus(x))));
+        auto m   = eve::min(un, u * (a1 / x - b1 / (oneminus(x))));
         x -= u / inc(-0.5 * m);
-        auto tt = inc[x >= o](t);
-        x       = if_else(is_lez(x) && (x >= o), average(x, tt), x);
+        auto tt = inc[x >= un](t);
+        x       = if_else(is_lez(x) && (x >= un), average(x, tt), x);
         if( eve::all(eve::abs(t) <= epsi * x) && j ) break;
       }
-      return if_else(is_lez(pp), zero, if_else(pp >= o, one, x));
+      return if_else(is_lez(pp), zero, if_else(pp >= un, one, x));
     }
   }
 }
