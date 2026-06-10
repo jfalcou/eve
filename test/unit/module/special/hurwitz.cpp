@@ -69,3 +69,18 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
      }
   }
 };
+
+TTS_CASE_WITH("Check behavior of erf on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.0, 6.0))
+             )
+<typename T>(T const& a0)
+{
+  using e_t = eve::element_type_t<T>;
+   using eve::raw;
+   using eve::fast;;
+   auto prec = tts::prec<T>(0.2, 0.2);
+   TTS_RELATIVE_EQUAL(eve::hurwitz(e_t(3), a0), eve::hurwitz[raw](e_t(3), a0), prec);
+   auto prec1 = tts::prec<T>(0.0009, 0.0009);
+   TTS_RELATIVE_EQUAL(eve::hurwitz(e_t(3), a0), eve::hurwitz[fast](e_t(3), a0), prec1);
+};
