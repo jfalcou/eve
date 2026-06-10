@@ -65,7 +65,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. \f$\displaystyle \mathbf{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
-//!     2. speedier computations at accuracy price.
+//!     2. faster computations at accuracy price.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}

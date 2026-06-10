@@ -69,7 +69,7 @@ namespace eve
 //!          * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!          * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!          * If the argument is Nan, nan returned.
-//!     2. speedier computations at accuracy price, based on `atanh(erf(x))` expansion.
+//!     2. faster computations at accuracy price, based on `atanh(erf(x))` expansion.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}

@@ -70,7 +70,7 @@ namespace eve
 //!          * If the argument is \f$\infty\f$, \f$1\f$ is returned.
 //!          * If the argument is \f$-\infty\f$,\f$2\f$ is returned.
 //!          * If the argument is Nan, nan is returned.
-//!     2. speedier computations at accuracy price, based on `atanh(erf(x))` expansion.
+//!     2. faster computations at accuracy price, based on `atanh(erf(x))` expansion.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}

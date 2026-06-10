@@ -78,7 +78,7 @@ namespace eve
 //!        and avoid overflows.
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. the naive formula is used.This option is speedier, but does not care about avoiding overflows
+//!    4. the naive formula is used.This option is faster, but does not care about avoiding overflows
 //!       or treating 'Nans' in special ways.
 //!    5. The pedantic option. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters
 //!       the result is \f$\infty\f$,  and computes the result without undue overflows or underflows.

@@ -64,7 +64,7 @@ namespace eve
 //!
 //!      1. The value of the  logarithm of the \f$\Gamma\f$ function is returned.
 //!         this callable returns NaN if `eve::gamma(x)` is less than zero.
-//!      2. speedier computations at accuracy price based on  "An accurate approximation formula for
+//!      2. faster computations at accuracy price based on  "An accurate approximation formula for
 //!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!

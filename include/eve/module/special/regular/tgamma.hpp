@@ -63,7 +63,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The value of \f$\Gamma\f$ is returned.
-//!      2. speedier computations at accuracy price based on  "An accurate approximation formula for
+//!      2. faster computations at accuracy price based on  "An accurate approximation formula for
 //!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
