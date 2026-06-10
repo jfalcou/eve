@@ -83,3 +83,19 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::digamma)(eve::wide)",
   TTS_IEEE_EQUAL(eve::digamma[mask](a0),
             eve::if_else(mask, eve::digamma(a0), a0));
 };
+
+TTS_CASE_WITH("Check behavior of digamma on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-100, 100), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.2, 0.05);
+   TTS_RELATIVE_EQUAL(eve::digamma(a0), eve::digamma[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::digamma(a1), eve::digamma[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.2, 0.001);
+   TTS_RELATIVE_EQUAL(eve::digamma(a0), eve::digamma[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::digamma(a1), eve::digamma[fast](a1), prec1);
+
+};
