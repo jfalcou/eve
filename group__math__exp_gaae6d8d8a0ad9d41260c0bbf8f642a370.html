@@ -173,7 +173,7 @@ $(function(){initNavTree('group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.ht
 <li>Returns \(\displaystyle\sqrt{\sum_1^n |x_i|^2}\). (naive formula) The result type is the <a class="el" href="namespaceeve.html#af8149a965ef1e4b8f73ff49e426532d6" title="common_value_t">common value type</a> of the absolute values of the parameters. (Some appropriate scaling is done to enhance precision and avoid overflows.</li>
 <li>equivalent to the call on the elements of the tuple.</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a></li>
-<li>the naive formula is used.This option is speedier, but does not care about avoiding overflows or treating 'Nans' in special ways.</li>
+<li>the naive formula is used.This option is faster, but does not care about avoiding overflows or treating 'Nans' in special ways.</li>
 <li>The pedantic option. returns \(\infty\) as soon as after disabling possible <span class="tt">Nan</span> parameters the result is \(\infty\), and computes the result without undue overflows or underflows. at intermediate stages of the computation.</li>
 <li>A kahan like compensated algorithm is used internal for more accurate results.</li>
 <li>The computation is done in the double sized element type (if available).</li>
