@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct acsc_t : elementwise_callable<acsc_t, Options,
+  struct acsc_t : elementwise_callable<acsc_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -46,13 +46,15 @@ namespace eve
 //!      constexpr auto acsc(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
+//!      constexpr auto acsc[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acsc[fast](floating_value auto x)                    noexcept; // 3
 //!      constexpr auto acsc[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto acsc[deg](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acsc[pirad](floating_value auto x)                   noexcept; // 3
-///!
+//!      constexpr auto acsc[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto acsc[pirad](floating_value auto x)                   noexcept; // 5
+//!
 //!      // Lanes masking
-//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 4
-//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 4
+//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -71,9 +73,10 @@ namespace eve
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. Result in degrees
-//!    3. Result in \f$\pi\f$ multiples
-//!    4. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast but accuracy not better than  5.0e-3 according Abramowitz & Stegun.
+//!    3. accuracy not better than  5.0e-5 according Abramowitz & Stegun.
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cosecant](https://mathworld.wolfram.com/InverseCosecant.html)

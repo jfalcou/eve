@@ -74,7 +74,7 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!    2. very fast but accuracy not better than  5.0e-3 according Abramowitz & Stegun.
-//!    3. accuracy not better than  5.0e-35according Abramowitz & Stegun.
+//!    3. accuracy not better than  5.0e-5 according Abramowitz & Stegun.
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
 //!    6. [The operation is performed conditionnaly](@ref conditional).

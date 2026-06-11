@@ -50,7 +50,7 @@ namespace eve
 //!
 //!      // Semantic option
 //!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acos[fast] (floating_value auto x)                   noexcept; // 3 
+//!      constexpr auto acos[fast] (floating_value auto x)                   noexcept; // 3
 //!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
 //!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 4
 //!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 5
@@ -75,7 +75,7 @@ namespace eve
 //!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
-//!    2. very fast but only around 1.0e-4 accracy.   
+//!    2. very fast but accuracy not better than  5.0e-4.
 //!    3. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
@@ -86,7 +86,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Inverse Cosine](https://mathworld.wolfram.com/InverseCosine.html)
 //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/4.23)
 //!   *  [Wikipedia: Arc cosinus](https://fr.wikipedia.org/wiki/Arc_cosinus)
-//!   *  [N. Chapman](https://www.forwardscattering.org/post/66) 
+//!   *  [N. Chapman](https://www.forwardscattering.org/post/66)
 //!   *  [Abramowitz & al. 4.4.46](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
