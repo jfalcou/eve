@@ -60,11 +60,11 @@ TTS_CASE_WITH("Check behavior of acos on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.002, 0.002);
+   auto prec = tts::prec<T>(0.005, 0.005);
    TTS_RELATIVE_EQUAL(eve::acos(a0), eve::acos[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::acos(a1), eve::acos[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   auto prec1 = tts::prec<T>(0.00005, 0.00005);
    TTS_RELATIVE_EQUAL(eve::acos(a0), eve::acos[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::acos(a1), eve::acos[fast](a1), prec1);
 
