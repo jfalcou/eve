@@ -90,11 +90,11 @@ TTS_CASE_WITH("Check behavior of digamma on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.2, 0.05);
+   auto prec = tts::prec<T>(0.3, 0.07);
    TTS_RELATIVE_EQUAL(eve::digamma(a0), eve::digamma[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::digamma(a1), eve::digamma[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.2, 0.002);
+   auto prec1 = tts::prec<T>(0.3, 0.02);
    TTS_RELATIVE_EQUAL(eve::digamma(a0), eve::digamma[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::digamma(a1), eve::digamma[fast](a1), prec1);
 

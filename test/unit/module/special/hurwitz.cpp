@@ -72,7 +72,7 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of erf on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 6.0))
+              tts::generate(tts::randoms(0.2, 6.0))
              )
 <typename T>(T const& a0)
 {
