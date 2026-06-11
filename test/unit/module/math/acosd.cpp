@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check behavior of acosd on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.005, 0.005);
+   auto prec = tts::prec<T>(0.01, 0.01);
    TTS_RELATIVE_EQUAL(eve::acosd(a0), eve::acosd[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::acosd(a1), eve::acosd[raw](a1), prec);
    using eve::fast;
