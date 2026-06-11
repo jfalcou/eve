@@ -90,7 +90,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    auto betainc_(EVE_REQUIRES(cpu_), O const& o, T px, T pa, T pb) noexcept
+    auto betainc_(EVE_REQUIRES(cpu_), O const& oo, T px, T pa, T pb) noexcept
     {
       using elt_t = element_type_t<T>;
       auto betacf = [](auto x, auto a, auto b, auto epsi) {
@@ -125,7 +125,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
       if constexpr(O::contains(fast))  epsi  = sqrt(epsi);
       if constexpr(O::contains(raw))   epsi  = sqrt(sqrt(epsi));
 
-      auto bt   = exp[o](fma(pa, log[o](px), pb * log1p[o](-px)) - lbeta[o](pa, pb));
+      auto bt   = exp[oo](fma(pa, log[oo](px), pb * log1p[oo](-px)) - lbeta[oo](pa, pb));
       auto test = (px > inc(pa) / (pa + pb + T(2)));
       auto oms   = oneminus[test](px);
       swap_if(test, pa, pb);
