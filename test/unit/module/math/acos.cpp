@@ -40,14 +40,14 @@ TTS_CASE_WITH("Check behavior of acos", eve::test::simd::ieee_reals_wf16, tts::g
   TTS_ULP_EQUAL(eve::acos(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, a0), 2);
 };
 
-TTS_CASE_WITH("Check behavior of acos[raw]", eve::test::simd::ieee_reals_wf16, tts::generate(tts::randoms(0.999, 1.0)))
+TTS_CASE_WITH("Check behavior of acos[fast]", eve::test::simd::ieee_reals_wf16, tts::generate(tts::randoms(0.999, 1.0)))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_ABSOLUTE_EQUAL( eve::acos[eve::raw](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, a0)
+  TTS_ABSOLUTE_EQUAL( eve::acos[eve::fast](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, a0)
                , double(100 * eve::eps(eve::as<v_t>()))
                     );
-  TTS_ABSOLUTE_EQUAL( eve::acos[eve::raw](-a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, -a0)
+  TTS_ABSOLUTE_EQUAL( eve::acos[eve::fast](-a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, -a0)
                , double(100 * eve::eps(eve::as<v_t>()))
                     );
 };
@@ -62,4 +62,21 @@ TTS_CASE_WITH ( "Check behavior of eve::masked(eve::acos)(eve::wide)"
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::acos[mask](a0),eve::if_else(mask, eve::acos(a0), a0));
+};
+
+
+TTS_CASE_WITH("Check behavior of acos on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1, 1), tts::randoms(0.9, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.002, 0.002);
+   TTS_RELATIVE_EQUAL(eve::acos(a0), eve::acos[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::acos(a1), eve::acos[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   TTS_RELATIVE_EQUAL(eve::acos(a0), eve::acos[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::acos(a1), eve::acos[fast](a1), prec1);
+
 };
