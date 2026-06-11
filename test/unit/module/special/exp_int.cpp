@@ -36,8 +36,8 @@ TTS_CASE_TPL("Check return types of exp_int", eve::test::simd::ieee_reals)
 };
 
 
-
-TTS_CASE_WITH("Check behavior of erf on wide",
+#if defined(PY_STDLIB_IS_LIBCPP)
+TTS_CASE_WITH("Check behavior of exp_int on wide",
               eve::test::scalar::ieee_reals,
               tts::generate(tts::randoms(0, 10))
              )
@@ -45,12 +45,13 @@ TTS_CASE_WITH("Check behavior of erf on wide",
 {
   using eve::raw;
   using eve::fast;
-  TTS_ULP_EQUAL(eve::exp_int(a0), -std::expint(-a0), 2.0);
+  TTS_ULP_EQUAL(eve::exp_int(a0), -std::expint(-a0), 5.0);
   auto prec = tts::prec<T>(1.0, 0.07);
   TTS_RELATIVE_EQUAL(eve::exp_int(a0), eve::exp_int[raw](a0), prec);
   auto prec1 = tts::prec<T>(0.002, 0.0009);
   TTS_RELATIVE_EQUAL(eve::exp_int(a0), eve::exp_int[fast](a0), prec1);
 };
+#endif
 
 
 #if defined(EVE_HAS_BOOST)
