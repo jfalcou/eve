@@ -99,7 +99,6 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      using elt_t =  element_type_t<T>;
       if constexpr(O::contains(rad))
         return atan[o.drop(rad)](a);
       else if constexpr(O::contains(deg))
@@ -108,26 +107,9 @@ namespace eve
         return radinpi(atan[o.drop(radpi)](a));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::atan[o], a);
-      else if constexpr(O::contains(raw))
+      else if constexpr(O::contains(raw)||O::contains(fast))
       {
-        auto agt1 = eve::abs(a) > elt_t(1);
-        auto x = rec[pedantic][agt1](a);
-        auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(a));
-        auto r = x/inc(elt_t(0.28)*sqr(x));
-        return if_else(agt1, spio2-r, r);
-      }
-      else if constexpr(O::contains(fast))
-      {
-        auto agt1 = eve::abs(a) > elt_t(1);
-        auto x = rec[pedantic][agt1](a);
-        auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(a));
-        constexpr auto a1 = elt_t(0.9998660);
-        constexpr auto a3 = elt_t(-0.3302995);
-        constexpr auto a5 = elt_t(0.1801410);
-        constexpr auto a7 = elt_t(-0.0851330);
-        constexpr auto a9 = elt_t(0.0208351);
-        auto r = x*reverse_horner(sqr(x), a1, a3, a5, a7, a9);
-        return if_else(agt1, spio2-r, r);
+        return opt_atan_kernel(o, a, rec[pedantic](a)); 
       }
       else
       {

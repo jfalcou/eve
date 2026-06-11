@@ -137,3 +137,17 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::atan2)(eve::wide)",
   TTS_IEEE_EQUAL(eve::atan2[mask](a0, a1),
             eve::if_else(mask, eve::atan2(a0, a1), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of atan2 on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1, 1), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.005, 0.005);
+   TTS_RELATIVE_EQUAL(eve::atan2(a0, a1), eve::atan2[raw](a0, a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   TTS_RELATIVE_EQUAL(eve::atan2(a0, a1), eve::atan2[fast](a0, a1), prec1);
+};

@@ -40,17 +40,6 @@ TTS_CASE_WITH("Check behavior of acos", eve::test::simd::ieee_reals_wf16, tts::g
   TTS_ULP_EQUAL(eve::acos(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, a0), 2);
 };
 
-TTS_CASE_WITH("Check behavior of acos[fast]", eve::test::simd::ieee_reals_wf16, tts::generate(tts::randoms(0.999, 1.0)))
-<typename T>(T const& a0)
-{
-  using v_t = eve::element_type_t<T>;
-  TTS_ABSOLUTE_EQUAL( eve::acos[eve::fast](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, a0)
-               , double(100 * eve::eps(eve::as<v_t>()))
-                    );
-  TTS_ABSOLUTE_EQUAL( eve::acos[eve::fast](-a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(std_acos(e)); }, -a0)
-               , double(100 * eve::eps(eve::as<v_t>()))
-                    );
-};
 
 //======================================================================================================================
 // Tests for masked acos

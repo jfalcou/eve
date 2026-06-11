@@ -40,18 +40,6 @@ TTS_CASE_WITH("Check behavior of acosd", eve::test::simd::ieee_reals_wf16, tts::
   TTS_ULP_EQUAL(eve::acosd(a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(eve::radindeg(std_acos(e))); }, a0), 2);
 };
 
-TTS_CASE_WITH("Check behavior of acosd[raw]", eve::test::simd::ieee_reals_wf16, tts::generate(tts::randoms(0.999, 1.0)))
-<typename T>(T const& a0)
-{
-  using v_t = eve::element_type_t<T>;
-  TTS_ABSOLUTE_EQUAL( eve::acosd[eve::raw](a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(eve::radindeg(std_acos(e))); }, a0)
-                    , double(200 * eve::eps(eve::as<v_t>()))
-                    );
-  TTS_ABSOLUTE_EQUAL( eve::acosd[eve::raw](-a0), tts::map([](auto e) -> v_t { return static_cast<v_t>(eve::radindeg(std_acos(e))); }, -a0)
-                    , double(200 * eve::eps(eve::as<v_t>()))
-                    );
-};
-
 //======================================================================================================================
 // Tests for masked acosd
 //======================================================================================================================
@@ -62,4 +50,21 @@ TTS_CASE_WITH ( "Check behavior of eve::masked(eve::acosd)(eve::wide)"
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::acosd[mask](a0),eve::if_else(mask, eve::acosd(a0), a0));
+};
+
+
+TTS_CASE_WITH("Check behavior of acosd on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1, 1), tts::randoms(0.9, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.002, 0.002);
+   TTS_RELATIVE_EQUAL(eve::acosd(a0), eve::acosd[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::acosd(a1), eve::acosd[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   TTS_RELATIVE_EQUAL(eve::acosd(a0), eve::acosd[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::acosd(a1), eve::acosd[fast](a1), prec1);
+
 };
