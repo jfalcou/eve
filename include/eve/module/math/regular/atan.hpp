@@ -49,13 +49,13 @@ namespace eve
 //!      // Semantic option
 //!      constexpr auto atan[raw](floating_value auto x)                     noexcept; // 2
 //!      constexpr auto atan[fast] (floating_value auto x)                   noexcept; // 3
-//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
+//!      constexpr auto atan[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto atan[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto atan[pirad](floating_value auto x)                   noexcept; // 5
 //!
 //!      // Lanes masking
-//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 4
-//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 4
+//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -109,7 +109,7 @@ namespace eve
         return eve::_::apply_fp16_as_fp32(eve::atan[o], a);
       else if constexpr(O::contains(raw)||O::contains(fast))
       {
-        return opt_atan_kernel(o, a, rec[pedantic](a)); 
+        return opt_atan_kernel(o, a, rec[pedantic](a));
       }
       else
       {
