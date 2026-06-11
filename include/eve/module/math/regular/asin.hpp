@@ -91,7 +91,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: InverseSine](https://mathworld.wolfram.com/InverseSine.html)
 //!   *  [Wikipedia:Inverse trigonometric functions ](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF:Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
-//!   *  [Abramowitz & al.](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
+//!   *  [Abramowitz & al. 4.4.46](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asin.cpp}

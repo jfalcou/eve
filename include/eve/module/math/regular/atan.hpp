@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct atan_t : elementwise_callable<atan_t, Options,
+  struct atan_t : elementwise_callable<atan_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -47,6 +47,8 @@ namespace eve
 //!      constexpr auto atan(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
+//!      constexpr auto atan[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto atan[fast] (floating_value auto x)                   noexcept; // 3
 //!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
 //!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
 //!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
@@ -71,15 +73,18 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. Result in degrees
-//!    3. Result in \f$\pi\f$ multiples
-//!    4. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast but accuracy not better than  5.0e-3 according Abramowitz & Stegun.
+//!    3. accuracy not better than  5.0e-35according Abramowitz & Stegun.
+//!    4. Result in degrees
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: atan](https://en.cppreference.com/w/cpp/numeric/math/atan)
 //!   *  [Wolfram MathWorld: Inverse Tangent](https://mathworld.wolfram.com/InverseTangent.html)
 //!   *  [Wikipedia: Inverse trigonometric functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF: Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!   *  [Abramowitz & al. 4.4.47/48](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atan.cpp}
@@ -94,6 +99,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
+      using elt_t =  element_type_t<T>;
       if constexpr(O::contains(rad))
         return atan[o.drop(rad)](a);
       else if constexpr(O::contains(deg))
@@ -102,6 +108,27 @@ namespace eve
         return radinpi(atan[o.drop(radpi)](a));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::atan[o], a);
+      else if constexpr(O::contains(raw))
+      {
+        auto agt1 = eve::abs(a) > elt_t(1);
+        auto x = rec[pedantic][agt1](a);
+        auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(a));
+        auto r = x/inc(elt_t(0.28)*sqr(x));
+        return if_else(agt1, spio2-r, r);
+      }
+      else if constexpr(O::contains(fast))
+      {
+        auto agt1 = eve::abs(a) > elt_t(1);
+        auto x = rec[pedantic][agt1](a);
+        auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(a));
+        constexpr auto a1 = elt_t(0.9998660);
+        constexpr auto a3 = elt_t(-0.3302995);
+        constexpr auto a5 = elt_t(0.1801410);
+        constexpr auto a7 = elt_t(-0.0851330);
+        constexpr auto a9 = elt_t(0.0208351);
+        auto r = x*reverse_horner(sqr(x), a1, a3, a5, a7, a9);
+        return if_else(agt1, spio2-r, r);
+      }
       else
       {
         T x = eve::abs(a);

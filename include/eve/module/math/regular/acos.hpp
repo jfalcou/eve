@@ -87,7 +87,7 @@ namespace eve
 //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/4.23)
 //!   *  [Wikipedia: Arc cosinus](https://fr.wikipedia.org/wiki/Arc_cosinus)
 //!   *  [N. Chapman](https://www.forwardscattering.org/post/66) 
-//!   *  [Abramowitz & al.](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
+//!   *  [Abramowitz & al. 4.4.46](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acos.cpp}

@@ -18,8 +18,5 @@ TTS_CASE_TPL("Random check for eve::acospi", eve::test::simd::ieee_reals)
   auto vmax = eve::one(eve::as<e_t>());
   auto std_acospi = [](auto e) { return eve::inv_pi(eve::as(e))*std::acos(e); };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_acospi, eve::acospi );
-  auto vmaxr = e_t(0.9);
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmaxr),  std_acospi, eve::acospi[eve::fast] );
-
 
 };

@@ -97,7 +97,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw
 
         auto twopaa = 2 + aa;
         auto lg = log[o](twopaa);
-        auto r = fam(-48, aa, fam(-157, aa, fam(-127, -30, aa)))/(12*aa*inc(aa)*sqr(twopaa)) + lg;
+        auto r = fam(-48, aa, fam(-157, aa, fam(elt_t(-127), elt_t(-30), aa)))/(12*aa*inc(aa)*sqr(twopaa)) + lg;
         if (none(aneg)) return r;
         else return sub[aneg](r, pi(as<elt_t>())*cot[radpi](a));
       }
