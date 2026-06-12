@@ -52,9 +52,27 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sinc)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::sinc[mask](a0),
             eve::if_else(mask, eve::sinc(a0), a0));
+};
+
+
+TTS_CASE_WITH("Check behavior of sinc on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+  auto pa1 = a1*eve::pio_2(eve::as(a1));
+   using eve::raw;
+   auto prec = tts::prec<T>(0.005, 0.005);
+   TTS_RELATIVE_EQUAL(eve::sinc(a0), eve::sinc[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::sinc(pa1), eve::sinc[raw](pa1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   TTS_RELATIVE_EQUAL(eve::sinc(a0), eve::sinc[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::sinc(pa1), eve::sinc[fast](pa1), prec1);
+
 };

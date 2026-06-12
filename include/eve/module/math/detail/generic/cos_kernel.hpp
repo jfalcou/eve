@@ -25,6 +25,31 @@
 
 namespace eve
 {
+  namespace ab_st //Abramowitz & Stegun
+  {
+    
+    template <typename T> inline T fast_cos(T a0) // cos(a0) -pi/2 < a0 <  pi/2
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(-0.4999999963);
+      constexpr elt_t c4(0.0416666418);
+      constexpr elt_t c6(-0.0013888397);
+      constexpr elt_t c8(0.0000247609);
+      constexpr elt_t c10(-0.0000002605);       
+      return reverse_horner(sqr(a0), c0, c2, c4, c6, c8, c10); //absolute error less than 2.0e-9
+    }
+    
+    template <typename T> inline T raw_cos(T a0)// cos(a0) -pi/2 < a0 <  pi/2
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(-0.4960);
+      constexpr elt_t c4(0.03705);
+      return reverse_horner(sqr(a0), c0, c2, c4); //absolute error less than 2.0e-3
+    }
+  }
+
   template<typename Options>
   struct cos_kernel_t : elementwise_callable<cos_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,
