@@ -28,7 +28,7 @@ namespace eve
   template<typename Options>
   struct cos_kernel_t : elementwise_callable<cos_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,
-                                             medium_option, big_option,
+                                             medium_option, big_option, raw_option, fast_option,
                                              rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>

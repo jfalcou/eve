@@ -24,5 +24,9 @@ int main()
   run<EVE_TYPE> (EVE_NAME(cos[eve::half_circle]) , xp, eve::cos[eve::half_circle] , arg0);
   run<EVE_VALUE>(EVE_NAME(eve::cos)        , xp, eve::cos             , arg0);
   run<EVE_TYPE >(EVE_NAME(eve::cos)        , xp, eve::cos             , arg0);
+  run<EVE_VALUE>(EVE_NAME(half_raw(cos)) , xp, eve::cos[eve::half_circle][eve::raw], arg0);
+  run<EVE_TYPE >(EVE_NAME(half_raw(cos)) , xp, eve::cos[eve::half_circle][eve::raw], arg0);
+  run<EVE_VALUE>(EVE_NAME(half_fast(cos)) , xp, eve::cos[eve::half_circle][eve::fast], arg0);
+  run<EVE_TYPE >(EVE_NAME(half_fast(cos)) , xp, eve::cos[eve::half_circle][eve::fast], arg0);
 
 }

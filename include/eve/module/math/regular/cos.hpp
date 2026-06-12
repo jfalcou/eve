@@ -14,7 +14,7 @@ namespace eve
   template<typename Options>
   struct cos_t : elementwise_callable<cos_t, Options, quarter_circle_option,
                                       half_circle_option, full_circle_option,
-                                      medium_option, big_option,
+                                      medium_option, big_option,  raw_option, fast_option,
                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -54,6 +54,8 @@ namespace eve
 //!      constexpr auto cos[quarter_circle](floating_value auto x)           noexcept; // 3.a
 //!      constexpr auto cos[half_circle](floating_value auto x)              noexcept; // 3.b
 //!      constexpr auto cos[full_circle](floating_value auto x)              noexcept; // 3.c
+//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 4.a
+//!      constexpr auto acos[fast] (floating_value auto x)                   noexcept; // 4.b
 //!   }
 //!   @endcode
 //!
@@ -81,7 +83,9 @@ namespace eve
 //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, Nan is returned.
 //!       * If the element is a `Nan`, `Nan` is returned.
-///!
+//!    4. faster but less accurate versions that can be mixed with range limitations  quarter_circle or
+//!       half_circle_option to have any effect.
+//!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Cosinus)
@@ -100,13 +104,39 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-    if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-      return eve::_::apply_fp16_as_fp32(eve::cos_kernel[o], a0);
-    else
-      return cos_kernel[o](a0);
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::_::apply_fp16_as_fp32(eve::cos_kernel[o], a0);
+      else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle) )
+      {
+        if constexpr(O::contains(deg))
+          return cos[o.drop(deg)](div_180(a0));
+        else if constexpr(O::contains(radpi))
+          return cos[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
+        else if constexpr(O::contains(raw))
+        {
+          constexpr elt_t c0(1);
+          constexpr elt_t c2(-0.4960);
+          constexpr elt_t c4(0.03705);
+          return reverse_horner(sqr(a0), c0, c2, c4);
+        }
+        else if constexpr(O::contains(fast) || std::same_as<elt_t, float>)
+        {
+          constexpr elt_t c0(1);
+          constexpr elt_t c2(-0.4999999963);
+          constexpr elt_t c4(0.0416666418);
+          constexpr elt_t c6(-0.0013888397);
+          constexpr elt_t c8(0.0000247609);
+          constexpr elt_t c10(-0.0000002605);
+          return reverse_horner(sqr(a0), c0, c2, c4, c6, c8, c10); //absolute error less than 2x1.0e-9
+        }
+        else
+          return cos_kernel[o](a0);
+      }
+      else
+        return cos_kernel[o](a0);
     }
   }
-  constexpr auto cosd = eve::cos[eve::deg];
-  constexpr auto cospi= eve::cos[eve::radpi];
-
+    constexpr auto cosd = eve::cos[eve::deg];
+    constexpr auto cospi= eve::cos[eve::radpi];
 }
