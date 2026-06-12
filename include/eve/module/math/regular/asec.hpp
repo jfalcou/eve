@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct asec_t : elementwise_callable<asec_t, Options, raw_option,
+  struct asec_t : elementwise_callable<asec_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -47,13 +47,14 @@ namespace eve
 //!
 //!      // Semantic option
 //!      constexpr auto asec[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto asec[fast](floating_value auto x)                    noexcept; // 3
 //!      constexpr auto asec[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto asec[deg](floating_value auto x)                     noexcept; // 3
-//!      constexpr auto asec[pirad](floating_value auto x)                   noexcept; // 4
+//!      constexpr auto asec[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto asec[pirad](floating_value auto x)                   noexcept; // 5
 ///!
 //!      // Lanes masking
-//!      constexpr auto asec[conditional_expr auto c](floating_value auto x) noexcept; // 5
-//!      constexpr auto asec[logical_value auto m](floating_value auto x)    noexcept; // 5
+//!      constexpr auto asec[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto asec[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -72,10 +73,10 @@ namespace eve
 //!      * If the element is \f$0\f$, \f$\pi\f$ is returned.
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
-//!    1. Result in degrees
-//!    2. Result in \f$\pi\f$ multiples
-//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast but  accuracy not better than  5.0e-4.
+//!    3. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cosecant](https://mathworld.wolfram.com/InverseCosecant.html)

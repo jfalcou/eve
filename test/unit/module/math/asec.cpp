@@ -62,3 +62,20 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::asec)(eve::wide)",
   TTS_IEEE_EQUAL(eve::asec[mask](a0),
             eve::if_else(mask, eve::asec(a0), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of asec on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(1, 100), tts::randoms(-100, -1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.005, 0.005);
+   TTS_RELATIVE_EQUAL(eve::asec(a0), eve::asec[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::asec(a1), eve::asec[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00005, 0.00005);
+   TTS_RELATIVE_EQUAL(eve::asec(a0), eve::asec[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::asec(a1), eve::asec[fast](a1), prec1);
+
+};

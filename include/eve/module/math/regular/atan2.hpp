@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct atan2_t : elementwise_callable<atan2_t, Options, pedantic_option,
+  struct atan2_t : elementwise_callable<atan2_t, Options, pedantic_option, raw_option, fast_option,
                                          rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T, eve::floating_value U>
@@ -133,9 +133,16 @@ namespace eve
       else
       {
         using r_t = common_value_t<T, U>;
+        using elt_t =  element_type_t<r_t>;
         r_t a00(a0);
         r_t a10(a1);
-        if constexpr(O::contains(pedantic))
+        if constexpr(O::contains(raw)|| O::contains(fast))
+        {
+          auto q = eve::abs(a00/a10);
+          auto z = _::opt_atan_kernel(o, q, eve::rec[pedantic](q));
+          return bit_xor(if_else(is_positive(a10), z, pi(eve::as<elt_t>()) - z), bitofsign(a00));
+                         }
+                         else if constexpr(O::contains(pedantic))
         {
           if constexpr(scalar_value<r_t> && platform::supports_nans)
           {

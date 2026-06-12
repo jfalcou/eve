@@ -18,6 +18,34 @@
 
 namespace eve::_
 {
+   template<floating_value T, typename O>
+  EVE_FORCEINLINE auto
+  opt_atan_kernel(O const &, T const& a, T const& reca) noexcept
+  {
+    using elt_t =  element_type_t<T>;
+    if constexpr(O::contains(raw))
+    {
+      auto agt1 = eve::abs(a) > elt_t(1);
+      auto x = if_else(agt1, reca, a);
+      auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(x));
+      auto r = x/inc(elt_t(0.28)*sqr(x));
+      return if_else(agt1, spio2-r, r);
+    }
+    else if constexpr(O::contains(fast))
+    {
+             auto agt1 = eve::abs(a) > elt_t(1);
+        auto x = rec[pedantic][agt1](a);
+        auto spio2 = bit_xor(pio_2(as<T>()), bitofsign(a));
+        constexpr auto a1 = elt_t(0.9998660);
+        constexpr auto a3 = elt_t(-0.3302995);
+        constexpr auto a5 = elt_t(0.1801410);
+        constexpr auto a7 = elt_t(-0.0851330);
+        constexpr auto a9 = elt_t(0.0208351);
+        auto r = x*reverse_horner(sqr(x), a1, a3, a5, a7, a9);
+        return if_else(agt1, spio2-r, r);
+    }
+  }
+
   template<floating_value T>
   EVE_FORCEINLINE auto
   atan_kernel(T const& x, T const& recx) noexcept
@@ -46,6 +74,6 @@ namespace eve::_
     z = eve::fma(xx, z, xx);
     z = add[flag2](z, ieee_constant<0x1.1a62633145c07p-55, -0x1.777a5c0p-26f>(eve::as<T>{}));  // pio_4lo
     z = add[!flag1](z, ieee_constant<0x1.1a62633145c07p-54, -0x1.777a5c0p-25f>(eve::as<T>{})); // pio_2lo
-    return yy + z;
+    return  yy + z;
   }
 }

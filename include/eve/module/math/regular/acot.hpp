@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct acot_t : elementwise_callable<acot_t, Options,
+  struct acot_t : elementwise_callable<acot_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -45,15 +45,17 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto acot(floating_value auto x)                          noexcept; // 1
 //!
+//!
 //!      // Semantic option
-//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 3
-//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 4
+//!      constexpr auto acot[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acot[fast] (floating_value auto x)                   noexcept; // 3
+//!      constexpr auto acot[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto acot[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto acot[pirad](floating_value auto x)                   noexcept; // 5
 //!
 //!      // Lanes masking
-//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 5
-//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 5
+//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -71,9 +73,11 @@ namespace eve
 //!       * If the element is \f$\pm0\f$, \f$\pm\frac\pi2\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.
-//!    3. Result in degrees
-//!    4. Result in \f$\pi\f$ multiples
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast but accuracy not better than  5.0e-3 according Abramowitz & Stegun.
+//!    3. accuracy not better than  5.0e-35according Abramowitz & Stegun.
+//!    4. Result in degrees
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cotangent](https://mathworld.wolfram.com/InverseCotangent.html)
@@ -100,6 +104,10 @@ namespace eve
         return radinpi(acot[o.drop(radpi)](a));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::acot[o], a);
+      else if constexpr(O::contains(raw)||O::contains(fast))
+      {
+        return opt_atan_kernel(o, rec[pedantic](a), a);
+      }
       else
       {
         auto x = eve::abs(a);

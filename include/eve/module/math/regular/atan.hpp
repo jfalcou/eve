@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct atan_t : elementwise_callable<atan_t, Options,
+  struct atan_t : elementwise_callable<atan_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -47,13 +47,15 @@ namespace eve
 //!      constexpr auto atan(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
+//!      constexpr auto atan[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto atan[fast] (floating_value auto x)                   noexcept; // 3
+//!      constexpr auto atan[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto atan[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto atan[pirad](floating_value auto x)                   noexcept; // 5
 //!
 //!      // Lanes masking
-//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 4
-//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 4
+//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -71,15 +73,18 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. Result in degrees
-//!    3. Result in \f$\pi\f$ multiples
-//!    4. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast but accuracy not better than  5.0e-3 according Abramowitz & Stegun.
+//!    3. accuracy not better than  5.0e-5 according Abramowitz & Stegun.
+//!    4. Result in degrees
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: atan](https://en.cppreference.com/w/cpp/numeric/math/atan)
 //!   *  [Wolfram MathWorld: Inverse Tangent](https://mathworld.wolfram.com/InverseTangent.html)
 //!   *  [Wikipedia: Inverse trigonometric functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF: Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!   *  [Abramowitz & al. 4.4.47/48](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atan.cpp}
@@ -102,6 +107,10 @@ namespace eve
         return radinpi(atan[o.drop(radpi)](a));
       else if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::atan[o], a);
+      else if constexpr(O::contains(raw)||O::contains(fast))
+      {
+        return opt_atan_kernel(o, a, rec[pedantic](a));
+      }
       else
       {
         T x = eve::abs(a);

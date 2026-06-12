@@ -19,7 +19,7 @@
 namespace eve
 {
 template<typename Options>
-struct betainc_t : elementwise_callable<betainc_t, Options>
+struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw_option, fast_option>
 {
   template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
   requires (same_lanes_or_scalar<T0, T1, T2>)
@@ -50,25 +50,28 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   {
 //!      // Regular overload
 //!      constexpr auto betainc(floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 1
+//!                             floating_value auto x, floating_value auto y)          noexcept; // 1
+//!
+//!      // semantic modifyers
+//!      constexpr auto betainc[raw](/*any previous overload*/)                        noexcept; // 2
+//!      constexpr auto betainc[fast](/*any previous overload*/)                       noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto betainc[conditional_expr auto c](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
-//!      constexpr auto betainc[logical_value auto m](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto betainc[conditional_expr auto c](/*any previous overload*/)    noexcept; // 3
+//!      constexpr auto betainc[logical_value auto m](*any previous overload*/)        noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `s` :  [real floating argument](@ref eve::floating_value). \f$ s \in [0, 1]\f$
-//!
 //!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
-//!   The value of the incomplete betainc function is returned.
+//!     1. The value of the incomplete betainc function is returned.
+//!     2. speedier computations at accuracy price,
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Incomplete Beta Function](https://dlmf.nist.gov/8.17)
@@ -87,13 +90,13 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    auto betainc_(EVE_REQUIRES(cpu_), O const&, T px, T pa, T pb) noexcept
+    auto betainc_(EVE_REQUIRES(cpu_), O const& oo, T px, T pa, T pb) noexcept
     {
-      auto betacf = [](auto x, auto a, auto b) {
+      using elt_t = element_type_t<T>;
+      auto betacf = [](auto x, auto a, auto b, auto epsi) {
         // continued fraction for incomplete Beta function, used by betainc
         constexpr std::size_t itmax = 100;
         auto const            o     = one(as(x));
-        auto                  epsi  = 10 * eps(as(x));
         auto                  fpmin = sqr(eps(as(x)));
         auto                  qab   = a + b;
         auto                  qap   = inc(a);
@@ -118,11 +121,15 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
         }
         return h;
       };
-      auto bt   = exp(fma(pa, log(px), pb * log1p(-px)) - lbeta(pa, pb));
+      auto epsi  = 10 * eps(as<elt_t>());
+      if constexpr(O::contains(fast))  epsi  = sqrt(epsi);
+      if constexpr(O::contains(raw))   epsi  = sqrt(sqrt(epsi));
+
+      auto bt   = exp[oo](fma(pa, log[oo](px), pb * log1p[oo](-px)) - lbeta[oo](pa, pb));
       auto test = (px > inc(pa) / (pa + pb + T(2)));
       auto oms   = oneminus[test](px);
       swap_if(test, pa, pb);
-      auto res  = bt * betacf(oms, pa, pb) / pa;
+      auto res  = bt * betacf(oms, pa, pb, epsi) / pa;
       return if_else(is_ltz(oms) || oms > one(as(px)),
                      allbits,
                      if_else(is_eqz(oms), zero, if_else(px == one(as(px)), one, oneminus[test](res))));

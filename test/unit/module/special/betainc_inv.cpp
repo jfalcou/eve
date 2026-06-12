@@ -62,3 +62,19 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::betainc_inv)(eve::wide)",
   TTS_IEEE_EQUAL(eve::betainc_inv[mask](a0, a1, a2),
             eve::if_else(mask, eve::betainc_inv(a0, a1, a2), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of erf on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate( tts::randoms(1, 10)
+                           , tts::randoms(1, 10)
+                           , tts::randoms(1, 10)))
+<typename T>(T const& a0, T const& a1, T const& a2)
+{
+   using eve::raw;
+   using eve::fast;;
+   auto prec = tts::prec<T>(0.2, 0.07);
+   TTS_RELATIVE_EQUAL(eve::betainc_inv(a0, a1, a2), eve::betainc_inv[raw](a0, a1, a2), prec);
+   auto prec1 = tts::prec<T>(0.0009, 0.0009);
+   TTS_RELATIVE_EQUAL(eve::betainc_inv(a0, a1, a2), eve::betainc_inv[fast](a0, a1, a2), prec1);
+};

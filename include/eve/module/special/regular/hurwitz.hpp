@@ -17,7 +17,7 @@
 namespace eve
 {
 template<typename Options>
-struct hurwitz_t : callable<hurwitz_t, Options>
+struct hurwitz_t : callable<hurwitz_t, Options, pedantic_option, raw_option, fast_option>
 {
   template<eve::scalar_value N, eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
@@ -78,7 +78,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
   namespace _
   {
     template<typename N, typename T, callable_options O>
-    constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const&, N s, T z) noexcept
+    constexpr T  hurwitz_(EVE_REQUIRES(cpu_), O const& o, N s, T z) noexcept
     {
       using r_t = T;
       using elt_t =  eve::element_type_t<r_t>;
@@ -99,13 +99,13 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           T ex((m + (2*kk-1))*(m+(2*kk-2))*(p[kk]/((2*kk-1)*(2*kk-2))));
           for(int k=M-2; k >= 2 ; k--)
           {
-            auto cdiv = 1.0/((2*k-1)*(2*k-2));
+            auto cdiv = elt_t(1)/((2*k-1)*(2*k-2));
             ex = ((cdiv*(m+(2*k-1))*(m + (2*k-2)))*((p[k]) + x * ex));
           }
           return ((m + 1) * ((p[1]) + x * ex));
         };
 
-        auto scalar_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto zz){
+        auto scalar_1 = [s, o](auto zeta, auto xf, auto n, auto cutoff, auto zz){
           auto x = zz;
           int  nx(xf);
           auto minus_s = -s;
@@ -115,16 +115,16 @@ struct hurwitz_t : callable<hurwitz_t, Options>
             if (nx < 0)
             {
               auto minus_z = -zz;
-              zeta += eve::pow(minus_z, minus_s);
+              zeta += eve::pow[o](minus_z, minus_s);
               if (xf != zz)
               {
-                zeta += pow(zz - nx, minus_s);
+                zeta += pow[o](zz - nx, minus_s);
               }
               if (s > 0)
               {
                 for (int v = -nx-1; v >= 1;  --v){
                   auto zeta0 = zeta;
-                  zeta+=eve::pow(minus_z - v, minus_s);
+                  zeta+=eve::pow[o](minus_z - v, minus_s);
                   if(zeta == zeta0) break; // prevent long loop for large -x > 0
                 }
               }
@@ -132,14 +132,14 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               {
                 for (int v = 1; v <= -nx-1; ++v){
                   auto zeta0 = zeta;
-                  zeta+=eve::pow(minus_z - v, minus_s);
+                  zeta+=eve::pow[o](minus_z - v, minus_s);
                   if(zeta == zeta0) break; // prevent long loop for large -x > 0
                 }
               }
             }
             else // x ≥ 0 && z != 0
             {
-              zeta += eve::pow(zz, minus_s);
+              zeta += eve::pow[o](zz, minus_s);
             }
           }
           // loop order depends on sign of s, as above
@@ -150,7 +150,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
              for(int v=std::max(1, 1-nx); v <= n-1; ++v)
               {
                 auto zeta0 = zeta;
-                zeta+=eve::pow(zz + v, minus_s);
+                zeta+=eve::pow[o](zz + v, minus_s);
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
@@ -159,7 +159,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               for(int v=n-1; v >= std::max(1, 1-nx); --v)
               {
                 auto zeta0 = zeta;
-                zeta+=eve::pow(zz + v, minus_s);
+                zeta+=eve::pow[o](zz + v, minus_s);
                 if(zeta == zeta0) break; // prevent long loop for large m
               }
             }
@@ -169,7 +169,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
 
         };
 
-        auto simd_1 = [s](auto zeta, auto xf, auto n, auto cutoff, auto zz){
+        auto simd_1 = [s, o](auto zeta, auto xf, auto n, auto cutoff, auto zz){
           auto x = zz;
           auto  nx(xf);
           auto minus_s = -s;
@@ -181,8 +181,8 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           {
             if (eve::any(test1 && test2))
             {
-              zeta += if_else(test3, eve::pow(minus_z, minus_s), eve::zero);
-              zeta += if_else(test3 && xf != zz, pow(zz - nx, minus_s), eve::zero);
+              zeta += if_else(test3, eve::pow[o](minus_z, minus_s), eve::zero);
+              zeta += if_else(test3 && xf != zz, pow[o](zz - nx, minus_s), eve::zero);
             }
             if (s > 0)
             {
@@ -190,7 +190,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               while ( eve::any(test3 && v >= 1))
               {
                 auto zeta0 = zeta;
-                zeta+=eve::if_else(test3 && v >= 1, eve::pow(minus_z - v, minus_s), zero);
+                zeta+=eve::if_else(test3 && v >= 1, eve::pow[o](minus_z - v, minus_s), zero);
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large -x > 0
                 v = eve::dec(v);
               }
@@ -201,7 +201,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
               while (eve::any(test3 && v <= -nx-1))
               {
                 auto zeta0 = zeta;
-                zeta+= eve::if_else(test3 && v <= -nx-1,eve::pow(minus_z - v, minus_s), zero);
+                zeta+= eve::if_else(test3 && v <= -nx-1,eve::pow[o](minus_z - v, minus_s), zero);
                 if(eve::all(zeta == zeta0)) break; // prevent long loop for large -x > 0
                 v = eve::inc(v);
               }
@@ -209,7 +209,7 @@ struct hurwitz_t : callable<hurwitz_t, Options>
           }
           if (eve::any(test1 && !test2)) // x ≥ 0 && z != 0
           {
-            zeta += if_else(test1 && !test2, eve::pow(zz, minus_s), zero);
+            zeta += if_else(test1 && !test2, eve::pow[o](zz, minus_s), zero);
           }
           // loop order depends on sign of s, as above
           if(eve::any(test1)) // shift using recurrence formula

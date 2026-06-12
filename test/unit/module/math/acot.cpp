@@ -51,3 +51,20 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::acot)(eve::wide)",
   TTS_IEEE_EQUAL(eve::acot[mask](a0),
             eve::if_else(mask, eve::acot(a0), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of acot on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+   using eve::raw;
+   auto prec = tts::prec<T>(0.005, 0.005);
+   TTS_RELATIVE_EQUAL(eve::acot(a0), eve::acot[raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::acot(a1), eve::acot[raw](a1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.00002, 0.00002);
+   TTS_RELATIVE_EQUAL(eve::acot(a0), eve::acot[fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::acot(a1), eve::acot[fast](a1), prec1);
+
+};

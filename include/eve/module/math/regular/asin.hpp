@@ -23,7 +23,7 @@
 namespace eve
 {
   template<typename Options>
-  struct asin_t : elementwise_callable<asin_t, Options,
+  struct asin_t : elementwise_callable<asin_t, Options, raw_option, fast_option,
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -54,13 +54,15 @@ namespace eve
 //!      constexpr auto asin(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
+//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[fast] (floating_value auto x)                   noexcept; // 3
 //!      constexpr auto acos[rad](floating_value auto x)                     noexcept; // 1
-//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 2
-//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 3
+//!      constexpr auto acos[deg](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto acos[pirad](floating_value auto x)                   noexcept; // 5
 //!
 //!      // Lanes masking
-//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 4
-//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 4
+//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 6
+//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -78,15 +80,18 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!    2. Result in degrees
-//!    3. Result in \f$\pi\f$ multiples
-//!    4. [The operation is performed conditionnaly](@ref conditional).
+//!    2. very fast  around 1.0e-5 accracy.
+//!    3. Same as 2.
+//!    4. Result in degrees
+//!    5. Result in \f$\pi\f$ multiples
+//!    6. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
 //!   *  [Wolfram MathWorld: InverseSine](https://mathworld.wolfram.com/InverseSine.html)
 //!   *  [Wikipedia:Inverse trigonometric functions ](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF:Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!   *  [Abramowitz & al. 4.4.46](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asin.cpp}
@@ -110,6 +115,18 @@ namespace eve
         return radinpi(asin[o.drop(radpi)](a0));
       else  if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::asin[o], a0);
+      else if constexpr(O::contains(raw) ||O::contains(fast))
+      {
+        using elt_t =  eve::element_type_t<T>;
+        //  from Abramowitz and Stegun 4.4.45 p 81
+        constexpr auto c0 = elt_t( 1.5707288);
+        constexpr auto c1 = elt_t(-0.2121144);
+        constexpr auto c2 = elt_t( 0.0742610);
+        constexpr auto c3 = elt_t(-0.0187293);
+        auto aa0 = eve::abs(a0);
+        auto p = eve::reverse_horner(aa0, c0, c1, c2, c3);
+        return eve::sign(a0)*eve::fam(eve::pio_2(eve::as<elt_t>()), eve::sqrt(eve::oneminus(aa0)), -p);
+      }
       else
       {
         using elt_t = element_type_t<T>;

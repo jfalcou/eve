@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option>
+  struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T, eve::value I>
     requires (same_lanes_or_scalar<I, T>)
@@ -51,9 +51,11 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      constexpr auto exp_int(floating_value auto x)                                   noexcept; // 1
-//!      constexpr auto exp_int(unsigned_value auto n, floating_value auto x)            noexcept; // 2
+//!      constexpr auto exp_int(unsigned_value auto n, floating_value auto x)            noexcept; // 1
 //!
 //!      // Lanes masking
+//!      constexpr auto exp_int[raw](/*any of the above overloads*/)                     noexcept; // 2
+//!      constexpr auto exp_int[fast](/*any of the above overloads*/)                    noexcept; // 2
 //!      constexpr auto exp_int[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
 //!      constexpr auto exp_int[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
@@ -70,12 +72,14 @@ namespace eve
 //!
 //!     1. The value of the exponential integral
 //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$, is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. speedier computations at  accuracy price.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld:Exponential Integral ](https://mathworld.wolfram.com/ExponentialIntegral.html)
 //!   *  [DLMF: Generalized Exponential Integral](https://dlmf.nist.gov/8.19#i)
 //!   *  [Wikipedia: Exponential integral](https://en.wikipedia.org/wiki/Exponential_integral)
+//!   *  [A. Barry & al.](https://www.sciencedirect.com/science/article/abs/pii/S0022169499001845?via%3Dihub)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/exp_int.cpp}
@@ -88,13 +92,29 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
-      return exp_int(T(1), x);
+      using elt_t = element_type_t<T>;
+      if constexpr(O::contains(raw)|| O::contains(fast))
+      {
+        auto x = if_else(is_negative(a0), allbits, a0);
+        constexpr auto g =  elt_t(0.561459483566885); //exp(-egamma)
+        constexpr auto omg = oneminus(g);
+        auto b =  sqrt(2*(1-g)/(g*(2-g)));
+        auto hinf = (1-g)*((g-6)*g+12)/(3*g*sqr(2-g)*b);
+        auto q = elt_t(0.425531914893617)*pow(x, elt_t(1.091928428198338)); // 20/47,  sqrt(31/26);
+        auto h = rec[pedantic](1+x*sqrt(x))+hinf*q/(1+q);
+        auto r = exp[o](-x)*log[o](1+g/x-(1-g)/sqr(fam(h, b, x)))/fam(g, omg, exp[o](-x/omg));
+        return if_else(is_eqpz(x), inf(as<elt_t>()), r);
+      }
+      else
+      {
+        return exp_int(T(1), a0);
+      }
     }
 
     template<typename I, typename T, callable_options O>
-    constexpr eve::as_wide_as_t<T, I> exp_int_(EVE_REQUIRES(cpu_), O const& , I in, T x) noexcept
+    constexpr eve::as_wide_as_t<T, I> exp_int_(EVE_REQUIRES(cpu_), O const& o, I in, T x) noexcept
     {
       if constexpr(scalar_value<I> && scalar_value<T>)
       {
@@ -118,12 +138,12 @@ namespace eve
         using elt_t = element_type_t<T>;
         using w_t   = wide<elt_t, cardinal_t<I>>;
         using i_t   = as_integer_t<elt_t>;
-        return exp_int(convert(in, as<i_t>()), w_t(x));
+        return exp_int[o](convert(in, as<i_t>()), w_t(x));
       }
     }
 
     template<typename T, callable_options O>
-    T exp_int_(EVE_REQUIRES(cpu_), O const& , T n, T x)
+    T exp_int_(EVE_REQUIRES(cpu_), O const& o, T n, T x)
     {
       using elt_t = element_type_t<T>;
       auto notdone  = is_gez(x) && is_flint(n) && is_gez(n);
@@ -132,26 +152,26 @@ namespace eve
       notdone = next_interval(br_zeron, notdone, is_eqz(n), r, x); // n == 0
       if( eve::any(notdone) )
       {
-        auto br_largen = [](auto pn, auto px) { // n >  5000
+        auto br_largen = [o](auto pn, auto px) { // n >  5000
           auto xk  = px + pn;
           auto yk  = rec[pedantic](sqr(xk));
           auto t   = pn;
           auto ans = yk * t * (6 * sqr(px) - 8 * t * px + sqr(t));
           ans      = yk * (ans + t * (t - 2 * px));
           ans      = yk * (ans + t);
-          return inc(ans) * exp(-px) / xk;
+          return inc(ans) * exp[o](-px) / xk;
         };
         notdone = next_interval(br_largen, notdone, n > 5000, r, n, x); // n >  5000
         if( eve::any(notdone) )
         {
-          auto br_xlt1 = [](auto pn, auto px) { // here x is always le 1
+          auto br_xlt1 = [o](auto pn, auto px) { // here x is always le 1
             auto eqzx    = is_eqz(px);
             px           = inc[eqzx](px); // loop is infinite for x == 0
             auto    psi1 = zero(as(px));
             int32_t maxn = dec(max(1, int32_t(eve::maximum(pn))));
             for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < pn](psi1, rec[pedantic](T(i)));
             auto euler = eve::egamma(eve::as<T>{});
-            auto psi   = -euler - log(px) + psi1;
+            auto psi   = -euler - log[o](px) + psi1;
             T    t;
 
             auto z   = -px;
@@ -168,14 +188,14 @@ namespace eve
             }
             while( eve::any(t > epso_2(as(px))) );
             auto in = convert(pn, int_from<T>());
-            return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(pn)) - ans, inf(as(px)));
+            return add[eqzx]((eve::pow[o](z, dec(in)) * psi / tgamma[o](pn)) - ans, inf(as(px)));
           };
           auto xlt1 = x < 1;
           T    xx   = if_else(xlt1, x, one);
           notdone   = next_interval(br_xlt1, notdone, xlt1, r, n, xx); // x <  1
           if( eve::any(notdone) )
           {
-            auto br_xge1 = [](auto pn, auto px) { // here x is always gt 1
+            auto br_xge1 = [o](auto pn, auto px) { // here x is always gt 1
               auto    exp_intbig = (sizeof(elt_t) == 8) ? T(1ull << 57) : T(1ull << 24);
               auto    rr          = exp_intbig;
               int32_t sk         = 1;
@@ -208,7 +228,7 @@ namespace eve
                 qkm1 *= fac;
               }
               while( eve::any(t > eps(as(px))) );
-              return add[px < maxlog(as(px))](zero(as(px)), ans * exp(-px));
+              return add[px < maxlog(as(px))](zero(as(px)), ans * exp[o](-px));
             };
             notdone = last_interval(br_xge1, notdone, r, n, if_else(xlt1, T(2), x));
           }
