@@ -145,14 +145,18 @@ $(function(){initNavTree('group__special_ga35bd17562d2457033901ba4a6a112808.html
 <div class="line">   <span class="comment">// Regular overload</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic modifyers</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[raw](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[fast](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35bd17562d2457033901ba4a6a112808">digamma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
-<div class="ttc" id="agroup__special_ga35bd17562d2457033901ba4a6a112808_html_ga35bd17562d2457033901ba4a6a112808"><div class="ttname"><a href="#ga35bd17562d2457033901ba4a6a112808">eve::digamma</a></div><div class="ttdeci">constexpr auto digamma</div><div class="ttdoc">elementwise_callable object computing the Digamma function i.e. the logarithmic derivative of the  fu...</div><div class="ttdef"><b>Definition</b> digamma.hpp:75</div></div>
+<div class="ttc" id="agroup__special_ga35bd17562d2457033901ba4a6a112808_html_ga35bd17562d2457033901ba4a6a112808"><div class="ttname"><a href="#ga35bd17562d2457033901ba4a6a112808">eve::digamma</a></div><div class="ttdeci">constexpr auto digamma</div><div class="ttdoc">elementwise_callable object computing the Digamma function i.e. the logarithmic derivative of the  fu...</div><div class="ttdef"><b>Definition</b> digamma.hpp:82</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -163,12 +167,14 @@ $(function(){initNavTree('group__special_ga35bd17562d2457033901ba4a6a112808.html
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The value of the Digamma function: \(\psi(x) = \frac{\Gamma&#39;(x)}{\Gamma(x)}\) is returned.</li>
+<li>speedier computations at accuracy price inspired from pmineiro library but also ok for negative values.</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
 <ul>
 <li><a href="https://dlmf.nist.gov/5.2#i">DLMF: Gamma and Psi Functions</a></li>
 <li><a href="https://mathworld.wolfram.com/DigammaFunction.html">Wolfram MathWorld: Digamma Function</a></li>
+<li><a href="github.com/pmineiro/fastapprox/tree/master/fastapprox">pmineiro fastapprox</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>

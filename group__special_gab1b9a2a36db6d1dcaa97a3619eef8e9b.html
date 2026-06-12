@@ -151,6 +151,7 @@ $(function(){initNavTree('group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Semantic options</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> lrising_factoriale[raw]<span class="comment">/*any of the above overloads*/</span>)                     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> lrising_factoriale[fast]<span class="comment">/*any of the above overloads*/</span>)                    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> lrising_factorialee[pedantic](<span class="comment">/*any of the above overloads*/</span>)              <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
@@ -168,7 +169,7 @@ $(function(){initNavTree('group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html
 <ol type="1">
 <li>The value of the natural logarithm of the rising_factorial is returned( <span class="tt">a</span> and <span class="tt">x</span> must be strictly positive).</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
-<li>The <span class="tt">raw</span> option uses the crude formula with all its limitations and inacurracies and return a Nan if <span class="tt">a</span> and <span class="tt">a+x</span> are not both positive.</li>
+<li>speedier, less accurate and return a Nan if <span class="tt">a</span> and <span class="tt">a+x</span> are not both positive.</li>
 <li>The <span class="tt">pedantic</span> option uses reflection tricks and computes the function for all real <span class="tt">a</span> and <span class="tt">x</span>, and in fact computes the logarithm of the absolute value of the Pochammer symbol \(\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\) returning nan only if the result is really undefined.</li>
 </ol>
 <h2 class="groupheader">External references </h2>

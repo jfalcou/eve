@@ -181,7 +181,7 @@ var searchData=
   ['callable_3c_20heuman_5flambda_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_178',['callable&lt; heuman_lambda_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20hi_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_179',['callable&lt; hi_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20horner_5ft_2c_20options_2c_20pedantic_5foption_2c_20kahan_5foption_2c_20widen_5foption_20_3e_180',['callable&lt; horner_t, Options, pedantic_option, kahan_option, widen_option &gt;',['../structeve_1_1callable.html',1,'eve']]],
-  ['callable_3c_20hurwitz_5ft_2c_20options_20_3e_181',['callable&lt; hurwitz_t, Options &gt;',['../structeve_1_1callable.html',1,'eve']]],
+  ['callable_3c_20hurwitz_5ft_2c_20options_2c_20pedantic_5foption_2c_20raw_5foption_2c_20fast_5foption_20_3e_181',['callable&lt; hurwitz_t, Options, pedantic_option, raw_option, fast_option &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20hypot_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_182',['callable&lt; hypot_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20if_5felse_5ft_2c_20options_20_3e_183',['callable&lt; if_else_t, Options &gt;',['../structeve_1_1callable.html',1,'eve']]],
   ['callable_3c_20ifrexp_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_184',['callable&lt; ifrexp_t, Options, Options... &gt;',['../structeve_1_1callable.html',1,'eve']]],

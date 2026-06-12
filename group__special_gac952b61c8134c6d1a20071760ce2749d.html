@@ -144,9 +144,11 @@ $(function(){initNavTree('group__special_gac952b61c8134c6d1a20071760ce2749d.html
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>(<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>(<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)            <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>[raw](<span class="comment">/*any of the above overloads*/</span>)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>[fast](<span class="comment">/*any of the above overloads*/</span>)                    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac952b61c8134c6d1a20071760ce2749d">exp_int</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
@@ -154,7 +156,7 @@ $(function(){initNavTree('group__special_gac952b61c8134c6d1a20071760ce2749d.html
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
 <div class="ttc" id="aconcepteve_1_1unsigned__value_html"><div class="ttname"><a href="concepteve_1_1unsigned__value.html">eve::unsigned_value</a></div><div class="ttdoc">The concept unsigned_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:84</div></div>
-<div class="ttc" id="agroup__special_gac952b61c8134c6d1a20071760ce2749d_html_gac952b61c8134c6d1a20071760ce2749d"><div class="ttname"><a href="#gac952b61c8134c6d1a20071760ce2749d">eve::exp_int</a></div><div class="ttdeci">constexpr auto exp_int</div><div class="ttdoc">elementwise_callable object computing the exponential integral .</div><div class="ttdef"><b>Definition</b> exp_int.hpp:83</div></div>
+<div class="ttc" id="agroup__special_gac952b61c8134c6d1a20071760ce2749d_html_gac952b61c8134c6d1a20071760ce2749d"><div class="ttname"><a href="#gac952b61c8134c6d1a20071760ce2749d">eve::exp_int</a></div><div class="ttdeci">constexpr auto exp_int</div><div class="ttdoc">elementwise_callable object computing the exponential integral .</div><div class="ttdef"><b>Definition</b> exp_int.hpp:87</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -166,6 +168,7 @@ $(function(){initNavTree('group__special_gac952b61c8134c6d1a20071760ce2749d.html
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The value of the exponential integral \( \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\), is returned.</li>
+<li>speedier computations at accuracy price.</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
@@ -173,6 +176,7 @@ $(function(){initNavTree('group__special_gac952b61c8134c6d1a20071760ce2749d.html
 <li><a href="https://mathworld.wolfram.com/ExponentialIntegral.html">Wolfram MathWorld:Exponential Integral</a></li>
 <li><a href="https://dlmf.nist.gov/8.19#i">DLMF: Generalized Exponential Integral</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Exponential_integral">Wikipedia: Exponential integral</a></li>
+<li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0022169499001845?via%3Dihub">A. Barry &amp; al.</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
