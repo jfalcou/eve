@@ -105,15 +105,13 @@ namespace eve
         return eve::_::apply_fp16_as_fp32(eve::tan_kernel[o], a0);
       else if constexpr( O::contains(quarter_circle))
       {
-        if constexpr(O::contains(deg))          return tan[o.drop(deg)](div_180(a0));
+        if constexpr(O::contains(deg))          return tan[o.drop(deg)][radpi](div_180(a0));
         else if constexpr(O::contains(radpi))   return tan[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
         else if constexpr(O::contains(raw))     return ab_st::raw_tanc(a0)*a0;
         else if constexpr(O::contains(fast))    return ab_st::fast_tanc(a0)*a0;
-        else
-          return tan_kernel[o](a0);
+        else                                   return tan_kernel[o](a0);
       }
-    else
-      return tan_kernel[o](a0);
+      else                                      return tan_kernel[o](a0);
     }
   }
   constexpr auto tand = eve::tan[eve::deg];
