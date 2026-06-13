@@ -35,19 +35,19 @@ namespace eve::_
       }
       else if constexpr (sizeof(T) == 2)
       {
-        constexpr as<wide<std::uint8_t, eve::fixed<16>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint8_t, eve::fixed<16>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm_maddubs_epi16(byte_counts, one(tgt))};
       }
       else if constexpr (sizeof(T) == 4)
       {
-        constexpr as<wide<std::uint16_t, eve::fixed<8>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint16_t, eve::fixed<8>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm_madd_epi16(byte_counts, one(tgt))};
       }
       else// if constexpr (sizeof(T) == 8)
       {
-        constexpr as<wide<std::uint8_t, eve::fixed<16>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint8_t, eve::fixed<16>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm_sad_epu8(byte_counts, _mm_setzero_si128())};
       }
@@ -83,19 +83,19 @@ namespace eve::_
       }
       else if constexpr (sizeof(T) == 2)
       {
-        constexpr as<wide<std::uint8_t, eve::fixed<32>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint8_t, eve::fixed<32>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm256_maddubs_epi16(byte_counts, one(tgt))};
       }
       else if constexpr (sizeof(T) == 4)
       {
-        constexpr as<wide<std::uint16_t, eve::fixed<16>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint16_t, eve::fixed<16>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm256_madd_epi16(byte_counts, one(tgt))};
       }
       else// if constexpr (sizeof(T) == 8)
       {
-        constexpr as<wide<std::uint8_t, eve::fixed<32>>> tgt = {};
+        constexpr as<typename wide<T,N>::template rebind<std::uint8_t, eve::fixed<32>>> tgt = {};
         auto byte_counts = popcount(bit_cast(x,tgt));
         return wide<T,N>{_mm256_sad_epu8(byte_counts, _mm256_setzero_si256())};
       }
