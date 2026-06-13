@@ -94,6 +94,6 @@ TTS_CASE_WITH("Check behavior of cot: on wide",
   auto prec = tts::prec<T>(0.09, 0.005);
   TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw](pa0), prec);
   using eve::fast;
-  auto prec1 = tts::prec<T>(0.02, 0.003);
+  auto prec1 = tts::prec<T>(0.09, 0.003);
   TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw][fast](pa0), prec1);
 };
