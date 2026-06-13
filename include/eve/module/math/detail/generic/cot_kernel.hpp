@@ -24,9 +24,32 @@
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 
-
 namespace eve
 {
+  namespace ab_st //Abramowitz & Stegun
+  {
+    template <typename T> inline T fast_xcot(T a0) // cot(a0)*a0 -pi/4 < a0 <  pi/4
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(-0.3333333410);
+      constexpr elt_t c4(-0.0222220287);
+      constexpr elt_t c6(-0.0021177168);
+      constexpr elt_t c8(-0.0002078504);
+      constexpr elt_t c10(-0.0000262619);
+     return reverse_horner(sqr(a0), c0, c2, c4, c6, c8, c10); //relative error less than 4.0e-10
+    }
+
+    template <typename T> inline T raw_xcot(T a0)// cot(a0)*a0 -pi/4 < a0 <  pi/4
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(-0.332867);
+      constexpr elt_t c4(-0.24369);
+      return reverse_horner(sqr(a0), c0, c2, c4); //relative error less than 3.0e-5
+    }
+  }
+
   template<typename Options>
   struct cot_kernel_t : elementwise_callable<cot_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,

@@ -26,6 +26,32 @@
 
 namespace eve
 {
+  namespace ab_st //Abramowitz & Stegun
+  {
+
+    template <typename T> inline T fast_tanc(T a0) // tan(a0)/a0 -pi/4 < a0 <  pi/4
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(0.3333314036);
+      constexpr elt_t c4(0.1333923995);
+      constexpr elt_t c6(0.0533740603);
+      constexpr elt_t c8(0.0245650893);
+      constexpr elt_t c10(0.0029005250);
+      constexpr elt_t c12(0.0095168091);
+      return reverse_horner(sqr(a0), c0, c2, c4, c6, c8, c10, c12); //absolute error less than 2.0e-8
+    }
+
+    template <typename T> inline T raw_tanc(T a0)// cos(a0) -pi/2 < a0 <  pi/2
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0(1);
+      constexpr elt_t c2(0.31755);
+      constexpr elt_t c4(0.20330);
+      return reverse_horner(sqr(a0), c0, c2, c4); //absolute error less than 1.0e-3
+    }
+  }
+
   template<typename Options>
   struct tan_kernel_t : elementwise_callable<tan_kernel_t, Options, quarter_circle_option,
                                              half_circle_option, full_circle_option,

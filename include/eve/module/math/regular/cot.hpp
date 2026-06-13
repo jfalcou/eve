@@ -12,7 +12,8 @@
 namespace eve
 {
   template<typename Options>
-  struct cot_t : elementwise_callable<cot_t, Options, quarter_circle_option, half_circle_option,
+  struct cot_t : elementwise_callable<cot_t, Options, raw_option, fast_option,
+                                      quarter_circle_option, half_circle_option,
                                       full_circle_option, medium_option, big_option,
                                       rad_option, radpi_option, deg_option>
   {
@@ -97,9 +98,19 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cot_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
+      using elt_t = element_type_t<T>;
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::cot_kernel[o], a0);
-      else
+      else if constexpr( O::contains(quarter_circle))
+      {
+        if constexpr(O::contains(deg))          return cot[o.drop(deg)](div_180(a0));
+        else if constexpr(O::contains(radpi))   return cot[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
+        else if constexpr(O::contains(raw))     return ab_st::raw_xcot(a0)/a0;
+        else if constexpr(O::contains(fast))    return ab_st::fast_xcot(a0)/a0;
+        else
+          return cot_kernel[o](a0);
+      }
+       else
         return cot_kernel[o](a0);
     }
   }

@@ -13,9 +13,9 @@
 namespace eve
 {
   template<typename Options>
-  struct sin_t : elementwise_callable<sin_t, Options, quarter_circle_option,
+  struct sin_t : elementwise_callable<sin_t, Options,  quarter_circle_option,
                                       half_circle_option, full_circle_option,
-                                      medium_option, big_option,
+                                      medium_option, big_option, raw_option, fast_option,
                                       rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -53,8 +53,8 @@ namespace eve
 //!      constexpr auto sin[quarter_circle](floating_value auto x)          noexcept; // 3.a
 //!      constexpr auto sin[half_circle](floating_value auto x)             noexcept; // 3.b
 //!      constexpr auto sin[full_circle](floating_value auto x)             noexcept; // 3.c
-//!      constexpr auto sin[raw](floating_value auto x)                     noexcept; // 4.a
-//!      constexpr auto sin[fast] (floating_value auto x)                   noexcept; // 4.b
+//!      constexpr auto sin[raw](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto sin[fast] (floating_value auto x)                   noexcept; // 4
 //!      constexpr auto sin[rad](floating_value auto x)                     noexcept; // 1
 //!      constexpr auto sin[deg](floating_value auto x)                     noexcept; // 5
 //!      constexpr auto sin[radpi](floating_value auto x)                   noexcept; // 6
@@ -86,7 +86,6 @@ namespace eve
 //!       half_circle_option to have any effect.
 //!    5. assume a parameter in degree.
 //!    6. assume a parameter in \f$\pi\f$ multiples.
-//!
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/sin)

@@ -82,3 +82,18 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cot)(eve::wide)",
   TTS_IEEE_EQUAL(eve::cot[mask](a0),
             eve::if_else(mask, eve::cot(a0), a0));
 };
+
+TTS_CASE_WITH("Check behavior of cot: on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate( tts::randoms(-1, 1)))
+  <typename T>(T const& a0)
+{
+  auto pa0 = a0*eve::pio_4(eve::as(a0));
+  using eve::raw;
+  using eve::quarter_circle;
+  auto prec = tts::prec<T>(0.02, 0.005);
+  TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw](pa0), prec);
+  using eve::fast;
+  auto prec1 = tts::prec<T>(0.02, 0.002);
+  TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw][fast](pa0), prec1);
+};

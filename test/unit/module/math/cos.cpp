@@ -75,3 +75,22 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cos)(eve::wide)",
   TTS_IEEE_EQUAL(eve::cos[mask](a0),
             eve::if_else(mask, eve::cos(a0), a0));
 };
+
+
+TTS_CASE_WITH("Check behavior of cos on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1.5, 1.5), tts::randoms(-1, 1)))
+<typename T>(T const& a0, T const& a1)
+{
+  auto pa1 = a1*eve::pio_2(eve::as(a1));
+   using eve::raw;
+   using eve::quarter_circle;
+   auto prec = tts::prec<T>(0.005, 0.005);
+   TTS_RELATIVE_EQUAL(eve::cos(a0), eve::cos[quarter_circle][raw](a0), prec);
+   TTS_RELATIVE_EQUAL(eve::cos(pa1), eve::cos[quarter_circle][raw][raw](pa1), prec);
+   using eve::fast;
+   auto prec1 = tts::prec<T>(0.002, 0.002);
+   TTS_RELATIVE_EQUAL(eve::cos(a0), eve::cos[quarter_circle][raw][fast](a0), prec1);
+   TTS_RELATIVE_EQUAL(eve::cos(pa1), eve::cos[quarter_circle][raw][fast](pa1), prec1);
+
+};

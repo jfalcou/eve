@@ -78,11 +78,10 @@ namespace eve
 //!         2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!         3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
-//!
 //!    4. faster but less accurate versions that can be mixed with range limitations to quarter_circle or
 //!       half_circle_option to have any effect.
 //!    5. assume a parameter in degree.
-//!    6. assume a parameter in \f$\pi\f$ multiples. 
+//!    6. assume a parameter in \f$\pi\f$ multiples.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
@@ -109,13 +108,13 @@ namespace eve
                         (std::same_as<elt_t, float> && !(O::contains(fast) ||  O::contains(raw))))
       {
         return cos_kernel[o](a0);
-      }    
+      }
       else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle) )
       {
         if constexpr(O::contains(deg))          return cos[o.drop(deg)](div_180(a0));
         else if constexpr(O::contains(radpi))   return cos[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw))     return ab_st::raw_cos(a0); 
-        else if constexpr(O::contains(fast))    return ab_st::fast_cos(a0);    
+        else if constexpr(O::contains(raw))     return ab_st::raw_cos(a0);
+        else if constexpr(O::contains(fast))    return ab_st::fast_cos(a0);
         else
           return cos_kernel[o](a0);
       }
