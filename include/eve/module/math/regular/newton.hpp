@@ -126,8 +126,8 @@ namespace eve
            , nodes<kumi::tuple<Nodes...>> const& ns)
     {
 
-      using r1_t  =  common_value_t<X, Coefs...>;
-      using r2_t  =  common_value_t<X, Nodes...>;
+      using r1_t  = common_value_t<X, Coefs...>;
+      using r2_t  = common_value_t<X, Nodes...>;
       using r_t   = common_value_t<r1_t, r2_t>;
       if constexpr(kumi::size_v<decltype(cs)> == 0)
       {
@@ -165,7 +165,7 @@ namespace eve
       else
       {
          kumi::result::fill_t<s, r_t> tcn{r_t{cns}...};
-        auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
+        auto [tc, tn] = kumi::split(tcn, kumi::index<(s+1)/2>);
         return newton[o](x,coefficients{tc},nodes{tn});
       }
     }

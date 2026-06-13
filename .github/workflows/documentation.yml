@@ -63,7 +63,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build && cd build

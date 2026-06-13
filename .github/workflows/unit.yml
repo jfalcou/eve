@@ -35,7 +35,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -72,7 +72,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -154,7 +154,7 @@ jobs:
           cmake .. -G Ninja
           cmake --install . --prefix /usr
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -219,7 +219,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -257,7 +257,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -319,7 +319,7 @@ jobs:
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -398,7 +398,7 @@ jobs:
 
   #   steps:
   #     - name: Fetch current branch
-  #       uses: actions/checkout@v4.1.1
+  #       uses: actions/checkout@v6
   #     - name: Running CMake for MSVC ${{ matrix.cfg.mode }} ${{ matrix.cfg.options }}
   #       run: |
   #         mkdir build && cd build
@@ -434,7 +434,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -462,7 +462,7 @@ jobs:
         - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -493,7 +493,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -519,7 +519,7 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -546,7 +546,7 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -572,7 +572,7 @@ jobs:
         - { comp: gcc15  , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
