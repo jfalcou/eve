@@ -24,6 +24,38 @@ TTS_CASE_TPL("Check return types of eve::popcount(simd)", eve::test::simd::unsig
 //==================================================================================================
 // Tests for eve::popcount
 //==================================================================================================
+TTS_CASE_TPL( "Pseudo-exhaustive behavior check of eve::popcount(simd)"
+            , eve::test::scalar::unsigned_integers
+            )
+<typename T>(tts::type<T>)
+{
+  if constexpr(sizeof(T) < 4)
+  {
+    eve::wide<T> bits = eve::iota(eve::as<eve::wide<T>>{});
+    constexpr T offset = eve::wide<T>::size();
+
+    while(eve::all(bits < eve::allbits(eve::as<T>{})))
+    {
+      TTS_EQUAL(eve::popcount(bits), tts::map([](T e) -> T { return std::popcount(e); }, bits));
+      bits += offset;
+    }
+  }
+  else
+  {
+    TTS_EQUAL(eve::popcount(eve::wide<T>{0}), eve::wide<T>{0});
+    TTS_EQUAL(eve::popcount(eve::allbits(eve::as<eve::wide<T>>{})), eve::wide<T>{8*sizeof(T)});
+
+    constexpr T base = 15;
+    eve::wide<T> bits{base / (1+eve::iota(eve::as<eve::wide<T>>{}))};
+
+    for(std::size_t i=0;i<(8*sizeof(T)-1);++i)
+    {
+      TTS_EQUAL(eve::popcount(bits), tts::map([](T e) -> T { return std::popcount(e); }, bits));
+      bits = eve::rotl(bits,1);
+    }
+  }
+};
+
 TTS_CASE_WITH("Check behavior of eve::popcount(simd)",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
