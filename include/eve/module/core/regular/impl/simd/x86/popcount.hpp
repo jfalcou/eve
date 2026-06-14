@@ -35,10 +35,10 @@ namespace eve::_
       if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
       if constexpr (sizeof(T) == 8) return wide<T,N>{_mm_sad_epu8(count8, _mm_setzero_si128())};
 
-      __m128i count16 = _mm_maddubs_epi16(count8, _mm_set1_epi8(1));
+      __m128i count16 = _mm_add_epi16(count8, _mm_srli_epi16(count8, 8));
 
       if constexpr (sizeof(T) == 2) return wide<T,N>{count16};
-      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm_madd_epi16(count16, _mm_set1_epi16(1))};
+      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm_add_epi32(count16, _mm_srli_epi32(count16, 16))};
     }
     else
     {
@@ -48,9 +48,9 @@ namespace eve::_
 
   /////////////////////////////////////////////////////////////////////////////
   // 256 bits
-template<unsigned_scalar_value T, typename N, callable_options O>
+  template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
-    requires std::same_as<abi_t<T, N>, x86_256_>
+  requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi8(x);
     else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi16(x);
@@ -70,10 +70,10 @@ template<unsigned_scalar_value T, typename N, callable_options O>
       if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
       if constexpr (sizeof(T) == 8) return wide<T,N>{_mm256_sad_epu8(count8, _mm256_setzero_si256())};
 
-      __m256i count16 = _mm256_maddubs_epi16(count8, _mm256_set1_epi8(1));
+      __m256i count16 = _mm256_add_epi16(count8,_mm256_srli_epi16(count8, 8));
 
       if constexpr (sizeof(T) == 2) return wide<T,N>{count16};
-      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm256_madd_epi16(count16, _mm256_set1_epi16(1))};
+      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm256_add_epi32(count16, _mm256_srli_epi32(count16, 16))};
     }
     else
     {
