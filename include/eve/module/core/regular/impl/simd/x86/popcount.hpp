@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<unsigned_scalar_value T, typename N, callable_options O>
+ template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
@@ -37,8 +37,12 @@ namespace eve::_
 
       __m128i count16 = _mm_add_epi16(count8, _mm_srli_epi16(count8, 8));
 
-      if constexpr (sizeof(T) == 2) return wide<T,N>{count16};
-      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm_add_epi32(count16, _mm_srli_epi32(count16, 16))};
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm_and_si128(count16, _mm_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 4)
+      {
+        __m128i count32 = _mm_add_epi32(count16, _mm_srli_epi32(count16, 16));
+        return wide<T,N>{_mm_and_si128(count32, _mm_set1_epi32(0x000000FF))};
+      }
     }
     else
     {
@@ -46,8 +50,6 @@ namespace eve::_
     }
   }
 
-  /////////////////////////////////////////////////////////////////////////////
-  // 256 bits
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
@@ -70,10 +72,14 @@ namespace eve::_
       if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
       if constexpr (sizeof(T) == 8) return wide<T,N>{_mm256_sad_epu8(count8, _mm256_setzero_si256())};
 
-      __m256i count16 = _mm256_add_epi16(count8,_mm256_srli_epi16(count8, 8));
+      __m256i count16 = _mm256_add_epi16(count8, _mm256_srli_epi16(count8, 8));
 
-      if constexpr (sizeof(T) == 2) return wide<T,N>{count16};
-      if constexpr (sizeof(T) == 4) return wide<T,N>{_mm256_add_epi32(count16, _mm256_srli_epi32(count16, 16))};
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm256_and_si256(count16, _mm256_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 4)
+      {
+        __m256i count32 = _mm256_add_epi32(count16, _mm256_srli_epi32(count16, 16));
+        return wide<T,N>{_mm256_and_si256(count32, _mm256_set1_epi32(0x000000FF))};
+      }
     }
     else
     {
@@ -82,11 +88,9 @@ namespace eve::_
     }
   }
 
-  /////////////////////////////////////////////////////////////////////////////
-  // 512 bits
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
-    requires std::same_as<abi_t<T, N>, x86_512_>
+  requires std::same_as<abi_t<T, N>, x86_512_>
   {
     if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi8(x);
     else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi16(x);
