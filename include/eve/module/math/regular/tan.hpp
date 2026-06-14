@@ -107,8 +107,8 @@ namespace eve
       {
         if constexpr(O::contains(deg))          return tan[o.drop(deg)][radpi](div_180(a0));
         else if constexpr(O::contains(radpi))   return tan[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw))     return ab_st::raw_tanc(a0)*a0;
-        else if constexpr(O::contains(fast))    return ab_st::fast_tanc(a0)*a0;
+        else if constexpr(O::contains(raw))     return _::ab_st::raw_tanc(a0)*a0;
+        else if constexpr(O::contains(fast))    return _::ab_st::fast_tanc(a0)*a0;
         else                                   return tan_kernel[o](a0);
       }
       else                                      return tan_kernel[o](a0);

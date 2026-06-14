@@ -116,8 +116,8 @@ namespace eve
       else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle))
       {
         if constexpr(O::contains(radpi))    return sinc[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw)) return ab_st::raw_sinc(a0);
-        else if constexpr(O::contains(fast))return ab_st::fast_sinc(a0);
+        else if constexpr(O::contains(raw)) return _::ab_st::raw_sinc(a0);
+        else if constexpr(O::contains(fast))return _::ab_st::fast_sinc(a0);
         else if constexpr(std::same_as<elt_t, float>)
         {
           auto bound = O::contains(fast) ? pio_2[lower](as<elt_t>()) :pio_4[lower](as<elt_t>());

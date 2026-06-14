@@ -117,8 +117,8 @@ namespace eve
       {
         if constexpr(O::contains(deg))          return sin[o.drop(deg)](div_180(a0));
         else if constexpr(O::contains(radpi))   return sin[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw))     return ab_st::raw_sinc(a0)*a0;
-        else if constexpr(O::contains(fast))    return ab_st::fast_sinc(a0)*a0;
+        else if constexpr(O::contains(raw))     return _::ab_st::raw_sinc(a0)*a0;
+        else if constexpr(O::contains(fast))    return _::ab_st::fast_sinc(a0)*a0;
         else
           return sin_kernel[o](a0);
       }

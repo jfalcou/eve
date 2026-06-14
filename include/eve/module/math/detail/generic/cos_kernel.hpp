@@ -25,7 +25,7 @@
 
 namespace eve
 {
-  namespace ab_st //Abramowitz & Stegun
+  namespace _::ab_st //Abramowitz & Stegun
   {
     
     template <typename T> inline T fast_cos(T a0) // cos(a0) -pi/2 < a0 <  pi/2

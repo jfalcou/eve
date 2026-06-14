@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve::ab_st //Abramowitz & Stegun
+namespace eve::_::ab_st //Abramowitz & Stegun
 {
 
   template <typename T> inline T fast_sinc(T a0) // sin(x)/ x -pi/2 < a0 <  pi/2

@@ -113,8 +113,8 @@ namespace eve
       {
         if constexpr(O::contains(deg))          return cos[o.drop(deg)](div_180(a0));
         else if constexpr(O::contains(radpi))   return cos[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw))     return ab_st::raw_cos(a0);
-        else if constexpr(O::contains(fast))    return ab_st::fast_cos(a0);
+        else if constexpr(O::contains(raw))     return _::ab_st::raw_cos(a0);
+        else if constexpr(O::contains(fast))    return _::ab_st::fast_cos(a0);
         else
           return cos_kernel[o](a0);
       }

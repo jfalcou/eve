@@ -26,7 +26,7 @@
 
 namespace eve
 {
-  namespace ab_st //Abramowitz & Stegun
+  namespace _::ab_st //Abramowitz & Stegun
   {
 
     template <typename T> inline T fast_tanc(T a0) // tan(a0)/a0 -pi/4 < a0 <  pi/4
