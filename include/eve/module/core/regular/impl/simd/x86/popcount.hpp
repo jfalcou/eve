@@ -35,13 +35,13 @@ namespace eve::_
       if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
       if constexpr (sizeof(T) == 8) return wide<T,N>{_mm_sad_epu8(count8, _mm_setzero_si128())};
 
-      __m128i count16 = _mm_add_epi16(count8, _mm_srli_epi16(count8, 8));
+      __m128i unmasked_count16 = _mm_add_epi16(count8, _mm_srli_epi16(count8, 8));
 
-      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm_and_si128(count16, _mm_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm_and_si128(unmasked_count16, _mm_set1_epi16(0x00FF))};
       if constexpr (sizeof(T) == 4)
       {
-        __m128i count32 = _mm_add_epi32(count16, _mm_srli_epi32(count16, 16));
-        return wide<T,N>{_mm_and_si128(count32, _mm_set1_epi32(0x000000FF))};
+        __m128i unmasked_count32 = _mm_add_epi32(unmasked_count16, _mm_srli_epi32(unmasked_count16, 16));
+        return wide<T,N>{_mm_and_si128(unmasked_count32, _mm_set1_epi32(0x000000FF))};
       }
     }
     else
@@ -72,13 +72,13 @@ namespace eve::_
       if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
       if constexpr (sizeof(T) == 8) return wide<T,N>{_mm256_sad_epu8(count8, _mm256_setzero_si256())};
 
-      __m256i count16 = _mm256_add_epi16(count8, _mm256_srli_epi16(count8, 8));
+      __m256i unmasked_count16 = _mm256_add_epi16(count8, _mm256_srli_epi16(count8, 8));
 
-      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm256_and_si256(count16, _mm256_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm256_and_si256(unmasked_count16, _mm256_set1_epi16(0x00FF))};
       if constexpr (sizeof(T) == 4)
       {
-        __m256i count32 = _mm256_add_epi32(count16, _mm256_srli_epi32(count16, 16));
-        return wide<T,N>{_mm256_and_si256(count32, _mm256_set1_epi32(0x000000FF))};
+        __m256i unmasked_count32 = _mm256_add_epi32(unmasked_count16, _mm256_srli_epi32(unmasked_count16, 16));
+        return wide<T,N>{_mm256_and_si256(unmasked_count32, _mm256_set1_epi32(0x000000FF))};
       }
     }
     else
