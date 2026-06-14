@@ -11,12 +11,17 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/detail/generic/sinc_kernel.hpp>
 #include <eve/module/math/regular/sin.hpp>
+//#include <eve/module/math/regular/sinpic.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct sinc_t : elementwise_callable<sinc_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
+  struct sinc_t : elementwise_callable<sinc_t, Options, raw_option, fast_option,
+                                       quarter_circle_option, half_circle_option,
+                                       full_circle_option, medium_option, big_option,
+                                       rad_option, radpi_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -48,6 +53,15 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto sinc[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto sinc[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto sinc[radpi](floating_value auto x)                    noexcept; // 1.c
+//!      constexpr auto sinc[quarter_circle](floating_value auto x)           noexcept; // 3.a
+//!      constexpr auto sinc[half_circle](floating_value auto x)              noexcept; // 3.b
+//!      constexpr auto sinc[full_circle](floating_value auto x)              noexcept; // 3.c
+//!      constexpr auto sinc[raw](floating_value auto x)                      noexcept; // 4.a
+//!      constexpr auto sinc[fast] (floating_value auto x)                    noexcept; // 4.b
+//!      constexpr auto sinc[radpi](floating_value auto x)                      noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -65,7 +79,12 @@ namespace eve
 //!       * If the element is \f$\pm\infty\f$, 0 is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!         1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!         2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!         3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
+//!    5. returns \f$\sin \frac{\pi x}{\pi x}
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
@@ -73,7 +92,7 @@ namespace eve
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinc.cpp}
 //================================================================================================
- inline constexpr auto sinc = functor<sinc_t>;
+  inline constexpr auto sinc = functor<sinc_t>;
 //================================================================================================
 //!  @}
 //================================================================================================
@@ -83,27 +102,31 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sinc_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      if constexpr( scalar_value<T> )
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::_::apply_fp16_as_fp32(eve::sinc[o], a0);
+      else if constexpr(std::same_as<elt_t, double> ||
+                        (std::same_as<elt_t, float> && !(O::contains(fast) ||  O::contains(raw))))
       {
-        if( is_eqz(a0) ) return one(eve::as(a0));
-        if constexpr( eve::platform::supports_infinites )
-          if( is_infinite(a0) ) return zero(eve::as<T>());
-        if constexpr( eve::platform::supports_denormals )
-          return eve::abs(a0) < eps(eve::as<T>()) ? one(eve::as<T>()) : sin(a0) / a0;
-        else return sin[o](a0) / a0;
-      }
-      else
+        auto r = sin[o](a0)/a0;
+        if constexpr( O::contains(radpi) ) r *= inv_pi(as<elt_t>());
+        r = if_else(is_infinite(a0), zero, r);
+        return if_else(eve::abs(a0) < eps(as<elt_t>()), one, r);
+      }                                                
+      else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle))
       {
-        auto r1 = sin[o](a0) / a0;
-        if constexpr( eve::platform::supports_denormals )
+        if constexpr(O::contains(radpi))    return sinc[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
+        else if constexpr(O::contains(raw)) return _::ab_st::raw_sinc(a0);
+        else if constexpr(O::contains(fast))return _::ab_st::fast_sinc(a0);
+        else if constexpr(std::same_as<elt_t, float>)
         {
-          r1 = if_else(eve::abs(a0) < eps(as<T>()), one(eve::as<T>()), r1);
+          auto bound = O::contains(fast) ? pio_2[lower](as<elt_t>()) :pio_4[lower](as<elt_t>());
+          return if_else(eve::abs(a0) <= bound, sinc[fast](a0), allbits);
         }
-        else r1 = if_else(is_eqz(a0), one(eve::as<T>()), r1);
-        if constexpr( eve::platform::supports_infinites )
-          r1 = if_else(is_infinite(a0), eve::zero, r1);
-        return r1;
+        else return sinc(a0); 
       }
+      else return sinc(a0);
     }
   }
+   constexpr auto sinpic = eve::sinc[eve::radpi];
 }

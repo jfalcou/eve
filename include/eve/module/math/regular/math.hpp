@@ -75,6 +75,5 @@
 #include <eve/module/math/regular/sinh.hpp>
 #include <eve/module/math/regular/sinhc.hpp>
 #include <eve/module/math/regular/sinhcosh.hpp>
-#include <eve/module/math/regular/sinpic.hpp>
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/tanh.hpp>

@@ -12,7 +12,8 @@
 namespace eve
 {
   template<typename Options>
-  struct tan_t : elementwise_callable<tan_t, Options, quarter_circle_option, half_circle_option,
+  struct tan_t : elementwise_callable<tan_t, Options, raw_option, fast_option,
+                                      quarter_circle_option, half_circle_option,
                                       full_circle_option, medium_option, big_option,
                                       rad_option, radpi_option, deg_option>
   {
@@ -51,6 +52,11 @@ namespace eve
 //!      constexpr auto tan[quarter_circle](floating_value auto x)          noexcept; // 3.a
 //!      constexpr auto tan[half_circle](floating_value auto x)             noexcept; // 3.b
 //!      constexpr auto tan[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto sin[raw](floating_value auto x)                     noexcept; // 4
+//!      constexpr auto sin[fast] (floating_value auto x)                   noexcept; // 4
+//!      constexpr auto sin[rad](floating_value auto x)                     noexcept; // 1
+//!      constexpr auto sin[deg](floating_value auto x)                     noexcept; // 5
+//!      constexpr auto sin[radpi](floating_value auto x)                   noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -71,6 +77,10 @@ namespace eve
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!    4. faster but less accurate versions that can be mixed with range limitations to quarter_circle or
+//!       half_circle_option to have any effect.
+//!    5. assume a parameter in degree.
+//!    6. assume a parameter in \f$\pi\f$ multiples.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/tan)
@@ -90,10 +100,18 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tan_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-    if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
-      return eve::_::apply_fp16_as_fp32(eve::tan_kernel[o], a0);
-    else
-      return tan_kernel[o](a0);
+      using elt_t = element_type_t<T>;
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::_::apply_fp16_as_fp32(eve::tan_kernel[o], a0);
+      else if constexpr( O::contains(quarter_circle))
+      {
+        if constexpr(O::contains(deg))          return tan[o.drop(deg)][radpi](div_180(a0));
+        else if constexpr(O::contains(radpi))   return tan[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
+        else if constexpr(O::contains(raw))     return _::ab_st::raw_tanc(a0)*a0;
+        else if constexpr(O::contains(fast))    return _::ab_st::fast_tanc(a0)*a0;
+        else                                   return tan_kernel[o](a0);
+      }
+      else                                      return tan_kernel[o](a0);
     }
   }
   constexpr auto tand = eve::tan[eve::deg];

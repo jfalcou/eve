@@ -23,4 +23,8 @@ int main()
   run<EVE_TYPE >(EVE_NAME(quarter_circle(cos)) , xp, eve::cos[eve::quarter_circle], arg0);
   run<EVE_VALUE>(EVE_NAME(cos)                 , xp, eve::cos                     , arg0);
   run<EVE_TYPE >(EVE_NAME(cos)                 , xp, eve::cos                     , arg0);
+  run<EVE_VALUE>(EVE_NAME(quarter_raw(cos)) , xp, eve::cos[eve::quarter_circle][eve::raw], arg0);
+  run<EVE_TYPE >(EVE_NAME(quarter_raw(cos)) , xp, eve::cos[eve::quarter_circle][eve::raw], arg0);
+  run<EVE_VALUE>(EVE_NAME(quarter_fast(cos)) , xp, eve::cos[eve::quarter_circle][eve::fast], arg0);
+  run<EVE_TYPE >(EVE_NAME(quarter_fast(cos)) , xp, eve::cos[eve::quarter_circle][eve::fast], arg0);
 }
