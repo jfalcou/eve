@@ -12,78 +12,94 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/module/core/regular/bit_shr.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/shr.hpp>
-
-#if defined(SPY_COMPILER_IS_MSVC)
-#  include <intrin.h>
-#endif
 
 namespace eve::_
 {
-  template<auto S, typename T, typename N>
-  EVE_FORCEINLINE auto putcounts(wide<T, N> in)
+ template<unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
+  requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    using i8_t = typename wide<T,N>::template rebind<std::uint8_t, fixed<S>>;
-
-    const i8_t pattern_2bit(0x55);
-    const i8_t pattern_4bit(0x33);
-    const i8_t pattern_16bit(0x0f);
-    auto xx = bit_cast(in, as<i8_t>()); // put
-
-    xx -= bit_shr(xx, 1) & pattern_2bit; // put
-    xx  = (xx & pattern_4bit) + (bit_shr(xx, 2) & pattern_4bit);
-    xx  = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
-
-    return bit_cast(xx,as(in));
-  };
-
-  template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> x) noexcept
-    requires std::same_as<abi_t<T, N>, x86_128_>
-  {
-    if constexpr (sizeof(T) == 8)
+    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm_popcnt_epi64(x);
+    else if constexpr (current_api >= eve::ssse3)
     {
-      using r_t = wide<T, N>;
-      using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<8>>;
+      __m128i lut  = _mm_setr_epi8(0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4);
+      __m128i mask = _mm_set1_epi8(0x0F);
 
-      auto xx = bit_cast(x, as<u16_t>());
+      __m128i lo_count = _mm_shuffle_epi8(lut, _mm_and_si128(x, mask));
+      __m128i hi_count = _mm_shuffle_epi8(lut, _mm_and_si128(_mm_srli_epi16(x, 4), mask));
+      __m128i count8   = _mm_add_epi8(lo_count, hi_count);
 
-      return bit_cast(_mm_sad_epu8(putcounts<16>(xx), _mm_setzero_si128()), as<r_t>());
-    }
-    else
-    {
-      return popcount.behavior(cpu_{}, opts, x);
-    }
-  }
+      if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
+      if constexpr (sizeof(T) == 8) return wide<T,N>{_mm_sad_epu8(count8, _mm_setzero_si128())};
 
-  /////////////////////////////////////////////////////////////////////////////
-  // 256 bits
-  template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
-    requires std::same_as<abi_t<T, N>, x86_256_>
-  {
-    using r_t = wide<T, N>;
+      __m128i unmasked_count16 = _mm_add_epi16(count8, _mm_srli_epi16(count8, 8));
 
-    if constexpr (sizeof(T) == 8)
-    {
-      if constexpr (current_api >= avx2)
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm_and_si128(unmasked_count16, _mm_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 4)
       {
-        using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<16>>;
-        auto xx = bit_cast(x, as<u16_t>());
-
-        return bit_cast(_mm256_sad_epu8(putcounts<32>(xx), _mm256_setzero_si256()), as<r_t>());
-      }
-      else
-      {
-        auto [lo, hi] = x.slice();
-        return r_t{popcount(lo), popcount(hi)};
+        __m128i unmasked_count32 = _mm_add_epi32(unmasked_count16, _mm_srli_epi32(unmasked_count16, 16));
+        return wide<T,N>{_mm_and_si128(unmasked_count32, _mm_set1_epi32(0x000000FF))};
       }
     }
     else
     {
       return popcount.behavior(cpu_{}, o, x);
+    }
+  }
+
+  template<unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
+  requires std::same_as<abi_t<T, N>, x86_256_>
+  {
+    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm256_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm256_popcnt_epi64(x);
+    else if constexpr (current_api >= eve::avx2)
+    {
+      // We broadcast the 128bits LUT as it generates better codegen than using _mm256_setr_epi8
+      __m128i lut_128 = _mm_setr_epi8(0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4);
+      __m256i lut     = _mm256_broadcastsi128_si256(lut_128);
+      __m256i mask    = _mm256_set1_epi8(0x0F);
+
+      __m256i lo_count = _mm256_shuffle_epi8(lut, _mm256_and_si256(x, mask));
+      __m256i hi_count = _mm256_shuffle_epi8(lut, _mm256_and_si256(_mm256_srli_epi16(x, 4), mask));
+      __m256i count8   = _mm256_add_epi8(lo_count, hi_count);
+
+      if constexpr (sizeof(T) == 1) return wide<T,N>{count8};
+      if constexpr (sizeof(T) == 8) return wide<T,N>{_mm256_sad_epu8(count8, _mm256_setzero_si256())};
+
+      __m256i unmasked_count16 = _mm256_add_epi16(count8, _mm256_srli_epi16(count8, 8));
+
+      if constexpr (sizeof(T) == 2) return wide<T,N>{_mm256_and_si256(unmasked_count16, _mm256_set1_epi16(0x00FF))};
+      if constexpr (sizeof(T) == 4)
+      {
+        __m256i unmasked_count32 = _mm256_add_epi32(unmasked_count16, _mm256_srli_epi32(unmasked_count16, 16));
+        return wide<T,N>{_mm256_and_si256(unmasked_count32, _mm256_set1_epi32(0x000000FF))};
+      }
+    }
+    else
+    {
+      auto[l,h] = x.slice();
+      return wide<T,N>(popcount[o](l), popcount[o](h));
+    }
+  }
+
+  template<unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
+  requires std::same_as<abi_t<T, N>, x86_512_>
+  {
+    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm512_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm512_popcnt_epi64(x);
+    else
+    {
+      auto[l,h] = x.slice();
+      return wide<T,N>(popcount[o](l),popcount[o](h));
     }
   }
 }
