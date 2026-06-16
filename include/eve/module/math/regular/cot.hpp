@@ -101,16 +101,43 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::cot_kernel[o], a0);
-      else if constexpr( O::contains(quarter_circle))
+      else if constexpr( O::contains(quarter_circle) ||  O::contains(quarter_circle) )
       {
         if constexpr(O::contains(deg))          return cot[o.drop(deg)][radpi](div_180(a0));
         else if constexpr(O::contains(radpi))   return cot[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
-        else if constexpr(O::contains(raw))     return _::ab_st::raw_xcot(a0)/a0;
-        else if constexpr(O::contains(fast))    return _::ab_st::fast_xcot(a0)/a0;
+        else if constexpr(O::contains(quarter_circle))
+        {
+          if constexpr(O::contains(raw))          return _::ab_st::raw_xcot(a0)/a0;
+          else if constexpr(O::contains(fast))    return _::ab_st::fast_xcot(a0)/a0;
+          else
+            return cot_kernel[o](a0);
+        }
+        else if constexpr(O::contains(half_circle))
+        {
+          if constexpr(O::contains(raw))        return ab_st::pade_xcot22(a0)/a0;
+          else if constexpr(O::contains(fast))  return ab_st::pade_xcot42(a0)/a0;
+          else                                  return tan_kernel[o](a0);
+        }
+        else if constexpr(O::contains(full_circle))
+        {
+         if constexpr(O::contains(raw)){
+            auto t = abs(a0) >= pio_2(as<elt_t>());
+            auto ca0 = if_else(t, copysign(pio_2(as(a0)), a0)-a0, a0);
+            auto r = ab_st::pade_xcot22(ca0)/a0;
+            return if_else(t, rec[pedantic](r), r);
+          }
+          else if constexpr(O::contains(fast))
+          {
+            auto t = abs(a0) >= pio_2(as<elt_t>());
+            auto ca0 = if_else(t, copysign(pio_2(as(a0)), a0)-a0, a0);
+            auto r = ab_st::pade_xcot42(ca0)/a0;
+            return if_else(t, rec[pedantic](r), r);
+          }
+        }
         else
           return cot_kernel[o](a0);
-      }
-       else
+     }
+      else
         return cot_kernel[o](a0);
     }
   }

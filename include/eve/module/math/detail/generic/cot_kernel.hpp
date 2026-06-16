@@ -28,6 +28,19 @@ namespace eve
 {
   namespace _::ab_st //Abramowitz & Stegun
   {
+     template <typename T> inline T pade_xcot22(T a0) // good for raw a0*cot(a0) -pi/2 < a0 <  pi/2 (0.016)
+    {
+      using elt_t =  element_type_t<T>;
+      auto a02 = sqr(a0); ;
+      return inc(5*a02/(a02-elt_t(15)));
+    }
+     template <typename T> inline T pade_xcot42(T a0) // good for raw a0*cot(a0) -pi/2 < a0 <  pi/2 (0.00069)
+    {
+      using elt_t =  element_type_t<T>;
+      auto a02 = sqr(a0); ;
+      return fam(elt_t(-1), a02, fam(elt_t(45), a02, elt_t(-105)))/fma(elt_t(10), a02,(-105)) ;
+    }
+
     template <typename T> inline T fast_xcot(T a0) // cot(a0)*a0 -pi/4 < a0 <  pi/4
     {
       using elt_t =  element_type_t<T>;

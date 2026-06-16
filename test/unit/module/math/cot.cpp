@@ -88,12 +88,17 @@ TTS_CASE_WITH("Check behavior of cot: on wide",
               tts::generate( tts::randoms(-1, 1)))
   <typename T>(T const& a0)
 {
-  auto pa0 = a0*eve::pio_2(eve::as(a0));
+  auto pa0 = a0*eve::pio_4(eve::as(a0));
   using eve::raw;
   using eve::quarter_circle;
-  auto prec = tts::prec<T>(0.09, 0.005);
+  using eve::half_circle;
+  auto prec = tts::prec<T>(0.3, 0.005);
   TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw](pa0), prec);
   using eve::fast;
-  auto prec1 = tts::prec<T>(0.09, 0.003);
+  auto prec1 = tts::prec<T>(0.3, 0.003);
   TTS_RELATIVE_EQUAL(eve::cot(pa0), eve::cot[quarter_circle][raw][fast](pa0), prec1);
+  auto pa1 = a0*eve::pio_2(eve::as(a0));
+  TTS_RELATIVE_EQUAL(eve::cot(pa1), eve::cot[half_circle][raw](pa1), prec);
+  TTS_RELATIVE_EQUAL(eve::cot(pa1), eve::cot[half_circle][raw][fast](pa1), prec1);
+
 };

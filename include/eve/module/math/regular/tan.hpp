@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/math/detail/generic/tan_kernel.hpp>
-#include <iostream>
 
 namespace eve
 {
