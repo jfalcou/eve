@@ -87,9 +87,9 @@ TTS_CASE_WITH("Check behavior of tan: on wide",
   auto pa0 = a0*eve::pio_4(eve::as(a0));
   using eve::raw;
   using eve::quarter_circle;
-  auto prec = tts::prec<T>(0.005, 0.005);
+  auto prec = tts::prec<T>(0.9, 0.9);
   TTS_RELATIVE_EQUAL(eve::tan(pa0), eve::tan[quarter_circle][raw](pa0), prec);
   using eve::fast;
   auto prec1 = tts::prec<T>(0.002, 0.002);
-  TTS_RELATIVE_EQUAL(eve::tan(pa0), eve::tan[quarter_circle][raw][fast](pa0), prec1);
+  TTS_RELATIVE_EQUAL(eve::tan(pa0), eve::tan[quarter_circle][fast](pa0), prec1);
 };

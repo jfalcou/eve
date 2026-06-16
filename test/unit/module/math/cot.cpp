@@ -88,7 +88,7 @@ TTS_CASE_WITH("Check behavior of cot: on wide",
               tts::generate( tts::randoms(-1, 1)))
   <typename T>(T const& a0)
 {
-  auto pa0 = a0*eve::pio_4(eve::as(a0));
+  auto pa0 = a0*eve::pio_2(eve::as(a0));
   using eve::raw;
   using eve::quarter_circle;
   auto prec = tts::prec<T>(0.09, 0.005);
