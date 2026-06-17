@@ -88,6 +88,19 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::sech[o], a0);
+      else if constexpr(O::contains(fast))
+      {
+        auto a02 = sqr(a0);
+        // (-4*x^2 + 120)/(3*x^4 + 56*x^2 + 120)
+        return (fma(elt_t(-4), a02, elt_t(120))/fam(elt_t(120), a02, fam(elt_t(56), a02, elt_t(3))));
+      }
+      else if constexpr(O::contains(raw))
+      {
+        //(-360*x^2 + 20160)/(13*x^6 + 660*x^4 + 9720*x^2 + 20160)
+        auto a02 = sqr(a0);
+        return fma(elt_t(-360), a02, elt_t(20160))/
+          fam(elt_t(20160), a02, fam(elt_t(9720),  a02, fam(elt_t(660), a02, elt_t(13))));
+      }
       else
       {
         //////////////////////////////////////////////////////////////////////////////

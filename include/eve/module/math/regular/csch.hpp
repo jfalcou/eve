@@ -79,7 +79,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T csch_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      return rec[pedantic](sinh[o](a0));
+       return rec[pedantic](sinh[o](a0));
     }
   }
 }
