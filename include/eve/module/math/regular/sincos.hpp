@@ -14,7 +14,7 @@ namespace eve
   template<typename Options>
   struct sincos_t : elementwise_callable<sincos_t, Options , quarter_circle_option,
                                          half_circle_option, full_circle_option,
-                                         medium_option, big_option,
+                                         medium_option, big_option, raw_option, fast_optio,
                                          rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
@@ -92,6 +92,15 @@ namespace eve
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::sincos_kernel[o], a0);
+      else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle) )
+      {
+        if constexpr(O::contains(deg))          return sincos[o.drop(deg)](div_180(a0));
+        else if constexpr(O::contains(radpi))   return sincos[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
+        else if constexpr(O::contains(raw))     return zip(_::ab_st::raw_sin(a0), _::ab_st::raw_cos(a0));
+        else if constexpr(O::contains(fast))    return zip(_::ab_st::fast_sin(a0),_::ab_st::fast_cos(a0);
+        else
+          return cos_kernel[o](a0);
+      }
       else
         return sincos_kernel[o](a0);
     }

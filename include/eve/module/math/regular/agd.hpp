@@ -64,13 +64,12 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) inverse
-//!      [gudermannian](@ref eve::gd) of the input.
+//!      [gudermannian](@ref eve::gd) of the input for x angle in the superior half circle.
 //!      In particular:
 //!      * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
-//!    2. The `raw` and `fast` options use internally less accuate but faster versions.
-//        relative accuracy and `fast` 0.005%.
+//!    2. The `raw` and `fast` options use internally less accuate but faster implementations.
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
@@ -94,7 +93,7 @@ namespace eve
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::agd[o], x);
       else
-        return 2*atanh[o](tan[o](x*half(as(x))));
+        return 2*atanh[o](tan[o][quarter_circle](x*half(as(x))));
     }
   }
 }
