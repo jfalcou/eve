@@ -102,7 +102,7 @@ namespace eve
         else if constexpr(O::contains(raw))     return zip(_::ab_st::raw_sinc(a0)*a0, _::ab_st::raw_cos(a0));
         else if constexpr(O::contains(fast))    return zip(_::ab_st::fast_sinc(a0)*a0,_::ab_st::fast_cos(a0));
         else
-          return cos_kernel[o](a0);
+          return sincos_kernel[o](a0);
       }
       else
         return sincos_kernel[o](a0);
