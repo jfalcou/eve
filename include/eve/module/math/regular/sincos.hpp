@@ -97,7 +97,7 @@ namespace eve
       else if constexpr(O::contains(half_circle) ||  O::contains(quarter_circle) )
       {
         using elt_t = element_type_t<T>;
-        if constexpr(O::contains(deg))          return sincos[o.drop(deg)](div_180(a0));
+        if constexpr(O::contains(deg))          return sincos[o.drop(deg)][radpi](div_180(a0));
         else if constexpr(O::contains(radpi))   return sincos[o.drop(radpi)](pi(eve::as<elt_t>())*a0);
         else if constexpr(O::contains(raw))     return zip(_::ab_st::raw_sinc(a0)*a0, _::ab_st::raw_cos(a0));
         else if constexpr(O::contains(fast))    return zip(_::ab_st::fast_sinc(a0)*a0,_::ab_st::fast_cos(a0));
