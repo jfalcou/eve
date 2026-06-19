@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct gd_t : elementwise_callable<gd_t, Options>
+  struct gd_t : elementwise_callable<gd_t, Options, raw_option, fast_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -45,6 +45,10 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto gd(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto gd[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto gd[fast] (floating_value auto x)                   noexcept; // 2
+//!
 //!      // Lanes masking
 //!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2
@@ -64,7 +68,9 @@ namespace eve
 //!            * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!            * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
 //!            * If the element is a `NaN`, `NaN` is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. The `raw` and `fast` options use internally less accuate but faster versions.
+//        relative accuracy and `fast` 0.005%.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Gudermannian](https://mathworld.wolfram.com/Gudermannian.html)
@@ -87,7 +93,7 @@ namespace eve
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::gd[o], a0);
       else
-        return 2*atan(tanh(a0*half(as(a0))));
+        return 2*atan[o](tanh[o](a0*half(as(a0))));
     }
   }
 }

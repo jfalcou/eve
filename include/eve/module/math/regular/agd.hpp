@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct agd_t : elementwise_callable<agd_t, Options>
+  struct agd_t : elementwise_callable<agd_t, Options, raw_option, fast_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -45,9 +45,13 @@ namespace eve
 //!      // Regular overload
 //!      constexpr auto agd(floating_value auto x)                          noexcept; // 1
 //!
+//!      // Semantic option
+//!      constexpr auto agd[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto agd[fast] (floating_value auto x)                   noexcept; // 2
+//!
 //!      // Lanes masking
-//!      constexpr auto agd[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto agd[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto agd[conditional_expr auto c](floating_value auto x) noexcept; // 3
+//!      constexpr auto agd[logical_value auto m](floating_value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -60,12 +64,13 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) inverse
-//!      [gudermannian](@ref eve::gd) of the input.
+//!      [gudermannian](@ref eve::gd) of the input for x angle in the superior half circle.
 //!      In particular:
 //!      * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. The `raw` and `fast` options use internally less accuate but faster implementations.
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Gudermannian](https://mathworld.wolfram.com/InverseGudermannian.html)
@@ -88,7 +93,7 @@ namespace eve
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::agd[o], x);
       else
-        return 2*atanh(tan(x*half(as(x))));
+        return 2*atanh[o](tan[o][quarter_circle](x*half(as(x))));
     }
   }
 }

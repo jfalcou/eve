@@ -16,11 +16,17 @@ int main()
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__tan = [](auto x){return std::tan(x);};
+//    auto std__tan = [](auto x){return std::tan(x);};
+//  auto pade__tan = [](auto x){return eve::_::ab_st::pade_tan(x);};
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(tan[eve::half_circle]) , xp, eve::tan[eve::half_circle] , arg0);
-  run<EVE_TYPE> (EVE_NAME(tan[eve::half_circle]) , xp, eve::tan[eve::half_circle] , arg0);
+//  run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
+//  run<EVE_VALUE>(EVE_NAME(tan[eve::half_circle]) , xp, eve::tan[eve::half_circle] , arg0);
+  run<EVE_TYPE> (EVE_NAME(tan half     ) , xp, eve::tan[eve::half_circle] , arg0);
+//  run<EVE_VALUE>(EVE_NAME(tan[eve::half_circle][raw]) , xp, eve::tan[eve::half_circle][eve::raw] , arg0);
+  run<EVE_TYPE> (EVE_NAME(tan half raw ) , xp, eve::tan[eve::half_circle][eve::raw] , arg0);
+//  run<EVE_VALUE>(EVE_NAME(tan[eve::half_circle][fast]) , xp, eve::tan[eve::half_circle][eve::fast] , arg0);
+  run<EVE_TYPE> (EVE_NAME(tan half fast) , xp, eve::tan[eve::half_circle][eve::fast] , arg0);
+//  run<EVE_TYPE> (EVE_NAME(pade_tan) , xp, pade__tan , arg0);
 
 }

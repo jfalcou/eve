@@ -29,6 +29,64 @@ namespace eve
   namespace _::ab_st //Abramowitz & Stegun
   {
 
+     template <typename T> inline T pade_tan12(T a0) // good for raw tan(a0) -pi/4 < a0 <  pi/4 (3.0e-3)
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t a = 24.35227277;
+      constexpr elt_t b = 9.869604404;
+      constexpr elt_t c = 0.710131865;
+      constexpr elt_t d = 2.467401100272339;  //pi^2/4
+      auto a02 = sqr(a0); ;
+      return a*a0/fam(b, c, a02)/(d-a02);
+   }
+
+    template <typename T> inline T pade_tan32(T a0) // good for raw tan(a0) -pi/2 < a0 <  pi/2  (4e-2)
+    {                                               // or fast tan(a0)      -pi/4 < a0 <  pi/4  (7.0e-6)
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t a =315.3924266860481;   // 15*pi2*(12-pi2)
+      constexpr elt_t b = -30.41464490063611; //720+60*pi2+pi2*pi2
+      constexpr elt_t c = -383.4712078039155; //-180(12-pi2)
+      constexpr elt_t d = 9.388483121566225;  //72*(10-pi2)
+      constexpr elt_t e = 2.467401100272339;  //pi^2/4
+      auto a02 = sqr(a0); ;
+      return 3*a0 * fam(a, b, a02)/((a02- e)*fam(c, d, a02));
+   }
+
+     template <typename T> inline T pade_tan52(T a0) // good for fast  tan(a0) -pi/2 < a0 <  pi/2 (1.0e-4)
+    {
+      using elt_t =  element_type_t<T>;
+      auto a02 = sqr(a0);
+      constexpr elt_t a = -0.00035748693;
+      constexpr elt_t b = 0.00003986845;
+      constexpr elt_t c = -3.881386e-7;
+      constexpr elt_t d = -0.130395596;
+      constexpr elt_t e =  0.005160122;
+      constexpr elt_t f = 2.467401100272339;  //pi^2/4
+
+      return -900*a0*fam(a, a02, fam(b, c, a02))/(fam(d, e, a02)*(a02- f));
+   }
+
+   template <typename T> inline T fast_tan(T a0) // tan(a0) -pi/2 < a0 <  pi/2
+    {
+      using elt_t =  element_type_t<T>;
+      constexpr elt_t c0 = 2.4674011002723397;
+      constexpr elt_t c1 = 2.471688400562703;
+      constexpr elt_t c2 = 0.189759681063053;
+      auto a02 = sqr(a0); ;
+      return a0 * fam(c1, -c2,  a02) / (c0 - a02);
+   }
+
+    template <typename T> inline T raw_tan(T a0)// tan(a0) -pi/2 < a0 <  pi/2
+    {
+      using elt_t =  element_type_t<T>;
+      a0*= 2*inv_pi(as<elt_t>());
+      auto y = oneminus(sqr(a0));
+      constexpr elt_t c0(-0.0187108);
+      constexpr elt_t c1(0.31583526);
+      constexpr elt_t c2(1.27365776);
+      return a0*horner(a0, c0, c1, c2)/y; //absolute error less than Z.0e-3
+    }
+
     template <typename T> inline T fast_tanc(T a0) // tan(a0)/a0 -pi/4 < a0 <  pi/4
     {
       using elt_t =  element_type_t<T>;
@@ -42,7 +100,7 @@ namespace eve
       return reverse_horner(sqr(a0), c0, c2, c4, c6, c8, c10, c12); //absolute error less than 2.0e-8
     }
 
-    template <typename T> inline T raw_tanc(T a0)// cos(a0) -pi/2 < a0 <  pi/2
+    template <typename T> inline T raw_tanc(T a0)// cos(a0) -pi/4 < a0 <  pi/4
     {
       using elt_t =  element_type_t<T>;
       constexpr elt_t c0(1);
