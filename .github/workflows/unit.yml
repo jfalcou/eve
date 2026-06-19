@@ -375,7 +375,7 @@ jobs:
           system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
           df -h /System/Volumes/Data
       - name: Fetch current branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
         run: |
           mkdir build && cd build
