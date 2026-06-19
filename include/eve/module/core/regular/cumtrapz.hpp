@@ -158,7 +158,7 @@ namespace eve
           using r_t = kumi::apply_traits_t<eve::common_value, PT>;
           auto w = kumi::windows<2>(tup);
           auto r = kumi::map(eve::average, w);
-          return push_front(eve::cumsum(r), r_t(0));
+          return kumi::push_front(eve::cumsum(r), r_t(0));
         }
       }
     }
@@ -170,7 +170,7 @@ namespace eve
         return kumi::make_tuple();
       else
       {
-        auto dxtup =  kumi::map([dx](auto m){return dx*m; }, tup);
+        auto dxtup = kumi::map([dx](auto m){return dx*m; }, tup);
         return cumtrapz[o](dxtup);
        }
     }
@@ -191,8 +191,8 @@ namespace eve
         auto w = kumi::windows<2>(tup);
         auto dx = eve::diff(x);
         auto avg = kumi::map(eve::average, w);
-        auto rdx =  kumi::map([](auto a, auto b) { return -a*b; }, avg, dx);
-        return push_front(eve::cumsum(rdx), r_t(0));
+        auto rdx = kumi::map([](auto a, auto b) { return -a*b; }, avg, dx);
+        return kumi::push_front(eve::cumsum(rdx), r_t(0));
       }
     }
 

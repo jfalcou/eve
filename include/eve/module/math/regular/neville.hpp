@@ -142,7 +142,7 @@ namespace eve
     neville_(EVE_REQUIRES(cpu_), O const & o, T x, PT0 tx, PT1 ty) noexcept
     requires(PT1::size() == PT0::size())
     {
-      return kumi::apply([x, o](auto ... m){return neville[o](x, m...); }, cat(tx, ty));
+      return kumi::apply([x, o](auto ... m){return neville[o](x, m...); }, kumi::cat(tx, ty));
     }
   }
 }
