@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::bit_ternary return type" , eve::test::simd::all_types)
   TTS_EXPR_IS(eve::bit_ternary(ik, v_t(), i_t(), ei_t()), T);
 };
 
-TTS_CASE_WITH("Check behavior of bit_ternary",
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x00 to 0x0f",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
@@ -59,6 +59,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x0d>(), a, b, c),  bit_notand(a, bit_ornot(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x0e>(), a, b, c),  bit_notand(a, bit_or(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x0f>(), a, b, c),  bit_not(a));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x10 to 0x1f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x10>(), a, b, c),  bit_notand(bit_or(b, c), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x11>(), a, b, c),  bit_not(bit_or(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x12>(), a, b, c),  bit_notand(b, bit_xor(a, c)));
@@ -75,6 +93,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x1d>(), a, b, c),  bit_or(bit_notand(a, b),  bit_notand(b, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x1e>(), a, b, c),  bit_xor(a, bit_or(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x1f>(), a, b, c),  bit_not(bit_and(a, bit_or(b, c))));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x20 to 0x2f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x20>(), a, b, c),  bit_and(bit_notand(b, a), c));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x21>(), a, b, c),  bit_not(bit_or(b, bit_xor(a, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x22>(), a, b, c),  bit_notand(b, c));
@@ -91,6 +127,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x2d>(), a, b, c),  bit_xor(a, bit_or(b, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x2e>(), a, b, c),  bit_xor(bit_or(b, c), bit_and(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x2f>(), a, b, c),  bit_or(bit_notand(b, c), bit_not(a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x30 to 0x3f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x30>(), a, b, c),  bit_notand(b, a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x31>(), a, b, c),  bit_notand(b,bit_ornot(a, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x32>(), a, b, c),  bit_notand(b, bit_or(a, c)));
@@ -107,6 +161,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x3d>(), a, b, c),  bit_or(bit_xor(a, b), bit_not(bit_or(a, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x3e>(), a, b, c),  bit_or(bit_notand(a, c), bit_xor(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x3f>(), a, b, c),  bit_not(bit_and(b, a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x40 to 0x4f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x40>(), a, b, c),  bit_and(bit_notand(c, a), b));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x41>(), a, b, c),  bit_not(bit_or(c, bit_xor(b, a))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x42>(), a, b, c),  bit_and(bit_xor(a, c), bit_xor(b, c)));
@@ -123,6 +195,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x4d>(), a, b, c),  bit_or(bit_notand(bit_and(a, c), b), bit_notand(b, bit_not(bit_or(a, c)))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x4e>(), a, b, c),  bit_or(bit_notand(a, c), bit_notand(c, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x4f>(), a, b, c),  bit_or(bit_not(a), bit_notand(c, b)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x50 to 0x5f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x50>(), a, b, c),  bit_notand(c, a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x51>(), a, b, c),  bit_notand(c, bit_or(a, bit_not(b))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x52>(), a, b, c),  bit_notand(bit_and(b, c), bit_xor(a, c)));
@@ -139,6 +229,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x5d>(), a, b, c),  bit_or(bit_notand(a, b), bit_not(c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x5e>(), a, b, c),  bit_or(bit_notand(c, b), bit_xor(a, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x5f>(), a, b, c),  bit_not(bit_and(c, a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x60 to 0x6f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x60>(), a, b, c),  bit_and(a, bit_xor(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x61>(), a, b, c),  bit_or(bit_and(a, bit_xor(b, c)), bit_notand(a, bit_not(bit_or(b, c)))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x62>(), a, b, c),  bit_and(bit_or(a, c), bit_xor(b, c)));
@@ -155,6 +263,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x6d>(), a, b, c),  bit_or(bit_notand(a, b), bit_xor(bit_not(a), b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x6e>(), a, b, c),  bit_or(bit_notand(a, b), bit_xor(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x6f>(), a, b, c),  bit_or(bit_xor(b, c), bit_not(a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x70 to 0x7f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x70>(), a, b, c),  bit_notand(bit_and(b, c), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x71>(), a, b, c),  bit_or(bit_not(bit_or(b, c)), bit_and(a, bit_xor(b, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x72>(), a, b, c),  bit_or(bit_notand(b, c), bit_notand(c, a)));
@@ -171,6 +297,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x7d>(), a, b, c),  bit_or(bit_xor(a, b), bit_not(c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x7e>(), a, b, c),  bit_or(bit_xor(a, b), bit_xor(a, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x7f>(), a, b, c),  bit_not(bit_and(a, b, c)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x80 to 0x8f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x80>(), a, b, c),  bit_and(a, b, c));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x81>(), a, b, c),  bit_notand(bit_xor(a, c), bit_xor(a, bit_not(b))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x82>(), a, b, c),  bit_notand(bit_xor(b, a), c));
@@ -187,6 +331,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x8d>(), a, b, c),  bit_or(bit_and(c, b), bit_notand(c,bit_not(a))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x8e>(), a, b, c),  bit_or(bit_and(b, c), bit_notand(a, bit_xor(b, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x8f>(), a, b, c),  bit_or(bit_and(b, c), bit_not(a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x90 to 0x9f",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x90>(), a, b, c),  bit_notand(bit_xor(b, c), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x91>(), a, b, c),  bit_notand(bit_xor(b, c),  bit_ornot(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x92>(), a, b, c),  bit_and(bit_or(a, c),  bit_xor(c, a, b)));
@@ -203,6 +365,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x9d>(), a, b, c),  bit_or(bit_notand(a, b), bit_xor(b, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x9e>(), a, b, c),  bit_or(bit_and(b, c), bit_xor(c, a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0x9f>(), a, b, c),  bit_not(bit_and(a, bit_xor(b, c))));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xa0 to 0xaf",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xa0>(), a, b, c),  bit_and(c, a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xa1>(), a, b, c),  bit_notand(bit_xor(a, c), bit_ornot(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xa2>(), a, b, c),  bit_notand(bit_notand(a, b), c));
@@ -219,6 +399,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xad>(), a, b, c),  bit_or(bit_and(b, c), bit_xor(a, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xae>(), a, b, c),  bit_or(c, bit_notand(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xaf>(), a, b, c),  bit_ornot(c, a));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xb0 to 0xbf",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb0>(), a, b, c),  bit_notand(bit_notand(c, b), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb1>(), a, b, c),    bit_or(bit_and(a, c), bit_notand(c, bit_not(b))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb2>(), a, b, c),  bit_or(bit_and(b, a, c),bit_notand(b, bit_or(a, c))));
@@ -235,6 +433,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xbd>(), a, b, c),  bit_or(bit_xor(a, b), bit_xor(a, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xbe>(), a, b, c),  bit_or(c, bit_xor(b, a)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xbf>(), a, b, c),  bit_or(c,bit_not(bit_and(b, a))));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xc0 to 0xcf",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xc0>(), a, b, c),  bit_and(b, a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xc1>(), a, b, c),  bit_notand(bit_xor(a, b), bit_or(a, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xc2>(), a, b, c),  bit_notand(bit_xor(b, a), bit_or(a, c)));
@@ -251,6 +467,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xcd>(), a, b, c),  bit_or(b, bit_not(bit_or(a, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xce>(), a, b, c),  bit_or(bit_notand(a, c), b));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xcf>(), a, b, c),  bit_or(b,bit_not(a)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xd0 to 0xdf",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xd0>(), a, b, c),  bit_notand(bit_notand(b, c), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xd1>(), a, b, c),  bit_or(bit_not(bit_or(b, c)), bit_and(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xd2>(), a, b, c),  bit_xor(bit_notand(b, c), a));
@@ -267,6 +501,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xdd>(), a, b, c),  bit_or(b, bit_not(c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xde>(), a, b, c),  bit_or(b, bit_xor(a, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xdf>(), a, b, c),  bit_or(b, bit_not(bit_and(a, c))));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xe0 to 0xef",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe0>(), a, b, c),  bit_and(a, bit_or(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe1>(), a, b, c),  bit_not(bit_xor(a, bit_or(b, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe2>(), a, b, c),  bit_or(bit_and(b, a),  bit_notand(b, c)));
@@ -283,6 +535,24 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xed>(), a, b, c),  bit_or(b, bit_not(bit_xor(a, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xee>(), a, b, c),  bit_or(c, b));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xef>(), a, b, c),  bit_or(b, bit_or(bit_not(a), c)));
+};
+
+TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xf0 to 0xff",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+  <typename T>(T const& a, T const& b, T const& c)
+{
+  using eve::as;
+  using eve::bit_xor;
+  using eve::bit_or;
+  using eve::bit_and;
+  using eve::bit_notand;
+  using eve::bit_notor;
+  using eve::bit_ornot;
+  using eve::bit_not;
+  using eve::bit_select;
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xf0>(), a, b, c),  a);
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xf1>(), a, b, c),  bit_or(a, bit_not(bit_or(b, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xf2>(), a, b, c),  bit_or(bit_notand(b, c), a));
