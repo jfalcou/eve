@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
- template<unsigned_scalar_value T, size N, callable_options O>
+ template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
@@ -50,7 +50,7 @@ namespace eve::_
     }
   }
 
-  template<unsigned_scalar_value T, size N, callable_options O>
+  template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
@@ -88,7 +88,7 @@ namespace eve::_
     }
   }
 
-  template<unsigned_scalar_value T, size N, callable_options O>
+  template<unsigned_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_512_>
   {
