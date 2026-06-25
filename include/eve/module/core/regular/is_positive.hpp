@@ -92,8 +92,8 @@ namespace eve
         else if constexpr( simd_value<T> )
         {
           using elt_t = element_type_t<T>;
-          using swi_t = as_wide_t<eve::as_integer_t<elt_t, signed>, cardinal_t<T>>;
-          using lwi_t = as_logical_t<as_wide_t<elt_t, cardinal_t<T>>>;
+          using swi_t = as_wide_t<eve::as_integer_t<elt_t, signed>, T::size()>;
+          using lwi_t = as_logical_t<as_wide_t<elt_t, T::size()>>;
           return bit_cast(is_gez(bit_cast(v, as<swi_t>())), as<lwi_t>());
         }
         else

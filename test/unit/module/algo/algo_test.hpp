@@ -19,29 +19,25 @@ namespace algo_test
   using selected_types = tts::types<
       eve::nofs_wide<std::uint8_t>
     , eve::wide<std::int16_t>
-    , eve::wide<std::uint16_t, eve::fixed<4>>
+    , eve::wide<std::uint16_t, 4>
     , eve::wide<int>
     , eve::wide<double>
 #ifndef EVE_INCLUDE_ARM_NEON_HEADER
-    , eve::wide<std::int8_t, eve::fixed<1>>
+    , eve::wide<std::int8_t, 1>
     , eve::nofs_wide<float>
     , eve::wide<std::uint64_t>
-    , eve::wide < std::uint32_t
-                , eve::fixed<eve::nofs_cardinal_v<std::uint32_t> * 2>
-                >
+    , eve::wide<std::uint32_t, eve::nofs_cardinal_v<std::uint32_t> * 2>
 #endif
   >;
 
   using selected_pairs_types = tts::types<
-      eve::wide<kumi::tuple<std::int8_t, std::int16_t>, eve::fixed<1>>
+      eve::wide<kumi::tuple<std::int8_t, std::int16_t>, 1>
     , eve::nofs_wide<kumi::tuple<std::uint8_t, std::uint8_t>>
     , eve::wide<kumi::tuple<std::int32_t, std::int32_t>>
     , eve::nofs_wide<kumi::tuple<std::int32_t, std::uint16_t>>
-    , eve::wide<kumi::tuple<float, double>, eve::fixed<2>>
+    , eve::wide<kumi::tuple<float, double>, 2>
     , eve::wide<kumi::tuple<float, double>>
-    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>,
-                eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
-                >
+    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>, eve::expected_cardinal_v<std::uint32_t> * 2>
     > ;
 
 
@@ -57,7 +53,7 @@ namespace algo_test
     test.run(eve::algo::as_range(f, l));
 
     static constexpr std::ptrdiff_t alignment = sizeof(e_t) * T::size();
-    using a_p = eve::aligned_ptr<e_t, eve::fixed<T::size()>>;
+    using a_p = eve::aligned_ptr<e_t, T::size()>;
 
     if (eve::is_aligned<alignment>(f))
     {
@@ -75,14 +71,14 @@ namespace algo_test
   template <typename T>
   auto allocate_page()
   {
-    using ts_in_page  = eve::fixed<4096/ sizeof(T)>;
-    using alloc       = eve::aligned_allocator<T, ts_in_page>;
-    return std::vector<T, alloc>(ts_in_page::value, 0);
+    constexpr auto ts_in_page  = 4096/ sizeof(T);
+    using alloc                = eve::aligned_allocator<T, ts_in_page>;
+    return std::vector<T, alloc>(ts_in_page, 0);
   }
 
-  template <typename N, typename T>
+  template<eve::size_type N, typename T>
   auto optional_aligned_ptr(T* ptr) {
-    static constexpr std::ptrdiff_t alignment = sizeof(T) * N{}();
+    static constexpr std::ptrdiff_t alignment = sizeof(T) * N;
     if (eve::is_aligned<alignment>(ptr)) return eve::aligned_ptr<T, N>{ptr};
     else                                 return eve::aligned_ptr<T, N>{};
   }
@@ -136,11 +132,11 @@ namespace algo_test
     run_f_l();
   }
 
-  template <typename N>
+  template <eve::size_type N>
   auto select_offsets() {
-    if constexpr ( N{}() <= 7 )
+    if constexpr ( N <= 7 )
     {
-      std::array<int, N{}()> res;
+      std::array<int, N> res;
       std::iota(res.begin(), res.end(), 0);
       return res;
     }
@@ -148,7 +144,7 @@ namespace algo_test
     {
       std::array<int, 7> res;
       std::iota(res.begin(), res.end(), 0);
-      res.back() = N{}();
+      res.back() = N;
       return res;
     }
   }
@@ -159,14 +155,14 @@ namespace algo_test
     using TU = eve::element_type_t<WideTU>;
     using T  = std::tuple_element_t<0, TU>;
     using U  = std::tuple_element_t<1, TU>;
-    using N  = eve::fixed<WideTU::size()>;
+    constexpr auto N  = WideTU::size();
 
     auto page_1 = allocate_page<T>();
     auto page_2 = allocate_page<U>();
 
     test.init(page_1, page_2);
 
-    constexpr int elements_to_test  = std::min( int(N{}() * 10), 300 );
+    constexpr int elements_to_test  = std::min( int(N * 10), 300 );
 
     auto* f1_base = page_1.data();
     auto* f2_base = page_2.data();

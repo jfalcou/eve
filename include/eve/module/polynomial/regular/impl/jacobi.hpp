@@ -79,7 +79,7 @@ namespace eve::_
       else
       {
         using f_t   = common_value_t<T, U, V>;
-        using r_t   = as_wide_t<f_t, cardinal_t<I>>;
+        using r_t   = as_wide_t<f_t, cardinal_v<I>>;
         using elt_t = element_type_t<r_t>;
         r_t nn(convert(n, as<elt_t>()));
         r_t aalpha(convert(alpha, as<elt_t>()));

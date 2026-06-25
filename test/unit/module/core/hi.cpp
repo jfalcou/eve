@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check return types of hi on wide", eve::test::simd::unsigned_integ
 {
   using v_t  = eve::element_type_t<T>;
   using sd_t = eve::downgrade_t<v_t>;
-  using d_t  = eve::wide<sd_t, eve::cardinal_t<T>>;
+  using d_t  = eve::wide<sd_t, T::size()>;
   TTS_EXPR_IS(eve::hi(T()), d_t);
   TTS_EXPR_IS(eve::hi(v_t()), sd_t);
 };

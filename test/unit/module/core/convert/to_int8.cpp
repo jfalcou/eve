@@ -17,7 +17,7 @@
 TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  using t_t = eve::wide<std::int8_t, eve::cardinal_t<T>>;
+  using t_t = eve::wide<std::int8_t, T::size()>;
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<std::int8_t>()), t_t);
   TTS_EXPR_IS(eve::convert[eve::saturated](T(), eve::as<std::int8_t>()), t_t);
@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types_wf16)
 TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  using t_t          = eve::wide<std::int8_t, eve::cardinal_t<T>>;
+  using t_t          = eve::wide<std::int8_t, T::size()>;
   using v_t          = eve::element_type_t<T>;
   constexpr auto tgt = eve::as<std::int8_t>();
 
@@ -54,7 +54,7 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
 TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  using t_t          = eve::wide<std::int8_t, eve::cardinal_t<T>>;
+  using t_t          = eve::wide<std::int8_t, T::size()>;
   using v_t          = eve::element_type_t<T>;
   constexpr auto tgt = eve::as<std::int8_t>();
 
@@ -87,7 +87,7 @@ TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd
 TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  using t_t          = eve::logical<eve::wide<std::int8_t, eve::cardinal_t<T>>>;
+  using t_t          = eve::logical<eve::wide<std::int8_t, T::size()>>;
   constexpr auto tgt = eve::as<eve::logical<std::int8_t>>();
 
   TTS_EQUAL(eve::convert(eve::logical<T>(true), tgt), t_t(true));

@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N, typename Idx, typename Ptr, callable_options O>
+  template<typename T, size_type N, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void
   scatter_(EVE_REQUIRES(avx512_), O const& opts, wide<T,N> const& v, Ptr ptr, Idx const& idx) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -27,7 +27,7 @@ namespace eve::_
     // Unsupported value types go back to emulation
     if      constexpr(sizeof(T) < 4)                    scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Singular scatter goes  back to emulation
-    if      constexpr(N::value == 1)                    scatter.behavior(cpu_{}, opts, v, ptr, idx);
+    if      constexpr(N == 1)                           scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Small indexes are converted to int32
     else if constexpr(sizeof(element_type_t<Idx>) < 4)  scatter[opts](v, ptr, convert(idx, as<std::int32_t>{}));
     // Do we need to aggregate ?
@@ -63,7 +63,7 @@ namespace eve::_
           else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm256_mask_i64scatter_epi32(ptr,m,idx,v,4);
           else if constexpr(c == category::float32x4  )                         _mm256_mask_i64scatter_ps   (ptr,m,idx,v,4);
         }
-        else if constexpr(match(ci, category::int64x2 , category::uint64x2 ) && N::value == 2)
+        else if constexpr(match(ci, category::int64x2 , category::uint64x2 ) && N == 2)
         {
           if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_mask_i64scatter_epi64(ptr,m,idx,v,8);
           else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm_mask_i64scatter_epi32(ptr,m,idx,v,4);
@@ -83,14 +83,14 @@ namespace eve::_
           else if constexpr(c == category::float64x8  )                         _mm512_mask_i32scatter_pd   (ptr,m,idx,v,8);
           else if constexpr(c == category::float32x8  )                         _mm256_mask_i32scatter_ps   (ptr,m,idx,v,4);
         }
-        else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N::value == 4)
+        else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N == 4)
         {
           if      constexpr(match(c, category::int64x4 , category::uint64x4 ))  _mm256_mask_i32scatter_epi64 (ptr,m,idx,v,8);
           else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm_mask_i32scatter_epi32    (ptr,m,idx,v,4);
           else if constexpr(c == category::float64x4  )                         _mm256_mask_i32scatter_pd    (ptr,m,idx,v,8);
           else if constexpr(c == category::float32x4  )                         _mm_mask_i32scatter_ps       (ptr,m,idx,v,4);
         }
-        else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N::value == 2)
+        else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N == 2)
         {
           if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_mask_i32scatter_epi64 (ptr,m,idx,v,8);
           else if constexpr(c == category::float64x2  )                         _mm_mask_i32scatter_pd    (ptr,m,idx,v,8);
@@ -114,7 +114,7 @@ namespace eve::_
         else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm256_i64scatter_epi32(ptr,idx,v,4);
         else if constexpr(c == category::float32x4  )                         _mm256_i64scatter_ps   (ptr,idx,v,4);
       }
-      else if constexpr(match(ci, category::int64x2 , category::uint64x2 ) && N::value == 2)
+      else if constexpr(match(ci, category::int64x2 , category::uint64x2 ) && N == 2)
       {
         if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_i64scatter_epi64(ptr,idx,v,8);
         else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm_i64scatter_epi32(ptr,idx,v,4);
@@ -134,14 +134,14 @@ namespace eve::_
         else if constexpr(c == category::float64x8  )                         _mm512_i32scatter_pd   (ptr,idx,v,8);
         else if constexpr(c == category::float32x8  )                         _mm256_i32scatter_ps   (ptr,idx,v,4);
       }
-      else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N::value == 4)
+      else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N == 4)
       {
         if      constexpr(match(c, category::int64x4 , category::uint64x4 ))  _mm256_i32scatter_epi64 (ptr,idx,v,8);
         else if constexpr(match(c, category::int32x4 , category::uint32x4 ))  _mm_i32scatter_epi32    (ptr,idx,v,4);
         else if constexpr(c == category::float64x4  )                         _mm256_i32scatter_pd    (ptr,idx,v,8);
         else if constexpr(c == category::float32x4  )                         _mm_i32scatter_ps       (ptr,idx,v,4);
       }
-      else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N::value == 2)
+      else if constexpr(match(ci, category::int32x4 , category::uint32x4 ) && N == 2)
       {
         if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_i32scatter_epi64 (ptr,idx,v,8);
         else if constexpr(c == category::float64x2  )                         _mm_i32scatter_pd    (ptr,idx,v,8);

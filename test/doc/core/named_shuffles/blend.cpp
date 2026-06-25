@@ -2,7 +2,7 @@
 
 #include <tts/tts.hpp>
 
-using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+using w_t = eve::wide<std::uint32_t, 4>;
 
 int
 main()

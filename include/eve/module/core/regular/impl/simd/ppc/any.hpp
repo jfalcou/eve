@@ -14,14 +14,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, typename N>
+  template<callable_options O, arithmetic_scalar_value T, size_type N>
   EVE_FORCEINLINE auto any_(EVE_REQUIRES(vmx_), O const& opts, logical<wide<T, N>> v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     auto m = v.bits();
 
     if constexpr (O::contains(splat)) return logical<wide<T, N>> { any.behavior(current_api, opts.drop(splat), v) };
-    else if constexpr (N::value == 1)
+    else if constexpr (N == 1)
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {

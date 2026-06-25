@@ -125,7 +125,7 @@ namespace eve
             using rr_t =  common_value_t<decltype(sab)>;
             return eve::zip(rr_t(sa2), rr_t(sb2), sab);
           };
-          if constexpr(scalar_value<r_t> && (Tup1::size() >= eve::expected_cardinal_v<r_t>)) //chunk it
+          if constexpr(scalar_value<r_t> && (Tup1::size() >= eve::expected_cardinal_v<element_type_t<r_t>>)) //chunk it
           {
             auto simdf = eve::as_wides(eve::zero(eve::as<r_t>()), f);
             auto simds = eve::as_wides(eve::zero(eve::as<r_t>()), s);

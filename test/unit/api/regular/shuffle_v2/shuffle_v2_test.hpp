@@ -101,7 +101,7 @@ template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::as_wide_t<T, eve::fixed<N>>;
+  using Wide = eve::as_wide_t<T, N>;
 
   Wide input;
 
@@ -118,7 +118,7 @@ template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
 run2(auto expected_level, eve::pattern_t<I...> p = {})
 {
-  using Wide = eve::as_wide_t<T, eve::fixed<N * 2>>;
+  using Wide = eve::as_wide_t<T, N * 2>;
 
   Wide input;
 
@@ -274,17 +274,17 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... extra_args_g
   named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, extra_args_gen...);
 }
 
-template<bool supports_G_eq_T_Size, typename T, typename N, typename NamedShuffle>
+template<bool supports_G_eq_T_Size, typename T, eve::size_type N, typename NamedShuffle>
 void
 named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto extra_args_gen)
 {
-  if( N::value == 1 && !supports_G_eq_T_Size )
+  if( N == 1 && !supports_G_eq_T_Size )
   {
     TTS_PASS();
     return;
   }
 
-  using wide2 = eve::wide<T, eve::fixed<N::value * 2>>;
+  using wide2 = eve::wide<T, N * 2>;
 
   {
     wide2 xy {[](int i, int) { return i + 1; }};
@@ -306,7 +306,7 @@ template<int l, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t..
 void
 debug_call_shuffle_l_directly()
 {
-  using w_t = eve::as_wide_t<T, eve::fixed<N>>;
+  using w_t = eve::as_wide_t<T, N>;
 
   auto p = eve::_::expanded_pattern<w_t, G, I...>;
   auto g = eve::lane<G>;

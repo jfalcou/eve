@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename U, typename N, callable_options O>
+  template<typename T, typename U, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_select_(EVE_REQUIRES(vmx_),
                                          O const          &,
                                          wide<U, N> const &m,

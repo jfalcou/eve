@@ -19,7 +19,10 @@ namespace eve
     consteval auto lanes_check()
     {
       // Find largest lanes as a reference
-      std::ptrdiff_t cards[] = { simd_value<T0> ? cardinal_v<T0> : 0, (simd_value<Ts> ? cardinal_v<Ts> : 0)... };
+      int cards[] = {
+        simd_value<T0> ? static_cast<int>(cardinal_v<T0>) : 0,
+        (simd_value<Ts> ? static_cast<int>(cardinal_v<Ts>) : 0)...
+      };
 
       auto max_card = cards[0];
       for(auto c : cards) max_card = max_card < c ? c : max_card;

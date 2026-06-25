@@ -33,7 +33,7 @@ template<typename O> struct is_less_t;
 namespace eve::_
 {
 // to_logical -----------------------------------------------------------
-template<typename T, typename N> auto to_logical(wide<T, N> const& v) noexcept;
+template<typename T, size_type N> auto to_logical(wide<T, N> const& v) noexcept;
 
 template<value T> EVE_FORCEINLINE auto to_logical(logical<T> v) noexcept;
 

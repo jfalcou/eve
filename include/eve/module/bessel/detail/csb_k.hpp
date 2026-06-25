@@ -48,7 +48,7 @@ namespace eve::_
     {
       if constexpr(simd_value<I> && scalar_value<T>)
       {
-        using c_t = wide<T, cardinal_t<I>>;
+        using c_t = wide<T, cardinal_v<I>>;
         return cyl_bessel_kn(nu, c_t(x));
       }
       else if constexpr(scalar_value<I> && scalar_value<T>)
@@ -57,7 +57,7 @@ namespace eve::_
       }
       else if constexpr(scalar_value<I> && simd_value<T>)
       {
-        using i_t = wide<I, cardinal_t<T>>;
+        using i_t = wide<I, cardinal_v<T>>;
         return kernel_bessel_k_int(i_t(nu), x);
       }
       else if constexpr(simd_value<I> && simd_value<T>)

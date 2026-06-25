@@ -83,7 +83,7 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
   using v_t = eve::element_type_t<T>;
   if constexpr( std::is_floating_point_v<v_t> )
   {
-    using w8_t = eve::wide<v_t, eve::fixed<8>>;
+    using w8_t = eve::wide<v_t, 8>;
     auto Inf   = eve::inf(eve::as<v_t>());
     {
       w8_t a(-0.0, -0.0, -0.0, -0.0, -1.0, -1.0, -Inf, -Inf);
@@ -93,7 +93,7 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
       TTS_ULP_EQUAL(c, rr, 2);
     }
     {
-      using w4_t = eve::wide<v_t, eve::fixed<4>>;
+      using w4_t = eve::wide<v_t, 4>;
       w4_t a(-Inf, -Inf, -Inf, 0.0);
       w4_t b(-4.5, 4.0, 4.5, 0.0);
       w4_t rr(0.0, Inf, Inf, 1.0);

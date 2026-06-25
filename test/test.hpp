@@ -19,7 +19,7 @@
 
 namespace eve
 {
-  template<typename T, typename N>
+  template<typename T, size_type N>
   inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
   {
     return eve::all(l == r);
@@ -50,7 +50,7 @@ namespace tts
     return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
   }
 
-  template<typename T, typename N>
+  template<typename T, eve::size_type N>
   inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
@@ -66,7 +66,7 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
   }
 
-  template<typename T, typename N>
+  template<typename T, eve::size_type N>
   inline bool is_ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
   {
     for(auto i = 0; i < a.size(); ++i)
@@ -83,7 +83,7 @@ namespace tts
     return eve::compare_equal(l,r);
   }
 
-  template<typename T, typename N>
+  template<typename T, eve::size_type N>
   inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_dr = 0;
@@ -109,7 +109,7 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : 1;
   }
 
-  template<typename T, typename N>
+  template<typename T, eve::size_type N>
   inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_d = 0;
@@ -155,7 +155,7 @@ namespace eve::test
   template<typename T, std::size_t... N>
   struct to_wide<T, std::index_sequence<N...>>
   {
-    using type = ::tts::types<as_wide_t<T,eve::fixed<1ULL << N>>...>;
+    using type = ::tts::types<as_wide_t<T, 1ULL << N>...>;
   };
 
   template<typename T, typename I>
@@ -334,7 +334,7 @@ namespace tts
     if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::has_emulated_abi_v<W> )
     {
       using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
-      using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+      using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
 
       ftype these(data.storage());
 
@@ -363,7 +363,7 @@ namespace tts
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
 
     using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
+    eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::fixed<T::size()>{});
 
     return poison(that);
   }
@@ -381,8 +381,8 @@ namespace tts
     }
   }
 
-  template<std::ptrdiff_t N>
-  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
+  template<eve::size_type N>
+  auto produce(type<eve::wide<eve::float16_t, N>> const&, auto g, auto& rng, auto... args)
   {
     auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
     return poison(eve::load(arr.data(), eve::fixed<N>{}));
@@ -507,9 +507,9 @@ namespace tts
   }
 
   template<typename Fn, typename Wm, typename... Args>
-  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>
+  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_v<Wm>>
   {
-    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>;
+    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_v<Wm>>;
     auto call_f = [&](auto idx) { return f(eve::_::get_at(wm, idx), eve::_::get_at(args, idx)...); };
     return eve::_::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
   }

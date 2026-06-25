@@ -20,7 +20,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_REQUIRES(sse4_1_),
                                     O           const& o,
                                     wide<T, N>  const& a0) noexcept
@@ -54,7 +54,7 @@ namespace eve::_
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, arithmetic_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_REQUIRES(avx512_),
                                     C          const& cx,
                                     O          const& o,

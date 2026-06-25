@@ -35,7 +35,7 @@ namespace eve
   struct alignment : std::integral_constant<std::size_t,alignof(Type)>
   {};
 
-  template<typename Type, typename Size>
+  template<typename Type, std::ptrdiff_t Size>
   struct  alignment<wide<Type, Size>>
         : std::integral_constant<std::size_t,wide<Type, Size>::alignment()>
   {};
@@ -45,7 +45,7 @@ namespace eve
   {
   };
 
-  template<typename Type, typename Size>
+  template<typename Type, std::ptrdiff_t Size>
   struct  alignment<logical<wide<Type, Size>>>
         : std::integral_constant<std::size_t,logical<wide<Type, Size>>::alignment()>
   {};

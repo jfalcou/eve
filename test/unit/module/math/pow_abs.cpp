@@ -97,7 +97,7 @@ TTS_CASE_TPL("Check limits of pow_abs", eve::test::simd::ieee_reals_wf16)
 
   if constexpr(sizeof(v_t) > 2)
   {
-    using w8_t = eve::wide<v_t, eve::fixed<8>>;
+    using w8_t = eve::wide<v_t, 8>;
     {
       w8_t a(0.25, 0.5, 1, 2.5, 100.0, 12.7, 4.0, 0.5);
       w8_t b(1.1, 2.2, 3.3, 4.4, 43.2, -0.7, 0.4, 0.0);
@@ -127,7 +127,7 @@ TTS_CASE_TPL("Check limits of pow_abs", eve::test::simd::ieee_reals_wf16)
       TTS_ULP_EQUAL(c, rr, 2);
     }
     {
-      using w4_t = eve::wide<v_t, eve::fixed<4>>;
+      using w4_t = eve::wide<v_t, 4>;
       w4_t a(0.5, 1.5, Inf, Inf);
       w4_t b(-Inf, -Inf, -3.0, 3.0);
       w4_t rr(Inf, 0.0, 0.0, Inf);

@@ -42,7 +42,7 @@ namespace eve::_
     {
       if constexpr(scalar_value<T>)
       {
-        using f_t =  wide<T, cardinal_t<I>>; //as_wide_as_t<T, I>;
+        using f_t =  wide<T, cardinal_v<I>>; //as_wide_as_t<T, I>;
         return hermite(n, f_t(x));
       }
       else if constexpr(simd_value<T>)

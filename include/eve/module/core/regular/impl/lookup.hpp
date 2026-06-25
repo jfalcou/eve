@@ -14,14 +14,14 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename I, typename N>
+  template<callable_options O, typename T, typename I, size_type N>
   EVE_FORCEINLINE logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept
   {
     if constexpr(abi_t<T, N>::is_wide_logical) return bit_cast(lookup(a.bits(), i), as(a));
     else                                       return to_logical(lookup(a.mask(), i));
   }
 
-  template<callable_options O, typename T, integral_scalar_value I, typename N>
+  template<callable_options O, typename T, integral_scalar_value I, size_type N>
   EVE_FORCEINLINE wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
   {
     if constexpr( is_bundle_v<abi_t<T, N>> )
@@ -32,7 +32,7 @@ namespace eve::_
     {
       logical<wide<I,N>> const cond = [&]()
       {
-        if constexpr( std::is_signed_v<I> ) return ind >= 0; else return ind < N::value;
+        if constexpr( std::is_signed_v<I> ) return ind >= 0; else return ind < N;
       }();
 
       // Compute mask as SIMD
@@ -44,7 +44,7 @@ namespace eve::_
 
       if constexpr(has_aggregated_abi_v<wide<T,N>>)
       {
-        constexpr auto const half = N::value / 2;
+        constexpr auto const half = N / 2;
         apply<half>([&, lx = idx.slice(lower_)](auto... v)
                     { (data.set(v, (cond.get(v) ? a.get(lx.get(v)) : T {})), ...); });
         apply<half>([&, hx = idx.slice(upper_)](auto... v)
@@ -52,7 +52,7 @@ namespace eve::_
       }
       else
       {
-        apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T {}), ...); });
+        apply<N>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T {}), ...); });
       }
 
       return data;

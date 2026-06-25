@@ -24,7 +24,7 @@
 namespace eve::_
 {
 
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {

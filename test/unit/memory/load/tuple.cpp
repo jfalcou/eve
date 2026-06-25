@@ -29,7 +29,7 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
 {
   using s_t   = tuple_t<T>;
   using w_t   = eve::wide<tuple_t<T>>;
-  using w8_t  = eve::wide<tuple_t<T>, eve::fixed<8>>;
+  using w8_t  = eve::wide<tuple_t<T>, 8>;
 
   auto const filler = [](auto i, auto)  { return s_t{ static_cast<std::int8_t>(1+i)
                                                     , static_cast<T>(i)
@@ -45,13 +45,13 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
                               , reference.storage()
                               )};
 
-  auto [data0,idx0] = page<std::int8_t  , typename w8_t::cardinal_type >();
-  auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
-  auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
+  auto [data0,idx0] = page<std::int8_t  , w8_t::size() >();
+  auto [data1,idx1] = page<T            , w8_t::size() >();
+  auto [data2,idx2] = page<double       , w8_t::size() >();
 
-  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
+  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0], eve::cardinal_t<w8_t>{})
                               , &data1[idx1] - 1
-                              , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
+                              , eve::as_aligned(&data2[idx2], eve::cardinal_t<w8_t>{})
                               );
 
 

@@ -14,7 +14,7 @@
 namespace eve::_
 {
 
-  template<callable_options O, floating_scalar_value T, typename N, conditional_expr C>
+  template<callable_options O, floating_scalar_value T, size_type N, conditional_expr C>
   EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
@@ -36,11 +36,11 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, floating_scalar_value T, typename N>
+  template<callable_options O, floating_scalar_value T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sve_), O const&,
                                  wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
-    return svcmpuo(expand_mask(keep_first(N::value), as(v)), v, w);
+    return svcmpuo(expand_mask(keep_first(N), as(v)), v, w);
   }
 }

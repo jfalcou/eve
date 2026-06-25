@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-template<typename T, typename S, typename N, callable_options O>
+template<typename T, typename S, size_type N, callable_options O>
 EVE_FORCEINLINE wide<T,N> rotr_(EVE_REQUIRES(avx512_), O const&, wide<T, N> v, wide<S, N> s) noexcept
 requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
 {
@@ -31,7 +31,7 @@ requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   else if constexpr( c == category::uint64x2  ) return _mm_rorv_epi64    (v, s);
 }
 
-template<typename T, auto S, typename N, callable_options O>
+template<typename T, auto S, size_type N, callable_options O>
 EVE_FORCEINLINE wide<T,N> rotr_(EVE_REQUIRES(avx512_), O const&, wide<T, N> v, index_t<S>) noexcept
 requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
 {
@@ -46,7 +46,7 @@ requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   else if constexpr( c == category::uint64x2  ) return _mm_ror_epi64    (v, S);
 }
 
-template<conditional_expr C, typename T, typename S, typename N, callable_options O>
+template<conditional_expr C, typename T, typename S, size_type N, callable_options O>
 EVE_FORCEINLINE wide<T,N> rotr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, wide<S, N> s) noexcept
 requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
 {
@@ -63,7 +63,7 @@ requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   else if constexpr( c == category::uint64x2  ) return _mm_mask_rorv_epi64    (src, m, v, s);
 }
 
-template<conditional_expr C, typename T, auto S, typename N, callable_options O>
+template<conditional_expr C, typename T, auto S, size_type N, callable_options O>
 EVE_FORCEINLINE wide<T,N> rotr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, index_t<S>) noexcept
 requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
 {

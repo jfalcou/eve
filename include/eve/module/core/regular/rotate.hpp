@@ -58,7 +58,7 @@ namespace eve
 //================================================================================================
   EVE_MAKE_CALLABLE(rotate_, rotate);
 
-  template<std::ptrdiff_t M, std::ptrdiff_t N>
+  template<std::ptrdiff_t M, size_type N>
   inline constexpr auto rotate_pattern = fix_pattern<N>(
     [](auto i, auto) {
       if (i < N - M) return M + i;
@@ -68,7 +68,7 @@ namespace eve
 
   namespace _
   {
-    template<std::ptrdiff_t N, std::ptrdiff_t... I>
+    template<size_type N, std::ptrdiff_t... I>
     inline constexpr auto is_rotate = []() -> std::ptrdiff_t
     {
       std::array actual  = {I...};

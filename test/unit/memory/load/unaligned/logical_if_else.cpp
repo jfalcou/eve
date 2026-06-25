@@ -22,7 +22,7 @@ TTS_CASE_WITH( "Check load to logical from unaligned pointer with alternatives"
 <typename T>(T others)
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
-  auto [ldata ,lidx ] = logical_page<v_t, eve::fixed<T::size()>>();
+  auto [ldata ,lidx ] = logical_page<v_t, T::size()>();
 
   auto l_ptr        = &ldata[lidx] - 1;
   auto l_const_ptr  = l_ptr;

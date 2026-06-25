@@ -17,12 +17,12 @@ namespace eve::_
   //================================================================================================
   // 2*128-bits regular combine
   //================================================================================================
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, typename N::combined_type>
+  template<typename T, size_type N>
+  EVE_FORCEINLINE wide<T, N * 2>
   combine(sse2_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    using t_t = wide<T, typename N::combined_type>;
+    using t_t = wide<T, N * 2>;
     using s_t = typename t_t::storage_type;
 
          if constexpr ( has_aggregated_abi_v<t_t>                 )  return s_t {l , h};
@@ -49,7 +49,7 @@ namespace eve::_
       else  if constexpr( std::same_as<T, float> ) return _mm256_insertf128_ps   (_mm256_castps128_ps256(l), h, 1);
       else                                         return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
     }
-    else if constexpr( N() * sizeof(T) == 8 )
+    else if constexpr( N * sizeof(T) == 8 )
     {
             if constexpr( std::same_as<T, double> ) return _mm_shuffle_pd(l, h, 0);
       else  if constexpr( std::same_as<T, float > ) return _mm_shuffle_ps(l, h, 0x44);
@@ -57,7 +57,7 @@ namespace eve::_
                                                                             _mm_castsi128_ps(h),
                                                                             0x44));
     }
-    else if constexpr( N() * sizeof(T) == 4 )
+    else if constexpr( N * sizeof(T) == 4 )
     {
       if constexpr( std::same_as<T, float> )
       {
@@ -74,11 +74,11 @@ namespace eve::_
     //==============================================================================================
     // Handle 1/8th and 1/16th -storage - Those cases are obviously integrals
     //==============================================================================================
-    else if constexpr( N()== 2 )
+    else if constexpr( N== 2 )
     {
       return make(eve::as<t_t> {}, l.get(0), l.get(1), h.get(0), h.get(1));
     }
-    else if constexpr( N() == 1 )
+    else if constexpr( N == 1 )
     {
       return make(eve::as<t_t> {}, l.get(0), h.get(0));
     }
@@ -87,14 +87,14 @@ namespace eve::_
   //================================================================================================
   // Non aggregated, skinny logicals
   //================================================================================================
-  template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, typename N::combined_type>>
+  template<typename T, size_type N>
+  EVE_FORCEINLINE logical<wide<T, N * 2>>
   combine ( avx512_ const & , logical<wide<T, N>> const &l
                             , logical<wide<T, N>> const &h
           ) noexcept
-      requires x86_abi<abi_t<T, typename N::combined_type>>
+      requires x86_abi<abi_t<T, N * 2>>
   {
-    using s_t = typename logical<wide<T, typename N::combined_type>>::storage_type;
+    using s_t = typename logical<wide<T, N * 2>>::storage_type;
     using i_t  = typename s_t::type;
     return s_t{ static_cast<i_t>((h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong())};
   }

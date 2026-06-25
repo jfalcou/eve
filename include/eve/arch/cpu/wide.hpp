@@ -49,16 +49,16 @@
 
 namespace eve::_
 {
-  template<typename T, typename N>
+  template<typename T, size_type N>
   struct wide_split_type_helper
   { };
 
-  template<typename T, typename N>
-  requires(N::value > 1)
+  template<typename T, size_type N>
+  requires(N > 1)
   struct wide_split_type_helper<T, N>
   {
     //! Type representing a wide of the same type but with a cardinal half the size
-    using split_type = wide<T, typename N::split_type>;
+    using split_type = wide<T, (N/2)>;
   };
 }
 
@@ -87,12 +87,13 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<arithmetic_scalar_value Type, typename Cardinal>
+  template<arithmetic_scalar_value Type, size_type Size>
+  requires (is_valid_size<Size>)
   struct EVE_MAY_ALIAS wide
-      : _::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>,
-        _::wide_split_type_helper<Type, Cardinal>
+      : _::wide_storage<as_register_t<translate_t<Type>, Size, abi_t<translate_t<Type>, Size>>>,
+        _::wide_split_type_helper<Type, Size>
   {
-    using storage_base = _::wide_storage<as_register_t<translate_t<Type>, Cardinal, abi_t<translate_t<Type>, Cardinal>>>;
+    using storage_base = _::wide_storage<as_register_t<translate_t<Type>, Size, abi_t<translate_t<Type>, Size>>>;
 
     //! The type stored in the register.
     using value_type = Type;
@@ -101,37 +102,31 @@ namespace eve
     using translated_element_type = translate_t<Type>;
 
     //! The type resulting from translating the current wide type.
-    using translated_type = wide<translated_element_type, Cardinal>;
+    using translated_type = wide<translated_element_type, Size>;
 
     //! The ABI tag for this register.
-    using abi_type = abi_t<translated_element_type, Cardinal>;
+    using abi_type = abi_t<translated_element_type, Size>;
 
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
 
-    //! Type describing the number of lanes of current wide
-    using cardinal_type = Cardinal;
-
-    //! Type representing the size of the current wide
-    using size_type = std::ptrdiff_t;
+    //! Type describing the size of the current wide
+    using cardinal_type = fixed<Size>;
 
     //! Opt-in for like concept
     using is_like = value_type;
 
     //! Type representing a wide of the same type but with a cardinal twice the size
-    using combined_type = wide<Type, typename Cardinal::combined_type>;
+    using combined_type = wide<Type, Size * 2>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
-    //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
-    template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T, N>;
+    //! If unspecified, `N` is computed as `expected_cardinal_v<T>`.
+    template<typename T, size_type N = expected_cardinal_v<T>> using rebind = wide<T, N>;
 
     //! Generates a eve::wide type from a different cardinal `N`.
-    template<typename N> using rescale = wide<Type, N>;
+    template<size_type N> using rescale = wide<Type, N>;
 
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept
-    {
-      return sizeof(Type) * Cardinal {};
-    }
+    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type) * Size; }
 
     //==============================================================================================
     //! @name Constructors
@@ -157,20 +152,20 @@ namespace eve
     requires (std::same_as<value_type_t<Range>, Type> && !std::same_as<storage_type, Range>)
         : wide(std::begin(EVE_FWD(r)))
     {
-      EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Cardinal::value,
+      EVE_ASSERT(std::distance(std::begin(r), std::end(r)) == Size,
                  "eve::wide: Range size does not match the expected cardinal.");
     }
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
-    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, Cardinal {}))
+    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, fixed<Size>{}))
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<_::data_source... Ptr>
     requires(eve::product_type<Type>)
     EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
-        : storage_base(load(ptr, Cardinal {}))
+      : storage_base(load(ptr, fixed<Size>{}))
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
@@ -183,7 +178,7 @@ namespace eve
     //! Constructs a eve::wide from a sequence of scalar values of proper size
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept
-        requires( (Cardinal::value == 2 + sizeof...(vs))
+        requires( (Size == 2 + sizeof...(vs))
                   && std::is_convertible_v<S0,Type>
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
@@ -331,7 +326,7 @@ namespace eve
     EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return _::extract(*this, i); }
 
     //! Retrieve the value from the last lane
-    EVE_FORCEINLINE Type back() const noexcept { return get(Cardinal::value - 1); }
+    EVE_FORCEINLINE Type back() const noexcept { return get(Size - 1); }
 
     //! Retrieve the value from the first lane
     EVE_FORCEINLINE Type front() const noexcept { return get(0); }
@@ -358,7 +353,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    EVE_FORCEINLINE auto slice() const requires(Cardinal::value > 1)
+    EVE_FORCEINLINE auto slice() const requires(Size > 1)
     {
       return _::slice(*this);
     }
@@ -392,7 +387,7 @@ namespace eve
     //
     //==============================================================================================
     template<std::size_t Slice>
-    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const requires(Cardinal::value > 1)
+    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const requires(Size > 1)
     {
       return _::slice(*this, s);
     }
@@ -440,13 +435,7 @@ namespace eve
     //=============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr size_type size() noexcept { return Cardinal::value; }
-
-    //! @brief Maximal number of lanes for a given wide
-    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
-
-    //! @brief Check if a wide contains 0 lanes
-    static EVE_FORCEINLINE constexpr bool empty() noexcept { return false; }
+    static EVE_FORCEINLINE constexpr size_type size() noexcept { return Size; }
 
     //==============================================================================================
     //! @}
@@ -479,7 +468,7 @@ namespace eve
 
     //! @brief Performs a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
-    template<scalar_value U, typename M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -502,12 +491,12 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE wide<S, Cardinal> operator&(S s, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide<S, Size> operator&(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      return bit_and(bit_cast(w, as<wide<S, Cardinal>>()), s);
+      return bit_and(bit_cast(w, as<wide<S, Size>>()), s);
     }
 
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
@@ -524,7 +513,7 @@ namespace eve
 
     //! @brief Performs a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<scalar_value U, typename M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator|(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -547,12 +536,12 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE wide<S, Cardinal> operator|(S s, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide<S, Size> operator|(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      return bit_or(bit_cast(w, as<wide<S, Cardinal>>{}), s);
+      return bit_or(bit_cast(w, as<wide<S, Size>>{}), s);
     }
 
     //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
@@ -568,7 +557,7 @@ namespace eve
 
     //! @brief Performs a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<scalar_value U, typename M>
+    template<scalar_value U, size_type M>
     friend EVE_FORCEINLINE wide operator^(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
@@ -591,12 +580,12 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE wide<S, Cardinal> operator^(S s, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide<S, Size> operator^(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      return bit_xor(bit_cast(w, as<wide<S, Cardinal>>()), s);
+      return bit_xor(bit_cast(w, as<wide<S, Size>>()), s);
     }
 
     //==============================================================================================
@@ -1087,11 +1076,11 @@ namespace eve
   //====================================================================================================================
 
   /// Allows deduction from a single eve::scalar_value
-  template<scalar_value S> wide(S const&) -> wide<S, expected_cardinal_t<S>>;
+  template<scalar_value S> wide(S const&) -> wide<S, expected_cardinal_v<S>>;
 
   /// Allows deduction from variadic pack of eve::scalar_value
   template<scalar_value S, std::same_as<S>... Ss>
-  wide(S, Ss...) -> wide<S,fixed<1+sizeof...(Ss)>>;
+  wide(S, Ss...) -> wide<S, 1 + sizeof...(Ss)>;
 
   //====================================================================================================================
   //! @}
@@ -1100,13 +1089,13 @@ namespace eve
   //==============================================================================================
   // Product type Support
   //==============================================================================================
-  template<std::size_t I, eve::product_type T, typename N>
+  template<std::size_t I, eve::product_type T, size_type N>
   EVE_FORCEINLINE auto& get(wide<T, N>& w) noexcept
   {
     return kumi::get<I>(w.storage());
   }
 
-  template<std::size_t... Idx, eve::product_type T, typename N>
+  template<std::size_t... Idx, eve::product_type T, size_type N>
 #if !defined(EVE_DOXYGEN_INVOKED)
   requires((Idx < kumi::size<T>::value) && ...)
 #endif
@@ -1131,12 +1120,12 @@ namespace eve
 //================================================================================================
 // Product type Support
 //================================================================================================
-template<std::size_t I, eve::product_type T, typename N>
+template<std::size_t I, eve::product_type T, eve::size_type N>
 struct std::tuple_element<I, eve::wide<T, N>>
     : std::tuple_element<I, typename eve::wide<T, N>::storage_type>
 {};
 
-template<eve::product_type T, typename N>
+template<eve::product_type T, eve::size_type N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
 #endif

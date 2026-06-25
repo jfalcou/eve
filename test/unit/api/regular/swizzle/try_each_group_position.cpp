@@ -34,7 +34,7 @@ to_array(kumi::tuple<Ts...> x)
 
 TTS_CASE_TPL("Check behavior of try_each_group_position simplest", eve::test::scalar::all_types)
 <typename T>(tts::type<T>) {
-  using T2 = eve::wide<T, eve::fixed<2>>;
+  using T2 = eve::wide<T, 2>;
 
   T2 x = {0, 1};
   kumi::tuple<T2, T2> expected{ T2{0, 1}, T2{1, 0} };

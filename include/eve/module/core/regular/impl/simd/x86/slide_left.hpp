@@ -13,14 +13,14 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_left_(EVE_SUPPORTS(sse2_), wide<T, N> v, index_t<Shift>) noexcept
-    requires(Shift <= N::value)
+    requires(Shift <= N)
     && x86_abi<abi_t<T, N>>
 {
   if constexpr( Shift == 0 ) return v;
-  else if constexpr( Shift == N::value ) return wide<T, N> {0};
+  else if constexpr( Shift == N ) return wide<T, N> {0};
   else
   {
     if constexpr( std::same_as<abi_t<T, N>, x86_128_> )
@@ -97,7 +97,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
             auto h0 = slide_left(h, index<Shift>);
 
             // Slide lower parts using _mm_alignr_epi8
-            using byte_t = typename wide<T, N>::template rebind<std::uint8_t, fixed<16>>;
+            using byte_t = typename wide<T, N>::template rebind<std::uint8_t, 16>;
 
             byte_t bytes = _mm_alignr_epi8(
                 bit_cast(h, as<byte_t> {}), bit_cast(l, as<byte_t> {}), shifted_bytes);
@@ -111,7 +111,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     else if constexpr( std::same_as<abi_t<T, N>, x86_512_> )
     {
       // Generates vperm + pand, good enough for now
-      return basic_shuffle(v, slide_left_pattern<Shift, N::value>);
+      return basic_shuffle(v, slide_left_pattern<Shift, N>);
     }
   }
 }

@@ -13,7 +13,7 @@
 namespace eve::_
 {
 
-template<typename T, typename N, std::ptrdiff_t Shift>
+template<typename T, size_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N>
                 slide_right_arm_extract(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
@@ -51,21 +51,21 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_),
                                  wide<T, N>     x,
                                  wide<T, N>     y,
-                                 index_t<Shift> s) requires(0 < Shift && Shift < N::value)
+                                 index_t<Shift> s) requires(0 < Shift && Shift < N)
     && native_simd_for_abi<wide<T, N>, arm_64_, arm_128_>
 {
   return slide_right_arm_extract(x, y, s);
 }
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, size_type N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_), wide<T, N> v, index_t<Shift> s) noexcept
-    requires(0 < Shift && Shift < N::value)
+    requires(0 < Shift && Shift < N)
     && arm_abi<abi_t<T, N>>
 {
   return slide_right_arm_extract(wide<T, N> {0}, v, s);

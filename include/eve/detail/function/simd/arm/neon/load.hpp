@@ -18,13 +18,13 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(neon128_, Ptr p, as<wide<T, N>>)
     requires arm_abi<abi_t<T, N>>
   {
     auto ptr = arm_ptr_downcast(unalign(p));
 
-    if constexpr( N::value * sizeof(T) >= arm_64_::bytes )
+    if constexpr( N * sizeof(T) >= arm_64_::bytes )
     {
       constexpr auto c = categorize<wide<T, N>>();
 
@@ -57,13 +57,13 @@ namespace eve::_
     else
     {
       typename wide<T, N>::storage_type that{};
-      std::memcpy(&that, ptr, N::value * sizeof(T));
+      std::memcpy(&that, ptr, N * sizeof(T));
       return that;
     }
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<arithmetic_scalar_value T, typename N, typename U, typename Lanes>
+  template<arithmetic_scalar_value T, size_type N, typename U, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_impl(neon128_, aligned_ptr<U, Lanes> p, as<wide<T, N>> tgt)
     requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
   {
@@ -75,7 +75,7 @@ namespace eve::_
     }
     else
     {
-      if constexpr( N::value * sizeof(T) >= eve::arm_64_::bytes )
+      if constexpr( N * sizeof(T) >= eve::arm_64_::bytes )
       {
         constexpr auto c = categorize<wide<T, N>>();
 
@@ -108,7 +108,7 @@ namespace eve::_
       else
       {
         typename wide<T, N>::storage_type that{};
-        std::memcpy(&that, ptr, N::value * sizeof(T));
+        std::memcpy(&that, ptr, N * sizeof(T));
         return that;
       }
     }

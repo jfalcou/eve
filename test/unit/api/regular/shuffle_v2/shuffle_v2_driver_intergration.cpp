@@ -49,7 +49,7 @@ TTS_CASE("integrating with fake native shuffle")
 {
   auto tst = tst_for_shuffler(perfect_shuffler);
 
-  using T = eve::wide<int, eve::fixed<4>>;
+  using T = eve::wide<int, 4>;
 
   tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, 0>);
   tst(T {4, 3, 2, 1}, eve::index<4>, T {1, 2, 3, 4}, eve::pattern<3, 2, 1, 0>);
@@ -58,9 +58,9 @@ TTS_CASE("integrating with fake native shuffle")
   tst(T {3, 4, 0, 0}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, eve::na_>);
 
   // T05
-  using T025 = eve::wide<int, eve::fixed<1>>;
-  using T05  = eve::wide<int, eve::fixed<2>>;
-  using T2   = eve::wide<int, eve::fixed<8>>;
+  using T025 = eve::wide<int, 1>;
+  using T05  = eve::wide<int, 2>;
+  using T2   = eve::wide<int, 8>;
 
   tst(T05 {4, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::pattern<3, 1>);
   tst((T {7, 5, 3, 1}), eve::index<4>, T {1, 2, 3, 4}, T {5, 6, 7, 8}, eve::pattern<6, 4, 2, 0>);
@@ -93,7 +93,7 @@ TTS_CASE("integrating with fake native shuffle")
       eve::pattern<3, 2, 1, 0>);
 
   // To bigger size
-  using TxT = eve::wide<kumi::tuple<int, int>, T::cardinal_type>;
+  using TxT = eve::wide<kumi::tuple<int, int>, T::size()>;
   tst(TxT {T {3, 4, 1, 2}, T {1, 2, 1, 2}},
       eve::index<2>,
       T {1, 2, 3, 4},
@@ -116,9 +116,9 @@ TTS_CASE("integrating with fake native shuffle")
   // Bundle
   {
     using ETxL     = kumi::tuple<int, eve::logical<int>>;
-    using TxL      = eve::wide<ETxL, T::cardinal_type>;
-    using TLxTL    = eve::wide<kumi::tuple<ETxL, ETxL>, T::cardinal_type>;
-    using TLxTLxTL = eve::wide<kumi::tuple<ETxL, ETxL, ETxL>, T::cardinal_type>;
+    using TxL      = eve::wide<ETxL, T::size()>;
+    using TLxTL    = eve::wide<kumi::tuple<ETxL, ETxL>, T::size()>;
+    using TLxTLxTL = eve::wide<kumi::tuple<ETxL, ETxL, ETxL>, T::size()>;
 
     TxL in {T {1, 2, 3, 4}, L {false, true, true, false}};
     TxL out {T {3, 4, 1, 2}, L {true, false, false, true}};
@@ -132,8 +132,8 @@ TTS_CASE("integrating with fake native shuffle")
 
 TTS_CASE("identites and 0s masking integration tests")
 {
-  using T      = eve::wide<int, eve::fixed<4>>;
-  using half_T = eve::wide<int, eve::fixed<2>>;
+  using T      = eve::wide<int, 4>;
+  using half_T = eve::wide<int, 2>;
 
   // Identities
   {
@@ -210,8 +210,8 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
   // normal
   {
     using e_t     = eve::element_type_t<T>;
-    using TxT     = eve::wide<kumi::tuple<e_t, e_t>, typename T::cardinal_type>;
-    using TxTxTxT = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, typename T::cardinal_type>;
+    using TxT     = eve::wide<kumi::tuple<e_t, e_t>, T::size()>;
+    using TxTxTxT = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, T::size()>;
 
     tst(TxT {T {0}, T {0}}, 0, T {0}, eve::lane<T::size()>, eve::pattern<0, 0>);
     tst(TxTxTxT {T {0}, T {1}, T {0}, T {1}},
@@ -238,9 +238,9 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
   // bundle
   {
     using e_t     = kumi::tuple<eve::element_type_t<T>, eve::logical<std::int8_t>>;
-    using U       = eve::wide<e_t, typename T::cardinal_type>;
-    using UxU     = eve::wide<kumi::tuple<e_t, e_t>, typename T::cardinal_type>;
-    using UxUxUxU = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, typename T::cardinal_type>;
+    using U       = eve::wide<e_t, T::size()>;
+    using UxU     = eve::wide<kumi::tuple<e_t, e_t>, T::size()>;
+    using UxUxUxU = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, T::size()>;
 
     tst(UxU {U {0, false}, U {0, false}},
         0,

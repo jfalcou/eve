@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename I, typename N>
+  template<callable_options O, typename T, typename I, size_type N>
   EVE_FORCEINLINE wide<T, N> lookup_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, wide<I, N> idx) noexcept
   requires(arm_abi<abi_t<I, N>>&& arm_abi<abi_t<T, N>>)
   {
@@ -28,7 +28,7 @@ namespace eve::_
     {
       if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
       {
-        using bytes_t = typename wide<I, N>::template rebind<std::uint8_t, fixed<8>>;
+        using bytes_t = typename wide<I, N>::template rebind<std::uint8_t, 8>;
         using tgt_t   = as<bytes_t>;
         auto b        = bit_cast(a, tgt_t {});
 
@@ -47,7 +47,7 @@ namespace eve::_
       }
       else if constexpr( std::same_as<abi_t<T, N>, arm_128_> )
       {
-        using bytes_t = typename wide<I, N>::template rebind<std::uint8_t, fixed<16>>;
+        using bytes_t = typename wide<I, N>::template rebind<std::uint8_t, 16>;
         using tgt_t   = as<bytes_t>;
         auto b        = bit_cast(a, tgt_t {});
 

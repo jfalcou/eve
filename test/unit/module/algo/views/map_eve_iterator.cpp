@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using N = eve::fixed<T::size()>;
+    constexpr auto N = T::size();
     using aligned_p = eve::aligned_ptr<U, N>;
 
     using u_it = eve::algo::ptr_iterator<U*, N>;
@@ -79,7 +79,8 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
 
 TTS_CASE("eve.algo map iterator non const to const")
 {
-  using N = eve::fixed<4>;
+  constexpr auto N = 4;
+
   using aligned_p  = eve::aligned_ptr<int      , N>;
   using aligned_cp = eve::aligned_ptr<int const, N>;
 

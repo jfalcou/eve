@@ -27,8 +27,8 @@ struct has_iterator_cardinal
 
 TTS_CASE( "Check for iterator_cardinal")
 {
-  using half_aligned  = eve::aligned_ptr<int, eve::fixed<eve::expected_cardinal_v<int> / 2>>;
-  using twice_aligned = eve::aligned_ptr<int, eve::fixed<eve::expected_cardinal_v<int> * 2>>;
+  using half_aligned  = eve::aligned_ptr<int, eve::expected_cardinal_v<int> / 2>;
+  using twice_aligned = eve::aligned_ptr<int, eve::expected_cardinal_v<int> * 2>;
 
   TTS_TYPE_IS(eve::iterator_cardinal_t<int*>,                       eve::expected_cardinal_t<int>);
   TTS_TYPE_IS(eve::iterator_cardinal_t<int const*>,                 eve::expected_cardinal_t<int>);

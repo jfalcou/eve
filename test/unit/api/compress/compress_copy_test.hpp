@@ -210,7 +210,7 @@ template<typename T>
 void
 compress_copy_tst(eve::as<T> tgt, auto algo)
 {
-  using N = typename T::cardinal_type;
+  constexpr auto N = T::size();
 
   if constexpr( eve::has_bundle_abi_v<T> )
   {

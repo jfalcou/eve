@@ -16,7 +16,7 @@ TTS_CASE_TPL("combine - arithmetic", eve::test::simd::all_types)
   {
     using T = eve::element_type_t<W>;
     using HW = typename W::split_type;
-    using W1 = eve::wide<T, eve::fixed<1>>;
+    using W1 = eve::wide<T, 1>;
 
     std::array<T, card_out> data;
     for(std::ptrdiff_t i = 0; i < card_out; i++) data[i] = 1 + i;
@@ -47,7 +47,7 @@ TTS_CASE_TPL("combine - logical", eve::test::simd::all_types)
     using W = eve::logical<BW>;
     using T = eve::element_type_t<W>;
     using HW = typename W::split_type;
-    using W1 = typename W::template rescale<eve::fixed<1>>;
+    using W1 = typename W::template rescale<1>;
 
     std::array<T, card_out> data;
     for(std::ptrdiff_t i = 0; i < card_out; i++) data[i] = (i % 3) == 0;

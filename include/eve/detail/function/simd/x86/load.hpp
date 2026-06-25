@@ -20,14 +20,14 @@ namespace eve::_
   //================================================================================================
   // Regular loads
   //================================================================================================
-  template<typename T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<typename T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_impl(sse2_, Ptr p, as<wide<T, N>>) noexcept
     requires (dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>)
   {
     constexpr auto cat = categorize<wide<T, N>>();
-    constexpr bool isfull512 = N::value*sizeof(T) == x86_512_::bytes;
-    constexpr bool isfull256 = N::value*sizeof(T) == x86_256_::bytes;
-    constexpr bool isfull128 = N::value*sizeof(T) == x86_128_::bytes;
+    constexpr bool isfull512 = N*sizeof(T) == x86_512_::bytes;
+    constexpr bool isfull256 = N*sizeof(T) == x86_256_::bytes;
+    constexpr bool isfull128 = N*sizeof(T) == x86_128_::bytes;
     constexpr bool has_fp16 = _::supports_fp16_vector_ops;
 
     if constexpr( !std::is_pointer_v<Ptr> )
@@ -56,7 +56,7 @@ namespace eve::_
       else
       {
         typename wide<T, N>::storage_type that{};
-        std::memcpy(&that, p.get(), N::value * sizeof(T));
+        std::memcpy(&that, p.get(), N * sizeof(T));
         return that;
       }
     }
@@ -86,7 +86,7 @@ namespace eve::_
       else
       {
         typename wide<T, N>::storage_type that{};
-        std::memcpy(&that, p, N::value * sizeof(T));
+        std::memcpy(&that, p, N * sizeof(T));
         return that;
       }
     }
@@ -95,7 +95,7 @@ namespace eve::_
   //================================================================================================
   // Conditional loads
   //================================================================================================
-  template<relative_conditional_expr C, typename Ptr, typename T, typename N>
+  template<relative_conditional_expr C, typename Ptr, typename T, size_type N>
   EVE_FORCEINLINE wide<T, N> load_impl(sse2_, C const& cond, Ptr p, as<wide<T, N>> tgt) noexcept
     requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
   {

@@ -23,10 +23,10 @@ namespace eve
 
 namespace eve
 {
-  template<typename T, typename N, x86_abi ABI>
-  consteval auto find_register_type(as<T>, N, ABI)
+  template<typename T, size_type N, x86_abi ABI>
+  consteval auto find_register_type(as<T>, fixed<N>, ABI)
   {
-    constexpr size_t width = sizeof(T) * N::value;
+    constexpr size_t width = sizeof(T) * N;
 
     if constexpr (std::same_as<ABI, x86_128_>)
     {
@@ -144,10 +144,10 @@ namespace eve
 
 # if defined(SPY_SIMD_IS_X86_AVX512)
   // logical uses different registers in AVX512
-  template<typename T, typename N, x86_abi ABI>
-  consteval auto find_logical_register_type(as<T>, N, ABI)
+  template<typename T, size_type N, x86_abi ABI>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, ABI)
   {
-    constexpr size_t width = sizeof(T) * N::value;
+    constexpr size_t width = sizeof(T) * N;
 
     if constexpr (std::same_as<ABI, x86_512_> && (width == 64))
     {
@@ -155,9 +155,9 @@ namespace eve
     }
     else if constexpr (std::same_as<ABI, x86_256_> && (width == 32))
     {
-      if constexpr (N::value <= 8 ) return _::mask8{};
-      if constexpr (N::value == 16) return _::mask16{};
-      if constexpr (N::value == 32) return _::mask32{};
+      if constexpr (N <= 8 ) return _::mask8{};
+      if constexpr (N == 16) return _::mask16{};
+      if constexpr (N == 32) return _::mask32{};
     }
     else if constexpr (std::same_as<ABI, x86_128_> && (width <= 16))
     {
@@ -167,8 +167,8 @@ namespace eve
   }
 # else
   // logical uses same registers
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T> t, N n, x86_abi auto a)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T> t, fixed<N> n, x86_abi auto a)
   {
     return find_register_type(t, n, a);
   }

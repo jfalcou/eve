@@ -18,16 +18,16 @@
 
 namespace eve
 {
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, eve::emulated_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::emulated_)
   {
-    return std::array<T, N::value>{};
+    return std::array<T, N>{};
   }
 
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, eve::emulated_)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::emulated_)
   {
-    return std::array<logical<T>, N::value>{};
+    return std::array<logical<T>, N>{};
   }
 
   //================================================================================================
@@ -35,7 +35,7 @@ namespace eve
   //================================================================================================
   namespace _
   {
-    template<typename N>
+    template<size_type N>
     struct apply_as_wide
     {
       template<typename T>
@@ -43,8 +43,8 @@ namespace eve
     };
   }
 
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, eve::bundle_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::bundle_)
     requires (eve::product_type<T>)
   {
     return kumi::as_tuple_t<T, _::apply_as_wide<N>::template type>{};
@@ -52,14 +52,13 @@ namespace eve
 
   namespace _
   {
-    template<typename Type, typename Cardinal>
-    struct  blob
+    template<typename Type, size_type Size>
+    struct blob
     {
-      static constexpr auto replication = Cardinal::value / expected_cardinal_v<Type>;
+      static constexpr auto replication = Size / expected_cardinal_v<Type>;
 
-      using cardinal_t                  = expected_cardinal_t<Type>;
-      using value_type                  = as_wide_t<Type, cardinal_t>;
-      using subvalue_type               = as_wide_t<Type, typename Cardinal::split_type>;
+      using value_type                  = as_wide_t<Type, expected_cardinal_v<Type>>;
+      using subvalue_type               = as_wide_t<Type, Size / 2>;
       using storage_type                = kumi::result::fill_t<replication, value_type>;
 
       storage_type storage;
@@ -90,7 +89,7 @@ namespace eve
         return data;
       }
 
-      // Return a view of the blob as a collection of wide of the expected cardinal for this type.
+      // Return a view of the blob as a collection of wide of the expected size for this type.
       EVE_FORCEINLINE auto slice_to_expected() const noexcept { return storage; }
 
       template<std::size_t I>
@@ -111,29 +110,38 @@ namespace eve
       template<typename Func>
       EVE_FORCEINLINE decltype(auto) apply(Func f) const  { return kumi::apply(f,*this); }
     };
+
+    template<typename T>
+    struct is_blob_impl : std::false_type {};
+
+    template<typename Type, auto S>
+    struct is_blob_impl<blob<Type, S>> : std::true_type {};
+
+    template<typename T>
+    concept is_blob = is_blob_impl<std::remove_cvref_t<T>>::value;
   }
 
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, eve::aggregated_)
+  template<typename T, size_type N>
+  consteval auto find_register_type(as<T>, fixed<N>, eve::aggregated_)
   {
     return _::blob<T, N>{};
   }
 
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, eve::aggregated_)
+  template<typename T, size_type N>
+  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::aggregated_)
   {
     return _::blob<logical<T>, N>{};
   }
 }
 
-template<std::size_t I, typename T, typename C>
-struct std::tuple_element<I, eve::_::blob<T, C>>
+template<std::size_t I, typename T, eve::size_type N>
+struct std::tuple_element<I, eve::_::blob<T, N>>
 {
-  using type = typename eve::_::blob<T, C>::value_type;
+  using type = typename eve::_::blob<T, N>::value_type;
 };
 
-template<typename T, typename C>
-struct  std::tuple_size<eve::_::blob<T, C>>
-      : std::integral_constant<std::size_t, eve::_::blob<T, C>::replication>
+template<typename T, eve::size_type N>
+struct  std::tuple_size<eve::_::blob<T, N>>
+      : std::integral_constant<std::size_t, eve::_::blob<T, N>::replication>
 {
 };

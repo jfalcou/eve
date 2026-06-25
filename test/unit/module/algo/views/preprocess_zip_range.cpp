@@ -21,8 +21,7 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   using v_i = std::vector<int>::iterator;
   using zip_vi = eve::views::zip_iterator<v_i, v_i>;
 
-  using N = eve::fixed<eve::nofs_cardinal_v<int>>;
-  using ui_it = eve::algo::ptr_iterator<int*, N>;
+  using ui_it = eve::algo::ptr_iterator<int*, eve::nofs_cardinal_v<int>>;
   using zip_ui = eve::views::zip_iterator<ui_it, ui_it>;
 
   zip_vi zf{v1.begin(), v2.begin()};
@@ -42,7 +41,7 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
   using zip_au = eve::views::zip_iterator<a, u>;
   using zip_uu = eve::views::zip_iterator<u, u>;
 
-  using N = eve::fixed<eve::nofs_cardinal_v<int>>;
+  constexpr auto N = eve::nofs_cardinal_v<int>;
   using a_it = eve::algo::ptr_iterator<a, N>;
   using u_it = eve::algo::ptr_iterator<u, N>;
   using zip_au_it = eve::views::zip_iterator<a_it, u_it>;
@@ -95,7 +94,7 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
 
 TTS_CASE("preprocess zip range, traits")
 {
-  using N = eve::fixed<eve::nofs_cardinal_v<std::uint32_t>>;
+  constexpr auto N = eve::nofs_cardinal_v<std::uint32_t>;
   using uc = std::int8_t*;
   using ac = eve::aligned_ptr<std::int8_t, N>;
   using ui = std::uint32_t*;
@@ -108,14 +107,14 @@ TTS_CASE("preprocess zip range, traits")
 
   using zip_uc_it_ui_it = eve::views::zip_iterator<uc_it, ui_it>;
 
-  alignas(sizeof(std::int8_t) * N{}())   std::array<std::int8_t,   N{}()> c;
-  alignas(sizeof(std::uint32_t) * N{}()) std::array<std::uint32_t, N{}()> i;
+  alignas(sizeof(std::int8_t) * N)   std::array<std::int8_t,   N> c;
+  alignas(sizeof(std::uint32_t) * N) std::array<std::uint32_t, N> i;
 
-  auto af_ul = []<typename T>(std::array<T, N{}()> & rng) {
+  auto af_ul = []<typename T>(std::array<T, N> & rng) {
     return eve::algo::as_range(eve::aligned_ptr<T, N>(rng.begin()), rng.end());
   };
 
-  auto af_al = []<typename T>(std::array<T, N{}()> & rng) {
+  auto af_al = []<typename T>(std::array<T, N> & rng) {
     return eve::algo::as_range(eve::aligned_ptr<T, N>(rng.begin()), eve::aligned_ptr<T, N>(rng.end()));
   };
 
@@ -201,7 +200,7 @@ TTS_CASE("preprocess zip range, common_type")
   std::array<std::uint32_t, 64> i;
 
   {
-    using N           = eve::fixed<eve::nofs_cardinal_v<std::uint32_t>>;
+    constexpr auto N = eve::nofs_cardinal_v<std::uint32_t>;
     using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
     using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, std::uint32_t>;
@@ -216,7 +215,7 @@ TTS_CASE("preprocess zip range, common_type")
   }
 
   {
-    using N           = eve::fixed<2>;
+    constexpr auto N = 2;
     using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
     using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, float>;

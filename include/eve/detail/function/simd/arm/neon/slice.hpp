@@ -13,11 +13,11 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, Slice) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    using type = wide<T, typename N::split_type>;
+    using type = wide<T, N / 2>;
     constexpr auto c = categorize<wide<T, N>>();
 
     if constexpr( Slice::value )
@@ -47,7 +47,7 @@ namespace eve::_
           return vtbl1_u8((uint8x8_t)(v.storage()), apply<8>(mask));
       };
 
-        return type((typename type::storage_type)(select(a, N {})));
+        return type((typename type::storage_type)(select(a, N)));
       }
     }
     else
@@ -67,11 +67,11 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };
+    std::array<wide<T, N / 2>, 2> that{ slice(a, lower_), slice(a, upper_) };
     return that;
   }
 }

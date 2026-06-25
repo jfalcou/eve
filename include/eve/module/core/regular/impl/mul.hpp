@@ -216,7 +216,7 @@ namespace eve::_
       else if constexpr (arithmetic_simd_value<T>)
       {
         // some mul ops cannot be handled by the neon backend
-        apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) * b.get(I)), ...); });
+        apply<cardinal_v<T>>([&](auto... I) { (a.set(I, a.get(I) * b.get(I)), ...); });
         return a;
       }
       else
@@ -253,7 +253,7 @@ namespace eve::_
     }
     else
     {
-      if constexpr(scalar_value<r_t> && (sizeof...(Vs)+1 >= eve::expected_cardinal_v<r_t>))
+      if constexpr(scalar_value<r_t> && (sizeof...(Vs)+1 >= expected_cardinal_v<element_type_t<r_t>>))
       {
         auto head = eve::as_wides(eve::one(eve::as<r_t>()), rs...);
         auto s = eve::mul[o](head);

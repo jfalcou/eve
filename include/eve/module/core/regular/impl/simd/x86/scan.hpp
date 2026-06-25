@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-template<typename T, typename N, std::ptrdiff_t Shift>
+template<typename T, size_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N> slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>);
 
 template<std::ptrdiff_t Shift> struct slide_right_in_lanes_lambda
@@ -26,7 +26,7 @@ template<std::ptrdiff_t Shift> struct slide_right_in_lanes_lambda
   }
 };
 
-template<typename T, typename N, std::ptrdiff_t Shift>
+template<typename T, size_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N>
 slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
@@ -79,7 +79,7 @@ use_scan_in_lanes(Wide)
   else return std::false_type {};
 }
 
-template<callable_options O, typename T, typename N, typename Op, typename Zero>
+template<callable_options O, typename T, size_type N, typename Op, typename Zero>
 EVE_FORCEINLINE auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op op, Zero z_)
   requires (x86_abi<abi_t<T, N>> && (current_api == avx2))
 {

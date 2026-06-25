@@ -16,7 +16,7 @@ namespace eve::_
 //================================================================================================
 // Logical to Bits
 //================================================================================================
-template<typename T, typename N>
+template<typename T, size_type N>
 EVE_FORCEINLINE auto
 to_bits(sve_ const&, logical<wide<T, N>> p) noexcept requires sve_abi<abi_t<T, N>>
 {
@@ -32,7 +32,7 @@ to_bits(sve_ const&, logical<wide<T, N>> p) noexcept requires sve_abi<abi_t<T, N
 //================================================================================================
 // Logical to Bits
 //================================================================================================
-template<typename T, typename N>
+template<typename T, size_type N>
 EVE_FORCEINLINE auto
 to_mask(sve_ const&, logical<wide<T, N>> p) noexcept
 {

@@ -232,7 +232,7 @@ namespace eve::_
     else if constexpr (arithmetic_simd_value<T>)
     {
       // some div ops cannot be handled by some backends (e.g. arm/neon)
-      apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) / b.get(I)), ...); });
+      apply<cardinal_v<T>>([&](auto... I) { (a.set(I, a.get(I) / b.get(I)), ...); });
       return a;
     }
     else

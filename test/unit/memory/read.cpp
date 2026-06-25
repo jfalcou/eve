@@ -19,7 +19,7 @@ TTS_CASE_TPL( "Check read from pointers"
               )
 <typename T>(tts::type<T>)
 {
-  auto [data, idx] = page<T , eve::expected_cardinal_t<T> >();
+  auto [data, idx] = page<T , eve::expected_cardinal_v<T> >();
 
   auto* ptr              = &data[idx];
   auto* uptr             = &data[idx] - 1;
@@ -40,7 +40,7 @@ TTS_CASE_TPL( "Check read from Contiguous Iterators"
               )
 <typename T>(tts::type<T>)
 {
-  auto [data, idx] = page<T , eve::expected_cardinal_t<T> >();
+  auto [data, idx] = page<T , eve::expected_cardinal_v<T> >();
 
   auto begin              = data.begin()  + idx;
   auto const const_begin  = data.cbegin() + idx;

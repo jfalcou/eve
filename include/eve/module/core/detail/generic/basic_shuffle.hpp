@@ -22,7 +22,7 @@ EVE_FORCEINLINE auto
 aggregate_shuffler(Wide const& v, Pattern p) noexcept
 {
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<Wide, fixed<sz>>;
+  using that_t      = as_wide_t<Wide, sz>;
 
   return that_t(shuffle(v, pattern_view<0, sz / 2, sz>(p)),
                 shuffle(v, pattern_view<sz / 2, sz, sz>(p)));
@@ -31,20 +31,20 @@ aggregate_shuffler(Wide const& v, Pattern p) noexcept
 //================================================================================================
 // Unary basic shuffle - logical
 //================================================================================================
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noexcept
 {
   constexpr auto sz = Pattern::size();
-  return bit_cast(shuffle(v.mask(), p), as<logical<wide<T, fixed<sz>>>>());
+  return bit_cast(shuffle(v.mask(), p), as<logical<wide<T, sz>>>());
 }
 
-template<typename T, typename N, std::ptrdiff_t... I>
+template<typename T, size_type N, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 {
   constexpr auto sz = pattern_t<I...>::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   return that_t {(I == na_ ? T {0} : v.get(I))...};
 }
@@ -52,13 +52,13 @@ basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 //================================================================================================
 // Emulation
 //================================================================================================
-template<typename T, typename N, shuffle_pattern Pattern>
+template<typename T, size_type N, shuffle_pattern Pattern>
 EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
 {
-  constexpr auto cd = N::value;
+  constexpr auto cd = N;
   constexpr auto sz = Pattern::size();
-  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+  using that_t      = as_wide_t<wide<T, N>, sz>;
 
   constexpr Pattern q = {};
 

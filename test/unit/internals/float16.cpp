@@ -59,9 +59,9 @@
     auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
       TTS_WHEN("cardinal = " << N)
       {
-        using wf16_t = eve::wide<eve::float16_t, eve::fixed<N>>;
-        using wf32_t = eve::wide<float, eve::fixed<N>>;
-        using wu16_t = eve::wide<uint16_t, eve::fixed<N>>;
+        using wf16_t = eve::wide<eve::float16_t, N>;
+        using wf32_t = eve::wide<float, N>;
+        using wu16_t = eve::wide<uint16_t, N>;
 
         for (uint64_t base = 0u; base < eve::valmax(eve::as<uint32_t>{}); base += N)
         {
@@ -108,11 +108,11 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
 
 TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
 {
-  auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
+  auto run_for = [&]<uint32_t N>(std::integral_constant<uint32_t, N>) {
     TTS_WHEN("cardinal = " << N)
     {
-      using wf16_t = eve::wide<eve::float16_t, eve::fixed<N>>;
-      using wf32_t = eve::wide<float, eve::fixed<N>>;
+      using wf16_t = eve::wide<eve::float16_t, N>;
+      using wf32_t = eve::wide<float, N>;
 
       for (uint32_t base = 0u; base < eve::valmax(eve::as<uint16_t>{}); base += N)
       {
@@ -132,7 +132,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
   constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
   [&]<std::size_t... I>(std::index_sequence<I...>) {
-    (run_for(std::integral_constant<std::ptrdiff_t, 1LL << I>{}), ...);
+    (run_for(std::integral_constant<uint32_t, 1LL << I>{}), ...);
   }(std::make_index_sequence<seq_size>{});
 };
 

@@ -12,6 +12,15 @@
 
 namespace eve
 {
+  namespace _ {
+    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
+  }
+
+  using size_type = std::ptrdiff_t;
+
+  template<size_type Size>
+  concept is_valid_size = (Size > 0) && _::is_pow2(Size);
+
   //================================================================================================
   //! @addtogroup simd_types
   //! @{
@@ -34,18 +43,17 @@ namespace eve
   //!   | `combined_type` | `eve::fixed``<Cardinal * 2>`                                  |
   //!
   //================================================================================================
-  template<std::ptrdiff_t Cardinal>
-  struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
+  template<size_type Cardinal>
+  struct fixed : std::integral_constant<size_type, Cardinal>
   {
-    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
-    static_assert((Cardinal > 0) && is_pow2(Cardinal), "Cardinal must be a non-zero power of 2");
+    static_assert(is_valid_size<Cardinal>, "Cardinal must be a non-zero power of 2");
 
     using type          = fixed<Cardinal>;
     using split_type    = fixed<Cardinal / 2>;
     using combined_type = fixed<Cardinal * 2>;
   };
 
-  template<> struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
+  template<> struct fixed<1ULL> : std::integral_constant<size_type, 1ULL>
   {
     using type          = fixed<1ULL>;
     using combined_type = fixed<2>;
@@ -85,7 +93,8 @@ namespace eve
   //================================================================================================
   namespace _
   {
-    template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
+    template<typename T>
+    constexpr size_type cache_line_cardinal = 64 / sizeof(T);
   }
 
   //================================================================================================

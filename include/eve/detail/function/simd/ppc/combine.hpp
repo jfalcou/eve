@@ -11,14 +11,14 @@
 
 namespace eve::_
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, typename N::combined_type>
+  template<typename T, size_type N>
+  EVE_FORCEINLINE wide<T, N * 2>
   combine(vmx_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    using that_t = wide<T, typename N::combined_type>;
+    using that_t = wide<T, N * 2>;
 
-    if constexpr( N::value * sizeof(T) == ppc_::bytes )
+    if constexpr( N * sizeof(T) == ppc_::bytes )
     {
       return typename that_t::storage_type {l, h};
     }
@@ -30,7 +30,7 @@ namespace eve::_
         return m;
       };
 
-      return vec_perm(l.storage(), h.storage(), apply<(sizeof(T) * N::value)>(mask));
+      return vec_perm(l.storage(), h.storage(), apply<(sizeof(T) * N)>(mask));
     }
   }
 }

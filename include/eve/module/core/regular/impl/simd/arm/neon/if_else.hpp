@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N, callable_options O>
+  template<typename T, size_type N, callable_options O>
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_REQUIRES(neon128_), O, logical<wide<T,N>> m, logical<wide<T,N>> v0, logical<wide<T,N>> v1) noexcept
   requires arm_abi<abi_t<T,N>>

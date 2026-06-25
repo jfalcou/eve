@@ -30,5 +30,5 @@ namespace eve
   //================================================================================================
 
   template<typename T>
-  using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_cardinal_t<T>>;
+  using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_cardinal_v<T>>;
 }

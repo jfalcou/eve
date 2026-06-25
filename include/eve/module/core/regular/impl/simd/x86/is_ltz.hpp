@@ -16,7 +16,7 @@
 namespace eve::_
 {
   // Generate better code on x86 than just comparing to 0
-  template<signed_integral_value T, typename N, callable_options O>
+  template<signed_integral_value T, size_type N, callable_options O>
   EVE_FORCEINLINE constexpr auto
   is_ltz_(EVE_REQUIRES(sse2_), O const &, wide<T, N> const& v) noexcept
   requires(sizeof(T) < 8 && x86_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
@@ -26,7 +26,7 @@ namespace eve::_
     return bit_cast(v >> shift, as<l_t> {});
   }
 
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_ltz_(EVE_REQUIRES(avx512_),
                                               O          const &,
                                               wide<T, N> const &a) noexcept
@@ -56,7 +56,7 @@ namespace eve::_
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-  template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, size_type N, callable_options O>
   EVE_FORCEINLINE auto is_ltz_(EVE_REQUIRES(avx512_),
                                C const& cx,
                                O const& o,

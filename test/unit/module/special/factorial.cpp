@@ -16,7 +16,7 @@
 TTS_CASE_TPL("Check return types of eve::factorial", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using d_t = eve::wide<double, eve::cardinal_t<T>>;
+  using d_t = eve::wide<double, T::size()>;
   using v_t = eve::element_type_t<T>;
   if constexpr( eve::integral_value<T> )
   {
@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::factorial on wide", eve::test:
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using d_t = eve::wide<double, eve::cardinal_t<T>>;
+  using d_t = eve::wide<double, T::size()>;
   if constexpr( eve::integral_value<T> )
   {
     TTS_EQUAL(eve::factorial(T(10)), d_t(3628800));

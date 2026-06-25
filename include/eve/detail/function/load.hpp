@@ -24,10 +24,10 @@ namespace eve
       return EVE_DISPATCH_CALL(ptr, as<wide_value_type_t<Ptr>>{});
     }
 
-    template<_::data_source Ptr, std::ptrdiff_t N>
-    EVE_FORCEINLINE as_wide_t<value_type_t<Ptr>, fixed<N>> operator()(Ptr ptr, fixed<N>) const noexcept
+    template<_::data_source Ptr, size_type N>
+    EVE_FORCEINLINE as_wide_t<value_type_t<Ptr>, N> operator()(Ptr ptr, fixed<N>) const noexcept
     {
-      return EVE_DISPATCH_CALL(ptr, as<as_wide_t<value_type_t<Ptr>, fixed<N>>>{});
+      return EVE_DISPATCH_CALL(ptr, as<as_wide_t<value_type_t<Ptr>, N>>{});
     }
 
     template<_::data_source Ptr, arithmetic_simd_value Wide>

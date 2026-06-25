@@ -22,7 +22,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
 <typename T>(T others)
 {
   using v_t = eve::element_type_t<T>;
-  auto [data  ,idx  ] = page<v_t , eve::fixed<T::size()>>();
+  auto [data  ,idx  ] = page<v_t , T::size()>();
 
   auto ptr        = &data[idx] - 1;
   auto const_ptr  = (v_t const*) ptr;

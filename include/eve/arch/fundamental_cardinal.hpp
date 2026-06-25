@@ -72,7 +72,7 @@ namespace eve
   using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
 
   template<typename Type, regular_abi ABI = eve::current_abi_type>
-  constexpr inline auto fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
+  constexpr inline size_type fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
 
   //================================================================================================
   // product_type special case
@@ -84,7 +84,7 @@ namespace eve
     template<typename... T, regular_abi ABI>
     struct min_fundamental<kumi::tuple<T...>,ABI>
     {
-      static constexpr std::ptrdiff_t value = std::min({fundamental_cardinal<T,ABI>::value...});
+      static constexpr size_type value = std::min({fundamental_cardinal<T,ABI>::value...});
     };
   }
 

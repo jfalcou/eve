@@ -122,7 +122,7 @@ namespace eve
         }
         else
         {
-          using u8_t = wide<uint8_t, fixed<S*cardinal_v<T>>>;
+          using u8_t = wide<uint8_t, S * cardinal_v<T>>;
           auto z = eve::bit_cast(x, as<u8_t>());
           return byte_reverse( bit_cast(bit_reverse(z), as<T>()));
         }

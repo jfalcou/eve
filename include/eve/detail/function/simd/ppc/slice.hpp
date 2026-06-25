@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N, typename Slice>
+  template<callable_options O, typename T, size_type N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, Slice) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -28,19 +28,19 @@ namespace eve::_
         return vec_perm(v.storage(), v.storage(), apply<16>(mask));
       };
 
-      return wide<T, typename N::split_type>(select(a, N {}));
+      return wide<T, N / 2>(select(a, N));
     }
     else
     {
-      return wide<T, typename N::split_type>(a.storage());
+      return wide<T, N / 2>(a.storage());
     }
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, N / 2>, 2> that{slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }

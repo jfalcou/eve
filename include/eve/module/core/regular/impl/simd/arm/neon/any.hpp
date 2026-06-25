@@ -16,14 +16,14 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, typename N, callable_options O>
+template<arithmetic_scalar_value T, size_type N, callable_options O>
 EVE_FORCEINLINE auto
 any_(EVE_REQUIRES(neon128_),
       O const           & opts,
      logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_64_>
 {
   using C = rbr::result::fetch_t<condition_key, O>;
-  using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<2>>;
+  using u32_2 = typename wide<T, N>::template rebind<std::uint32_t, 2>;
 
   if      constexpr (O::contains(splat)) return logical<wide<T, N>> { any.behavior(current_api, opts.drop(splat), v0) };
   else if constexpr( C::is_complete && !C::is_inverted ) return false;
@@ -31,7 +31,7 @@ any_(EVE_REQUIRES(neon128_),
   else if constexpr( eve::current_api >= eve::asimd ) return any.behavior(cpu_{}, opts, v0);
   else
   {
-    if constexpr( sizeof(T) * N() <= 4u ) return any.behavior(cpu_{}, opts, v0);
+    if constexpr( sizeof(T) * N <= 4u ) return any.behavior(cpu_{}, opts, v0);
 
     auto dwords = eve::bit_cast(v0, eve::as<u32_2> {});
     dwords      = vpmax_u32(dwords, dwords);
@@ -39,7 +39,7 @@ any_(EVE_REQUIRES(neon128_),
   }
 }
 
-template<arithmetic_scalar_value T, typename N, callable_options O>
+template<arithmetic_scalar_value T, size_type N, callable_options O>
 EVE_FORCEINLINE auto
 any_(EVE_REQUIRES(neon128_),
      O const           & opts,
@@ -47,8 +47,8 @@ any_(EVE_REQUIRES(neon128_),
 {
   using C = rbr::result::fetch_t<condition_key, O>;
   auto cond = opts[condition_key];
-  using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
-  using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, eve::fixed<2>>;
+  using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, 4>;
+  using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, 2>;
 
   if      constexpr (O::contains(splat)) return logical<wide<T, N>> { any.behavior(current_api, opts.drop(splat), v0) };
   else if constexpr( C::is_complete && !C::is_inverted ) return false;

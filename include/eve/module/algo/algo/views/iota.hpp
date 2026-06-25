@@ -29,7 +29,7 @@ namespace eve::algo::views
   //! @}
   //================================================================================================
 
-  template <typename T, typename N>
+  template <typename T, size_type N>
   struct iota_with_step_iterator : operations_with_distance
   {
     using value_type = T;
@@ -60,10 +60,10 @@ namespace eve::algo::views
     iota_with_step_iterator previous_partially_aligned() const { return *this; }
     iota_with_step_iterator next_partially_aligned()     const { return *this; }
 
-    static N iterator_cardinal() { return {}; }
+    static fixed<N> iterator_cardinal() { return {}; }
 
-    template <typename _N>
-    auto cardinal_cast(_N) const { return iota_with_step_iterator<T, _N>{base, step, i}; }
+    template <size_type _N>
+    auto cardinal_cast(fixed<_N>) const { return iota_with_step_iterator<T, _N>{base, step, i}; }
 
     iota_with_step_iterator& operator+=(std::ptrdiff_t n)
     {
@@ -139,7 +139,7 @@ namespace eve::algo::views
     template <typename T>
     EVE_FORCEINLINE auto operator()(T base, T step) const
     {
-      using N = eve::fixed<eve::nofs_cardinal_v<T>>;
+      constexpr auto N = eve::nofs_cardinal_v<T>;
       return iota_with_step_iterator<T, N>{base, step, 0};
     }
 

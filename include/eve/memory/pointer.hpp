@@ -43,8 +43,17 @@ namespace eve::_
     typename pointer_traits<Ptr>::value_type;
   };
 
+  template<typename T>
+  struct is_aligned_ptr_impl : std::false_type {};
+
+  template<typename Type, std::ptrdiff_t Lanes>
+  struct is_aligned_ptr_impl<aligned_ptr<Type, Lanes>> : std::true_type{};
+
+  template<typename Ptr>
+  constexpr bool is_aligned_ptr_v = is_aligned_ptr_impl<Ptr>::value;
+
   template <typename Ptr>
-  concept scalar_pointer = std::is_pointer_v<Ptr> || instance_of<Ptr, aligned_ptr>;
+  concept scalar_pointer = std::is_pointer_v<Ptr> || is_aligned_ptr_v<Ptr>;
 
   template<typename T, typename Ptr> struct dereference_as;
 
@@ -63,10 +72,10 @@ namespace eve::_
     static constexpr bool value = std::same_as<T,base>;
   };
 
-  template <typename U, typename T, typename Lanes>
+  template <typename U, typename T, std::ptrdiff_t Lanes>
   EVE_FORCEINLINE auto ptr_cast(eve::aligned_ptr<T, Lanes> p)
   {
-    return aligned_ptr<U, eve::fixed<Lanes() * sizeof(T) / sizeof(U)>>{(U*)(p.get())};
+    return aligned_ptr<U, Lanes * sizeof(T) / sizeof(U)>{(U*)(p.get())};
   }
 
   template <typename U, typename T>

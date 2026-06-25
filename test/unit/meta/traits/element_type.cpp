@@ -17,8 +17,8 @@ TTS_CASE( "Check for element_type")
   TTS_TYPE_IS( eve::element_type_t<bool>                              , bool);
   TTS_TYPE_IS( eve::element_type_t<int>                               , int);
   TTS_TYPE_IS( eve::element_type_t<tuple_t>                           , tuple_t);
-  TTS_TYPE_IS((eve::element_type_t<eve::wide<int,eve::fixed<8>>>)     , int);
-  TTS_TYPE_IS((eve::element_type_t<eve::wide<tuple_t,eve::fixed<8>>>) , tuple_t);
+  TTS_TYPE_IS((eve::element_type_t<eve::wide<int, 8>>)     , int);
+  TTS_TYPE_IS((eve::element_type_t<eve::wide<tuple_t, 8>>) , tuple_t);
   TTS_TYPE_IS((eve::element_type_t<eve::wide<int>>)                   , int);
   TTS_TYPE_IS((eve::element_type_t<eve::wide<tuple_t>>)               , tuple_t);
   TTS_TYPE_IS( eve::element_type_t<eve::logical<int>>                 , eve::logical<int>);

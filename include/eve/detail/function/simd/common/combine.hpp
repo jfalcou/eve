@@ -25,15 +25,15 @@ namespace eve::_
     }
   };
 
-  template<typename T, typename N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
-    using that_t = wide<T, typename N::combined_type>;
+    using that_t = wide<T, N * 2>;
 
     if constexpr( is_emulated_v<abi_t<T, N>> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
+      return apply<N>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
     else if constexpr( has_aggregated_abi_v<that_t> )
     {
@@ -47,15 +47,15 @@ namespace eve::_
     }
   }
 
-  template<typename T, typename N>
+  template<typename T, size_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {
-    using that_t = logical<wide<T, typename N::combined_type>>;
+    using that_t = logical<wide<T, N * 2>>;
 
     if constexpr( is_emulated_v<abi_t<T, N>> )
     {
-      return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
+      return apply<N>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
     else if constexpr( has_aggregated_abi_v<that_t> )
     {
@@ -65,7 +65,7 @@ namespace eve::_
     }
     else
     {
-      wide<T, typename N::combined_type> cb(l.mask(),h.mask());
+      wide<T, N * 2> cb(l.mask(),h.mask());
       return bit_cast(cb, as<that_t>());
     }
   }

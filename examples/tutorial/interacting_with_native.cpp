@@ -18,7 +18,7 @@
 
 void remove_spaces(std::string& s)
 {
-  using u8x16 = eve::wide<std::uint8_t, eve::fixed<16>>;
+  using u8x16 = eve::wide<std::uint8_t, 16>;
 
   // eve only supports std::int8_t and std::uint8_t, not char.
   std::span s_bytes{reinterpret_cast<std::uint8_t*>(s.data()), s.size()};
@@ -57,10 +57,10 @@ TTS_CASE("Check remove spaces") {
 
 TTS_CASE("Slice Example") {
   // On most platforms is 2 registers or even 4.
-  using i32x16 = eve::wide<int, eve::fixed<16>>;
+  using i32x16 = eve::wide<int, 16>;
 
   // half type
-  using i32x8  = eve::wide<int, eve::fixed<8>>;
+  using i32x8  = eve::wide<int, 8>;
 
   i32x16 ints {0,  1,   2,   3,
                4,  5,   6,   7,

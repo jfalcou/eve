@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, typename N, typename U>
+  template<callable_options O, typename T, size_type N, typename U>
   EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
     requires (rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>))
   {
@@ -24,22 +24,22 @@ namespace eve::_
     {
       return _::apply_fp16_as_fp32(is_equal, a, b);
     }
-    else if constexpr (match(c, category::integer_))     return __riscv_vmseq(a, b, N::value);
-    else if constexpr (match(c, category::float_))       return __riscv_vmfeq(a, b, N::value);
+    else if constexpr (match(c, category::integer_))     return __riscv_vmseq(a, b, N);
+    else if constexpr (match(c, category::float_))       return __riscv_vmfeq(a, b, N);
   }
 
-  template<callable_options O, typename T, typename N, scalar_value U>
+  template<callable_options O, typename T, size_type N, scalar_value U>
   EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, U a, wide<T, N> b) noexcept
-    requires (rvv_abi<abi_t<T, N>>)
+    requires (rvv_abi<abi_t<T, N>> )
   {
     return is_equal.behavior(current_api, opts, b, a);
   }
 
-  template<callable_options O, typename T, typename N>
+  template<callable_options O, typename T, size_type N>
   EVE_FORCEINLINE logical<wide<T, N>>
   is_equal_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
   requires(rvv_abi<abi_t<T, N>>)
   {
-    return __riscv_vmxnor(a, b, N::value);
+    return __riscv_vmxnor(a, b, N);
   }
 }

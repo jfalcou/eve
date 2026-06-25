@@ -49,15 +49,15 @@ namespace eve::_
       if constexpr(simd_value<T>) return T::size(); else return 1;
     }
 
-    static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
+    static constexpr std::ptrdiff_t card_v = std::max({card<std::decay_t<Ts>>()...});
     using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
 
-    template<typename S> struct widen : as_wide<S, fixed_t> {};
+    template<typename S> struct widen : as_wide<S, card_v> {};
 
     using base  = _::conditional_t< eve::product_type<value_t>
                                     , kumi::as_tuple<value_t,widen>
-                                    , as_wide<value_t, fixed_t>
+                                    , as_wide<value_t, card_v>
                                     >;
     using type = typename base::type;
   };
@@ -127,7 +127,7 @@ namespace eve::_
 
     // Apply f on both side of the slices and re-combine
     using half_result_t = decltype(f(get<0>(slicer(ts))...));
-    using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
+    using wide_t = typename half_result_t::combined_type;
 
     return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
   }
@@ -175,7 +175,7 @@ namespace eve::_
       auto process = [&](auto i) { return kumi::apply([&](auto... p) { return f( get<i>(p)... ); }, parts); };
 
       using small_result_t = decltype(process(kumi::index<0>));
-      using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
+      using wide_t = typename small_result_t::template rescale<small_result_t::size() * max_repl>;
       using storage_t = typename wide_t::storage_type;
 
       // Flatten the per-slice result in case it still contains aggregated values.
@@ -197,7 +197,7 @@ namespace eve::_
         // Functions returning zipped values need an extra level of storage wrapping.
         // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
         // The check on range is used due to arrays now being considered `product types`
-        if constexpr (!range<storage_t> && eve::product_type<storage_t> && !instance_of<storage_t, blob>)
+        if constexpr (!range<storage_t> && eve::product_type<storage_t> && !is_blob<storage_t>)
         {
           return kumi::generate<kumi::size_v<storage_t>>([&](auto i)
             {
@@ -218,7 +218,7 @@ namespace eve::_
           using current_wide = kumi::element_t<0, decltype(inner)>;
           constexpr std::ptrdiff_t current_card = current_wide::size();
           constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
-          using expected_wide = typename current_wide::template rescale<fixed<expected_card>>;
+          using expected_wide = typename current_wide::template rescale<expected_card>;
 
           if constexpr (current_card < expected_card)
           {

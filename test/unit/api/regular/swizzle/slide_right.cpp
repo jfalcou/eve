@@ -11,7 +11,7 @@
 #include <eve/wide.hpp>
 #include <bit>
 
-template<std::ptrdiff_t Shift, std::ptrdiff_t N>
+template<std::ptrdiff_t Shift, eve::size_type N>
 inline constexpr
 auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
                                                 {
@@ -56,8 +56,8 @@ TTS_CASE_WITH( "Check behavior of slide_right swizzle"
 
 TTS_CASE( "Check behavior of smaller 8bytes with garbage" )
 {
-  using full_t = eve::wide<std::uint8_t, eve::fixed<8>>;
-  using small_t = eve::wide<std::uint8_t, eve::fixed<2>>;
+  using full_t = eve::wide<std::uint8_t, 8>;
+  using small_t = eve::wide<std::uint8_t, 2>;
 
   full_t  full ([](int i, int) { return i > 2 ? 255 : 5 - i; });
   small_t cast_down = eve::bit_cast(full, eve::as<small_t>{});

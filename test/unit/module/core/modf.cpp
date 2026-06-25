@@ -14,7 +14,7 @@ TTS_CASE_TPL("Check return types of modf", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::modf(T())  , (eve::wide<kumi::tuple<v_t, v_t>, typename T::cardinal_type>));
+  TTS_EXPR_IS(eve::modf(T())  , (eve::wide<kumi::tuple<v_t, v_t>, T::size()>));
   TTS_EXPR_IS(eve::modf(v_t()), (kumi::tuple<v_t, v_t>)           );
 };
 
