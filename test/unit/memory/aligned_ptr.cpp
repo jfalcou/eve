@@ -266,8 +266,8 @@ TTS_CASE("previous/next aligned address")
 
   for( int i = 0; i != static_cast<int>(data.size()); ++i)
   {
-    short*                 cur = data.begin() + i;
-    short const* prev_expected = data.begin() + (i / 16) * 16;
+    short*                 cur = &data[i];
+    short const* prev_expected = &data[(i / 16) * 16];
     short const* next_expected = (cur == prev_expected) ? cur : prev_expected + 16;
 
     aligned_ptr<short, lanes> prev = eve::previous_aligned_address(cur, lanes{});

@@ -90,19 +90,19 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
     }
   };
 
-  for (auto* f = ref.begin();f != ref.end() - T::size() + 1;++f)
+  for (std::ptrdiff_t i = 0; i != ref.size() - T::size() + 1;++i)
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, f, data),...);
+      (test(eve::lane<(1<<(N+2))>, &ref[i], data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 
-  for (auto* f = logical_ref.begin();f != logical_ref.end() - T::size() + 1;++f)
+  for (std::ptrdiff_t i = 0; i != logical_ref.size() - T::size() + 1;++i)
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, f, logical_data),...);
+      (test(eve::lane<(1<<(N+2))>, &logical_ref[i], logical_data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 };

@@ -65,13 +65,13 @@ TTS_CASE_TPL( "Check load to wides from re-aligned pointer", eve::test::simd::al
       TTS_EQUAL(eve::load[eve::unsafe](ptr, eve::lane<D::size()>), expected);
     }
   };
-
-  for (auto* f = ref.begin();f != ref.end() - T::size() + 1;++f)
+  
+  for (std::ptrdiff_t i = 0; i != ref.size() - T::size() + 1;++i)
   {
-    T expected(f);
+    T expected(&ref[i]);
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, f, expected),...);
+      (test(eve::lane<(1<<(N+2))>, &ref[i], expected),...);
     }( std::make_integer_sequence<std::ptrdiff_t,6>{});
   }
 };
