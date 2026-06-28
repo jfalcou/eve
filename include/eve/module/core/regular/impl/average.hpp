@@ -31,6 +31,20 @@ namespace eve::_
       return apply_fp16_as_fp32(average[o], ts...);
   }
 
+  template<typename O> struct average_kahan_helper_t
+  {
+     static inline auto get_fn(){
+      if constexpr(O::contains(raw)) return two_add[raw];
+      else return two_add[pedantic];
+    };
+
+    static inline auto pair_add(auto pair0, auto r1, auto invn){
+      auto [r, e0] = pair0;
+      auto [s, e1] = eve::two_fma_approx(r1, invn, r);
+      return zip(s, e0+e1);
+    };
+  };
+
   template<value T0, value ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
@@ -77,13 +91,13 @@ namespace eve::_
       }
       else if constexpr(O::contains(kahan))
       {
-        auto pair_add = [invn](auto pair0, auto r1){
-          auto [r, e0] = pair0;
-          auto [s, e1] = eve::two_fma_approx(r1, invn, r);
-          return zip(s, e0+e1);
-        };
+//         auto pair_add = [invn](auto pair0, auto r1, auto invn){
+//           auto [r, e0] = pair0;
+//           auto [s, e1] = eve::two_fma_approx(r1, invn, r);
+//           return zip(s, e0+e1);
+//         };
         auto p0 = two_prod(r_t(a0), invn);
-        ((p0 = pair_add(p0,args)),...);
+        ((p0 = average_kahan_helper_t<O>::pair_add(p0,args,invn)),...);
         auto [r, e] = p0;
         return r+e;
       }

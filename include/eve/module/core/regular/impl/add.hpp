@@ -120,7 +120,7 @@ namespace eve::_
       return a;
   }
 
-  template<typename O> struct kahan_helper_t
+  template<typename O> struct add_kahan_helper_t
   {
      static inline auto get_fn(){
       if constexpr(O::contains(raw)) return two_add[raw];
@@ -157,7 +157,7 @@ namespace eve::_
         // Accurate floating-point summation part I: Faithful rounding.
         // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
         auto p0   = two_add(r_t(r0),r_t(r1));
-        ((p0 = kahan_helper_t<O>::pair_add(p0,r_t(rs))),...);
+        ((p0 = add_kahan_helper_t<O>::pair_add(p0,r_t(rs))),...);
         auto [r, e] = p0;
         return r+e;
       }
