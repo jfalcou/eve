@@ -171,8 +171,8 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4" id="r_gaf4a87d02fe2157d5848083b4ff725dc4"><td class="memTemplParams" colspan="2">template&lt;auto Func, auto... Opt&gt; </td></tr>
-<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__extensions_gaf4a87d02fe2157d5848083b4ff725dc4.html#gaf4a87d02fe2157d5848083b4ff725dc4">eve::supports_options</a> = requires{ (Func[Opt], ...); }</td></tr>
+<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4" id="r_gaf4a87d02fe2157d5848083b4ff725dc4"><td class="memTemplParams" colspan="2">template&lt;typename Func, auto... Opt&gt; </td></tr>
+<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__extensions_gaf4a87d02fe2157d5848083b4ff725dc4.html#gaf4a87d02fe2157d5848083b4ff725dc4">eve::supports_options</a> = requires{ (std::declval&lt;Func&gt;()[Opt], ...); }</td></tr>
 <tr class="memdesc:gaf4a87d02fe2157d5848083b4ff725dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a callable function supports given options.  <br /></td></tr>
 <tr class="memitem:ga406269d77123b31f9bc18b38b78c8e25" id="r_ga406269d77123b31f9bc18b38b78c8e25"><td class="memTemplParams" colspan="2"><a id="ga406269d77123b31f9bc18b38b78c8e25" name="ga406269d77123b31f9bc18b38b78c8e25"></a>
 template&lt;template&lt; typename &gt; class Func&gt; </td></tr>

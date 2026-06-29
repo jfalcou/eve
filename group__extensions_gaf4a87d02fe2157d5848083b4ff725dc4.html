@@ -124,13 +124,13 @@ $(function(){initNavTree('group__extensions_gaf4a87d02fe2157d5848083b4ff725dc4.h
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;auto Func, auto... Opt&gt; </div>
+template&lt;typename Func, auto... Opt&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool eve::supports_options = requires{ (Func[Opt], ...); }</td>
+          <td class="memname">bool eve::supports_options = requires{ (std::declval&lt;Func&gt;()[Opt], ...); }</td>
         </tr>
       </table>
   </td>
