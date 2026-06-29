@@ -20,35 +20,6 @@ namespace eve
 {
 namespace _
 {
-
-// MSVC was iceing
-#if defined(EVE_COMP_IS_MSVC)
-  template<std::input_or_output_iterator T> constexpr auto value_type_impl()
-  {
-    return std::type_identity<typename std::iterator_traits<T>::value_type> {};
-  }
-
-  template<typename T> constexpr auto value_type_impl()
-  {
-    if constexpr( requires { typename T::value_type; } )
-    {
-      return std::type_identity<typename T::value_type> {};
-    }
-    // Maybe this should be deleted
-    else if constexpr( eve::product_type<T> )
-    {
-      auto mapper = []<typename U>(U) { return typename decltype(value_type_impl<U>())::type {}; };
-
-      return std::type_identity<kumi::result::map_t<decltype(mapper), T>> {};
-    }
-  }
-
-  template<range T> constexpr auto value_type_impl()
-  {
-    using ref = std::add_lvalue_reference_t<T>;
-    return value_type_impl<decltype(std::begin(std::declval<ref>()))>();
-  }
-#else
   template<typename T> constexpr auto value_type_impl()
   {
     if constexpr( requires { typename T::value_type; } )
@@ -66,7 +37,6 @@ namespace _
     }
   }
 }
-#endif
 
   //================================================================================================
   //! @addtogroup traits

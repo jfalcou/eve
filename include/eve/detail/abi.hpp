@@ -22,6 +22,13 @@
 // Faster than std::forward
 #define EVE_FWD(...) static_cast<decltype(__VA_ARGS__) &&>(__VA_ARGS__)
 
+// Enforce EBO on MSVC : https://learn.microsoft.com/en-us/cpp/cpp/empty-bases?view=msvc-170  
+#if defined (_MSC_VER)
+# define EVE_STRUCT_ABI __declspec(empty_bases)
+#else 
+# define EVE_STRUCT_ABI
+#endif
+
 // Force a function to be inline
 #if defined(EVE_NO_FORCEINLINE)
 #  define EVE_FORCEINLINE inline

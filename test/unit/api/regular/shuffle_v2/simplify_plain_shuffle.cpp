@@ -81,7 +81,7 @@ TTS_CASE("Check simplification, types")
 {
   if constexpr( !eve::supports_simd )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
 
@@ -170,7 +170,7 @@ TTS_CASE("Check simplification, pad to fundamental")
 {
   if constexpr( !eve::supports_simd )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   else
@@ -208,7 +208,7 @@ TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
 {
   if constexpr( !eve::supports_simd )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   else
@@ -228,7 +228,7 @@ TTS_CASE("Check simplification, upscale")
 {
   if constexpr( !eve::supports_simd )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   else
@@ -252,7 +252,7 @@ TTS_CASE("Check simplification, 2 register")
 {
   if constexpr( !eve::supports_simd )
   {
-    TTS_PASS();
+    TTS_PASS("");
     return;
   }
   else

@@ -86,11 +86,11 @@ struct compress_store_core
       eve::store[settings.c_out](part, o);
       std::ptrdiff_t count = count_;
 
-      if( !COut::is_complete ) count = std::min(count, settings.c_out.count(as(x)));
+      if constexpr ( !COut::is_complete ) count = std::min(count, settings.c_out.count(as(x)));
 
       return unalign(o) + count;
     }
-    else if( !COut::is_complete )
+    else if constexpr ( !COut::is_complete )
     {
       auto safe_settings =
           _::compress_callable_settings(safe, dense, settings.c_in, settings.c_out);
@@ -102,7 +102,7 @@ struct compress_store_core
       auto o_    = unalign(o);
 
       kumi::for_each(
-          [&](auto part_count) mutable
+          [&](auto part_count)
           {
             auto [part, count] = part_count;
             eve::store(part, o_);
