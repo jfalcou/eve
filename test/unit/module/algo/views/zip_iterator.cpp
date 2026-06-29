@@ -20,8 +20,8 @@ TTS_CASE("zip_iterator for not eve iterators")
   std::array<float, 4> f { 1, 2, 3, 4};
   using u_f = eve::algo::ptr_iterator<float*, eve::fixed<4>>;
 
-  eve::views::zip_iterator zf{ c.begin(), v.begin(), u_f{f.begin()} };
-  eve::views::zip_iterator zl{ c.end(), v.end(), u_f{f.end()} };
+  eve::views::zip_iterator zf{ c.begin(), v.begin(), u_f{f.data()} };
+  eve::views::zip_iterator zl{ c.end(), v.end(), u_f{f.data() + f.size()} };
 
   kumi::tuple twos{std::uint8_t{2}, int{2}, float{2.0}};
 
@@ -210,9 +210,9 @@ TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
     algo_test::iterator_supports_compress(f, values, replace);
   };
 
-  eve::algo::ptr_iterator<t1*, N> u_f_1{data_1.begin()};
-  eve::algo::ptr_iterator<t2*, N> u_f_2{data_2.begin()};
-  eve::algo::ptr_iterator<t3*, N> u_f_3{data_3.begin()};
+  eve::algo::ptr_iterator<t1*, N> u_f_1{data_1.data()};
+  eve::algo::ptr_iterator<t2*, N> u_f_2{data_2.data()};
+  eve::algo::ptr_iterator<t3*, N> u_f_3{data_3.data()};
 
   auto u_l_1 = u_f_1 + T::size();
 

@@ -53,12 +53,16 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
     uc_it{}
   );
 
+  auto* b = arr.data();
+  auto* e = b + arr.size();
+  auto const* cb = b;
+  auto const* ce = e;
   // aligned_pointer
   {
     using ap = eve::aligned_ptr<e_t, N>;
 
     auto processed = common_test(
-      ap{arr.begin()}, arr.end(),
+      ap{b}, e,
       eve::algo::ptr_iterator<ap, N>{},
       u_it{}
     );
@@ -68,11 +72,9 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // const aligned_pointer
   {
     using ap = eve::aligned_ptr<e_t const, N>;
-
+    
     auto processed = common_test(
-      ap{arr.cbegin()}, arr.cend(),
-      eve::algo::ptr_iterator<ap, N>{},
-      uc_it{}
+      ap{cb},ce,eve::algo::ptr_iterator<ap, N>{},uc_it{}
     );
     TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<decltype(processed.begin())>);
   }
@@ -82,7 +84,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
     using ap = eve::aligned_ptr<e_t, N>;
 
     auto processed = common_test(
-      ap{arr.begin()}, ap{arr.end()},
+      ap{b}, ap{e},
       eve::algo::ptr_iterator<ap, N>{},
       eve::algo::ptr_iterator<ap, N>{}
     );
@@ -93,9 +95,8 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // two const aligned_pointers
   {
     using ap = eve::aligned_ptr<e_t const, N>;
-
     auto processed = common_test(
-      ap{arr.cbegin()}, ap{arr.cend()},
+      ap{cb}, ap{ce},
       eve::algo::ptr_iterator<ap, N>{},
       eve::algo::ptr_iterator<ap, N>{}
     );
@@ -109,12 +110,12 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
     using acp = eve::aligned_ptr<e_t const, N>;
 
     common_test(
-      arr.begin(), ap{arr.end()},
+      arr.data(), ap{arr.data()+arr.size()},
       u_it{},
       eve::algo::ptr_iterator<ap, N>{}
     );
     common_test(
-      arr.cbegin(), acp{arr.cend()},
+      cb, acp{ce},
       uc_it{},
       eve::algo::ptr_iterator<acp, N>{}
     );
@@ -123,12 +124,12 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // Not aligned enough
   if constexpr (N{}() > 1) {
     common_test(
-      arr.begin(), eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
+      b, eve::aligned_ptr<e_t, eve::fixed<1>>{e},
       u_it{},
       u_it{}
     );
     common_test(
-      eve::aligned_ptr<e_t, eve::fixed<1>>{arr.begin()}, eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
+      eve::aligned_ptr<e_t, eve::fixed<1>>{b}, eve::aligned_ptr<e_t, eve::fixed<1>>{e},
       u_it{},
       u_it{}
     );
@@ -137,7 +138,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // over aligned
   {
     common_test(
-      eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t, N>{arr.end()},
+      eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{b}, eve::aligned_ptr<e_t, N>{e},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{}
     );
@@ -145,12 +146,15 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
 
   // vector::iterator
   common_test(
-    vec.begin(), vec.end(),
+    vec.data(), vec.data()+vec.size(),
     u_it{}, u_it{});
+ 
+  auto const* vcb = vec.data();
+  auto const* vce = vcb + vec.size();
 
   // vector::const_iterator
   common_test(
-    vec.cbegin(), vec.cend(),
+    vcb, vce,
     uc_it{}, uc_it{});
 };
 
@@ -199,9 +203,12 @@ TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected
     }
     run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
   };
-
-  run_test(arr.begin(), arr.end());
-  run_test(arr.cbegin(), arr.cend());
+  auto *f = arr.data();
+  auto *l = f + arr.size();
+  auto const* cf = f;
+  auto const* cl = l;
+  run_test(f,l);
+  run_test(cf, cl);
 };
 
 TTS_CASE_TPL("contiguous ranges", algo_test::selected_types)

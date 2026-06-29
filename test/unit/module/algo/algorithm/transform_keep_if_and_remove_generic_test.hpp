@@ -36,12 +36,14 @@ void transform_keep_if_generic_test_aligned_ptr(eve::as<T>, Algo alg, Op op)
   std::vector<e_t> expected;
   std::remove_copy(data.begin(), data.end(), std::back_inserter(expected), drop);
   std::transform(expected.begin(), expected.end(), expected.begin(), op);
-
-  auto rng = eve::algo::as_range(eve::as_aligned(data.begin()), data.end());
+  
+  auto *p = data.data();
+  auto *pe = p + data.size();
+  auto rng = eve::algo::as_range(eve::as_aligned(p),pe);
   auto func = [drop, &op](auto x) {
     return kumi::make_tuple(op(x), eve::is_not_equal(drop, x));
   };
-  std::vector<e_t> actual{data.begin(), alg(rng, func)};
+  std::vector<e_t> actual{data.data(), alg(rng, func)};
 
   TTS_EQUAL(expected, actual);
 };

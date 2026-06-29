@@ -55,7 +55,10 @@ TTS_CASE_TPL("Check converting_iterator", algo_test::selected_types)
       run_test_writeable(u_f);
     }
   };
-
-  run_test(data.begin(), data.end());
-  run_test(data.cbegin(), data.cend());
+  auto *f = data.data();
+  auto *l = f + data.size();
+  auto const* cf = f;
+  auto const* cl = l;
+  run_test(f,l);
+  run_test(cf, cl);
 };
