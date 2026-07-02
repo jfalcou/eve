@@ -172,6 +172,24 @@ EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
   else return map(convert, v, tgt);
 }
 
+struct pieces_t
+{
+  template < typename T> static inline auto call(T w) noexcept
+  {
+
+    if constexpr( std::endian::native == std::endian::little )
+    {
+      if constexpr( std::is_signed_v<T> ) return eve::interleave(w, (w < 0).mask());
+      else return eve::interleave(w, zero(as(w)));
+    }
+    else
+    {
+      if constexpr( std::is_signed_v<T> ) return eve::interleave((w < 0).mask(), w);
+      else return eve::interleave(zero(as(w)), w);
+    }
+  };
+};
+
 // Convert integer from 2^n -> 2^n+1
 template<typename T, typename N, typename U>
 EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)

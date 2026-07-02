@@ -91,11 +91,6 @@ namespace eve::_
       }
       else if constexpr(O::contains(kahan))
       {
-//         auto pair_add = [invn](auto pair0, auto r1, auto invn){
-//           auto [r, e0] = pair0;
-//           auto [s, e1] = eve::two_fma_approx(r1, invn, r);
-//           return zip(s, e0+e1);
-//         };
         auto p0 = two_prod(r_t(a0), invn);
         ((p0 = average_kahan_helper_t<O>::pair_add(p0,args,invn)),...);
         auto [r, e] = p0;
