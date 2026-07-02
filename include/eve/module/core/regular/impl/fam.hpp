@@ -95,10 +95,7 @@ namespace eve::_
         }
         else
         {
-          auto stdfam = [](auto x, auto y, auto z){
-            return std::fma(y, z, x);
-          };
-          return map(stdfam, a, b, c);
+          return map( [](auto x, auto y, auto z){return std::fma(y, z, x);}, a, b, c);
         }
       }
       else if constexpr( std::is_integral_v<element_type_t<T>> )

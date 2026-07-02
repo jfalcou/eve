@@ -118,9 +118,8 @@ namespace eve::_
       }
       else if constexpr( std::same_as<element_type_t<T>, double> )
       {
-        [[maybe_unused]] auto stdfms = [](auto sa, auto sb, auto sc){return std::fma(sa, sb, -sc); };
         if constexpr(scalar_value<T>) return std::fma(a, b, -c);
-        else                          return map(stdfms, a, b, c);
+        else                          return map([](auto sa, auto sb, auto sc){return std::fma(sa, sb, -sc); }, a, b, c);
       }
       else if constexpr( std::is_integral_v<element_type_t<T>> )
       {
