@@ -59,14 +59,14 @@ namespace eve::_
   }
 
   template<typename T>
-  static inline auto aux1_mul(const T mini, const T maxi)
+  static EVE_FORCEINLINE auto aux1_mul(const T mini, const T maxi) noexcept
   {
     T z = valmax(as<T>{}) / maxi;
     return (z < mini) ? valmax(as<T>{}) : mini * maxi;
   };
 
   template<typename T,  typename UT>
-  static inline auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi)
+  static EVE_FORCEINLINE auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi) noexcept
   {
     UT z = valmax(as<T>{}) / amaxi;
     return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
@@ -151,12 +151,6 @@ namespace eve::_
 
               un_t aa  = eve::abs(a);
               un_t bb  = eve::abs(b);
-
-//               auto aux = [sgn](const T& mini, const T& maxi, const un_t& amini, const un_t& amaxi)
-//               {
-//                 un_t z = valmax(as<T>{}) / amaxi;
-//                 return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
-//               };
 
               if( bb >= aa ) return aux2_mul(sgn, a, b, aa, bb);
               else           return aux2_mul(sgn, b, a, bb, aa);

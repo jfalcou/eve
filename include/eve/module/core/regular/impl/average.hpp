@@ -33,12 +33,14 @@ namespace eve::_
 
   template<typename O> struct average_kahan_helper_t
   {
-     static inline auto get_fn(){
+    static EVE_FORCEINLINE auto get_fn() noexcept
+    {
       if constexpr(O::contains(raw)) return two_add[raw];
       else return two_add[pedantic];
     };
 
-    static inline auto pair_add(auto pair0, auto r1, auto invn){
+    static EVE_FORCEINLINE auto pair_add(auto pair0, auto r1, auto invn) noexcept
+    {
       auto [r, e0] = pair0;
       auto [s, e1] = eve::two_fma_approx(r1, invn, r);
       return zip(s, e0+e1);
