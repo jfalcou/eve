@@ -58,6 +58,20 @@ namespace eve::_
     }
   }
 
+  template<typename T>
+  static inline auto aux1_mul(const T mini, const T maxi)
+  {
+    T z = valmax(as<T>{}) / maxi;
+    return (z < mini) ? valmax(as<T>{}) : mini * maxi;
+  };
+
+  template<typename T,  typename UT>
+  static inline auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi)
+  {
+    UT z = valmax(as<T>{}) / amaxi;
+    return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
+  };
+
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
@@ -138,14 +152,14 @@ namespace eve::_
               un_t aa  = eve::abs(a);
               un_t bb  = eve::abs(b);
 
-              auto aux = [sgn](const T& mini, const T& maxi, const un_t& amini, const un_t& amaxi)
-              {
-                un_t z = valmax(as<T>{}) / amaxi;
-                return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
-              };
+//               auto aux = [sgn](const T& mini, const T& maxi, const un_t& amini, const un_t& amaxi)
+//               {
+//                 un_t z = valmax(as<T>{}) / amaxi;
+//                 return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
+//               };
 
-              if( bb >= aa ) return aux(a, b, aa, bb);
-              else           return aux(b, a, bb, aa);
+              if( bb >= aa ) return aux2_mul(sgn, a, b, aa, bb);
+              else           return aux2_mul(sgn, b, a, bb, aa);
             }
           }
           else // simd

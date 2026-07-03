@@ -15,6 +15,23 @@
 
 namespace eve::_
 {
+  struct scatter_helper_t
+  {
+
+    // Single-value scatter
+    template<typename T, typename O>
+    static inline void sc(auto base, auto idx, auto vn, auto vc, auto vv) noexcept
+    {
+      // We only write if mask is set
+      if constexpr(match_option<condition_key,O,ignore_none_>) write(vv.get(vn),base+idx.get(vn));
+      else
+      {
+        auto vm = vc.mask( as<as_logical_t<T>>{} );
+        if(vm.get(vn)) write(vv.get(vn),base+idx.get(vn));
+      }
+    };
+  };
+
   template<typename T, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void scatter_(EVE_REQUIRES(cpu_), O const& o, T const& v, Ptr p, Idx const& idx)
   {
@@ -38,20 +55,10 @@ namespace eve::_
       // Extract the pointer from a potential aligned_ptr
       auto base = unalign(get<2>(se));
 
-      // Single-value scatter
-      auto sc = [&](auto vn, auto vc, auto vv)
-      {
-        // We only write if mask is set
-        if constexpr(match_option<condition_key,O,ignore_none_>) write(vv.get(vn),base+idx.get(vn));
-        else
-        {
-          auto vm = vc.mask( as<as_logical_t<T>>{} );
-          if(vm.get(vn)) write(vv.get(vn),base+idx.get(vn));
-        }
-      };
-
       // Scatter all (clang doesn't like capturing structured bindings)
-      eve::_::for_<0, 1, T::size()>([&](auto... I) { ( sc(I,get<0>(se),get<1>(se)), ...); });
+      eve::_::for_<0, 1, T::size()>([&](auto... I) {
+                                      ( scatter_helper_t::sc<T, O>(base, idx, I,get<0>(se),get<1>(se)), ...); }
+                                   );
     }
   }
 }
