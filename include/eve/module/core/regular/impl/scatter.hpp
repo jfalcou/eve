@@ -20,7 +20,7 @@ namespace eve::_
 
     // Single-value scatter
     template<typename T, typename O>
-    static inline void sc(auto base, auto idx, auto vn, auto vc, auto vv) noexcept
+    static EVE_FORCEINLINE void sc(auto base, auto idx, auto vn, auto vc, auto vv) noexcept
     {
       // We only write if mask is set
       if constexpr(match_option<condition_key,O,ignore_none_>) write(vv.get(vn),base+idx.get(vn));
