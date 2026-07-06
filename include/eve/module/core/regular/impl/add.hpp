@@ -120,6 +120,22 @@ namespace eve::_
       return a;
   }
 
+  template<typename O> struct add_kahan_helper_t
+  {
+    static EVE_FORCEINLINE auto get_fn() noexcept
+    {
+      if constexpr(O::contains(raw)) return two_add[raw];
+      else return two_add[pedantic];
+    };
+
+    static EVE_FORCEINLINE auto pair_add(auto pair0, auto ri) noexcept
+    {
+      auto [a0, e0] = pair0;
+      auto [s, e1] = get_fn()(a0, ri);
+      return zip(s, e0+e1);
+    };
+  };
+
   template<typename T0, typename T1, typename ... Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   requires(sizeof...(Ts) != 0)
@@ -135,27 +151,15 @@ namespace eve::_
       {
         auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
         auto s = eve::add[o](head);
-//        if constexpr(O::size() == 1 && match_option<condition_key, O, ignore_none_>)
-//           return sum(s);
-//         else
-          return butterfly_reduction(s, eve::add[o]).get(0);
+        return butterfly_reduction(s, eve::add[o]).get(0);
       }
       else if constexpr(O::contains(kahan))
       {
         // kahan being precursor, but this is S. M. Rump, T. Ogita, and S. Oishi algorithm
         // Accurate floating-point summation part I: Faithful rounding.
         // SIAM Journal on Scientific Computing, 31(1):189-224, 2008.
-        auto get_fn= [](){
-          if constexpr(O::contains(raw)) return two_add[raw];
-          else return two_add[pedantic];
-        };
-        auto pair_add = [fn = get_fn()](auto pair0, auto ri){
-          auto [a0, e0] = pair0;
-          auto [s, e1] = fn(a0, ri);
-          return zip(s, e0+e1);
-        };
         auto p0   = two_add(r_t(r0),r_t(r1));
-        ((p0 = pair_add(p0,r_t(rs))),...);
+        ((p0 = add_kahan_helper_t<O>::pair_add(p0,r_t(rs))),...);
         auto [r, e] = p0;
         return r+e;
       }

@@ -26,7 +26,7 @@ namespace eve::_
   {
     if constexpr( is_bundle_v<abi_t<T, N>> )
     {
-      return wide<T, N>(kumi::map([=]<typename M>(M m) { return lookup(m, ind); }, a));
+      return wide<T, N>(kumi::map([ind]<typename M>(M m) { return lookup(m, ind); }, a));
     }
     else
     {
