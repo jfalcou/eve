@@ -64,12 +64,14 @@ EVE_FORCEINLINE wide<T, N>
     }
     else
     {
-      if      constexpr( lmul == -4 ) return __riscv_vmv_v_x_i16mf4_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
-      else if constexpr( lmul == -2 ) return __riscv_vmv_v_x_i16mf2_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
-      else if constexpr( lmul == 1 )  return __riscv_vmv_v_x_i16m1_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
-      else if constexpr( lmul == 2 )  return __riscv_vmv_v_x_i16m2_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
-      else if constexpr( lmul == 4 )  return __riscv_vmv_v_x_i16m4_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
-      else if constexpr( lmul == 8 )  return __riscv_vmv_v_x_i16m8_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      wide<std::int16_t, N> x_fill_zero;
+      auto xx = std::bit_cast<std::uint16_t>(x);
+      if      constexpr( lmul == -4 ) return bit_cast(__riscv_vmv_v_x_i16mf4_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+      else if constexpr( lmul == -2 ) return bit_cast(__riscv_vmv_v_x_i16mf2_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+      else if constexpr( lmul == 1 )  return bit_cast(__riscv_vmv_v_x_i16m1_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+      else if constexpr( lmul == 2 )  return bit_cast(__riscv_vmv_v_x_i16m2_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+      else if constexpr( lmul == 4 )  return bit_cast(__riscv_vmv_v_x_i16m4_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+      else if constexpr( lmul == 8 )  return bit_cast(__riscv_vmv_v_x_i16m8_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
     }
   }
   else if constexpr( match(c, category::int64) )
