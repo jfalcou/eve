@@ -130,7 +130,7 @@ namespace tts
   template<>
   inline double absolute_distance(eve::float16_t const &l, eve::float16_t const &r)
   {
-    return eve::dist(l, r);
+    return static_cast<double>(eve::dist(l, r));
   }
 }
 
