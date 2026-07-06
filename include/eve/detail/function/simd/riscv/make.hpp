@@ -64,14 +64,16 @@ EVE_FORCEINLINE wide<T, N>
     }
     else
     {
-      wide<std::int16_t, N> x_fill_zero;
+      using tmp_t = wide<std::int16_t, N>;
+      tmp_t x_fill_zero;
       auto xx = std::bit_cast<std::uint16_t>(x);
-      if      constexpr( lmul == -4 ) return bit_cast(__riscv_vmv_v_x_i16mf4_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
-      else if constexpr( lmul == -2 ) return bit_cast(__riscv_vmv_v_x_i16mf2_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
-      else if constexpr( lmul == 1 )  return bit_cast(__riscv_vmv_v_x_i16m1_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
-      else if constexpr( lmul == 2 )  return bit_cast(__riscv_vmv_v_x_i16m2_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
-      else if constexpr( lmul == 4 )  return bit_cast(__riscv_vmv_v_x_i16m4_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
-      else if constexpr( lmul == 8 )  return bit_cast(__riscv_vmv_v_x_i16m8_tu(x_fill_zero, xx, N::value), as<wrap<EVE_RVV_M(vfloat16m1_t, 1)>> {});
+
+      if      constexpr( lmul == -4 ) return simd_cast(tmp_t{__riscv_vmv_v_x_i16mf4_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == -2 ) return simd_cast(tmp_t{__riscv_vmv_v_x_i16mf2_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 1 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m1_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 2 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m2_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 4 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m4_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 8 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m8_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
     }
   }
   else if constexpr( match(c, category::int64) )

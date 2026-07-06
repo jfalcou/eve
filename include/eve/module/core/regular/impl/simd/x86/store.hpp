@@ -48,7 +48,7 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
     else
     {
       using np = typename Ptr::template rebind<std::uint16_t>;
-      store[cond](b, np { (std::uint16_t*) ptr.get() });
+      store[cvt_cond()](b, np { (std::uint16_t*) ptr.get() });
     }
   }
   else if constexpr (std::same_as<C, ignore_none_>)
