@@ -30,18 +30,20 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
     auto b = eve::bit_cast(v, as<wide<std::uint16_t, N>>{});
 
     auto cvt_cond = [&]() {
-      if constexpr (relative_conditional_expr<C>) return cond;
-      else if constexpr (C::has_alternative)
+      if constexpr (C::has_alternative)
       {
-        const auto nc = convert(expand_mask(cond, as<wide<T, N>>{}), as<logical<wide<std::uint16_t, N>>>{});
-        const auto na = convert(cond.alternative, as<std::uint16_t>{});
-        return if_(nc).else_(na);
+        if constexpr (simd_value<typename C::alternative_type>)
+        {
+          const auto na = bit_cast(cond.alternative, as<wide<std::uint16_t, N>>{});
+          return cond.map_alternative([&](auto) { return na; });
+        }
+        else
+        {
+          const auto na = bit_cast(cond.alternative, as<std::uint16_t>{});
+          return cond.map_alternative([&](auto) { return na; });
+        }
       }
-      else
-      {
-        const auto m = convert(expand_mask(cond, as<wide<T, N>>{}), as<logical<wide<std::uint16_t, N>>>{});
-        return if_(m);
-      }
+      else return cond;
     };
 
     if constexpr (std::is_pointer_v<Ptr>) store[cvt_cond()](b, (std::uint16_t*) ptr);
