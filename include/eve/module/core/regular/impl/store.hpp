@@ -12,6 +12,7 @@
 #include <eve/concept/ptr_translation.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/conditional.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
@@ -127,13 +128,15 @@ namespace eve::_
   template<callable_options O, typename T, typename N, typename Dst>
   EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
+    using mask_type_t = typename logical<T>::mask_type;
+    auto cond = bit_cast_alternative(opts[condition_key], as<mask_type_t>{});
+
     if constexpr (std::is_pointer_v<Dst>)
     {
-      store[opts](value.mask(), reinterpret_cast<typename logical<T>::mask_type*>(dst));
+      store[cond](value.mask(), reinterpret_cast<mask_type_t*>(dst));
     }
     else
     {
-      using mask_type_t = typename logical<T>::mask_type;
       store[opts](value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
     }
   }

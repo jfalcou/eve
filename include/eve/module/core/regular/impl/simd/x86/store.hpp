@@ -28,29 +28,13 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
   if constexpr (std::same_as<T, eve::float16_t> && !_::supports_fp16_vector_ops)
   {
     auto b = eve::bit_cast(v, as<wide<std::uint16_t, N>>{});
+    auto newcond = bit_cast_alternative(cond, as<std::uint16_t>{});
 
-    auto cvt_cond = [&]() {
-      if constexpr (C::has_alternative)
-      {
-        if constexpr (simd_value<typename C::alternative_type>)
-        {
-          const auto na = bit_cast(cond.alternative, as<wide<std::uint16_t, N>>{});
-          return cond.map_alternative([&](auto) { return na; });
-        }
-        else
-        {
-          const auto na = bit_cast(cond.alternative, as<std::uint16_t>{});
-          return cond.map_alternative([&](auto) { return na; });
-        }
-      }
-      else return cond;
-    };
-
-    if constexpr (std::is_pointer_v<Ptr>) store[cvt_cond()](b, (std::uint16_t*) ptr);
+    if constexpr (std::is_pointer_v<Ptr>) store[newcond](b, (std::uint16_t*) ptr);
     else
     {
       using np = typename Ptr::template rebind<std::uint16_t>;
-      store[cvt_cond()](b, np { (std::uint16_t*) ptr.get() });
+      store[newcond](b, np { (std::uint16_t*) ptr.get() });
     }
   }
   else if constexpr (std::same_as<C, ignore_none_>)
