@@ -95,15 +95,16 @@ namespace eve
       }
       else if constexpr (no_logicals)
       {
+
         using cv_t  = common_value_t<T, Ts...>;
         using cve_t = element_type_t<cv_t>;
         constexpr _::local_converter_t<cve_t> s_cvt{};
 
         constexpr bool is_callable = !std::same_as< _::ignore
-                                                  , decltype(base_t::behavior(arch, opts, s_cvt(x), s_cvt(xs)...))
+                                                  , decltype(base_t::direct_mask_callable(arch, opts, s_cvt(x), s_cvt(xs)...))
                                                   >;
 
-        if constexpr (is_callable)     return base_t::behavior(arch, opts, s_cvt(x), s_cvt(xs)...);
+        if constexpr (is_callable) return base_t::behavior(arch, opts, s_cvt(x), s_cvt(xs)...);
         else
         {
           constexpr bool is_convertible = requires{ base_t::behavior(arch, opts, cv_t{x}, cv_t{xs}...); };
