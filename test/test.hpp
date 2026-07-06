@@ -126,6 +126,12 @@ namespace tts
   {
     return eve::compare_equal(l,r) ? 0. : 1;
   }
+
+  template<>
+  inline double absolute_distance(eve::float16_t const &l, eve::float16_t const &r)
+  {
+    return eve::dist(l, r);
+  }
 }
 
 namespace tts

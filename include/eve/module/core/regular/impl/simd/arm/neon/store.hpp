@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/arch/arm/arm_utils.hpp>
 
 #include <type_traits>
 
@@ -32,6 +33,8 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr)
     constexpr auto cat = categorize<wide<T, N>>();
     if constexpr( cat == category::float32x2 ) vst1_f32(ptr, value);
     else if constexpr( cat == category::float32x4 ) vst1q_f32(ptr, value);
+    else if constexpr( cat == category::float16x4 ) vst1_f16(arm_ptr_downcast(ptr), value);
+    else if constexpr( cat == category::float16x8 ) vst1q_f16(arm_ptr_downcast(ptr), value);
     else if constexpr( cat == category::int64x1 ) vst1_s64(ptr, value);
     else if constexpr( cat == category::int64x2 ) vst1q_s64(ptr, value);
     else if constexpr( cat == category::uint64x1 ) vst1_u64(ptr, value);
@@ -74,6 +77,8 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned
     constexpr auto cat = categorize<wide<T, N>>();
     if constexpr( cat == category::float32x2 ) vst1_f32_ex(ptr, value, 64);
     else if constexpr( cat == category::float32x4 ) vst1_f32_ex(ptr, value, 128);
+    else if constexpr( cat == category::float16x4 ) vst1_f16_ex(arm_ptr_downcast(unalign(ptr)), value, 64);
+    else if constexpr( cat == category::float16x8 ) vst1_f16_ex(arm_ptr_downcast(unalign(ptr)), value, 128);
     else if constexpr( cat == category::int64x1 ) vst1_s64_ex(ptr, value, 64);
     else if constexpr( cat == category::int64x2 ) vst1_s64_ex(ptr, value, 128);
     else if constexpr( cat == category::uint64x1 ) vst1_u64_ex(ptr, value, 64);

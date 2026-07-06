@@ -1857,8 +1857,8 @@ namespace tts::detail
             );                                                                                      \
                                                                                                     \
     for(auto f : failures)                                                                          \
-      std::cout << "    @[" << f.index << "] : " << f.original << " and " << f.other                \
-                << " differ by " << OP(f.original,f.other) << " " << UNIT << "\n";                  \
+      std::cout << "    @[" << f.index << "] : " << ::tts::as_string(f.original) << " and " << ::tts::as_string(f.other)                \
+                << " differ by " << ::tts::as_string(OP(f.original,f.other)) << " " << UNIT << "\n";                  \
                                                                                                     \
     std::cout << "\n";                                                                              \
     return ::tts::detail::logger{};                                                                 \

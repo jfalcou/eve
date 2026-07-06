@@ -18,7 +18,7 @@ namespace
 // Aligned store tests
 //==================================================================================================
 TTS_CASE_WITH( "Check store behavior with aligned pointers"
-        , eve::test::simd::all_types
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
@@ -58,7 +58,7 @@ TTS_CASE_WITH( "Check store behavior with aligned pointers"
 // Aligned store tests
 //==================================================================================================
 TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
-        , eve::test::simd::all_types
+        , eve::test::simd::all_types_wf16
         , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
