@@ -53,12 +53,24 @@ EVE_FORCEINLINE wide<T, N>
   }
   else if constexpr( match(c, category::float16) )
   {
-    if constexpr( lmul == -4 ) return __riscv_vfmv_v_f_f16mf4_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == -2 ) return __riscv_vfmv_v_f_f16mf2_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 1 ) return __riscv_vfmv_v_f_f16m1_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 2 ) return __riscv_vfmv_v_f_f16m2_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 4 ) return __riscv_vfmv_v_f_f16m4_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 8 ) return __riscv_vfmv_v_f_f16m8_tu(fill_zero, x, N::value);
+    if constexpr (supports_fp16_vector_ops)
+    {
+      if      constexpr( lmul == -4 ) return __riscv_vfmv_v_f_f16mf4_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == -2 ) return __riscv_vfmv_v_f_f16mf2_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 1 )  return __riscv_vfmv_v_f_f16m1_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 2 )  return __riscv_vfmv_v_f_f16m2_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 4 )  return __riscv_vfmv_v_f_f16m4_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 8 )  return __riscv_vfmv_v_f_f16m8_tu(fill_zero, x, N::value);
+    }
+    else
+    {
+      if      constexpr( lmul == -4 ) return __riscv_vmv_v_x_i16mf4_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      else if constexpr( lmul == -2 ) return __riscv_vmv_v_x_i16mf2_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      else if constexpr( lmul == 1 )  return __riscv_vmv_v_x_i16m1_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      else if constexpr( lmul == 2 )  return __riscv_vmv_v_x_i16m2_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      else if constexpr( lmul == 4 )  return __riscv_vmv_v_x_i16m4_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+      else if constexpr( lmul == 8 )  return __riscv_vmv_v_x_i16m8_tu(fill_zero, std::bit_cast<std::int16_t>(x), N::value);
+    }
   }
   else if constexpr( match(c, category::int64) )
   {
