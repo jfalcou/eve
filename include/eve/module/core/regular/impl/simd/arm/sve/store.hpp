@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/arch/arm/arm_utils.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::_
@@ -20,6 +21,6 @@ namespace eve::_
   {
     if constexpr (C::has_alternative) store_common(cpu_{}, cx, v, p);
     else if constexpr (C::is_complete && !C::is_inverted) return;
-    else svst1(expand_mask(cx, as<wide<T, N>>{}), unalign(p), v);
+    else svst1(expand_mask(cx, as<wide<T, N>>{}), arm_ptr_downcast(unalign(p)), v);
   }
 }
