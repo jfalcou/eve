@@ -137,7 +137,7 @@ namespace eve::_
     }
     else
     {
-      store[opts](value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
+      store[cond](value.mask(), aligned_ptr<mask_type_t, N> { reinterpret_cast<mask_type_t*>(dst.get()) });
     }
   }
 }
