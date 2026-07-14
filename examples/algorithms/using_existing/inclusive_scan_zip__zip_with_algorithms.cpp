@@ -16,7 +16,7 @@
 //   readability and reusability.
 //
 // NOTE:
-//   examples/algorithms/using_existing/memcmp__two_range_algorithms_interface_specifics.cpp also
+//   examples/algorithms/using_existing/memcmp__two_range_algorithms.cpp also
 //   showcases zip.
 
 #include <eve/module/algo.hpp>

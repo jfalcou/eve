@@ -18,7 +18,7 @@
 //
 // NOTE:
 //   You might also want to have a look at:
-//   examples/algorithms/using_existing/inclusive_scan_zip__using_zip_with_algorithms.cpp
+//   examples/algorithms/using_existing/inclusive_scan_zip__zip_with_algorithms.cpp
 //   where we don't declare an object for complex numbers and just deal with tuples.
 //
 

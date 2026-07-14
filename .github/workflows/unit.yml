@@ -405,23 +405,42 @@ jobs:
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }} 
         run: |
-          mkdir build && cd build
-          cmake -G "Visual Studio 17 2022" -A x64 .. ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+          cmake -G "Visual Studio 17 2022" -A x64 -S . -B build ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
 
       - name: Arch Tests
         run: |
           cd build
-          cmake --build . --target unit.arch.exe --config ${{ matrix.cfg.mode }} --parallel 2
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
-          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-
+          cmake --build . --target unit.arch.exe --config ${{ matrix.cfg.mode }}  --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.arch        --parallel 2
+         
       - name: API Tests
         run: |
           cd build
-          cmake --build . --target unit.api.exe --config ${{ matrix.cfg.mode }} --parallel 2
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.api.*.exe              
+          cmake --build . --target clean            --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.api.exe     --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.memory.exe  --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.api           --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.memory        --parallel 2
+ 
+      - name: Core Tests
+        run: |
+          cd build
+          cmake --build . --target clean                --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.core.exe        --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.internals.exe   --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.meta.exe        --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.core              --parallel 2       
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.internals         --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.meta              --parallel 2 
 
-      - name: Bessel, Combinatorial, Elliptic and Polynomial Tests
+      - name: Math Tests
+        run: |
+          cd build
+          cmake --build . --target clean          --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.math.exe  --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.math        --parallel 2
+
+      - name: Advanced Maths Tests 
         run: |
           cd build
           cmake --build . --target clean --config ${{ matrix.cfg.mode }}
@@ -429,38 +448,30 @@ jobs:
           cmake --build . --target unit.combinatorial.exe   --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.elliptic.exe        --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.polynomial.exe      --config ${{ matrix.cfg.mode }} --parallel 2
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.bessel.*.exe
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.combinatorial.*.exe
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.elliptic.*.exe
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.polynomial.*.exe
+          cmake --build . --target unit.special.exe         --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.bessel                --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.combinatorial         --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.elliptic              --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.polynomial            --parallel 2 
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.special               --parallel 2   
 
-      - name: Core Tests
+      - name: Algorithms Tests 
         run: |
           cd build
-          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-          cmake --build . --target unit.core.exe            --config ${{ matrix.cfg.mode }} --parallel 2
-          cmake --build . --target unit.internals.exe       --config ${{ matrix.cfg.mode }} --parallel 2
-          cmake --build . --target unit.meta.exe            --config ${{ matrix.cfg.mode }} --parallel 2
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.core.*.exe
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
+          cmake --build . --target clean          --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.algo.exe  --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R unit.algo        --parallel 2
 
-      - name: Math Tests
+      - name: Doc & Examples Tests 
         run: |
           cd build
-          cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-          cmake --build . --target unit.math.exe --config ${{ matrix.cfg.mode }} --parallel 2
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.math.*.exe
+          cmake --build . --target clean          --config ${{ matrix.cfg.mode }}
+          cmake --build . --target doc.exe        --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target examples.exe   --config ${{ matrix.cfg.mode }} --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R doc              --parallel 2
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R examples         --parallel 2
 
-      #- name: Memory and special Tests
-      #  run: |
-      #    cd build
-      #    cmake --build . --target clean --config ${{ matrix.cfg.mode }}
-      #    cmake --build . --target unit.memory.exe      --config ${{ matrix.cfg.mode }} --parallel 2
-      #    cmake --build . --target unit.special.exe     --config ${{ matrix.cfg.mode }} --parallel 2
-      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.memory.*.exe
-      #    ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.special.*.exe
-    
+
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################

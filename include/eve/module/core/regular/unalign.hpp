@@ -79,7 +79,7 @@ namespace eve
 //!   @endcode
 //!
 //!   Convert the pointer or iterator passed as a parameter to a pointer without
-//!   qny information about its alignment.
+//!   any information about its alignment.
 //!
 //!   **Parameters**
 //!     * `p`: A pointer or relaxed iterator to convert.

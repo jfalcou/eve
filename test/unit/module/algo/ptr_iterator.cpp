@@ -55,13 +55,10 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
     }
   };
   
-  auto      *  f = data.data();
-  auto      *  l = f + data.size();
-  auto const* cf = f;
-  auto const* cl = l;
-  
-  run_test(f, l);
-  run_test(cf, cl);
+  using type = eve::element_type_t<T>;
+  run_test(data.data(), data.data()+data.size());
+  run_test( static_cast<type const*>(data.data())
+          , static_cast<type const*>(data.data() + data.size()));
 };
 
 
