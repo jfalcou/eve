@@ -20,6 +20,12 @@ namespace eve::_
       return EVE_DISPATCH_CALL_NT(translate_ref(w), idx, v);
     }
 
+    template<typename Wide, std::ptrdiff_t I, typename Val>
+    EVE_FORCEINLINE constexpr void operator()(Wide& w, index_t<I> idx, Val v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_NT(translate_ref(w), idx, v);
+    }
+
     EVE_CALLABLE_OBJECT(insert_t, insert_);
   };
 
@@ -30,6 +36,12 @@ namespace eve::_
   {
     template<typename Wide>
     EVE_FORCEINLINE constexpr element_type_t<Wide> operator()(Wide w, std::size_t idx) const noexcept
+    {
+      return EVE_DISPATCH_CALL(w, idx);
+    }
+
+    template<typename Wide, std::ptrdiff_t I>
+    EVE_FORCEINLINE constexpr element_type_t<Wide> operator()(Wide w, index_t<I> idx) const noexcept
     {
       return EVE_DISPATCH_CALL(w, idx);
     }

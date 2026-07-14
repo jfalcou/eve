@@ -291,6 +291,33 @@ TTS_CASE_TPL("Check eve::wide insert/set", eve::test::simd::all_types)
 };
 
 //==================================================================================================
+// Compile-time extract and insert
+//==================================================================================================
+TTS_CASE_TPL("Check eve::wide extract/get and insert/set with compile-time indices",
+             eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = typename T::value_type;
+
+  T data { 0 };
+  data.set(eve::index<0>, v_t{42});
+  TTS_EQUAL(data.get(eve::index<0>), v_t{42});
+
+  eve::logical<T> logical_data { false };
+  logical_data.set(eve::index<0>, true);
+  TTS_EQUAL(logical_data.get(eve::index<0>), true);
+
+  if constexpr(T::size() > 1)
+  {
+    data.set(eve::index<1>, v_t{7});
+    TTS_EQUAL(data.get(eve::index<1>), v_t{7});
+
+    logical_data.set(eve::index<1>, true);
+    TTS_EQUAL(logical_data.get(eve::index<1>), true);
+  }
+};
+
+//==================================================================================================
 // Split/Combine
 //==================================================================================================
 template<typename T>

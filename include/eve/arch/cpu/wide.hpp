@@ -327,8 +327,17 @@ namespace eve
       _::insert(*this, i, v);
     }
 
+    template<std::ptrdiff_t I>
+    EVE_FORCEINLINE void set(index_t<I> i, scalar_value auto v) noexcept
+    {
+      _::insert(*this, i, v);
+    }
+
     //! Retrieve the value from a given lane
     EVE_FORCEINLINE Type get(std::size_t i) const noexcept { return _::extract(*this, i); }
+
+    template<std::ptrdiff_t I>
+    EVE_FORCEINLINE Type get(index_t<I> i) const noexcept { return _::extract(*this, i); }
 
     //! Retrieve the value from the last lane
     EVE_FORCEINLINE Type back() const noexcept { return get(Cardinal::value - 1); }

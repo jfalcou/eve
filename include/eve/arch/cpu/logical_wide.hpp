@@ -391,8 +391,20 @@ namespace eve
       _::insert(*this, i, v);
     }
 
+    template<std::ptrdiff_t I>
+    EVE_FORCEINLINE void set(index_t<I> i, std::convertible_to<bool> auto v) noexcept
+    {
+      _::insert(*this, i, v);
+    }
+
     //! Retrieve the value from a given lane
     EVE_FORCEINLINE auto get(std::size_t i) const noexcept
+    {
+      return _::extract(*this, i);
+    }
+
+    template<std::ptrdiff_t I>
+    EVE_FORCEINLINE auto get(index_t<I> i) const noexcept
     {
       return _::extract(*this, i);
     }
