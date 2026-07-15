@@ -72,9 +72,12 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
       algo_test::iterator_supports_compress(map_u_f, values, replace);
     }
   };
-
-  run_test(data.begin(), data.end());
-  run_test(data.cbegin(), data.cend());
+  auto *f = data.data();
+  auto *l = f + data.size();
+  auto const* cf = f;
+  auto const* cl = l;
+  run_test(f,l);
+  run_test(cf, cl);
 };
 
 TTS_CASE("eve.algo map iterator non const to const")

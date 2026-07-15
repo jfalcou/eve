@@ -54,9 +54,11 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
       algo_test::iterator_supports_compress(u_f, values, replace);
     }
   };
-
-  run_test(data.begin(), data.end());
-  run_test(data.cbegin(), data.cend());
+  
+  using type = eve::element_type_t<T>;
+  run_test(data.data(), data.data()+data.size());
+  run_test( static_cast<type const*>(data.data())
+          , static_cast<type const*>(data.data() + data.size()));
 };
 
 
@@ -66,7 +68,7 @@ TTS_CASE("eve.algo non const to const")
   using aligned_p  = eve::aligned_ptr<int, N>;
   using aligned_cp = eve::aligned_ptr<int const, N>;
 
-  using u_it  = eve::algo::ptr_iterator <int*      , N>;
+  using u_it  = eve::algo::ptr_iterator <int*     , N>;
   using uc_it = eve::algo::ptr_iterator<int const*, N>;
   using a_it  = eve::algo::ptr_iterator<aligned_p, N>;
   using ac_it = eve::algo::ptr_iterator<aligned_cp, N>;

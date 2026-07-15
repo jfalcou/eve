@@ -23,7 +23,7 @@ struct fixture
   auto aligned_begin() const
   {
     using ap = eve::aligned_ptr<const int, eve::fixed<4>>;
-    return eve::algo::ptr_iterator<ap, eve::fixed<4>> {ap(data.begin())};
+    return eve::algo::ptr_iterator<ap, eve::fixed<4>> {ap(data.data())};
   }
 
   auto aligned_end() const { return aligned_begin() + data.size(); }

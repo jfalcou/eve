@@ -48,9 +48,9 @@ namespace ascii
     if ( a.size() != b.size() ) return false;
 
     // converting them to uint8_t; because our to upper algorithm relies on unsigned integers.
-    auto *f1 = reinterpret_cast<std::uint8_t const *>(a.begin());
-    auto *l1 = reinterpret_cast<std::uint8_t const *>(a.end());
-    auto *f2 = reinterpret_cast<std::uint8_t const *>(b.begin());
+    auto *f1 = reinterpret_cast<std::uint8_t const *>(a.data());
+    auto *l1 = reinterpret_cast<std::uint8_t const *>(a.data()+a.size());
+    auto *f2 = reinterpret_cast<std::uint8_t const *>(b.data());
 
     // convert both to uppercase and then check if they're equal
     return eve::algo::equal(

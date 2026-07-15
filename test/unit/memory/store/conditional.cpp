@@ -97,8 +97,9 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
       }
     };
 
-    for (e_t* f = data.begin(); f != data.end() - T::size(); ++f)
+    for (std::ptrdiff_t i = 0; i != data.size() - T::size(); ++i)
     {
+      e_t *f = &data[i];
       run_all_ignores(f);
 
       if (!eve::is_aligned(f,eve::cardinal_t<T>{})) continue;

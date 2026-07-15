@@ -21,11 +21,12 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
 {
   template<typename LoopBody, typename I> struct LoopBodyAdapter
   {
-    LoopBody& loop_body;
-    I         base;
+    LoopBody&      loop_body;
+    I              first;
+    std::ptrdiff_t chunk_offset;
 
     EVE_FORCEINLINE
-    bool operator()(std::ptrdiff_t i) { return loop_body(base + i); }
+    bool operator()(std::ptrdiff_t i) { return loop_body(first + (chunk_offset + i)); }
   };
 
   template<typename P, typename LoopBody, typename ProcessedI, typename I> struct delegate
@@ -36,13 +37,13 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
     ProcessedI processed_first;
     I          first;
 
-    EVE_FORCEINLINE I restore_iterator(const auto& it) { return first + (it - processed_first); }
-
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
       auto loaded = eve::load[ignore](it);
+      std::ptrdiff_t chunk_offset = it - processed_first;   // safe: ProcessedI is a raw-pointer-based
+                                                            // eve::ptr_iterator, no bounds checking
       was_stopped = eve::iterate_selected[ignore](
-          is_selected(loaded), LoopBodyAdapter<LoopBody, I> {loop_body, restore_iterator(it)});
+          is_selected(loaded), LoopBodyAdapter<LoopBody, I> {loop_body, first, chunk_offset});
       return was_stopped;
     }
 
