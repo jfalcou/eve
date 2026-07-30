@@ -31,7 +31,8 @@ requires rvv_abi<abi_t<T, N>>
   {
     const auto w = bit_cast(vf, as<wide<std::uint16_t, N>>{});
     const auto s = bit_cast(vt, as<std::uint16_t>{});
-    return bit_cast(__riscv_vmerge(w, s, c, N::value), as<wide<T, N>>{});
+    const auto r = __riscv_vmerge(w, s, c, N::value);
+    return bit_cast(wide<std::uint16_t, N>{ r }, as<wide<T, N>>{});
   }
   else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
   else return __riscv_vmerge(vf, vt, c, N::value);
