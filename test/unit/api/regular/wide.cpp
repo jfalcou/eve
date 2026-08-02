@@ -264,6 +264,9 @@ TTS_CASE_TPL("Check eve::wide insert/set", eve::test::simd::all_types)
   {
     T data { 0 };
 
+    eve::_::insert(data, eve::index_t<0>{}, static_cast<v_t>(42));
+    TTS_EQUAL(eve::_::extract(data, eve::index_t<0>{}), static_cast<v_t>(42));
+
     for (std::ptrdiff_t i = 0; i < T::size(); ++i)
     {
       data.set(i, static_cast<v_t>(1 + i));

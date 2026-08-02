@@ -49,6 +49,12 @@ namespace eve::_
     }
   }
 
+  template<callable_options O, typename Wide, std::ptrdiff_t I>
+  EVE_FORCEINLINE auto extract_(EVE_REQUIRES(cpu_), O const&, Wide p, index_t<I>) noexcept
+  {
+    return extract(p, static_cast<std::size_t>(I));
+  }
+
   //================================================================================================
   // Insert value
   //================================================================================================
@@ -96,5 +102,11 @@ namespace eve::_
       std::memcpy((char*)(&p),(char*)(&data[0]),sizeof(data));
       EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
     }
+  }
+
+  template<callable_options O, typename Wide, std::ptrdiff_t I, typename Value>
+  EVE_FORCEINLINE void insert_(EVE_REQUIRES(cpu_), O const&, Wide& p, index_t<I>, Value v) noexcept
+  {
+    insert(p, static_cast<std::size_t>(I), v);
   }
 }
