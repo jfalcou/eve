@@ -24,7 +24,20 @@ template<relative_conditional_expr C, scalar_value T,
 EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
   requires x86_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr (std::same_as<C, ignore_none_>)
+  // store float16 as integer when AVX512FP16 is not available
+  if constexpr (std::same_as<T, eve::float16_t> && !_::supports_fp16_vector_ops)
+  {
+    auto b = eve::bit_cast(v, as<wide<std::uint16_t, N>>{});
+    auto newcond = bit_cast_alternative(cond, as<std::uint16_t>{});
+
+    if constexpr (std::is_pointer_v<Ptr>) store[newcond](b, (std::uint16_t*) ptr);
+    else
+    {
+      using np = typename Ptr::template rebind<std::uint16_t>;
+      store[newcond](b, np { (std::uint16_t*) ptr.get() });
+    }
+  }
+  else if constexpr (std::same_as<C, ignore_none_>)
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
@@ -32,18 +45,21 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
       {
         if constexpr( std::is_same_v<T, double> ) _mm512_store_pd(ptr.get(), v);
         else if constexpr( std::is_same_v<T, float> ) _mm512_store_ps(ptr.get(), v);
+        else if constexpr (std::same_as<T, eve::float16_t>) _mm512_store_ph(ptr.get(), v);
         else if constexpr( std::is_integral_v<T> ) _mm512_store_si512((__m512i *)(ptr.get()), v);
       }
       else if constexpr( N::value * sizeof(T) == x86_256_::bytes )
       {
         if constexpr( std::is_same_v<T, double> ) _mm256_store_pd(ptr.get(), v);
         else if constexpr( std::is_same_v<T, float> ) _mm256_store_ps(ptr.get(), v);
+        else if constexpr (std::same_as<T, eve::float16_t>) _mm256_store_ph(ptr.get(), v);
         else if constexpr( std::is_integral_v<T> ) _mm256_store_si256((__m256i *)(ptr.get()), v);
       }
       else if constexpr( N::value * sizeof(T) == x86_128_::bytes )
       {
         if constexpr( std::is_same_v<T, double> ) _mm_store_pd(ptr.get(), v);
         else if constexpr( std::is_same_v<T, float> ) _mm_store_ps(ptr.get(), v);
+        else if constexpr (std::same_as<T, eve::float16_t>) _mm_store_ph(ptr.get(), v);
         else if constexpr( std::is_integral_v<T> ) _mm_store_si128((__m128i *)(ptr.get()), v);
       }
       else { memcpy(ptr.get(), (T const *)(&v), N::value * sizeof(T)); }
@@ -52,18 +68,21 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
     {
       if constexpr( std::is_same_v<T, double> ) _mm512_storeu_pd(ptr, v);
       else if constexpr( std::is_same_v<T, float> ) _mm512_storeu_ps(ptr, v);
+      else if constexpr (std::same_as<T, eve::float16_t>) _mm512_storeu_ph(ptr, v);
       else if constexpr( std::is_integral_v<T> ) _mm512_storeu_si512((__m512i *)(ptr), v);
     }
     else if constexpr( N::value * sizeof(T) == x86_256_::bytes )
     {
       if constexpr( std::is_same_v<T, double> ) _mm256_storeu_pd(ptr, v);
       else if constexpr( std::is_same_v<T, float> ) _mm256_storeu_ps(ptr, v);
+      else if constexpr (std::same_as<T, eve::float16_t>) _mm256_storeu_ph(ptr, v);
       else if constexpr( std::is_integral_v<T> ) _mm256_storeu_si256((__m256i *)(ptr), v);
     }
     else if constexpr( N::value * sizeof(T) == x86_128_::bytes )
     {
       if constexpr( std::is_same_v<T, double> ) _mm_storeu_pd(ptr, v);
       else if constexpr( std::is_same_v<T, float> ) _mm_storeu_ps(ptr, v);
+      else if constexpr (std::same_as<T, eve::float16_t>) _mm_storeu_ph(ptr, v);
       else if constexpr( std::is_integral_v<T> ) _mm_storeu_si128((__m128i *)(ptr), v);
     }
     else { memcpy(ptr, (T const *)(&v), N::value * sizeof(T)); }
@@ -113,6 +132,9 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
       else if constexpr( c == category::float32x4 ) _mm_mask_store_ps(ptr.get(), m, v);
       else if constexpr( c == category::float32x8 ) _mm256_mask_store_ps(ptr.get(), m, v);
       else if constexpr( c == category::float32x16 ) _mm512_mask_store_ps(ptr.get(), m, v);
+      else if constexpr( c == category::float16x8 ) _mm_mask_store_epi16(ptr.get(), m, _mm_castsi128_ph(v));
+      else if constexpr( c == category::float16x16 ) _mm256_mask_store_epi16(ptr.get(), m, _mm_castsi256_ph(v));
+      else if constexpr( c == category::float16x32 ) _mm512_mask_store_epi16(ptr.get(), m, _mm_castsi512_ph(v));
       else if constexpr( match(c, category::int64x2, category::uint64x2) )
         _mm_mask_store_epi64(ptr.get(), m, v);
       else if constexpr( match(c, category::int64x4, category::uint64x4) )
@@ -139,6 +161,9 @@ EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr p
     else if constexpr( c == category::float32x4 ) _mm_mask_storeu_ps(ptr, m, v);
     else if constexpr( c == category::float32x8 ) _mm256_mask_storeu_ps(ptr, m, v);
     else if constexpr( c == category::float32x16 ) _mm512_mask_storeu_ps(ptr, m, v);
+    else if constexpr( c == category::float16x8 ) _mm_mask_storeu_epi16(ptr, m, _mm_castph_si128(v));
+    else if constexpr( c == category::float16x16 ) _mm256_mask_storeu_epi16(ptr, m, _mm_castph_si256(v));
+    else if constexpr( c == category::float16x32 ) _mm512_mask_storeu_epi16(ptr, m, _mm_castph_si512(v));
     else if constexpr( match(c, category::int64x2, category::uint64x2) )
       _mm_mask_storeu_epi64(ptr, m, v);
     else if constexpr( match(c, category::int64x4, category::uint64x4) )

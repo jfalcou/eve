@@ -53,12 +53,28 @@ EVE_FORCEINLINE wide<T, N>
   }
   else if constexpr( match(c, category::float16) )
   {
-    if constexpr( lmul == -4 ) return __riscv_vfmv_v_f_f16mf4_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == -2 ) return __riscv_vfmv_v_f_f16mf2_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 1 ) return __riscv_vfmv_v_f_f16m1_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 2 ) return __riscv_vfmv_v_f_f16m2_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 4 ) return __riscv_vfmv_v_f_f16m4_tu(fill_zero, x, N::value);
-    else if constexpr( lmul == 8 ) return __riscv_vfmv_v_f_f16m8_tu(fill_zero, x, N::value);
+    if constexpr (supports_fp16_vector_ops)
+    {
+      if      constexpr( lmul == -4 ) return __riscv_vfmv_v_f_f16mf4_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == -2 ) return __riscv_vfmv_v_f_f16mf2_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 1 )  return __riscv_vfmv_v_f_f16m1_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 2 )  return __riscv_vfmv_v_f_f16m2_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 4 )  return __riscv_vfmv_v_f_f16m4_tu(fill_zero, x, N::value);
+      else if constexpr( lmul == 8 )  return __riscv_vfmv_v_f_f16m8_tu(fill_zero, x, N::value);
+    }
+    else
+    {
+      using tmp_t = wide<std::int16_t, N>;
+      tmp_t x_fill_zero;
+      auto xx = std::bit_cast<std::uint16_t>(x);
+
+      if      constexpr( lmul == -4 ) return simd_cast(tmp_t{__riscv_vmv_v_x_i16mf4_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == -2 ) return simd_cast(tmp_t{__riscv_vmv_v_x_i16mf2_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 1 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m1_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 2 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m2_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 4 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m4_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+      else if constexpr( lmul == 8 )  return simd_cast(tmp_t{__riscv_vmv_v_x_i16m8_tu(x_fill_zero, xx, N::value)}, as<wide<eve::float16_t, N>>{});
+    }
   }
   else if constexpr( match(c, category::int64) )
   {

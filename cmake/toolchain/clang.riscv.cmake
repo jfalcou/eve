@@ -6,8 +6,8 @@
 set(CMAKE_SYSTEM_NAME       Generic)
 set(CMAKE_SYSTEM_PROCESSOR  riscv64)
 
-set(CMAKE_C_COMPILER    clang-20)
-set(CMAKE_CXX_COMPILER  clang++-20)
+set(CMAKE_C_COMPILER    clang-21)
+set(CMAKE_CXX_COMPILER  clang++-21)
 
 set(CMAKE_CXX_FLAGS "--static -fbracket-depth=512 --target=riscv64-unknown-linux-gnu -DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )
 set(CMAKE_CROSSCOMPILING_CMD ${PROJECT_SOURCE_DIR}/cmake/toolchain/${EVE_RUNNER_SCRIPT}.sh )

@@ -12,6 +12,7 @@
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/bits.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits.hpp>
 #include <type_traits>
@@ -75,6 +76,13 @@ namespace eve
       auto mapped = op(alternative);
       C c = *this;
       return or_<C, decltype(mapped)>{c, mapped};
+    }
+
+    template <typename Tgt>
+    constexpr auto bit_cast_alternative(as<Tgt>)
+    {
+      if constexpr (simd_value<V>) return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<wide<Tgt, cardinal_t<V>>>{}); });
+      else                         return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<Tgt>{}); });
     }
 
     //! Inserts a conditional expression with alternative into a output stream
@@ -709,6 +717,26 @@ namespace eve
   {
     if constexpr (!C::has_alternative) return c;
     else                               return c.map_alternative(op);
+  }
+
+  //================================================================================================
+  //! @brief Computes a transformed conditional
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //! Creates a eve::conditional_expr by bitcasting the alternative value of `c` to a new type,
+  //! `Tgt`, if any is present.
+  //!
+  //! @param  c   eve::conditional_expr to transform
+  //! @param  tgt  [Target type](@ref eve::as)
+  //! @return A eve::conditional_expr of the same kind that `c` which alternative value, if
+  //!         any is repalced by the bitcast of `c.alternative` to `Tgt`
+  //================================================================================================
+  template <eve::relative_conditional_expr C, typename Tgt>
+  auto bit_cast_alternative(C c, as<Tgt> tgt)
+  {
+    if constexpr (!C::has_alternative) return c;
+    else                               return c.bit_cast_alternative(tgt);
   }
 
   //================================================================================================

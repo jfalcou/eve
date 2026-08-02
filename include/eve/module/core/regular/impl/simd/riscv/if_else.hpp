@@ -27,6 +27,13 @@ if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> v
 requires rvv_abi<abi_t<T, N>>
 {
   if constexpr( !std::same_as<T, U> ) return if_else(c, static_cast<T>(vt), vf);
+  else if constexpr (std::same_as<T, eve::float16_t> && !supports_fp16_vector_ops)
+  {
+    const auto w = bit_cast(vf, as<wide<std::uint16_t, N>>{});
+    const auto s = bit_cast(vt, as<std::uint16_t>{});
+    const auto r = __riscv_vmerge(w, s, c, N::value);
+    return bit_cast(wide<std::uint16_t, N>{ r }, as<wide<T, N>>{});
+  }
   else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
   else return __riscv_vmerge(vf, vt, c, N::value);
 }

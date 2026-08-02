@@ -22,7 +22,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // store tests
 //==================================================================================================
-TTS_CASE_TPL( "Check store behavior with soa_ptr", eve::test::scalar::all_types)
+TTS_CASE_TPL( "Check store behavior with soa_ptr", eve::test::scalar::all_types_wf16)
 <typename T>(tts::type<T>)
 {
   using s_t = tuple_t<T>;

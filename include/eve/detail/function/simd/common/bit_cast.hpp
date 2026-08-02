@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/traits/element_type.hpp>
 #include <bit>
 
 namespace eve::_
