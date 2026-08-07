@@ -108,7 +108,7 @@ namespace eve
           const auto not_finite_mask = is_not_finite(xx);
           if (any(not_finite_mask))
           {
-            auto r = expm1[o][raw](if_else(not_finite_mask, zero(as(xx)), xx));
+            auto r = expm1[o](if_else(not_finite_mask, zero(as(xx)), xx));
             r = if_else(is_nan(xx), nan(as(xx)), r);
             r = if_else(is_minf(xx), mone(as(xx)), r);
             r = if_else(is_pinf(xx), inf(as(xx)), r);
