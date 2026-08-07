@@ -182,6 +182,22 @@ $(function(){initNavTree('group__math__hyper_ga66b0e9fefb189e70baa9e4bbbe0d96e2.
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sinh(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga66b0e9fefb189e70baa9e4bbbe0d96e2">eve::sinh</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sinh[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga66b0e9fefb189e70baa9e4bbbe0d96e2">eve::sinh</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sinh[wf != -2.0f](wf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga66b0e9fefb189e70baa9e4bbbe0d96e2">eve::sinh</a>[wf != -2.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordtype">float</span> <span class="keyword">const</span> nan = std::numeric_limits&lt;float&gt;::quiet_NaN();</div>
+<div class="line">    <span class="keywordtype">float</span> buf[8] = {10.f, 0.f, -0.f, nan, 0.5f, 0.5f, 0.5f, 0.5f};</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> a{&amp;buf[0]};</div>
+<div class="line">    std::cout&lt;&lt;a&lt;&lt;std::endl;</div>
+<div class="line">    <span class="keyword">auto</span> r = <a class="code hl_variable" href="#ga66b0e9fefb189e70baa9e4bbbe0d96e2">eve::sinh</a>(a);</div>
+<div class="line">    std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordtype">float</span> buf[8] = {10.f, 0.f, -0.f, 0.f, 0.5f, 0.5f, 0.5f, 0.5f};</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> a{&amp;buf[0]};</div>
+<div class="line">    std::cout&lt;&lt;a&lt;&lt;std::endl;</div>
+<div class="line">    <span class="keyword">auto</span> r = <a class="code hl_variable" href="#ga66b0e9fefb189e70baa9e4bbbe0d96e2">eve::sinh</a>(a);</div>
+<div class="line">    std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56_html_ga34b67924fa53bec83dfc96b51bd8fe56"><div class="ttname"><a href="group__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition</b> nan.hpp:67</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
