@@ -90,7 +90,7 @@ namespace eve
       else  if constexpr( floating_value<T> )
         return signnz[is_nez(a)](a);
       else
-        return eve::max(eve::min(a,T(1), T(-1));
+        return eve::max(eve::min(a,T(1), T(-1)));
     }
   }
 }
