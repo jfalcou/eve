@@ -35,12 +35,12 @@ namespace eve::algo
   //!   When calling you just pass individual traits via [], i.e.
   //!
   //!   @code
-  //!   eve::algo::find_if[eve::algo::expensive_callable][eve::algo::cosider_types<double>]()
+  //!   eve::algo::find_if[eve::algo::expensive_callable][eve::algo::consider_types<double>]()
   //!   @endcode
   //!
   //!   You can also pass traits struct:
   //!   @code
-  //!   eve::algo::find_if[eve::algo::traits{eve::algo::expensive_callable, eve::algo::cosider_types<double>}]()
+  //!   eve::algo::find_if[eve::algo::traits{eve::algo::expensive_callable, eve::algo::consider_types<double>}]()
   //!   @endcode
   //!   This is useful for prebuilding traits (for example eve::algo::default_simple_algo_traits)
   //! @}

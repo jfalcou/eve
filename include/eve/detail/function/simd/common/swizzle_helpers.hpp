@@ -58,12 +58,12 @@ namespace eve::_
   //----------------------------------------------------------------------------------------------
   // Index to bytes conversion
   template<typename Pack, typename Shuffler, std::size_t... I>
-  EVE_FORCEINLINE constexpr auto as_bytes_impl(Shuffler p, std::index_sequence<I...> const &)
+  EVE_FORCEINLINE constexpr auto as_bytes_impl(Shuffler p, std::index_sequence<I...>)
   {
     constexpr auto sz = Shuffler::size();
     constexpr auto b = sizeof(typename Pack::value_type);
 
-    return values< (p(I/b,sz) == na_ ? 0xFF : p(I/b,sz)*b+I%b)... >{};
+    return std::index_sequence< (p(I/b,sz) == na_ ? 0xFF : p(I/b,sz)*b+I%b)... >{};
   }
 
   template<typename Pack, typename Shuffler, typename Bytes>

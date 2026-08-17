@@ -97,7 +97,7 @@ namespace eve
   requires( requires{typename _::up<T>::type;} )
   struct upgrade_if<O,T>
   {
-    using base = std::conditional_t<O::contains(eve::widen), _::up<T>, eve::_::always<T>>;
+    using base = std::conditional_t<O::contains(eve::widen), _::up<T>, std::type_identity<T>>;
     using type = typename base::type;
   };
 
