@@ -13,18 +13,23 @@
 // byte_16_runtime_shuffle
 // shuffle registers of bytes with len <= 16 using runtime idxs
 // Not avaliable well on all platforms ==> declared in detail
-
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(byte_16_runtime_shuffle_)
-  EVE_DECLARE_CALLABLE(byte_16_runtime_shuffle_, byte_16_runtime_shuffle)
-
-  namespace _
+  template<typename Options>
+  struct byte_16_runtime_shuffle_t : callable<byte_16_runtime_shuffle_t, Options>
   {
-    EVE_ALIAS_CALLABLE(byte_16_runtime_shuffle_, byte_16_runtime_shuffle);
-  }
+    template<typename N>
+    EVE_FORCEINLINE wide<std::uint8_t, N> operator()(
+        wide<std::uint8_t, N> what, 
+        wide<std::uint8_t, N> pattern) const noexcept
+    {
+      return EVE_DISPATCH_CALL(what, pattern);
+    }
 
-  EVE_CALLABLE_API(byte_16_runtime_shuffle_, byte_16_runtime_shuffle)
+    EVE_CALLABLE_OBJECT(byte_16_runtime_shuffle_t, byte_16_runtime_shuffle_);
+  };
+
+  inline constexpr auto byte_16_runtime_shuffle = functor<byte_16_runtime_shuffle_t>;
 }
 
 #include <eve/detail/function/simd/common/byte_16_runtime_shuffle.hpp>

@@ -10,7 +10,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/translation.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 #include <iterator>
 

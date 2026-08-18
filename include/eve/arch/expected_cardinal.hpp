@@ -9,7 +9,7 @@
 
 #include <eve/arch/cardinals.hpp>
 #include <eve/arch/spec.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve::_

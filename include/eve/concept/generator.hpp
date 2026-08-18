@@ -9,7 +9,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/invocable.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 #include <type_traits>
 

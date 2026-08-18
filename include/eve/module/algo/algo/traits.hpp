@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo/algo/concepts/types_to_consider.hpp>
 
-#include <eve/detail/raberu.hpp>
+#include <eve/deps/raberu.hpp>
 
 #include <eve/arch/cardinals.hpp>
 #include <eve/traits.hpp>

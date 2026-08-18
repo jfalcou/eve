@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/arch/float16.hpp>
 #include <eve/as.hpp>
 
@@ -25,22 +25,6 @@ namespace eve::_
   {
     template<typename... Us> constexpr types<Types...,Us...> operator+( types<Us...> const&) const;
   };
-
-  // Extract abi_type from type
-  template<typename T, typename Enable = void>
-  struct abi_type
-  {
-    using type = void;
-  };
-
-  template<typename T>
-  struct abi_type<T, std::void_t<typename T::abi_type>>
-  {
-    using type = typename T::abi_type;
-  };
-
-  template<typename T>
-  using abi_type_t = typename abi_type<T>::type;
 
   // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned>
@@ -90,10 +74,7 @@ namespace eve::_
   template<std::size_t Size, typename Sign = unsigned>
   using make_integer_t = typename make_integer<Size, Sign>::type;
 
-
-  ///////////////////////////////////////////////////////////////////
-
-  // Generate integral types from sign + size
+  // Generate floating point types from size
   template<std::size_t Size>
   struct make_floating_point;
 
@@ -152,7 +133,7 @@ namespace eve::_
   template<auto Begin, auto Step, auto End, typename Func>
   EVE_FORCEINLINE constexpr void for_(Func f)
   {
-    return for_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}>{}, f);
+    return for_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}, f);
   }
 
   // Can't use a lambda because need to force inline

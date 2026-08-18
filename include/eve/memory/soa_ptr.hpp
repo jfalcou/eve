@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 #include <eve/memory/pointer.hpp>
 #include <concepts>

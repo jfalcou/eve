@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve

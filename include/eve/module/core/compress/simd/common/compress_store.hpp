@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/memory/stack_buffer.hpp>
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/store.hpp>

@@ -9,7 +9,7 @@
 
 #include <eve/detail/wide_forward.hpp>
 #include <eve/traits/translation.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 namespace eve
 {

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/element_type.hpp>
