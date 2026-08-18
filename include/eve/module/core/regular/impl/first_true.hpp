@@ -52,7 +52,7 @@ namespace eve::_
 
     if      constexpr (scalar_value<T>)                   return first_true[cond](v.value());
     else if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
-    else if constexpr (has_emulated_abi_v<T>)
+    else if constexpr (emulated_abi<T>)
     {
       if constexpr (relative_conditional_expr<C>)
       {

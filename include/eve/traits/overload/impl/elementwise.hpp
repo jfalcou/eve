@@ -115,7 +115,7 @@ namespace eve
       else
       {
         using          cl_t         = common_logical_t<T, Ts...>;
-        constexpr bool any_emulated = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+        constexpr bool any_emulated = (emulated_abi<T> || ... || emulated_abi<Ts>);
 
         if constexpr(any_emulated)  return base_t::behavior(arch, opts, cvt(x, as<cl_t>{}), cvt(xs, as<cl_t>{})...);
         else

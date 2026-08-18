@@ -19,7 +19,7 @@ namespace eve::_
     auto cx = opts[condition_key];
 
     if constexpr (C::is_complete && !C::is_inverted) return std::nullopt;
-    else if constexpr (has_aggregated_abi_v<L>)
+    else if constexpr (aggregated_abi<L>)
     {
       if constexpr (!C::is_complete)
       {

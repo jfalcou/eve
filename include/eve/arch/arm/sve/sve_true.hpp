@@ -35,7 +35,7 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
     using v_t   = element_type_t<T>;
     using fc_t  = fundamental_cardinal_t<v_t>;
 
-    if constexpr ( eve::has_aggregated_abi_v<T> )
+    if constexpr ( eve::aggregated_abi<T> )
     {
       using half_t = as_wide_t<v_t, eve::fixed<T::size() / 2>>;
       half_t half = sve_true(cond, eve::as<half_t>{});

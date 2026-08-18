@@ -34,7 +34,7 @@ namespace eve::_
   template<callable_options O, simd_value Wide>
   EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index) noexcept
   {
-    if constexpr( is_bundle_v<typename Wide::abi_type> )
+    if constexpr( bundle_abi<Wide> )
     {
       return Wide(kumi::map([&]<typename T>(T m) { return broadcast(m, Index); }, v));
     }
@@ -46,7 +46,7 @@ namespace eve::_
   {
     using that_t = as_wide_t<Wide, fixed<N>>;
 
-    if constexpr( is_bundle_v<typename Wide::abi_type> )
+    if constexpr( bundle_abi<Wide> )
     {
       return that_t(kumi::map([&]<typename T>(T m) { return broadcast(m, Index, fixed<N> {}); }, v));
     }

@@ -20,7 +20,7 @@ sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
 {
   constexpr auto c = categorize<T>();
 
-  if constexpr( has_aggregated_abi_v<T> )
+  if constexpr( aggregated_abi<T> )
   {
     using e_t    = eve::element_type_t<T>;
     using N      = typename T::cardinal_type;

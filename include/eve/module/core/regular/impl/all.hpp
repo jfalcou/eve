@@ -33,7 +33,7 @@ all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 
   if constexpr (scalar_value<T>) return eve::all[cond](v.value());
   else if constexpr( C::is_complete && !C::is_inverted ) return true;
-  else if constexpr( has_emulated_abi_v<T> )
+  else if constexpr( emulated_abi<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
@@ -57,7 +57,7 @@ all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
       return true;
     }
   }
-  else if constexpr( has_aggregated_abi_v<T> && C::is_complete )
+  else if constexpr( aggregated_abi<T> && C::is_complete )
   {
     auto [l, h] = v.slice();
     return eve::all(l && h);

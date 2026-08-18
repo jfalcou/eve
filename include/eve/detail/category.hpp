@@ -120,7 +120,7 @@ namespace eve::_
 
   template<typename W> EVE_FORCEINLINE constexpr category categorize() noexcept
   {
-    if constexpr( has_native_abi_v<W> )
+    if constexpr( native_abi<W> )
     {
       using type      = typename W::value_type;
       using storage_t = typename W::storage_type;

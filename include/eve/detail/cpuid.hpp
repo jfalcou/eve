@@ -21,7 +21,6 @@
 #  endif
 
 #include <bitset>
-#include <vector>
 #include <array>
 
 namespace

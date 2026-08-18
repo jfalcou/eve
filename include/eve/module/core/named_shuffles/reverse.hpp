@@ -63,7 +63,7 @@ struct reverse_t
   template<simd_value T, std::ptrdiff_t G>
   static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
   {
-    if constexpr( eve::has_aggregated_abi_v<T> )
+    if constexpr( eve::aggregated_abi<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
       using half_t = decltype(T {}.slice(lower_));

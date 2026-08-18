@@ -63,29 +63,29 @@ basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
   constexpr Pattern q = {};
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_bundle_abi_v<that_t> )
+  if constexpr( bundle_abi<that_t> )
   {
     return that_t {kumi::map([](auto m) { return shuffle(m, Pattern {}); }, v)};
   }
-  else if constexpr( has_aggregated_abi_v<that_t> && !has_aggregated_abi_v<wide<T, N>> )
+  else if constexpr( aggregated_abi<that_t> && !aggregated_abi<wide<T, N>> )
   {
     return aggregate_shuffler(v, q);
   }
   // Be sure we can shuffle everything ionside a single vector of ouput
-  else if constexpr( !has_aggregated_abi_v<that_t> )
+  else if constexpr( !aggregated_abi<that_t> )
   {
     // We're swizzling the first half of an aggregate
-    if constexpr( has_aggregated_abi_v<wide<T, N>> && q.strictly_under(cd / 2) )
+    if constexpr( aggregated_abi<wide<T, N>> && q.strictly_under(cd / 2) )
     {
       return shuffle(v.slice(lower_), q);
     }
     // We're swizzling the second half of an aggregate
-    else if constexpr( has_aggregated_abi_v<wide<T, N>> && q.over(cd / 2) )
+    else if constexpr( aggregated_abi<wide<T, N>> && q.over(cd / 2) )
     {
       return shuffle(v.slice(upper_), slide_pattern<cd / 2, sz>(q));
     }
     // We're swizzling an aggregate in steplock [lo | hi]
-    else if constexpr( has_aggregated_abi_v<
+    else if constexpr( aggregated_abi<
                            wide<T, N>> && pattern_view<0, sz / 2, sz>(q).strictly_under(cd / 2)
                        && pattern_view<sz / 2, sz, sz>(q).over(cd / 2) )
     {
@@ -93,7 +93,7 @@ basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
                      shuffle(v, pattern_view<sz / 2, sz, sz>(q))};
     }
     // We're swizzling an aggregate in steplock [hi | lo]
-    else if constexpr( has_aggregated_abi_v<
+    else if constexpr( aggregated_abi<
                            wide<T, N>> && pattern_view<0, sz / 2, sz>(q).over(cd / 2)
                        && pattern_view<sz / 2, sz, sz>(q).strictly_under(cd / 2) )
     {

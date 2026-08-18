@@ -73,7 +73,7 @@ struct zero_swizzle
   EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
   {
     using w_t = as_wide_t<Wide, Cardinal>;
-    if constexpr( is_bundle_v<typename Wide::abi_type> )
+    if constexpr( bundle_abi<Wide> )
     {
       return w_t(kumi::map([]<typename T>(T) { return as_wide_t<T, Cardinal> {0}; }, w));
     }

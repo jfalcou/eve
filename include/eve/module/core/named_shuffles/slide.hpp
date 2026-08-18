@@ -86,7 +86,7 @@ struct slide_left_impl_t
 
     if constexpr( S == 0 ) return 0;
     else if constexpr( S == T::size() ) return 1;
-    else if constexpr( eve::has_aggregated_abi_v<T> )
+    else if constexpr( eve::aggregated_abi<T> )
     {
       using half_t = decltype(T {}.slice(lower_));
       if constexpr( S > T::size() / 2 )

@@ -65,12 +65,12 @@ EVE_FORCEINLINE auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) requires(G <= N())
 {
   if constexpr( G >= N() / 2 ) return v;
-  else if constexpr( has_aggregated_abi_v<wide<T, N>> )
+  else if constexpr( aggregated_abi<wide<T, N>> )
   {
     auto [v0, v1] = v.slice();
     return deinterleave_groups_shuffle(v0, v1, lane<G>);
   }
-  else if constexpr( is_bundle_v<abi_t<T, N>> )
+  else if constexpr( bundle_abi<abi<T, N>> )
   {
     return wide<T, N>(
         kumi::map([](auto _v) { return deinterleave_groups_shuffle(_v, lane<G>); }, v));
@@ -88,12 +88,12 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
   using res_t = wide<T, typename N::combined_type>;
 
   if constexpr( G >= N() ) return eve::combine(v0, v1);
-  else if constexpr( is_bundle_v<abi_t<T, N>> )
+  else if constexpr( bundle_abi<abi<T, N>> )
   {
     return res_t(kumi::map(
         [](auto _v0, auto _v1) { return deinterleave_groups_shuffle(_v0, _v1, lane<G>); }, v0, v1));
   }
-  else if constexpr( !has_emulated_abi_v<wide<T, N>> && G == (N() / 2) )
+  else if constexpr( !emulated_abi<wide<T, N>> && G == (N() / 2) )
   {
     auto [a0, b0] = v0.slice();
     auto [a1, b1] = v1.slice();
@@ -101,7 +101,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
     v1            = eve::combine(b0, b1);
     return eve::combine(v0, v1);
   }
-  else if constexpr( !has_emulated_abi_v<wide<T, N>> )
+  else if constexpr( !emulated_abi<wide<T, N>> )
   {
     v0 = deinterleave_groups_shuffle(v0, lane<G>);
     v1 = deinterleave_groups_shuffle(v1, lane<G>);

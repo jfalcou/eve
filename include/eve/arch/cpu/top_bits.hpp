@@ -91,8 +91,8 @@ namespace _
     static constexpr std::ptrdiff_t static_size = logical_type::size();
 
     //! is stored as an array of 2 halves
-    static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
-                                          (has_emulated_abi_v<logical_type> && static_size > 64);
+    static constexpr bool is_aggregated = aggregated_abi<logical_type> ||
+                                          (emulated_abi<logical_type> && static_size > 64);
 
     static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
 
@@ -114,7 +114,7 @@ namespace _
 
     static constexpr bool is_cheap_impl()
     {
-      if constexpr ( has_emulated_abi_v<logical_type> ) return true;
+      if constexpr ( emulated_abi<logical_type> ) return true;
       if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
 
       if constexpr ( x86_abi<abi_type> ) return true;
@@ -468,9 +468,8 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     // For arm and power we can likely do better, but we didn't care thus far.
     //  Use the most full type to be sure to fill outside values of small wide with false
     using bits_wide = typename Logical::bits_type;
-    using abi_t     = typename bits_wide::abi_type;
 
-    if constexpr ( !is_native_v<abi_t> )
+    if constexpr ( !native_abi<bits_wide> )
     {
       Logical mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
       return mask;

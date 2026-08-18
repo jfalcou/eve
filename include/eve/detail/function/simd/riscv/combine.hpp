@@ -19,7 +19,7 @@ requires rvv_abi<abi_t<T, N>>
 {
   using that_t = wide<T, typename N::combined_type>;
 
-  if constexpr( eve::has_aggregated_abi_v<that_t> )
+  if constexpr( eve::aggregated_abi<that_t> )
   {
     that_t that;
     that.storage().assign_parts(l, h);
@@ -44,7 +44,7 @@ combine(rvv_ const&, logical<wide<T, N>> l, logical<wide<T, N>> h) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
   using that_t = logical<wide<T, typename N::combined_type>>;
-  if constexpr( eve::has_aggregated_abi_v<that_t> )
+  if constexpr( eve::aggregated_abi<that_t> )
   {
     that_t that;
     that.storage().assign_parts(l, h);

@@ -24,7 +24,7 @@ namespace eve::_
   template<callable_options O, typename T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
   {
-    if constexpr( is_bundle_v<abi_t<T, N>> )
+    if constexpr( bundle_abi<abi<T, N>> )
     {
       return wide<T, N>(kumi::map([ind]<typename M>(M m) { return lookup(m, ind); }, a));
     }
@@ -42,7 +42,7 @@ namespace eve::_
       // Rebuild as scalar
       wide<T, N> data{};
 
-      if constexpr(has_aggregated_abi_v<wide<T,N>>)
+      if constexpr(aggregated_abi<wide<T,N>>)
       {
         constexpr auto const half = N::value / 2;
         apply<half>([&, lx = idx.slice(lower_)](auto... v)
