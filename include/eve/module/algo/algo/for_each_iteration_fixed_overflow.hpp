@@ -90,7 +90,7 @@ namespace _
         {
           std::array<I, unrolling> arr;
           eve::_::for_<0, 1, unrolling>(
-              [&](auto idx) mutable
+              [&](auto idx)
               {
                 arr[idx()] = f;
                 f += iterator_cardinal_v<I>;

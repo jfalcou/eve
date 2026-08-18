@@ -85,7 +85,7 @@ namespace eve::algo::views
      EVE_FORCEINLINE std::ptrdiff_t compute_distance(Components&& ... components) const
      {
        std::ptrdiff_t res = -1;
-       auto process_one = [&]<typename C>(C const& c) mutable {
+       auto process_one = [&]<typename C>(C const& c) {
          if constexpr (relaxed_range<C>)
          {
            std::ptrdiff_t cur = c.end() - c.begin();

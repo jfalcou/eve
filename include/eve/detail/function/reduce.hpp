@@ -27,7 +27,7 @@ namespace eve::_
     {
       constexpr auto depth = std::bit_width(std::size_t{Wide::size()}) - 1;
 
-      return [&]<std::size_t... I>(std::index_sequence<I...>) mutable
+      return [&]<std::size_t... I>(std::index_sequence<I...>) 
       {
         ((v = f(v,swap_adjacent(v, fixed<(1<<I)>{} ))),...);
         return v;

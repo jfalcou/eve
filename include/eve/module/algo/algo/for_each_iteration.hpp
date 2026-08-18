@@ -82,7 +82,7 @@ namespace eve::algo
           while( big_steps_count )
           {
             std::array<I, unrolling> arr;
-            eve::_::for_<0, 1, unrolling>([&](auto idx) mutable {
+            eve::_::for_<0, 1, unrolling>([&](auto idx) {
               arr[idx()] = f;
               f += iterator_cardinal_v<I>;
             });
