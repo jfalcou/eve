@@ -51,14 +51,16 @@ namespace eve
     using combined_type = fixed<2>;
   };
 
-  namespace _ {
+  namespace _ 
+  {
+    template<std::ptrdiff_t N>
+    void wide_cardinal(fixed<N> const&);
 
-  template <typename>
-  struct is_wide_cardinal  : std::false_type {};
-
-  template <std::ptrdiff_t N>
-  struct is_wide_cardinal<eve::fixed<N>> : std::true_type {};
-
+    template<typename T>
+    concept is_wide_cardinal = requires(T && t) 
+    { 
+      wide_cardinal(t);
+    };
   }  // namespace _
 
   template<std::ptrdiff_t Cardinal>
@@ -99,5 +101,5 @@ namespace eve
   //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
   //================================================================================================
   template <typename T>
-  concept wide_cardinal = _::is_wide_cardinal<T>::value;
+  concept wide_cardinal = _::is_wide_cardinal<T>;
 }

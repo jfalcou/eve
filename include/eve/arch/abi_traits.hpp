@@ -109,7 +109,17 @@ namespace eve
   // Concept for discriminating aggregated from non-agregated ABI
   //================================================================================================
   template<typename T> 
-  concept regular_abi = !std::same_as<T,aggregated_>;
+  concept regular_abi = !std::same_as<T, aggregated_>;
+
+  template<typename T>
+  struct has_regular_abi : std::bool_constant<regular_abi<T>>
+  {};
+
+  template<typename T>
+  inline constexpr bool has_regular_abi_v = regular_abi<T>;
+
+  template<typename T>
+  using has_regular_abi_t = typename has_regular_abi<T>::type;
 
   //================================================================================================
   // Check if at least one type inside a wide has an aggregated ABI
@@ -132,7 +142,7 @@ namespace eve
   template<typename T>
   requires eve::product_type<T>
   struct  has_aggregated_component<T>
-        : kumi::result::fold_left<_::check_abi, T, std::false_type>::type
+        : kumi::result::fold_left_t<_::check_abi, T, std::false_type>
   {};
 
   template<typename T>
@@ -141,3 +151,4 @@ namespace eve
   template<typename T>
   using has_aggregated_component_t = typename has_aggregated_component<T>::type;
 }
+
