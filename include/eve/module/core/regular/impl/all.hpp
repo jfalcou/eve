@@ -10,7 +10,7 @@
 #include <eve/arch/top_bits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/to_logical.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 

@@ -27,7 +27,7 @@ namespace eve
     consteval auto tuple_type_check()
     {
       if constexpr(eve::sized_product_type<T, 0>) return true;
-      else                                         return eve::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
+      else                                        return eve::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
     }
   }
 

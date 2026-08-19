@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/as_element.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/traits/overload/impl/strict_elementwise.hpp>
 
 namespace eve::_

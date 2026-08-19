@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/arch/float16.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 
 #include <cstddef>
 #include <type_traits>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
+#include <eve/arch/abi.hpp>
 #include <eve/deps/kumi.hpp>
 #include <type_traits>
 
@@ -106,10 +106,16 @@ namespace eve
   using has_non_native_abi_t = typename has_non_native_abi<T>::type;
 
   //================================================================================================
+  // Concept for discriminating aggregated from non-agregated ABI
+  //================================================================================================
+  template<typename T> 
+  concept regular_abi = !std::same_as<T,aggregated_>;
+
+  //================================================================================================
   // Check if at least one type inside a wide has an aggregated ABI
   //================================================================================================
   template<typename T>
-  struct has_aggregated_component : has_aggregated_abi<T> {};
+  struct has_aggregated_component : std::bool_constant<aggregated_abi<T>> {};
 
   namespace _
   {

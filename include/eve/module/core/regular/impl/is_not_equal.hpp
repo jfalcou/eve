@@ -60,7 +60,7 @@ namespace eve::_
     else
     {
       if constexpr(scalar_value<T>) return as_logical_t<T>(a != b);
-      else                          return apply_over( []<typename E>(E const& e, E const& f)
+      else                          return map( []<typename E>(E const& e, E const& f)
                                                         { return as_logical_t<E>(e != f); }
                                                       , a, b
                                                       );

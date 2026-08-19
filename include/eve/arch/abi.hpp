@@ -20,7 +20,7 @@ namespace eve::_
   // Types that are too big and are not emulated require aggregation
   template<typename Type, typename Size>
   inline constexpr bool require_aggregation =     (Size::value > expected_cardinal_v<Type>)
-                                              && !std::is_same_v
+                                              && !std::same_as
                                                         < abi_of_t< Type
                                                                   , expected_cardinal_v<Type>
                                                                   >

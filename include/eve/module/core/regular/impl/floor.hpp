@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 #include <eve/module/core/regular/dec.hpp>

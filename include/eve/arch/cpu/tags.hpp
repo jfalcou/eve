@@ -102,11 +102,6 @@ namespace eve
   }
 
   //================================================================================================
-  // Concept for discriminating aggregated from non-agregated ABI
-  //================================================================================================
-  template<typename T> concept regular_abi = !std::same_as<T,aggregated_>;
-
-  //================================================================================================
   // Dispatching tag for emulated SIMD implementation
   struct emulated_
   {

@@ -10,7 +10,6 @@
 #include <eve/traits/common_value.hpp>
 #include <eve/traits/underlying_type.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 

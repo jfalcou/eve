@@ -9,7 +9,6 @@
 
 #include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>
