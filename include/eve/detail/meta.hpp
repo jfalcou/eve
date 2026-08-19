@@ -98,26 +98,21 @@ namespace eve::_
   template<std::size_t Size>
   using make_floating_point_t = typename make_floating_point<Size>::type;
 
-  // Tuple free apply from generator data
+  //================================================================================================
+  // Reusable tuple-free meta algorithms 
+  //================================================================================================
+
+  // apply from generator data
   template<std::size_t... I, typename Func>
-  EVE_FORCEINLINE decltype(auto) apply(Func &&f, std::index_sequence<I...>)
+  EVE_FORCEINLINE constexpr decltype(auto) apply(Func &&f, std::index_sequence<I...>)
   {
     return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
   }
 
-  // Tuple free apply
-  template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
+  template<std::size_t Count, typename Func> 
+  EVE_FORCEINLINE constexpr decltype(auto) apply(Func &&f)
   {
     return apply(EVE_FWD(f), std::make_index_sequence<Count>{});
-  }
-
-  // Find the index of the first Ps equals to p
-  template<typename P, typename... Ps>
-  consteval std::ptrdiff_t find_index(P p, kumi::tuple<Ps...> )
-  {
-    bool checks[] = { (Ps{} == p)...};
-    for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;
-    return -1;
   }
  
   // Can't use a lambda because need to force inline
@@ -148,6 +143,29 @@ namespace eve::_
   EVE_FORCEINLINE constexpr bool for_until_(Func f)
   {
     return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}, f);
+  }
+
+  // Can't use a lambda because need to force inline
+  template<typename Builder, typename Func, std::size_t... I>
+  EVE_FORCEINLINE constexpr auto map_impl_(Builder && b, Func f, std::index_sequence<I...>)
+  {
+    return EVE_FWD(b)(f(std::integral_constant<std::size_t,I>{})...);
+  }
+
+  // Reusable map/transform like meta-function
+  template<std::size_t Size, typename Builder, typename Func>
+  EVE_FORCEINLINE constexpr auto map_(Builder && b, Func f)
+  {
+    return map_impl_(EVE_FWD(b), f, std::make_index_sequence<Size>{});
+  }
+
+  // Find the index of the first Ps equals to p
+  template<typename P, typename... Ps>
+  consteval std::ptrdiff_t find_index(P p, kumi::tuple<Ps...> )
+  {
+    bool checks[] = { (Ps{} == p)...};
+    for(std::size_t i=0;i<sizeof...(Ps);++i) if(checks[i]) return i;
+    return -1;
   }
 
   // instance concept

@@ -9,6 +9,7 @@
 
 #include <eve/arch/cardinals.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
 

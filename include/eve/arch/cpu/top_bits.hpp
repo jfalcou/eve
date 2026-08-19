@@ -428,8 +428,8 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     using bits_et   = element_type_t<bits_wide>;
 
     //  Use the most full type to be sure to fill outside values of small wide with false
-    using abi_t     = typename bits_wide::abi_type;
-    using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
+    using abi_type  = typename bits_wide::abi_type;
+    using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_type>>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
     static constexpr auto element_mask = _::set_lower_n_bits<bits_et>(bits_per_element);
@@ -468,6 +468,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     // For arm and power we can likely do better, but we didn't care thus far.
     //  Use the most full type to be sure to fill outside values of small wide with false
     using bits_wide = typename Logical::bits_type;
+    using abi_type  = typename bits_wide::abi_type;
 
     if constexpr ( !native_abi<bits_wide> )
     {
@@ -477,7 +478,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     else
     {
       using bits_et   = element_type_t<bits_wide>;
-      using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
+      using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_type>>>;
       fit_wide mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
       return call_simd_cast( mask, as<Logical>{} );
     }

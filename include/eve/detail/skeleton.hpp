@@ -21,39 +21,28 @@
 namespace eve::_
 {
   // Extract ith element of a wide or propagate the value if non SIMD
-  template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) get_at(T &&t, std::size_t i) noexcept
+  template<std::size_t I, typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) get_at(T &&t) noexcept
   {
-    if constexpr(simd_value<std::decay_t<T>>) return EVE_FWD(t).get(i);
+    if constexpr(simd_value<std::decay_t<T>>) return EVE_FWD(t).get(I);
     else                                      return EVE_FWD(t);
   }
 
-  // Checks that a map is valid so that callable that discard this and try another route
-  template<typename F, typename... Ts>
-  concept supports_mapping =  requires(F func, Ts... ts)
-  {
-    { func(eve::_::get_at(ts, 0)...) };
-  };
-
   // Compute a transformed wide type
   template<typename F, typename... Ts>
-  struct wide_result;
-
-  template<typename F, typename... Ts>
-  requires supports_mapping<F,Ts...>
-  struct wide_result<F,Ts...>
+  struct wide_result
   {
     template<typename T>
-    static constexpr std::ptrdiff_t card() noexcept
+    static consteval std::ptrdiff_t card() noexcept
     {
       if constexpr(simd_value<T>) return T::size(); else return 1;
     }
 
     static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
-    using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
+    using value_t                       = std::invoke_result_t<F&, decltype(eve::_::get_at<0>(std::declval<Ts>()))...>;
     using fixed_t                       = fixed<card_v>;
 
-    template<typename S> struct widen : as_wide<S, fixed_t> {};
+    template<typename S> using widen = as_wide<S, fixed_t>;
 
     using base  = _::conditional_t< eve::product_type<value_t>
                                     , kumi::as_tuple<value_t,widen>
@@ -62,52 +51,32 @@ namespace eve::_
     using type = typename base::type;
   };
 
-  template<typename Out, typename... Bs>
-  EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
+  template<typename T, std::size_t...I, typename... Args>
+  EVE_FORCEINLINE auto rebuild_(std::index_sequence<I...>, Args&&... args) noexcept
   {
-    auto const inside = [&]<typename I>(I)
-    {
-      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
-    };
-
-    return _::apply<kumi::size<Out>::value>( [&]( auto const&... I)
-    {
-      Out that;
-      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
-      return that;
-    }
-    );
+    return T{std::tuple_element_t<I,T>(get<I>(EVE_FWD(args))...)... };
+  }
+  
+  template<typename T, typename... Args>
+  EVE_FORCEINLINE auto rebuild(Args &&... args) noexcept
+  {
+    if constexpr ( eve::product_type<T> )
+      return rebuild_<T>(std::make_index_sequence<kumi::size_v<T>>{}, EVE_FWD(args)...);
+    else 
+      return T{EVE_FWD(args)...};
   }
 
   // MAP skeleton used to emulate SIMD operations
-  struct map_
-  {
-    // Not a lambda as we need force-inlining
-    template<typename Func, typename Idx, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
-    {
-      return EVE_FWD(fn)(eve::_::get_at(EVE_FWD(vs), i)...);
-    }
-  };
-
+  // Checks that a map is valid so that callable that discard this can try another route
   template<typename Fn, typename... Ts>
+  requires std::invocable<Fn&, decltype(eve::_::get_at<0>(std::declval<Ts>()))...>
   EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
-
-    if constexpr( eve::product_type<element_type_t<w_t>> )
-    {
-      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
-              ( [&](auto... I)
-                {
-                  return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
-                }
-              );
-    }
-    else
-    {
-      return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
-    }
+    constexpr auto sz = eve::product_type<eve::element_type_t<w_t>>   ?
+                        eve::cardinal_v<std::tuple_element_t<0,w_t>>  :
+                        eve::cardinal_v<w_t>;
+    return eve::_::map_<sz>(rebuild<w_t>, [&](auto I){ return f(eve::_::get_at<I>(EVE_FWD(ts))...); });
   }
 
   // Apply the function `f` to every `ts` once sliced.
@@ -134,7 +103,7 @@ namespace eve::_
 
   // Aggregate replication count for a given type
   template<typename T>
-  constexpr std::ptrdiff_t replication()
+  consteval std::ptrdiff_t replication()
   {
     if constexpr (requires { T::storage_type::replication; }) return T::storage_type::replication;
     else if constexpr (scalar_value<T>)                       return 0;

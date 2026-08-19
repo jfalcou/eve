@@ -24,11 +24,11 @@ namespace eve
   };
   
   template<typename T>
-  struct has_bundle_abi<T> : std::bool_constant<bundle_abi<T>> 
+  struct has_bundle_abi : std::bool_constant<bundle_abi<T>> 
   {};
 
   template<typename T>
-  inline constexpr bool bundle_abi = bundle_abi<T>;
+  inline constexpr bool has_bundle_abi_v = bundle_abi<T>;
 
   template<typename T>
   using has_bundle_abi_t = typename has_bundle_abi<T>::type;
@@ -44,11 +44,11 @@ namespace eve
   };
   
   template<typename T>
-  struct has_emulated_abi<T> : std::bool_constant<emulated_abi<T>> 
+  struct has_emulated_abi : std::bool_constant<emulated_abi<T>> 
   {};
 
   template<typename T>
-  inline constexpr bool emulated_abi = emulated_abi<T>;
+  inline constexpr bool has_emulated_abi_v = emulated_abi<T>;
 
   template<typename T>
   using has_emulated_abi_t = typename has_emulated_abi<T>::type;
@@ -64,11 +64,11 @@ namespace eve
   };
   
   template<typename T>
-  struct has_aggregated_abi<T> : std::bool_constant<aggregated_abi<T>> 
+  struct has_aggregated_abi : std::bool_constant<aggregated_abi<T>> 
   {};
 
   template<typename T>
-  inline constexpr bool aggregated_abi = aggregated_abi<T>;
+  inline constexpr bool has_aggregated_abi_v = aggregated_abi<T>;
 
   template<typename T>
   using has_aggregated_abi_t = typename has_aggregated_abi<T>::type;
@@ -84,7 +84,7 @@ namespace eve
   {};
 
   template<typename T>
-  inline constexpr bool native_abi = native_abi<T>;
+  inline constexpr bool has_native_abi_v = native_abi<T>;
 
   template<typename T>
   using has_native_abi_t = typename has_native_abi<T>::type;
@@ -100,7 +100,7 @@ namespace eve
   {};
 
   template<typename T>
-  inline constexpr bool non_native_abi = non_native_abi<T>;
+  inline constexpr bool has_non_native_abi_v = non_native_abi<T>;
 
   template<typename T>
   using has_non_native_abi_t = typename has_non_native_abi<T>::type;
