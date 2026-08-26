@@ -38,39 +38,12 @@ namespace eve::algo::views
   //!    Has a shorthand `eve::views::zip_iterator` in `<eve/views/zip.hpp>`.
   //! @}
   //================================================================================================
-
   template <typename ...Is> struct zip_iterator;
 
   namespace _
   {
     template<typename... Is> struct zip_iterator_common;
   }
-}
-
-// tuple opt in
-namespace std
-{
-  template<std::size_t idx, typename ...Is>
-  struct  tuple_element<idx, eve::algo::views::zip_iterator<Is...>> : tuple_element<idx, kumi::tuple<Is...>>
-  {
-  };
-
-  template<typename ...Is>
-  struct tuple_size<eve::algo::views::zip_iterator<Is...>> : std::tuple_size<kumi::tuple<Is...>>
-  {
-  };
-
-  template<std::size_t idx, typename ...Is>
-  struct tuple_element<idx, eve::algo::views::_::zip_iterator_common<Is...>>
-    : tuple_element<idx, kumi::tuple<Is...>>
-  {
-  };
-
-  template<typename ...Is>
-  struct tuple_size<eve::algo::views::_::zip_iterator_common<Is...>>
-    : std::tuple_size<kumi::tuple<Is...>>
-  {
-  };
 }
 
 namespace eve::algo::views
@@ -407,6 +380,28 @@ namespace std
   struct basic_common_reference<eve::algo::views::zip_iterator<Is...>, ZipI2, TQual, UQual>
   {
     using type = eve::unaligned_t<ZipI2>;
+  };
+  
+  template<std::size_t idx, typename ...Is>
+  struct  tuple_element<idx, eve::algo::views::zip_iterator<Is...>> : tuple_element<idx, kumi::tuple<Is...>>
+  {
+  };
+
+  template<typename ...Is>
+  struct tuple_size<eve::algo::views::zip_iterator<Is...>> : std::tuple_size<kumi::tuple<Is...>>
+  {
+  };
+
+  template<std::size_t idx, typename ...Is>
+  struct tuple_element<idx, eve::algo::views::_::zip_iterator_common<Is...>>
+    : tuple_element<idx, kumi::tuple<Is...>>
+  {
+  };
+
+  template<typename ...Is>
+  struct tuple_size<eve::algo::views::_::zip_iterator_common<Is...>>
+    : std::tuple_size<kumi::tuple<Is...>>
+  {
   };
 }
 // ~tuple opt in

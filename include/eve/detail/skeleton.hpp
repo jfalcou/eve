@@ -57,14 +57,21 @@ namespace eve::_
     return T{std::tuple_element_t<I,T>(get<I>(EVE_FWD(args))...)... };
   }
   
-  template<typename T, typename... Args>
-  EVE_FORCEINLINE auto rebuild(Args &&... args) noexcept
+  template<typename T>
+  struct rebuild_t
   {
-    if constexpr ( eve::product_type<T> )
-      return rebuild_<T>(std::make_index_sequence<kumi::size_v<T>>{}, EVE_FWD(args)...);
-    else 
-      return T{EVE_FWD(args)...};
-  }
+    template<typename... Args>
+    EVE_FORCEINLINE auto operator()(Args &&... args) const noexcept
+    {
+      if constexpr ( eve::product_type<T> )
+        return rebuild_<T>(std::make_index_sequence<kumi::size_v<T>>{}, EVE_FWD(args)...);
+      else 
+        return T{EVE_FWD(args)...};
+    }
+  };
+
+  template<typename T>
+  inline constexpr rebuild_t<T> rebuild{};
 
   // MAP skeleton used to emulate SIMD operations
   // Checks that a map is valid so that callable that discard this can try another route
@@ -73,10 +80,10 @@ namespace eve::_
   EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
-    constexpr auto sz = eve::product_type<eve::element_type_t<w_t>>   ?
-                        eve::cardinal_v<std::tuple_element_t<0,w_t>>  :
-                        eve::cardinal_v<w_t>;
-    return eve::_::map_<sz>(rebuild<w_t>, [&](auto I){ return f(eve::_::get_at<I>(EVE_FWD(ts))...); });
+    if constexpr ( eve::product_type<eve::element_type_t<w_t>> )
+      return eve::_::map_<eve::cardinal_v<std::tuple_element_t<0,w_t>>>(rebuild<w_t>, [&](auto I){ return f(eve::_::get_at<I>(EVE_FWD(ts))...); });
+    else 
+      return eve::_::map_<eve::cardinal_v<w_t>>(rebuild<w_t>, [&](auto I){ return f(eve::_::get_at<I>(EVE_FWD(ts))...); });
   }
 
   // Apply the function `f` to every `ts` once sliced.

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>

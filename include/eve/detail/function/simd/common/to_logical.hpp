@@ -12,7 +12,7 @@
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 
 #include <bitset>
 

@@ -52,7 +52,7 @@ namespace eve::_
         else if constexpr( N::value == 2 ) return type(eve::min(v.get(0), v.get(1)));
         else if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
         {
-          if( N::value == expected_cardinal_v<T, abi_t<T, N>> )
+          if constexpr( N::value == expected_cardinal_v<T, abi_t<T, N>> )
           {
             wide<T, N> s = pairwise_min(v, v);
             if constexpr( N::value >= 2 ) s = pairwise_min(s, s);

@@ -26,9 +26,9 @@ namespace eve::_
 
     if constexpr (std::same_as<C, ignore_none_>)
     {
-            if constexpr( N::value == 1 )                   return v;
-      else  if constexpr( emulated_abi<abi<T, N>>  )  return wide<T,N>( eve::_::sum(v) );
-      else  if constexpr( aggregated_abi<abi<T, N>>)
+            if constexpr( N::value == 1 )               return v;
+      else  if constexpr( emulated_abi<abi_t<T, N>>  )  return wide<T,N>( eve::_::sum(v) );
+      else  if constexpr( aggregated_abi<abi_t<T, N>>)
       {
         auto[l,h] = v.slice();
         const auto r = sum[splat](l + h);
@@ -57,7 +57,7 @@ namespace eve::_
         using r_t = element_type_t<T>;
 
           if constexpr( N::value == 1 )         return v.get(0);
-        else  if constexpr( emulated_abi<abi<r_t, N>> )
+        else  if constexpr( emulated_abi<abi_t<r_t, N>> )
         {
           r_t r = v.get(0);
 
@@ -67,7 +67,7 @@ namespace eve::_
 
           return r;
         }
-        else  if constexpr( aggregated_abi<abi<r_t, N>> )
+        else  if constexpr( aggregated_abi<abi_t<r_t, N>> )
         {
           auto[l,h] = v.slice();
           return  sum( l+h );

@@ -20,7 +20,7 @@ namespace eve::_
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if (!match_option<condition_key, O, ignore_none_>)
+    if constexpr(!match_option<condition_key, O, ignore_none_>)
     {
       return maximum.behavior(cpu_{}, opts, v);
     }
@@ -51,7 +51,7 @@ namespace eve::_
         else if constexpr( N::value == 2 ) return type(eve::max(v.get(0), v.get(1)));
         else if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
         {
-          if( N::value == expected_cardinal_v<T, abi_t<T, N>> )
+          if constexpr( N::value == expected_cardinal_v<T, abi_t<T, N>> )
           {
             wide<T, N> s = pairwise_max(v, v);
             if constexpr( N::value >= 2 ) s = pairwise_max(s, s);

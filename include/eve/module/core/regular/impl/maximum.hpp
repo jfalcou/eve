@@ -22,7 +22,7 @@ namespace eve::_
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {
       if constexpr( N::value == 1 ) return v;
-      else if constexpr( !aggregated_abi<abi<T, N>> ) return butterfly_reduction(v, eve::max);
+      else if constexpr( !aggregated_abi<abi_t<T, N>> ) return butterfly_reduction(v, eve::max);
       else
       {
         auto [l, h] = v.slice();
@@ -49,7 +49,7 @@ namespace eve::_
         using r_t = element_type_t<T>;
 
         if constexpr( N::value == 1 ) return v.get(0);
-        else if constexpr( !aggregated_abi<abi<r_t, N>> ) return butterfly_reduction(v, eve::max).get(0);
+        else if constexpr( !aggregated_abi<abi_t<r_t, N>> ) return butterfly_reduction(v, eve::max).get(0);
         else
         {
           auto [l, h] = v.slice();

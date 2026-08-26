@@ -30,7 +30,7 @@ template<typename T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N>
 slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
-  if constexpr( bundle_abi<abi<T, N>> )
+  if constexpr( bundle_abi<abi_t<T, N>> )
     return wide<T, N> {kumi::map(slide_right_in_lanes_lambda<Shift> {}, x, y)};
   else
   {

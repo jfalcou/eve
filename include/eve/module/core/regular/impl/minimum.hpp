@@ -26,7 +26,7 @@ namespace eve::_
     if constexpr (std::same_as<C, ignore_none_>)
     {
       if constexpr( N::value == 1 ) return v;
-      else if constexpr( !aggregated_abi<abi<T, N>> ) return butterfly_reduction(v, eve::min);
+      else if constexpr( !aggregated_abi<abi_t<T, N>> ) return butterfly_reduction(v, eve::min);
       else
       {
         auto [l, h] = v.slice();
@@ -57,7 +57,7 @@ namespace eve::_
         using N = typename T::cardinal_type;
 
         if      constexpr (N::value == 1) return v.get(0);
-        else if constexpr (!aggregated_abi<abi<element_type_t<T>, N>>)
+        else if constexpr (!aggregated_abi<abi_t<element_type_t<T>, N>>)
         {
           return butterfly_reduction(v, eve::min).get(0);
         }

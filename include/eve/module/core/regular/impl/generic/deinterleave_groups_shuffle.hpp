@@ -70,7 +70,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) require
     auto [v0, v1] = v.slice();
     return deinterleave_groups_shuffle(v0, v1, lane<G>);
   }
-  else if constexpr( bundle_abi<abi<T, N>> )
+  else if constexpr( bundle_abi<abi_t<T, N>> )
   {
     return wide<T, N>(
         kumi::map([](auto _v) { return deinterleave_groups_shuffle(_v, lane<G>); }, v));
@@ -88,7 +88,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
   using res_t = wide<T, typename N::combined_type>;
 
   if constexpr( G >= N() ) return eve::combine(v0, v1);
-  else if constexpr( bundle_abi<abi<T, N>> )
+  else if constexpr( bundle_abi<abi_t<T, N>> )
   {
     return res_t(kumi::map(
         [](auto _v0, auto _v1) { return deinterleave_groups_shuffle(_v0, _v1, lane<G>); }, v0, v1));

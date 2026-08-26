@@ -61,7 +61,7 @@ namespace eve::_
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
-    if constexpr (native_abi<abi<T, N>> && abi_t<T, N>::is_wide_logical)
+    if constexpr (native_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
       using l_t   = logical<wide<T, typename N::split_type>>;
       using s_t   = typename l_t::storage_type;
@@ -78,7 +78,7 @@ namespace eve::_
   template<callable_options O, typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
-    if constexpr (native_abi<abi<T, N>> && abi_t<T, N>::is_wide_logical)
+    if constexpr (native_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
       using l_t = logical<wide<T, typename N::split_type>>;
       using s_t = typename l_t::storage_type;
