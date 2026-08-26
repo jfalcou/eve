@@ -24,15 +24,11 @@ namespace eve
   };
   
   template<typename T>
-  struct has_bundle_abi : std::bool_constant<bundle_abi<T>> 
-  {};
-
-  template<typename T>
   inline constexpr bool has_bundle_abi_v = bundle_abi<T>;
 
   template<typename T>
-  using has_bundle_abi_t = typename has_bundle_abi<T>::type;
-
+  using has_bundle_abi_t = std::bool_constant<bundle_abi<T>>; 
+  
   //================================================================================================
   // Check for emulated_ ABI
   //================================================================================================
@@ -44,14 +40,10 @@ namespace eve
   };
   
   template<typename T>
-  struct has_emulated_abi : std::bool_constant<emulated_abi<T>> 
-  {};
-
-  template<typename T>
   inline constexpr bool has_emulated_abi_v = emulated_abi<T>;
 
   template<typename T>
-  using has_emulated_abi_t = typename has_emulated_abi<T>::type;
+  using has_emulated_abi_t = std::bool_constant<emulated_abi<T>>; 
 
   //================================================================================================
   // Check for aggregated_ ABI
@@ -62,17 +54,13 @@ namespace eve
     typename T::abi_type;
     requires std::same_as<typename T::abi_type, aggregated_>;
   };
-  
-  template<typename T>
-  struct has_aggregated_abi : std::bool_constant<aggregated_abi<T>> 
-  {};
-
+ 
   template<typename T>
   inline constexpr bool has_aggregated_abi_v = aggregated_abi<T>;
 
   template<typename T>
-  using has_aggregated_abi_t = typename has_aggregated_abi<T>::type;
-
+  using has_aggregated_abi_t = std::bool_constant<aggregated_abi<T>>;
+ 
   //================================================================================================
   // Check for native ABI
   //================================================================================================
@@ -80,14 +68,10 @@ namespace eve
   concept native_abi = (!emulated_abi<T> && !aggregated_abi<T> && !std::is_void_v<T>) || std::is_arithmetic_v<T>;
 
   template<typename T>
-  struct has_native_abi : std::bool_constant<native_abi<T>>
-  {};
-
-  template<typename T>
   inline constexpr bool has_native_abi_v = native_abi<T>;
 
   template<typename T>
-  using has_native_abi_t = typename has_native_abi<T>::type;
+  using has_native_abi_t = std::bool_constant<native_abi<T>>;
 
   //================================================================================================
   // Check for non-native ABI 
@@ -96,14 +80,10 @@ namespace eve
   concept non_native_abi = _::one_of<T, aggregated_, emulated_, bundle_>; 
   
   template<typename T>
-  struct has_non_native_abi : std::bool_constant<non_native_abi<T>>
-  {};
-
-  template<typename T>
   inline constexpr bool has_non_native_abi_v = non_native_abi<T>;
 
   template<typename T>
-  using has_non_native_abi_t = typename has_non_native_abi<T>::type;
+  using has_non_native_abi_t = std::bool_constant<non_native_abi<T>>;
 
   //================================================================================================
   // Concept for discriminating aggregated from non-agregated ABI
@@ -112,14 +92,10 @@ namespace eve
   concept regular_abi = !std::same_as<T, aggregated_>;
 
   template<typename T>
-  struct has_regular_abi : std::bool_constant<regular_abi<T>>
-  {};
-
-  template<typename T>
   inline constexpr bool has_regular_abi_v = regular_abi<T>;
 
   template<typename T>
-  using has_regular_abi_t = typename has_regular_abi<T>::type;
+  using has_regular_abi_t = std::bool_constant<regular_abi<T>>; 
 
   //================================================================================================
   // Check if at least one type inside a wide has an aggregated ABI

@@ -51,18 +51,6 @@ namespace eve
     using combined_type = fixed<2>;
   };
 
-  namespace _ 
-  {
-    template<std::ptrdiff_t N>
-    void wide_cardinal(fixed<N> const&);
-
-    template<typename T>
-    concept is_wide_cardinal = requires(T && t) 
-    { 
-      wide_cardinal(t);
-    };
-  }  // namespace _
-
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
 
@@ -90,6 +78,14 @@ namespace eve
     template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
   }
 
+  namespace _ 
+  {
+    template<typename T>
+    inline constexpr bool is_wide_cardinal = false;
+
+    template<std::ptrdiff_t C>
+    inline constexpr bool is_wide_cardinal<fixed<C>> = true;
+  } 
   //================================================================================================
   //! @ingroup simd_concepts
   //! @brief concept to determine if this is cardinal type of a wide

@@ -15,21 +15,21 @@
 #include <concepts>
 #include <type_traits>
 
+namespace eve
+{
+    template<typename T> struct logical;
+}
+
 namespace eve::_
 {
   namespace
   {
-    template<typename T> struct logical;
-
-    template<typename U>
-    void logical_type(logical<U> const&);
+    template<typename T>
+    inline constexpr bool is_logical = false;
 
     template<typename T>
-    concept is_logical = requires(T && t)
-    { 
-      logical_type(t);
-    };
-
+    inline constexpr bool is_logical<eve::logical<T>> = true;
+    
     template<typename T> concept arithmetic = std::is_arithmetic_v<T> || std::same_as<T, eve::float16_t>;
   }
   
@@ -96,14 +96,14 @@ namespace eve::_
 
   // Types that are too big and are not emulated require aggregation 
   template<typename ABI, typename T, std::ptrdiff_t Size>
-  concept require_aggregation = (Size > ABI::template expected_cardinal<T>) && !std::same_as<ABI, eve::emulated_>;
+  inline constexpr bool require_aggregation = (Size > eve::current_abi_type::template expected_cardinal<T>) && !std::same_as<ABI, eve::emulated_>;
 
   //================================================================================================
   // Select Software ABI from Type x Cardinal combo depending on type properties
   template<typename T, std::ptrdiff_t Cardinal> consteval auto software_abi_of()
   {
-         if constexpr ( _::is_logical<T>                 ) return software_abi_of<typename T::value_type, Cardinal>();
-    else if constexpr ( eve::product_type<T>             ) return bundle_{};
+         if constexpr ( eve::_::is_logical<T> ) return software_abi_of<typename T::value_type, Cardinal>();
+    else if constexpr ( eve::product_type<T>  ) return bundle_{};
     else
     {
       constexpr auto abi = hardware_abi_of<T,Cardinal>();
@@ -148,7 +148,7 @@ namespace eve
   template<typename Type, typename Lanes> struct abi{};
 
   template<typename Type, typename Lanes> 
-  requires( eve::product_type<Type> || _::arithmetic<Type> )
+  requires( eve::product_type<Type> || _::arithmetic<Type> || _::is_logical<Type> )
   struct abi<Type, Lanes>
   {
     using type = decltype(_::software_abi_of<Type, Lanes::value>());
