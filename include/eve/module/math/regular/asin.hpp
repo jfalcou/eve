@@ -104,7 +104,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_NOINLINE T
+    EVE_NOINLINE constexpr T
     asin_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
     {
        if constexpr(O::contains(rad))

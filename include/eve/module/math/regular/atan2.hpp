@@ -119,7 +119,7 @@ namespace eve
   namespace _
   {
     template<typename T, typename U, callable_options O>
-    constexpr EVE_NOINLINE common_value_t<T, U>
+    EVE_NOINLINE constexpr common_value_t<T, U>
     atan2_(EVE_REQUIRES(cpu_), O const& o, T const& a0, const U a1) noexcept
     {
       if constexpr(O::contains(rad))

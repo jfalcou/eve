@@ -103,7 +103,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_NOINLINE T sec_(EVE_REQUIRES(cpu_), O const& o, T a0)
+    EVE_NOINLINE constexpr T sec_(EVE_REQUIRES(cpu_), O const& o, T a0)
     {
       using elt_t = element_type_t<T>;
       if constexpr(std::same_as<elt_t, eve::float16_t>)
