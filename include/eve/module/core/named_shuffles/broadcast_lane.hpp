@@ -71,7 +71,7 @@ struct broadcast_lane_t
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
 
-    if constexpr( eve::has_aggregated_abi_v<T> )
+    if constexpr( eve::aggregated_abi<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
       using half_t = decltype(T {}.slice(lower_));

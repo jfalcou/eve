@@ -22,7 +22,7 @@ slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift 
   using type = typename Wide::value_type;
   if constexpr( Shift == 0 ) return v;
   else if constexpr( Shift == Wide::size() ) return Wide{type{0}};
-  else if constexpr( has_aggregated_abi_v<Wide> )
+  else if constexpr( aggregated_abi<Wide> )
   {
     if constexpr( Shift >= Wide::size() / 2 )
     {

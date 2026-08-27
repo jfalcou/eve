@@ -68,7 +68,7 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }
-    if( eve::has_emulated_abi_v<T> ) expected_level = 0;
+    if( eve::emulated_abi<T> ) expected_level = 0;
     TTS_EQUAL(expected_level, l())
         << "G: " << g() << "\npattern: " << p << "\nT type: " << tts::typename_<T>;
   }
@@ -91,7 +91,7 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }
-    if( eve::has_emulated_abi_v<T> ) expected_level = 0;
+    if( eve::emulated_abi<T> ) expected_level = 0;
     TTS_EQUAL(expected_level, l()) << "G: " << g() << "\npattern: " << p;
   }
   else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }

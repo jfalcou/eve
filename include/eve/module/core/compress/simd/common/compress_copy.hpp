@@ -19,7 +19,7 @@ struct compress_copy_core
   template<typename Settings, typename L> static constexpr auto select_strategy(as<Settings>, as<L>)
   {
     using COut = typename Settings::cond_out_t;
-    if constexpr( eve::has_emulated_abi_v<L> ) return compress_copy_scalar;
+    if constexpr( eve::emulated_abi<L> ) return compress_copy_scalar;
     else if constexpr( eve::current_api >= sve || eve::current_api >= avx512
                        || eve::current_api >= rvv )
       return compress_copy_simd;

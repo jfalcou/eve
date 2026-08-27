@@ -231,7 +231,7 @@ shuffle_v2_driver_another_emulation_check(NativeSelector        selector,
                                           fixed<G>              g,
                                           kumi::tuple<T, Ts...> xs)
 {
-  if constexpr( eve::has_emulated_abi_v<T> )
+  if constexpr( eve::emulated_abi<T> )
   {
     auto [shuffled_tuple, l] = shuffle_emulated(p, g, xs);
     return kumi::tuple {get<0>(shuffled_tuple), l};
@@ -345,7 +345,7 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
     // Level: if we just shuffle, then it's 0. If we need a 0 constant - that's 1 but
     //        not on emulated, on emulated we don't count anything.
     constexpr bool has_zeroes = ((I == na_) || ...);
-    auto           l          = eve::index < (has_zeroes && !has_emulated_abi_v<T>) ? 1 : 0 > ;
+    auto           l          = eve::index < (has_zeroes && !emulated_abi<T>) ? 1 : 0 > ;
     auto           get_i      = [&]<std::ptrdiff_t i>(eve::index_t<i>)
     {
       if constexpr( i == na_ ) return eve::zero(eve::as<T> {});
@@ -379,7 +379,7 @@ struct shuffle_v2_driver_aggregation
   EVE_FORCEINLINE auto
   operator()(NativeSelector selector, pattern_t<I...> p, fixed<G> g, kumi::tuple<T, Ts...> xs) const
   {
-    if constexpr( !has_aggregated_abi_v<T> )
+    if constexpr( !aggregated_abi<T> )
     {
       return shuffle_v2_overly_large_groups(selector, p, g, xs);
     }

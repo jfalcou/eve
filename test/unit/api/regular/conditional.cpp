@@ -14,7 +14,7 @@
 #if defined(SPY_SIMD_IS_X86_AVX512)
 template<typename Type, typename Cond> void check_conditional_bits()
 {
-  if constexpr( !eve::has_aggregated_abi_v<Type> )
+  if constexpr( !eve::aggregated_abi<Type> )
   {
     using m_t = typename eve::logical<Type>::storage_type::type;
     m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(Type::size()));
@@ -45,7 +45,7 @@ TTS_CASE_TPL( "ignore_all behavior", eve::test::simd::all_types)
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  if constexpr( !eve::has_aggregated_abi_v<type> )
+  if constexpr( !eve::aggregated_abi<type> )
     TTS_EQUAL( ignore_all.mask(as<type>()).storage().value, 0U );
 #endif
 
@@ -82,7 +82,7 @@ TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  if constexpr( !eve::has_aggregated_abi_v<type> )
+  if constexpr( !eve::aggregated_abi<type> )
   {
     using m_t = typename eve::logical<type>::storage_type::type;
     TTS_EQUAL ( ignore_none.mask(as<type>()).storage().value
@@ -350,7 +350,7 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
         TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref) << keep_between(fi,li);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  if constexpr( !eve::has_aggregated_abi_v<type> )
+  if constexpr( !eve::aggregated_abi<type> )
   {
     using m_t = typename eve::logical<type>::storage_type::type;
     m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(type::size()));
@@ -420,7 +420,7 @@ TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_
         TTS_EQUAL( (if_else(ignore_extrema(fi, li), value, type(69))), ref);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
-  if constexpr( !eve::has_aggregated_abi_v<type> )
+  if constexpr( !eve::aggregated_abi<type> )
   {
     using m_t = typename eve::logical<type>::storage_type::type;
     m_t bits_mask = m_t(~eve::_::set_lower_n_bits<m_t>(type::size()));

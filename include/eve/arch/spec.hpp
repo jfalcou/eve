@@ -44,7 +44,7 @@ namespace eve
 # endif
 
   //================================================================================================
-  // Types & object s for ABI/API detection
+  // Types & objects for ABI/API detection
   using current_abi_type = EVE_CURRENT_ABI;
   using current_api_type = std::decay_t<decltype(current_api)>;
 }

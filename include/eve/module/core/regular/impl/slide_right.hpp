@@ -26,7 +26,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift
   using type = typename Wide::value_type;
   if constexpr( Shift == 0 ) return v;
   else if constexpr( Shift == Wide::size() ) return Wide {type{0}};
-  else if constexpr( has_aggregated_abi_v<Wide> )
+  else if constexpr( aggregated_abi<Wide> )
   {
     if constexpr( Shift >= Wide::size() / 2 )
     {
@@ -70,7 +70,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
   {
     return Wide(kumi::map(slide_right_lambda<Shift> {}, x, y));
   }
-  else if constexpr( has_aggregated_abi_v<Wide> )
+  else if constexpr( aggregated_abi<Wide> )
   {
     // [aa bb] [cc dd] => [bccd], [abbc]
     auto [aa, bb] = x.slice();

@@ -42,7 +42,7 @@ namespace eve::_
       // Rebuild as scalar
       wide<T, N> data{};
 
-      if constexpr(has_aggregated_abi_v<wide<T,N>>)
+      if constexpr(aggregated_abi<wide<T,N>>)
       {
         constexpr auto const half = N::value / 2;
         apply<half>([&, lx = idx.slice(lower_)](auto... v)
