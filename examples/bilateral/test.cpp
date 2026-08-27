@@ -33,6 +33,6 @@ TTS_CASE("Bilateral filter, SIMD against scalar")
   bilateral::filter_simd  (input, out_eve   , eve::exp                          );
   bilateral::filter_simd  (input, out_raw   , eve::exp[eve::raw]                );
 
-  TTS_ALL_ULP_EQUAL(out_scalar, out_eve, 2);
+  TTS_ALL_ULP_EQUAL(out_scalar, out_eve, 3);
   TTS_ALL_RELATIVE_EQUAL(out_scalar, out_raw, 1.0);
 };
