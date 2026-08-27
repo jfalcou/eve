@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/arch/float16.hpp>
-#include <eve/deps/kumi.hpp>
+#include <eve/detail/kumi.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -95,21 +95,24 @@ namespace eve::_
   }
 
   // Types that are too big and are not emulated require aggregation 
-  template<typename ABI, typename T, std::ptrdiff_t Size>
-  inline constexpr bool require_aggregation = (Size > eve::current_abi_type::template expected_cardinal<T>) && !std::same_as<ABI, eve::emulated_>;
+  template<typename T, std::ptrdiff_t Size>
+  inline constexpr bool require_aggregation = (Size > eve::current_abi_type::template expected_cardinal<T>); 
 
   //================================================================================================
   // Select Software ABI from Type x Cardinal combo depending on type properties
-  template<typename T, std::ptrdiff_t Cardinal> consteval auto software_abi_of()
+  template<typename T, std::ptrdiff_t Cardinal> 
+  requires( _::arithmetic<T> || eve::product_type<T> || _::is_logical<T> )
+  consteval auto software_abi_of()
   {
          if constexpr ( eve::_::is_logical<T> ) return software_abi_of<typename T::value_type, Cardinal>();
     else if constexpr ( eve::product_type<T>  ) return bundle_{};
     else
     {
       constexpr auto abi = hardware_abi_of<T,Cardinal>();
-      using abi_type = std::remove_cvref_t<decltype(abi)>;
-      if constexpr ( require_aggregation<abi_type, T, Cardinal> ) return aggregated_{};
-      else                                                        return abi;
+      constexpr bool aggregate =  require_aggregation<T,Cardinal> 
+                                  && !std::is_same_v<emulated_,std::remove_cvref_t<decltype(abi)>>;
+      if constexpr ( aggregate )  return aggregated_{};
+      else                        return abi;
     }
   }
 }
@@ -147,15 +150,16 @@ namespace eve
   //================================================================================================
   template<typename Type, typename Lanes> struct abi{};
 
-  template<typename Type, typename Lanes> 
-  requires( eve::product_type<Type> || _::arithmetic<Type> || _::is_logical<Type> )
+  template<typename Type, typename Lanes>
+  requires( _::arithmetic<Type> || eve::product_type<Type> || _::is_logical<Type> )
   struct abi<Type, Lanes>
   {
-    using type = decltype(_::software_abi_of<Type, Lanes::value>());
+    using type = decltype(_::software_abi_of<Type, Lanes::value>()); 
   };
 
   // Type short-cut
   template<typename Type, typename Lanes>
-  using abi_t = typename abi<Type,Lanes>::type;
+  using abi_t = typename abi<translate_t<Type>, Lanes>::type;
+
 
 }

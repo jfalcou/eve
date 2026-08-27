@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/abi.hpp>
-#include <eve/deps/kumi.hpp>
+#include <eve/detail/kumi.hpp>
 #include <type_traits>
 
 namespace eve
@@ -65,7 +65,8 @@ namespace eve
   // Check for native ABI
   //================================================================================================
   template<typename T>
-  concept native_abi = std::is_arithmetic_v<T> || (!emulated_abi<T> && !aggregated_abi<T> && !std::is_void_v<T>);
+  concept native_abi = std::is_arithmetic_v<T> || 
+                       !(emulated_abi<T> || aggregated_abi<T> || bundle_abi<T> || std::is_void_v<T>);
 
   template<typename T>
   inline constexpr bool has_native_abi_v = native_abi<T>;
@@ -77,7 +78,7 @@ namespace eve
   // Check for non-native ABI 
   //================================================================================================
   template<typename T>
-  concept non_native_abi = aggregated_abi<T> || emulated_abi<T> || bundle_abi<T>;
+  concept non_native_abi = !native_abi<T>;
   
   template<typename T>
   inline constexpr bool has_non_native_abi_v = non_native_abi<T>;

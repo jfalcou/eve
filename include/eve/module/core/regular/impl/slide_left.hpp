@@ -40,7 +40,7 @@ slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift 
       return Wide {l, h};
     }
   }
-  else if constexpr( is_bundle_v<typename Wide::abi_type> )
+  else if constexpr( bundle_abi<typename Wide::abi_type> )
   {
     return Wide(kumi::map([]<typename T>(T m) { return slide_left(m, index<Shift>); }, v));
   }

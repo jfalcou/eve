@@ -9,7 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/detail/abi_traits.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/arch/platform.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/as.hpp>
@@ -27,7 +27,7 @@ namespace eve::_
   {
     using abi_t   = typename P::abi_type;
 
-    if constexpr( is_aggregated_v<abi_t> )  return a.storage().slice();
+    if constexpr( aggregated_abi<abi_t> )  return a.storage().slice();
     else                                    return std::array{a.slice(lower_), a.slice(upper_)};
   }
 
@@ -43,17 +43,17 @@ namespace eve::_
 
     using sub_t = as_wide_t<value_t, typename card_t::split_type>;
 
-    if constexpr( is_emulated_v<abi_t> )
+    if constexpr( emulated_abi<abi_t> )
     {
       auto eval = [&](auto... I) { return sub_t {a.get(I + (Slice::value * sub_t::size()))...}; };
 
       return apply<card_t::value / 2>(eval);
     }
-    else if constexpr( is_aggregated_v<abi_t> )
+    else if constexpr( aggregated_abi<abi_t> )
     {
       return a.storage().slice()[Slice::value];
     }
-    else if constexpr( is_bundle_v<abi_t> )
+    else if constexpr( bundle_abi<abi_t> )
     {
       return sub_t(kumi::map( [&](auto m) { return m.slice(s); }, a));
     }
@@ -65,7 +65,7 @@ namespace eve::_
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
-    if constexpr (abi_traits_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
+    if constexpr (native_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
       using l_t   = logical<wide<T, typename N::split_type>>;
       using s_t   = typename l_t::storage_type;
@@ -82,7 +82,7 @@ namespace eve::_
   template<callable_options O, typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
-    if constexpr (abi_traits_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
+    if constexpr (native_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
       using l_t = logical<wide<T, typename N::split_type>>;
       using s_t = typename l_t::storage_type;

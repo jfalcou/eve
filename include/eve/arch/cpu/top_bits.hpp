@@ -470,7 +470,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     using bits_wide = typename Logical::bits_type;
     using abi_t     = typename bits_wide::abi_type;
 
-    if constexpr ( !is_native_v<abi_t> )
+    if constexpr ( !native_abi<abi_t> )
     {
       Logical mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
       return mask;

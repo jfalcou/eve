@@ -45,7 +45,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift
       return Wide {l, h};
     }
   }
-  else if constexpr( is_bundle_v<typename Wide::abi_type> )
+  else if constexpr( bundle_abi<typename Wide::abi_type> )
   {
     return Wide(kumi::map(slide_right_lambda<Shift> {}, v));
   }
@@ -66,7 +66,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
 {
   if constexpr( Shift == 0 ) return y;
   else if constexpr( Shift == Wide::size() ) return x;
-  else if constexpr( is_bundle_v<typename Wide::abi_type> )
+  else if constexpr( bundle_abi<typename Wide::abi_type> )
   {
     return Wide(kumi::map(slide_right_lambda<Shift> {}, x, y));
   }
