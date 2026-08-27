@@ -15,10 +15,12 @@ LABEL org.opencontainers.image.source="https://github.com/jfalcou/eve"
 ARG SDE_VERSION=10.8.0-2026-03-15
 ARG SDE_SHA256=50b320cd226acef7a491f5b321fc1be3c3c7984f9e27a456e64894b5b0979dd3
 
-RUN   curl -fsSL "https://downloadmirror.intel.com/915934/sde-external-${SDE_VERSION}-lin.tar.xz" -o /tmp/sde.tar.xz&&  \
+## /opt/sde is emptied first: the base image used to ship its own SDE there, and moving into an existing
+## directory would nest this one inside it and go on quietly using the other.
+RUN   curl -fsSL "https://downloadmirror.intel.com/915934/sde-external-${SDE_VERSION}-lin.tar.xz" -o /tmp/sde.tar.xz &&  \
       echo "${SDE_SHA256}  /tmp/sde.tar.xz" | sha256sum -c -                                                        &&  \
-      tar xf /tmp/sde.tar.xz -C /tmp                                                                                &&  \
-      mv "/tmp/sde-external-${SDE_VERSION}-lin" /opt/sde                                                            &&  \
+      rm -rf /opt/sde && mkdir -p /opt/sde                                                                          &&  \
+      tar xf /tmp/sde.tar.xz -C /opt/sde --strip-components=1                                                       &&  \
       rm -f /tmp/sde.tar.xz
 
 ENV PATH=/opt/sde:$PATH
