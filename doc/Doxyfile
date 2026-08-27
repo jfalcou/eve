@@ -6,7 +6,7 @@ DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = E.V.E
 PROJECT_NUMBER         =
 PROJECT_BRIEF          = v2023.02.15
-PROJECT_LOGO           = logo.png
+PROJECT_LOGO           = logo.svg
 
 OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
 CREATE_SUBDIRS         = NO

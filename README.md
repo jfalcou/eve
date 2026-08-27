@@ -1,4 +1,4 @@
-<img src="https://github.com/jfalcou/eve/raw/main/doc/logo.png" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/main/doc/logo.png" align="left"  width="15%" height="15%" />
+<img src="https://github.com/jfalcou/eve/raw/main/doc/logo.svg" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/main/doc/logo.svg" align="left"  width="15%" height="15%" />
 
 # EVE - the Expressive Vector Engine
 
