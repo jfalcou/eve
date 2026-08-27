@@ -13,7 +13,7 @@
 
 template<typename TraitsSupport> struct find_if_with_search_ : TraitsSupport
 {
-  template<typename Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+  template<typename Rng, typename P> EVE_ABI auto operator()(Rng&& rng, P p) const
   {
     std::array<std::int8_t, 1> fake;
     return eve::algo::search[TraitsSupport::get_traits()](
