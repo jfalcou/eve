@@ -26,11 +26,12 @@
 
 namespace
 {
-  // Keeps the optimiser from discarding a filter pass nobody reads back.
-  void keep(std::vector<float> const& data)
+  // Reads one sample back so the optimiser cannot discard a filter pass nobody looks at.
+  float keep(std::vector<float> const& data)
   {
     static volatile float sink;
     sink = data[data.size() / 2];
+    return sink;
   }
 
   template<typename Func>
