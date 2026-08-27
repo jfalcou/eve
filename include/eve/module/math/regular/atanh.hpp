@@ -19,7 +19,7 @@ namespace eve
   struct atanh_t : elementwise_callable<atanh_t, Options, raw_option, fast_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(atanh_t, atanh_);
   };
@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T atanh_(EVE_REQUIRES(cpu_), O const&o , T const& x)
+    constexpr T atanh_(EVE_REQUIRES(cpu_), O const&o , T const& x)
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::atanh[o], x);

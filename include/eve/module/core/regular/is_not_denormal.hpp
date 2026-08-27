@@ -23,7 +23,7 @@ namespace eve
   struct is_not_denormal_t : elementwise_callable<is_not_denormal_t, Options>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    EVE_ABI constexpr as_logical_t<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    constexpr as_logical_t<T>
     is_not_denormal_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( !floating_value<T> || !eve::platform::supports_denormals )

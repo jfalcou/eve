@@ -110,7 +110,7 @@ namespace eve
     template<typename N> using rescale = logical<wide<Type,N>>;
 
     //! Returns the alignment expected to be used to store a eve::logical
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal::value; }
+    static EVE_ABI constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal::value; }
 
     //==============================================================================================
     //! @name Constructors
@@ -118,10 +118,10 @@ namespace eve
     //==============================================================================================
 
     //! Default constructor
-    EVE_FORCEINLINE logical() = default;
+    EVE_ABI logical() = default;
 
     //! Constructs from ABI-specific storage
-    EVE_FORCEINLINE logical(storage_type const &r) noexcept
+    EVE_ABI logical(storage_type const &r) noexcept
       : storage_base( r )
     {}
 
@@ -131,35 +131,35 @@ namespace eve
     // [internal] The requires clause is needed to avoid ambiguity with the storage_type constructor
     //            in emulated mode.
     template<_::range Range>
-    EVE_FORCEINLINE explicit logical(Range &&r) noexcept
+    EVE_ABI explicit logical(Range &&r) noexcept
       requires (std::same_as<value_type_t<Range>, value_type> && !std::same_as<storage_type, Range>)
                   : logical(std::begin(EVE_FWD(r)))
     {}
 
     //! Constructs a eve::logical from a SIMD compatible pointer
     template<simd_compatible_ptr<logical> Ptr>
-    EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
+    EVE_ABI explicit logical(Ptr ptr) noexcept
                   : storage_base(load(ptr, as<logical>{}))
     { }
 
     //! Constructs a eve::logical from a non-logical SIMD compatible pointer
     template<simd_compatible_ptr<mask_type> Ptr>
-    EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept
+    EVE_ABI explicit logical(Ptr ptr) noexcept
                   : storage_base(load(ptr, as<logical>{}))
     { }
 
     //! Construct from a scalar logical
     template<scalar_value U>
-    EVE_FORCEINLINE explicit logical(logical<U> v) noexcept
+    EVE_ABI explicit logical(logical<U> v) noexcept
                   : storage_base(_::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Construct from a `bool`
-    EVE_FORCEINLINE explicit logical(std::same_as<bool> auto v) noexcept
+    EVE_ABI explicit logical(std::same_as<bool> auto v) noexcept
                   : storage_base(_::make(eve::as<translated_type>{}, translate(v))) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
-    EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
+    EVE_ABI logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
           requires(    std::convertible_to<T0, value_type>
                     && std::convertible_to<T1, value_type>
                     &&  (... && std::convertible_to<Ts, value_type>)
@@ -202,7 +202,7 @@ namespace eve
     //!
     //==============================================================================================
     template<eve::invocable<size_type,size_type> Generator>
-    EVE_FORCEINLINE logical(Generator &&g) noexcept
+    EVE_ABI logical(Generator &&g) noexcept
                   : storage_base(_::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
@@ -239,14 +239,14 @@ namespace eve
     //!
     //==============================================================================================
     template<eve::invocable<size_type> Generator>
-    EVE_FORCEINLINE logical(Generator &&g) noexcept
+    EVE_ABI logical(Generator &&g) noexcept
                   : storage_base(_::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::wide by combining multiple wides of the same underlying type and which cardinals sums
     //!        to the current cardinal.
     template<logical_simd_value WL0, logical_simd_value WL1, logical_simd_value... WLs>
-    EVE_FORCEINLINE logical(WL0 wl0, WL1 wl1, WLs... wls) noexcept
+    EVE_ABI logical(WL0 wl0, WL1 wl1, WLs... wls) noexcept
     requires (combinable_to<logical, WL0, WL1, WLs...>)
       : storage_base(combine(wl0, wl1, wls...))
     { }
@@ -257,7 +257,7 @@ namespace eve
     //==============================================================================================
 
     //! @brief Assignment of a logical value by splatting it in all lanes
-    EVE_FORCEINLINE logical& operator=(logical<Type> v) noexcept
+    EVE_ABI logical& operator=(logical<Type> v) noexcept
     {
       logical that(v);
       swap(that);
@@ -265,7 +265,7 @@ namespace eve
     }
 
     //! @brief Assignment of a boolean value by splatting it in all lanes
-    EVE_FORCEINLINE logical& operator=(bool v) noexcept
+    EVE_ABI logical& operator=(bool v) noexcept
     {
       logical that( value_type{v} );
       swap(that);
@@ -285,13 +285,13 @@ namespace eve
     //==============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Cardinal::value; }
+    static EVE_ABI constexpr size_type size()     noexcept { return Cardinal::value; }
 
     //! @brief Maximal number of lanes for a given wide
-    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
+    static EVE_ABI constexpr size_type max_size() noexcept { return Cardinal::value; }
 
     //! @brief Check if a wide contains 0 lanes
-    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
+    static EVE_ABI constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     //! @}
@@ -302,21 +302,21 @@ namespace eve
     //==============================================================================================
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of unsigned integral.
-    EVE_FORCEINLINE bits_type bits()   const noexcept { return _::to_bits(eve::current_api,*this); }
+    EVE_ABI bits_type bits()   const noexcept { return _::to_bits(eve::current_api,*this); }
 
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of `Type`.
-    EVE_FORCEINLINE mask_type mask()   const noexcept { return _::to_mask(eve::current_api,*this); }
+    EVE_ABI mask_type mask()   const noexcept { return _::to_mask(eve::current_api,*this); }
 
     //! Returns a bitset corresponding to the current logical values.
-    EVE_FORCEINLINE auto bitmap() const noexcept { return _::to_bitmap(eve::current_api,*this); }
+    EVE_ABI auto bitmap() const noexcept { return _::to_bitmap(eve::current_api,*this); }
 
     //==============================================================================================
     // Logical operations
     //==============================================================================================
     //! Perform a logical and operation between two eve::logical
     template<typename U>
-    friend EVE_FORCEINLINE common_logical_t<logical, logical<wide<U, Cardinal>>>
+    friend EVE_ABI common_logical_t<logical, logical<wide<U, Cardinal>>>
     operator&&(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_and(a, b);
@@ -324,21 +324,21 @@ namespace eve
 
     //! Perform a logical and operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE common_logical_t<logical, S> operator&&(logical const& w, S s) noexcept
+    friend EVE_ABI common_logical_t<logical, S> operator&&(logical const& w, S s) noexcept
     {
       return logical_and(w, s);
     }
 
     //! Perform a logical and operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE common_logical_t<S, logical> operator&&(S s, logical const& w) noexcept
+    friend EVE_ABI common_logical_t<S, logical> operator&&(S s, logical const& w) noexcept
     {
       return logical_and(s, w);
     }
 
     //! Perform a logical or operation between two eve::logical
     template<typename U>
-    friend EVE_FORCEINLINE common_logical_t<logical, logical<wide<U, Cardinal>>>
+    friend EVE_ABI common_logical_t<logical, logical<wide<U, Cardinal>>>
     operator||(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_or(a, b);
@@ -346,20 +346,20 @@ namespace eve
 
     //! Perform a logical or operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE common_logical_t<logical, S> operator||(logical const& w, S s) noexcept
+    friend EVE_ABI common_logical_t<logical, S> operator||(logical const& w, S s) noexcept
     {
       return logical_or(w, s);
     }
 
     //! Perform a logical or operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE common_logical_t<S, logical> operator||(S s, logical const& w) noexcept
+    friend EVE_ABI common_logical_t<S, logical> operator||(S s, logical const& w) noexcept
     {
       return logical_or(s, w);
     }
 
     //! Computes the logical complement of its parameter
-    friend EVE_FORCEINLINE auto operator!(logical const& v) noexcept
+    friend EVE_ABI auto operator!(logical const& v) noexcept
     {
       return logical_not(v);
     }
@@ -376,7 +376,7 @@ namespace eve
     //==============================================================================================
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept
+    friend EVE_ABI void swap(logical &lhs, logical &rhs) noexcept
     {
       lhs.swap(rhs);
     }
@@ -386,22 +386,22 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Set the value of a given lane
-    EVE_FORCEINLINE void set(std::size_t i, std::convertible_to<bool> auto v) noexcept
+    EVE_ABI void set(std::size_t i, std::convertible_to<bool> auto v) noexcept
     {
       _::insert(*this, i, v);
     }
 
     //! Retrieve the value from a given lane
-    EVE_FORCEINLINE auto get(std::size_t i) const noexcept
+    EVE_ABI auto get(std::size_t i) const noexcept
     {
       return _::extract(*this, i);
     }
 
     //! Retrieve the value of the first lanes
-    EVE_FORCEINLINE auto back()  const noexcept { return get(Cardinal::value-1); }
+    EVE_ABI auto back()  const noexcept { return get(Cardinal::value-1); }
 
     //! Retrieve the value of the first lane
-    EVE_FORCEINLINE auto front() const noexcept { return get(0); }
+    EVE_ABI auto front() const noexcept { return get(0); }
 
     //==============================================================================================
     //! @brief Slice a eve::logical into two eve::logical of half cardinal.
@@ -428,7 +428,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    EVE_FORCEINLINE auto slice() const
+    EVE_ABI auto slice() const
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires(Cardinal::value > 1)
 #endif
@@ -468,7 +468,7 @@ namespace eve
     //
     //==============================================================================================
     template<std::size_t Slice>
-    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const
+    EVE_ABI auto slice(slice_t<Slice> s) const
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires(Cardinal::value > 1)
 #endif
@@ -481,28 +481,28 @@ namespace eve
     //==============================================================================================
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
     template<logical_scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
+    friend EVE_ABI auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     ////! @brief Element-wise equality comparison of a scalar value and a eve::logical
     template<logical_scalar_value S>
-    friend EVE_FORCEINLINE auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
+    friend EVE_ABI auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
     template<logical_scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
+    friend EVE_ABI auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
     template<logical_scalar_value S>
-    friend EVE_FORCEINLINE auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
+    friend EVE_ABI auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }
@@ -521,7 +521,7 @@ namespace eve
 
   //! @brief Element-wise equality comparison of two eve::logical
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal>
-  EVE_FORCEINLINE auto operator==(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
+  EVE_ABI auto operator==(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
     -> decltype(is_equal(a,b))
   {
     return is_equal(a, b);
@@ -530,7 +530,7 @@ namespace eve
 
   //! @brief Element-wise inequality comparison of two eve::logical
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal>
-  EVE_FORCEINLINE auto operator!=(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
+  EVE_ABI auto operator!=(logical<wide<T,Cardinal>> a, logical<wide<U,Cardinal>> b) noexcept
     -> decltype(is_not_equal(a,b))
   {
     return is_not_equal(a, b);

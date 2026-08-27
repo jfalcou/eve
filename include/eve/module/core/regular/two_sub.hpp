@@ -17,7 +17,7 @@ namespace eve
   struct two_sub_t : elementwise_callable<two_sub_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T, eve::floating_value U>
-    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>>
+    EVE_ABI constexpr zipped<common_value_t<T, U>, common_value_t<T, U>>
     operator()(T a, U b) const noexcept
     {
       return EVE_DISPATCH_CALL(a, b);
@@ -83,8 +83,7 @@ inline constexpr auto two_sub = functor<two_sub_t>;
   namespace _
   {
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE auto
-    two_sub_(EVE_REQUIRES(cpu_), O const& , T a , U b) noexcept
+    auto two_sub_(EVE_REQUIRES(cpu_), O const& , T a , U b) noexcept
     {
       auto r0 = a - b;
       T err;

@@ -38,7 +38,7 @@ namespace eve::algo
         sums[0] = op(sums[0], i);
       }
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
+      EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
       {
         auto ignore_else_0 = ignore.else_(as_value(zero, as<Wide>{}));
         sums[idx()] = op(sums[idx()], eve::load[ignore_else_0](it));
@@ -46,7 +46,7 @@ namespace eve::algo
       }
 
       template <typename I, std::size_t size>
-      EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+      EVE_ABI bool unrolled_step(std::array<I, size> arr)
       {
         sums =  array_map(sums, arr, [&](auto su, auto i) {
           return op(su, load(i));
@@ -54,14 +54,14 @@ namespace eve::algo
         return false;
       }
 
-      EVE_FORCEINLINE auto finish() {
+      EVE_ABI auto finish() {
         auto su = array_reduce(sums, op);
         return eve::reduce(su, op);
       }
     };
 
     template <eve::algo::relaxed_range Rng, typename Op, typename Zero, typename U>
-    EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
+    EVE_ABI U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       auto cvt_rng = views::convert(EVE_FWD(rng), as<U>{});
       auto processed = preprocess_range(TraitsSupport::get_traits(), cvt_rng);
@@ -81,7 +81,7 @@ namespace eve::algo
     }
 
     template <eve::algo::relaxed_range Rng, typename U>
-    EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
+    EVE_ABI U operator()(Rng&& rng, U init) const
     {
       return operator()(EVE_FWD(rng), std::pair{eve::add, eve::zero}, init);
     }

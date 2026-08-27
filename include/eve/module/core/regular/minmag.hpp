@@ -19,13 +19,13 @@ namespace eve
   {
     template<eve::value T0, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+    EVE_ABI constexpr common_value_t<T0, Ts...>
     operator()(T0 t0, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(t0, ts...); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup t) const noexcept
     { return EVE_DISPATCH_CALL(t); }

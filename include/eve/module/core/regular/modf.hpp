@@ -22,7 +22,7 @@ namespace eve
   struct modf_t : elementwise_callable<modf_t, Options, pedantic_option, raw_option, almost_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept
+    EVE_ABI constexpr zipped<T,T> operator()(T a) const noexcept
     {
       return EVE_DISPATCH_CALL(a);
     }
@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
+    constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
     {
       if constexpr(floating_value<T>)
       {

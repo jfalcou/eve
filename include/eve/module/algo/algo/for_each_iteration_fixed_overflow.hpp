@@ -21,7 +21,7 @@ namespace _
              typename I,
              typename S,
              typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits, I overflow_base, I& f, S l, Delegate& delegate) const
+    bool main_loop(Traits, I overflow_base, I& f, S l, Delegate& delegate) const
     requires(get_unrolling<Traits>() == 1)
     {
       static_assert(get_overflow<Traits>() % iterator_cardinal_v<I> == 0);
@@ -58,7 +58,7 @@ namespace _
              typename I,
              typename S,
              typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits, I overflow_base, I& f, S l, Delegate& delegate) const
+    bool main_loop(Traits, I overflow_base, I& f, S l, Delegate& delegate) const
     requires(get_unrolling<Traits>() > 1)
     {
       static constexpr std::ptrdiff_t unrolling = get_unrolling<Traits>();
@@ -131,7 +131,7 @@ namespace _
                      << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
     }
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       main_loop<0, 0>(traits, base, f, l, delegate);
     }
@@ -148,7 +148,7 @@ namespace _
     for_each_iteration_fixed_overflow_precise_f(Traits t, I i, S s) : traits(t), base(i), f(i), l(s)
     {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
 
@@ -176,7 +176,7 @@ namespace _
         , l(s)
     {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();
@@ -204,7 +204,7 @@ namespace _
 struct
 {
   template<typename Traits, iterator I, sentinel_for<I> S>
-  auto operator()(Traits traits, I f, S l) const
+  EVE_ABI auto operator()(Traits traits, I f, S l) const
   {
     EVE_ASSERT(f != l, "for_each_iteration_fixed_overflow requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )

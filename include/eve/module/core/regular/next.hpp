@@ -36,12 +36,12 @@ namespace eve
   struct next_t : strict_elementwise_callable<next_t, Options, pedantic_option,  saturated_option, raw_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     template<eve::value T, integral_value N>
     requires(eve::same_lanes_or_scalar<T, N>)
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
+    EVE_ABI constexpr as_wide_as_t<T, N> operator()(T v, N n) const noexcept
     {
       EVE_ASSERT(eve::all(n >= 0), "[eve::next] : second parameter must be positive");
       return EVE_DISPATCH_CALL(v, n);
@@ -112,14 +112,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto next_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto next_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return next_(EVE_TARGETS(cpu_), o, ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+    constexpr T next_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
     {
       if constexpr( floating_value<T>)
@@ -160,7 +160,7 @@ namespace eve
     }
 
     template<floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     requires(O::contains(pedantic))
     {
       if ((!std::same_as<element_type_t<T>,  eve::float16_t>) && eve::all( eve::is_normal(a))) return next[raw](a);
@@ -184,7 +184,7 @@ namespace eve
     }
 
     template<typename T, typename N, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
+    constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(!O::contains(pedantic) || !floating_value<T>)
     {
@@ -214,7 +214,7 @@ namespace eve
     }
 
     template<floating_value T, typename N, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
+    constexpr as_wide_as_t<T, N>
     next_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
     requires(O::contains(pedantic))
     {

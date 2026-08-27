@@ -21,13 +21,13 @@ namespace eve
   struct scan_t : callable<scan_t, Options>
   {
     template<simd_value Wide, eve::abelian_monoid<Wide> Op, eve::substitute_for<Wide> Zero>
-    constexpr EVE_FORCEINLINE Wide operator()(Wide w, Op op, Zero z) const noexcept
+    EVE_ABI constexpr Wide operator()(Wide w, Op op, Zero z) const noexcept
     {
       return EVE_DISPATCH_CALL(w, op, z);
     }
 
     template<simd_value Wide>
-    constexpr EVE_FORCEINLINE Wide operator()(Wide w) const noexcept
+    EVE_ABI constexpr Wide operator()(Wide w) const noexcept
     {
       return EVE_DISPATCH_CALL(w, add, eve::zero);
     }

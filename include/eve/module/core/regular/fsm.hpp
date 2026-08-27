@@ -22,12 +22,12 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 {
   template<eve::value T,eve::value U,eve::value V>
   requires(Options::contains(promote))
-  constexpr EVE_FORCEINLINE
+  EVE_ABI constexpr 
   _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
   template<eve::value T,eve::value U,eve::value V>
   requires(!Options::contains(promote))
-  constexpr EVE_FORCEINLINE
+  EVE_ABI constexpr 
   common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
   EVE_CALLABLE_OBJECT(fsm_t, fsm_);
@@ -93,7 +93,7 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
   namespace _
   {
     template<callable_options O, simd_value... Ts>
-    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
+    constexpr auto fsm_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
       requires (_::fp16_should_apply<Ts> && ...)
     {
       if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fsm[o], ts...);
@@ -101,7 +101,7 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
     }
 
     template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
       return fms[o](b, c, a);
     }

@@ -17,7 +17,7 @@ template<typename Options>
 struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
@@ -34,7 +34,7 @@ struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(rayleigh_kurtosis_excess_t, rayleigh_kurtosis_excess_);
 };

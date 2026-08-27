@@ -21,7 +21,7 @@ namespace eve
   struct frac_t : elementwise_callable<frac_t, Options, raw_option, almost_option, pedantic_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const
+    EVE_ABI constexpr T operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(frac_t, frac_);
@@ -88,14 +88,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto frac_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto frac_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return _::map(frac[o], ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr( floating_value<T> )

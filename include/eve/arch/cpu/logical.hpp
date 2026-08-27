@@ -56,14 +56,14 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Default constructor
-    EVE_FORCEINLINE constexpr logical() noexcept {}
+    EVE_ABI constexpr logical() noexcept {}
 
     //! Construct from a `bool`
-    EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
+    EVE_ABI constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
     //! Construct from a plain_scalar_value
     template<plain_scalar_value U>
-    EVE_FORCEINLINE explicit constexpr logical(U const &v) noexcept
+    EVE_ABI explicit constexpr logical(U const &v) noexcept
                   : value_((v != 0) ? true_mask : false_mask)
     {}
     //==============================================================================================
@@ -75,7 +75,7 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Assign a `bool`
-    EVE_FORCEINLINE constexpr logical &operator=(bool v) & noexcept
+    EVE_ABI constexpr logical &operator=(bool v) & noexcept
     {
       value_ = v ? true_mask : false_mask;
       return *this;
@@ -87,36 +87,36 @@ namespace eve
     //==============================================================================================
     // Logical operators
     //==============================================================================================
-    EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
+    EVE_ABI constexpr logical operator!() const noexcept { return {!value_}; }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE common_logical_t<T, U> operator&&(logical const& v, logical<U> const& w) noexcept
+    friend EVE_ABI common_logical_t<T, U> operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() && w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator&&(logical const& v, bool const& w) noexcept
+    friend EVE_ABI logical operator&&(logical const& v, bool const& w) noexcept
     {
       return w ? v : logical{false};
     }
 
-    friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
+    friend EVE_ABI logical operator&&(bool const& v, logical const& w) noexcept
     {
       return v ? w : logical{false};
     }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE common_logical_t<T, U> operator||(logical const& v, logical<U> const& w) noexcept
+    friend EVE_ABI common_logical_t<T, U> operator||(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() || w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator||(logical const& v, bool const& w) noexcept
+    friend EVE_ABI logical operator||(logical const& v, bool const& w) noexcept
     {
       return w ? logical{true} : v;
     }
 
-    friend EVE_FORCEINLINE logical operator||(bool const& v, logical const& w) noexcept
+    friend EVE_ABI logical operator||(bool const& v, logical const& w) noexcept
     {
       return v ? logical{true} : w;
     }
@@ -124,12 +124,12 @@ namespace eve
     //==============================================================================================
     // Conversion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
-    EVE_FORCEINLINE constexpr operator bool()   const noexcept { return !!value_; }
-    EVE_FORCEINLINE constexpr bool value()      const noexcept { return !!value_; }
-    EVE_FORCEINLINE constexpr auto bitmap()     const noexcept { return std::bitset<1>(value_ & 1); }
-    EVE_FORCEINLINE constexpr bits_type bits()       const noexcept { return value_; }
+    EVE_ABI constexpr operator bool()   const noexcept { return !!value_; }
+    EVE_ABI constexpr bool value()      const noexcept { return !!value_; }
+    EVE_ABI constexpr auto bitmap()     const noexcept { return std::bitset<1>(value_ & 1); }
+    EVE_ABI constexpr bits_type bits()       const noexcept { return value_; }
 
-    EVE_FORCEINLINE constexpr mask_type mask() const noexcept
+    EVE_ABI constexpr mask_type mask() const noexcept
     {
       return std::bit_cast<mask_type>(value_);
     }
@@ -140,38 +140,38 @@ namespace eve
     // Comparison operators
     //==============================================================================================
     template<scalar_value U>
-    friend EVE_FORCEINLINE common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
+    friend EVE_ABI common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() == w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator==(logical const& v, bool w) noexcept
+    friend EVE_ABI logical operator==(logical const& v, bool w) noexcept
     {
       return v.value() == w;
     }
 
-    friend EVE_FORCEINLINE logical operator==(bool v, logical const& w) noexcept
+    friend EVE_ABI logical operator==(bool v, logical const& w) noexcept
     {
       return w.value() == v;
     }
 
     template<scalar_value U>
-    friend EVE_FORCEINLINE common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
+    friend EVE_ABI common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() != w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, bool w) noexcept
+    friend EVE_ABI logical operator!=(logical const& v, bool w) noexcept
     {
       return v.value() != w;
     }
 
-    friend EVE_FORCEINLINE logical operator!=(bool v, logical const& w) noexcept
+    friend EVE_ABI logical operator!=(bool v, logical const& w) noexcept
     {
       return w.value() != v;
     }
 
-    friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept
+    friend EVE_ABI void swap(logical &lhs, logical &rhs) noexcept
     {
       lhs.swap(rhs);
     }
@@ -180,7 +180,7 @@ namespace eve
     // Stream insertion operator
     //==============================================================================================
     template<typename C, typename CT>
-    friend EVE_FORCEINLINE auto& operator<<(std::basic_ostream<C, CT>& os, logical const &v)
+    friend EVE_ABI auto& operator<<(std::basic_ostream<C, CT>& os, logical const &v)
     {
       return os << (v.value_ ? "true" : "false");
     }

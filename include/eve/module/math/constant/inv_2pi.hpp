@@ -17,7 +17,7 @@ template<typename Options>
 struct inv_2pi_t : constant_callable<inv_2pi_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
@@ -34,7 +34,7 @@ struct inv_2pi_t : constant_callable<inv_2pi_t, Options, lower_option, upper_opt
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(inv_2pi_t, inv_2pi_);
 };

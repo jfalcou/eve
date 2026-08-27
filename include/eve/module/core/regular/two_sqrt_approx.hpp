@@ -18,7 +18,8 @@ namespace eve
   template<typename Options>
   struct two_sqrt_approx_t : elementwise_callable<two_sqrt_approx_t, Options>
   {
-    template<eve::floating_value T> constexpr EVE_FORCEINLINE
+    template<eve::floating_value T> 
+    EVE_ABI constexpr 
     zipped<T, T> operator()(T a) const
     {
       return EVE_DISPATCH_CALL(a);
@@ -72,7 +73,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto two_sqrt_approx_(EVE_REQUIRES(cpu_), O const&, T x)
+    constexpr auto two_sqrt_approx_(EVE_REQUIRES(cpu_), O const&, T x)
     {
       auto r0 = eve::sqrt(x);
       auto e0 = if_else(is_not_finite(r0), zero, eve::fma[pedantic](-r0, r0, x)/(r0+r0));

@@ -25,7 +25,7 @@ namespace eve
   struct sinhcosh_t : elementwise_callable< sinhcosh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sinhcosh_t, sinhcosh_);
   };
@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr auto sinhcosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       using elt_t =  element_type_t<T>;
       constexpr elt_t ovflimit = maxlog(as<elt_t>());

@@ -16,7 +16,7 @@ namespace eve
   struct sqrtvalmax_t : constant_callable<sqrtvalmax_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       if      constexpr( std::same_as<T, eve::float16_t>   ) return _::float16_from_bits(0x5bff);
       else if constexpr( std::same_as<T, float>         ) return T(0x1.fffffep+63);
@@ -32,7 +32,7 @@ namespace eve
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sqrtvalmax_t, sqrtvalmax_);
   };

@@ -18,20 +18,20 @@ namespace eve
   {
     template<product_type Src, product_type Tgt>
     requires(kumi::result::flatten_all_t<Src>::size() == kumi::result::flatten_all_t<Tgt>::size())
-    EVE_FORCEINLINE constexpr _::conditional_t<scalar_value<Src>, Tgt, as_wide_t<Tgt, cardinal_t<Src>>>
+    EVE_ABI constexpr _::conditional_t<scalar_value<Src>, Tgt, as_wide_t<Tgt, cardinal_t<Src>>>
     operator()(Src const& src, as<Tgt> tgt) const noexcept
     {
       return EVE_DISPATCH_CALL(src, tgt);
     }
 
     template<logical_value Src, logical_scalar_value Tgt>
-    EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
+    EVE_ABI constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
       return EVE_DISPATCH_CALL(src, tgt);
     }
 
     template<value Src, plain_scalar_value Tgt>
-    EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
+    EVE_ABI constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
       return EVE_DISPATCH_CALL(src, tgt);
     }
@@ -90,7 +90,7 @@ namespace eve
   {
     // This function is forward declared wrapper around convert, so that internally we can call it anywhere.
     template<typename Src, typename Tgt>
-    EVE_FORCEINLINE as_wide_as_t<Tgt, Src> call_convert(Src x, as<Tgt> tgt)
+    as_wide_as_t<Tgt, Src> call_convert(Src x, as<Tgt> tgt)
     {
       return convert(x, tgt);
     }

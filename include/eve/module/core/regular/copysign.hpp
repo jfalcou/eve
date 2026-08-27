@@ -22,7 +22,7 @@ namespace eve
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(copysign_t, copysign_);
@@ -80,7 +80,7 @@ namespace eve
   namespace _
   {
     template<floating_value T, floating_value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto copysign_(EVE_REQUIRES(cpu_), O const &, T aa, U bb) noexcept
+    constexpr auto copysign_(EVE_REQUIRES(cpu_), O const &, T aa, U bb) noexcept
     {
       using r_t = common_value_t<T, U>;
       r_t a = r_t(aa);

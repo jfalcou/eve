@@ -19,7 +19,7 @@ namespace eve
   struct bit_width_t : elementwise_callable<bit_width_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bit_width_t, bit_width_);
@@ -74,7 +74,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    constexpr T  bit_width_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    constexpr T bit_width_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       using elt_t = element_type_t<T>;
       return sizeof(elt_t) * 8 - countl_zero(v);
