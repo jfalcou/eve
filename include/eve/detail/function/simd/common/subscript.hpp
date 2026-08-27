@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <eve/detail/abi_traits.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/as.hpp>
 #include <cstring>

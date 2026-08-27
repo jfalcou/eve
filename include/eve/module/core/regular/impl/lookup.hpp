@@ -24,7 +24,7 @@ namespace eve::_
   template<callable_options O, typename T, integral_scalar_value I, typename N>
   EVE_FORCEINLINE wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
   {
-    if constexpr( is_bundle_v<abi_t<T, N>> )
+    if constexpr( bundle_abi<abi_t<T, N>> )
     {
       return wide<T, N>(kumi::map([ind]<typename M>(M m) { return lookup(m, ind); }, a));
     }

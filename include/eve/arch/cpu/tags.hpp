@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/deps/spy.hpp>
 #include <eve/arch/predef.hpp>
 
@@ -102,11 +101,6 @@ namespace eve
   }
 
   //================================================================================================
-  // Concept for discriminating aggregated from non-agregated ABI
-  //================================================================================================
-  template<typename T> concept regular_abi = !std::same_as<T,aggregated_>;
-
-  //================================================================================================
   // Dispatching tag for emulated SIMD implementation
   struct emulated_
   {
@@ -122,12 +116,6 @@ namespace eve
     template<typename Type>
     static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);
   };
-
-  template<typename T>
-  concept non_native_abi = _::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
-
-  template<typename T>
-  concept native_abi = !_::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
 
   //================================================================================================
   // Checks if a type fills all its storage

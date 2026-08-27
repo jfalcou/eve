@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi_traits.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/pattern.hpp>
@@ -67,7 +67,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   using v_t           = element_type_t<Wide>;
   constexpr auto card = cardinal_v<Wide>;
 
-  if constexpr( is_bundle_v<typename Wide::abi_type> )
+  if constexpr( bundle_abi<typename Wide::abi_type> )
   {
     return Wide(kumi::map([=](auto m) { return broadcast_group(m, g, i, sz); }, w));
   }

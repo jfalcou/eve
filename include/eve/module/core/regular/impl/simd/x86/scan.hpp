@@ -30,7 +30,7 @@ template<typename T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N>
 slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
-  if constexpr( is_bundle_v<abi_t<T, N>> )
+  if constexpr( bundle_abi<abi_t<T, N>> )
     return wide<T, N> {kumi::map(slide_right_in_lanes_lambda<Shift> {}, x, y)};
   else
   {
@@ -68,7 +68,7 @@ auto
 use_scan_in_lanes(Wide)
 {
   if constexpr( std::same_as<typename Wide::abi_type, x86_256_> ) return std::true_type {};
-  else if constexpr( is_bundle_v<typename Wide::abi_type> )
+  else if constexpr( bundle_abi<typename Wide::abi_type> )
   {
     return kumi::fold_left(
         []<bool so_far, typename T>(std::bool_constant<so_far>, T)
