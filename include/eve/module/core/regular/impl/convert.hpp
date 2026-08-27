@@ -48,7 +48,7 @@ namespace eve::_
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
     // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
-    if constexpr( has_aggregated_abi_v<wide<float, N>> )
+    if constexpr( aggregated_abi<wide<float, N>> )
     {
       using card_t = expected_cardinal_t<float>;
       using base   = typename wide<eve::float16_t, N>::template rescale<card_t>;
@@ -120,14 +120,14 @@ namespace eve::_
         using out_ae_t = as_arithmetic_t<Out>;
         using out_t = as_wide_as_t<Out, In>;
 
-        if constexpr (has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t>)
+        if constexpr (aggregated_abi<In> || aggregated_abi<out_t>)
         {
           // If input or output are aggregated, we slice and combine without lose of performance
           return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};
         }
         else
         {
-          if constexpr (has_emulated_abi_v<In> || has_emulated_abi_v<out_t>)
+          if constexpr (emulated_abi<In> || emulated_abi<out_t>)
           {
             return map([&](auto m) { return convert(m, tgt); }, v0);
           }
@@ -159,7 +159,7 @@ namespace eve::_
         constexpr auto c_o = categorize<wide<Out, N>>();
 
         // helps with some ptrdiff_t conversions on macOS x86_64
-        if constexpr (has_native_abi_v<In> && (c_i == c_o))
+        if constexpr (native_abi<In> && (c_i == c_o))
         {
           return bit_cast(v0, as<wide<Out, N>>{});
         }

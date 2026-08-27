@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/is_native.hpp>
+#include <eve/detail/abi_traits.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/concept/combinable.hpp>
@@ -35,7 +35,7 @@ namespace eve::_
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( has_aggregated_abi_v<that_t> )
+    else if constexpr( aggregated_abi<that_t> )
     {
       that_t that;
       that.storage().assign_parts(l, h);
@@ -57,7 +57,7 @@ namespace eve::_
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( has_aggregated_abi_v<that_t> )
+    else if constexpr( aggregated_abi<that_t> )
     {
       that_t that;
       that.storage().assign_parts(l, h);

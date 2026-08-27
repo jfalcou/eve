@@ -14,22 +14,22 @@ TTS_CASE( "Check for detection of native ABI")
 {
   constexpr auto native = eve::wide<float>::size();
 
-  TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::wide<float, eve::fixed<2*native>>>              ));
-  TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+  TTS_EXPECT_NOT(( eve::native_abi<eve::wide<float, eve::fixed<2*native>>>              ));
+  TTS_EXPECT_NOT(( eve::native_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT_NOT( eve::has_native_abi_v<eve::wide<float>>                );
-    TTS_EXPECT_NOT( eve::has_native_abi_v<eve::logical<eve::wide<float>>>  );
+    TTS_EXPECT_NOT( eve::native_abi<eve::wide<float>>                );
+    TTS_EXPECT_NOT( eve::native_abi<eve::logical<eve::wide<float>>>  );
   }
   else
   {
-    TTS_EXPECT( eve::has_native_abi_v<eve::wide<float>>                );
-    TTS_EXPECT( eve::has_native_abi_v<eve::logical<eve::wide<float>>>  );
+    TTS_EXPECT( eve::native_abi<eve::wide<float>>                );
+    TTS_EXPECT( eve::native_abi<eve::logical<eve::wide<float>>>  );
   }
 
-  TTS_EXPECT( eve::has_native_abi_v<float>                           );
-  TTS_EXPECT( eve::has_native_abi_v<eve::logical<float>>             );
+  TTS_EXPECT( eve::native_abi<float>                           );
+  TTS_EXPECT( eve::native_abi<eve::logical<float>>             );
 };
 
 TTS_CASE( "Check for detection of aggregated ABI")
@@ -38,20 +38,20 @@ TTS_CASE( "Check for detection of aggregated ABI")
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT_NOT(( eve::has_aggregated_abi_v<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT_NOT(( eve::has_aggregated_abi_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
+    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
   }
   else
   {
-    TTS_EXPECT(( eve::has_aggregated_abi_v<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT(( eve::has_aggregated_abi_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT(( eve::aggregated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
+    TTS_EXPECT(( eve::aggregated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
   }
 
-  TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::wide<float>>                );
-  TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::logical<eve::wide<float>>>  );
+  TTS_EXPECT_NOT( eve::aggregated_abi<eve::wide<float>>                );
+  TTS_EXPECT_NOT( eve::aggregated_abi<eve::logical<eve::wide<float>>>  );
 
-  TTS_EXPECT_NOT( eve::has_aggregated_abi_v<float>                           );
-  TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::logical<float>>             );
+  TTS_EXPECT_NOT( eve::aggregated_abi<float>                           );
+  TTS_EXPECT_NOT( eve::aggregated_abi<eve::logical<float>>             );
 };
 
 TTS_CASE( "Check for detection of aggregated ABI in product type")

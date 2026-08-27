@@ -24,7 +24,7 @@ namespace eve::_
                               wide<T, N> v,
                               logical<wide<U, N>> mask) noexcept
   {
-    constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
+    constexpr bool like_aggregate = aggregated_abi<wide<T, N>> || aggregated_abi<wide<U, N>> || N() > 8;
 
     if constexpr ( C::is_complete && !C::is_inverted )
     {

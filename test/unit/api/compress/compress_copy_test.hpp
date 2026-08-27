@@ -18,7 +18,7 @@ input(eve::as<T>)
   {
     return T {[](int i, int) { return bool(std::countl_zero((unsigned)i) & 1); }};
   }
-  else if constexpr( eve::has_bundle_abi_v<T> )
+  else if constexpr( eve::bundle_abi<T> )
   {
     return T {[](int i, int)
               {
@@ -152,7 +152,7 @@ compress_copy_tst_mask(eve::as<T> tgt, L m, auto algo)
       for( int j = 0; j != T::size() - i; ++j ) { for_ignore_tests(eve::ignore_extrema(i, j)); }
     }
   }
-  else if constexpr( eve::has_bundle_abi_v<T>
+  else if constexpr( eve::bundle_abi<T>
                      && (eve::current_api >= eve::sve || eve::current_api >= eve::rvv) )
   {
     for_ignore_tests(eve::ignore_extrema(0, 0));
@@ -212,7 +212,7 @@ compress_copy_tst(eve::as<T> tgt, auto algo)
 {
   using N = typename T::cardinal_type;
 
-  if constexpr( eve::has_bundle_abi_v<T> )
+  if constexpr( eve::bundle_abi<T> )
   {
     using e_t = std::tuple_element_t<1, eve::element_type_t<T>>;
     using l_t = eve::logical<eve::wide<e_t, N>>;

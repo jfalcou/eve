@@ -91,8 +91,8 @@ namespace _
     static constexpr std::ptrdiff_t static_size = logical_type::size();
 
     //! is stored as an array of 2 halves
-    static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
-                                          (has_emulated_abi_v<logical_type> && static_size > 64);
+    static constexpr bool is_aggregated = aggregated_abi<logical_type> ||
+                                          (emulated_abi<logical_type> && static_size > 64);
 
     static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
 
@@ -114,7 +114,7 @@ namespace _
 
     static constexpr bool is_cheap_impl()
     {
-      if constexpr ( has_emulated_abi_v<logical_type> ) return true;
+      if constexpr ( emulated_abi<logical_type> ) return true;
       if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
 
       if constexpr ( x86_abi<abi_type> ) return true;

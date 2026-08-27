@@ -26,7 +26,7 @@ struct natives
 TTS_CASE_TPL("Test category matching for double", natives<double>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Test category matching for double", natives<double>)
 TTS_CASE_TPL("Test category matching for std::int64", natives<std::int64_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -66,7 +66,7 @@ TTS_CASE_TPL("Test category matching for std::int64", natives<std::int64_t>)
 TTS_CASE_TPL("Test category matching for std::uint64", natives<std::uint64_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -87,7 +87,7 @@ TTS_CASE_TPL("Test category matching for std::uint64", natives<std::uint64_t>)
 TTS_CASE_TPL("Test category matching for float", natives<float>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -106,7 +106,7 @@ TTS_CASE_TPL("Test category matching for float", natives<float>)
 TTS_CASE_TPL("Test category matching for std::int32", natives<std::int32_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -127,7 +127,7 @@ TTS_CASE_TPL("Test category matching for std::int32", natives<std::int32_t>)
 TTS_CASE_TPL("Test category matching for std::uint32", natives<std::uint32_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -148,7 +148,7 @@ TTS_CASE_TPL("Test category matching for std::uint32", natives<std::uint32_t>)
 TTS_CASE_TPL("Test category matching for std::int16", natives<std::int16_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -169,7 +169,7 @@ TTS_CASE_TPL("Test category matching for std::int16", natives<std::int16_t>)
 TTS_CASE_TPL("Test category matching for std::uint16", natives<std::uint16_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -190,7 +190,7 @@ TTS_CASE_TPL("Test category matching for std::uint16", natives<std::uint16_t>)
 TTS_CASE_TPL("Test category matching for std::int8", natives<std::int8_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;
@@ -211,7 +211,7 @@ TTS_CASE_TPL("Test category matching for std::int8", natives<std::int8_t>)
 TTS_CASE_TPL("Test category matching for std::uint8", natives<std::uint8_t>)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::has_native_abi_v<T> )
+  if constexpr( eve::native_abi<T> )
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::_::category;

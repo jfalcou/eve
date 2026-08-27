@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/is_native.hpp>
+#include <eve/detail/abi_traits.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
@@ -68,7 +68,7 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
                                  as_integer_t<typename l_t::bits_type, signed>>;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
-  else if constexpr (has_emulated_abi_v<T>)
+  else if constexpr (emulated_abi<T>)
   {
     l_t res;
     std::ptrdiff_t offset = c.offset(tgt);

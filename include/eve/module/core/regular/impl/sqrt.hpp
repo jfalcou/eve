@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/detail/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>

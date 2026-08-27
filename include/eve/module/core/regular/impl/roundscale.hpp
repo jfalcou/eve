@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/detail/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/round.hpp>

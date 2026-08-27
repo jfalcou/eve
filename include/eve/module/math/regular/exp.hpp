@@ -115,7 +115,7 @@ namespace eve
         };
         if constexpr( scalar_value<T> )
         {
-          if constexpr( has_emulated_abi_v<wide<T>> )
+          if constexpr( emulated_abi<wide<T>> )
           {
             return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
           }

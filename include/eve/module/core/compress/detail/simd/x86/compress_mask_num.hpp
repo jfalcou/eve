@@ -47,7 +47,7 @@ namespace eve::_
     requires (current_api < avx512)
   {
     // aggregated
-    if constexpr ( eve::has_aggregated_abi_v<wide<T, fixed<8>>> )
+    if constexpr ( eve::aggregated_abi<wide<T, fixed<8>>> )
     {
       using half_t = make_integer_t<sizeof(T) / 2, unsigned>;
       auto half = eve::convert(mask, eve::as<logical<half_t>>{});

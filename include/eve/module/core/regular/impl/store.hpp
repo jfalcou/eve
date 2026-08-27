@@ -34,11 +34,11 @@ namespace eve::_
     }
     else if constexpr (std::same_as<C, ignore_none_>)
     {
-      if constexpr (has_emulated_abi_v<T>)
+      if constexpr (emulated_abi<T>)
       {
         apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
       }
-      else if constexpr (has_aggregated_abi_v<T>)
+      else if constexpr (aggregated_abi<T>)
       {
         value.storage().apply(
           [&]<typename... Sub>(Sub&...v)
@@ -50,7 +50,7 @@ namespace eve::_
     }
     else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);
     else if constexpr (C::is_complete) return;
-    else if constexpr (has_emulated_abi_v<T>)
+    else if constexpr (emulated_abi<T>)
     {
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});
