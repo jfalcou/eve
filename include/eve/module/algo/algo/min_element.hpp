@@ -40,7 +40,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
     {
       Less less;
 
-      EVE_FORCEINLINE wide_v_i operator()(wide_v_i x, wide_v_i y) const
+       wide_v_i operator()(wide_v_i x, wide_v_i y) const
       {
         wide_v_i r;
         get<0>(r) = eve::min(less)(get<0>(x), get<0>(y));
@@ -58,7 +58,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
 
     delegate(I b, I i, Less l) : base(b), prev_best(i), less(l) { reset(); }
 
-    EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
+     bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
     {
       wide_v   cur_values = eve::load[ignore.else_(get<0>(best[idx()]))](it);
       wide_v_i cur {cur_values, loop_index};
@@ -69,7 +69,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
       return false;
     }
 
-    EVE_FORCEINLINE bool unrolled_step(auto arr)
+     bool unrolled_step(auto arr)
     {
       return unroll_by_calling_single_step{}(arr, *this);
     }
@@ -79,14 +79,14 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
       Less & less;
       wide_v best_one;
 
-      EVE_FORCEINLINE wide_i operator()(wide_v_i x) const
+       wide_i operator()(wide_v_i x) const
       {
         auto is_not_best = less(best_one, get<0>(x));
         return eve::if_else(is_not_best, std::numeric_limits<index_t>::max(), get<1>(x));
       }
     };
 
-    EVE_FORCEINLINE void update_res()
+     void update_res()
     {
       auto   values          = array_map(best, [](auto x) { return get<0>(x); });
       wide_v lane_best_value = array_reduce(values, eve::min(less));
@@ -101,7 +101,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
       prev_best = base + eve::reduce(array_reduce(best_indexes, eve::min), eve::min);
     }
 
-    EVE_FORCEINLINE void overflow(auto it)
+     void overflow(auto it)
     {
       update_res();
       base = it;
@@ -110,7 +110,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
   };
 
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
+   auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
   {
     auto raw_processed = eve::algo::preprocess_range(TraitsSupport::get_traits(), rng);
     if( raw_processed.begin() == raw_processed.end() ) return rng.begin();
@@ -149,7 +149,7 @@ inline constexpr auto min_element_1_pass = function_with_traits<min_element_1_pa
 template<typename TraitsSupport> struct min_element_2_pass_ : TraitsSupport
 {
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
+   auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
 
@@ -171,7 +171,7 @@ namespace eve::algo
 template<typename TraitsSupport> struct min_element_ : TraitsSupport
 {
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
+  EVE_ABI auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
   {
     auto processed = preprocess_range(TraitsSupport::get_traits(), rng);
     if constexpr( decltype(processed.traits())::contains(single_pass) )
@@ -182,7 +182,7 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
   }
 
   template<relaxed_range Rng>
-  EVE_FORCEINLINE auto operator()(Rng&& rng) const -> unaligned_iterator_t<Rng>
+  EVE_ABI auto operator()(Rng&& rng) const -> unaligned_iterator_t<Rng>
   {
     return operator()(EVE_FWD(rng), eve::is_less);
   }

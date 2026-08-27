@@ -16,7 +16,7 @@ namespace eve::_
   // Recurrence relation for Tchebytchev polynomials:
   template<typename T, callable_options O>
   requires(O::contains(successor))
-  constexpr EVE_FORCEINLINE T
+  constexpr  T
   tchebytchev_(EVE_REQUIRES(cpu_),  O const& , T x, T tn, T tnm1)
   {
     return fms(x + x, tn, tnm1);

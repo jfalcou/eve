@@ -16,7 +16,7 @@
 namespace eve::_
 {
   // T is always floating
-  template < typename I,  typename T > constexpr EVE_FORCEINLINE
+  template < typename I,  typename T > constexpr 
   T cb_k(I nu, T x) noexcept
   {
     if constexpr(floating_value<I>)
@@ -69,7 +69,7 @@ namespace eve::_
   }
 
   // T is always floating
-  template < typename I,  typename T > constexpr EVE_FORCEINLINE
+  template < typename I,  typename T > constexpr 
   T sb_k(I n, T x) noexcept
   {
     using elt_t = element_type_t<T>;

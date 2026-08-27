@@ -22,7 +22,7 @@ namespace eve
                                                 , full_circle_option, medium_option, big_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(as<T> v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_ABI T operator()(as<T> v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(Rempio2_limit_t, Rempio2_limit_);
   };
@@ -32,7 +32,7 @@ namespace eve
   namespace _
   {
     template< typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T  Rempio2_limit_(EVE_REQUIRES(cpu_), O const& , as<T> const&) noexcept
+     constexpr T  Rempio2_limit_(EVE_REQUIRES(cpu_), O const& , as<T> const&) noexcept
     {
       if constexpr( floating_value<T> )
       {

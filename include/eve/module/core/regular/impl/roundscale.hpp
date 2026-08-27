@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<auto S, typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T roundscale_(EVE_REQUIRES(cpu_),
+   constexpr T roundscale_(EVE_REQUIRES(cpu_),
                                          O const& o,
                                          T const& a0,
                                          index_t<S> const &) noexcept
@@ -26,7 +26,7 @@ namespace eve::_
   }
 
   template<typename T, typename S, callable_options O>
-  EVE_FORCEINLINE constexpr T roundscale_(EVE_REQUIRES(cpu_),
+   constexpr T roundscale_(EVE_REQUIRES(cpu_),
                                          O const & o,
                                          T const & a0,
                                          S const & scale) noexcept

@@ -18,7 +18,7 @@
 namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
+   wide<T, N> sum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v
                             ) noexcept
     requires (O::contains(splat))
   {
@@ -43,7 +43,7 @@ namespace eve::_
   }
 
   template<callable_options O, arithmetic_value T>
-  EVE_FORCEINLINE element_type_t<T> sum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+   element_type_t<T> sum_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
     requires (!O::contains(splat))
   {
     using C = rbr::result::fetch_t<condition_key, O>;

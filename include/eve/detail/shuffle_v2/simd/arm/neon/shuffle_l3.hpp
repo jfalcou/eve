@@ -18,7 +18,7 @@ namespace eve::_
 {
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
@@ -39,7 +39,7 @@ shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle_t {};
@@ -51,7 +51,7 @@ shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
@@ -81,7 +81,7 @@ shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
@@ -94,7 +94,7 @@ requires(P::out_reg_size == P::reg_size)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {

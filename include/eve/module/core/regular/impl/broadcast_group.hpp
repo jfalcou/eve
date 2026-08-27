@@ -57,7 +57,7 @@ inline constexpr auto is_broadcast_group = []()
 
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
 requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+         && (Index < cardinal_v<Wide> / Group)) 
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           Wide           w,
                           fixed<Group>   g,
@@ -108,7 +108,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
 
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
 requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+         && (Index < cardinal_v<Wide> / Group)) 
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           logical<Wide>  w,
                           fixed<Group>   g,
@@ -132,7 +132,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
 
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index>
 requires((Group > 0) && (Group <= cardinal_v<Wide>)&&(Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+         && (Index < cardinal_v<Wide> / Group)) 
     auto broadcast_group_(EVE_SUPPORTS(cpu_), Wide w, fixed<Group> g, index_t<Index> i)
 {
   return broadcast_group(w, g, i, cardinal_t<Wide> {});

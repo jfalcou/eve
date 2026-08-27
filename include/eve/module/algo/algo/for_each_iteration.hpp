@@ -24,7 +24,7 @@ namespace eve::algo
     struct for_each_iteration_common
     {
       template<typename Traits, typename I, typename S, typename Delegate>
-      EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
+       bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() == 1)
       {
         while( f != l )
@@ -46,7 +46,7 @@ namespace eve::algo
           Delegate& delegate;
 
           template <int i>
-          EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
+           bool operator()(std::integral_constant<int, i>)
           {
             if (f == l) return true;
 
@@ -57,7 +57,7 @@ namespace eve::algo
       };
 
       template<typename Traits, typename I, typename S, typename Delegate>
-      EVE_FORCEINLINE bool main_loop(Traits, I &f, S l, Delegate &delegate) const
+       bool main_loop(Traits, I &f, S l, Delegate &delegate) const
           requires(get_unrolling<Traits>() > 1)
       {
         static constexpr std::ptrdiff_t unrolling = get_unrolling<Traits>();
@@ -112,7 +112,7 @@ namespace eve::algo
       }
 
       template <typename Delegate>
-      EVE_FORCEINLINE void operator()(Delegate& delegate)
+       void operator()(Delegate& delegate)
       {
         main_loop(traits, f, l, delegate);
       }
@@ -130,7 +130,7 @@ namespace eve::algo
         traits(t), base(i), f(i), l(s) {}
 
       template <typename Delegate>
-      EVE_FORCEINLINE void operator()(Delegate& delegate)
+       void operator()(Delegate& delegate)
       {
 
         I precise_l = f + (((l - f) / iterator_cardinal_v<I>) * iterator_cardinal_v<I>);
@@ -156,7 +156,7 @@ namespace eve::algo
         traits(t), base(i.previous_partially_aligned()), f(i), l(s) {}
 
       template<typename Delegate>
-      EVE_FORCEINLINE void operator()(Delegate &delegate)
+       void operator()(Delegate &delegate)
       {
         auto aligned_f = base;
         auto aligned_l = (f + (l - f)).previous_partially_aligned();

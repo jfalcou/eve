@@ -24,13 +24,13 @@ namespace eve
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
 
     template<callable_options O, eve::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
+    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }
@@ -47,13 +47,13 @@ namespace eve
     using base_t = elementwise_callable<Func, OptionsValues, Options...>;
 
     template<callable_options O, eve::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x) const
+    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch, opts, a...); }, x);
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0,  Ts... xs) const
+    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T const& x0,  Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }

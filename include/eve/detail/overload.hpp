@@ -43,7 +43,7 @@ namespace tag { struct TAG {}; }                                                
       requires  (   tag_dispatchable<tag_type,Arg,Args...>                                         \
                 ||  supports_ ## TAG<Arg,Args...>                                                  \
                 )                                                                                  \
-      static EVE_FORCEINLINE constexpr decltype(auto) call(Arg&& d, Args &&... args)  noexcept     \
+      static  constexpr decltype(auto) call(Arg&& d, Args &&... args)  noexcept     \
       {                                                                                            \
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
@@ -76,13 +76,13 @@ namespace tag { struct TAG {}; }                                                
       requires  (   tag_dispatchable<tag_type,Args...>                                             \
                 ||  supports_ ## TAG<Args...>                                                      \
                 )                                                                                  \
-      EVE_FORCEINLINE constexpr decltype(auto) operator()(Args &&... args) const noexcept          \
+       constexpr decltype(auto) operator()(Args &&... args) const noexcept          \
       {                                                                                            \
         return call(args...);                                                                      \
       }                                                                                            \
                                                                                                    \
       template<value Condition>                                                                    \
-      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                        \
+       constexpr auto operator[](Condition c) const noexcept                        \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
         auto cond = if_(to_logical(c));                                                            \
@@ -90,7 +90,7 @@ namespace tag { struct TAG {}; }                                                
       }                                                                                            \
                                                                                                    \
       template<std::same_as<bool> T>                                                               \
-      EVE_FORCEINLINE constexpr auto operator[](T c) const noexcept                                \
+       constexpr auto operator[](T c) const noexcept                                \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
         using type = _::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
@@ -98,7 +98,7 @@ namespace tag { struct TAG {}; }                                                
       }                                                                                            \
                                                                                                    \
       template<conditional_expr Condition>                                                         \
-      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                        \
+       constexpr auto operator[](Condition c) const noexcept                        \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
         return callable_object_bind_recurse<callable_object, Condition>{c};                        \
@@ -168,7 +168,7 @@ namespace eve
     using base_type = Decoration;
 
     template<decorator Decorator>
-    constexpr EVE_FORCEINLINE auto operator()(Decorator d) const noexcept
+    constexpr EVE_ABI auto operator()(Decorator d) const noexcept
     {
       return Decoration::combine(d);
     }
@@ -179,14 +179,14 @@ namespace eve
       Function f;
 
       template <typename... X>
-      constexpr EVE_FORCEINLINE auto operator()(X&&... x) const
+      constexpr EVE_ABI auto operator()(X&&... x) const
       {
         return f(decorated{}, EVE_FWD(x)...);
       }
     };
 
     template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    constexpr EVE_ABI auto operator()(Function f) const noexcept
     {
       if constexpr( specific_decorator<Decoration,Function> )  return Decoration{}(f);
       else                                          return fwding_lamda<Function>{f};
@@ -214,7 +214,7 @@ namespace eve
     {
       First first;
 
-      EVE_FORCEINLINE decltype(auto) operator()(auto ... args) const noexcept
+       decltype(auto) operator()(auto ... args) const noexcept
       {
         return Self::call(first, args...);
       }

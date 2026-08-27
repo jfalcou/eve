@@ -57,7 +57,7 @@ namespace _
           , equal {equal_}
       {}
 
-      template<typename I2, typename Ignore> EVE_FORCEINLINE bool step(I2 i, Ignore ignore, auto)
+      template<typename I2, typename Ignore>  bool step(I2 i, Ignore ignore, auto)
       {
         auto v2 = eve::load[ignore](i);
         while( true )
@@ -80,14 +80,14 @@ namespace _
         }
       }
 
-      EVE_FORCEINLINE bool unrolled_step(auto arr)
+       bool unrolled_step(auto arr)
       {
         return unroll_by_calling_single_step {}(arr, *this);
       }
     };
 
     template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
+     auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
         -> set_intersection_result<unaligned_iterator_t<R1>,
                                    unaligned_iterator_t<R2>,
                                    unaligned_iterator_t<RO>>
@@ -151,7 +151,7 @@ namespace _
           , equal {equal_}
       {}
 
-      template<typename I1, typename Ignore> EVE_FORCEINLINE bool step(I1 i, Ignore ignore, auto)
+      template<typename I1, typename Ignore>  bool step(I1 i, Ignore ignore, auto)
       {
         auto v1 = eve::load[ignore](i);
         while( true )
@@ -174,14 +174,14 @@ namespace _
         }
       }
 
-      EVE_FORCEINLINE bool unrolled_step(auto arr)
+       bool unrolled_step(auto arr)
       {
         return unroll_by_calling_single_step {}(arr, *this);
       }
     };
 
     template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
+     auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
         -> set_intersection_result<unaligned_iterator_t<R1>,
                                    unaligned_iterator_t<R2>,
                                    unaligned_iterator_t<RO>>
@@ -227,7 +227,7 @@ namespace _
     }
 
     template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-    EVE_FORCEINLINE auto main_part(R1& r1, R2& r2, RO& ro, Less less, Equal equal) const
+     auto main_part(R1& r1, R2& r2, RO& ro, Less less, Equal equal) const
         -> set_intersection_result<unaligned_iterator_t<R1>,
                                    unaligned_iterator_t<R2>,
                                    unaligned_iterator_t<RO>>
@@ -270,7 +270,7 @@ namespace _
     }
 
     template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-    EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
+     auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
         -> set_intersection_result<unaligned_iterator_t<R1>,
                                    unaligned_iterator_t<R2>,
                                    unaligned_iterator_t<RO>>
@@ -303,7 +303,7 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
    * No zipped range becuase R1, R2 don't have to be the same length
    */
   template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-  EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal_fn) const
+  EVE_ABI auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal_fn) const
       -> set_intersection_result<unaligned_iterator_t<R1>,
                                  unaligned_iterator_t<R2>,
                                  unaligned_iterator_t<RO>>
@@ -326,7 +326,7 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
   }
 
   template<relaxed_range R1, relaxed_range R2, relaxed_range RO>
-  EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro) const
+  EVE_ABI auto operator()(R1&& r1, R2&& r2, RO&& ro) const
       -> set_intersection_result<unaligned_iterator_t<R1>,
                                  unaligned_iterator_t<R2>,
                                  unaligned_iterator_t<RO>>

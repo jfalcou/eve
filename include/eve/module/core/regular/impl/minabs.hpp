@@ -13,14 +13,14 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto minabs_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+   constexpr auto minabs_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return minabs[o.drop(widen)](upgrade(ts)...);
   }
 
   template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+   constexpr common_value_t<T0, Ts...>
   minabs_(EVE_REQUIRES(cpu_), O const & o, T0 t0, Ts... as) noexcept
   {
     using r_t = eve::common_value_t<T0, Ts...>;

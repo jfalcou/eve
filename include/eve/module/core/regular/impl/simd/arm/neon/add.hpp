@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
+   upgrade_t<wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
@@ -41,7 +41,7 @@ namespace eve::_
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts,
+   wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts,
                                                wide<T, N> v, wide<T, N> w) noexcept
     requires (arm_abi<abi_t<T, N>> && !O::contains(widen) && !O::contains(mod))
   {

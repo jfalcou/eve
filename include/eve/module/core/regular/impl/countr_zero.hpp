@@ -20,7 +20,7 @@
 namespace eve::_
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T countr_zero_(EVE_REQUIRES(cpu_),
+   constexpr T countr_zero_(EVE_REQUIRES(cpu_),
                                            O const&,
                                            T x) noexcept
   {

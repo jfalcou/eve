@@ -36,7 +36,7 @@ namespace eve
                               , sign_set= 0b1100
                               };
 
-    EVE_FORCEINLINE constexpr int operator|(range_ctrl a,  range_ctrl b) noexcept
+     constexpr int operator|(range_ctrl a,  range_ctrl b) noexcept
     {
       return static_cast<int>(a) | static_cast<int>(b);
     }
@@ -78,7 +78,7 @@ namespace eve
         , true_us   = 0x1f // true (unordered, signaling)
         };
 
-    EVE_FORCEINLINE constexpr std::int32_t to_integer(cmp_flt a) noexcept
+     constexpr std::int32_t to_integer(cmp_flt a) noexcept
     {
       return static_cast<std::int32_t>(a);
     }

@@ -23,7 +23,7 @@
 namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(sse2_),
+   wide<T, N> rec_(EVE_REQUIRES(sse2_),
                                   O const& o,
                                   wide<T, N> const& v) noexcept
   requires(x86_abi<abi_t<T, N>> && !O::contains(mod))
@@ -118,7 +118,7 @@ namespace eve::_
 // -----------------------------------------------------------------------------------------------
 // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(avx512_),
+   wide<T, N> rec_(EVE_REQUIRES(avx512_),
                                   C const                & mask,
                                   O const                & opts,
                                   wide<T, N> const       & a0) noexcept

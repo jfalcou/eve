@@ -22,7 +22,7 @@ namespace eve
     using result = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
 
     template<eve::value T>
-    EVE_ABI constexpr typename result<T>
+    EVE_ABI constexpr result<T>
     operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(hi_t, hi_);

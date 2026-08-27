@@ -17,14 +17,14 @@
 namespace eve::_
 {
   template<floating_value T>
-  EVE_FORCEINLINE auto rempio2_quarter_circle(T const &xx) noexcept
+   auto rempio2_quarter_circle(T const &xx) noexcept
   {
     return eve::zip(T(0), xx, T(0));
   }
 
 // up to 255*pi/4 ~200
   template<floating_value T>
-  EVE_FORCEINLINE auto rempio2_half_circle(T const &xx) noexcept
+   auto rempio2_half_circle(T const &xx) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
@@ -54,7 +54,7 @@ namespace eve::_
 // double use   x < 281474976710656 (2.81476710656e+14)
 /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
   template<floating_value T>
-  EVE_FORCEINLINE auto rempio2_medium(T const& xx) noexcept
+   auto rempio2_medium(T const& xx) noexcept
   {
     using elt_t             = element_type_t<T>;
     static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
@@ -105,7 +105,7 @@ namespace eve::_
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE auto rempio2_full_circle(T const&x) noexcept
+   auto rempio2_full_circle(T const&x) noexcept
   {
     using elt_t = element_type_t<T>;
     using elt_t = element_type_t<T>;
@@ -136,7 +136,7 @@ namespace eve::_
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE constexpr auto rempio2_big(T xx) noexcept
+   constexpr auto rempio2_big(T xx) noexcept
   {
     using elt_t = element_type_t<T>;
     auto xlerfl = (xx <= Rempio2_limit[half_circle](as(xx)));

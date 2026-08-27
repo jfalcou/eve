@@ -18,7 +18,7 @@
 namespace eve::_
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_integer_t<T, signed>
+   constexpr as_integer_t<T, signed>
   bitinteger(T const& a) noexcept
   {
     using r_t = as_integer_t<T, signed>;
@@ -34,7 +34,7 @@ namespace eve::_
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr as_floating_point_t<T>
+   constexpr as_floating_point_t<T>
   bitfloating(T const& a) noexcept
   {
     using r_t = as_floating_point_t<T>;

@@ -34,7 +34,7 @@ namespace eve::algo
   struct reverse_ : TraitsSupport
   {
     template <relaxed_range Rng>
-    EVE_FORCEINLINE void operator()(Rng&& rng) const
+    EVE_ABI void operator()(Rng&& rng) const
     {
       using Traits = typename TraitsSupport::traits_type;
       static_assert(Traits::contains(no_aligning));
@@ -100,7 +100,7 @@ namespace eve::algo
   struct reverse_copy_ : TraitsSupport
   {
     template <zipped_range_pair R>
-    EVE_FORCEINLINE void operator()(R r) const
+    EVE_ABI void operator()(R r) const
     {
       auto [from, to] = r;
       return eve::algo::copy[TraitsSupport::get_traits()](views::reverse(from), to);
@@ -108,7 +108,7 @@ namespace eve::algo
 
     template <typename R1, typename R2>
       requires zip_to_range<R1, R2>
-    EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
+    EVE_ABI void operator()(R1&& r1, R2&& r2) const
     {
       return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }

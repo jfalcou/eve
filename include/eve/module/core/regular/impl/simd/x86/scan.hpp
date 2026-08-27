@@ -16,18 +16,18 @@
 namespace eve::_
 {
 template<typename T, typename N, std::ptrdiff_t Shift>
-EVE_FORCEINLINE wide<T, N> slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>);
+ wide<T, N> slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>);
 
 template<std::ptrdiff_t Shift> struct slide_right_in_lanes_lambda
 {
-  EVE_FORCEINLINE auto operator()(auto... x) const
+   auto operator()(auto... x) const
   {
     return slide_right_in_lanes(x..., index<Shift>);
   }
 };
 
 template<typename T, typename N, std::ptrdiff_t Shift>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
 slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
   if constexpr( is_bundle_v<abi_t<T, N>> )
@@ -45,14 +45,14 @@ slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 }
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-EVE_FORCEINLINE logical<Wide>
+ logical<Wide>
                 slide_right_in_lanes(logical<Wide> x, logical<Wide> y, index_t<Shift> s)
 {
   return bit_cast(slide_right_in_lanes(x.bits(), y.bits(), s), as<logical<Wide>> {});
 }
 
 template<int group_size, simd_value Wide, typename Op>
-EVE_FORCEINLINE Wide
+ Wide
 scan_in_lanes(Wide x, Op op, Wide z)
 {
   if constexpr( group_size == 1 ) return x;
@@ -80,7 +80,7 @@ use_scan_in_lanes(Wide)
 }
 
 template<callable_options O, typename T, typename N, typename Op, typename Zero>
-EVE_FORCEINLINE auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op op, Zero z_)
+ auto scan_(EVE_REQUIRES(avx2_), O const& opts, wide<T, N> v, Op op, Zero z_)
   requires (x86_abi<abi_t<T, N>> && (current_api == avx2))
 {
   if constexpr( decltype(use_scan_in_lanes(v))::value )

@@ -21,7 +21,7 @@ namespace eve::_
 //================================================================================================
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE wide<T, typename N::split_type>
+ wide<T, typename N::split_type>
                 slice_(EVE_REQUIRES(rvv_), O const&, wide<T, N> a, lower_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -32,7 +32,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE wide<T, typename N::split_type>
+ wide<T, typename N::split_type>
                 slice_(EVE_REQUIRES(rvv_), O const&, wide<T, N> a, upper_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -49,7 +49,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
+ logical<wide<T, typename N::split_type>>
                 slice_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, lower_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -57,7 +57,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
+ logical<wide<T, typename N::split_type>>
                 slice_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, upper_slice_t) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -71,7 +71,7 @@ requires rvv_abi<abi_t<T, N>>
 // Both slice
 //================================================================================================
 
-EVE_FORCEINLINE auto
+ auto
 slice_(EVE_REQUIRES(rvv_), callable_options auto const&, simd_value auto x)
 {
   return std::array {x.slice(lower_), x.slice(upper_)};

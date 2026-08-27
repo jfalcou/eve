@@ -15,7 +15,7 @@ namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sve_),O const& o,wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
+   wide<T, N> fnma_(EVE_REQUIRES(sve_),O const& o,wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
   {
     if constexpr(O::contains(lower) || O::contains(upper))
       return fnma.behavior(cpu_{}, o, a, b, c);
@@ -27,7 +27,7 @@ namespace eve::_
 
   template<conditional_expr C, typename T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sve_), C cond, O const&o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+   wide<T, N> fnma_(EVE_REQUIRES(sve_), C cond, O const&o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     if constexpr(O::contains(lower) || O::contains(upper))
       return fnma[o][cond].retarget(cpu_{}, a, b, c);

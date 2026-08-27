@@ -21,7 +21,7 @@ namespace eve::_
 
 // Fills undefined values with zeros
 template<arithmetic_scalar_value T, typename N, typename PtrTy>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 perform_alternative_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
   wide<T, N> zero_init {0};
@@ -43,7 +43,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // Undefined values are undefined
 template<arithmetic_scalar_value T, typename N, typename PtrTy>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 perform_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -54,7 +54,7 @@ EVE_FORCEINLINE wide<T, N>
 }
 
 template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
+ wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
   requires rvv_abi<abi_t<T, N>>
 {
   auto ptr = unalign(p);
@@ -75,7 +75,7 @@ EVE_FORCEINLINE wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tg
 }
 
 template<relative_conditional_expr C, typename T, typename N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
-EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<logical<wide<T, N>>>) noexcept
+ logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<logical<wide<T, N>>>) noexcept
 {
   auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });
   auto const block = load[c1](ptr_cast<T const>(ptr), as<wide<T, N>>{});
@@ -83,7 +83,7 @@ EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<log
 }
 
 template<relative_conditional_expr C, typename Iterator, typename T, typename N>
-EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>>) noexcept
+ logical<wide<T, N>> load_impl(rvv_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>>) noexcept
 {
   auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });
   auto const block = load[c1](b, e, as<wide<T, N>>{});

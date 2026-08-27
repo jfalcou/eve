@@ -32,7 +32,7 @@ namespace eve::_
   //
 
   template <typename Gen, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto lentz_b_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)
+   constexpr auto lentz_b_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)
     noexcept
   {
     using eve::abs;
@@ -91,7 +91,7 @@ namespace eve::_
   //
 
   template <typename Gen, typename U, callable_options O>
-  EVE_FORCEINLINE auto lentz_a_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)  noexcept
+   auto lentz_a_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)  noexcept
   {
     using eve::abs;
     auto v = g();

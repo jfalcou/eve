@@ -67,7 +67,7 @@ namespace eve
     using func_t = typename base_t::func_t;
 
     template<typename Src, typename Tgt>
-    EVE_FORCEINLINE static constexpr Tgt cvt(Src e, as<Tgt>)
+    EVE_ABI static constexpr Tgt cvt(Src e, as<Tgt>)
     {
       if      constexpr (std::same_as<Src, Tgt>)                       return e;
       else if constexpr (std::same_as<Src, bool> || scalar_value<Src>) return Tgt{e};
@@ -75,7 +75,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x, Ts... xs) const
+    constexpr EVE_ABI auto adapt_call(auto arch, O const& opts, T x, Ts... xs) const
     {
       // we test for no logicals first to prevent mishandling bools
       constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);
@@ -129,7 +129,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {

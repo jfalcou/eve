@@ -34,7 +34,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+   constexpr auto mul_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(widen))
@@ -59,21 +59,21 @@ namespace eve::_
   }
 
   template<typename T>
-  static EVE_FORCEINLINE auto aux1_mul(const T mini, const T maxi) noexcept
+  static  auto aux1_mul(const T mini, const T maxi) noexcept
   {
     T z = valmax(as<T>{}) / maxi;
     return (z < mini) ? valmax(as<T>{}) : mini * maxi;
   };
 
   template<typename T,  typename UT>
-  static EVE_FORCEINLINE auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi) noexcept
+  static  auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi) noexcept
   {
     UT z = valmax(as<T>{}) / amaxi;
     return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
   };
 
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
+   constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
     if constexpr(O::contains(widen))
     {
@@ -235,7 +235,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename... Vs>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, Vs... rs) noexcept
+   constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, Vs... rs) noexcept
   requires (sizeof...(Vs) != 0)
   {
     using r_t =  eve::common_value_t<Vs...>;

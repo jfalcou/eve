@@ -78,7 +78,7 @@ namespace eve::_
   }
 
   template <typename Struct>
-  EVE_FORCEINLINE
+  
   auto neon_struct_to_wide(Struct s)
   {
     using helper = decltype(neon_struct_to_wide_type<Struct>());

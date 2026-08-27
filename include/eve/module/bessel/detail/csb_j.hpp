@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template < typename I,  typename T > constexpr EVE_FORCEINLINE
+  template < typename I,  typename T > constexpr 
   T cb_j(I nu, T x) noexcept
   {
     using w_t = as_wide_as_t<T, I>;
@@ -55,7 +55,7 @@ namespace eve::_
     }
   }
 
-  template < typename I,  typename T > constexpr EVE_FORCEINLINE
+  template < typename I,  typename T > constexpr 
   T sb_j(I n, T x) noexcept
   {
     using elt_t = element_type_t<T>;

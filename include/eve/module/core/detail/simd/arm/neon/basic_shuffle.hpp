@@ -15,7 +15,7 @@
 namespace eve::_
 {
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(neon128_),
                wide<T, N> const& v,
                Pattern const&) requires arm_abi<abi_t<T, N>>

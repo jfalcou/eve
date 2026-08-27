@@ -23,7 +23,7 @@ namespace eve::_
   //================================================================================================
   // Full slice
   //================================================================================================
-  template<typename P> EVE_FORCEINLINE auto slice_impl(P const &a) noexcept
+  template<typename P>  auto slice_impl(P const &a) noexcept
   {
     using abi_t   = typename P::abi_type;
 
@@ -35,7 +35,7 @@ namespace eve::_
   // Partial slice
   //================================================================================================
   template<typename P, typename Slice>
-  EVE_FORCEINLINE auto slice_impl(P const &a, Slice s) noexcept
+   auto slice_impl(P const &a, Slice s) noexcept
   {
     using abi_t   = typename P::abi_type;
     using card_t  = typename P::cardinal_type;
@@ -63,7 +63,7 @@ namespace eve::_
   // Logical slices
   //================================================================================================
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
+   auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
@@ -80,7 +80,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
+   auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
     if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
     {
@@ -98,14 +98,14 @@ namespace eve::_
   // Arithmetic slices
   //================================================================================================
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a) noexcept
+   auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, Slice s) noexcept
+   auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, Slice s) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a, s);

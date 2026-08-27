@@ -21,7 +21,7 @@
 namespace eve::_
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+   constexpr T
   nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
     if constexpr(integral_value<T>)
@@ -47,7 +47,7 @@ namespace eve::_
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
   {
     auto z = nearest(a0);
