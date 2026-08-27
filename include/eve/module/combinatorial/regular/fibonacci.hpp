@@ -21,7 +21,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 {
   template<eve::unsigned_value N, floating_value T0,  floating_value T1>
   requires (same_lanes_or_scalar<N, T0, T1>)
-  constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N>
+  constexpr EVE_ABI as_wide_as_t<common_value_t<T0, T1>, N>
   operator()(N n, T0 t0, T1 t1) const noexcept
   { return EVE_DISPATCH_CALL(n, t0, t1); }
 
@@ -91,7 +91,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
   namespace _
   {
     template<typename N, typename T, typename U, callable_options O>
-    constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T, U>, N>
+    constexpr EVE_ABI as_wide_as_t<common_value_t<T, U>, N>
     fibonacci_(EVE_REQUIRES(cpu_), O const&, N n, T a, U b)
     {
       using c_t    = as_wide_as_t<common_value_t<T, U>, N>;

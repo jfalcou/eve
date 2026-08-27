@@ -18,7 +18,7 @@ namespace eve
   struct bessel_k_t : elementwise_callable<bessel_k_t, Options, eve::spherical_option, eve::cylindrical_option>
   {
     template<eve::value N, eve::floating_value Z>
-    EVE_FORCEINLINE constexpr Z  operator()(N const& n, Z const & z) const noexcept
+    EVE_ABI constexpr Z  operator()(N const& n, Z const & z) const noexcept
     {
       if constexpr(Options::contains(eve::spherical))
         return _::sb_k(n, z);

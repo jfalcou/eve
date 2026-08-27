@@ -21,7 +21,7 @@ namespace eve
   struct erfcx_t : elementwise_callable<erfcx_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(erfcx_t, erfcx_);
   };

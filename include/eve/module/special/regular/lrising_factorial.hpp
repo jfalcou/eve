@@ -24,7 +24,7 @@ namespace eve
   {
     template<value I, floating_value T>
     requires (same_lanes_or_scalar<I, T>)
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_ABI as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(lrising_factorial_t, lrising_factorial_);
   };
@@ -96,7 +96,7 @@ namespace eve
     /////////////////////////////////////////////////////////////////////////////////////////
     //utilities
 
-    template<typename T> constexpr EVE_FORCEINLINE auto inner_lrising_factorial(T a, T x) noexcept
+    template<typename T> constexpr EVE_ABI auto inner_lrising_factorial(T a, T x) noexcept
     {
       // Assumes a>0 and a+x>0.
       auto ax      = eve::abs(x);

@@ -15,7 +15,7 @@ namespace eve::_
 {
   struct accumulate_decorations
   {
-    constexpr EVE_FORCEINLINE auto operator()(auto acc, auto const& m) const { return m.default_to(acc); }
+    constexpr auto operator()(auto acc, auto const& m) const { return m.default_to(acc); }
   };
 }
 
@@ -42,30 +42,30 @@ namespace eve
   template <rbr::concepts::settings Settings = rbr::settings<>>
   struct options : Settings
   {
-    constexpr EVE_FORCEINLINE options() : Settings{} {}
+    constexpr EVE_ABI options() : Settings{} {}
 
     template <rbr::concepts::option... Options>
-    constexpr EVE_FORCEINLINE explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
+    constexpr EVE_ABI explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
 
     template <typename... Options>
-    constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
+    constexpr EVE_ABI explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
 
     template <rbr::concepts::keyword K>
-    constexpr EVE_FORCEINLINE auto drop(K const& k) const noexcept
+    constexpr EVE_ABI auto drop(K const& k) const noexcept
     {
       auto dropped = rbr::drop(k, *this);
       return options<decltype(dropped)>{dropped};
     }
 
     template <rbr::concepts::keyword K0, rbr::concepts::keyword... Ks>
-    constexpr EVE_FORCEINLINE auto drop(K0 const& k0, Ks const&... ks) const noexcept
+    constexpr EVE_ABI auto drop(K0 const& k0, Ks const&... ks) const noexcept
     {
       auto dropped = rbr::drop(k0, *this);
       return options<decltype(dropped)>{dropped}.drop(ks...);
     }
 
     template<rbr::concepts::keyword Ks>
-    constexpr EVE_FORCEINLINE auto extract(Ks const& kws) const noexcept
+    constexpr EVE_ABI auto extract(Ks const& kws) const noexcept
     {
       auto    value   = (*this)[kws];
       auto    dropped =  rbr::drop(kws, *this);
@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template <rbr::concepts::settings S0, rbr::concepts::settings S1>
-    constexpr static EVE_FORCEINLINE auto merge_prefer_first(options<S0> const& base, options<S1> const& new_opts) noexcept
+    constexpr static auto merge_prefer_first(options<S0> const& base, options<S1> const& new_opts) noexcept
     {
       auto res_opts = rbr::merge(new_opts, base);
       return options<decltype(res_opts)>{res_opts};
@@ -145,8 +145,8 @@ namespace eve
   {
     using Options::process...;
 
-    constexpr EVE_FORCEINLINE decorated_with() {}
-    constexpr EVE_FORCEINLINE decorated_with(OptionsValues v) : OptionsValues(std::move(v)) {}
+    constexpr EVE_ABI decorated_with() {}
+    constexpr EVE_ABI decorated_with(OptionsValues v) : OptionsValues(std::move(v)) {}
 
     //==================================================================================================================
     //! @brief Adds an option to current callable
@@ -160,14 +160,14 @@ namespace eve
     //! @return A new @callable with the options `o` set.
     //==================================================================================================================
     template<typename O>
-    EVE_FORCEINLINE constexpr auto operator[](O o) const
+    EVE_ABI constexpr auto operator[](O o) const
     requires( requires(OptionsValues const& ov) { this->process(ov,o);} )
     {
       return process(static_cast<OptionsValues const&>(*this), o);
     }
 
     /// Retrieves the current options' state, including processed default
-    EVE_FORCEINLINE constexpr auto options() const
+    EVE_ABI constexpr auto options() const
     {
       return kumi::fold_left( _::accumulate_decorations{}
                             , kumi::tuple<Options...>{}
@@ -234,13 +234,13 @@ namespace eve
   //====================================================================================================================
   struct relative_conditional_option
   {
-    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
+    EVE_ABI constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
       return merge_prefer_first(base, options{condition_key = opt});
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
+    EVE_ABI constexpr auto default_to(auto const& base) const
     {
       return merge_prefer_first(options{condition_key = ignore_none}, base);
     }
@@ -268,31 +268,31 @@ namespace eve
   //====================================================================================================================
   struct conditional_option
   {
-    EVE_FORCEINLINE constexpr auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
+    EVE_ABI constexpr auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
       return merge_prefer_first(base, options{opt});
     }
 
     template<std::same_as<bool> O>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, O opt) const
+    EVE_ABI constexpr auto process(auto const& base, O opt) const
     {
       // Just delay the evaluation of the type by injecting some templates
       using type = _::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
       return process(base, condition_key = if_(logical<type>(opt)) );
     }
 
-    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::logical_value auto opt) const
+    EVE_ABI constexpr auto process(auto const& base, eve::logical_value auto opt) const
     {
       return process(base, condition_key = if_(opt));
     }
 
-    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::conditional_expr auto opt) const
+    EVE_ABI constexpr auto process(auto const& base, eve::conditional_expr auto opt) const
     {
       return process(base, condition_key = opt);
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
+    EVE_ABI constexpr auto default_to(auto const& base) const
     {
       return merge_prefer_first(options{condition_key = ignore_none}, base);
     }
@@ -301,13 +301,13 @@ namespace eve
   struct relative_conditional_no_alternative_option
   {
     template<relative_conditional_expr Opt>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, Opt opt) const
+    EVE_ABI constexpr auto process(auto const& base, Opt opt) const
     requires( !Opt::has_alternative )
     {
       return merge_prefer_first(base, options{condition_key = opt});
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
+    EVE_ABI constexpr auto default_to(auto const& base) const
     {
       return merge_prefer_first(options{condition_key = ignore_none}, base);
     }
@@ -319,11 +319,11 @@ namespace eve::_
   // Internal helper for decorator setup
   template<auto Decorator> struct exact_option
   {
-    EVE_FORCEINLINE constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
+    constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
     {
       return merge_prefer_first(base, options{opts});
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+    constexpr auto default_to(auto const& base) const { return base; }
   };
 }

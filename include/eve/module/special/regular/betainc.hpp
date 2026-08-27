@@ -23,7 +23,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
 {
   template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
   requires (same_lanes_or_scalar<T0, T1, T2>)
-  constexpr EVE_FORCEINLINE eve::common_value_t<T0, T1, T2>
+  constexpr EVE_ABI eve::common_value_t<T0, T1, T2>
   operator()(T0 a, T1 b, T2 c) const noexcept
   { return EVE_DISPATCH_CALL(a, b, c); }
 
@@ -89,7 +89,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
   namespace _
   {
     template< typename T, callable_options O>
-    constexpr EVE_FORCEINLINE
+    constexpr EVE_ABI
     auto betainc_(EVE_REQUIRES(cpu_), O const& oo, T px, T pa, T pb) noexcept
     {
       using elt_t = element_type_t<T>;

@@ -22,11 +22,11 @@ namespace eve
   {
     template<eve::floating_value T, eve::value I>
     requires (same_lanes_or_scalar<I, T>)
-      EVE_FORCEINLINE  constexpr eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept
+      EVE_ABI  constexpr eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept
     { return EVE_DISPATCH_CALL(n, v); }
 
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exp_int_t, exp_int_);
   };
@@ -92,7 +92,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+    constexpr  EVE_ABI T exp_int_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr(O::contains(raw)|| O::contains(fast))

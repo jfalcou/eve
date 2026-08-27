@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template<eve::relative_conditional_expr C, typename T>
-  EVE_FORCEINLINE std::pair<int, int>
+  std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(vmx_), C c, logical<wide<T, fixed<4>>> mask)
     requires (sizeof(T) == 4)
   {

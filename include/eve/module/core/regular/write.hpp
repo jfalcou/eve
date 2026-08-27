@@ -19,14 +19,14 @@ namespace eve
   {
     template<typename Ptr, scalar_value V>
     requires requires(Ptr p, V v) { *p = v; }
-    EVE_FORCEINLINE void operator()(V v, Ptr ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
+    EVE_ABI void operator()(V v, Ptr ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
 
     template<typename Writeable, scalar_value V>
     requires requires(Writeable p, V v) { p.write(v); }
-    EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept{ return EVE_DISPATCH_CALL(v,p); }
+    EVE_ABI void operator()(V v, Writeable p) const noexcept{ return EVE_DISPATCH_CALL(v,p); }
 
     template<typename... Ptrs, scalar_value V>
-    EVE_FORCEINLINE void operator()(V v, soa_ptr<Ptrs...> ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
+    EVE_ABI void operator()(V v, soa_ptr<Ptrs...> ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
 
     EVE_CALLABLE_OBJECT(write_t, write_);
   };
@@ -54,14 +54,14 @@ namespace eve
 //!   {
 //!     template<typename Ptr, scalar_value V>
 //!     requires requires(Ptr p, V v) { *p = v; }
-//!     EVE_FORCEINLINE void operator()(V v, Ptr p) const noexcept;               // 1
+//!     void operator()(V v, Ptr p) const noexcept;               // 1
 //!
 //!     template<typename Writeable, scalar_value V>
 //!     requires requires(Writeable p, V v) { p.write(v); }
-//!     EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept;         // 2
+//!     void operator()(V v, Writeable p) const noexcept;         // 2
 //!
 //!     template<typename... Ptrs, scalar_value V>
-//!     EVE_FORCEINLINE void operator()(V v, soa_ptr<Ptrs...> p) const noexcept;  // 3
+//!     void operator()(V v, soa_ptr<Ptrs...> p) const noexcept;  // 3
 //!   }
 //!   @endcode
 //!
@@ -84,14 +84,14 @@ namespace eve
 namespace eve::_
 {
   template<callable_options O, typename Ptr, typename V>
-  EVE_FORCEINLINE void write_(EVE_REQUIRES(cpu_), O const&, V v, Ptr p) noexcept
+  void write_(EVE_REQUIRES(cpu_), O const&, V v, Ptr p) noexcept
   {
     if constexpr(requires { p.write(v); })   p.write(v);
     else                                    *p = v;
   }
 
   template<callable_options O,  typename... Ptrs, typename V>
-  EVE_FORCEINLINE void write_(EVE_REQUIRES(cpu_), O const&, V v, soa_ptr<Ptrs...> ptr) noexcept
+  void write_(EVE_REQUIRES(cpu_), O const&, V v, soa_ptr<Ptrs...> ptr) noexcept
   {
     kumi::for_each(write, v, ptr);
   }

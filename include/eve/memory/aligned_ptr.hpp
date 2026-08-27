@@ -431,9 +431,9 @@ namespace eve
   //================================================================================================
   template <typename T, typename Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, Lanes) noexcept
+  EVE_ABI auto previous_aligned_address(T* p, Lanes) noexcept
   #else
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, Lanes width) noexcept
+  EVE_ABI auto previous_aligned_address(T* p, Lanes width) noexcept
   #endif
   {
     return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::under{Lanes::value*sizeof(T)}) };
@@ -450,7 +450,7 @@ namespace eve
   //! @see previous_aligned_address(T*, Cardinal)
   //================================================================================================
   template <typename T>
-  EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
+  EVE_ABI auto previous_aligned_address(T* p) noexcept
   {
     return previous_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
   }
@@ -468,9 +468,9 @@ namespace eve
   //================================================================================================
   template <typename T, typename Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
-  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes) noexcept
+  EVE_ABI auto next_aligned_address(T* p, Lanes) noexcept
   #else
-  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes width) noexcept
+  EVE_ABI auto next_aligned_address(T* p, Lanes width) noexcept
   #endif
   {
     return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::over{Lanes::value*sizeof(T)}) };
@@ -487,7 +487,7 @@ namespace eve
   //! @see next_aligned_address(T*, Cardinal)
   //================================================================================================
   template <typename T>
-  EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
+  EVE_ABI auto next_aligned_address(T* p) noexcept
   {
     return next_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
   }

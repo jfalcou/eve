@@ -20,7 +20,7 @@ namespace eve
   struct log_gamma_t : elementwise_callable<log_gamma_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    constexpr EVE_ABI T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(log_gamma_t, log_gamma_);
