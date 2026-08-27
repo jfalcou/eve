@@ -15,6 +15,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/forward.hpp>
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/traits/as_integer.hpp>
 
@@ -173,9 +174,9 @@ requires rvv_abi<abi_t<T, N>>
     auto tgt          = as<wide<e_t, fundamental_cardinal<T>>> {};
     auto full_bits    = bit_cast(bits, tgt);
     auto full_logical = full_bits > static_cast<e_t>(0);
-    return simd_cast(full_logical, logic_tgt);
+    return call_simd_cast(full_logical, logic_tgt);
   }
-  else return simd_cast(bits > static_cast<e_t>(0), logic_tgt);
+  else return call_simd_cast(bits > static_cast<e_t>(0), logic_tgt);
 }
 
 }

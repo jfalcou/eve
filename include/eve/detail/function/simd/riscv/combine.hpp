@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::_
 {
@@ -27,8 +28,8 @@ requires rvv_abi<abi_t<T, N>>
   }
   else
   {
-    auto           wider_l        = simd_cast(l, as<that_t> {});
-    auto           wider_h        = simd_cast(h, as<that_t> {});
+    auto           wider_l        = call_simd_cast(l, as<that_t> {});
+    auto           wider_h        = call_simd_cast(h, as<that_t> {});
     constexpr auto shift_size     = N::value;
     constexpr size_t combined_vl    = N::combined_type::value;
     that_t         wider_h_placed = __riscv_vslideup(wider_h, wider_h, shift_size, combined_vl);

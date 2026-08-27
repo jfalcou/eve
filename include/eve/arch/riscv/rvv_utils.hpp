@@ -8,6 +8,13 @@
 #pragma once
 #if defined(EVE_INCLUDE_RISCV_HEADER)
 
+#  include <eve/arch/cardinals.hpp>
+#  include <eve/concept/scalar.hpp>
+#  include <eve/detail/wide_forward.hpp>
+
+#  include <algorithm>
+#  include <cstddef>
+
 #  ifndef __riscv_v_fixed_vlen
 #    error __riscv_v_fixed_vlen must be defined
 #  endif
