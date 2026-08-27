@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template< typename T, callable_options O>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     auto beta_(EVE_REQUIRES(cpu_), O const& o, T a0,  T a1) noexcept
     {
       auto y    = a0 + a1;

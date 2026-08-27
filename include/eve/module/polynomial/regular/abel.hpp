@@ -17,7 +17,7 @@ namespace eve
   struct abel_t : strict_elementwise_callable< abel_t, Options>
   {
     template<value N, eve::floating_value T0,  eve::floating_value T1>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     as_wide_as_t<eve::common_value_t<T0, T1>, N> operator()(N n, T0 x,  T1 a) const noexcept
     {
       return EVE_DISPATCH_CALL(n, x, a);

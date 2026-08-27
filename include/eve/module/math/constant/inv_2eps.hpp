@@ -17,7 +17,7 @@ template<typename Options>
 struct inv_2eps_t : constant_callable<inv_2eps_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
+  EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
       return T(0x1p+22);

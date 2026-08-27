@@ -44,7 +44,7 @@ template<scalar_value T> auto to_logical(T v) noexcept;
 template<relative_conditional_expr C, simd_value T> auto to_logical(C c, eve::as<T>) noexcept;
 
 template<relative_conditional_expr C, simd_value T>
-auto EVE_ABI to_logical(C c, eve::as<T>) noexcept
+EVE_ABI auto to_logical(C c, eve::as<T>) noexcept
 requires (x86_abi<typename T::abi_type> && (current_api >= avx512));
 
 template<conditional_expr C, typename Op, typename Arg0, typename... Args>

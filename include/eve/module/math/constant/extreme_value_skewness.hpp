@@ -17,7 +17,7 @@ template<typename Options>
 struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
+  EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {

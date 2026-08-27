@@ -39,7 +39,7 @@ namespace eve
     using base_t = _::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }
@@ -54,7 +54,7 @@ namespace eve
     using base_t = _::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }

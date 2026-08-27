@@ -17,7 +17,7 @@ template<typename Options>
 struct log_10_t : constant_callable<log_10_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
+  EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {

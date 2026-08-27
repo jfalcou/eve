@@ -90,7 +90,7 @@ namespace eve
   {
 
     template<integral_value T, callable_options O>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     as_wide_as_t<double, T> factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       if constexpr(signed_integral_value<T>)
@@ -288,7 +288,7 @@ namespace eve
     }
 
     template<floating_value T, callable_options O>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;

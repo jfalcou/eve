@@ -75,7 +75,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_ABI auto adapt_call(auto arch, O const& opts, T x, Ts... xs) const
+    EVE_ABI constexpr auto adapt_call(auto arch, O const& opts, T x, Ts... xs) const
     {
       // we test for no logicals first to prevent mishandling bools
       constexpr bool no_logicals = !(eve::logical_value<T> || ... || eve::logical_value<Ts>);

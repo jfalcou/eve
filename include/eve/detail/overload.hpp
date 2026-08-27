@@ -168,7 +168,7 @@ namespace eve
     using base_type = Decoration;
 
     template<decorator Decorator>
-    constexpr EVE_ABI auto operator()(Decorator d) const noexcept
+    EVE_ABI constexpr auto operator()(Decorator d) const noexcept
     {
       return Decoration::combine(d);
     }
@@ -179,14 +179,14 @@ namespace eve
       Function f;
 
       template <typename... X>
-      constexpr EVE_ABI auto operator()(X&&... x) const
+      EVE_ABI constexpr auto operator()(X&&... x) const
       {
         return f(decorated{}, EVE_FWD(x)...);
       }
     };
 
     template<typename Function>
-    constexpr EVE_ABI auto operator()(Function f) const noexcept
+    EVE_ABI constexpr auto operator()(Function f) const noexcept
     {
       if constexpr( specific_decorator<Decoration,Function> )  return Decoration{}(f);
       else                                          return fwding_lamda<Function>{f};

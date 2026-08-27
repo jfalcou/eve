@@ -21,7 +21,7 @@ namespace eve
   {
     template<eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<Ts...>)
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
@@ -29,7 +29,7 @@ namespace eve
 
     template<eve::integral_value T0, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, Ts...>)
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(convert(a, as<element_type_t<common_value_t<Ts...>>>{}), b...);
@@ -37,7 +37,7 @@ namespace eve
 
     template<eve::integral_value T0, eve::integral_value T1, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, T1, Ts...>)
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
     {
       auto ct = as<element_type_t<common_value_t<Ts...>>>();

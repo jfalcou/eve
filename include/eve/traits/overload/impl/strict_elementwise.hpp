@@ -25,7 +25,7 @@ namespace eve
     using func_t =  Func<OptionsValues>;
 
     template<typename... Ts>
-    constexpr EVE_ABI typename _::wide_result<func_t, Ts...>::type map(Ts... ts) const noexcept
+    EVE_ABI constexpr typename _::wide_result<func_t, Ts...>::type map(Ts... ts) const noexcept
     {
       using R = typename _::wide_result<func_t, Ts...>::type;
 
@@ -36,7 +36,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_ABI auto adapt_call(auto a, O const& o, T x, Ts... xs) const
+    EVE_ABI constexpr auto adapt_call(auto a, O const& o, T x, Ts... xs) const
     {
       constexpr bool has_implementation          = requires{ func_t::deferred_call(a, o, x, xs...); };
       constexpr bool has_emulated_implementation = requires{ func_t::deferred_call(emulated_{}, o, x, xs...); };
@@ -53,7 +53,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_ABI auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       if constexpr (!O::contains(condition_key) || match_option<condition_key, O, ignore_none_>)
       {
@@ -97,7 +97,7 @@ namespace eve
     }
 
     template<typename T, typename... Ts>
-    constexpr EVE_ABI auto retarget(auto arch, T x0, Ts... xs) const
+    EVE_ABI constexpr auto retarget(auto arch, T x0, Ts... xs) const
     {
       return this->behavior(arch, this->options(), x0, xs...);
     }

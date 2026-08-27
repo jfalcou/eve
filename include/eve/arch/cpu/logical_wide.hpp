@@ -110,7 +110,7 @@ namespace eve
     template<typename N> using rescale = logical<wide<Type,N>>;
 
     //! Returns the alignment expected to be used to store a eve::logical
-    static EVE_ABI constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal::value; }
+    EVE_ABI static constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal::value; }
 
     //==============================================================================================
     //! @name Constructors
@@ -285,13 +285,13 @@ namespace eve
     //==============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_ABI constexpr size_type size()     noexcept { return Cardinal::value; }
+    EVE_ABI static constexpr size_type size()     noexcept { return Cardinal::value; }
 
     //! @brief Maximal number of lanes for a given wide
-    static EVE_ABI constexpr size_type max_size() noexcept { return Cardinal::value; }
+    EVE_ABI static constexpr size_type max_size() noexcept { return Cardinal::value; }
 
     //! @brief Check if a wide contains 0 lanes
-    static EVE_ABI constexpr bool      empty()    noexcept { return false; }
+    EVE_ABI static constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     //! @}
@@ -316,7 +316,7 @@ namespace eve
     //==============================================================================================
     //! Perform a logical and operation between two eve::logical
     template<typename U>
-    friend EVE_ABI common_logical_t<logical, logical<wide<U, Cardinal>>>
+    EVE_ABI friend common_logical_t<logical, logical<wide<U, Cardinal>>>
     operator&&(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_and(a, b);
@@ -324,21 +324,21 @@ namespace eve
 
     //! Perform a logical and operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_ABI common_logical_t<logical, S> operator&&(logical const& w, S s) noexcept
+    EVE_ABI friend common_logical_t<logical, S> operator&&(logical const& w, S s) noexcept
     {
       return logical_and(w, s);
     }
 
     //! Perform a logical and operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_ABI common_logical_t<S, logical> operator&&(S s, logical const& w) noexcept
+    EVE_ABI friend common_logical_t<S, logical> operator&&(S s, logical const& w) noexcept
     {
       return logical_and(s, w);
     }
 
     //! Perform a logical or operation between two eve::logical
     template<typename U>
-    friend EVE_ABI common_logical_t<logical, logical<wide<U, Cardinal>>>
+    EVE_ABI friend common_logical_t<logical, logical<wide<U, Cardinal>>>
     operator||(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
       return logical_or(a, b);
@@ -346,20 +346,20 @@ namespace eve
 
     //! Perform a logical or operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_ABI common_logical_t<logical, S> operator||(logical const& w, S s) noexcept
+    EVE_ABI friend common_logical_t<logical, S> operator||(logical const& w, S s) noexcept
     {
       return logical_or(w, s);
     }
 
     //! Perform a logical or operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_ABI common_logical_t<S, logical> operator||(S s, logical const& w) noexcept
+    EVE_ABI friend common_logical_t<S, logical> operator||(S s, logical const& w) noexcept
     {
       return logical_or(s, w);
     }
 
     //! Computes the logical complement of its parameter
-    friend EVE_ABI auto operator!(logical const& v) noexcept
+    EVE_ABI friend auto operator!(logical const& v) noexcept
     {
       return logical_not(v);
     }
@@ -376,7 +376,7 @@ namespace eve
     //==============================================================================================
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_ABI void swap(logical &lhs, logical &rhs) noexcept
+    EVE_ABI friend void swap(logical &lhs, logical &rhs) noexcept
     {
       lhs.swap(rhs);
     }
@@ -481,28 +481,28 @@ namespace eve
     //==============================================================================================
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
     template<logical_scalar_value S>
-    friend EVE_ABI auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
+    EVE_ABI friend auto operator==(logical w, S s) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     ////! @brief Element-wise equality comparison of a scalar value and a eve::logical
     template<logical_scalar_value S>
-    friend EVE_ABI auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
+    EVE_ABI friend auto operator==(S s, logical w) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
     template<logical_scalar_value S>
-    friend EVE_ABI auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
+    EVE_ABI friend auto operator!=(logical w, S s) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
     template<logical_scalar_value S>
-    friend EVE_ABI auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
+    EVE_ABI friend auto operator!=(S s, logical w) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }

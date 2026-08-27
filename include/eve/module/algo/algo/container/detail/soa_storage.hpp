@@ -29,7 +29,7 @@ namespace eve::algo::_
     }
 
     template <typename T, typename U>
-    static EVE_ABI auto align_to_cacheline(U* p) noexcept
+    EVE_ABI static auto align_to_cacheline(U* p) noexcept
     {
       return eve::as_aligned(reinterpret_cast<T*>(p), eve::_::cache_line_cardinal<T>{});
     }
@@ -179,7 +179,7 @@ namespace eve::algo::_
     data_ptr_type data_;
     std::size_t   capacity_;
 
-    template<typename T> static EVE_ABI auto as_aligned_pointer(T* ptr)
+    template<typename T> EVE_ABI static auto as_aligned_pointer(T* ptr)
     {
       return eve::as_aligned(ptr, eve::_::cache_line_cardinal<T>{});
     }

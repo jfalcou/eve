@@ -92,7 +92,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr  EVE_ABI T exp_int_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+    EVE_ABI constexpr T exp_int_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr(O::contains(raw)|| O::contains(fast))

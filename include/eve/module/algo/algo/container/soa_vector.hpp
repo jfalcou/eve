@@ -258,7 +258,7 @@ namespace eve::algo
     }
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_ABI void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
+    EVE_ABI friend void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
 
     //! @brief Retrieves an instance of the current allocator
     Allocator get_allocator() { return storage.get_allocator(); }

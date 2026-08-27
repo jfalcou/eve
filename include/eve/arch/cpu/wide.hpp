@@ -128,7 +128,7 @@ namespace eve
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type, N>;
 
-    static EVE_ABI constexpr auto alignment() noexcept
+    EVE_ABI static constexpr auto alignment() noexcept
     {
       return sizeof(Type) * Cardinal {};
     }
@@ -195,7 +195,7 @@ namespace eve
 
     //! Constructs a eve::wide from a sequence of values
     template<typename S0, typename... Ss>
-    explicit EVE_ABI wide(S0 const& v0, Ss const&...vs) noexcept
+    EVE_ABI explicit wide(S0 const& v0, Ss const&...vs) noexcept
     requires(eve::sized_product_type_or_more<Type,1+sizeof...(Ss)>)
     {
       storage_base::storage() = [&]<std::size_t... I>(std::index_sequence<I...>)
@@ -432,7 +432,7 @@ namespace eve
     //! @}
     //==============================================================================================
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_ABI void swap(wide& lhs, wide& rhs) noexcept { lhs.swap(rhs); }
+    EVE_ABI friend void swap(wide& lhs, wide& rhs) noexcept { lhs.swap(rhs); }
 
     //==============================================================================================
     //! @name Indexing and reordering
@@ -440,13 +440,13 @@ namespace eve
     //=============================================================================================
 
     //! @brief Size of the wide in number of lanes
-    static EVE_ABI constexpr size_type size() noexcept { return Cardinal::value; }
+    EVE_ABI static constexpr size_type size() noexcept { return Cardinal::value; }
 
     //! @brief Maximal number of lanes for a given wide
-    static EVE_ABI constexpr size_type max_size() noexcept { return Cardinal::value; }
+    EVE_ABI static constexpr size_type max_size() noexcept { return Cardinal::value; }
 
     //! @brief Check if a wide contains 0 lanes
-    static EVE_ABI constexpr bool empty() noexcept { return false; }
+    EVE_ABI static constexpr bool empty() noexcept { return false; }
 
     //==============================================================================================
     //! @}
@@ -457,7 +457,7 @@ namespace eve
     //==============================================================================================
 
     //! @brief Performs a bitwise complement on all the wide lanes
-    friend EVE_ABI wide operator~(wide const& v) noexcept
+    EVE_ABI friend wide operator~(wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif
@@ -468,7 +468,7 @@ namespace eve
     //! @brief Performs a compound bitwise and on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_ABI wide& operator&=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
@@ -480,7 +480,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_ABI wide operator&(wide const& a, wide<U, M> const& b) noexcept
+    EVE_ABI friend wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
@@ -491,7 +491,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide operator&(wide const& w, S s) noexcept
+    EVE_ABI friend wide operator&(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
@@ -502,7 +502,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide<S, Cardinal> operator&(S s, wide const& w) noexcept
+    EVE_ABI friend wide<S, Cardinal> operator&(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
@@ -513,7 +513,7 @@ namespace eve
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_ABI wide& operator|=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator|=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
@@ -525,7 +525,7 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_ABI wide operator|(wide const& a, wide<U, M> const& b) noexcept
+    EVE_ABI friend wide operator|(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
@@ -536,7 +536,7 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide operator|(wide const& w, S s) noexcept
+    EVE_ABI friend wide operator|(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
@@ -547,7 +547,7 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide<S, Cardinal> operator|(S s, wide const& w) noexcept
+    EVE_ABI friend wide<S, Cardinal> operator|(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
@@ -557,7 +557,7 @@ namespace eve
 
     //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
     template<value V>
-    friend EVE_ABI wide& operator^=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
@@ -569,7 +569,7 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_ABI wide operator^(wide const& a, wide<U, M> const& b) noexcept
+    EVE_ABI friend wide operator^(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
@@ -580,7 +580,7 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide operator^(wide const& w, S s) noexcept
+    EVE_ABI friend wide operator^(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
@@ -591,7 +591,7 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_ABI wide<S, Cardinal> operator^(S s, wide const& w) noexcept
+    EVE_ABI friend wide<S, Cardinal> operator^(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
@@ -603,10 +603,10 @@ namespace eve
     // Arithmetic operators
     //==============================================================================================
     //! Unary plus operator
-    friend EVE_ABI wide operator+(wide const& v) noexcept { return v; }
+    EVE_ABI friend wide operator+(wide const& v) noexcept { return v; }
 
     //! Unary minus operator. See also: eve::minus
-    friend EVE_ABI wide operator-(wide const& v) noexcept
+    EVE_ABI friend wide operator-(wide const& v) noexcept
         requires(!eve::product_type<Type>)
     {
       return minus(v);
@@ -615,7 +615,7 @@ namespace eve
     //! @brief Performs the compound addition on all the wide lanes and assign the result
     //! to the current one. See also: eve::add
     template<value V>
-    friend EVE_ABI wide& operator+=(wide& w, V v) noexcept
+    EVE_ABI friend wide& operator+=(wide& w, V v) noexcept
       requires(!eve::product_type<Type>)
     {
       w = add(w, v);
@@ -624,7 +624,7 @@ namespace eve
 
     //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
-    friend EVE_ABI wide operator+(wide const& a, wide const& b) noexcept
+    EVE_ABI friend wide operator+(wide const& a, wide const& b) noexcept
     requires(!eve::product_type<Type>)
     {
       return add(a, b);
@@ -632,7 +632,7 @@ namespace eve
 
     //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
-    friend EVE_ABI wide operator+(plain_scalar_value auto s, wide const& v) noexcept
+    EVE_ABI friend wide operator+(plain_scalar_value auto s, wide const& v) noexcept
     requires(!eve::product_type<Type>)
     {
       return add(v, wide{s});
@@ -640,7 +640,7 @@ namespace eve
 
     //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
-    friend EVE_ABI wide operator+(wide const& v, plain_scalar_value auto s) noexcept
+    EVE_ABI friend wide operator+(wide const& v, plain_scalar_value auto s) noexcept
     requires(!eve::product_type<Type>)
     {
       return add(v, wide{s});
@@ -649,7 +649,7 @@ namespace eve
     //! @brief Performs the compound difference on all the wide lanes and assign
     //! the result to the current one. See also: eve::sub
     template<value V>
-    friend EVE_ABI wide& operator-=(wide& w, V v) noexcept
+    EVE_ABI friend wide& operator-=(wide& w, V v) noexcept
       requires(!eve::product_type<Type>)
     {
       w = sub(w, v);
@@ -658,7 +658,7 @@ namespace eve
 
     //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
-    friend EVE_ABI wide operator-(wide const& a, wide const& b) noexcept
+    EVE_ABI friend wide operator-(wide const& a, wide const& b) noexcept
     requires(!eve::product_type<Type>)
     {
       return sub(a, b);
@@ -666,7 +666,7 @@ namespace eve
 
     //! @brief Performs the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
-    friend EVE_ABI wide operator-(plain_scalar_value auto s, wide const& w) noexcept
+    EVE_ABI friend wide operator-(plain_scalar_value auto s, wide const& w) noexcept
         requires(!eve::product_type<Type>)
     {
       return sub(wide{s}, w);
@@ -674,7 +674,7 @@ namespace eve
 
     //! @brief Performs the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
-    friend EVE_ABI wide operator-(wide const& w, plain_scalar_value auto s) noexcept
+    EVE_ABI friend wide operator-(wide const& w, plain_scalar_value auto s) noexcept
         requires(!eve::product_type<Type>)
     {
       return sub(w, wide{s});
@@ -683,7 +683,7 @@ namespace eve
     //! @brief Performs the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
     template<value V>
-    friend EVE_ABI wide& operator*=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator*=(wide& w, V o) noexcept
         requires(!eve::product_type<Type>)
     {
       w = mul(w, o);
@@ -692,7 +692,7 @@ namespace eve
 
     //! @brief Performs the product between all lanes of its parameters
     //! See also: eve::mul
-    friend EVE_ABI wide operator*(wide const& a, wide const& b) noexcept
+    EVE_ABI friend wide operator*(wide const& a, wide const& b) noexcept
       requires(!eve::product_type<Type>)
     {
       return mul(a, b);
@@ -700,7 +700,7 @@ namespace eve
 
     //! @brief Performs the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
-    friend EVE_ABI wide operator*(plain_scalar_value auto s, wide const& w) noexcept
+    EVE_ABI friend wide operator*(plain_scalar_value auto s, wide const& w) noexcept
         requires(!eve::product_type<Type>)
     {
       return mul(s, w);
@@ -708,7 +708,7 @@ namespace eve
 
     //! @brief Performs the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
-    friend EVE_ABI wide operator*(wide const& w, plain_scalar_value auto s) noexcept
+    EVE_ABI friend wide operator*(wide const& w, plain_scalar_value auto s) noexcept
       requires(!eve::product_type<Type>)
     {
       return mul(w, s);
@@ -717,7 +717,7 @@ namespace eve
     //! @brief Performs the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
     template<value V>
-    friend EVE_ABI wide& operator/=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator/=(wide& w, V o) noexcept
         requires(!eve::product_type<Type>)
     {
       w = div(w, o);
@@ -726,7 +726,7 @@ namespace eve
 
     //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
-    friend EVE_ABI wide operator/(wide const& a, wide const& b) noexcept
+    EVE_ABI friend wide operator/(wide const& a, wide const& b) noexcept
         requires(!eve::product_type<Type>)
     {
       return div(a, b);
@@ -734,7 +734,7 @@ namespace eve
 
     //! @brief Performs the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
-    friend EVE_ABI wide operator/(plain_scalar_value auto s, wide const& w) noexcept
+    EVE_ABI friend wide operator/(plain_scalar_value auto s, wide const& w) noexcept
         requires(!eve::product_type<Type>)
     {
       return div(wide{s}, w);
@@ -742,7 +742,7 @@ namespace eve
 
     //! @brief Performs the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
-    friend EVE_ABI wide operator/(wide const& v, plain_scalar_value auto s) noexcept
+    EVE_ABI friend wide operator/(wide const& v, plain_scalar_value auto s) noexcept
         requires(!eve::product_type<Type>)
     {
       return div(v, wide{s});
@@ -752,7 +752,7 @@ namespace eve
     //! the result to the current one. Does not participate in overload resolution
     //! if `Type` does not models integral_scalar_value
     template<integral_value V>
-    friend EVE_ABI wide& operator%=(wide& w, V o) noexcept
+    EVE_ABI friend wide& operator%=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
@@ -764,7 +764,7 @@ namespace eve
     //! @brief Performs the modulo between all lanes of its parameters.
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
-    friend EVE_ABI wide operator%(wide const& a, wide const& b) noexcept
+    EVE_ABI friend wide operator%(wide const& a, wide const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
@@ -776,7 +776,7 @@ namespace eve
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
     template<integral_scalar_value S>
-    friend EVE_ABI auto operator%(S s, wide const& w) noexcept
+    EVE_ABI friend auto operator%(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
@@ -787,7 +787,7 @@ namespace eve
     //! @brief Performs the modulo between all lanes of a eve::wide and a scalar
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
-    friend EVE_ABI auto operator%(wide const& w, integral_scalar_value auto s) noexcept
+    EVE_ABI friend auto operator%(wide const& w, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type> && integral_scalar_value<Type>)
 #endif
@@ -798,7 +798,7 @@ namespace eve
     //! @brief Performs the compound left-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend EVE_ABI wide& operator<<=(wide& w, S s) noexcept
+    EVE_ABI friend wide& operator<<=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif
@@ -810,7 +810,7 @@ namespace eve
     //! @brief Performs the compound left-shift on all the eve::wide lanes with a constant and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
-    friend EVE_ABI wide& operator<<=(wide& w, index_t<V> const& s) noexcept
+    EVE_ABI friend wide& operator<<=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif
@@ -821,14 +821,14 @@ namespace eve
 
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S>
-    friend EVE_ABI wide operator<<(wide w, S s) noexcept
+    EVE_ABI friend wide operator<<(wide w, S s) noexcept
     {
       return shl(w, s);
     }
 
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
-    friend EVE_ABI wide operator<<(wide w, index_t<V> const& s) noexcept
+    EVE_ABI friend wide operator<<(wide w, index_t<V> const& s) noexcept
     {
       return shl(w, s);
     }
@@ -836,7 +836,7 @@ namespace eve
     //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend EVE_ABI wide& operator>>=(wide& w, S s) noexcept
+    EVE_ABI friend wide& operator>>=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif
@@ -848,7 +848,7 @@ namespace eve
     //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
-    friend EVE_ABI wide& operator>>=(wide& w, index_t<V> const& s) noexcept
+    EVE_ABI friend wide& operator>>=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif
@@ -859,14 +859,14 @@ namespace eve
 
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S>
-    friend EVE_ABI wide operator>>(wide w, S s) noexcept
+    EVE_ABI friend wide operator>>(wide w, S s) noexcept
     {
       return shr(w, s);
     }
 
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
-    friend EVE_ABI auto operator>>(wide w, index_t<V> const& s) noexcept
+    EVE_ABI friend auto operator>>(wide w, index_t<V> const& s) noexcept
     {
       return shr(w, s);
     }
@@ -875,47 +875,47 @@ namespace eve
     // Logical operations
     //==============================================================================================
     //! @brief Element-wise equality comparison of two eve::wide
-    friend EVE_ABI auto operator==(wide a, wide b) noexcept
+    EVE_ABI friend auto operator==(wide a, wide b) noexcept
     {
       return is_equal(a, b);
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_ABI auto operator==(wide w, S s) noexcept -> decltype(is_equal(w,s))
+    EVE_ABI friend auto operator==(wide w, S s) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator==(S s, wide w) noexcept -> decltype(is_equal(w,s))
+    EVE_ABI friend auto operator==(S s, wide w) noexcept -> decltype(is_equal(w,s))
     {
       return is_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of two eve::wide
-    friend EVE_ABI auto operator!=(wide a, wide b) noexcept
+    EVE_ABI friend auto operator!=(wide a, wide b) noexcept
     {
       return is_not_equal(a, b);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
-    friend EVE_ABI auto operator!=(wide w, S s) noexcept -> decltype(is_not_equal(w,s))
+    EVE_ABI friend auto operator!=(wide w, S s) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator!=(S s, wide w) noexcept -> decltype(is_not_equal(w,s))
+    EVE_ABI friend auto operator!=(S s, wide w) noexcept -> decltype(is_not_equal(w,s))
     {
       return is_not_equal(w, s);
     }
 
     //! @brief Element-wise less-than comparison between eve::wide
-    friend EVE_ABI auto operator<(wide a, wide b) noexcept
+    EVE_ABI friend auto operator<(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -925,7 +925,7 @@ namespace eve
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_ABI auto operator<(wide w, S s) noexcept -> decltype(is_less(w,s))
+    EVE_ABI friend auto operator<(wide w, S s) noexcept -> decltype(is_less(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -935,7 +935,7 @@ namespace eve
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator<(S s, wide w) noexcept -> decltype(is_less(s,w))
+    EVE_ABI friend auto operator<(S s, wide w) noexcept -> decltype(is_less(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -944,7 +944,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-than comparison between eve::wide
-    friend EVE_ABI auto operator>(wide a, wide b) noexcept
+    EVE_ABI friend auto operator>(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -954,7 +954,7 @@ namespace eve
 
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_ABI auto operator>(wide w, S s) noexcept -> decltype(is_greater(w,s))
+    EVE_ABI friend auto operator>(wide w, S s) noexcept -> decltype(is_greater(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -964,7 +964,7 @@ namespace eve
 
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator>(S s, wide w) noexcept -> decltype(is_greater(s,w))
+    EVE_ABI friend auto operator>(S s, wide w) noexcept -> decltype(is_greater(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -973,7 +973,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-or-equal comparison between eve::wide
-    friend EVE_ABI auto operator>=(wide a, wide b) noexcept
+    EVE_ABI friend auto operator>=(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -983,7 +983,7 @@ namespace eve
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_ABI auto operator>=(wide w, S s) noexcept -> decltype(is_greater_equal(w,s))
+    EVE_ABI friend auto operator>=(wide w, S s) noexcept -> decltype(is_greater_equal(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -993,7 +993,7 @@ namespace eve
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator>=(S s, wide w) noexcept -> decltype(is_greater_equal(s,w))
+    EVE_ABI friend auto operator>=(S s, wide w) noexcept -> decltype(is_greater_equal(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1002,7 +1002,7 @@ namespace eve
     }
 
     //! @brief Element-wise less-or-equal comparison between eve::wide
-    friend EVE_ABI auto operator<=(wide a, wide b) noexcept
+    EVE_ABI friend auto operator<=(wide a, wide b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1012,7 +1012,7 @@ namespace eve
 
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
     template<scalar_value S>
-    friend EVE_ABI auto operator<=(wide w, S s) noexcept -> decltype(is_less_equal(w,s))
+    EVE_ABI friend auto operator<=(wide w, S s) noexcept -> decltype(is_less_equal(w,s))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1022,7 +1022,7 @@ namespace eve
 
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
     template<scalar_value S>
-    friend EVE_ABI auto operator<=(S s, wide w) noexcept -> decltype(is_less_equal(s,w))
+    EVE_ABI friend auto operator<=(S s, wide w) noexcept -> decltype(is_less_equal(s,w))
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
 #endif
@@ -1031,7 +1031,7 @@ namespace eve
     }
 
     //! Computes the logical negation of its parameter
-    friend EVE_ABI logical<wide> operator!(wide v) noexcept
+    EVE_ABI friend logical<wide> operator!(wide v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!eve::product_type<Type>)
 #endif

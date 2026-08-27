@@ -17,7 +17,7 @@ template<typename Options>
 struct pi_pow_e_t : constant_callable<pi_pow_e_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
+  EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {

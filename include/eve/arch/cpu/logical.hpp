@@ -90,33 +90,33 @@ namespace eve
     EVE_ABI constexpr logical operator!() const noexcept { return {!value_}; }
 
     template<arithmetic_scalar_value U>
-    friend EVE_ABI common_logical_t<T, U> operator&&(logical const& v, logical<U> const& w) noexcept
+    EVE_ABI friend common_logical_t<T, U> operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() && w.value()};
     }
 
-    friend EVE_ABI logical operator&&(logical const& v, bool const& w) noexcept
+    EVE_ABI friend logical operator&&(logical const& v, bool const& w) noexcept
     {
       return w ? v : logical{false};
     }
 
-    friend EVE_ABI logical operator&&(bool const& v, logical const& w) noexcept
+    EVE_ABI friend logical operator&&(bool const& v, logical const& w) noexcept
     {
       return v ? w : logical{false};
     }
 
     template<arithmetic_scalar_value U>
-    friend EVE_ABI common_logical_t<T, U> operator||(logical const& v, logical<U> const& w) noexcept
+    EVE_ABI friend common_logical_t<T, U> operator||(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() || w.value()};
     }
 
-    friend EVE_ABI logical operator||(logical const& v, bool const& w) noexcept
+    EVE_ABI friend logical operator||(logical const& v, bool const& w) noexcept
     {
       return w ? logical{true} : v;
     }
 
-    friend EVE_ABI logical operator||(bool const& v, logical const& w) noexcept
+    EVE_ABI friend logical operator||(bool const& v, logical const& w) noexcept
     {
       return v ? logical{true} : w;
     }
@@ -140,38 +140,38 @@ namespace eve
     // Comparison operators
     //==============================================================================================
     template<scalar_value U>
-    friend EVE_ABI common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
+    EVE_ABI friend common_logical_t<T, U> operator==(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() == w.value()};
     }
 
-    friend EVE_ABI logical operator==(logical const& v, bool w) noexcept
+    EVE_ABI friend logical operator==(logical const& v, bool w) noexcept
     {
       return v.value() == w;
     }
 
-    friend EVE_ABI logical operator==(bool v, logical const& w) noexcept
+    EVE_ABI friend logical operator==(bool v, logical const& w) noexcept
     {
       return w.value() == v;
     }
 
     template<scalar_value U>
-    friend EVE_ABI common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
+    EVE_ABI friend common_logical_t<T, U> operator!=(logical const& v, logical<U> const& w) noexcept
     {
       return common_logical_t<T, U>{v.value() != w.value()};
     }
 
-    friend EVE_ABI logical operator!=(logical const& v, bool w) noexcept
+    EVE_ABI friend logical operator!=(logical const& v, bool w) noexcept
     {
       return v.value() != w;
     }
 
-    friend EVE_ABI logical operator!=(bool v, logical const& w) noexcept
+    EVE_ABI friend logical operator!=(bool v, logical const& w) noexcept
     {
       return w.value() != v;
     }
 
-    friend EVE_ABI void swap(logical &lhs, logical &rhs) noexcept
+    EVE_ABI friend void swap(logical &lhs, logical &rhs) noexcept
     {
       lhs.swap(rhs);
     }
@@ -180,7 +180,7 @@ namespace eve
     // Stream insertion operator
     //==============================================================================================
     template<typename C, typename CT>
-    friend EVE_ABI auto& operator<<(std::basic_ostream<C, CT>& os, logical const &v)
+    EVE_ABI friend auto& operator<<(std::basic_ostream<C, CT>& os, logical const &v)
     {
       return os << (v.value_ ? "true" : "false");
     }

@@ -18,7 +18,7 @@ namespace eve
   {
     struct fill_zero
     {
-      constexpr EVE_ABI auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
+      EVE_ABI constexpr auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
     };
 
     template<typename T>

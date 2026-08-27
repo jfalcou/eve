@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     as_wide_as_t<double, T>
     double_factorial_(EVE_REQUIRES(cpu_), O const&, T i0) noexcept
     {

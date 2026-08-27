@@ -42,30 +42,30 @@ namespace eve
   template <rbr::concepts::settings Settings = rbr::settings<>>
   struct options : Settings
   {
-    constexpr EVE_ABI options() : Settings{} {}
+    EVE_ABI constexpr options() : Settings{} {}
 
     template <rbr::concepts::option... Options>
-    constexpr EVE_ABI explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
+    EVE_ABI constexpr explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
 
     template <typename... Options>
-    constexpr EVE_ABI explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
+    EVE_ABI constexpr explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
 
     template <rbr::concepts::keyword K>
-    constexpr EVE_ABI auto drop(K const& k) const noexcept
+    EVE_ABI constexpr auto drop(K const& k) const noexcept
     {
       auto dropped = rbr::drop(k, *this);
       return options<decltype(dropped)>{dropped};
     }
 
     template <rbr::concepts::keyword K0, rbr::concepts::keyword... Ks>
-    constexpr EVE_ABI auto drop(K0 const& k0, Ks const&... ks) const noexcept
+    EVE_ABI constexpr auto drop(K0 const& k0, Ks const&... ks) const noexcept
     {
       auto dropped = rbr::drop(k0, *this);
       return options<decltype(dropped)>{dropped}.drop(ks...);
     }
 
     template<rbr::concepts::keyword Ks>
-    constexpr EVE_ABI auto extract(Ks const& kws) const noexcept
+    EVE_ABI constexpr auto extract(Ks const& kws) const noexcept
     {
       auto    value   = (*this)[kws];
       auto    dropped =  rbr::drop(kws, *this);
@@ -145,8 +145,8 @@ namespace eve
   {
     using Options::process...;
 
-    constexpr EVE_ABI decorated_with() {}
-    constexpr EVE_ABI decorated_with(OptionsValues v) : OptionsValues(std::move(v)) {}
+    EVE_ABI constexpr decorated_with() {}
+    EVE_ABI constexpr decorated_with(OptionsValues v) : OptionsValues(std::move(v)) {}
 
     //==================================================================================================================
     //! @brief Adds an option to current callable

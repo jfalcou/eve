@@ -22,7 +22,7 @@ namespace eve
                                                 , full_circle_option, medium_option, big_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_ABI T operator()(as<T> v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(Rempio2_limit_t, Rempio2_limit_);
   };

@@ -265,7 +265,7 @@ namespace eve
     static constexpr bool is_complete     = false;
 
     //! Construct an eve::relative_conditional_expr that will keep the *n* first lanes
-    constexpr explicit EVE_ABI keep_first(std::ptrdiff_t n) noexcept : count_(n)
+    EVE_ABI constexpr explicit keep_first(std::ptrdiff_t n) noexcept : count_(n)
     {
       EVE_ASSERT(n >= 0, "[eve::keep_first] Invalid count");
     }
@@ -336,7 +336,7 @@ namespace eve
     static constexpr bool is_complete     = false;
 
     //! Construct an eve::relative_conditional_expr that will ignore the *n* last lanes
-    constexpr explicit EVE_ABI ignore_last(std::ptrdiff_t n) noexcept : count_(n)
+    EVE_ABI constexpr explicit ignore_last(std::ptrdiff_t n) noexcept : count_(n)
     {
       EVE_ASSERT(n >= 0, "[eve::ignore_last] Invalid count");
     }
@@ -406,7 +406,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr explicit EVE_ABI keep_last(std::ptrdiff_t n) noexcept : count_(n)
+    EVE_ABI constexpr explicit keep_last(std::ptrdiff_t n) noexcept : count_(n)
     {
       EVE_ASSERT(n >= 0, "[eve::keep_last] Invalid count");
     }
@@ -476,7 +476,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr explicit EVE_ABI ignore_first(std::ptrdiff_t n) noexcept : count_(n)
+    EVE_ABI constexpr explicit ignore_first(std::ptrdiff_t n) noexcept : count_(n)
     {
       EVE_ASSERT(n >= 0, "[eve::ignore_first] Invalid count");
     }
@@ -546,7 +546,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr EVE_ABI keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
+    EVE_ABI constexpr keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e)
     {
       EVE_ASSERT((b >= 0) && (b <= e), "[eve::keep_between] Invalid begin/end indices");
     }
@@ -616,7 +616,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr EVE_ABI ignore_extrema(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
+    EVE_ABI constexpr ignore_extrema(std::ptrdiff_t b, std::ptrdiff_t e) noexcept
             : first_count_(b), last_count_(e)
     {
       EVE_ASSERT((b >= 0) && (e >= 0), "[eve::ignore_extrema] Invalid first/last indices");
@@ -674,12 +674,12 @@ namespace eve
     std::ptrdiff_t first_count_, last_count_;
   };
 
-  constexpr EVE_ABI ignore_extrema operator&&( ignore_first a, ignore_last b) noexcept
+  EVE_ABI constexpr ignore_extrema operator&&( ignore_first a, ignore_last b) noexcept
   {
     return {a.count_, b.count_};
   }
 
-  constexpr EVE_ABI ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
+  EVE_ABI constexpr ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
   {
     return a && b;
   }

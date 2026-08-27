@@ -19,7 +19,7 @@ namespace eve
   struct prime_floor_t : strict_elementwise_callable<prime_floor_t, Options>
   {
     template<eve::unsigned_value T>
-    constexpr EVE_ABI
+    EVE_ABI constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<eve::unsigned_value T, floating_scalar_value U>
@@ -85,7 +85,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    constexpr EVE_ABI T
+    EVE_ABI constexpr T
     prime_floor_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
@@ -111,14 +111,14 @@ namespace eve
     }
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
-    constexpr EVE_ABI auto
+    EVE_ABI constexpr auto
     prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       return convert(prime_floor(convert(n, as<uint32_t>())), target);
     }
 
     template<unsigned_value T,  floating_scalar_value U, callable_options O>
-    constexpr EVE_ABI auto
+    EVE_ABI constexpr auto
     prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       auto r = convert(prime_floor(convert(n, as<uint32_t>())), target);

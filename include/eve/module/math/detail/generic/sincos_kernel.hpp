@@ -32,7 +32,7 @@ namespace eve
                                              rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_ABI zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sincos_kernel_t, sincos_kernel_);
   };

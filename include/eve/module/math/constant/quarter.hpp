@@ -17,7 +17,7 @@ template<typename Options>
 struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_ABI constexpr T value(eve::as<T> const&, Opts const&)
+  EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
   {
     return T(0.25);
   }

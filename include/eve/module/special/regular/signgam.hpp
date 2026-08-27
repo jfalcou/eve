@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_ABI T
+    EVE_ABI constexpr T
     signgam_(EVE_REQUIRES(cpu_), O const &, T a0)
     {
       auto isleza0 = is_ngtz(a0);
