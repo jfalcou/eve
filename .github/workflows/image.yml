@@ -46,6 +46,17 @@ jobs:
       ## The whole repository is the context so the image carries the commit that built it, and
       ## the layer cache keeps a rebuild down to the EVE install itself.
       ##==========================================================================================
+      ##==========================================================================================
+      ## A rolling image built from main has no release to name itself after, so it carries the
+      ## day it was built and the commit it was built from, short enough to read.
+      ##==========================================================================================
+      - name: Name this build
+        id: naming
+        shell: bash
+        run: |
+          echo "date=$(date -u +%Y.%m.%d)" >> "$GITHUB_OUTPUT"
+          echo "commit=${GITHUB_SHA:0:7}"  >> "$GITHUB_OUTPUT"
+
       - name: Build and Publish
         uses: docker/build-push-action@v7
         with:
@@ -54,6 +65,12 @@ jobs:
           push: true
           tags: |
             ghcr.io/jfalcou/eve:latest
-            ghcr.io/jfalcou/eve:${{ github.sha }}
-          cache-from: type=registry,ref=ghcr.io/jfalcou/eve:buildcache
-          cache-to: type=registry,ref=ghcr.io/jfalcou/eve:buildcache,mode=max
+            ghcr.io/jfalcou/eve:${{ steps.naming.outputs.date }}
+            ghcr.io/jfalcou/eve:${{ steps.naming.outputs.commit }}
+          ##======================================================================================
+          ## The cache lives in the Actions cache, not in GHCR: a buildcache tag sitting next to
+          ## the images is the most recently published one, so the package page offers it as the
+          ## thing to pull.
+          ##======================================================================================
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
