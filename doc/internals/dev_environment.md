@@ -1,14 +1,17 @@
 Development Environment {#dev_environment}
 =======================
 
-When adding feature or fixing bugs within **EVE**, you may want to locally test your code for a
-non-trivial amount of architecture and instructions sets. As you may not have access to all the
-compilers or hardware necessary, **EVE** continuous integration and testing environment can be
-recreated locally.
+When adding a feature or fixing a bug within **EVE**, you may want to test your code locally over a
+non-trivial number of architectures and instruction sets. As you are unlikely to own all the
+hardware - or to have every compiler installed - two Docker images are published for that.
 
-**EVE** use a [pre-configured Docker image](https://github.com/jfalcou/compilers) based on Ubuntu
-that comes with preinstalled latest versions of g++ and clang  compilers for x86, ARM, AARCH64 and
-PowerPC. It is setup so that CI triggers works out of the box but also support manual usage.
+| Image                            | What it is                                                                     |
+|----------------------------------|--------------------------------------------------------------------------------|
+| `ghcr.io/jfalcou/compilers:v10`  | The image our CI runs in: g++ and clang for x86, ARM, AArch64, PowerPC64 and RISC-V, QEMU to execute what you cross-compile, and the Emscripten SDK for WebAssembly. Use it to reproduce a CI job exactly. |
+| `ghcr.io/jfalcou/eve:latest`     | The above, plus **EVE** already installed, its examples in place, and Intel SDE. Rebuilt on every push to `main`. Use it to try **EVE** out without building anything. |
+
+Both are built from [their own repository](https://github.com/jfalcou/compilers) and from
+`docker/Dockerfile` in this one respectively.
 
 @section dev_docker_setup Docker setup
 
@@ -39,11 +42,11 @@ proper installation.
 
 @section dev_docker_helper Running EVE docker
 
-Running **EVE** CI docker can be done by moving to **EVE** source folder than run the following
-command:
+Running the CI image over your own **EVE** checkout is done by moving to the **EVE** source folder
+then running:
 
 @verbatim
-docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
+docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v10
 @endverbatim
 
 This will give you access to an interactive shell running inside the Docker Image. We strongly
@@ -54,7 +57,7 @@ an instance of Docker.
 # .bashrc
 dockhere()
 {
-  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
+  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v10
 }
 @endverbatim
 
@@ -71,5 +74,24 @@ root@302ed6f6f4fa:/home/dyarosh/space/eve#      # Done
 
 From now on, we make the assumption your Docker instance is running and that you're logged into
 its interactive shell.
+
+@section dev_docker_eve Trying EVE without building it
+
+If all you want is to *use* **EVE** - run the examples, see what a kernel compiles to on another
+instruction set - the second image needs no checkout at all:
+
+@verbatim
+docker run -i -t ghcr.io/jfalcou/eve:latest
+@endverbatim
+
+**EVE** is installed, `examples/` holds every example, `toolchain/` holds the very scripts our CI
+uses to run a binary under emulation, and its `README.md` lists the commands. Intel SDE is on the
+path, so an AVX-512 build runs on any x86:
+
+@verbatim
+cd examples/bilateral
+g++-14 -std=c++23 -O3 -march=skylake-avx512 main.cpp -o bilateral
+sde64 -skx -- ./bilateral
+@endverbatim
 
 Next step is [configuring CMake and compiling some tests](@ref dev_cmake)

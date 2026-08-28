@@ -17,6 +17,9 @@ mkdir build_arch && cd build_arch
 instance. You can simply use them to configure your CMake. If you want to pass additional options,
 like specific architecture or optimization settings, you can use the `-DEVE_OPTIONS` CMake arguments.
 
+One of them stands apart: `clang.x86_sde.cmake` runs the tests under Intel SDE, which ships in the
+`ghcr.io/jfalcou/eve` image rather than in the CI one.
+
 The following table provides the CMake command line used for our classic CI setup using the Ninja
 generator.
 
@@ -24,7 +27,7 @@ generator.
 |----------------------|-------------------------------------------------------------------------------------------------------------------------|
 | Emulated             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-DEVE_NO_SIMD'               |
 | X86_sse2             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-msse2'                      |
-| X86_sse2-asan        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.asan.cmake -DEVE_OPTIONS='-msse2'                 |
+| X86_sse2-asan        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86_asan.cmake -DEVE_OPTIONS='-msse2'                 |
 | X86_sse4             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-msse4'                     |
 | X86_avx              | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx'                      |
 | X86_avx2             | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake  -DEVE_OPTIONS='-mavx2'                     |
@@ -38,6 +41,8 @@ generator.
 | Arm (sve-256)        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve256.cmake                                            |
 | Arm (sve-512)        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve512.cmake                                            |
 | PowerPC64            | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.ppc64.cmake                                             |
+| RISC-V (rvv-128)     | cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=run_rvv128 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.riscv.cmake -DEVE_OPTIONS='-mrvv-vector-bits=128 -march=rv64gcv -O3' |
+| RISC-V (rvv-256)     | cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=run_rvv256 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.riscv.cmake -DEVE_OPTIONS='-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3' |
 
 Once run, your build folder should contain all the necessary artifact to compile and run **EVE**
 test suite.
