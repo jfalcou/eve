@@ -101,31 +101,16 @@ namespace eve
   //================================================================================================
   // Check if at least one type inside a wide has an aggregated ABI
   //================================================================================================
-  template<typename T>
-  struct has_aggregated_component : std::bool_constant<aggregated_abi<T>> {};
-
   namespace _
   {
-    struct check_abi
-    {
-      template<typename A, typename T>
-      auto operator()(A const&, T const&) const noexcept
-      {
-        return std::bool_constant<A::value || eve::aggregated_abi<T>>{};
-      }
-    };
+    template<typename... Ts>
+    using has_aggregate = std::bool_constant<(eve::aggregated_abi<Ts> || ... || false)>;
   }
 
   template<typename T>
-  requires eve::product_type<T>
-  struct  has_aggregated_component<T>
-        : kumi::result::fold_left_t<_::check_abi, T, std::false_type>
-  {};
+  inline constexpr bool has_aggregated_component_v = eve::aggregated_abi<T>;
 
   template<typename T>
-  inline constexpr bool has_aggregated_component_v = has_aggregated_component<T>::value;
-
-  template<typename T>
-  using has_aggregated_component_t = typename has_aggregated_component<T>::type;
+  requires ( eve::product_type<T> )
+  inline constexpr bool has_aggregated_component_v<T> = kumi::apply_traits_t<_::has_aggregate, T>::value; 
 }
-

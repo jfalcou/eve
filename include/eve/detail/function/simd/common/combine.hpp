@@ -30,8 +30,8 @@ namespace eve::_
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
-
-    if constexpr( emulated_abi<abi_t<T, N>> )
+    
+    if constexpr( emulated_abi<abi_t<T,N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
@@ -41,7 +41,7 @@ namespace eve::_
       that.storage().assign_parts(l, h);
       return that;
     }
-    else if constexpr( bundle_abi<abi_t<T, N>> )
+    else if constexpr( bundle_abi<abi_t<T,N>> )
     {
       return that_t ( kumi::map ( local_combiner{}, l.storage(), h.storage() ) );
     }
