@@ -48,7 +48,7 @@ namespace eve::_
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
     // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
-    if constexpr( aggregated_abi<wide<float, N>> )
+    if constexpr( aggregated_abi<abi_t<float, N>> )
     {
       using card_t = expected_cardinal_t<float>;
       using base   = typename wide<eve::float16_t, N>::template rescale<card_t>;
