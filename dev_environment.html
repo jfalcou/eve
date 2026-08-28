@@ -122,8 +122,16 @@ $(function(){initNavTree('dev_environment.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__2____w_2eve_2eve_2doc_2internals_2dev__environment"></a></p>
-<p>When adding feature or fixing bugs within <b>EVE</b>, you may want to locally test your code for a non-trivial amount of architecture and instructions sets. As you may not have access to all the compilers or hardware necessary, <b>EVE</b> continuous integration and testing environment can be recreated locally.</p>
-<p><b>EVE</b> use a <a href="https://github.com/jfalcou/compilers">pre-configured Docker image</a> based on Ubuntu that comes with preinstalled latest versions of g++ and clang compilers for x86, ARM, AARCH64 and PowerPC. It is setup so that CI triggers works out of the box but also support manual usage.</p>
+<p>When adding a feature or fixing a bug within <b>EVE</b>, you may want to test your code locally over a non-trivial number of architectures and instruction sets. As you are unlikely to own all the hardware - or to have every compiler installed - two Docker images are published for that.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Image  </th><th class="markdownTableHeadNone">What it is  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ghcr.io/jfalcou/compilers:v10</span>  </td><td class="markdownTableBodyNone">The image our CI runs in: g++ and clang for x86, ARM, AArch64, PowerPC64 and RISC-V, QEMU to execute what you cross-compile, and the Emscripten SDK for WebAssembly. Use it to reproduce a CI job exactly.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ghcr.io/jfalcou/eve:latest</span>  </td><td class="markdownTableBodyNone">The above, plus <b>EVE</b> already installed, its examples in place, and Intel SDE. Rebuilt on every push to <span class="tt">main</span>. Use it to try <b>EVE</b> out without building anything.  </td></tr>
+</table>
+<p>Both are built from <a href="https://github.com/jfalcou/compilers">their own repository</a> and from <span class="tt">docker/Dockerfile</span> in this one respectively.</p>
 <h1 class="doxsection"><a class="anchor" id="dev_docker_setup"></a>
 Docker setup</h1>
 <p>First step is to install docker on your system. On most Linux, you can find docker in your usual package manager.</p>
@@ -139,13 +147,13 @@ Docker setup</h1>
 </pre><p>This command will download a small docker image, run it and display some message that confirms the proper installation.</p>
 <h1 class="doxsection"><a class="anchor" id="dev_docker_helper"></a>
 Running EVE docker</h1>
-<p>Running <b>EVE</b> CI docker can be done by moving to <b>EVE</b> source folder than run the following command:</p>
-<pre class="fragment">docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
+<p>Running the CI image over your own <b>EVE</b> checkout is done by moving to the <b>EVE</b> source folder then running:</p>
+<pre class="fragment">docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v10
 </pre><p>This will give you access to an interactive shell running inside the Docker Image. We strongly advice to make a small Bash function that you can add to your bash profile to easily spin up an instance of Docker.</p>
 <pre class="fragment"># .bashrc
 dockhere()
 {
-  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v9
+  docker run -i -t -v${PWD}:${PWD} ghcr.io/jfalcou/compilers:v10
 }
 </pre><p>From there, you can navigate to the source folder by <span class="tt">cd</span> into your folder:</p>
 <pre class="fragment">@:~/space/eve$ pwd                              # From eve directory
@@ -155,7 +163,15 @@ root@302ed6f6f4fa:                              # We are in docker in root
 root@302ed6f6f4fa:/# cd /home/dyarosh/space/eve # Go back to eve directory
 root@302ed6f6f4fa:/home/dyarosh/space/eve#      # Done
 </pre><p>From now on, we make the assumption your Docker instance is running and that you're logged into its interactive shell.</p>
-<p>Next step is <a class="el" href="dev_cmake.html" title="Building for Testing">configuring CMake and compiling some tests</a> </p>
+<h1 class="doxsection"><a class="anchor" id="dev_docker_eve"></a>
+Trying EVE without building it</h1>
+<p>If all you want is to <em>use</em> <b>EVE</b> - run the examples, see what a kernel compiles to on another instruction set - the second image needs no checkout at all:</p>
+<pre class="fragment">docker run -i -t ghcr.io/jfalcou/eve:latest
+</pre><p><b>EVE</b> is installed, <span class="tt">examples/</span> holds every example, <span class="tt">toolchain/</span> holds the very scripts our CI uses to run a binary under emulation, and its <span class="tt">README.md</span> lists the commands. Intel SDE is on the path, so an AVX-512 build runs on any x86:</p>
+<pre class="fragment">cd examples/bilateral
+g++-14 -std=c++23 -O3 -march=skylake-avx512 main.cpp -o bilateral
+sde64 -skx -- ./bilateral
+</pre><p>Next step is <a class="el" href="dev_cmake.html" title="Building for Testing">configuring CMake and compiling some tests</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

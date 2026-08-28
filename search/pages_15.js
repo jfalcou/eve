@@ -20,12 +20,13 @@ var searchData=
   ['to_20simd_20using_20eve_3a_3awide_17',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md99',1,'']]],
   ['toward_20simd_20algorithms_18',['Toward SIMD Algorithms',['../intro-02.html#autotoc_md104',1,'']]],
   ['traits_19',['traits',['../glossary_semantic.html#autotoc_md70',1,'ABI traits'],['../algo_rationale.html#autotoc_md63',1,'Algorithms traits']]],
-  ['tuning_20algorithms_20',['Tuning algorithms',['../intro-02.html#autotoc_md105',1,'']]],
-  ['tuple_20of_20simd_20registers_21',['Tuple of SIMD registers',['../intro-03.html#autotoc_md107',1,'']]],
-  ['tuples_22',['Tuples',['../intro-03.html',1,'']]],
-  ['tuples_23',['SIMD register of tuples',['../intro-03.html#autotoc_md108',1,'']]],
-  ['type_24',['type',['../glossary_semantic.html#autotoc_md69',1,'Element type'],['../structeve_1_1underlying__type.html#autotoc_md35',1,'Helper type']]],
-  ['type_20x_20cardinal_25',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
-  ['types_26',['Types',['../concepteve_1_1translatable__ptr.html#autotoc_md7',1,'Example Types'],['../concepteve_1_1plain__scalar__value.html#autotoc_md8',1,'Example Types'],['../concepteve_1_1logical__scalar__value.html#autotoc_md9',1,'Example Types'],['../concepteve_1_1product__scalar__value.html#autotoc_md10',1,'Example Types'],['../concepteve_1_1arithmetic__scalar__value.html#autotoc_md11',1,'Example Types'],['../concepteve_1_1logical__simd__value.html#autotoc_md12',1,'Example Types'],['../concepteve_1_1has__plain__translation.html#autotoc_md13',1,'Example Types']]],
-  ['types_27',['types',['../structeve_1_1abi.html#autotoc_md1',1,'Helper types'],['../structeve_1_1fundamental__cardinal.html#autotoc_md4',1,'Helper types'],['../structeve_1_1common__compatible.html#autotoc_md30',1,'Helper types'],['../structeve_1_1element__type.html#autotoc_md33',1,'Helper types'],['../structeve_1_1abi.html#autotoc_md0',1,'Member types'],['../structeve_1_1fundamental__cardinal.html#autotoc_md3',1,'Member types'],['../structeve_1_1cardinal.html#autotoc_md28',1,'Member types'],['../structeve_1_1common__compatible.html#autotoc_md29',1,'Member types'],['../structeve_1_1element__type.html#autotoc_md32',1,'Member types'],['../glossary_semantic.html#autotoc_md67',1,'Property of EVE types']]]
+  ['trying_20eve_20without_20building_20it_20',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
+  ['tuning_20algorithms_21',['Tuning algorithms',['../intro-02.html#autotoc_md105',1,'']]],
+  ['tuple_20of_20simd_20registers_22',['Tuple of SIMD registers',['../intro-03.html#autotoc_md107',1,'']]],
+  ['tuples_23',['Tuples',['../intro-03.html',1,'']]],
+  ['tuples_24',['SIMD register of tuples',['../intro-03.html#autotoc_md108',1,'']]],
+  ['type_25',['type',['../glossary_semantic.html#autotoc_md69',1,'Element type'],['../structeve_1_1underlying__type.html#autotoc_md35',1,'Helper type']]],
+  ['type_20x_20cardinal_26',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
+  ['types_27',['Types',['../concepteve_1_1translatable__ptr.html#autotoc_md7',1,'Example Types'],['../concepteve_1_1plain__scalar__value.html#autotoc_md8',1,'Example Types'],['../concepteve_1_1logical__scalar__value.html#autotoc_md9',1,'Example Types'],['../concepteve_1_1product__scalar__value.html#autotoc_md10',1,'Example Types'],['../concepteve_1_1arithmetic__scalar__value.html#autotoc_md11',1,'Example Types'],['../concepteve_1_1logical__simd__value.html#autotoc_md12',1,'Example Types'],['../concepteve_1_1has__plain__translation.html#autotoc_md13',1,'Example Types']]],
+  ['types_28',['types',['../structeve_1_1abi.html#autotoc_md1',1,'Helper types'],['../structeve_1_1fundamental__cardinal.html#autotoc_md4',1,'Helper types'],['../structeve_1_1common__compatible.html#autotoc_md30',1,'Helper types'],['../structeve_1_1element__type.html#autotoc_md33',1,'Helper types'],['../structeve_1_1abi.html#autotoc_md0',1,'Member types'],['../structeve_1_1fundamental__cardinal.html#autotoc_md3',1,'Member types'],['../structeve_1_1cardinal.html#autotoc_md28',1,'Member types'],['../structeve_1_1common__compatible.html#autotoc_md29',1,'Member types'],['../structeve_1_1element__type.html#autotoc_md32',1,'Member types'],['../glossary_semantic.html#autotoc_md67',1,'Property of EVE types']]]
 ];

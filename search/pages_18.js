@@ -7,6 +7,7 @@ var searchData=
   ['with_20alternative_4',['Mask with alternative',['../conditional.html#autotoc_md94',1,'']]],
   ['with_20cmake_5',['Use with CMake',['../setup.html#autotoc_md89',1,'']]],
   ['with_20native_20code_6',['Interaction with native code.',['../inter-with-native.html',1,'']]],
-  ['writing_20the_20dynamic_20function_20hub_7',['Writing the dynamic function hub',['../multiarch.html#autotoc_md118',1,'']]],
-  ['writing_20the_20kernel_8',['Writing the kernel',['../multiarch.html#autotoc_md117',1,'']]]
+  ['without_20building_20it_7',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
+  ['writing_20the_20dynamic_20function_20hub_8',['Writing the dynamic function hub',['../multiarch.html#autotoc_md118',1,'']]],
+  ['writing_20the_20kernel_9',['Writing the kernel',['../multiarch.html#autotoc_md117',1,'']]]
 ];

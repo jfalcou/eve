@@ -128,6 +128,7 @@ CMake setup</h1>
 <p>First, you'd need to create a build directory and cd into it</p>
 <pre class="fragment">mkdir build_arch &amp;&amp; cd build_arch
 </pre><p><b>EVE</b> provides a set of CMake toolchain files configured for each compiler present in the Docker instance. You can simply use them to configure your CMake. If you want to pass additional options, like specific architecture or optimization settings, you can use the <span class="tt">-DEVE_OPTIONS</span> CMake arguments.</p>
+<p>One of them stands apart: <span class="tt">clang.x86_sde.cmake</span> runs the tests under Intel SDE, which ships in the <span class="tt">ghcr.io/jfalcou/eve</span> image rather than in the CI one.</p>
 <p>The following table provides the CMake command line used for our classic CI setup using the Ninja generator.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -137,7 +138,7 @@ CMake setup</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">X86_sse2  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-msse2'  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">X86_sse2-asan  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.asan.cmake -DEVE_OPTIONS='-msse2'  </td></tr>
+<td class="markdownTableBodyNone">X86_sse2-asan  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86_asan.cmake -DEVE_OPTIONS='-msse2'  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">X86_sse4  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-msse4'  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -164,6 +165,10 @@ CMake setup</h1>
 <td class="markdownTableBodyNone">Arm (sve-512)  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve512.cmake  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">PowerPC64  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.ppc64.cmake  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">RISC-V (rvv-128)  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=run_rvv128 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.riscv.cmake -DEVE_OPTIONS='-mrvv-vector-bits=128 -march=rv64gcv -O3'  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">RISC-V (rvv-256)  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=run_rvv256 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.riscv.cmake -DEVE_OPTIONS='-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3'  </td></tr>
 </table>
 <p>Once run, your build folder should contain all the necessary artifact to compile and run <b>EVE</b> test suite.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md65"></a>

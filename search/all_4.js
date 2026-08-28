@@ -60,8 +60,9 @@ var searchData=
   ['broadcast_5flane_57',['broadcast_lane',['../group__core__named__shuffles_ga9a82942f0d1facc72749788d545576fa.html#ga9a82942f0d1facc72749788d545576fa',1,'eve']]],
   ['bug_20fixes_58',['Bug Fixes',['../changelog.html#autotoc_md43',1,'']]],
   ['building_20for_20testing_59',['Building for Testing',['../dev_cmake.html',1,'']]],
-  ['building_20the_20documentation_60',['Building the Documentation',['../setup.html#autotoc_md84',1,'']]],
-  ['byte_5freverse_61',['byte_reverse',['../group__core__bitops_gab21caf2aeece0c2486bd80d7e5d9dc2c.html#gab21caf2aeece0c2486bd80d7e5d9dc2c',1,'eve']]],
-  ['byte_5fswap_5fadjacent_62',['byte_swap_adjacent',['../group__core__bitops_ga26b08595fa85a206ed5bd09848338f55.html#ga26b08595fa85a206ed5bd09848338f55',1,'eve']]],
-  ['byte_5fswap_5fpairs_63',['byte_swap_pairs',['../group__core__bitops_ga030e462fe0a8e9815b08326264d106bd.html#ga030e462fe0a8e9815b08326264d106bd',1,'eve']]]
+  ['building_20it_60',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
+  ['building_20the_20documentation_61',['Building the Documentation',['../setup.html#autotoc_md84',1,'']]],
+  ['byte_5freverse_62',['byte_reverse',['../group__core__bitops_gab21caf2aeece0c2486bd80d7e5d9dc2c.html#gab21caf2aeece0c2486bd80d7e5d9dc2c',1,'eve']]],
+  ['byte_5fswap_5fadjacent_63',['byte_swap_adjacent',['../group__core__bitops_ga26b08595fa85a206ed5bd09848338f55.html#ga26b08595fa85a206ed5bd09848338f55',1,'eve']]],
+  ['byte_5fswap_5fpairs_64',['byte_swap_pairs',['../group__core__bitops_ga030e462fe0a8e9815b08326264d106bd.html#ga030e462fe0a8e9815b08326264d106bd',1,'eve']]]
 ];
