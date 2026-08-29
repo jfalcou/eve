@@ -10,6 +10,11 @@ PROJECT_LOGO           = logo.svg
 
 OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
 CREATE_SUBDIRS         = NO
+
+## Lands in the deployed directory, so projects documenting on top of EVE can point their
+## TAGFILES at https://jfalcou.github.io/eve/eve.tag and link back to these pages.
+GENERATE_TAGFILE       = $(EVE_DOXYGEN_OUPUT)/eve.tag
+
 ALLOW_UNICODE_NAMES    = NO
 
 BRIEF_MEMBER_DESC      = YES
