@@ -17,14 +17,14 @@
 namespace eve::_
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto to_logical(wide<T, N> const& v) noexcept
+   auto to_logical(wide<T, N> const& v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     return v != 0;
   }
 
   template<relative_conditional_expr C, simd_value S>
-  EVE_FORCEINLINE as_logical_t<S> to_logical_impl([[maybe_unused]] sve_ tag, C c, [[maybe_unused]] as<S> tgt) noexcept
+   as_logical_t<S> to_logical_impl([[maybe_unused]] sve_ tag, C c, [[maybe_unused]] as<S> tgt) noexcept
     requires sve_abi<typename S::abi_type>
   {
     using T = element_type_t<as_arithmetic_t<S>>;

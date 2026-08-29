@@ -20,19 +20,19 @@ namespace eve
   {
 //     template<value Tup1, value Tup2>
 //     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>>)// && Options::contains(widen))
-//     EVE_FORCEINLINE constexpr
+//     EVE_ABI constexpr
 //     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
 //     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
     template<value Tup1, value Tup2>
     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>> && Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_t<kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
     template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::product_type<element_type_t<Tup1>> && eve::product_type<element_type_t<Tup2>> && !Options::contains(widen))
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
@@ -92,14 +92,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto covariance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto covariance_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return covariance[o.drop(widen)](upgrade(ts)...);
     }
 
     template<eve::non_empty_product_type PT1, eve::non_empty_product_type PT2, callable_options O>
-    EVE_FORCEINLINE constexpr auto covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
+    constexpr auto covariance_(EVE_REQUIRES(cpu_), O const & o, PT1 f, PT2 s) noexcept
     requires (kumi::as_tuple_t<PT1>::size() == kumi::as_tuple_t<PT2>::size())
     {
      if constexpr(O::contains(widen)) {

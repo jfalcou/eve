@@ -20,7 +20,7 @@ namespace eve
   struct omega_t : elementwise_callable<omega_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(omega_t, omega_);
   };

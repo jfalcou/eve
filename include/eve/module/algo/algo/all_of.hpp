@@ -26,7 +26,7 @@ template<typename TraitsSupport> struct all_of_ : TraitsSupport
   {
     explicit delegate(P pf) : p(pf) {}
 
-    EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
+    EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
       eve::logical test = p(eve::load[ignore](it));
       res               = eve::all[ignore](test);
@@ -34,7 +34,7 @@ template<typename TraitsSupport> struct all_of_ : TraitsSupport
     }
 
     template<typename I, std::size_t size>
-    EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+    EVE_ABI bool unrolled_step(std::array<I, size> arr)
     {
       auto tests   = array_map(arr, load_and_apply {p});
       auto overall = array_reduce(tests, eve::logical_and);
@@ -46,7 +46,7 @@ template<typename TraitsSupport> struct all_of_ : TraitsSupport
     bool res = true;
   };
 
-  template<relaxed_range Rng, typename P> EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
+  template<relaxed_range Rng, typename P> EVE_ABI bool operator()(Rng&& rng, P p) const
   {
     auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
 

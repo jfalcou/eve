@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<typename Obj, value T0, value ... T>
-  EVE_FORCEINLINE  auto apply_over(Obj f, T0 const & arg0, T const &... args) noexcept
+    auto apply_over(Obj f, T0 const & arg0, T const &... args) noexcept
   requires simd_value<T0> || (simd_value<T> ||  ...)
   {
     constexpr bool any_aggregated = has_aggregated_abi_v<T0> || (has_aggregated_abi_v<T> || ...);

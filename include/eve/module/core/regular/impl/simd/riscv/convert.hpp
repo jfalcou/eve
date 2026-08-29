@@ -18,7 +18,7 @@ namespace eve::_
 {
 
 template<value In, scalar_value Out>
-EVE_FORCEINLINE auto
+ auto
 convert_impl(EVE_REQUIRES(rvv_), logical<In> v, as<logical<Out>>) noexcept
 requires rvv_abi<typename In::abi_type>
 {

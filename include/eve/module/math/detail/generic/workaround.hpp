@@ -10,7 +10,7 @@ namespace eve::_
 {
 
 template<typename T>
-EVE_FORCEINLINE auto
+ auto
 prevent_gcc_abusive_contract(const T& ab) noexcept
 {
   return ab + 0;

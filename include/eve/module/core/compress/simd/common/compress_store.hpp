@@ -21,7 +21,7 @@ namespace eve
 struct compress_store_core
 {
   template<typename Settings, simd_value T, logical_simd_value U, typename O>
-  EVE_FORCEINLINE auto operator()(Settings settings, T x, U m, O o) const -> unaligned_t<O>
+  EVE_ABI auto operator()(Settings settings, T x, U m, O o) const -> unaligned_t<O>
   {
     using CIn  = typename Settings::cond_in_t;
     using COut = typename Settings::cond_out_t;

@@ -19,7 +19,7 @@ namespace eve
                                        lower_option, upper_option, strict_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const
+    EVE_ABI constexpr T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(sqrt_t, sqrt_);

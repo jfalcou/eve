@@ -99,7 +99,7 @@ namespace eve
     }
 
     template<simd_value T, simd_value Target>
-    EVE_FORCEINLINE constexpr Target operator()(T x, as<Target> tgt) const noexcept
+    EVE_ABI constexpr Target operator()(T x, as<Target> tgt) const noexcept
     requires(enabled_for(as<T> {}, as<Target> {}))
     {
       return EVE_DISPATCH_CALL(x, tgt);
@@ -117,7 +117,7 @@ namespace eve
   {
     // This function is forward declared wrapper around simd_cast,
     // so that internally we can call it anywhere.
-    template<typename T, typename Target> EVE_FORCEINLINE Target call_simd_cast(T x, as<Target> tgt)
+    template<typename T, typename Target> Target call_simd_cast(T x, as<Target> tgt)
     {
       return eve::simd_cast(x, tgt);
     }

@@ -22,13 +22,13 @@ namespace eve
   {
     template<value T,  value U,  value V>
     requires(Options::contains(promote))
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     EVE_CALLABLE_OBJECT(fsnm_t, fsnm_);
@@ -94,7 +94,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, simd_value... Ts>
-    EVE_FORCEINLINE constexpr auto fsnm_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
+    constexpr auto fsnm_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts)
       requires (_::fp16_should_apply<Ts> && ...)
     {
       if constexpr(O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fsnm[o], ts...);
@@ -102,7 +102,7 @@ namespace eve
     }
 
     template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr auto fsnm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    constexpr auto fsnm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
       return fnms[o](b, c, a);
     }

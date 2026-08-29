@@ -19,7 +19,7 @@ namespace eve::algo::views
   namespace _
   {
     template <typename Traits, typename ...Rngs>
-    EVE_FORCEINLINE auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {
+     auto preprocess_zip_range(Traits tr, kumi::tuple<Rngs...> rngs) {
       // So far decided not to return types to consider in resulting traits.
       // Maybe we should.
       eve::algo::traits types_to_consider{ consider_types_key = kumi::result::cat_t<types_to_consider_for_t<Rngs> ...>{} };

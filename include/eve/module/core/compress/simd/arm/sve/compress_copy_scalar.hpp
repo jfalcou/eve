@@ -16,8 +16,7 @@ namespace eve::_
 {
 
 template <typename I, typename L, typename O>
-EVE_FORCEINLINE O
-compress_copy_sparse_sve_no_limits(I f, L m, O o)
+O compress_copy_sparse_sve_no_limits(I f, L m, O o)
 {
   if constexpr( has_aggregated_abi_v<L> )
   {
@@ -39,8 +38,7 @@ compress_copy_sparse_sve_no_limits(I f, L m, O o)
 }
 
 template <typename I, typename L, typename O>
-EVE_FORCEINLINE O
-compress_copy_sparse_sve_limited(I f, L m, O o, O limit)
+O compress_copy_sparse_sve_limited(I f, L m, O o, O limit)
 {
   if constexpr( has_aggregated_abi_v<L> )
   {
@@ -63,8 +61,7 @@ compress_copy_sparse_sve_limited(I f, L m, O o, O limit)
 }
 
 template<typename Settings, typename I, typename L, typename O>
-EVE_FORCEINLINE auto
-compress_copy_scalar_impl_(EVE_SUPPORTS(sve_), Settings settings, I f, L m, O o) -> O
+auto compress_copy_scalar_impl_(EVE_SUPPORTS(sve_), Settings settings, I f, L m, O o) -> O
     requires(Settings::is_sparse) //
 {
   using IC = typename Settings::cond_in_t;

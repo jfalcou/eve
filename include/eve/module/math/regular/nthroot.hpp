@@ -18,12 +18,12 @@ namespace eve
   struct nthroot_t : strict_elementwise_callable<nthroot_t, Options, raw_option>
   {
     template<eve::floating_value T, eve::integral_value U>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr as_wide_as_t<T, U> operator()(T v, U w) const noexcept
     requires(eve::same_lanes_or_scalar<T, U>)
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::floating_value T, eve::floating_value U>
-    EVE_FORCEINLINE  constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI  constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(nthroot_t, nthroot_);
@@ -85,7 +85,7 @@ namespace eve
   {
 
     template<floating_value T,  integral_value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, U>
+    constexpr as_wide_as_t<T, U>
     nthroot_(EVE_REQUIRES(cpu_), O const & o, T x, U n) noexcept
     {
       using elt_t = element_type_t<T>;
@@ -93,7 +93,7 @@ namespace eve
     }
 
     template<floating_value  T, floating_value  U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    constexpr common_value_t<T, U>
     nthroot_(EVE_REQUIRES(cpu_), O const &, T xx, U nn) noexcept
     {
       using r_t =  common_value_t<T, U>;

@@ -25,7 +25,7 @@ namespace eve
                                           , kahan_option, harrisson_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
+    EVE_ABI constexpr T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(epsilon_t, epsilon_);
@@ -95,14 +95,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto epsilon_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return _::map(epsilon[o], ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(integral_value<T>)
         return T(1);

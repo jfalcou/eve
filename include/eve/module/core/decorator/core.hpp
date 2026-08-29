@@ -186,13 +186,13 @@ namespace eve
   struct almost_option
   {
     template<typename Value>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, almost_t<Value> const& opts) const
+    EVE_ABI constexpr auto process(auto const& base, almost_t<Value> const& opts) const
     {
       auto news = rbr::merge(options{opts}, base);
       return options<decltype(news)>{news};
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+    EVE_ABI constexpr auto default_to(auto const& base) const { return base; }
   };
 
   template<typename Value> struct definitely_t;
@@ -200,13 +200,13 @@ namespace eve
   struct definitely_option
   {
     template<typename Value>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, definitely_t<Value> const& opts) const
+    EVE_ABI constexpr auto process(auto const& base, definitely_t<Value> const& opts) const
     {
       auto news = rbr::merge(options{opts}, base);
       return options<decltype(news)>{news};
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+    EVE_ABI constexpr auto default_to(auto const& base) const { return base; }
   };
 
   // New threshold option that carry a value
@@ -215,13 +215,13 @@ namespace eve
   struct threshold_option
   {
     template<typename Value>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, threshold_t<Value> const& opts) const
+    EVE_ABI constexpr auto process(auto const& base, threshold_t<Value> const& opts) const
     {
       auto news = rbr::merge(options{opts}, base);
       return options<decltype(news)>{news};
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+    EVE_ABI constexpr auto default_to(auto const& base) const { return base; }
   };
 
   template<typename Value> struct mod_t;
@@ -229,12 +229,12 @@ namespace eve
   struct mod_option
   {
     template<typename Value>
-    EVE_FORCEINLINE constexpr auto process(auto const& base, mod_t<Value> const& opts) const
+    EVE_ABI constexpr auto process(auto const& base, mod_t<Value> const& opts) const
     {
       auto news = rbr::merge(options{opts}, base);
       return options<decltype(news)>{news};
     }
 
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+    EVE_ABI constexpr auto default_to(auto const& base) const { return base; }
   };
 }

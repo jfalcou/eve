@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::floating_value T0, floating_value T1>
     requires(eve::same_lanes_or_scalar<T0, T1>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+    EVE_ABI constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
@@ -83,7 +83,7 @@ namespace eve
 
   namespace _
   {
-    template<typename T, callable_options O> EVE_FORCEINLINE constexpr auto
+    template<typename T, callable_options O> constexpr auto
     fmod_(EVE_REQUIRES(cpu_), O const &, T const& a, T const& b) noexcept
     {
       return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),

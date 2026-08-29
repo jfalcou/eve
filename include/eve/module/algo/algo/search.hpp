@@ -40,20 +40,20 @@ namespace _
       bool                                                               was_stopped = false;
       decltype(equal_fn(wide_value_type_t<HaystackI> {}, NeedleWide {})) precheck    = {};
 
-      template<typename I> EVE_FORCEINLINE auto make_verify_adapter(I haystack_it)
+      template<typename I> auto make_verify_adapter(I haystack_it)
       {
         struct res_t
         {
           Verify&        verify;
           unaligned_t<I> base;
 
-          EVE_FORCEINLINE bool operator()(std::ptrdiff_t i) { return verify(base + i); }
+          bool operator()(std::ptrdiff_t i) { return verify(base + i); }
         };
 
         return res_t {verify, unalign(haystack_it)};
       }
 
-      EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
+      bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
       {
         // not loading from `zip_it` here, becasue it's much more expensive for tails.
         auto haystack_front = eve::load[ignore](get<0>(zip_it));
@@ -66,7 +66,7 @@ namespace _
         return true;
       }
 
-      EVE_FORCEINLINE bool main_part(auto zip_it)
+      bool main_part(auto zip_it)
       {
         auto [haystack_front, haystack_back] = eve::load(zip_it);
 
@@ -74,13 +74,13 @@ namespace _
         return eve::any(precheck);
       }
 
-      template<eve::relative_conditional_expr C> EVE_FORCEINLINE bool step(auto zip_it, C ignore)
+      template<eve::relative_conditional_expr C> bool step(auto zip_it, C ignore)
       {
         if constexpr( C::is_complete && C::is_inverted ) { return main_part(zip_it); }
         else { return tail(zip_it, ignore); }
       }
 
-      EVE_FORCEINLINE bool expensive_part(auto it)
+      bool expensive_part(auto it)
       {
         was_stopped = eve::iterate_selected(precheck, make_verify_adapter(get<0>(it)));
         return was_stopped;
@@ -92,7 +92,7 @@ namespace _
              typename NeedleWide,
              typename Equal,
              typename Verify>
-    EVE_FORCEINLINE bool operator()(auto           traits,
+    bool operator()(auto           traits,
                                     HaystackI      haystack_f,
                                     HaystackS      haystack_l,
                                     NeedleWide     needle_front,
@@ -200,7 +200,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
   };
 
   template<typename I1, typename I2, typename Equal, typename Checker>
-  EVE_FORCEINLINE auto main_part(auto            traits,
+  EVE_ABI auto main_part(auto            traits,
                                  I1              haystack_f,
                                  unaligned_t<I1> haystack_main_part_l,
                                  I2              needle_f,
@@ -216,7 +216,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       std::optional<unaligned_t<I1>> res;
       Checker                        check;
 
-      EVE_FORCEINLINE bool operator()(unaligned_t<I1> haystack_it)
+      EVE_ABI bool operator()(unaligned_t<I1> haystack_it)
       {
         if( check.main_check(haystack_it) )
         {
@@ -240,7 +240,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
   }
 
   template<typename UnalignedI1, typename I2, typename Checker>
-  EVE_FORCEINLINE std::optional<UnalignedI1> small_tail(UnalignedI1    small_tail_start,
+  EVE_ABI std::optional<UnalignedI1> small_tail(UnalignedI1    small_tail_start,
                                                         auto           haystack_l,
                                                         I2             needle_f,
                                                         auto           equal_fn,
@@ -265,7 +265,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 
       Checker checker;
 
-      EVE_FORCEINLINE
+      EVE_ABI
       verify_t(UnalignedI1                    _small_tail_start,
                wide_value_type_t<UnalignedI1> haystack,
                Checker                        _checker)
@@ -275,7 +275,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
         eve::store(haystack, buf.ptr());
       }
 
-      EVE_FORCEINLINE bool operator()(std::ptrdiff_t i)
+      EVE_ABI bool operator()(std::ptrdiff_t i)
       {
         // We can't slide a register by a runtime value.
         // So we store the register on the stack buffer and load instead.
@@ -297,7 +297,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
   }
 
   template<relaxed_range R1, relaxed_range R2, typename Equal>
-  EVE_FORCEINLINE auto
+  EVE_ABI auto
   operator()(R1&& haystack, R2&& needle, Equal equal_fn) const -> unaligned_iterator_t<R1>
   {
     std::ptrdiff_t needle_len   = (needle.end() - needle.begin());
@@ -345,7 +345,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
   }
 
   template<relaxed_range R1, relaxed_range R2>
-  EVE_FORCEINLINE auto operator()(R1&& haystack, R2&& needle) const -> unaligned_iterator_t<R1>
+  EVE_ABI auto operator()(R1&& haystack, R2&& needle) const -> unaligned_iterator_t<R1>
   {
     // we should implement `common_type` as a trait for algorithms
     // and not just zip

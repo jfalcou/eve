@@ -21,7 +21,7 @@ namespace eve
   struct polygamma_t : callable<polygamma_t, Options>
   {
     template<eve::scalar_value N, eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
+    EVE_ABI constexpr T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
 
     EVE_CALLABLE_OBJECT(polygamma_t, polygamma_);
   };

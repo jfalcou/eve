@@ -20,7 +20,7 @@ namespace eve
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-      constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
     {
       return EVE_DISPATCH_CALL(a,b);
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    constexpr auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       auto r0 = a * b;
       auto e0 = if_else(is_not_finite(r0), zero, fma[pedantic](a, b, -r0));

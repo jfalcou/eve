@@ -23,7 +23,7 @@ namespace eve
   struct nb_values_t : elementwise_callable<nb_values_t, Options>
   {
     template<value T,  value U>
-    EVE_FORCEINLINE constexpr as_integer_t<common_value_t<T, U>, unsigned> operator()(T a, U b) const noexcept
+    EVE_ABI constexpr as_integer_t<common_value_t<T, U>, unsigned> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(nb_values_t, nb_values_);

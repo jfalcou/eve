@@ -15,14 +15,14 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename I, typename N>
-  EVE_FORCEINLINE logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept
+   logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept
   {
     if constexpr(abi_t<T, N>::is_wide_logical) return bit_cast(lookup(a.bits(), i), as(a));
     else                                       return to_logical(lookup(a.mask(), i));
   }
 
   template<callable_options O, typename T, integral_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
+   wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
   {
     if constexpr( is_bundle_v<abi_t<T, N>> )
     {

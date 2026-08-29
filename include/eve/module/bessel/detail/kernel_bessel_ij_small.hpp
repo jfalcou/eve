@@ -34,7 +34,7 @@ namespace eve::_
 // Series summation utility
 ///////////////////////////////////////////////////////////////////////////////
 template<class F, class U, class V>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 sum_series(F& func, U factor, int max_terms, V init_value) noexcept
 {
   using result_type = typename F::result_type;
@@ -87,7 +87,7 @@ template<class T> struct bessel_j_small_z_series_term
 };
 
 template<class T>
-EVE_FORCEINLINE T
+ T
 bessel_j_small_z_series(T v, T x) noexcept
 {
   using elt_t        = element_type_t<T>;
@@ -126,7 +126,7 @@ template<typename T> struct bessel_i_small_z_series_term
 };
 
 template<floating_value T>
-EVE_FORCEINLINE T
+ T
 bessel_i_small_z_series(T v, T x)
 {
   using elt_t        = element_type_t<T>;

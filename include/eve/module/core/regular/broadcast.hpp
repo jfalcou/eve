@@ -18,19 +18,19 @@ namespace eve
   struct broadcast_t : callable<broadcast_t, Options>
   {
     template<scalar_value T>
-    constexpr EVE_FORCEINLINE as_wide_t<T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr as_wide_t<T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<scalar_value T, std::ptrdiff_t N>
-    constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>>
+    EVE_ABI constexpr as_wide_t<T, fixed<N>>
     operator()(T v, fixed<N> lanes) const noexcept { return EVE_DISPATCH_CALL(v, lanes); }
 
     // TODO: Remove this as it is a duplicata of broadcast_lane
     template<simd_value T, std::ptrdiff_t I>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     T operator()(T v, index_t<I> idx) const noexcept { return EVE_DISPATCH_CALL(v,idx); }
 
     template<simd_value T, std::ptrdiff_t I, std::ptrdiff_t N>
-    constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>>
+    EVE_ABI constexpr as_wide_t<T, fixed<N>>
     operator()(T v, index_t<I> idx, fixed<N> lanes) const noexcept { return EVE_DISPATCH_CALL(v, idx, lanes); }
 
     EVE_CALLABLE_OBJECT(broadcast_t, broadcast_);

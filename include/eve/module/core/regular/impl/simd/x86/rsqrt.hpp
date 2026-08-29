@@ -32,7 +32,7 @@ namespace eve::_
   //------------------------------------------------------------------------------------------------
   // Generic function for rsqrt on X86
   template<typename Pack>
-  EVE_FORCEINLINE Pack rsqrt_x86_normal(Pack const& x) noexcept
+   Pack rsqrt_x86_normal(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     // Local constants
@@ -61,7 +61,7 @@ namespace eve::_
   }
 
   template<typename Pack>
-  EVE_FORCEINLINE Pack rsqrt_x86_full(Pack const& x) noexcept
+   Pack rsqrt_x86_full(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     if( eve::any(is_denormal(x)) ||
@@ -83,7 +83,7 @@ namespace eve::_
   }
 
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v) noexcept
+   wide<T, N> rsqrt_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -124,7 +124,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(avx512_),
+   wide<T, N> rsqrt_(EVE_REQUIRES(avx512_),
                                     C          const& cx,
                                     O          const&,
                                     wide<T, N> const& v) noexcept

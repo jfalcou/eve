@@ -23,7 +23,7 @@ namespace eve
     using base_t = strict_tuple_callable<Func, OptionsValues, Options...>;
 
     template<typename T, typename Tgt>
-    constexpr static EVE_FORCEINLINE auto process_input(T v, as<Tgt>) noexcept
+    EVE_ABI constexpr static auto process_input(T v, as<Tgt>) noexcept
     {
       using expected_t = as_wide_as_t<element_type_t<T>, Tgt>;
       if constexpr (has_emulated_abi_v<expected_t>) return _::bit_cast_impl(current_api, v, as<as_uinteger_t<T>>{});
@@ -31,7 +31,7 @@ namespace eve
     }
 
     template<typename T, typename Tgt>
-    constexpr static EVE_FORCEINLINE auto process_alternative(T v, as<Tgt>) noexcept
+    EVE_ABI constexpr static auto process_alternative(T v, as<Tgt>) noexcept
     {
       using utgt_t = as_uinteger_t<Tgt>;
       using inner_tgt_t = std::conditional_t<has_emulated_abi_v<Tgt>, utgt_t, Tgt>;
@@ -58,20 +58,20 @@ namespace eve
     }
 
     template<callable_options O, typename... Ts>
-    constexpr EVE_FORCEINLINE bit_value_t<Ts...> execute(auto arch, O const& opts, Ts... xs) const
+    EVE_ABI constexpr bit_value_t<Ts...> execute(auto arch, O const& opts, Ts... xs) const
     {
       using r_t = bit_value_t<Ts...>;
       return _::bit_cast_impl(current_api, base_t::behavior(arch, opts, process_input(xs, as<r_t>{})...), as<bit_value_t<Ts...>>{});
     }
 
     template<callable_options O, eve::product_type Tup>
-    constexpr EVE_FORCEINLINE kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
+    EVE_ABI constexpr kumi::apply_traits_t<bit_value, Tup> behavior(auto arch, O const& opts, Tup x) const
     {
       return kumi::apply([&](auto... xs) { return behavior(arch, opts, xs...); }, x);
     }
 
     template<callable_options O, typename... Ts>
-    constexpr EVE_FORCEINLINE bit_value_t<Ts...> behavior(auto arch, O const& opts, Ts... xs) const
+    EVE_ABI constexpr bit_value_t<Ts...> behavior(auto arch, O const& opts, Ts... xs) const
     {
       using C = rbr::result::fetch_t<condition_key, O>;
 

@@ -22,20 +22,20 @@ namespace eve
   {
     template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
     {
       return EVE_DISPATCH_CALL(t, u);
     }
 
     template<eve::floating_value T0, floating_value T1, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    EVE_ABI constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0,  t1, ts...);
     }
 
     template<eve::non_empty_product_type Tuple>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tuple>
+    EVE_ABI constexpr kumi::apply_traits_t<eve::common_value,Tuple>
     operator()(Tuple const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(logspace_sub_t, logspace_sub_);
@@ -96,7 +96,7 @@ namespace eve
   namespace _
   {
     template<typename T0, typename T1, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+    constexpr common_value_t<T0, T1, Ts...>
     logspace_sub_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;

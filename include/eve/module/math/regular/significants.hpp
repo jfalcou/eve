@@ -17,7 +17,7 @@ namespace eve
   struct significants_t : strict_elementwise_callable<significants_t, Options>
   {
     template<floating_value T0, unsigned_value T1>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
+    EVE_ABI constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, n);
     }
@@ -71,7 +71,7 @@ namespace eve
   namespace _
   {
     template<floating_value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
     {
       auto e      = floor(inc(log10(eve::abs(a)) - convert(n, as_element<T>())));

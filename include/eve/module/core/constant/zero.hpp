@@ -18,11 +18,11 @@ namespace eve
   {
     struct fill_zero
     {
-      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
+      EVE_ABI constexpr auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
     };
 
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       if constexpr( eve::product_type<T> )
       {
@@ -35,7 +35,7 @@ namespace eve
     }
 
     template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);
   };

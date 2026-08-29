@@ -20,7 +20,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+   constexpr auto average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(widen))
@@ -33,13 +33,13 @@ namespace eve::_
 
   template<typename O> struct average_kahan_helper_t
   {
-    static EVE_FORCEINLINE auto get_fn() noexcept
+    static  auto get_fn() noexcept
     {
       if constexpr(O::contains(raw)) return two_add[raw];
       else return two_add[pedantic];
     };
 
-    static EVE_FORCEINLINE auto pair_add(auto pair0, auto r1, auto invn) noexcept
+    static  auto pair_add(auto pair0, auto r1, auto invn) noexcept
     {
       auto [r, e0] = pair0;
       auto [s, e1] = eve::two_fma_approx(r1, invn, r);
@@ -48,7 +48,7 @@ namespace eve::_
   };
 
   template<value T0, value ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
   {
     using r_t =  eve::common_value_t<T0, Ts...>;

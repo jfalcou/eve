@@ -23,14 +23,14 @@ namespace eve
     template <typename T, typename U > using  ui_t = as_integer_t<b_t<T, U>, unsigned>;
 
     template<value T, value U>
-    constexpr EVE_FORCEINLINE auto  operator()(T a, U b)  const
+    EVE_ABI constexpr auto  operator()(T a, U b)  const
       -> decltype(is_equal(bit_cast(b_t<T, U>(a), as<ui_t<T, U>>()), bit_cast(b_t<T, U>(b), as<ui_t<T, U>>())))
     {
       return EVE_DISPATCH_CALL(a, b);
     }
 
     template<value T, value U>
-    constexpr EVE_FORCEINLINE auto  operator()(logical<T> a, logical<U> b)  const
+    EVE_ABI constexpr auto  operator()(logical<T> a, logical<U> b)  const
       -> decltype(is_equal(a, b))
     {
       return EVE_DISPATCH_CALL(a, b);
@@ -89,7 +89,7 @@ namespace eve
   namespace _
   {
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     is_bit_equal_(EVE_REQUIRES(cpu_),O const &, T const& a, U const& b) noexcept
     {
       using b_t =  bit_value_t<T, U>;
@@ -98,7 +98,7 @@ namespace eve
     }
 
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     is_bit_equal_(EVE_REQUIRES(cpu_),O const &, logical<T> const& a, logical<U> const& b) noexcept
     {
       return is_equal(a, b);

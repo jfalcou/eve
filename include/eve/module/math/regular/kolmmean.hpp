@@ -21,13 +21,13 @@ namespace eve
   {
     template<typename F, typename G,  value... Ts>
     requires(!value<F> && sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
+    EVE_ABI constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
     operator()(F f, G g, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(f, g, ts...); }
 
     template<typename F, typename G, eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(F f, G g, Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(f, g, t); }
@@ -96,14 +96,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto kolmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto kolmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return kolmmean[o.drop(widen)](upgrade(ts)...);
     }
 
     template<typename F, typename G, floating_value... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     kolmmean_(EVE_REQUIRES(cpu_), O const & o, F f, G g, Ts... args) noexcept
     {
       using r_t   = common_value_t<Ts...>;
@@ -127,7 +127,7 @@ namespace eve
     }
 
     template<typename F, typename G, eve::non_empty_product_type Tup, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     kolmmean_(EVE_REQUIRES(cpu_), O const & o, F f, G g, Tup t) noexcept
     {
       return kumi::apply([f, g, o](auto ...m){return kolmmean[o](f, g, m...); }, t);

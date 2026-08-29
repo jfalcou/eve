@@ -19,7 +19,7 @@ namespace eve
   struct coth_t : elementwise_callable<coth_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(coth_t, coth_);
   };
@@ -76,7 +76,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T coth_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr T coth_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::coth[o], a0);

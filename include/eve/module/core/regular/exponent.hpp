@@ -34,7 +34,7 @@ namespace eve
   struct exponent_t : elementwise_callable<exponent_t, Options, raw_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE as_integer_t<T, signed> operator()(T v) const noexcept
+    EVE_ABI constexpr as_integer_t<T, signed> operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exponent_t, exponent_);

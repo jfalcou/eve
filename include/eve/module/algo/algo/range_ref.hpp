@@ -40,7 +40,7 @@ namespace eve::algo
       auto end() const { return rng->end(); }
 
       template<typename Traits>
-      EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, range_ref_wrapper self)
+      EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits traits, range_ref_wrapper self)
       {
         return preprocess_range(traits, *self.rng);
       }
@@ -73,11 +73,11 @@ namespace eve::algo
 
   struct range_ref_
   {
-    EVE_FORCEINLINE auto operator()(non_owning_range auto r) const { return r; }
+    EVE_ABI auto operator()(non_owning_range auto r) const { return r; }
 
     template<relaxed_range R>
       requires (!non_owning_range<R>)  // gcc concepts bug
-    EVE_FORCEINLINE auto operator()(R& r) const { return range_ref_wrapper{r}; }
+    EVE_ABI auto operator()(R& r) const { return range_ref_wrapper{r}; }
   };
 
   //================================================================================================

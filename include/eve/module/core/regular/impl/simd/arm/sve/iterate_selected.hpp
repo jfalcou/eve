@@ -14,7 +14,7 @@ namespace eve::_
 {
 
 template<callable_options O, typename L, typename F>
-EVE_FORCEINLINE bool
+ bool
 iterate_selected_(EVE_REQUIRES(sve_), O const& opts, top_bits<L> l, F&& f)
 requires(L::size() > 1 && !top_bits<L>::is_aggregated)
 {

@@ -15,7 +15,7 @@ namespace eve::_
 // Logical to Bits
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE typename logical<wide<T, N>>::bits_type
+ typename logical<wide<T, N>>::bits_type
 to_bits(rvv_ const&, logical<wide<T, N>> p) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -30,7 +30,7 @@ requires rvv_abi<abi_t<T, N>>
 // Logical to Mask
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 to_mask(rvv_ const&, logical<wide<T, N>> p) noexcept
 {
   return bit_cast(p.bits(), as<typename logical<wide<T, N>>::mask_type> {});

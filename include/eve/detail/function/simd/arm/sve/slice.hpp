@@ -18,7 +18,7 @@ namespace eve::_
 // Single slice
 //================================================================================================
 template<callable_options O, typename T, typename N, typename Slice>
-EVE_FORCEINLINE wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, Slice) noexcept
+ wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   if constexpr( !Slice::value ) return a.storage();
@@ -26,7 +26,7 @@ EVE_FORCEINLINE wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_), O con
 }
 
 template<callable_options O, typename T, typename N, typename Slice>
-EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a, Slice) noexcept
+ logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   if constexpr( !Slice::value ) return a.storage();
@@ -41,7 +41,7 @@ EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve
 // Both slice
 //================================================================================================
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a) noexcept
   requires sve_abi<abi_t<T, N>>
 {
@@ -50,7 +50,7 @@ slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a) noexcept
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a) noexcept
   requires sve_abi<abi_t<T, N>>
 {

@@ -19,12 +19,12 @@ namespace eve::algo
 {
 template<typename TraitsSupport> struct mismatch_ : TraitsSupport
 {
-  template<zipped_range_pair R, typename P> EVE_FORCEINLINE auto operator()(R&& r, P p) const
+  template<zipped_range_pair R, typename P> EVE_ABI auto operator()(R&& r, P p) const
   {
     return algo::find_if_not[TraitsSupport::get_traits()](EVE_FWD(r), apply_to_zip_pair {p});
   }
 
-  template<zipped_range_pair R> EVE_FORCEINLINE auto operator()(R&& r) const
+  template<zipped_range_pair R> EVE_ABI auto operator()(R&& r) const
   {
     auto rezipped     = r[common_type];
     auto rezipped_res = operator()(rezipped, eve::is_equal);
@@ -32,13 +32,13 @@ template<typename TraitsSupport> struct mismatch_ : TraitsSupport
   }
 
   template<typename R1, typename R2, typename P>
-  requires zip_to_range<R1, R2> EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, P p) const
+  requires zip_to_range<R1, R2> EVE_ABI auto operator()(R1&& r1, R2&& r2, P p) const
   {
     return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), p);
   }
 
   template<typename R1, typename R2>
-  requires zip_to_range<R1, R2> EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2) const
+  requires zip_to_range<R1, R2> EVE_ABI auto operator()(R1&& r1, R2&& r2) const
   {
     return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
   }

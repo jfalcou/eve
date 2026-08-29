@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<typename A0, callable_options O, eve::value A1>
-  constexpr EVE_FORCEINLINE bool assert_shift(O const& opts, A1 t) noexcept
+  constexpr  bool assert_shift(O const& opts, A1 t) noexcept
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
@@ -27,7 +27,7 @@ namespace eve::_
   }
 
   template<typename A0, eve::value A1>
-  constexpr EVE_FORCEINLINE bool assert_relative_shift(A1 t) noexcept
+  constexpr  bool assert_relative_shift(A1 t) noexcept
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
@@ -43,7 +43,7 @@ namespace eve::_
   }
 
   template<typename A0, callable_options O, eve::value A1>
-  constexpr EVE_FORCEINLINE bool assert_relative_shift(O const& opts, A1 t) noexcept
+  constexpr  bool assert_relative_shift(O const& opts, A1 t) noexcept
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;

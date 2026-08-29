@@ -19,7 +19,7 @@ namespace eve
   struct countl_one_t : elementwise_callable<countl_one_t, Options>
   {
     template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(countl_one_t, countl_one_);
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T countl_one_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    constexpr T countl_one_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       if constexpr( scalar_value<T> )
         return T(std::countl_one(v));

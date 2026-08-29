@@ -23,7 +23,7 @@ namespace eve
 
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
-      constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     auto operator()(T0 a, T1 b) const noexcept -> decltype(zip(common_value_t<T0, T1>(), common_value_t<T0, T1>(), common_value_t<T0, T1>()))
     { return EVE_DISPATCH_CALL(a, b); }
 

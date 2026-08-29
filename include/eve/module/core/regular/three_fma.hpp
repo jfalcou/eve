@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::floating_value T, eve::floating_value U, eve::floating_value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
-      constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>
+    EVE_ABI constexpr zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>
     operator()(T t, U u, V v) const noexcept
     { return EVE_DISPATCH_CALL(t, u, v); }
 
@@ -87,14 +87,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, simd_value... Ts>
-    EVE_FORCEINLINE constexpr auto three_fma_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto three_fma_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<Ts> && ...)
     {
       return _::map(three_fma[o], ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE auto three_fma_(EVE_REQUIRES(cpu_), O const&, T a, T x, T y) noexcept
+    auto three_fma_(EVE_REQUIRES(cpu_), O const&, T a, T x, T y) noexcept
     {
       T r1 = fma[pedantic](a, x, y);
       auto [u1, u2] = two_prod(a, x);

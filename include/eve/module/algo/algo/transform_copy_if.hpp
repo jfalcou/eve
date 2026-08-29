@@ -26,7 +26,7 @@ namespace eve::algo
         O ol;
         F func;
 
-        EVE_FORCEINLINE
+        
         bool tail(auto f, auto ignore)
         {
           auto out_ignore   = eve::keep_first(std::min(ol - of, eve::iterator_cardinal_v<O>));
@@ -36,13 +36,13 @@ namespace eve::algo
           return of == ol;
         }
 
-        EVE_FORCEINLINE
+        
         std::ptrdiff_t left_for_stage1() const
         {
           return ol - of;
         }
 
-        EVE_FORCEINLINE
+        
         bool step_1(auto f)
         {
           auto loaded = eve::load(f);
@@ -51,7 +51,7 @@ namespace eve::algo
           return false;
         }
 
-        EVE_FORCEINLINE
+        
         bool step_2(auto f)
         {
           // ol - of < cardinal
@@ -64,7 +64,7 @@ namespace eve::algo
       };
 
       template<relaxed_range In, relaxed_range Out, typename Func>
-      EVE_FORCEINLINE
+      
       auto operator()(In&& in, Out&& out, Func func) const -> unaligned_iterator_t<Out>
       {
         if( in.begin() == in.end() || out.begin() == out.end() )

@@ -21,14 +21,13 @@ namespace eve
   {
     template<value... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
+    EVE_ABI constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
     operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
@@ -96,14 +95,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto harmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto harmmean_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return harmmean[o.drop(widen)](upgrade(ts)...);
     }
 
     template<typename T0, typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     harmmean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept
     {
       using r_t   = common_value_t<T0, Ts...>;

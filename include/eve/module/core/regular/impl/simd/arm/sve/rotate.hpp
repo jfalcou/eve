@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<typename T, typename N, std::ptrdiff_t M>
-  EVE_FORCEINLINE wide<T, N> rotate_(EVE_SUPPORTS(sve_), wide<T, N> x, index_t<M>)
+   wide<T, N> rotate_(EVE_SUPPORTS(sve_), wide<T, N> x, index_t<M>)
     requires (sve_abi<abi_t<T, N>> && (M <= N::value))
   {
     if constexpr (N::value == fundamental_cardinal_v<T>)
