@@ -69,7 +69,7 @@ namespace eve
 //!
 //!     1. Returns true if and only if `x` is not [denormal](https://mathworld.wolfram.com/SubnormalNumber.html).
 //!     2. Always returns `true`.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_denormal.cpp}

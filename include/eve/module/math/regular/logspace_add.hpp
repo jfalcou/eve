@@ -80,7 +80,7 @@ namespace eve
 //!    1. The call `logspace_add(x, xs...)` is semantically equivalent to `log(exp(log(x)) +  + exp(log(xs))...)`
 //!      without causing unnecessary overflows or throwing away too much accuracy.
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/logspace_add.cpp}

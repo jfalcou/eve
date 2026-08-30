@@ -71,8 +71,10 @@ struct invlog_10_t : constant_callable<invlog_10_t, Options, lower_option, upper
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/invlog_10.cpp}
-//! @}
+//!  @godbolt{doc/math/invlog_10.cpp}
 //================================================================================================
 inline constexpr auto invlog_10 = functor<invlog_10_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

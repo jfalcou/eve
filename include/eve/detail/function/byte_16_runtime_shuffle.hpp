@@ -12,7 +12,7 @@
 
 // byte_16_runtime_shuffle
 // shuffle registers of bytes with len <= 16 using runtime idxs
-// Not avaliable well on all platforms ==> declared in detail
+// Not available well on all platforms ==> declared in detail
 
 namespace eve
 {

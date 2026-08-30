@@ -64,7 +64,7 @@ namespace eve
 //!      \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
 //!      \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
 //!      is returned.
-//!    2. [The operation is performed conditionaly.](@ref conditional).
+//!    2. [The operation is performed conditionally.](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Airy Functions](https://mathworld.wolfram.com/AiryFunctions.html)

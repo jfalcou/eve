@@ -55,7 +55,7 @@ namespace _
 
       EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
       {
-        // not loading from `zip_it` here, becasue it's much more expensive for tails.
+        // not loading from `zip_it` here, because it's much more expensive for tails.
         auto haystack_front = eve::load[ignore](get<0>(zip_it));
         precheck            = equal_fn(haystack_front, needle_front);
 
@@ -384,7 +384,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 //!   Tuning:
 //!    * Aligning search for initial test. Passing `no_aligning` will remove this aligning.
 //!    * Unrolling search for initial test. By default we unroll 4 times, with expensive
-//!      predicates might not be benificial
+//!      predicates might not be beneficial
 //!
 //!   @groupheader{Callable Signatures}
 //!

@@ -83,14 +83,14 @@ namespace eve
 //!          * \f$ \mathbf{C}_1^\lambda(x) = 2\lambda x\f$.
 //!          * \f$ \mathbf{C}_n^\lambda(x) = \left[(2x+\lambda-1)\mathbf{C}_{n-1}^\lambda(x) -
 //!            (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\f$.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Gegenbauer polynomials](https://en.wikipedia.org/wiki/Gegenbauer_polynomials)
 //!   *  [Wolfram MathWorld: Gegenbauer polynomial](https://mathworld.wolfram.com/GegenbauerPolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
+//!   @godbolt{doc/polynomial/gegenbauer.cpp}
 //================================================================================================
   inline constexpr auto gegenbauer = functor<gegenbauer_t>;
 //================================================================================================

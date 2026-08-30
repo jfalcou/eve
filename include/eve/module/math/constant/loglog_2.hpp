@@ -71,8 +71,10 @@ struct loglog_2_t : constant_callable<loglog_2_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/loglog_2.cpp}
-//! @}
+//!  @godbolt{doc/math/loglog_2.cpp}
 //================================================================================================
 inline constexpr auto loglog_2 = functor<loglog_2_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

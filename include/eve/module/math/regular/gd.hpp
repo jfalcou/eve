@@ -70,7 +70,7 @@ namespace eve
 //!            * If the element is a `NaN`, `NaN` is returned.
 //!     2. The `raw` and `fast` options use internally less accuate but faster versions.
 //        relative accuracy and `fast` 0.005%.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Gudermannian](https://mathworld.wolfram.com/Gudermannian.html)

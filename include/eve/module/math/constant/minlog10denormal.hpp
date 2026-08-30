@@ -39,7 +39,7 @@ struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog10denormal
-//!   @brief Callable object computing the least value for which eve::exp10 is not zero.
+//!   @brief Callable object computing the least value for which eve::exp10 is denormal and not zero.
 //!
 //!   **Defined in Header**
 //!
@@ -63,13 +63,14 @@ struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower
 //!
 //!    **Return value**
 //!
-//!      The call `eve::minlog10denormal(as<T>())` returns the least value for which
-//!      eve::exp10 is not denormal.
+//!      The call `eve::minlog10denormal(as<T>())` returns the least value for which eve::exp10 is denormal and not zero.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog10denormal.cpp}
-//! @}
+//!  @godbolt{doc/math/minlog10denormal.cpp}
 //================================================================================================
 inline constexpr auto minlog10denormal = functor<minlog10denormal_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

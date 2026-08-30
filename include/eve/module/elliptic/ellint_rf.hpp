@@ -74,7 +74,7 @@ namespace eve
 //!       \f$  \mathbf{R}_\mathbf{F}(x, y) =
 //!       \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
 //!       (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.  is returned
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Elliptic Integral](https://dlmf.nist.gov/19.2)

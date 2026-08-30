@@ -92,8 +92,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` : [real](@ref eve::floating values) ordered arguments in increasing order.
-//!     * `x`,     : [tuple of real](@ref eve::floating values) ordered arguments in increasing order.
+//!     * `xs ...` : [real values](@ref eve::floating_value) ordered arguments in increasing order.
+//!     * `x`,     : [tuple of real values](@ref eve::floating_value) ordered arguments in increasing order.
 //!     * `y`      : tuple of real arguments
 //!     * `h`      : floating value scaling the abscissas
 //!     * `f`      : invocable
@@ -107,9 +107,9 @@ namespace eve
 //!       5. Internal summation use kahan algorithm for better accuracy
 //!
 //!  @note definition of `f` or of `y` ?
-//!      - If `f` is a paramater the `y` values are defined by  \$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
+//!      - If `f` is a parameter the `y` values are defined by  \$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
 //!      - If `y` (or `ys...`) is a parameter `f` is defined by  \$f(x_i) = y_i\f$. and the values of \f$x_i\f$ are not needed
-//!        as thet are equally spaced with space `h` (defaulted to one).
+//!        as they are equally spaced with space `h` (defaulted to one).
 //!      - If `x` (or `xs ...`) is a parameter its must be sorted in increasing order.
 //!
 //!  @groupheader{External references}

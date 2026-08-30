@@ -75,7 +75,7 @@ namespace eve
 //!           - For two parameters it computes the  bitwise ORNOT of the two parameters
 //!           - For more than two parameters the call is  semantically equivalent to
 //!            `bit_ornot(a0, bit_and(xs...))`
-//!      2. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!      2. [The operation is performed conditionally](@ref conditional). This is only supported when all parameters
 //!         share the same number of lanes or are scalars.
 //!
 //!  @groupheader{Example}

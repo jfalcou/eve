@@ -85,7 +85,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var welford_variance
-//!   @brief `tuple_callable` computing the arithmetic mean of its arguments.
+//!   @brief `tuple_callable` computing the variance of its arguments with the Welford algorithm, along with their average, second centered moment and count.
 //!
 //!   @groupheader{Header file}
 //!
@@ -123,7 +123,7 @@ namespace eve
 //!         best unbiased estimator of the variance (population variance).
 //!
 //!  @note The Welford algorithm does not provides as much option as the [`variance`](@ref variance) function, but is a quite stable algorithm
-//!        that have the advantage to allow spliting the computation of the variance in
+//!        that have the advantage to allow splitting the computation of the variance in
 //!        multiple calls.  For instance: the call with two tuples:<br/>
 //!        &nbsp;   `wv = welford_corariance(kumi::cat(xs, ys))`<br/>
 //!        is equivalent to the sequence:<br/>

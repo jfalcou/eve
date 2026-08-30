@@ -71,8 +71,10 @@ struct three_pio_4_t : constant_callable<three_pio_4_t, Options, lower_option, u
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/three_pio_4.cpp}
-//! @}
+//!  @godbolt{doc/math/three_pio_4.cpp}
 //================================================================================================
 inline constexpr auto three_pio_4 = functor<three_pio_4_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

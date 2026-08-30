@@ -54,23 +54,23 @@ EVE_FORCEINLINE auto mask_op(C const&                     c,
                              [[maybe_unused]] Args const&...as);
 
 
-// This is an inderect wrapper of eve::simd_cast to avoid cycling dependencies
+// This is an indirect wrapper of eve::simd_cast to avoid cycling dependencies
 template <typename From, typename To>
 To call_simd_cast(From, as<To>);
 
-// This is an inderect wrapper of eve::convert to avoid cycling dependencies
+// This is an indirect wrapper of eve::convert to avoid cycling dependencies
 template <typename Src, typename Tgt>
 as_wide_as_t<Tgt, Src> call_convert(Src, as<Tgt>);
 
-// This is an inderect wrapper of eve::_::butterfly_reduction to avoid cycling dependencies
+// This is an indirect wrapper of eve::_::butterfly_reduction to avoid cycling dependencies
 template <simd_value Wide, typename Callable>
 auto call_butterfly_reduction(Wide w, Callable f) noexcept;
 
-// This is a limited  inderect wrapper of eve::add to avoid cycling dependencies
+// This is a limited  indirect wrapper of eve::add to avoid cycling dependencies
 template <typename T, typename U>
 auto call_add(T, U);
 
-// This is a limited  inderect wrapper of eve::sub to avoid cycling dependencies
+// This is a limited  indirect wrapper of eve::sub to avoid cycling dependencies
 template <typename T, typename U>
 auto call_sub(T, U);
 

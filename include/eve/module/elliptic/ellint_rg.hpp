@@ -77,7 +77,7 @@ namespace eve
 //!       \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
 //!       +y\sin^2\theta\sin^2\phi
 //!       +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$ is returned:
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)

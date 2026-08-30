@@ -66,8 +66,8 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of the relative distance of the arguments is returned,  i.e. `eve::abs(x-y)/max(abs(x), abs(y), 1)`.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
-//!      3. `reldist[pedantic](x, y)` computes a distance wich is `NaN` if and only
+//!      2. [The operation is performed conditionally](@ref conditional).
+//!      3. `reldist[pedantic](x, y)` computes a distance which is `NaN` if and only
 //!          if one of the parameters is `NaN`.
 //!
 //!  @groupheader{Example}

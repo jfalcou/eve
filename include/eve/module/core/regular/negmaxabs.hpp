@@ -77,7 +77,7 @@ namespace eve
 //!      The negated value of the element of maximal absolute value is returned.
 //!        1. If any element of the inputs is a NaN the corresponding output element is system-dependent
 //!        2. equivalent to the call on the elements of the tuple.
-//!        3. [The operation is performed conditionnaly](@ref conditional)
+//!        3. [The operation is performed conditionally](@ref conditional)
 //!        4. computation internally uses `abs[saturated]` instead of `abs`
 //!        5. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
 //!           is used internally

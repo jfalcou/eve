@@ -101,7 +101,7 @@ namespace eve
 //!      *  If `y` is \f$\pm\infty\f$ and `x` is \f$+\infty\f$, \f$\pm\frac{\pi}4\f$ is returned
 //!      *  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-\frac\pi2\f$ is returned
 //!      *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
-//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!    3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference:atan2](https://en.cppreference.com/w/cpp/numeric/math/atan2)

@@ -80,7 +80,7 @@ namespace eve
 //!   @endcode
 //!
 //!   Use inside a @callable definition to generate the required EVE protocol of function's resolution based on type
-//!   and architecture informations.
+//!   and architecture information.
 //!
 //!   @param NS   Namespace in which specialization of the @callable will be found. This namespace must have been
 //!               registered via EVE_CALLABLE_NAMESPACE.
@@ -130,7 +130,7 @@ using callable_tag_type     = TYPE                                              
 //!   @endcode
 //!
 //!   Use inside a @callable definition to generate the required EVE protocol of function's resolution based on type
-//!   and architecture informations using overload from the `eve::_` namespace.
+//!   and architecture information using overload from the `eve::_` namespace.
 //!
 //!   @warning @ref EVE_CALLABLE_OBJECT is mostly used for EVE @callable definition. If you want to use EVE's overload
 //!   facility for your own library, use @ref EVE_CALLABLE_OBJECT_FROM.

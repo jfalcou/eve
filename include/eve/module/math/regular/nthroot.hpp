@@ -70,8 +70,12 @@ namespace eve
 //!
 //!    1. Returns the value of \f$x^{1/n}\f$. For negative `x` the value returned is a Nan as soon as `n`
 //!      is not an odd integer.
-//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    2. [The operation is performed conditionally](@ref conditional)
 //!    3. Speedier but less accurate computation.
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Nth_root)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/nthRoot.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/nthroot.cpp}

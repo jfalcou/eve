@@ -57,7 +57,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    bits from `x` reinterpreted as a new type, accoridng to the rules described earlier.
+//!    bits from `x` reinterpreted as a new type, according to the rules described earlier.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/simd_cast.cpp}

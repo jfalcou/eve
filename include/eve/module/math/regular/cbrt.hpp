@@ -57,7 +57,7 @@ namespace eve
 //! **Return value**
 //!
 //!   1. Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   2. [The operation is performed conditionally](@ref conditional).
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)

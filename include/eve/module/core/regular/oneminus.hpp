@@ -77,12 +77,12 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of `1-x` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. saturated version.
-//!      4. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!      4. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
 //!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
-//!      5. The operation is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!      5. The operation is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranteed
 //!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!      6. compute the result in modular arithmetic. the parameter must be flint positive

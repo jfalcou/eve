@@ -71,8 +71,10 @@ struct two_pi_t : constant_callable<two_pi_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/two_pi.cpp}
-//! @}
+//!  @godbolt{doc/math/two_pi.cpp}
 //================================================================================================
 inline constexpr auto two_pi = functor<two_pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

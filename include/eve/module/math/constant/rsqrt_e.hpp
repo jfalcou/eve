@@ -72,8 +72,10 @@ struct rsqrt_e_t : constant_callable<rsqrt_e_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/rsqrt_e.cpp}
-//! @}
+//!  @godbolt{doc/math/rsqrt_e.cpp}
 //================================================================================================
 inline constexpr auto rsqrt_e = functor<rsqrt_e_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

@@ -79,7 +79,7 @@ namespace eve
 //!        (corresponding to \f$ \phi = \pi/2 \f$) is returned.
 //!      2. the incomplete elliptic integral  of the first kind is returned:
 //!        \f$\mathbf{F}(\phi, k) = \int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\f$
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!
 //!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
 //!   values the result of the incomplete function with a \f$\phi\f$ floating point value

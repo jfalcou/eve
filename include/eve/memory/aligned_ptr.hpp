@@ -133,7 +133,7 @@ namespace eve
       return *this;
     }
 
-    //! @brief Substract an offset to the held pointer.
+    //! @brief Subtract an offset to the held pointer.
     //! Behavior is undefined if the offset forces the pointer to become misaligned
     aligned_ptr &operator-=(std::ptrdiff_t o) noexcept
     {

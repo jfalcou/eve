@@ -77,7 +77,7 @@ namespace eve
 //!           * `0`, if `x` is less than `lo`. or if `hi` is strictly less than `x`.
 //!           * `1` otherwise.
 //!        2  1 in the type of x if belongs(x) evaluate to true else 0.
-//!        3. [The operation is performed conditionnaly](@ref conditional).
+//!        3. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note If any `lo` is not less or equal to the corresponding `hi` the routine asserts.
 //!

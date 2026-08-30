@@ -71,7 +71,7 @@ namespace eve
 //!          * If the argument is \f$-\infty\f$,\f$2\f$ is returned.
 //!          * If the argument is Nan, nan is returned.
 //!     2. faster computations at accuracy price, based on `atanh(erf(x))` expansion.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: erfc](https://en.cppreference.com/w/cpp/numeric/math/erfc)

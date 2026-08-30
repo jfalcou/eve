@@ -61,7 +61,7 @@ namespace eve
 //!
 //!     1. The value of the sine integral
 //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_0^x \frac{\sin t}{t}\;\mbox{d}t\f$, is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld:Sine Integral ](https://mathworld.wolfram.com/SineIntegral.html)

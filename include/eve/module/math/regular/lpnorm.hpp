@@ -83,7 +83,7 @@ namespace eve
 //!
 //!   1. \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$ and \f$ \max_{i = 0}^n |x_i|} \f$ if 'p' is infinite.
 //!   2. same as 1. on the tuple elements.
-//!   3. [The operation is performed conditionnaly](@ref conditional)
+//!   3. [The operation is performed conditionally](@ref conditional)
 //!   4. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters the result is \f$\infty\f$.
 //!   5. The summation is computed in the double sized element type (if available).
 //!   6. Kahan like compensated algorithm is used in internal summation for better precision (see [add](@ref eve::add)).

@@ -72,11 +72,20 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 //!      The call `eve::egamma(as<T>())` returns  \f$\gamma =
 //!      \lim_{n\to\infty}\left( \sum_{k = 0}^n \frac1k - \log n\right )\f$. γ is an alias.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Euler-MascheroniConstant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Euler%27s_constant)
+//!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/egamma.cpp}
-//! @}
+//!  @godbolt{doc/math/egamma.cpp}
+//!
+//!   @var γ
+//!   @brief Unicode alias for [eve::egamma](@ref eve::egamma), computing the Euler-Mascheroni constant \f$\gamma\f$.
 //================================================================================================
 inline constexpr auto egamma = functor<egamma_t>;
 inline constexpr auto γ     = functor<egamma_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

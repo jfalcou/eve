@@ -102,7 +102,7 @@ namespace eve
 //!
 //!      1. The value of the polynom at  `x` is returned.
 //!      2. same as the call with the elements of the tuples.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!      4. `fma[pedantic]` instead of `fma` is used in internal computations.
 //!
 //!   @note If the coefficients or nodes are simd values of cardinal N, this means you simultaneously

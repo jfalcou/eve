@@ -78,8 +78,8 @@ namespace eve
 //!
 //!     1. The call `eve::compare_absolute(x,y,f)`  is semantically  equivalent to `f(abs(x), abs(y))` and
 //!         `eve::compare_absolute(x,f)` is semantically  equivalent to `f(abs(x))` and
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. the option is transfered to 'abs' in the call.
+//!     2. [The operation is performed conditionally](@ref conditional).
+//!     3. the option is transferred to 'abs' in the call.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/compare_absolute.cpp}

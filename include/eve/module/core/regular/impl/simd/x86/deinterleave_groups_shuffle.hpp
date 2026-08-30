@@ -31,7 +31,7 @@ template<typename T, typename N, std::ptrdiff_t G>
     // on avx2 there is a perfect shuffle
     if constexpr( current_api == avx && g_sz == 8 )
     {
-      // only double shuffle is avaliable
+      // only double shuffle is available
       if constexpr( !std::same_as<double, T> )
         return deinterleave_groups_shuffle_as_doubles(v, lane<G>);
       else
@@ -71,7 +71,7 @@ template<typename T, typename N, std::ptrdiff_t G>
       v = _mm_shufflehi_epi16(v, _MM_SHUFFLE(3, 1, 2, 0));
       return _mm_shuffle_epi32(v, _MM_SHUFFLE(3, 1, 2, 0));
     }
-    // should use pshuvb for chars when it's avaliable
+    // should use pshuvb for chars when it's available
     // otherwise we have to use shorts, no chars shuffles
     else if constexpr( g_sz == 1 && current_api < ssse3 )
     {
@@ -149,7 +149,7 @@ template<typename T, typename N, std::ptrdiff_t G>
 
   // Doing 2 is the most important case since we can deinterleave with G = N() / 2 and then
   // deinterleave each half. This deinterleaving halves is done in 2 instructions (I mean g_sz * n
-  // >= 16, less than native reg will aggrgate) So - 2 for this shuffle + shuffle each.
+  // >= 16, less than native reg will aggregate) So - 2 for this shuffle + shuffle each.
   if constexpr( n == 2 )
   {
     // 16 bytes

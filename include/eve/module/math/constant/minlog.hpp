@@ -39,7 +39,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog
-//!   @brief Callable object computing the least value for which eve::exp is not zero
+//!   @brief Callable object computing the least value for which eve::exp is normal and not zero.
 //!
 //!   **Defined in Header**
 //!
@@ -63,12 +63,14 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::minlog(as<T>())` returns the least value for which eve::exp is not zero.
+//!      The call `eve::minlog(as<T>())` returns the least value for which eve::exp is normal and not zero.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog.cpp}
-//! @}
+//!  @godbolt{doc/math/minlog.cpp}
 //================================================================================================
 inline constexpr auto minlog = functor<minlog_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

@@ -72,7 +72,7 @@ namespace eve
 //!           *  `lo`, if `x` is less than `lo`.
 //!           *  `hi`, if `hi` is less than `x`.
 //!           *  otherwise `x`.
-//!        2. [The operation is performed conditionnaly](@ref conditional).
+//!        2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note
 //!     If some lo are not less or equal to the corresponding hi the routine asserts.

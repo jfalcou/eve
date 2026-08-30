@@ -26,7 +26,7 @@ namespace eve
 //!   @endcode
 //!
 //!   This function behaves like eve::compress_copy[dense] but as input it takes
-//!   loaded register. @see eve::compres_copy for explained behavour.
+//!   loaded register. @see eve::compres_copy for explained behaviour.
 //!
 //!   @warning you should use eve::compress_copy if possible, it has more opportunities
 //!   for optimizations.

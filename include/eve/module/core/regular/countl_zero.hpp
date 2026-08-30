@@ -61,7 +61,7 @@ namespace eve
 //!
 //!       1. The value of the number of consecutive 0 ("zero") bits in the value of `x`, starting
 //!        from the most significant bit ("left"), with same type as `x` is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/countl_zero)

@@ -71,8 +71,10 @@ struct sqrtlog_4_t : constant_callable<sqrtlog_4_t, Options, lower_option, upper
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sqrtlog_4.cpp}
-//! @}
+//!  @godbolt{doc/math/sqrtlog_4.cpp}
 //================================================================================================
 inline constexpr auto sqrtlog_4 = functor<sqrtlog_4_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

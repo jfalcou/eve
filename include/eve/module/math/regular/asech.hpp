@@ -65,7 +65,7 @@ namespace eve
 //!       * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!       * If the element is \f$1\f$, \f$+0\f$ returned.
 //!       * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Hyperbolic Secant](https://mathworld.wolfram.com/InverseHyperbolicSecant.html)

@@ -13,7 +13,7 @@
 #include <eve/module/bessel/detail/kernel_bessel_j1.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
-// Theis routine is detail of the computation of cylindrical bessel functions
+// This routine is detail of the computation of cylindrical bessel functions
 // of the first kind and integer orders.
 // They are not meant to be called directly
 // The inspiration is from boost math

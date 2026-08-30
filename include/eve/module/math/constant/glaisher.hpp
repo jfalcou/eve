@@ -69,10 +69,16 @@ struct glaisher_t : constant_callable<glaisher_t, Options, lower_option, upper_o
 //!
 //!      The call `eve::glaisher(as<T>())` returns the Glaisher-Kinkelin constant.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Glaisher-KinkelinConstant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Glaisher%E2%80%93Kinkelin_constant)
+//!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/glaisher.cpp}
-//! @}
+//!  @godbolt{doc/math/glaisher.cpp}
 //================================================================================================
 inline constexpr auto glaisher = functor<glaisher_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

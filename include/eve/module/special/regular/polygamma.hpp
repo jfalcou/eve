@@ -56,14 +56,14 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n`: [scalar_value](@ref eve::value). (see note below)
-//!     * `x`: [flaoting value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
 //!     1. The value of the Polygamma function: \f$\psi(n, x) = \frac{\mbox{d}^{n+1}}{\mbox{d}x^{n+1}}\log\Gamma(x)\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @note Only integral (or flint) positive values of n correspond to the proper polygamma definition. You can use
 //!        non integral values but the function result may be different to

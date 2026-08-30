@@ -72,7 +72,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...`, `ys ...: [real](@ref eve::floating values) arguments
+//!     * `xs ...`, `ys ...: [real values](@ref eve::floating_value) arguments
 //!     * `xx`, `yy`       : kumi::tuple of arguments
 //!
 //!    **Return value**
@@ -83,7 +83,7 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [Wikipedia  neville's algorithm](https://en.wikipedia.org/wiki/Neville%27s_algorithm)
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/neville.cpp}
+//!  @godbolt{doc/math/neville.cpp}
 //================================================================================================
   inline constexpr auto neville = functor<neville_t>;
 //================================================================================================

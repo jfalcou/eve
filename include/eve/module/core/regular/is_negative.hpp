@@ -69,7 +69,7 @@ namespace eve
 //!     1. For signed types The call `is_negative(x)` returns true
 //!        if and only if the bit of sign (most significant bit) is set. Of course the result on a NaN input
 //!        is generally out of control.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. with this option a NaN input always return false.
 //!
 //!   @note

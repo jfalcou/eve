@@ -71,7 +71,7 @@ namespace eve
 //!     1. The call `is_flint(x)` is semantically  equivalent to `is_eqz (eve::frac(x))`;
 //!        This means that x represents an integral value.
 //!     2. Always returns `true`
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!     4. The call `is_flint[pedantic](x)` also check that the input is not greater or equal to the
 //!        largest consecutive integer in the element type of `x` (`maxflint(as(x))`).
 //!

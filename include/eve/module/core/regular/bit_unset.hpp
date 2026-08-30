@@ -61,7 +61,7 @@ namespace eve
 //!    **Return value**
 //!       1. The value of the parameter is returned with the ith bit set to 0
 //!          if the index is out of range the call will assert.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_unset.cpp}

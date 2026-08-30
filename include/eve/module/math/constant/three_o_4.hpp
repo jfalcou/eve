@@ -71,8 +71,10 @@ struct three_o_4_t : constant_callable<three_o_4_t, Options, lower_option, upper
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/three_o_4.cpp}
-//! @}
+//!  @godbolt{doc/math/three_o_4.cpp}
 //================================================================================================
 inline constexpr auto three_o_4 = functor<three_o_4_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

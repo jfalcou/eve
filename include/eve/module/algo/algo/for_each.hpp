@@ -29,7 +29,7 @@ namespace eve::algo
   //!    * The unrolling just calls the single step.
   //!    * Will align by default.
   //!
-  //!    If you you have a more advanced unrolling, consider using the `for_each_iteration`.
+  //!    If you have a more advanced unrolling, consider using the `for_each_iteration`.
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/for_each.hpp>`
   //! @}

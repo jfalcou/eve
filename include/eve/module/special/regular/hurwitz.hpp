@@ -61,7 +61,7 @@ struct hurwitz_t : callable<hurwitz_t, Options, pedantic_option, raw_option, fas
 //!   **Return value**
 //!
 //!     1. The value of the Hurwitz function:  \f$\sum_{k=0}^\infty (k+z)^{-s}\f$, where any term with \f$k+z = 0\f$ is excluded.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)

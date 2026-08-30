@@ -71,8 +71,10 @@ struct rsqrt_pi_t : constant_callable<rsqrt_pi_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/rsqrt_pi.cpp}
-//! @}
+//!  @godbolt{doc/math/rsqrt_pi.cpp}
 //================================================================================================
 inline constexpr auto rsqrt_pi = functor<rsqrt_pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

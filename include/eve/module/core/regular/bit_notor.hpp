@@ -79,7 +79,7 @@ namespace eve
 //!           - For more than two parameters the call is semantically equivalent to
 //!             `bit_notor(a0, bit_or(xs...))`
 //!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!      3. [The operation is performed conditionally](@ref conditional). This is only supported when all parameters
 //!         share the same number of lanes or are scalars.
 //!
 //!  @groupheader{Example}

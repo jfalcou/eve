@@ -72,8 +72,10 @@ struct sqrt_e_t : constant_callable<sqrt_e_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sqrt_e.cpp}
-//! @}
+//!  @godbolt{doc/math/sqrt_e.cpp}
 //================================================================================================
 inline constexpr auto sqrt_e = functor<sqrt_e_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

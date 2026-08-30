@@ -69,7 +69,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. A `kumi::tuple` of values containing respectively the `frac(x)` and trunc(x)`,
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. A `kumi::tuple` of values containing respectively the `frac[o](x)` and trunc[o](x)`
 //!        where `o` is the chosen option.
 //!

@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var valmin
-//!   @brief Computes the the lowest representable value.
+//!   @brief Computes the lowest representable value.
 //!
 //!   **Defined in Header**
 //!

@@ -66,6 +66,10 @@ namespace eve
 //!       3. Calls a proper system intrinsic if one exists, but with possibly
 //!          very poor accuracy in return. Otherwise, it uses the regular implementation.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Square_root)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SquareRoot.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rsqrt.cpp}
 //================================================================================================

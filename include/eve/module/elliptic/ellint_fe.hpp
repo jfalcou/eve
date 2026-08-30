@@ -39,7 +39,7 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var ellint_fe
-//!   @brief `elementwise_callable` object computing the elliptic integrals of the first and second kind kind.
+//!   @brief `elementwise_callable` object computing the elliptic integrals of the first and second kind.
 //!
 //!   @groupheader{Header file}
 //!

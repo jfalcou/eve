@@ -67,7 +67,7 @@ namespace eve
 //!
 //!    1. Returns [elementwise](@ref glossary_elementwise) the phase angle (in radians) of the
 //!       input (0 or\f$\pi\f$) depending of the bit of sign of the input
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!    3. If the entry is `NaN` the result is `NaN`.
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples

@@ -60,7 +60,7 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the radian input converted in \f$\pi\f$ multiples.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/radinpi.cpp}

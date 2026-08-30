@@ -69,7 +69,7 @@ namespace eve
 //!    **Return value**
 //!
 //!     1. The integer nearest to `x`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. equivalent to `ceil(x)`.
 //!     4. equivalent to `floor(x)`.
 //!     5. equivalent to `nearest(x)`.

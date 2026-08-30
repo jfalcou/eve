@@ -65,7 +65,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 //!
 //!     1. The value of the normalized lower incomplete \f$\Gamma\f$ function:
 //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Incomplete gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function)

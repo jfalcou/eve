@@ -71,8 +71,10 @@ struct inv_pi_t : constant_callable<inv_pi_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/inv_pi.cpp}
-//! @}
+//!  @godbolt{doc/math/inv_pi.cpp}
 //================================================================================================
 inline constexpr auto inv_pi = functor<inv_pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

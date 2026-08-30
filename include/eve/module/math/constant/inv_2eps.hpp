@@ -63,8 +63,10 @@ struct inv_2eps_t : constant_callable<inv_2eps_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/inv_2eps.cpp}
-//! @}
+//!  @godbolt{doc/math/inv_2eps.cpp}
 //================================================================================================
 inline constexpr auto inv_2eps = functor<inv_2eps_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

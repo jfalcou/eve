@@ -66,7 +66,7 @@ namespace eve
 //!   1. The value of the normalized complementary error function:
 //!     \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$, is returned.
 //!   2. faster computations at accuracy price.
-//!   3. [The operation is performed conditionnaly](@ref conditional).
+//!   3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)

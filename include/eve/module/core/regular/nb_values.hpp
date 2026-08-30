@@ -65,7 +65,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. Returns the number of values representable in the type in the interval `[x, y[`
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //================================================================================================

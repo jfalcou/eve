@@ -49,7 +49,7 @@ namespace eve::_
         //  if saturated on integer, we don't have masked op so we delegate
         if        constexpr (O::contains(saturated) && std::integral<T>)
           return mul[opts][mask].retarget(cpu_{}, a, b);
-        //  If not, we can mask if there is no alterative value
+        //  If not, we can mask if there is no alternative value
         else  if  constexpr (!C::has_alternative && (sizeof(T) > 1))
         {
           auto m = expand_mask(mask, as{a});

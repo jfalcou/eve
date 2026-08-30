@@ -79,7 +79,7 @@ namespace eve
 //!    3. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
-//!    6. [The operation is performed conditionnaly](@ref conditional).
+//!    6. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: acos](https://en.cppreference.com/w/cpp/numeric/math/acos)

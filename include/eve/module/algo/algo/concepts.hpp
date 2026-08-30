@@ -14,7 +14,7 @@
 //!   @brief Provides SIMD implementation of standard algorithms
 //!
 //!   @defgroup views Views
-//!   @brief Provides views to work with SIMD algorihms
+//!   @brief Provides views to work with SIMD algorithms
 //!
 //!   @defgroup algo_concepts Algorithms Concepts
 //!   @brief Provides Concepts for algorithms and related components

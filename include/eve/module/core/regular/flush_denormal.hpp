@@ -57,7 +57,7 @@ namespace eve
 //!   **Return value**
 //!
 //!   1. denormal values are flushed to zero.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Subnormal_number)

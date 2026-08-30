@@ -66,7 +66,7 @@ namespace eve
 //!    **Return value**
 //!
 //!       1. Return x byte i0 and i1 swapped in each element of x. Assert if i0 or i1 are out of range.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/byte_swap_pairs.cpp}

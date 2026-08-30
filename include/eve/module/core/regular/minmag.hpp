@@ -78,7 +78,7 @@ namespace eve
 //!            * Otherwise `min(x, y)` is returned.
 //!         For n parameters the result is computed as if this scheme was recursively used.
 //!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!      4. The behaviour of eve::maxmag[o](x, y) (where o is one of these two options)
 //!        is identical except that if  `|x| == |y|`, `min[o]` is used.
 //!

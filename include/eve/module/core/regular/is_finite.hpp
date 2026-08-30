@@ -65,7 +65,7 @@ namespace eve
 //!
 //!      1. `is_finite(x)` is semantically  equivalent to `is_not_nan(x-x)`,
 //!      2. Always returns true.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_finite.cpp}

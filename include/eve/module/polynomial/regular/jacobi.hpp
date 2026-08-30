@@ -64,7 +64,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n` :  [integral positive argument](@ref eve::integral_value).
-//!              (returns a NaN if `n` does not fullfill these conditions).
+//!              (returns a NaN if `n` does not fulfill these conditions).
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!     * `alpha`, `beta`: [floating arguments](@ref eve::floating_value).
 //!
@@ -79,7 +79,7 @@ namespace eve
 //!     (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\f$.
 //!
 //!    1. The value of the polynomial \f$P^{\alpha, \beta}_n(x)\f$ is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
@@ -87,7 +87,7 @@ namespace eve
 //!   *  [Wolfram MathWorld:Jacobi Polynomial](https://mathworld.wolfram.com/JacobiPolynomial.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/polynomial/regular/jacobi.cpp}
+//!  @godbolt{doc/polynomial/jacobi.cpp}
 //================================================================================================
   inline constexpr auto jacobi = functor<jacobi_t>;
 //================================================================================================

@@ -63,7 +63,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!     1. returns a kumi::tuple `{m,e}`  of values ` of the same type as `x`, which are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
 //!       However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. this option takes also properly care of the cases where
 //!        \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!        denormal cases.

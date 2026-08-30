@@ -70,7 +70,7 @@ namespace eve
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
 //!    2. The `raw` and `fast` options use internally less accuate but faster implementations.
-//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!    3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Gudermannian](https://mathworld.wolfram.com/InverseGudermannian.html)

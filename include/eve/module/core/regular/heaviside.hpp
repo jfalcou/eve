@@ -81,7 +81,7 @@ namespace eve
 //!        2. Each [element](@ref glossary_elementwise)  of the result contains:
 //!           * `0`, if `x` is less or equal to `s` (default to zero).
 //!           * `1` otherwise.
-//!        3. [The operation is performed conditionnaly](@ref conditional).
+//!        3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [wikipedia](https://en.wikipedia.org/wiki/Indicator_function)

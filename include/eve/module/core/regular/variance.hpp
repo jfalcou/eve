@@ -94,7 +94,7 @@ namespace eve
 //!
 //!     1. the  computation of the variance of its arguments.
 //!     2. the  computation is made on  the tuple values.
-//!     3. [The operation is performed conditionnaly](@ref conditional)
+//!     3. [The operation is performed conditionally](@ref conditional)
 //!     4. No provision is made to avoid inaccuracies.
 //!     5. The variance is computed in the double sized element type (if available).
 //!     6. Compensated algorithm for better precision.

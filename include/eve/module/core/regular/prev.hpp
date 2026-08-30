@@ -88,7 +88,7 @@ namespace eve
 //!
 //!       1. the greatest representable value less than `x` is returned.
 //!       2. the nth representable value less than `x` is returned. If `n` is zero returns `x`.
-//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       3. [The operation is performed conditionally](@ref conditional)
 //!       4. if `x` is floating  zero and mzero are considered distinct.
 //!       5. ensures that the input is never less than the result of the call.
 //!       6. works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite).

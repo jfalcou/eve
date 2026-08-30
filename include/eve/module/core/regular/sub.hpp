@@ -84,14 +84,14 @@ namespace eve
 //!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
 //!       This call performs additions in reverse incoming order.
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!    4. The call `sub[saturated](...)` computes a saturated version of `add`.
-//!       Take care that for signed integral entries this kind of a is highly order dependant.
+//!       Take care that for signed integral entries this kind of a is highly order dependent.
 //!       This call perform saturated additions in reverse incoming order.
 //!        We do not advise to use it for more than 2 parameters.
-//!    5. The substraction is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!    5. The subtraction is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
 //!       to be less or equal to the exact one (except for Nans).
-//!    6. The substraction is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!    6. The subtraction is computed in a 'round toward \f$\infty\f$ mode. The result is guaranteed
 //!       to be greater or equal to the exact one (except for Nans).
 //!    7. The operation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and 64 bits integrals.

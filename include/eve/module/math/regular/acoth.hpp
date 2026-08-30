@@ -64,7 +64,7 @@ namespace eve
 //!      * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!      * If the element is less than one or a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Hyperbolic Cotangent](https://mathworld.wolfram.com/InverseHyperbolicCotangent.html)

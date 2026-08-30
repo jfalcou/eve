@@ -51,7 +51,7 @@ namespace eve
 //! @{
 //!   @var cumfun
 ///!   @brief `callable` converting a pack of values into
-//!     a tuple of the cumulative application of a two parameter eve fonction defining
+//!     a tuple of the cumulative application of a two parameter eve function defining
 //!     an abelian monoid.
 //!
 //!   @groupheader{Header file}

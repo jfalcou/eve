@@ -78,7 +78,7 @@ namespace eve
 //!         * If the element is \f$\pm\infty\f$, Nan is returned.
 //!         * If the element is a `NaN`, `NaN` is returned.
 //!       (the inverse of the sine). In particular:
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.

@@ -23,7 +23,7 @@
 //!
 //! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
-//! These functions allows performing some basic arithmetics operations with greater accuracy
+//! These functions allows performing some basic arithmetic operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
 //! [diff_of_prod](@ref eve::diff_of_prod), [safe_scale](@ref eve::safe_scale), [sufp](@ref eve::sufp),
@@ -39,15 +39,15 @@
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! These functions allows performing some basic arithmetics operations and some less basic.
+//! These functions allows performing some basic arithmetic operations and some less basic.
 //!
-//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmi](@ref eve::absmin),
+//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmin](@ref eve::absmin),
 //! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
 //! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
-//! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
+//! [copysign](@ref eve::copysign), [cosine_similarity](@ref eve::cosine_similarity),
 //! [covariance](@ref eve::covariance),
 //! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [dot](@ref eve::dot),
-//! [fdim](@ref eve::fdim)], [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
+//! [fdim](@ref eve::fdim), [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
 //! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
 //! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
 //! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
@@ -56,7 +56,7 @@
 //! [negabsmin](@ref eve::negabsmin), [negate](@ref eve::negate),[negatenz](@ref eve::negatenz),
 //! [negmaxabs](@ref eve::negmaxabs), [negminabs](@ref eve::negminabs), [oneminus](@ref eve::oneminus),
 //! [rat](@ref eve::rat), [rec](@ref eve::rec), [reldist](@ref eve::reldist), [rem](@ref eve::rem),
-//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale)],
+//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale),
 //! [rsqrt](@ref eve::rsqrt), [saturate](@ref eve::saturate), [sign](@ref eve::sign), [sign_alternate](@ref eve::sign_alternate)
 //! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr), [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
 //! [sum_of_squares](@ref eve::sum_of_squares),
@@ -65,7 +65,7 @@
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
-//! These functions are low level and acting on the bit or byte representation of the involved datas independantly of their type.
+//! These functions are low level and acting on the bit or byte representation of the involved data independently of their type.
 //!
 //! [bit_and](@ref eve::bit_and), [bit_andnot](@ref eve::bit_andnot), [bit_cast](@ref eve::bit_cast), [bit_ceil](@ref eve::bit_ceil),
 //! [bit_flip](@ref eve::bit_flip),[bit_floor](@ref eve::bit_floor),  [bit_mask](@ref eve::bit_mask),
@@ -75,7 +75,7 @@
 //! [bit_shr](@ref eve::bit_shr), [bit_swap_adjacent](@ref eve::bit_swap_adjacent), [bit_swap_pairs](@ref eve::bit_swap_pairs),
 //! [bit_ternary](@ref eve::bit_ternary), [bit_unset](@ref eve::bit_unset), [bit_width](@ref eve::bit_width), [bit_xor](@ref eve::bit_xor).
 //! [byte_reverse](@ref eve::byte_reverse), [byte_swap_adjacent](@ref eve::byte_swap_adjacent), [byte_swap_pairs](@ref eve::byte_swap_pairs),
-//! [countl](@ref eve::countl), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
+//! [countl_one](@ref eve::countl_one), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
 //!
 //! @defgroup core_constants  Constants
 //! @ingroup core
@@ -94,7 +94,7 @@
 //!
 //! @note For mathematic constants whose value is (perhaps) not exactly represented in the floating point type used,
 //!       the regular call provides the value rounded to nearest even, but the semantic modifiyers `upper` and
-//!       `lower` can be used to provide values guaranted to be greater or equal (respectively less or equal) to
+//!       `lower` can be used to provide values guaranteed to be greater or equal (respectively less or equal) to
 //!       the real mathematical value. For instance the regular nearest values of \f$\pi\f$ for float and double are
 //!       greater (resp. less) than the mathematical value.
 //!
@@ -109,10 +109,10 @@
 //!   * general behaviour
 //!       - `raw`: indicates that the operation is performed minimally to gain speed generally at the expanse of accuracy
 //!          or/and proper treatment of corner cases values.
-//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed impovement against the regular call.
+//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed improvement against the regular call.
 //!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
 //!       - `pedantic` : indicates that the operation will aim to follow existing **C++** standard.
-//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranted less or
+//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranteed less or
 //!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
 //!
 //!   * integer roundings :
@@ -149,7 +149,7 @@
 //!
 //!       - `widen`: the result is computed in the upgraded type corresponding to the elements parameters. Presently, this has no effect
 //!          on 64 bits types as the upgrade type is the type itself.
-//!          If the widen decorator is used,  it is the responsability of the user to use [convert](@ref eve::convert)
+//!          If the widen decorator is used,  it is the responsibility of the user to use [convert](@ref eve::convert)
 //!          if it is  needed to get back to the input type sizes.
 //!
 //!    * Fuzzy
@@ -189,7 +189,7 @@
 //! Take care that can be very expensive if the proper hardware capabilities are not present.
 //!
 //! By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand
-//! and if there is no possibility of  maping the std implementation
+//! and if there is no possibility of  mapping the std implementation
 //!
 //! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnma](@ref eve::fnma),
 //! [fnms](@ref eve::fnms)[fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
@@ -217,8 +217,8 @@
 //!
 //! [swap_if](@ref eve::swap_if), [logical_and](@ref eve::logical_and), [logical_andnot](@ref eve::logical_andnot),
 //! [logical_not](@ref eve::logical_not), [logical_notand](@ref eve::logical_notand), [logical_notor](@ref eve::logical_notor),
-//! [logical_or](@ref eve::logical_or). [logical_ornot](@ref eve::logical_ornot),
-//! [logical_select](@ref eve::logical_select), [replace_ignored](@ref eve::replace_ignored).
+//! [logical_or](@ref eve::logical_or), [logical_ornot](@ref eve::logical_ornot),
+//! [replace_ignored](@ref eve::replace_ignored).
 //!
 //! @defgroup core_predicates  Predicates
 //! @ingroup core
@@ -234,7 +234,7 @@
 //!
 //! *  With [numeric](@ref eve::numeric) decorator, Nan never wins against a definite value in a comparison.
 //! *  [pedantic](@ref eve::pedantic) try to mimic the corresponding standard function behaviour.
-//! *  [almost](@ref eve::almost) and [definitely](@ref eve::almost) allow a fuzzy treatment of comparisons.
+//! *  [almost](@ref eve::almost) and [definitely](@ref eve::definitely) allow a fuzzy treatment of comparisons.
 //!
 //! Supplementary comparisons functions take the bit of sign of zero into account,  namely
 //! [is_eqpz](@ref eve::is_eqpz), [is_eqmz](@ref eve::is_eqmz), [is_negative](@ref eve::is_negative), [is_positive](@ref eve::is_positive)

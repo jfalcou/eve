@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var remainder
-//!   @brief mimick the std::remainder function for floating values.
+//!   @brief mimic the std::remainder function for floating values.
 //!
 //!   @groupheader{Header file}
 //!
@@ -61,12 +61,12 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. Returns the remainder after division division of `x` by `y` and is
+//!      1. Returns the remainder after division of `x` by `y` and is
 //!         equivalent to  `x- eve::nearest(eve:div(x, y))*y`. In particular:
 //!        * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!        * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
 //!        * If `y` is `NaN`, `NaN` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/remainder.cpp}

@@ -71,8 +71,10 @@ struct sqrt_pi_t : constant_callable<sqrt_pi_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sqrt_pi.cpp}
-//! @}
+//!  @godbolt{doc/math/sqrt_pi.cpp}
 //================================================================================================
 inline constexpr auto sqrt_pi = functor<sqrt_pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

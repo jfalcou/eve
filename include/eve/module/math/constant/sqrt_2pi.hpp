@@ -71,8 +71,10 @@ struct sqrt_2pi_t : constant_callable<sqrt_2pi_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sqrt_2pi.cpp}
-//! @}
+//!  @godbolt{doc/math/sqrt_2pi.cpp}
 //================================================================================================
 inline constexpr auto sqrt_2pi = functor<sqrt_2pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

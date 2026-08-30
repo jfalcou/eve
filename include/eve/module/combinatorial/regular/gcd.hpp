@@ -64,7 +64,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 //!
 //!      1. If both p and n are zero, returns zero. Otherwise, returns the greatest common divisor of |p|
 //!         and |n|.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Least common multiple](https://en.wikipedia.org/wiki/Greatest_common_divisor)

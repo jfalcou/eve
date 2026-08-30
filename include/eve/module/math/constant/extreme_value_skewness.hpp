@@ -72,8 +72,10 @@ struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Op
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/extreme_value_skewness.cpp}
-//! @}
+//!  @godbolt{doc/math/extreme_value_skewness.cpp}
 //================================================================================================
 inline constexpr auto extreme_value_skewness = functor<extreme_value_skewness_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

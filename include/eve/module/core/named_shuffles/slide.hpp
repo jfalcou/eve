@@ -19,7 +19,7 @@ namespace eve
 //!    @var slide_left
 //!    @brief a named shuffles for sliding two simd values together and selecting
 //!    one register. Common names for this would also include "shift", "extract".
-//!    Second value can be ommitted for an implicit zero.
+//!    Second value can be omitted for an implicit zero.
 //!
 //!    **Defined in Header**
 //!

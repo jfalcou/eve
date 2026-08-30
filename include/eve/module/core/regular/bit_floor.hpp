@@ -69,7 +69,7 @@ namespace eve
 //!
 //!      1. The value of the largest integral power of two that is not greater than `x` is returned.
 //!         If `x` is zero returns zero.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_floor.cpp}

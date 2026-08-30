@@ -37,7 +37,7 @@ namespace eve
 //!                     even if not all are selected. Those values are undefined.
 //!                     safe is not allowed to perform those writes, at the price of
 //!                     being slower for certain usecases.
-//!     * dense/sparse - wether or not you expect a lot of selected elements.
+//!     * dense/sparse - whether or not you expect a lot of selected elements.
 //!
 //!   @note `safe` version only touch selected elements. So, for example,
 //!   other threads can read/write them without a race condition.
@@ -59,7 +59,7 @@ namespace eve
 //!     * they are treated as not selected, regardless of the mask value
 //!   2nd is the output side ignore:
 //!     * elements that are ignored, will not be written.
-//!       having initial offset is equivalent to offseting the `o + offset`.
+//!       having initial offset is equivalent to offsetting the `o + offset`.
 //!       followed by keep_first(count)
 //!     Example:
 //!       if the `eve::ignore_extrema(1, L::size() - 2)` is passed,

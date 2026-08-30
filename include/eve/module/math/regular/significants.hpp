@@ -49,7 +49,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!      * `x`: [floating argument](@ref eve::floating_value).
-//!      * `n` : [value argument](@ref eve::unsigned_integral_value).
+//!      * `n` : [unsigned value argument](@ref eve::unsigned_value).
 //!
 //!    **Return value**
 //!

@@ -39,7 +39,7 @@ struct minlog10_t : constant_callable<minlog10_t, Options, lower_option, upper_o
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog10
-//!   @brief Callable object computing the least value for which eve::exp10 is not zero.
+//!   @brief Callable object computing the least value for which eve::exp10 is normal and not zero.
 //!
 //!   **Defined in Header**
 //!
@@ -63,13 +63,14 @@ struct minlog10_t : constant_callable<minlog10_t, Options, lower_option, upper_o
 //!
 //!    **Return value**
 //!
-//!      The call `eve::minlog10(as<T>())` returns  the least value for which
-//!      eve::exp10 is not zero.
+//!      The call `eve::minlog10(as<T>())` returns the least value for which eve::exp10 is normal and not zero.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog10.cpp}
-//! @}
+//!  @godbolt{doc/math/minlog10.cpp}
 //================================================================================================
 inline constexpr auto minlog10 = functor<minlog10_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

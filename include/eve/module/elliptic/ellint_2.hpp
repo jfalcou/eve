@@ -79,7 +79,7 @@ namespace eve
 //!      2. the incomplete elliptic integrals of the second kind:
 //!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\f$ is returned.
 //!         \f$\alphaf$ is  \f$\sin k\f$ and \f$m\f$ is \sqrt(k)\f$
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!
 //!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
 //!   values the result of the incomplete  function with a \f$\phi\f$ floating point value

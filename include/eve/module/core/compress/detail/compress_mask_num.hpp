@@ -49,7 +49,7 @@
 // [0, 0], [1, 0] and [0, 1], [1, 1].
 //
 // This means we have 3 * 3 * 3 options.
-// The easiest way to convert from a mask to a 27 options is to interpet it
+// The easiest way to convert from a mask to a 27 options is to interpret it
 // as a base3 number: each 2 elements are a base 3 digit.
 // This is a popcount for 2 elements.
 // We also return popcount.

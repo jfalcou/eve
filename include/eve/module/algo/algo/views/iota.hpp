@@ -122,7 +122,7 @@ namespace eve::algo::views
   //! @addtogroup views
   //! @{
   //!    @var iota_with_step
-  //!    @brief A fuction to generate an `iota` with a step i.e. a general arithmetic sequence.
+  //!    @brief A function to generate an `iota` with a step i.e. a general arithmetic sequence.
   //!    To generate an iterator pass T base, T step.
   //!    For a range pass a range size as ptrdiff_t as a 3rd parameter.
   //!
@@ -156,9 +156,9 @@ namespace eve::algo::views
   //! @addtogroup views
   //! @{
   //!    @var iota
-  //!    @brief A fuction to generate an `iota` iterator/view like [0.5, 2.5,  4.5, ...]. \f$(0.5 + 2(n-1))_{n \in \N}\f$
+  //!    @brief A function to generate an `iota` iterator/view like [0.5, 2.5,  4.5, ...]. \f$(0.5 + 2(n-1))_{n \in \N}\f$
   //!    To generate an iterator base + (n-1) step  pass T base and T step.
-  //!    For a range pass a range size as ptrdiff_t as a 2rd parameter.
+  //!    For a range pass a range size as ptrdiff_t as a 2nd parameter.
   //!
   //!    **Required header:** `#include <eve/module/algo/algo/views/iota.hpp>`
   //!

@@ -63,7 +63,11 @@ namespace eve
 //!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
 //!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
 //!        * If the element is a `Nan`, `NaN` is returned.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   2. [The operation is performed conditionally](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SinhcFunction.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinhc.cpp}

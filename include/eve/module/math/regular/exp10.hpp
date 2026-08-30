@@ -70,6 +70,11 @@ namespace eve
 //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!       * If the element is a `NaN`, `NaN` is returned
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/exp10.cpp}
 //================================================================================================

@@ -94,7 +94,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Laguerre Polynomial](https://mathworld.wolfram.com/LaguerrePolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/laguerre.cpp}
+//!   @godbolt{doc/polynomial/laguerre.cpp}
 //================================================================================================
   inline constexpr auto laguerre = functor<laguerre_t>;
 //================================================================================================

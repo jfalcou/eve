@@ -65,7 +65,7 @@ namespace eve
 //!      1. The value of \f$\Gamma\f$ is returned.
 //!      2. faster computations at accuracy price based on  "An accurate approximation formula for
 //!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: tgamma](https://en.cppreference.com/w/cpp/numeric/math/tgamma)

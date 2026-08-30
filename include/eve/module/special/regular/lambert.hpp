@@ -63,7 +63,7 @@ namespace eve
 //!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
 //!          returned are NaN.
 //!        * If the inputs are positive, only one branch exist and the two returned values are equal.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)

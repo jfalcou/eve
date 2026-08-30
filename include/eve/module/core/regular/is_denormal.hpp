@@ -71,7 +71,7 @@ namespace eve
 //!      1. returns [elementwise](@ref glossary_elementwise) true if and only if the element value is
 //!         [denormal](https://mathworld.wolfram.com/SubnormalNumber.html).
 //!      2. always return `false`.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_denormal.cpp}

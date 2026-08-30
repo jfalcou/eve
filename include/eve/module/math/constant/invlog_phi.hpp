@@ -72,8 +72,10 @@ struct invlog_phi_t : constant_callable<invlog_phi_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/invlog_phi.cpp}
-//! @}
+//!  @godbolt{doc/math/invlog_phi.cpp}
 //================================================================================================
 inline constexpr auto invlog_phi = functor<invlog_phi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

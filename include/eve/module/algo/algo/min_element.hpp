@@ -208,7 +208,7 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
 //!   The `single_pass` opt-in will be aligning all data accesses
 //~   (expensive_callable always disables this).
 //!
-//!   @note for equivalent elements we return the first amoung equal.
+//!   @note for equivalent elements we return the first among equal.
 //!   @note we assume that `eve::is_less` defined for your type is total order.
 //!        (this comes up when switching min with max)
 //!

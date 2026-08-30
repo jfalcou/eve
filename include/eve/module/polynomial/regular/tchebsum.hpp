@@ -100,7 +100,7 @@ namespace eve
 //!
 //!     1. The value at  `x` f the polynom based on first kind Tchebytchev function is returned.
 //!     2. Same as the call with the elements of the tuple.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!     4. `fma[pedantic]` instead of `fma` is used in internal computations.
 //!     5. a Kahan like compensated algorithm is used to enhance accuracy.
 //!     6. the computation is applied to upgraded types values when available.
@@ -115,7 +115,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Tchebsum's_method)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/math/tchebsum.cpp}
+//!   @godbolt{doc/polynomial/tchebsum.cpp}
 //================================================================================================
   inline constexpr auto tchebsum = functor<tchebsum_t>;
 //================================================================================================

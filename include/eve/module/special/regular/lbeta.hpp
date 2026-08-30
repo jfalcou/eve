@@ -65,7 +65,7 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options, pedantic_option, raw_opt
 //!
 //!     1. the natural logarithm of the [beta](@ref beta) function.
 //!     2. faster computations at accuracy price.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Beta Function](https://dlmf.nist.gov/5.12)

@@ -71,8 +71,10 @@ struct invsqrt_2_t : constant_callable<invsqrt_2_t, Options, lower_option, upper
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/invsqrt_2.cpp}
-//! @}
+//!  @godbolt{doc/math/invsqrt_2.cpp}
 //================================================================================================
 inline constexpr auto invsqrt_2 = functor<invsqrt_2_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

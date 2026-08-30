@@ -69,10 +69,17 @@ struct zeta_3_t : constant_callable<zeta_3_t, Options, lower_option, upper_optio
 //!
 //!      The call `eve::zeta_3(as<T>())` returns  \f$\zeta(3)\f$.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AperysConstant.html)
+//!   *  [DLMF](https://dlmf.nist.gov/25.6)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_constant)
+//!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/zeta_3.cpp}
-//! @}
+//!  @godbolt{doc/math/zeta_3.cpp}
 //================================================================================================
 inline constexpr auto zeta_3 = functor<zeta_3_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

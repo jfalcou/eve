@@ -68,7 +68,7 @@ namespace eve
 //!        nearest even integer.The smallest integer not less than `x`.
 //!        The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
 //!        `FE_TOWARDZERO`. This function object implements the `FE_TONEAREST` version.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/round)

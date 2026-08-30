@@ -63,7 +63,7 @@ namespace eve
 //!
 //!      1. The call `is_not_infinite(x)` is semantically equivalent to `is_finite(x) || is_nan(x)`
 //!      2. Always returns `true`.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_infinite.cpp}

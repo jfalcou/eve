@@ -32,7 +32,7 @@ struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_opt
 //! @addtogroup math_constants
 //! @{
 //!   @var quarter
-//!   @brief Callable object computing the constant \f$1/3\f$.
+//!   @brief Callable object computing the constant \f$1/4\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -60,8 +60,10 @@ struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/quarter.cpp}
-//! @}
+//!  @godbolt{doc/math/quarter.cpp}
 //================================================================================================
 inline constexpr auto quarter = functor<quarter_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

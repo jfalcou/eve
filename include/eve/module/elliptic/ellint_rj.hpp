@@ -79,7 +79,7 @@ namespace eve
 //!     1. the value of the \f$\mathbf{R}_\mathbf{J}\f$ Carlson elliptic integral:
 //!        \f$ \frac32 \int_{0}^{\infty}
 //!        \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\;\mathrm{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
@@ -155,7 +155,7 @@ namespace eve
           if( eve::any(test) )
           {
             //
-            // occationally en ~ -1, we then have no means of calculating
+            // occasionally en ~ -1, we then have no means of calculating
             // rc(1, 1+en) without terrible cancellation error, so we
             // need to get to 1+en directly.  by substitution we have
             //

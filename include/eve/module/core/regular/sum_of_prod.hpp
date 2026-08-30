@@ -78,7 +78,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of `x*y-z*t`,  with better precision if correct fma is available, is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. computes a raw  version of sum_of_prod,  i.e. the naive formula (in fact  `fma(x, y, z*t)`)
 //!      4. computes a pedantic version of `diff_of_prod` ensuring better accuracy in any case.
 //!

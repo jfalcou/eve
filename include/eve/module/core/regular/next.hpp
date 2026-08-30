@@ -93,7 +93,7 @@ namespace eve
 //!
 //!       1. the least representable value greater than `x` is returned.
 //!       2. the nth representable value greater than `x` is returned. If `n` is zero returns `x`.
-//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       3. [The operation is performed conditionally](@ref conditional)
 //!       4. if `x` is floating the call with mzero returns zero
 //!       5. ensures that the input is never greater than the result of the call.
 //!       6. works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite)

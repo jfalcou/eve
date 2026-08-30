@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var countl_one
-//!   @brief elementwise_callable object computing the number of consecutive bits unset in a value starting from left
+//!   @brief elementwise_callable object computing the number of consecutive bits set in a value starting from left
 //!
 //!   @groupheader{Header file}
 //!
@@ -61,7 +61,7 @@ namespace eve
 //!
 //!       1. The value of the number of consecutive 1 ("one") bits in the value of `x`, starting
 //!        from the most significant bit ("left"), with same type as `x` is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/countl_one)

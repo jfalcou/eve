@@ -64,7 +64,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The call `is_unit(x)` is semantically  equivalent to  `abs(x) == 1`
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_unit.cpp}

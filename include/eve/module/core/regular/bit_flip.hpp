@@ -64,7 +64,7 @@ namespace eve
 //!
 //!      1. The value of the parameter is returned with the ith bit flipped.
 //!         if the index is out of range the call will assert.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_flip.cpp}

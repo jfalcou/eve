@@ -62,7 +62,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1.  For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to `x != x`
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_nan.cpp}

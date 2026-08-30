@@ -73,7 +73,7 @@ namespace eve
 //!          the result is of the same type as the entry.
 //!        * If `n` elements are nor integer nor flint the result is NaN.
 //!     2. With the pedantic option \f$\log(\Gamma(x+1))\f$ is returned.
-//!     3. [The operation is performed conditionnaly](@ref conditional)
+//!     3. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)

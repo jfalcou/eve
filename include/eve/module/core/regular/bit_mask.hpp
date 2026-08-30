@@ -61,7 +61,7 @@ namespace eve
 //!        *  if the [element](@ref glossary_elementwise) is zero, an element
 //!           with all bits unset is returned.
 //!        *  else an element of the type with all bits set is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_mask.cpp}

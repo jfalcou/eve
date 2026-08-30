@@ -65,7 +65,7 @@ namespace eve
 //!       1. Return x with elementwise groups of N bytes swapped.
 //!          - If N is greater to sizeof(x) 0 is returned.
 //!          - If N is equal   to sizeof(x) x is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note Take care that eve::byte_swap_adjacent is NOT the EVE functional equivalent to std::byteswap.
 //!   eve::byte_reverse IS. As the name does not say, std::byteswap reverse the order

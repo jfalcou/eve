@@ -68,7 +68,7 @@ namespace eve
 //!        - `-1` , if `x` is less than 0
 //!        -  \f$\pm0\f$, if `x` is \f$\pm0\f$
 //!        -  If called on `Nan`, the result is the actual sign of `Nan`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sign.cpp}

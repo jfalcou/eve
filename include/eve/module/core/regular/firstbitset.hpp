@@ -60,7 +60,7 @@ namespace eve
 //!      1. Computes [elementwise](@ref glossary_elementwise) the bit pattern in
 //!         which the only bit set (if it exists) is
 //!         the first bit set (beginning with the least significant bit) in the input.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/firstbitset.cpp}

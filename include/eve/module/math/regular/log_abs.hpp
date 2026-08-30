@@ -58,7 +58,7 @@ namespace eve
 //!
 //!    1. Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
 //!       the absolute value of the input.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/log_abs.cpp}

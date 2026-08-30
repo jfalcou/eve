@@ -45,7 +45,7 @@ namespace eve
 //!    Instead of just a shuffled result, it returns a `kumi::tuple{shuffled, eve::index<Level>}`
 //!    where `Level` is a number indicating how complex the shuffle is.
 //!
-//!    If the ouptut consists of multiple native registers, the `Level` is maximum.
+//!    If the output consists of multiple native registers, the `Level` is maximum.
 //!    For one native register:
 //!      0: noop - this shuffle does not require any assembly.
 //!      1: constant - this shuffle produces requires one constant value and no instructions.
@@ -60,7 +60,7 @@ namespace eve
 //!
 //!    For context: anything <= 3 is a very good shuffle, <= 5 is an OK shuffle.
 //!
-//!    @note: if there is no native SIMD support on the platfroms and `eve` implements wide
+//!    @note: if there is no native SIMD support on the platforms and `eve` implements wide
 //!           as an array of scalars, the level is always 0.
 //!    @note: past level 5 we start to recurse a lot and we only guarantee max. For example level 6
 //!           might be 5 for some specific pattern.
@@ -69,7 +69,7 @@ namespace eve
 //!
 //!    ## The usecase
 //!
-//!    This is used for compiled comments/documentation vie `eve::shuffle_l`.
+//!    This is used for compiled comments/documentation via `eve::shuffle_l`.
 //!
 //!    When your final goal is to shuffle a register, you just call `shuffle` and accept
 //!    what it gives you.
@@ -78,7 +78,7 @@ namespace eve
 //!    is cheap. Or that it's cheap unless certain old architecture.
 //!
 //!    @note: `shuffle_l` might cause an assertion later, when porting to a weaker platform a
-//!           also probaly you want to update your docs.
+//!           also probably you want to update your docs.
 //!
 //!    ## Why `max` for multiple registers output?
 //!
@@ -121,7 +121,7 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //!   (2) and (4) call (1) and (3) with GroupSize = 1.
 //!   (3) will call 1 with `fix_pattern<T::size() / G>` generated from formula
 //!
-//!   Paramters:
+//!   Parameters:
 //!    * xs... - variadic pack of registers to shuffle.
 //!    * GroupSize - a parameter that allows you to specify pattern in groups of multiple
 //!      elements. Example: passing eve::lane<1>, eve::pattern<2, 3, 0, 1> is the same as

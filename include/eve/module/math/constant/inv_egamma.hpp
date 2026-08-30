@@ -73,8 +73,10 @@ struct inv_egamma_t : constant_callable<inv_egamma_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/inv_egamma.cpp}
-//! @}
+//!  @godbolt{doc/math/inv_egamma.cpp}
 //================================================================================================
 inline constexpr auto inv_egamma = functor<inv_egamma_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

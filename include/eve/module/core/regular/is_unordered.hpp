@@ -63,7 +63,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The call `eve::is_unordered(x,y)`  is semantically  equivalent to `is_nan(x) || is_nan(y)`:
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_unordered.cpp}

@@ -58,7 +58,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. Returns the [elementwise](@ref glossary_elementwise) the degree input converted in radian.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

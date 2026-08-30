@@ -45,7 +45,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var sum_of_squares
-//!   @brief `tuple_callable` object computing the sum_of_squares norm (\f$l_1\f$)  of its arguments.
+//!   @brief `tuple_callable` object computing the sum of the squared values of its arguments.
 //!
 //!   @groupheader{Header file}
 //!

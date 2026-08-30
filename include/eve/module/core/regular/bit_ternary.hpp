@@ -68,10 +68,10 @@ namespace eve
 //!        the specific ternary function is specified by value of k.
 //!        For each bit in each integer, the corresponding bit from a, b, and c are used according
 //!        to ik, and the result is output.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!        Note that the element type of the output is always the one of `a` and if any parameter is simd,
 //!        its number of lanes is the number of lanes of the output
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!      The following table is the pattern of a truth table: if `op` is a ternary bit operator the result column
 //!      is the desired bit output when calling `op` pn the `x`, `y` and `z` bit values.

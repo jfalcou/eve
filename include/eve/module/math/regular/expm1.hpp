@@ -65,7 +65,12 @@ namespace eve
 //!        * If the element is \f$-\infty\f$, \f$-1\f$ is returned
 //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!        * If the element is a `NaN`, `NaN` is returned
-//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    2. [The operation is performed conditionally](@ref conditional)
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/expm1)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/expm1.cpp}

@@ -36,7 +36,7 @@ requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), 
 {
   auto [shuffled, l] = shuffle_v2_core(x.bits(), y.bits(), g, p);
 
-  // 2 convertions from logical to bits and 1 back - costs 6 levels.
+  // 2 conversions from logical to bits and 1 back - costs 6 levels.
   return kumi::tuple {to_logical(shuffled), eve::index<decltype(l)::value + 6>};
 }
 

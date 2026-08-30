@@ -68,7 +68,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //!
 //!    1. The value of the  inverse of the normalized lower incomplete \f$\Gamma\f$ function
 //!       relative to the first parameter is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Incomplete gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function)

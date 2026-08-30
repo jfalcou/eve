@@ -64,9 +64,9 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The call `is_not_flint(x)` is semantically  equivalent to: `is_nez(frac (x))`;
-//!         This means that x  does not represent an integer (flint is a shorcut for 'floating integer').
+//!         This means that x  does not represent an integer (flint is a shortcut for 'floating integer').
 //!      2. Always returns `false`.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_flint.cpp}

@@ -75,6 +75,11 @@ namespace eve
 //!     5. The square root is computed in a 'round toward \f$\infty\f$ mode. The result is guaranteed
 //!        to be greater than or equal to the exact value (except for NaNs).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/sqrt)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Square_root)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SquareRoot.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sqrt.cpp}
 //================================================================================================

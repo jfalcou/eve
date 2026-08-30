@@ -11,7 +11,7 @@
 //! @defgroup traits Type traits
 //! @brief  Type traits for SIMD related types and functions
 //!
-//! Using **EVE** types and functions may require informations about some properties of the processed
+//! Using **EVE** types and functions may require information about some properties of the processed
 //! types that are accessible through the following traits.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/traits.hpp> @endcode

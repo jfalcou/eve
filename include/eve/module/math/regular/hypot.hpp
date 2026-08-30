@@ -77,7 +77,7 @@ namespace eve
 //!        absolute values of the parameters. (Some appropriate scaling is done to enhance precision
 //!        and avoid overflows.
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!    4. the naive formula is used.This option is faster, but does not care about avoiding overflows
 //!       or treating 'Nans' in special ways.
 //!    5. The pedantic option. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters

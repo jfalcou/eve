@@ -89,7 +89,7 @@ namespace eve
 //!      *  pow_abs(\f$+\infty\f$, y) returns \f$+0\f$ for any negative y.
 //!      *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
 //!      *  except where specified above, if any argument is NaN, NaN is returned.
-//!   2. [The operation is performed conditionnaly](@ref conditional)
+//!   2. [The operation is performed conditionally](@ref conditional)
 //!   3. faster but less accurate call.
 //!
 //!  @groupheader{Example}

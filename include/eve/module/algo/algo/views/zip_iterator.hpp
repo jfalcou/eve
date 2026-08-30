@@ -78,7 +78,7 @@ namespace eve::algo::views
   namespace _
   {
     // Don't take always aligned if possible.
-    // Prefer aligned if avaliable.
+    // Prefer aligned if available.
     template <typename ...I>
     constexpr std::size_t main_iterator()
     {
@@ -228,7 +228,7 @@ namespace eve::algo::views
       }
 
       // store_ has to be in common and not in iterator, because
-      // of the model breaking on making `compress_store` an alogirhtm.
+      // of the model breaking on making `compress_store` an algorithm.
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 

@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup core_simd
 //! @{
 //!   @var sort
-//!   @brief sorts a register in a accedning order accroding to a comparator.
+//!   @brief sorts a register in a accedning order according to a comparator.
 //!
 //!   @groupheader{Header file}
 //!
@@ -41,12 +41,12 @@ namespace eve
 //!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
-//!   Sorting algorithm, based on sortin networks.
+//!   Sorting algorithm, based on sorting networks.
 //!
 //!   @note this sort is unstable.
 //!
 //!   Also our implementation is not directly based on any specific one,
-//!   people we are definetly not the first people to do this.
+//!   people we are definitely not the first people to do this.
 //!   Here is a list of previous work that was looked at.
 //!    * A Novel Hybrid Quicksort Algorithm Vectorized using AVX-512 on
 //!      Intel Skylake: arXiv:1704.08579

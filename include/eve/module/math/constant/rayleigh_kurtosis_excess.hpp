@@ -72,8 +72,10 @@ struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/rayleigh_kurtosis_excess.cpp}
-//! @}
+//!  @godbolt{doc/math/rayleigh_kurtosis_excess.cpp}
 //================================================================================================
 inline constexpr auto rayleigh_kurtosis_excess = functor<rayleigh_kurtosis_excess_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

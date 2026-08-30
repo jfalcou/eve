@@ -68,7 +68,7 @@ namespace eve
 //!   **Return value**
 //!     1. the signed unit value in the first place of the input. I.e. the greatest integer power
 //!        of the base (2) less than or equal to |x| multiplied by the sign of x. (Kahan- definition)
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The same value up to a factor 2, but with faster computation. (the result is times 2 is the input is not
 //!         a power of 2).
 //!

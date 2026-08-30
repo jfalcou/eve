@@ -60,9 +60,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The value of the Wright \f$\omega\f$ function is returne
+//!     1. The value of the Wright \f$\omega\f$ function is returned
 //!        (the inverse function of \f$ x \rightarrow \log x+x\f$) is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!     ω can be used as an alias.
 //!
@@ -75,6 +75,9 @@ namespace eve
   inline constexpr auto omega = functor<omega_t>;
   inline constexpr auto ω = functor<omega_t>;
 //================================================================================================
+//!
+//!   @var ω
+//!   @brief Unicode alias for [eve::omega](@ref eve::omega), computing the Wright \f$\omega\f$ function.
 //! @}
 //================================================================================================
 

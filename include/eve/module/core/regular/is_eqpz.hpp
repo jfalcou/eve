@@ -67,7 +67,7 @@ namespace eve
 //!
 //!     1. returns [elementwise](@ref glossary_elementwise) true if and only
 //!        if the element value is zero with sign bit unset.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_eqpz.cpp}

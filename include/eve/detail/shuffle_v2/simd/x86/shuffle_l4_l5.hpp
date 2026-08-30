@@ -60,7 +60,7 @@ EVE_FORCEINLINE auto
 shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
-  // Coudn't figure out how to generalize well
+  // Couldn't figure out how to generalize well
   // only slide left for now
   // No masking 0s on avx512
   if constexpr( current_api < avx2 ) return no;

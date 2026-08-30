@@ -42,7 +42,7 @@ namespace eve
 //! @{
 //!   @var is_not_greater_equal
 //!   @brief `elementwise callable` returning a logical true  if and only if the element value of the first parameter is
-//!          greater or equal to the second one.
+//!          not greater or equal to the second one.
 //!
 //!   @groupheader{Header file}
 //!
@@ -78,7 +78,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The call `eve::is_not_greater_equal(x,y)`  is semantically  equivalent to `!(x >= y)`:
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The expression `is_not_greater_equal[definitely = tol](x, y)` where `x` and `y` must be
 //!         floating point values, evaluates to true if and only if `x` is definitely not greater than `y`.
 //!         This means that:

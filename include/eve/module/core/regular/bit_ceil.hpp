@@ -69,7 +69,7 @@ namespace eve
 //!      1. The value of the smallest integral power of two that is not smaller than `x`
 //!         is returned. If that value is not representable in the input type,
 //!         the behavior is undefined.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_ceil.cpp}

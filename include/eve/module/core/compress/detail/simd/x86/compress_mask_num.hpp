@@ -91,7 +91,7 @@ namespace eve::_
       // The closest we come is `_mm_sad_epu8`, it sumosums absolute differences for bytes.
       // We could use a zero mask.
       // But instead we can use the same mask we got to mask the 1, 3, 9.
-      // The top is responisble for popcount.
+      // The top is responsible for popcount.
 
       __m128i sad_mask = _mm_set_epi64x(0, 0x8080898983838181);
       __m128i su      = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);

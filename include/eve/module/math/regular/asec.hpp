@@ -76,7 +76,7 @@ namespace eve
 //!    2. very fast but  accuracy not better than  5.0e-4.
 //!    3. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
 //!    5. Result in \f$\pi\f$ multiples
-//!    6. [The operation is performed conditionnaly](@ref conditional).
+//!    6. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cosecant](https://mathworld.wolfram.com/InverseCosecant.html)

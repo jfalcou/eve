@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var minexponent
-//!   @brief Computes the  the greatest exponent of a floating point IEEE value
+//!   @brief Computes the least exponent of a floating point IEEE value
 //!
 //!   **Defined in Header**
 //!
