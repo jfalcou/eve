@@ -63,7 +63,7 @@ struct iota_t : callable<iota_t, Options, conditional_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{test/doc/core/constant/iota.cpp}
+//!  @godbolt{doc/core/constant/iota.cpp}
 //!
 //================================================================================================
 inline constexpr auto iota = functor<iota_t>;

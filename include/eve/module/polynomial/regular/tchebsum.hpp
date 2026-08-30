@@ -115,7 +115,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Tchebsum's_method)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/math/tchebsum.cpp}
+//!   @godbolt{doc/polynomial/tchebsum.cpp}
 //================================================================================================
   inline constexpr auto tchebsum = functor<tchebsum_t>;
 //================================================================================================

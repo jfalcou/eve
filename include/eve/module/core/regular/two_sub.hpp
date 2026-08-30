@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/two_sub.cpp}
+//!  @godbolt{doc/core/two_sub.cpp}
 //!
 //! @}
 //================================================================================================

@@ -64,7 +64,7 @@ namespace eve
 
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/veltkamp.cpp}
+//!  @godbolt{doc/core/veltkamp.cpp}
 //!
 //! @}
 //================================================================================================
