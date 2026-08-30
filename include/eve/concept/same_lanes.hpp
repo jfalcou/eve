@@ -50,7 +50,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //!  @var same_lanes_or_scalar
+  //!  @concept same_lanes_or_scalar
   //!
   //!  @tparam Ts Type to process
   //!
@@ -65,7 +65,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //!  @var same_lanes_or_scalar_tuple
+  //!  @concept same_lanes_or_scalar_tuple
   //!
   //!  @tparam T Product type to process
   //!
@@ -80,7 +80,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //!  @var same_lanes
+  //!  @concept same_lanes
   //!
   //!  @tparam T0 [SIMD Type](@ref eve::simd_value)  to process.
   //!  @tparam Ts [SIMD Types](@ref eve::simd_value) to process.

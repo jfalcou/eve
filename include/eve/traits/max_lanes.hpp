@@ -26,7 +26,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //!  @var max_lanes
+  //!  @var max_lanes_v
   //!
   //!  @tparam Ts Types to process
   //!
@@ -39,7 +39,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //!  @var max_lanes
+  //!  @typedef max_lanes_t
   //!
   //!  @tparam Ts Types to process
   //!
