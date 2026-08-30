@@ -75,7 +75,7 @@ struct euler_t : constant_callable<euler_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/euler.cpp}
+//!  @godbolt{doc/math/euler.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto euler = functor<euler_t>;

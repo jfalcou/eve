@@ -68,7 +68,7 @@ struct maxlog_t : constant_callable<maxlog_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/maxlog.cpp}
+//!  @godbolt{doc/math/maxlog.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto maxlog = functor<maxlog_t>;

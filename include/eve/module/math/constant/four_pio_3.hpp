@@ -71,7 +71,7 @@ struct four_pio_3_t : constant_callable<four_pio_3_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/four_pio_3.cpp}
+//!  @godbolt{doc/math/four_pio_3.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto four_pio_3 = functor<four_pio_3_t>;

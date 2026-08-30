@@ -71,7 +71,7 @@ struct rsqrt_pio_2_t : constant_callable<rsqrt_pio_2_t, Options, lower_option, u
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/rsqrt_pio_2.cpp}
+//!  @godbolt{doc/math/rsqrt_pio_2.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto rsqrt_pio_2 = functor<rsqrt_pio_2_t>;

@@ -67,7 +67,7 @@ struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog10denormal.cpp}
+//!  @godbolt{doc/math/minlog10denormal.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto minlog10denormal = functor<minlog10denormal_t>;

@@ -78,7 +78,7 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/egamma.cpp}
+//!  @godbolt{doc/math/egamma.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto egamma = functor<egamma_t>;

@@ -76,7 +76,7 @@ struct zeta_3_t : constant_callable<zeta_3_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/zeta_3.cpp}
+//!  @godbolt{doc/math/zeta_3.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto zeta_3 = functor<zeta_3_t>;

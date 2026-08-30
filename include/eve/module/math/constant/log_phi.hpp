@@ -71,7 +71,7 @@ struct log_phi_t : constant_callable<log_phi_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log_phi.cpp}
+//!  @godbolt{doc/math/log_phi.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto log_phi = functor<log_phi_t>;

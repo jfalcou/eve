@@ -71,7 +71,7 @@ struct sixth_t : constant_callable<sixth_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sixth.cpp}
+//!  @godbolt{doc/math/sixth.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto sixth = functor<sixth_t>;

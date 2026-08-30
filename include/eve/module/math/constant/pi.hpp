@@ -71,7 +71,7 @@ struct pi_t : constant_callable<pi_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/pi.cpp}
+//!  @godbolt{doc/math/pi.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto pi = functor<pi_t>;

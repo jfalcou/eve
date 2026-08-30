@@ -71,7 +71,7 @@ struct pi_minus_3_t : constant_callable<pi_minus_3_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/pi_minus_3.cpp}
+//!  @godbolt{doc/math/pi_minus_3.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto pi_minus_3 = functor<pi_minus_3_t>;

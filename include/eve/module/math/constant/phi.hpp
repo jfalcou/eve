@@ -75,7 +75,7 @@ struct phi_t : constant_callable<phi_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/phi.cpp}
+//!  @godbolt{doc/math/phi.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto phi = functor<phi_t>;

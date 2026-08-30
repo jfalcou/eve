@@ -71,7 +71,7 @@ struct pi2o_16_t : constant_callable<pi2o_16_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/pi2o_16.cpp}
+//!  @godbolt{doc/math/pi2o_16.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto pi2o_16 = functor<pi2o_16_t>;

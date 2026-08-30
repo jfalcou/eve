@@ -90,7 +90,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Gegenbauer polynomial](https://mathworld.wolfram.com/GegenbauerPolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
+//!   @godbolt{doc/polynomial/gegenbauer.cpp}
 //================================================================================================
   inline constexpr auto gegenbauer = functor<gegenbauer_t>;
 //================================================================================================

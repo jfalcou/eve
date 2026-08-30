@@ -87,7 +87,7 @@ namespace eve
 //!   *  [Wolfram MathWorld:Jacobi Polynomial](https://mathworld.wolfram.com/JacobiPolynomial.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/polynomial/regular/jacobi.cpp}
+//!  @godbolt{doc/polynomial/jacobi.cpp}
 //================================================================================================
   inline constexpr auto jacobi = functor<jacobi_t>;
 //================================================================================================

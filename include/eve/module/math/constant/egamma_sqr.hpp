@@ -73,7 +73,7 @@ struct egamma_sqr_t : constant_callable<egamma_sqr_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/egamma_sqr.cpp}
+//!  @godbolt{doc/math/egamma_sqr.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto egamma_sqr = functor<egamma_sqr_t>;

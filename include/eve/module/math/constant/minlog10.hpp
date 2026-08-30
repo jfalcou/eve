@@ -67,7 +67,7 @@ struct minlog10_t : constant_callable<minlog10_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog10.cpp}
+//!  @godbolt{doc/math/minlog10.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto minlog10 = functor<minlog10_t>;

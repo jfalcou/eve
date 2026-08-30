@@ -71,7 +71,7 @@ struct exp_pi_t : constant_callable<exp_pi_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/exp_pi.cpp}
+//!  @godbolt{doc/math/exp_pi.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto exp_pi = functor<exp_pi_t>;

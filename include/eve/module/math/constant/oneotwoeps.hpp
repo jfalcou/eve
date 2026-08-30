@@ -66,7 +66,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/core/constant/oneotwoeps.cpp}
+//!   @godbolt{doc/math/oneotwoeps.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto oneotwoeps = functor<oneotwoeps_t>;

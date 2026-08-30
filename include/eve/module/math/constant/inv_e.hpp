@@ -71,7 +71,7 @@ struct inv_e_t : constant_callable<inv_e_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/inv_e.cpp}
+//!  @godbolt{doc/math/inv_e.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto inv_e = functor<inv_e_t>;

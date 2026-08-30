@@ -72,7 +72,7 @@ struct rayleigh_kurtosis_t : constant_callable<rayleigh_kurtosis_t, Options, low
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/rayleigh_kurtosis.cpp}
+//!  @godbolt{doc/math/rayleigh_kurtosis.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto rayleigh_kurtosis = functor<rayleigh_kurtosis_t>;

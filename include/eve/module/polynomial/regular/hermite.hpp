@@ -103,7 +103,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Hermite Polynomial](https://mathworld.wolfram.com/HermitePolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/hermite.cpp}
+//!   @godbolt{doc/polynomial/hermite.cpp}
 //================================================================================================
   inline constexpr auto hermite = functor<hermite_t>;
 //================================================================================================

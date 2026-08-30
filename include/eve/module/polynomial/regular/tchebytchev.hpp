@@ -95,7 +95,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: second kind](https://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/tchebytchev.cpp}
+//!   @godbolt{doc/polynomial/tchebytchev.cpp}
 //================================================================================================
   inline constexpr auto tchebytchev = functor<tchebytchev_t>;
 //================================================================================================

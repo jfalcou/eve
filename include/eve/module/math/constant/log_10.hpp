@@ -71,7 +71,7 @@ struct log_10_t : constant_callable<log_10_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log_10.cpp}
+//!  @godbolt{doc/math/log_10.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto log_10 = functor<log_10_t>;

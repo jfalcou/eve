@@ -83,7 +83,7 @@ namespace eve
 //!   *  [Wikipedia: Falling and rising factorials](https://en.wikipedia.org/wiki/Falling_and_rising_factorials
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/lrising_factorial.cpp}
+//!  @godbolt{doc/special/lrising_factorial.cpp}
 //================================================================================================
   inline constexpr auto lrising_factorial = functor<lrising_factorial_t>;
 //================================================================================================

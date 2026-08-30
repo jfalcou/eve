@@ -71,7 +71,7 @@ struct third_t : constant_callable<third_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/third.cpp}
+//!  @godbolt{doc/math/third.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto third = functor<third_t>;

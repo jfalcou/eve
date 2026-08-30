@@ -67,7 +67,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/minlog.cpp}
+//!  @godbolt{doc/math/minlog.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto minlog = functor<minlog_t>;

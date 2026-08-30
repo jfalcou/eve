@@ -71,7 +71,7 @@ struct cbrt_pi_t : constant_callable<cbrt_pi_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/cbrt_pi.cpp}
+//!  @godbolt{doc/math/cbrt_pi.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto cbrt_pi = functor<cbrt_pi_t>;

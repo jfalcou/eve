@@ -119,7 +119,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Legendre Polynomial](https://mathworld.wolfram.com/LegendrePolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/legendre.cpp}
+//!   @godbolt{doc/polynomial/legendre.cpp}
 //================================================================================================
   inline constexpr auto legendre = functor<legendre_t>;
 //================================================================================================

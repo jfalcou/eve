@@ -71,7 +71,7 @@ struct log2_e_t : constant_callable<log2_e_t, Options, lower_option, upper_optio
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log2_e.cpp}
+//!  @godbolt{doc/math/log2_e.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto log2_e = functor<log2_e_t>;

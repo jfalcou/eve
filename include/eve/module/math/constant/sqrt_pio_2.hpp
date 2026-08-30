@@ -71,7 +71,7 @@ struct sqrt_pio_2_t : constant_callable<sqrt_pio_2_t, Options, lower_option, upp
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/sqrt_pio_2.cpp}
+//!  @godbolt{doc/math/sqrt_pio_2.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto sqrt_pio_2 = functor<sqrt_pio_2_t>;

@@ -75,7 +75,7 @@ struct khinchin_t : constant_callable<khinchin_t, Options, lower_option, upper_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/khinchin.cpp}
+//!  @godbolt{doc/math/khinchin.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto khinchin = functor<khinchin_t>;

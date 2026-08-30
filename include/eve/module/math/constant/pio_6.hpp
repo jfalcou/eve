@@ -71,7 +71,7 @@ struct pio_6_t : constant_callable<pio_6_t, Options, lower_option, upper_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/pio_6.cpp}
+//!  @godbolt{doc/math/pio_6.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto pio_6 = functor<pio_6_t>;

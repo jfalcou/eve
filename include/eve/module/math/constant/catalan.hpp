@@ -76,7 +76,7 @@ struct catalan_t : constant_callable<catalan_t, Options, lower_option, upper_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/catalan.cpp}
+//!  @godbolt{doc/math/catalan.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto catalan = functor<catalan_t>;
