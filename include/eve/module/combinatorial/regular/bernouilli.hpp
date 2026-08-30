@@ -69,7 +69,7 @@ namespace eve
 //!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/bernoulli.cpp}
+//!  @godbolt{doc/combinatorial/bernouilli.cpp}
 //================================================================================================
   inline constexpr auto bernouilli = functor<bernouilli_t>;
 //================================================================================================
