@@ -564,6 +564,10 @@ EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */module/*/detail/*
 EXCLUDE_PATTERNS      += */eve/detail/function/*
 EXCLUDE_PATTERNS      += */eve/algo/detail/*
+## Out-of-line members of preprocess_range_, whose declaration lives under algo/detail and is
+## therefore excluded above. Parsing the definitions without the class makes doxygen list every
+## operator() it knows as a candidate, which is where the bulk of the warning log came from.
+EXCLUDE_PATTERNS      += */algo/preprocess_range.hpp
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
