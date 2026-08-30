@@ -38,15 +38,15 @@ namespace eve
 //!  noexcept;
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!
-//! **template Parameters**
+//!   **Template Parameters**
 //!
-//! `f':  float scalar constant
+//!   `f`:      float scalar constant
 //!
-//!`'d': double scalar constant
+//!   `d`:      double scalar constant
 //!
-//!   ** Parameters**
+//!   **Parameters**
 //!
-//!  'target': as<T>() where T is the chosen return type
+//!   `target`: as<T>() where T is the chosen return type
 //!
 //! **Return value**
 //!
