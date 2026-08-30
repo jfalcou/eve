@@ -501,6 +501,68 @@ namespace eve
   inline constexpr auto to_nearest_odd = {};
 
 //======================================================================================================================
+//!   @var left
+//!   @brief Swaps the two operands before applying the operation.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   `sub[left](a, b)` is `sub(b, a)`, and the same holds for the other operations that accept it.
+//!   Useful when the order comes from the call site rather than from the intent.
+//======================================================================================================================
+  inline constexpr auto left = {};
+
+//======================================================================================================================
+//!   @var right
+//!   @brief Applies the operation in the order the operands are written.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The behaviour of an undecorated call, spelled out. It exists so that a call site pairing with
+//!   [`left`](@ref eve::left) elsewhere can state which of the two it means instead of relying on
+//!   the reader knowing the default.
+//======================================================================================================================
+  inline constexpr auto right = {};
+
+//======================================================================================================================
+//!   @var spherical
+//!   @brief Selects the spherical form of a Bessel function.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   `bessel_j[spherical](n, z)` computes \f$j_n(z)\f$ where the plain call computes
+//!   \f$J_n(z)\f$. Accepted by the four Bessel families.
+//======================================================================================================================
+  inline constexpr auto spherical = {};
+
+//======================================================================================================================
+//!   @var cylindrical
+//!   @brief Selects the cylindrical form of a Bessel function.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The form the undecorated call already computes, \f$J_n(z)\f$, named so that a call site can
+//!   say which of the two it wants rather than leaving it to the default. Mirror of
+//!   [`spherical`](@ref eve::spherical).
+//======================================================================================================================
+  inline constexpr auto cylindrical = {};
+
+//======================================================================================================================
 //! @}
 //======================================================================================================================
 }
