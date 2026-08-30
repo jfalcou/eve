@@ -16,11 +16,16 @@ int main()
             << "-> pi(as<wide_ft>())        = " << eve::pi(eve::as<wide_ft>())            << std::endl
             << "-> pi(as(wxf))              = " << eve::pi(eve::as(wxf))                  << std::endl;
 
-  double       xf;
+  float        xf;
+  double       xd;
 
   std::cout << "---- scalar" << std::endl
             << "-> pi(as<float>())         = " << eve::pi(eve::as(float())) << std::endl
-            << "-> pi(as<xf))              = " << eve::pi(eve::as(xf))      << std::endl;
+            << "-> pi(as(xf))              = " << eve::pi(eve::as(xf))      << std::endl
+            << "-> pi(as(xd))              = " << eve::pi(eve::as(xd))      << std::endl;
+
+  std::cout << "---- unicode alias" << std::endl
+            << "-> \u03c0(as(xd))               = " << eve::π(eve::as(xd))       << std::endl;
 
   std::cout << "-> constexpr pi            = " << constexpr_pi<float>() << std::endl;
 
