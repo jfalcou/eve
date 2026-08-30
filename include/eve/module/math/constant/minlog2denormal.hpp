@@ -35,7 +35,7 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, lower_o
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog2denormal
-//!   @brief Callable object computing the least value for which eve::exp2 is not denormal.
+//!   @brief Callable object computing the least value for which eve::exp2 is denormal and not zero.
 //!
 //!   **Defined in Header**
 //!
@@ -59,8 +59,7 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, lower_o
 //!
 //!    **Return value**
 //!
-//!      The call `eve::minlog2denormal(as<T>())` returns  the least value for which eve::exp2
-//!      is not zero.
+//!      The call `eve::minlog2denormal(as<T>())` returns the least value for which eve::exp2 is denormal and not zero.
 //!
 //!  @groupheader{Example}
 //!
