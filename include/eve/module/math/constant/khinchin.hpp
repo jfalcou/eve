@@ -69,6 +69,10 @@ struct khinchin_t : constant_callable<khinchin_t, Options, lower_option, upper_o
 //!
 //!      The call `eve::khinchin(as<T>())` returns a value of type T with all bits set.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/KhinchinsConstant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Khinchin%27s_constant)
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/khinchin.cpp}

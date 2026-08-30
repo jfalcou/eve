@@ -69,6 +69,10 @@ struct euler_t : constant_callable<euler_t, Options, lower_option, upper_option>
 //!
 //!      The call `eve::euler(as<T>())` returns  the basis of the natural logarithms.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/e.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/E_%28mathematical_constant%29)
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/euler.cpp}

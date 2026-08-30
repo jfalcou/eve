@@ -70,6 +70,10 @@ struct catalan_t : constant_callable<catalan_t, Options, lower_option, upper_opt
 //!      The call `eve::catalan(as<T>())` returns  the catalan constant \f$\beta(2) = \sum_0^\infty
 //!      \frac{(-1)^n}{(2n+1)^2}\f$.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CatalansConstant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Catalan%27s_constant)
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/catalan.cpp}

@@ -69,6 +69,11 @@ struct zeta_2_t : constant_callable<zeta_2_t, Options, lower_option, upper_optio
 //!
 //!      The call `eve::zeta_2(as<T>())` returns  \f$\zeta(2)\f$.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/RiemannZetaFunctionZeta2.html)
+//!   *  [DLMF](https://dlmf.nist.gov/25.6)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Basel_problem)
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/zeta_2.cpp}

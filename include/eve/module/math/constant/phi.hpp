@@ -69,6 +69,10 @@ struct phi_t : constant_callable<phi_t, Options, lower_option, upper_option>
 //!
 //!      The call `eve::phi(as<T>())` returns the golden ratio.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/GoldenRatio.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Golden_ratio)
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/phi.cpp}
