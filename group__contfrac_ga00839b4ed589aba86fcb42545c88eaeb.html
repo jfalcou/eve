@@ -144,7 +144,7 @@ $(function(){initNavTree('group__contfrac_ga00839b4ed589aba86fcb42545c88eaeb.htm
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Gen, eve::scalar_value T&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="#ga00839b4ed589aba86fcb42545c88eaeb">lentz_a</a>(Gen g, <span class="keyword">const</span> T&amp; tol, <span class="keywordtype">size_t</span> &amp; max_terms) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__contfrac_ga00839b4ed589aba86fcb42545c88eaeb_html_ga00839b4ed589aba86fcb42545c88eaeb"><div class="ttname"><a href="#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a></div><div class="ttdeci">constexpr auto lentz_a</div><div class="ttdoc">Implement the lentz scheme to evaluate continued fractions.</div><div class="ttdef"><b>Definition</b> lentz_a.hpp:77</div></div>
+<div class="ttc" id="agroup__contfrac_ga00839b4ed589aba86fcb42545c88eaeb_html_ga00839b4ed589aba86fcb42545c88eaeb"><div class="ttname"><a href="#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a></div><div class="ttdeci">constexpr auto lentz_a</div><div class="ttdoc">Implement the Lentz scheme to evaluate a continued fraction with no leading term: .</div><div class="ttdef"><b>Definition</b> lentz_a.hpp:80</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -158,6 +158,7 @@ $(function(){initNavTree('group__contfrac_ga00839b4ed589aba86fcb42545c88eaeb.htm
 </ul>
 <p><b>Return value</b></p>
 <p>The value of the continued fraction is returned. \(\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots\vphantom{\frac{1}{1}} }}}\)</p>
+<p>Note that the first a and b values (a0 and b0) generated are both used here.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
@@ -184,7 +185,7 @@ $(function(){initNavTree('group__contfrac_ga00839b4ed589aba86fcb42545c88eaeb.htm
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs are: &quot;</span> &lt;&lt; gr &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__arithmetic_ga044101b90ab7a146067d8cb1f76889eb_html_ga044101b90ab7a146067d8cb1f76889eb"><div class="ttname"><a href="group__core__arithmetic_ga044101b90ab7a146067d8cb1f76889eb.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition</b> sqr.hpp:98</div></div>
-<div class="ttc" id="agroup__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37_html_ga641aa98b8a2c05bf5bfb4907d15faf37"><div class="ttname"><a href="group__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the elementwise square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:81</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37_html_ga641aa98b8a2c05bf5bfb4907d15faf37"><div class="ttname"><a href="group__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the elementwise square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:86</div></div>
 <div class="ttc" id="agroup__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>

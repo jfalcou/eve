@@ -176,7 +176,7 @@ $(function(){initNavTree('group__polynomial_ga654af420c26859a9b088461f2b49d336.h
            (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\).</li>
 </ul>
 </li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
 <ul>
@@ -184,42 +184,27 @@ $(function(){initNavTree('group__polynomial_ga654af420c26859a9b088461f2b49d336.h
 <li><a href="https://mathworld.wolfram.com/GegenbauerPolynomial.html">Wolfram MathWorld: Gegenbauer polynomial</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;unsigned, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <span class="keywordtype">double</span>    l(-3.0/8.0);</div>
 <div class="line"> </div>
-<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  wide_ft x(0.3);</div>
-<div class="line">  wide_ft l(-3.0/8.0);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                           = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                            = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l                            = &quot;</span> &lt;&lt; l  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                            = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(3, l, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(3, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, 0.3)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, -3.0/8.0, 0.3) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, -3.0/8.0, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, x)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            ;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                  = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                   = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- l                                   = &quot;</span> &lt;&lt; l  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
-<div class="line">  <span class="keywordtype">double</span> ll = 0.1;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs                     = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- ll                     = &quot;</span> &lt;&lt; ll  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(4, ll, xs)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(4, ll, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    ;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer[ignore_last(2)](n, l, xd)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer[n &gt; 3](n, l, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>[n &gt; 3](n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(3, l, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(3, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, 0.3)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>

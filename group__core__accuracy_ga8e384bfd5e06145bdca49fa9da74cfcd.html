@@ -150,7 +150,7 @@ $(function(){initNavTree('group__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cf
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">two_sub</a>[pedantic](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)  <span class="keyword">noexcept</span>; <span class="comment">//3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
-<div class="ttc" id="agroup__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cfcd_html_ga8e384bfd5e06145bdca49fa9da74cfcd"><div class="ttname"><a href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a></div><div class="ttdeci">constexpr auto two_sub</div><div class="ttdoc">Computes the elementwise pair consisting of the difference of the parameters and its resulting roundi...</div><div class="ttdef"><b>Definition</b> two_sub.hpp:81</div></div>
+<div class="ttc" id="agroup__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cfcd_html_ga8e384bfd5e06145bdca49fa9da74cfcd"><div class="ttname"><a href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a></div><div class="ttdeci">constexpr auto two_sub</div><div class="ttdoc">Computes the elementwise pair consisting of the difference of the parameters and its resulting roundi...</div><div class="ttdef"><b>Definition</b> two_sub.hpp:80</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -172,7 +172,26 @@ $(function(){initNavTree('group__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cf
 <li><a href="https://www.vinc17.net/research/papers/rr_ccrsums2.pdf">On the Computation of Correctly-Rounded Sums</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, -32.7f, 1.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2f, 1.5f, -100.834f, <a class="code hl_variable" href="group__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1               = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_sub(wf0, wf1)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_sub[raw](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a>[eve::raw](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__core__constants_ga3a08ea3bf1e679ed4ef0576ddffff08a.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

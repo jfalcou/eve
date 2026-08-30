@@ -139,8 +139,8 @@ $(function(){initNavTree('group__algos_gaf81b82c776f35dc63602d6f07d2bb644.html',
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/module/algo/algo/max_value.hpp&gt;</code></p>
-<p>The standard only has <span class="tt">_element</span> versions of <span class="tt">min/max</span> algorithms. However, in SIMD finding the value is much faster then also finding the position - hense this algorithm.</p>
-<dl class="section note"><dt>Note</dt><dd>for equivalent elements we return the second amoung equal. </dd>
+<p>The standard only has <span class="tt">_element</span> versions of <span class="tt">min/max</span> algorithms. However, in SIMD finding the value is much faster then also finding the position - hence this algorithm.</p>
+<dl class="section note"><dt>Note</dt><dd>for equivalent elements we return the second among equal. </dd>
 <dd>
 we assume that <span class="tt"><a class="el" href="group__core__predicates_ga7dd417908ae322f8f3ef9a16779ee63f.html#ga7dd417908ae322f8f3ef9a16779ee63f" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less</a></span> defined for your type is total order. (this comes up when switching <span class="tt"><a class="el" href="group__core__arithmetic_ga208ca607f968474fa9e4d016e0eb4e5f.html#ga208ca607f968474fa9e4d016e0eb4e5f" title="Computes the maximum of its arguments.">max</a></span> with <span class="tt"><a class="el" href="group__core__arithmetic_ga11d112beae386b529269a6ba2eb02471.html#ga11d112beae386b529269a6ba2eb02471" title="Computes the minimum of its arguments.">min</a></span>)</dd></dl>
 <p><b>Alternative Header</b></p>

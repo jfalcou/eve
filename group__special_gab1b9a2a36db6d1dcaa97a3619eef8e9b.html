@@ -168,7 +168,7 @@ $(function(){initNavTree('group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The value of the natural logarithm of the rising_factorial is returned( <span class="tt">a</span> and <span class="tt">x</span> must be strictly positive).</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 <li>speedier, less accurate and return a Nan if <span class="tt">a</span> and <span class="tt">a+x</span> are not both positive.</li>
 <li>The <span class="tt">pedantic</span> option uses reflection tricks and computes the function for all real <span class="tt">a</span> and <span class="tt">x</span>, and in fact computes the logarithm of the absolute value of the Pochammer symbol \(\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\) returning nan only if the result is really undefined.</li>
 </ol>
@@ -178,31 +178,25 @@ $(function(){initNavTree('group__special_gab1b9a2a36db6d1dcaa97a3619eef8e9b.html
 <li>[Wikipedia: Falling and rising factorials](<a href="https://en.wikipedia.org/wiki/Falling_and_rising_factorials">https://en.wikipedia.org/wiki/Falling_and_rising_factorials</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w32_t n = {1, 2, -3, 7};</div>
-<div class="line">  wf_t x = {1.0f,  1.5f, 2.0f, 2.5f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n = {1, 2, -3, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> p = {1.0f,  1.5f, 2.0f, 2.5f};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- n                                   = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- x                                   = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lrising_factorial(n, x)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                      = &quot;</span> &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- p                                      = &quot;</span> &lt;&lt; p &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xi = 1.8;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                           = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lrising_factorial(7, xi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>(7, xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lrising_factorial(n, p)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>(n, p) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lrising_factorial[ignore_last(2)](n, p)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, p) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lrising_factorial[n != 2](n, p)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>[n != 2](n, p) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lrising_factorial[raw](n, p)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>[eve::raw](n, p) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lrising_factorial[pedantic](n, p)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab1b9a2a36db6d1dcaa97a3619eef8e9b">eve::lrising_factorial</a>[eve::pedantic](n, p) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>

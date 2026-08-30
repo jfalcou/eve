@@ -172,7 +172,7 @@ $(function(){initNavTree('group__polynomial_ga76ed546859e8fc7ab78c7a998d64faa3.h
 </ul>
 <p><b>Return value</b></p>
 <p>1.The value of the polynomial at <span class="tt">x</span> is returned.</p><ol type="1">
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 <li>evaluates the nth polynomial of tchebytchev of second kind \( \displaystyle U_n(x) =  \frac{\sin(n\arccos x)}{\sin(\arccos x)}\). on \([-1, +1]\).</li>
 <li>computes the value of \(T_{n+1}(x)\) knowing the values tn = \(T_n(x)\) and tnm1 = \(T_{n-1}(x)\), This call can be used to create a sequence of values evaluated at the same <span class="tt">x</span> and for rising <span class="tt">n</span>.</li>
 </ol>
@@ -183,39 +183,45 @@ $(function(){initNavTree('group__polynomial_ga76ed546859e8fc7ab78c7a998d64faa3.h
 <li><a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html">Wolfram MathWorld: second kind</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n1{0, -1, -2, -3, -4, -5, -6, -7};</div>
+<div class="line">  <span class="keywordtype">double</span> x(0.5);</div>
 <div class="line"> </div>
-<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  wide_ft x(0.5);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                      = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                       = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                       = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                  = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                   = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                   = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[eve::ignore_last(2)](n, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[n &gt; 3](n, xd)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[n &gt;  3](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(3, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, 2.0)                     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, x)                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](n, xd)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[eve::kind_2](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">    ;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs               = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(4, xs)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(4.0, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  <span class="keyword">using </span>wide_ft =  <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  std::array&lt;wide_ft, 8&gt; t;</div>
+<div class="line">  t[0] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(0, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[0]                                    = &quot;</span> &lt;&lt;  t[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  t[1] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(1, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[1]                                    = &quot;</span> &lt;&lt;  t[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
+<div class="line">  {</div>
+<div class="line">    t[i] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[eve::successor](xd, t[i-1], t[i-2]);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]                                    = &quot;</span> &lt;&lt;  t[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> }</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>

@@ -139,10 +139,10 @@ $(function(){initNavTree('group__algo__traits_ga01b72d95d26f28c2c8715af53bef8f53
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
-<p>Aligning takes precident over this: if the data accesses are going to be aligned, the tail handling comes back. You can pass <span class="tt"><a class="el" href="group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e" title="Traits for disabling alignment handling in algorithm.">eve::algo::no_aligning</a></span>.</p>
+<p>Aligning takes precedent over this: if the data accesses are going to be aligned, the tail handling comes back. You can pass <span class="tt"><a class="el" href="group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e" title="Traits for disabling alignment handling in algorithm.">eve::algo::no_aligning</a></span>.</p>
 <p>In other words only does anything if the pointer is <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> or <span class="tt"><a class="el" href="group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e" title="Traits for disabling alignment handling in algorithm.">no_aligning</a></span> is passed.</p>
 <dl class="section note"><dt>Note</dt><dd>this trait is deduced automatically if both begin and end of the range are <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> with alignment &gt;= cardinal. If you are using this, consider aligning your data too.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries in parallel algoirthms.</dd>
+<dl class="section see"><dt>See also</dt><dd>inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries in parallel <a class="el" href="group__algorithms.html" title="Algorithms and Views.">Algorithms and Views</a>.</dd>
 <dd>
 <a class="el" href="group__algo__traits_ga07dd1178b2904dc377069bc34452a84e.html#ga07dd1178b2904dc377069bc34452a84e" title="Traits for disabling alignment handling in algorithm.">no_aligning</a> </dd></dl>
 

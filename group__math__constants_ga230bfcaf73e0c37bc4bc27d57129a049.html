@@ -145,7 +145,7 @@ $(function(){initNavTree('group__math__constants_ga230bfcaf73e0c37bc4bc27d57129a
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">rayleigh_kurtosis</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__constants_ga230bfcaf73e0c37bc4bc27d57129a049_html_ga230bfcaf73e0c37bc4bc27d57129a049"><div class="ttname"><a href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a></div><div class="ttdeci">constexpr auto rayleigh_kurtosis</div><div class="ttdoc">Callable object computing the Rayleigh kurtosis value : .</div><div class="ttdef"><b>Definition</b> rayleigh_kurtosis.hpp:78</div></div>
+<div class="ttc" id="agroup__math__constants_ga230bfcaf73e0c37bc4bc27d57129a049_html_ga230bfcaf73e0c37bc4bc27d57129a049"><div class="ttname"><a href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a></div><div class="ttdeci">constexpr auto rayleigh_kurtosis</div><div class="ttdoc">Callable object computing the Rayleigh kurtosis value : .</div><div class="ttdef"><b>Definition</b> rayleigh_kurtosis.hpp:77</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -155,7 +155,30 @@ $(function(){initNavTree('group__math__constants_ga230bfcaf73e0c37bc4bc27d57129a
 <p><b>Return value</b></p>
 <p>The call <span class="tt"><a class="el" href="#ga230bfcaf73e0c37bc4bc27d57129a049" title="Callable object computing the Rayleigh kurtosis value : .">eve::rayleigh_kurtosis</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;())</span> returns the Rayleigh kurtosis value.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
+<div class="line">  <span class="keyword">using </span>wd_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(9);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis(as&lt;float&gt;())          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis(as&lt;wf_t&gt;())           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wf_t&gt;</a>())           &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis[lower](as&lt;wf_t&gt;())    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>[eve::lower](<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wf_t&gt;</a>()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis[upper](as&lt;wf_t&gt;())    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>[eve::upper](<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wf_t&gt;</a>()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(17);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis(as&lt;double&gt;())         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())         &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis(as&lt;wd_t&gt;())           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wd_t&gt;</a>())           &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis[lower](as&lt;wd_t&gt;())    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>[eve::lower](<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wd_t&gt;</a>()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; rayleigh_kurtosis[upper](as&lt;wd_t&gt;())    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga230bfcaf73e0c37bc4bc27d57129a049">eve::rayleigh_kurtosis</a>[eve::upper](<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wd_t&gt;</a>()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

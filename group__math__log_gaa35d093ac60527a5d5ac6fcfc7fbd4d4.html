@@ -169,7 +169,7 @@ $(function(){initNavTree('group__math__log_gaa35d093ac60527a5d5ac6fcfc7fbd4d4.ht
 <li>If the element is less than 0, <span class="tt">NaN</span> is returned.</li>
 </ul>
 </li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
 <ul>
@@ -202,21 +202,20 @@ $(function(){initNavTree('group__math__log_gaa35d093ac60527a5d5ac6fcfc7fbd4d4.ht
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <span class="tt"><a class="el" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4" title="elementwise_callable object computing the base 2 logarithm: .">eve::log2</a>[mask](x)</span> provides a masked version of <span class="tt"><a class="el" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4" title="elementwise_callable object computing the base 2 logarithm: .">eve::log2</a></span> which is equivalent to <span class="tt"><a class="el" href="group__core__logical_ga4883faa71d1b0e8eaea97fe7cc00b0a8.html#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else</a> (mask, <a class="el" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4" title="elementwise_callable object computing the base 2 logarithm: .">log2(x)</a>, x)</span>.</p>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, -0.0f, -1.0f, 1.0f, 2.0f,</div>
-<div class="line">               <a class="code hl_variable" href="group__core__constants_ga8a568ccc9a870bc971851209c836bc63.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 4.0f, <a class="code hl_variable" href="group__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {0.0f, -0.0f, -1.0f, 1.0f, 2.0f,</div>
+<div class="line">                  <a class="code hl_variable" href="group__core__constants_ga8a568ccc9a870bc971851209c836bc63.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 4.0f, <a class="code hl_variable" href="group__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; log2[pf &gt; 1.0](pf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4">eve::log2</a>[pf &gt; 1.0](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf                      = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; log2(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4">eve::log2</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; log2[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4">eve::log2</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; log2[wf != 2.0f](wf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa35d093ac60527a5d5ac6fcfc7fbd4d4">eve::log2</a>[wf != 2.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </li>
 </ul>

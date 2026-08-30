@@ -163,7 +163,7 @@ $(function(){initNavTree('group__special_ga07111caf2d86c76136eae323799ef5a9.html
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The value of the Trigamma function: \(\psi(x) = \frac{\Gamma&#39;(x)}{\Gamma(x)}\) is returned.</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 </ol>
 <h2 class="groupheader">External references </h2>
 <ul>
@@ -171,7 +171,22 @@ $(function(){initNavTree('group__special_ga07111caf2d86c76136eae323799ef5a9.html
 <li><a href="https://mathworld.wolfram.com/TrigammaFunction.html">Wolfram MathWorld: Trigamma Function</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {0.5, 1.0, 1.5, 2.0, 3.0, 10.0, 0.25, 100.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(15);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf              = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; trigamma(wf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga07111caf2d86c76136eae323799ef5a9">eve::trigamma</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; trigamma[wf &gt; 1.0](wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga07111caf2d86c76136eae323799ef5a9">eve::trigamma</a>[wf &gt; 1.0](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

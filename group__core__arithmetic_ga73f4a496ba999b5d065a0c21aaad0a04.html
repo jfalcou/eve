@@ -172,9 +172,9 @@ $(function(){initNavTree('group__core__arithmetic_ga73f4a496ba999b5d065a0c21aaad
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>the value of the minimum of the absolute values is returned. If one of the elements is <span class="tt">NaN</span> the result is system dependant.</li>
+<li>the value of the minimum of the absolute values is returned. If one of the elements is <span class="tt">NaN</span> the result is system dependent.</li>
 <li>equivalent to the call on the elements of the tuple.</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a></li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
 <li>Ensures conformity to the standard. That is for two parameters to be equivalent to: <span class="tt">(|x| &lt; |y|) ? |x| : |y|</span> and this behaviour is also ensured on n parameters calls as if this scheme was recursively used. If one of the arguments is \(\pm0\) returns \(0\) even if some other arguments are NaNs.</li>
 <li><span class="tt">NaNs</span> are considered greater than anything else.</li>
 <li>compute the upgraded result if available.</li>
@@ -237,7 +237,7 @@ $(function(){initNavTree('group__core__arithmetic_ga73f4a496ba999b5d065a0c21aaad
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minabs(z, o, n)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga73f4a496ba999b5d065a0c21aaad0a04">eve::minabs</a>(z, o, n)&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56_html_ga34b67924fa53bec83dfc96b51bd8fe56"><div class="ttname"><a href="group__core__constants_ga34b67924fa53bec83dfc96b51bd8fe56.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition</b> nan.hpp:67</div></div>
-<div class="ttc" id="agroup__core__constants_ga85073f11abb76d43faf07742435ea083_html_ga85073f11abb76d43faf07742435ea083"><div class="ttname"><a href="group__core__constants_ga85073f11abb76d43faf07742435ea083.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition</b> valmax.hpp:67</div></div>
+<div class="ttc" id="agroup__core__constants_ga85073f11abb76d43faf07742435ea083_html_ga85073f11abb76d43faf07742435ea083"><div class="ttname"><a href="group__core__constants_ga85073f11abb76d43faf07742435ea083.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the greatest representable value.</div><div class="ttdef"><b>Definition</b> valmax.hpp:67</div></div>
 <div class="ttc" id="agroup__core__constants_ga8a568ccc9a870bc971851209c836bc63_html_ga8a568ccc9a870bc971851209c836bc63"><div class="ttname"><a href="group__core__constants_ga8a568ccc9a870bc971851209c836bc63.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition</b> inf.hpp:67</div></div>
 <div class="ttc" id="agroup__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f_html_gab4ecebb6ef8d0c73695dee1eb7371e6f"><div class="ttname"><a href="group__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>

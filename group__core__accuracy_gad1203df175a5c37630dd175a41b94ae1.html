@@ -166,7 +166,7 @@ $(function(){initNavTree('group__core__accuracy_gad1203df175a5c37630dd175a41b94a
 </ul>
 <p><b>Return value</b></p><ol type="1">
 <li>provide a value s such that |x|/s, is much above the underflow threshold and much below the overflow threshold (so that, for example, we can safely square it); (return maxflint for 0); moreover it is an integer power of 2 (in order to avoid rounding errors when multiplying or dividing by it).</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 <li>same as 1. but return 1 for 0</li>
 </ol>
 <h2 class="groupheader">External references </h2>
@@ -174,7 +174,23 @@ $(function(){initNavTree('group__core__accuracy_gad1203df175a5c37630dd175a41b94a
 <li><a href="https://members.loria.fr/PZimmermann/papers/split.pdf">HAL: On various ways to split a floating-point number</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = { 1.0, 42.0, 1.0e-300, 1.0e300,</div>
+<div class="line">                   0.0, -1.0e-200, <a class="code hl_variable" href="group__core__constants_gadf2de69a7c166758ea2c4643e0fae62e.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga85073f11abb76d43faf07742435ea083.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()) };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf             = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; safe_scale(wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">eve::safe_scale</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga85073f11abb76d43faf07742435ea083_html_ga85073f11abb76d43faf07742435ea083"><div class="ttname"><a href="group__core__constants_ga85073f11abb76d43faf07742435ea083.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the greatest representable value.</div><div class="ttdef"><b>Definition</b> valmax.hpp:67</div></div>
+<div class="ttc" id="agroup__core__constants_gadf2de69a7c166758ea2c4643e0fae62e_html_gadf2de69a7c166758ea2c4643e0fae62e"><div class="ttname"><a href="group__core__constants_gadf2de69a7c166758ea2c4643e0fae62e.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a></div><div class="ttdeci">constexpr auto smallestposval</div><div class="ttdoc">Computes the smallest normal positive value.</div><div class="ttdef"><b>Definition</b> smallestposval.hpp:71</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

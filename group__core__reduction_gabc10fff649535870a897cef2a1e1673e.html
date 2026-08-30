@@ -168,7 +168,32 @@ Should you check for any?</h2>
 What if I know there is a match?</h2>
 <p>We would recommend <span class="tt"><a class="el" href="#gabc10fff649535870a897cef2a1e1673e" title="Returns the index of the last element in the input which evaluates to true, if there is one.">eve::last_true(m)</a></span> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> show(<span class="keywordtype">char</span> <span class="keyword">const</span>* what, std::optional&lt;std::ptrdiff_t&gt; r)</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; what;</div>
+<div class="line">  <span class="keywordflow">if</span>( r ) std::cout &lt;&lt; *r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; <span class="keywordflow">else</span> std::cout &lt;&lt; <span class="stringliteral">&quot;nullopt\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int32_t, eve::fixed&lt;8&gt;</a>&gt; w = {1, 0, 3, 0, 5, 0, 0, 8};</div>
+<div class="line">  <span class="keyword">auto</span> m = w &gt; 0;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- w                              = &quot;</span> &lt;&lt; w &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- m = (w &gt; 0)                    = &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true(m)                   = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>(m));</div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true[eve::ignore_last(2)](m) = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](m));</div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true(w &gt; 100)              = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>(w &gt; 100));</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

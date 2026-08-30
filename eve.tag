@@ -4512,13 +4512,6 @@
     </member>
     <member kind="variable">
       <type>constexpr auto</type>
-      <name>bernouilli</name>
-      <anchorfile>group__combinatorial_ga593a2a4580b4130dcfdf334a86a16409.html</anchorfile>
-      <anchor>ga593a2a4580b4130dcfdf334a86a16409</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>constexpr auto</type>
       <name>fibonacci</name>
       <anchorfile>group__combinatorial_ga53fabf7d60ead52b043a80c3733f3567.html</anchorfile>
       <anchor>ga53fabf7d60ead52b043a80c3733f3567</anchor>
@@ -6626,6 +6619,13 @@
     </member>
     <member kind="variable">
       <type>constexpr auto</type>
+      <name>γ</name>
+      <anchorfile>group__math__constants.html</anchorfile>
+      <anchor>gad5b2eb3051d3486a03d80e5c99060aac</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
       <name>egamma_sqr</name>
       <anchorfile>group__math__constants_ga9968fbd2955d1569c6e53ebc59744e72.html</anchorfile>
       <anchor>ga9968fbd2955d1569c6e53ebc59744e72</anchor>
@@ -6895,6 +6895,13 @@
       <name>pi</name>
       <anchorfile>group__math__constants_gad32687fc782ada2bb223abb7722ac694.html</anchorfile>
       <anchor>gad32687fc782ada2bb223abb7722ac694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>π</name>
+      <anchorfile>group__math__constants.html</anchorfile>
+      <anchor>ga477d0f53a8b2fa587469a1e6b7db9ab9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -7833,6 +7840,13 @@
       <name>omega</name>
       <anchorfile>group__special_gab2da346734b5d477afbbc1c91018a940.html</anchorfile>
       <anchor>gab2da346734b5d477afbbc1c91018a940</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>ω</name>
+      <anchorfile>group__special.html</anchorfile>
+      <anchor>ga510e9e790c8175e9be4e782119495b32</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -9308,13 +9322,6 @@
     <filename>group__combinatorial.html</filename>
     <member kind="variable">
       <type>constexpr auto</type>
-      <name>eve::bernouilli</name>
-      <anchorfile>group__combinatorial_ga593a2a4580b4130dcfdf334a86a16409.html</anchorfile>
-      <anchor>ga593a2a4580b4130dcfdf334a86a16409</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>constexpr auto</type>
       <name>eve::fibonacci</name>
       <anchorfile>group__combinatorial_ga53fabf7d60ead52b043a80c3733f3567.html</anchorfile>
       <anchor>ga53fabf7d60ead52b043a80c3733f3567</anchor>
@@ -9745,6 +9752,13 @@
     </member>
     <member kind="variable">
       <type>constexpr auto</type>
+      <name>eve::γ</name>
+      <anchorfile>group__math__constants.html</anchorfile>
+      <anchor>gad5b2eb3051d3486a03d80e5c99060aac</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
       <name>eve::egamma_sqr</name>
       <anchorfile>group__math__constants_ga9968fbd2955d1569c6e53ebc59744e72.html</anchorfile>
       <anchor>ga9968fbd2955d1569c6e53ebc59744e72</anchor>
@@ -10007,6 +10021,13 @@
       <name>eve::pi</name>
       <anchorfile>group__math__constants_gad32687fc782ada2bb223abb7722ac694.html</anchorfile>
       <anchor>gad32687fc782ada2bb223abb7722ac694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>eve::π</name>
+      <anchorfile>group__math__constants.html</anchorfile>
+      <anchor>ga477d0f53a8b2fa587469a1e6b7db9ab9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -12194,6 +12215,13 @@
       <name>eve::omega</name>
       <anchorfile>group__special_gab2da346734b5d477afbbc1c91018a940.html</anchorfile>
       <anchor>gab2da346734b5d477afbbc1c91018a940</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>eve::ω</name>
+      <anchorfile>group__special.html</anchorfile>
+      <anchor>ga510e9e790c8175e9be4e782119495b32</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">

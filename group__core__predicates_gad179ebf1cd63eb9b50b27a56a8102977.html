@@ -168,7 +168,7 @@ $(function(){initNavTree('group__core__predicates_gad179ebf1cd63eb9b50b27a56a810
 <p><b>Return value</b></p>
 <ol type="1">
 <li>The call <span class="tt"><a class="el" href="#gad179ebf1cd63eb9b50b27a56a8102977" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_not_greater_equal(x,y)</a></span> is semantically equivalent to <span class="tt">!(x &gt;= y)</span>:</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
 <li>The expression <span class="tt"><a class="el" href="#gad179ebf1cd63eb9b50b27a56a8102977" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">is_not_greater_equal</a>[definitely = tol](x, y)</span> where <span class="tt">x</span> and <span class="tt">y</span> must be floating point values, evaluates to true if and only if <span class="tt">x</span> is definitely not greater than <span class="tt">y</span>. This means that:<ul>
 <li>if <span class="tt">tol</span> is a floating value then \(x \le y - \mbox{tol}\cdot \max(|x|, |y|)\)</li>
 <li>if <span class="tt">tol</span> is a positive integral value then \(x \le \mbox{prev}(y, \mbox{tol})\);</li>

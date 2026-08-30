@@ -143,7 +143,7 @@ $(function(){initNavTree('group__core__compress_ga8e545371fd605df1555e4cd0b2f623
 <p>You can think about this function as <span class="tt">std::copy_if</span> but instead of a predicate, you pass in <a class="el" href="concepteve_1_1logical__simd__value.html" title="Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...">logical_simd_value</a>. Similar to <span class="tt">std::copy_if</span> it returns you a pointer to where the output ended. </p><dl class="section note"><dt>Note</dt><dd>: you might be missing information about the last selected element written, but unfortunately that adds overhead we couldn't fix (#1656)</dd></dl>
 <p>There are the following two modifiers:</p><ul>
 <li>safe/unsafe - unsafe version is allowed to write up to <span class="tt">mask.size()</span> elements, even if not all are selected. Those values are undefined. safe is not allowed to perform those writes, at the price of being slower for certain usecases.</li>
-<li>dense/sparse - wether or not you expect a lot of selected elements.</li>
+<li>dense/sparse - whether or not you expect a lot of selected elements.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><span class="tt">safe</span> version only touch selected elements. So, for example, other threads can read/write them without a race condition.</dd></dl>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
@@ -155,7 +155,7 @@ Masked Calls</h2>
 <p>You can pass up to two <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> ignore modifiers. 1st is the input side ignore:</p><ul>
 <li>the ignored elements can are not loaded (same as load[ignore])</li>
 <li>they are treated as not selected, regardless of the mask value 2nd is the output side ignore:</li>
-<li>elements that are ignored, will not be written. having initial offset is equivalent to offseting the <span class="tt">o + offset</span>. followed by keep_first(count) Example: if the <span class="tt"><a class="el" href="structeve_1_1ignore__extrema.html" title="Conditional expression ignoring lanes at both extrema of a eve::simd_value.">eve::ignore_extrema</a>(1, L::size() - 2)</span> is passed, </li>
+<li>elements that are ignored, will not be written. having initial offset is equivalent to offsetting the <span class="tt">o + offset</span>. followed by keep_first(count) Example: if the <span class="tt"><a class="el" href="structeve_1_1ignore__extrema.html" title="Conditional expression ignoring lanes at both extrema of a eve::simd_value.">eve::ignore_extrema</a>(1, L::size() - 2)</span> is passed, </li>
 </ul>
 
 </div>

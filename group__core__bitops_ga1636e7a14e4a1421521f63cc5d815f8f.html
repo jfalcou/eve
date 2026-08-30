@@ -167,7 +167,7 @@ $(function(){initNavTree('group__core__bitops_ga1636e7a14e4a1421521f63cc5d815f8f
 <ol type="1">
 <li>The <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> arithmetic right shift of the first parameter by the second one is returned. If <span class="tt">N</span>is the size in bits of the element type of <span class="tt">x</span>, all <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elements</a> of n must belong to the interval: <span class="tt">]0, N[</span> or the result is undefined.</li>
 <li>This call allows optimization for architectures that have an intrinsic requiring an immediate parameter</li>
-<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionnaly</a></li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>Although the infix notation with <span class="tt">&lt;&lt;</span> is supported, the <span class="tt">&lt;&lt;</span> operator on standard scalar types is the original one and so can not be overloaded on standard floating parameters due to <b>C++</b> limitations. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The behavior of this function is undefined if the shift value is out of the range [0, N[, where N is the number of bits of the input type. Use <a class="el" href="group__core__bitops_ga945a9cad6f4e83840ac6a4e7782af905.html#ga945a9cad6f4e83840ac6a4e7782af905" title="eve::rshr">eve::rshr</a> for a relative right shift that accepts negative shift values.</dd></dl>

@@ -145,7 +145,43 @@ $(function(){initNavTree('group__core__arithmetic_ga9410b950085a4299478368cdc486
 <li><a href="https://en.wikipedia.org/wiki/Neville%27s_algorithm">Wikipedia neville's algorithm</a> <h2 class="groupheader">Example </h2>
 </li>
 </ul>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 1 TODO</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  {</div>
+<div class="line">    kumi::tuple xd{1.0, 2.0};</div>
+<div class="line">    kumi::tuple yd = kumi::map([](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> 2*x+1; }, xd);</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt; x(0.5, 2.0, -2.5, 5.0);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                   = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- yd                                   = &quot;</span> &lt;&lt; yd  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                    = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, 1.0, 2.0, 3.0, 5.0)&lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, kumi::cat(xd, yd)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, xd, yd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  }</div>
+<div class="line">   {</div>
+<div class="line">    kumi::tuple xd{1.0, 2.0, 3.0, 4.0};</div>
+<div class="line">    kumi::tuple yd = kumi::map([](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> x*x; }, xd);</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt; x(0.5, 2.0, -2.5, 5.0,0.5, 2.0, -2.5, 5.0 );</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                   = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- yd                                   = &quot;</span> &lt;&lt; yd  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                    = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, 1.0, 2.0, 3.0, 4.0, 1.0, 4.0, 9.0, 16.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, kumi::cat(xd, yd)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; neville(x, xd, yd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a>(x, xd, yd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__arithmetic_ga9410b950085a4299478368cdc4864e58_html_ga9410b950085a4299478368cdc4864e58"><div class="ttname"><a href="#ga9410b950085a4299478368cdc4864e58">eve::neville</a></div><div class="ttdeci">constexpr auto neville</div><div class="ttdoc">callable computing the value of the interpolation polynomial  of degree n, satisfying: /f$ p(x_i) = y...</div><div class="ttdef"><b>Definition</b> neville.hpp:88</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

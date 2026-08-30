@@ -145,7 +145,7 @@ $(function(){initNavTree('group__math__constants_gaaf04325ae522d9fbd5b8e38fa6409
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#gaaf04325ae522d9fbd5b8e38fa64093b0">egamma</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__constants_gaaf04325ae522d9fbd5b8e38fa64093b0_html_gaaf04325ae522d9fbd5b8e38fa64093b0"><div class="ttname"><a href="#gaaf04325ae522d9fbd5b8e38fa64093b0">eve::egamma</a></div><div class="ttdeci">constexpr auto egamma</div><div class="ttdoc">Callable object computing the Euler-Mascheroni constant :  .</div><div class="ttdef"><b>Definition</b> egamma.hpp:80</div></div>
+<div class="ttc" id="agroup__math__constants_gaaf04325ae522d9fbd5b8e38fa64093b0_html_gaaf04325ae522d9fbd5b8e38fa64093b0"><div class="ttname"><a href="#gaaf04325ae522d9fbd5b8e38fa64093b0">eve::egamma</a></div><div class="ttdeci">constexpr auto egamma</div><div class="ttdoc">Callable object computing the Euler-Mascheroni constant :  .</div><div class="ttdef"><b>Definition</b> egamma.hpp:86</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -155,6 +155,11 @@ $(function(){initNavTree('group__math__constants_gaaf04325ae522d9fbd5b8e38fa6409
 <p><b>Return value</b></p>
 <p>The call <span class="tt"><a class="el" href="#gaaf04325ae522d9fbd5b8e38fa64093b0" title="Callable object computing the Euler-Mascheroni constant :  .">eve::egamma</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;())</span> returns  \(\gamma =
      \lim_{n\to\infty}\left( \sum_{k = 0}^n \frac1k - \log n\right )\). γ is an alias.</p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://mathworld.wolfram.com/Euler-MascheroniConstant.html">Wolfram MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Euler%27s_constant">Wikipedia</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -178,13 +183,17 @@ $(function(){initNavTree('group__math__constants_gaaf04325ae522d9fbd5b8e38fa6409
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; std::endl</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; egamma(as&lt;float&gt;())         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaaf04325ae522d9fbd5b8e38fa64093b0">eve::egamma</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(<span class="keywordtype">float</span>())) &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; egamma(as&lt;xf))              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaaf04325ae522d9fbd5b8e38fa64093b0">eve::egamma</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf))      &lt;&lt; std::endl;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; egamma(as(xf))              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaaf04325ae522d9fbd5b8e38fa64093b0">eve::egamma</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf))      &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- unicode alias&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; \u03b3(as(xf))                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants.html#gad5b2eb3051d3486a03d80e5c99060aac">eve::γ</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf))           &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; constexpr egamma            = &quot;</span> &lt;&lt; constexpr_egamma&lt;float&gt;() &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__math__constants_html_gad5b2eb3051d3486a03d80e5c99060aac"><div class="ttname"><a href="group__math__constants.html#gad5b2eb3051d3486a03d80e5c99060aac">eve::γ</a></div><div class="ttdeci">constexpr auto γ</div><div class="ttdoc">Unicode alias for eve::egamma, computing the Euler-Mascheroni constant .</div><div class="ttdef"><b>Definition</b> egamma.hpp:87</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
 </div>
