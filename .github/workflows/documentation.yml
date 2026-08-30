@@ -75,3 +75,40 @@ jobs:
       - name: Run Documentation Tests
         run:  |
           cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
+
+  #################################################################################################
+  # DOXYGEN WARNINGS
+  #
+  # Not part of the required checks: a warning here never blocks a merge, it only says the
+  # generated documentation lost something on the way.
+  #################################################################################################
+  doxygen:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Prepare EVE
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=ON
+      - name: Generate the documentation
+        run: |
+          cd build && ninja doxygen 2>&1 | tee doxygen.log
+      - name: Report Doxygen warnings
+        run: |
+          cd build
+          grep -E ': (warning|error):' doxygen.log > warnings.txt || true
+          count=$(wc -l < warnings.txt)
+          if [ "$count" -eq 0 ]; then
+            echo ':white_check_mark: Doxygen generated the documentation without a single warning.' >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+          echo ":warning: Doxygen emitted **$count** warning(s)." >> $GITHUB_STEP_SUMMARY
+          echo ''            >> $GITHUB_STEP_SUMMARY
+          echo '```'         >> $GITHUB_STEP_SUMMARY
+          head -50 warnings.txt >> $GITHUB_STEP_SUMMARY
+          echo '```'         >> $GITHUB_STEP_SUMMARY
+          cat warnings.txt
+          exit 1
