@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup bessel
+//! @addtogroup eve_bessel
 //! @{
 //!   @var airy
 //!   @brief `elementwise_callable` object computing simultaneously the airy functions values \f$ Ai(x)\f$

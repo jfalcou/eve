@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var hi
 //!   @brief  `elementwise_callable` computing the most significant half of each lane.

@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var rotr
 //!   @brief Bitwise rotation to the right

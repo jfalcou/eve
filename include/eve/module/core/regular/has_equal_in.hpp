@@ -38,7 +38,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_simd
+  //! @addtogroup eve_core_simd
   //! @{
   //!    @var has_equal_in
   //!    @brief

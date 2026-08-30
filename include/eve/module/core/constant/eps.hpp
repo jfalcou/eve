@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var eps
 //!   @brief Computes a constant to the machine epsilon.

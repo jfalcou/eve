@@ -44,7 +44,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!   @var reverse_horner
 //!   @brief implement the horner scheme to evaluate polynomials with coefficients

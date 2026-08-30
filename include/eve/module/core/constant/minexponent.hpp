@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var minexponent
 //!   @brief Computes the least exponent of a floating point IEEE value

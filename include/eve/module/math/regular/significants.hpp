@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //!   @var significants
 //!   @brief Computes the rounding to n significants digits of the first input.

@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var rising_factorial
 //!   @brief  `elementwise_callable` object computing the rising Factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.

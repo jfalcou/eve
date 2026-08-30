@@ -40,7 +40,7 @@ struct pi3_t : constant_callable<pi3_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pi3
 //!   @brief Callable object computing the pi cubed value : \f$\pi^3\f$.

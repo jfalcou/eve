@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var dawson
 //!   @brief `elementwise_callable` object computing the Dawson function:

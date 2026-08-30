@@ -92,7 +92,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find_last_if
 //!
@@ -144,7 +144,7 @@ template<typename TraitsSupport> struct find_last_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find_last
 //!
@@ -193,7 +193,7 @@ template<typename TraitsSupport> struct find_last_if_not_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find_last_if_not
 //!

@@ -212,7 +212,7 @@ namespace _
 }
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!    @var for_each_iteration_with_expensive_optional_part
 //!

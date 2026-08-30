@@ -16,7 +16,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @struct iota_with_step_iterator
   //!    @brief An iterator for all values from base to offset.
@@ -119,7 +119,7 @@ namespace eve::algo::views
   };
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @var iota_with_step
   //!    @brief A function to generate an `iota` with a step i.e. a general arithmetic sequence.
@@ -153,7 +153,7 @@ namespace eve::algo::views
   } inline constexpr iota_with_step;
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @var iota
   //!    @brief A function to generate an `iota` iterator/view like [0.5, 2.5,  4.5, ...]. \f$(0.5 + 2(n-1))_{n \in \N}\f$

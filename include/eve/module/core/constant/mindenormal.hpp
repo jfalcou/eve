@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var mindenormal
 //!   @brief Computes the smallest denormal positive value.

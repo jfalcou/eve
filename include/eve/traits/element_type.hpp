@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!   @struct element_type
   //!   @brief Extracts the scalar part of a type

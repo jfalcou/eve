@@ -44,7 +44,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var max
 //!   @brief Computes the  maximum  of its arguments.

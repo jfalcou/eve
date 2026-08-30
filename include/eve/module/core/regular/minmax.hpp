@@ -53,7 +53,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var minmax
 //!   @brief Computes the minimum and maximum of its arguments.

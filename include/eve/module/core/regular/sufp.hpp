@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var sufp
 //!   @brief `elementwise_callable` object computing the signed unit value in the first place of the input

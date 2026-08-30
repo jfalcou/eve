@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var stirling
 //!   @brief `elementwise_callable` object computing the Stirling approximation of the \f$\Gamma\f$ function.

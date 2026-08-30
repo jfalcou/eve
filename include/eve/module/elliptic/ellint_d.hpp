@@ -35,7 +35,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var ellint_d
 //!   @brief `elementwise_callable` object computing the \f$\mbox{D}\f$ elliptic integral.

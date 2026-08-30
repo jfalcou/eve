@@ -40,7 +40,7 @@ struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Op
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var extreme_value_skewness
 //!   @brief Callable object computing the extreme value distribution skewness :

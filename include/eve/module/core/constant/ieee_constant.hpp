@@ -18,7 +18,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //! @var ieee_constant
 //!

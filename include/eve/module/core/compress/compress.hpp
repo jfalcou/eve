@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core_compress
+  //! @addtogroup eve_core_compress
   //! @{
   //!    @var compress
   //!    @brief A low level function to compress one simd value based on a mask.

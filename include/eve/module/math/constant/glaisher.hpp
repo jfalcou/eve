@@ -40,7 +40,7 @@ struct glaisher_t : constant_callable<glaisher_t, Options, lower_option, upper_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var glaisher
 //!   @brief Callable object computing the Glaisher-Kinkelin constant.

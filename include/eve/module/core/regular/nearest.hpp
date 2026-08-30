@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var nearest
 //!   @brief  `strict_elementwise_callable` object computing the nearest integer to the input.

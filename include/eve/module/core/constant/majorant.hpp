@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var majorant
 //!   @brief Computes a value `x` such that for any value `y` of the same type, `is_not_greater(y, x)` is true.

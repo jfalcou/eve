@@ -77,7 +77,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var cumtrapz
 ///!   @brief `callable` converting a pack of values into a tuple of the cumulative

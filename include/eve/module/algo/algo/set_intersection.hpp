@@ -15,7 +15,7 @@ namespace eve::algo
 {
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! return type from set_intersection
 //================================================================================================
 template<typename I1, typename I2, typename O> struct set_intersection_result
@@ -347,7 +347,7 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var set_intersection
 //!

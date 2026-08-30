@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var veltkamp
 //!   @brief split a loating-point number with radix 2 and p mantissa bits

@@ -48,7 +48,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var dec
 //!   @brief `elementwise_callable` object returning the input decremented by 1.

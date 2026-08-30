@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var maxflint
 //!   @brief Computes the smallest floating point representing an integer such that n == n+1.

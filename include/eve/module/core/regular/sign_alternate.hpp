@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var sign_alternate
 //!   @brief Computes \f$(-1)^n\f$.

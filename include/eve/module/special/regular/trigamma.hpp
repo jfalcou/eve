@@ -23,7 +23,7 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var trigamma
 //!   @brief `elementwise_callable` object computing the Trigamma function i.e.

@@ -82,7 +82,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var welford_variance
 //!   @brief `tuple_callable` computing the variance of its arguments with the Welford algorithm, along with their average, second centered moment and count.

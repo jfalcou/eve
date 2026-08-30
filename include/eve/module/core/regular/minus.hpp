@@ -32,7 +32,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var minus
 //!   @brief Computes the opposite of the parameter that must be signed.

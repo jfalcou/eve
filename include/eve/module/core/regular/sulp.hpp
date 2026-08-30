@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var sulp
 //!   @brief `elementwise_callable` object computing the classical unit in the last place (Kahan)

@@ -30,7 +30,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup math_invhyper
+//! @addtogroup eve_math_invhyper
 //! @{
 //!   @var asinh
 //!   @brief `elementwise_callable` object computing the inverse hyperbolic

@@ -99,7 +99,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_reduction
+  //! @addtogroup eve_core_reduction
   //! @{
   //!   @var reduce
   //!   @brief Computes the reduction of a SIMD value using a given callable. Performs an horizontal sum by default.

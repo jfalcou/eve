@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var jacobi_zeta
 //!   @brief `elementwise_callable` object computing the  Jacobi Zeta function.

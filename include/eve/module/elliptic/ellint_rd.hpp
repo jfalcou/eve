@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var ellint_rd
 //!   @brief  `elementwise_callable` object computing the Carlson's elliptic integral

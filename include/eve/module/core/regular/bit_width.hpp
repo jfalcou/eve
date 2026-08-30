@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_width
 //!   @brief  `elementwise_callable` object Computing elementwise the number of bits needed

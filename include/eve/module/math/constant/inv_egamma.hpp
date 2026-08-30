@@ -40,7 +40,7 @@ struct inv_egamma_t : constant_callable<inv_egamma_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var inv_egamma
 //!   @brief Callable object computing the inverse of the [Euler-Mascheroni constant](@ref

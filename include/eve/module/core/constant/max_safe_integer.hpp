@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var max_safe_integer
 //!   @brief Computes the greatest floating point representing an integer such that n != n+1.

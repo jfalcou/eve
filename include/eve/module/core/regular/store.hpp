@@ -33,7 +33,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //!   @var store
   //!   @brief Store the elements of a [SIMD value](@ref eve::simd_value) into the given memory

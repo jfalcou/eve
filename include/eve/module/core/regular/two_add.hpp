@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var two_add
 //!   @brief Computes the [elementwise](@ref glossary_elementwise) pair consisting of the sum and its resulting rounding error.

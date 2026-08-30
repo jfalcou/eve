@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var maxrepint
 //!   @brief Computes the maximum representable integer value. Same as `maxflint` for floating types and

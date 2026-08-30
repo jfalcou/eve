@@ -38,7 +38,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_notand
 //!   @brief  `bit_callable` object computing the bitwise NOTAND of its arguments.

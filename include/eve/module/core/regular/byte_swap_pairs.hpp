@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var byte_swap_pairs
 //!   @brief  `strict_elementwise_callable` object swapping chosen pairs of bytes in each vector element.

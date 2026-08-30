@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var prevint
 //!   @brief Computes the previous representable integer if it exists.

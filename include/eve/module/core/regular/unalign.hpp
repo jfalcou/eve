@@ -48,7 +48,7 @@ namespace eve
   };
 // TODO DOC is this to be there : there is no simd parameter involved. Perhaps better in algo ?
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //!   @var unalign
 //!   @brief Callable object for computing an unaligned version of a relaxed iterator.
@@ -96,7 +96,7 @@ namespace eve
 //================================================================================================
 
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //!   @typedef unaligned_t
 //!   @brief  Compute the unaligned pointer type associated to a given type.

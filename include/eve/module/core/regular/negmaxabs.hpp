@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var negmaxabs
 //!   @brief `tuple_callable` object computing the negated value of the element of maximal absolute value.

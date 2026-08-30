@@ -87,7 +87,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find_if
 //!
@@ -140,7 +140,7 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find
 //!
@@ -191,7 +191,7 @@ template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var find_if_not
 //!

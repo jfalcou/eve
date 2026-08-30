@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_hyper
+//! @addtogroup eve_math_hyper
 //! @{
 //! @var gd
 //! @brief `elementwise_callable` object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.

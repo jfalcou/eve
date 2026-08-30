@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var erfcx
 //!   @brief Computes the normalized complementary error function

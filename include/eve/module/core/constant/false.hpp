@@ -30,7 +30,7 @@ struct false_t : constant_callable<false_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var false_
 //!   @brief Computes the false logical value.

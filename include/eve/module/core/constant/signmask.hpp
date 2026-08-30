@@ -40,7 +40,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var signmask
 //!   @brief Computes a value in which the most significant bit is the only bit set.

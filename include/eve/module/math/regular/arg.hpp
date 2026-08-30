@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_trig
+//! @addtogroup eve_math_trig
 //! @{
 //!   @var arg
 //!   @brief `elementwise_callable` object computing the phase angle (in radians).

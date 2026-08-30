@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var fdim
 //!   @brief `elementwise_callable` computing the positive difference between the two parameters.

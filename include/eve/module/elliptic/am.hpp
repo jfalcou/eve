@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var am
 //!   @brief `elementwise_callable` object computing the  Jacobi's Amplitude function.

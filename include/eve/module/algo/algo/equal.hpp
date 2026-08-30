@@ -45,7 +45,7 @@ template<typename TraitsSupport> struct equal_ : TraitsSupport
 
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var equal
 //!

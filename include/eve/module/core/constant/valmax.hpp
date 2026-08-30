@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var valmax
 //!   @brief Computes the greatest representable value.

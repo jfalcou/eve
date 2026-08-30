@@ -42,7 +42,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var hermite
 //!   @brief  `strict_elementwise_callable` object computing the value of the 'physicists' Hermite polynomial of order `n` at `x`:

@@ -40,7 +40,7 @@ template<typename TraitsSupport> struct min_value_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var min_value
 //!

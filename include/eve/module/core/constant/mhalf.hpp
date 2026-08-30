@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var mhalf
 //!   @brief Computes the constant \f$-1/2\f$.

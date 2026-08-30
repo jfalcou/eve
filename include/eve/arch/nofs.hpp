@@ -22,7 +22,7 @@ namespace eve
   }  // namespace _
 
   //================================================================================================
-  //! @addtogroup arch
+  //! @addtogroup eve_arch
   //! @{
   //!   @var nofs_cardinal_v
   //!   @brief nofs stands for "no frequency scaling".

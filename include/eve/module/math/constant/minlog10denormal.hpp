@@ -36,7 +36,7 @@ struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var minlog10denormal
 //!   @brief Callable object computing the least value for which eve::exp10 is denormal and not zero.

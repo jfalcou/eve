@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var bernoulli
 //!   @brief  `elementwise_callable` object computing the nth Bernoulli number \f$b_n\f$ as a double.

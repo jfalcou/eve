@@ -75,7 +75,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var welford_covariance
 //!   @brief `elementwise_callable` object computing the elementwise  welford_covariance product

@@ -41,7 +41,7 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var egamma
 //!   @brief Callable object computing the Euler-Mascheroni constant : \f$\gamma =

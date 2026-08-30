@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var exp_int
 //!   @brief  `elementwise_callable` object computing the exponential integral

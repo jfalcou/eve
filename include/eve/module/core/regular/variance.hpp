@@ -49,7 +49,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var variance
 //!   @brief `tuple_callable` computing the variance of its arguments.

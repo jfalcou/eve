@@ -19,7 +19,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept value
   //! @brief The concept `value<T>` is satisfied if and only if T satisfies
@@ -37,7 +37,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept integral_value
   //! @brief The concept `integral_value<T>` is satisfied if and only if T satisfies
@@ -54,7 +54,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_value
   //! @brief The concept `signed_value<T>` is satisfied if and only if T satisfies
@@ -71,7 +71,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept unsigned_value
   //! @brief The concept `unsigned_value<T>` is satisfied if and only if T satisfies
@@ -87,7 +87,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_integral_value
   //! @brief The concept `signed_integral_value<T>` is satisfied if and only if T satisfies
@@ -103,7 +103,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept floating_value
   //! @brief The concept `floating_value<T>` is satisfied if and only if T satisfies
@@ -121,7 +121,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept logical_value
   //! @brief The concept `logical_value<T>` is satisfied if and only if T satisfies
@@ -138,7 +138,7 @@ namespace eve
 
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept plain_value
   //! @brief The concept `plain_value<T>` is satisfied if and only if T satisfies
@@ -154,7 +154,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept arithmetic_value
   //! @brief The concept `plain_value<T>` is satisfied if and only if T satisfies
@@ -173,7 +173,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept relaxed_logical_value
   //! @brief The concept `relaxed_logical_value<T>` is satisfied if and only if T is a

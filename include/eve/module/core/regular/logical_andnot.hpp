@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_logical
+//! @addtogroup eve_core_logical
 //! @{
 //!   @var logical_andnot
 //!   @brief Computes the logical ANDNOT of its arguments.

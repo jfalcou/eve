@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var negabsmin
 //!   @brief `tuple_callable` computing the negated absolute value of the minimal element.

@@ -24,7 +24,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @var max_lanes_v
   //!
@@ -37,7 +37,7 @@ namespace eve
   inline constexpr auto max_lanes_v = _::compute_max_lanes<Ts...>();
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @typedef max_lanes_t
   //!

@@ -29,7 +29,7 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, raw_option, pedan
   EVE_CALLABLE_OBJECT(ldexp_t, ldexp_);
 };
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var ldexp
 //!   @brief `strict_elementwise callable` computing \f$\textstyle x 2^n\f$.

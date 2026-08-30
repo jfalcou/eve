@@ -27,7 +27,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup eve_math_invtrig
 //! @{
 //!   @var atan
 //!   @brief `elementwise_callable` object computing the arc tangent.

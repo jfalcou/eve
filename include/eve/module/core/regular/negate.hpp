@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var negate
 //!   @brief `elementwise_callable` object computing the product of the first parameter

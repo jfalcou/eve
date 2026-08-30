@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_swap_adjacent
 //!   @brief `strict_elementwise_callable` object  swapping adjacent groups of n bits.

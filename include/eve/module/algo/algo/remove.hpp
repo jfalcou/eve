@@ -64,7 +64,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!  @var remove_if
   //!  @brief SIMD version of std::remove_if
@@ -97,7 +97,7 @@ namespace eve::algo
   };
 
  //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!  @var remove
   //!  @brief SIMD version of std::remove

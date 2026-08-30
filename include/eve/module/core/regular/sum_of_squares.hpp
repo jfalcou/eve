@@ -42,7 +42,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var sum_of_squares
 //!   @brief `tuple_callable` object computing the sum of the squared values of its arguments.

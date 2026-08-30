@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var ellint_2
 //!   @brief `elementwise_callable` object computing the  elliptic integrals of the second kind.

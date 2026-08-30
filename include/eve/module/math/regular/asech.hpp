@@ -26,7 +26,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup math_invhyper
+//! @addtogroup eve_math_invhyper
 //! @{
 //!   @var asech
 //!   @brief `elementwise_callable` object computing the inverse hyperbolic secant: \f$\log(1/x+\sqrt{1/x^2-1})\f$.

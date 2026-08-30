@@ -26,7 +26,7 @@ namespace eve
 };
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup eve_math_invtrig
 //! @{
 //!   @var asec
 //!   @brief Callable object computing the arc secant.

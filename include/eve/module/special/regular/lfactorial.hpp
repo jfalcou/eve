@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var lfactorial
 //!   @brief `elementwise_callable` object computing the natural logarithm of the factorial of unsigned integer values

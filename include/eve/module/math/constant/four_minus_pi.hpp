@@ -40,7 +40,7 @@ struct four_minus_pi_t : constant_callable<four_minus_pi_t, Options, lower_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var four_minus_pi
 //!   @brief Callable object computing the constant \f$4-\pi\f$.

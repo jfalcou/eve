@@ -18,7 +18,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept simd_value
   //! @brief   Specifies that a type is a SIMD type.
@@ -37,7 +37,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept integral_simd_value
   //! @brief   Specifies that a type is a SIMD type with integral elements
@@ -56,7 +56,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_simd_value
   //! @brief   Specifies that a type is a SIMD type with signed elements
@@ -76,7 +76,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept unsigned_simd_value
   //! @brief   Specifies that a type is a SIMD type with unsigned elements
@@ -96,7 +96,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_integral_simd_value
   //! @brief   Specifies that a type is a SIMD type with signed integral elements
@@ -116,7 +116,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept floating_simd_value
   //! @brief   Specifies that a type is a SIMD type with floating elements.

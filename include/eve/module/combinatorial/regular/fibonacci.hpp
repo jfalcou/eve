@@ -29,7 +29,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var fibonacci
 //!   @brief Computes the nth element of the Fibonacci sequence \f$(f_i)_{i\in \mathbb{N}}\f$.

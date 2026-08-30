@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var mantissamask
 //!   @brief Computes the mask to extract the mantissa bits of an ieee floating value.

@@ -46,7 +46,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var average
 //!   @brief `tuple_callable` computing the arithmetic mean of its arguments.

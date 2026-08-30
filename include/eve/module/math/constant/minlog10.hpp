@@ -36,7 +36,7 @@ struct minlog10_t : constant_callable<minlog10_t, Options, lower_option, upper_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var minlog10
 //!   @brief Callable object computing the least value for which eve::exp10 is normal and not zero.

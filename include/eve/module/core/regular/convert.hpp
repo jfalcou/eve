@@ -40,7 +40,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_conversions
+  //! @addtogroup eve_core_conversions
   //! @{
   //!   @var convert
   //!   @brief Converts a value to another type.

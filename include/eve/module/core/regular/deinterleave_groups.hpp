@@ -14,7 +14,7 @@ namespace eve
 {
 //TODO DOC
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!    @var deinterleave_groups
 //!

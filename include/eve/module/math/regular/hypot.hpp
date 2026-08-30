@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var hypot
 //! @brief `tuple_callable` computing the \f$l_2\f$ norm of its inputs.

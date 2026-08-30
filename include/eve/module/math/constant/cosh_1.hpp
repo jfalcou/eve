@@ -40,7 +40,7 @@ struct cosh_1_t : constant_callable<cosh_1_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var cosh_1
 //!   @brief Callable object computing the constant \f$\cosh(1)\f$.

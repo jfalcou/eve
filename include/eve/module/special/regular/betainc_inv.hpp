@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var betainc_inv
 //!   @brief `elementwise_callable` object computing the inverse relative to the first parameter

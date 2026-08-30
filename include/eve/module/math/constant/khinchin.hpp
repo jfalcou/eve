@@ -40,7 +40,7 @@ struct khinchin_t : constant_callable<khinchin_t, Options, lower_option, upper_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var khinchin
 //!   @brief Callable object computing the Khinchin constant.

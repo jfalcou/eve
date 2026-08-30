@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var erf
 //!   @brief `elementwise_callable` object computing the error function: \f$ \displaystyle

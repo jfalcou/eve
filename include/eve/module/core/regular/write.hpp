@@ -33,7 +33,7 @@ namespace eve
 
 // TODO DOC
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //!   @var write
 //!   @brief Callable object writing a scalar value to memory

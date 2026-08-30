@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_sigmoid
+//! @addtogroup eve_math_sigmoid
 //! @{
 //! @var sigmoid
 //! @brief `elementwise_callable` object computing the sigmoid (logistic function).

@@ -55,7 +55,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var unfold
 //!   @brief `tuple_callable` utility to convert a pack of values into a tuple of scalar values.

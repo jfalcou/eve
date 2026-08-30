@@ -27,7 +27,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var rec
 //!   @brief Computes the inverse of the parameter.

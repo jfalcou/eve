@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_simd
+//! @addtogroup eve_core_simd
 //! @{
 //!   @var broadcast
 //!   @brief Computes the

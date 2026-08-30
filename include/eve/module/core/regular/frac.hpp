@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var frac
 //!   @brief `elementwise_callable` computing the fractional part of the input.

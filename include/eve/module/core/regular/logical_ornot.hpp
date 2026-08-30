@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_logical
+//! @addtogroup eve_core_logical
 //! @{
 //!   @var logical_ornot
 //!   @brief Computes the logical ORNOT of its arguments.

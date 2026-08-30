@@ -40,7 +40,7 @@ struct pi2_t : constant_callable<pi2_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pi2
 //!   @brief Callable object computing the square of \f$\pi\f$.

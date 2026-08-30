@@ -16,7 +16,7 @@
 namespace eve
 {
   //====================================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept generator
   //! The concept `generator<Constant>` is satisfied if `Constant` is built as a eve::constant_callable.
@@ -33,7 +33,7 @@ namespace eve
   //====================================================================================================================
 
   //====================================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept generator_from
   //! The concept `generator_for` is satisfied if `G` satisfies eve::generator and can be called with a

@@ -23,7 +23,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //!   @var cbrt
 //!   @brief `elementwise_callable` object computing the cubic root.

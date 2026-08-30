@@ -16,7 +16,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Checks that the types passed are all SIMD values that can be passed to `eve::combine`. i.e they share a
   //!        common value type and their cardinals and numbers are consistent with `eve::combine` semantics
@@ -31,7 +31,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Checks that the types passed can be passed to `eve::combine` and that the resulting type would be `Tgt`.
   //================================================================================================

@@ -38,7 +38,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var minabs
 //!   @brief Computes the  minimum  of the absolute value of its arguments.

@@ -46,7 +46,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var inc
 //!   @brief `elementwise_callable` object returning the input incremented by 1.

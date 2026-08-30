@@ -40,7 +40,7 @@ struct pio_4_t : constant_callable<pio_4_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pio_4
 //!   @brief Callable object computing the constant \f$\pi/4\f$.

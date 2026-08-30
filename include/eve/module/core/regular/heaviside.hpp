@@ -41,7 +41,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var heaviside
 //!   @brief `elementwise_callable` that return 1 if the input is greater than a threshold else 0.

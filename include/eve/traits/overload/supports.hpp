@@ -22,7 +22,7 @@ namespace eve::_
 namespace eve
 {
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct options
   //!   @brief  Wrapper class around bundle of options passed to eve::callable
@@ -97,7 +97,7 @@ namespace eve
 namespace eve
 {
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @var functor
   //!   @brief EVE's @callable generator
@@ -110,7 +110,7 @@ namespace eve
   using tag_t = std::remove_cvref_t<decltype(Func)>;
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct decorated_with
   //!   @brief Helper class to aggregate options handlers and states
@@ -194,7 +194,7 @@ namespace eve
   }
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @var condition_key
   //!   @brief Keyword for retrieving conditionals decorator
@@ -213,7 +213,7 @@ namespace eve
   inline constexpr _::condition_key_t condition_key = {};
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct relative_conditional_option
   //!   @brief Option specification for decoration via relative conditional value and expressions
@@ -247,7 +247,7 @@ namespace eve
   };
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct conditional_option
   //!   @brief Option specification for decoration via conditional value and expressions

@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var rsqrt
 //!   @brief Computes the inverse of the square root of the parameter.

@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var bitofsign
 //!   @brief `elementwise_callable` object computing the bit of sign.

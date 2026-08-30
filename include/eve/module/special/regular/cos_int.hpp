@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var cos_int
 //!   @brief  `elementwise_callable` object computing the cosine integral

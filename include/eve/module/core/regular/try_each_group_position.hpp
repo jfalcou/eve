@@ -15,7 +15,7 @@ namespace eve
 {
   // TODO DOC is this to be in the use interface ?
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup eve_core
   //! @{
   //!    @var try_each_group_position
   //!    @brief

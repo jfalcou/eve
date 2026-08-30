@@ -32,7 +32,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @concept same_types
   //!
@@ -48,7 +48,7 @@ namespace eve
   concept same_types = same_lanes_or_scalar<Ts...> && _::type_check<Ts...>();
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @concept same_types_tuple
   //!

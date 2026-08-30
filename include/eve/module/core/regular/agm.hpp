@@ -40,7 +40,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var agm
 //!   @brief `elementwise_callable` object computing the arithmetic-geometric mean.

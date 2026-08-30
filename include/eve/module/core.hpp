@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup core Core functions
+//! @defgroup eve_core Core functions
 //! @brief Core functions
 //!
 //!  This module provides implementation for various fundamental functions
@@ -18,11 +18,11 @@
 //! @}
 //==================================================================================================
 //==================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!
-//! @defgroup core_accuracy  Accuracy helpers
-//! @ingroup core
+//! @defgroup eve_core_accuracy  Accuracy helpers
+//! @ingroup eve_core
 //! These functions allows performing some basic arithmetic operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
@@ -35,8 +35,8 @@
 //!       made in the upgraded type if available. Currently types with 64 bits elements cannot be upgraded and
 //!       for then  `widen` has no effect.
 //!
-//! @defgroup core_arithmetic  Arithmetic operations
-//! @ingroup core
+//! @defgroup eve_core_arithmetic  Arithmetic operations
+//! @ingroup eve_core
 //! Core arithmetic functions
 //!
 //! These functions allows performing some basic arithmetic operations and some less basic.
@@ -63,8 +63,8 @@
 //! [trunc](@ref eve::trunc), [variance](@ref eve::variance), [welford_average](@ref eve::welford_average),
 //! [welford_covariance](@ref eve::welford_covariance), [welford_variance](@ref eve::welford_variance).
 //!
-//! @defgroup core_bitops Bitwise functions
-//! @ingroup core
+//! @defgroup eve_core_bitops Bitwise functions
+//! @ingroup eve_core
 //! These functions are low level and acting on the bit or byte representation of the involved data independently of their type.
 //!
 //! [bit_and](@ref eve::bit_and), [bit_andnot](@ref eve::bit_andnot), [bit_cast](@ref eve::bit_cast), [bit_ceil](@ref eve::bit_ceil),
@@ -77,8 +77,8 @@
 //! [byte_reverse](@ref eve::byte_reverse), [byte_swap_adjacent](@ref eve::byte_swap_adjacent), [byte_swap_pairs](@ref eve::byte_swap_pairs),
 //! [countl_one](@ref eve::countl_one), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
 //!
-//! @defgroup core_constants  Constants
-//! @ingroup core
+//! @defgroup eve_core_constants  Constants
+//! @ingroup eve_core
 //! Basic useful constants (scalar and SIMD)
 //!
 //! All EVE constants can be called in four ways:
@@ -98,8 +98,8 @@
 //!       the real mathematical value. For instance the regular nearest values of \f$\pi\f$ for float and double are
 //!       greater (resp. less) than the mathematical value.
 //!
-//! @defgroup core_decorators  Decorators
-//! @ingroup core
+//! @defgroup eve_core_decorators  Decorators
+//! @ingroup eve_core
 //! Core semantic modifiers
 //!
 //!  Many core function semantics can be modified using decorator(s). The complete description of their effects can be found in
@@ -173,8 +173,8 @@
 //! @note It must be noticed that the availabity of `raw`, `fast` does not guaranty speed improvement but
 //!        only no speed degradation against regular calls.
 //!
-//! @defgroup core_fma_family  Fused multiply add family
-//! @ingroup core
+//! @defgroup eve_core_fma_family  Fused multiply add family
+//! @ingroup eve_core
 //! These functions implements accurate versions of the operations
 //! \f$\pm x \pm yz\f$ and \f$\pm xy \pm z\f$.
 //!
@@ -194,12 +194,12 @@
 //! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnma](@ref eve::fnma),
 //! [fnms](@ref eve::fnms)[fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
 //!
-//!  @defgroup core_reduction  Reductions
-//!  @ingroup core
+//!  @defgroup eve_core_reduction  Reductions
+//!  @ingroup eve_core
 //!  Operations providing a scalar value from SIMD vectors
 //!
-//! @defgroup core_internal  IEEE operations
-//! @ingroup core
+//! @defgroup eve_core_internal  IEEE operations
+//! @ingroup eve_core
 //! Operations related to classical IEEE functions and the floating representation of real numbers
 //!
 //! most of the standard function are present,  but their names and calls can slightly change.
@@ -211,8 +211,8 @@
 //!  * [nextafter](@ref eve::nextafter) comes along  [next](@ref eve::next) and  [prev](@ref eve::prev) that can take a second scalar integral parameter say `n`
 //!    which indicates one want the nth representable value that follows (resp. precedes) the first parameter.
 //!
-//! @defgroup core_logical  Logical operations
-//! @ingroup core
+//! @defgroup eve_core_logical  Logical operations
+//! @ingroup eve_core
 //! Logical operations
 //!
 //! [swap_if](@ref eve::swap_if), [logical_and](@ref eve::logical_and), [logical_andnot](@ref eve::logical_andnot),
@@ -220,8 +220,8 @@
 //! [logical_or](@ref eve::logical_or), [logical_ornot](@ref eve::logical_ornot),
 //! [replace_ignored](@ref eve::replace_ignored).
 //!
-//! @defgroup core_predicates  Predicates
-//! @ingroup core
+//! @defgroup eve_core_predicates  Predicates
+//! @ingroup eve_core
 //! Operations returning logical values
 //!
 //! Mind that in SIMD context these functions DO NOT return boolean but logical values that is
@@ -239,8 +239,8 @@
 //! Supplementary comparisons functions take the bit of sign of zero into account,  namely
 //! [is_eqpz](@ref eve::is_eqpz), [is_eqmz](@ref eve::is_eqmz), [is_negative](@ref eve::is_negative), [is_positive](@ref eve::is_positive)
 //!
-//! @defgroup core_conversions Conversions
-//! @ingroup core
+//! @defgroup eve_core_conversions Conversions
+//! @ingroup eve_core
 //! Type conversions
 //!
 //! [convert](@ref eve::convert), [simd_cast](@ref eve::simd_cast),
@@ -248,16 +248,16 @@
 //! * conversion functions take two arguments a value and a scalar type to convert each lane of the value (the value itself, if it is scalar value)
 //! * The conversion can use the decorator  [eve::saturated](@ref eve::saturated) in which case (sic) the result is saturated in the target type.
 //!
-//! @defgroup core_simd SIMD Specific Operations
-//! @ingroup core
+//! @defgroup eve_core_simd SIMD Specific Operations
+//! @ingroup eve_core
 //! Proper SIMD operations as shuffling, splitting and merging SIMD vectors
 //!
-//! @defgroup core_named_shuffles Named Shuffles
-//! @ingroup core
+//! @defgroup eve_core_named_shuffles Named Shuffles
+//! @ingroup eve_core
 //! Functions that are just shuffles with a different api.
 //!
-//! @defgroup core_compress Compress functions
-//! @ingroup core
+//! @defgroup eve_core_compress Compress functions
+//! @ingroup eve_core
 //! Functions that in different way expose `compressing` selected elements
 //! together to beginning. This is at the core of `remove_if`, `copy_if` etc.
 //! Alternative search keywords: filter, remove, pack

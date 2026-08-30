@@ -40,7 +40,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var rat
 //!   @brief `elementwise_callable` object computing a rational approximation.

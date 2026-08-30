@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var three_fma
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)

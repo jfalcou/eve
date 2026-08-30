@@ -8,18 +8,18 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup algorithms
+//! @addtogroup eve_algorithms
 //! @{
-//!   @defgroup algos Algorithms
+//!   @defgroup eve_algos Algorithms
 //!   @brief Provides SIMD implementation of standard algorithms
 //!
-//!   @defgroup views Views
+//!   @defgroup eve_views Views
 //!   @brief Provides views to work with SIMD algorithms
 //!
-//!   @defgroup algo_concepts Algorithms Concepts
+//!   @defgroup eve_algo_concepts Algorithms Concepts
 //!   @brief Provides Concepts for algorithms and related components
 //!
-//!   @defgroup algo_traits AlgoTraits
+//!   @defgroup eve_algo_traits AlgoTraits
 //!   @brief Different customisation for algorithms.
 //! @}
 //==================================================================================================

@@ -38,7 +38,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var prime_ceil
 //!   @brief `strict_elementwise_callable` object computing the smallest prime greater or equal to the input.

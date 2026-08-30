@@ -42,7 +42,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!   @var tchebsum
 //!   @brief Implement the evaluation of tchebytchev  polynomials with coefficients

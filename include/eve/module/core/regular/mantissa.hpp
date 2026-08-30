@@ -28,7 +28,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var mantissa
 //!   @brief  `elementwise_callable` object computing the IEEE mantissa of the floating value.

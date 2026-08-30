@@ -37,7 +37,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_simd
+  //! @addtogroup eve_core_simd
   //! @{
   //!   @var gather
   //!   @brief Load a SIMD value with values selected from a memory region at the given offsets.

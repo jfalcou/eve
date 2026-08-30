@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var popcount
 //!   @brief `elementwise_callable` object computing elementwise the number of bits set in the parameter.

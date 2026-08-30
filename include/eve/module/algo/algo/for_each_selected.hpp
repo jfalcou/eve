@@ -72,7 +72,7 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var for_each_selected
 //!

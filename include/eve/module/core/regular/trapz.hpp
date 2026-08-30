@@ -58,7 +58,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var trapz
 //!   @brief `tuple_callable` object applying the trapezoidal composite rule to its arguments.

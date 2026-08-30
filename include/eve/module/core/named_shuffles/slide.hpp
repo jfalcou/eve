@@ -14,7 +14,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!    @var slide_left
 //!    @brief a named shuffles for sliding two simd values together and selecting

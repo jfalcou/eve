@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_logical
+//! @addtogroup eve_core_logical
 //! @{
 //!   @var logical_xor
 //!   @brief Computes the logical XOR of its arguments.

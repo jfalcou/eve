@@ -38,7 +38,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var sqrtvalmax
 //!   @brief Computes the greatest value less than the square root of eve::valmax.

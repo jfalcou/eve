@@ -40,7 +40,7 @@ struct cbrt_pi_t : constant_callable<cbrt_pi_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var cbrt_pi
 //!   @brief Callable object computing the constant \f$\sqrt[3]\pi\f$.

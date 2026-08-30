@@ -44,7 +44,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!   @var horner
 //!   @brief Implement the horner scheme to evaluate polynomials with coefficients

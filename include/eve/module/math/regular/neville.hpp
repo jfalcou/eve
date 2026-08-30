@@ -47,7 +47,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var neville
 //!   @brief `callable` computing the value of the interpolation polynomial \f$p\f$ of degree n, satisfying:

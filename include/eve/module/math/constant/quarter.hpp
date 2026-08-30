@@ -29,7 +29,7 @@ struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var quarter
 //!   @brief Callable object computing the constant \f$1/4\f$.

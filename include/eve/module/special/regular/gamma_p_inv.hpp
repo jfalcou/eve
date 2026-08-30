@@ -32,7 +32,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var gamma_p_inv
 //!   @brief `elementwise_callable` object computing  the inverse of the normalized lower

@@ -40,7 +40,7 @@ struct pi2o_16_t : constant_callable<pi2o_16_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pi2o_16
 //!   @brief Callable object computing the constant \f$\pi^2/16\f$.

@@ -12,7 +12,7 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!
   //!    @var backward

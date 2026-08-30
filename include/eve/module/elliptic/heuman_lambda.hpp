@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var heuman_lambda
 //!   @brief `elementwise_callable` object computing the  Heuman lambda function.

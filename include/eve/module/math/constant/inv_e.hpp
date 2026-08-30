@@ -40,7 +40,7 @@ struct inv_e_t : constant_callable<inv_e_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var inv_e
 //!   @brief Callable object computing the constant \f$e^{-1}\f$.

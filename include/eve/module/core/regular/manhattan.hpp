@@ -44,7 +44,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var manhattan
 //!   @brief `tuple_callable` object computing the manhattan norm (\f$l_1\f$)  of its arguments.

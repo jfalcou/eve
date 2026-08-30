@@ -31,7 +31,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var betainc
 //!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =

@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var minlog
 //!   @brief Callable object computing the least value for which eve::exp is normal and not zero.

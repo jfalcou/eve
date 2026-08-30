@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var jacobi_elliptic
 //!   @brief `elementwise_callable` object computing the  Jacobi's sn, cn and dn function simultaneously.

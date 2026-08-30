@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var trunc
 //!   @brief `elementwise_callable` object computing  the integral part of `x` with the same sign as  `x`.

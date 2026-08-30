@@ -25,7 +25,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_bitops
+  //! @addtogroup eve_core_bitops
   //! @{
   //!   @var swap_pairs
   //!   @brief swap chosen pair of elements.

@@ -40,7 +40,7 @@ struct pi_minus_3_t : constant_callable<pi_minus_3_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pi_minus_3
 //!   @brief Callable object computing the constant \f$\pi-3\f$.

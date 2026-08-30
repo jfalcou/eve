@@ -16,7 +16,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_conversions
+//! @addtogroup eve_core_conversions
 //! @{
 //!   @var simd_cast
 //!   @brief casting bits between simd values.

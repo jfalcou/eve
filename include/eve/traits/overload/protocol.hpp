@@ -15,9 +15,9 @@
 #include <type_traits>
 
 //======================================================================================================================
-//! @addtogroup simd
+//! @addtogroup eve_simd
 //! @{
-//!   @defgroup extensions Extensions points
+//!   @defgroup eve_extensions Extensions points
 //!   @brief Macros, classes and functions designed to extend EVE externally.
 //! @}
 //======================================================================================================================
@@ -25,7 +25,7 @@
 namespace eve
 {
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @concept callable_object
   //!   @brief **EVE** callable object
@@ -46,7 +46,7 @@ namespace eve
 
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @var supports_options
   //!   @brief Checks if a callable function supports given options
@@ -68,7 +68,7 @@ namespace eve
 }
 
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def   EVE_CALLABLE_OBJECT_FROM
 //!   @brief Generate the generic function interface for any EVE-compatible @callable
@@ -118,7 +118,7 @@ using callable_tag_type     = TYPE                                              
 
 // THIS MACRO IS DUPLICATED TO ENSURE ERROR MESSAGE QUALITY
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def   EVE_CALLABLE_OBJECT
 //!   @brief Generate the generic function interface for an actual eve::callable
@@ -185,7 +185,7 @@ namespace eve::_
 }
 
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def EVE_DISPATCH_CALL
 //!   @brief Generate the proper call to current EVE's @callable implementation
@@ -195,7 +195,7 @@ namespace eve::_
 /**/
 
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def EVE_DISPATCH_CALL_NT
 //!   @brief Generate the proper call to current EVE's @callable implementation, skips the translation mekanism
@@ -205,7 +205,7 @@ namespace eve::_
 /**/
 
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def EVE_CALLABLE_NAMESPACE
 //!   @brief Register a namespace as suitable for containing eve::callable overloads.
@@ -217,7 +217,7 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 /**/
 
 //======================================================================================================================
-//! @addtogroup extensions
+//! @addtogroup eve_extensions
 //! @{
 //!   @def EVE_REQUIRES
 //!   @brief Flag a function to support delayed calls on given architecture

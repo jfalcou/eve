@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_predicates
+//! @addtogroup eve_core_predicates
 //! @{
 //!   @var is_finite
 //!   @brief `elementwise callable` returning a logical true  if and only if the element is a finite value

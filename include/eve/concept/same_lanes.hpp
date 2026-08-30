@@ -48,7 +48,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @concept same_lanes_or_scalar
   //!
@@ -63,7 +63,7 @@ namespace eve
   concept same_lanes_or_scalar  = _::lanes_check<Ts...>();
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @concept same_lanes_or_scalar_tuple
   //!
@@ -78,7 +78,7 @@ namespace eve
   concept same_lanes_or_scalar_tuple  = _::tuple_lanes_check<T>();
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @concept same_lanes
   //!

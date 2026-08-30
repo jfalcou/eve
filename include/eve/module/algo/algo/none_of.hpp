@@ -24,7 +24,7 @@ template<typename TraitsSupport> struct none_of_ : TraitsSupport
   }
 };
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var none_of
 //!

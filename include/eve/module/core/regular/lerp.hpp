@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var lerp
 //!   @brief Computes the  linear interpolation.

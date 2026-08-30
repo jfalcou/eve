@@ -38,7 +38,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var chi
 //!   @brief `callable` indicatrix of the interval \f$[lo, hi[\f$ or of the set for which the invocable returns true.

@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var omega
 //!   @brief Computes the Wright \f$\omega\f$ the inverse function of \f$ x \rightarrow \log

@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_predicates
+//! @addtogroup eve_core_predicates
 //! @{
 //!   @var is_eqmz
 //!   @brief `elementwise callable` returning a logical true if and only if the element

@@ -26,7 +26,7 @@ struct iota_t : callable<iota_t, Options, conditional_option>
 
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!    @var iota
 //!    @brief all numbers from 0 to size() - 1. equivalent to `T{ [](int i, int) {return i; } }`

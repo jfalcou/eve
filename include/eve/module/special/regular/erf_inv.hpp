@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var erf_inv
 //!   @brief `elementwise_callable` object computing the inverse of the error function.

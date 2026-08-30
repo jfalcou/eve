@@ -14,7 +14,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!    @var broadcast_lane
 //!    @brief a named shuffle for duplicating the lane across a register.

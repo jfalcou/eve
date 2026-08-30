@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var log_gamma
 //!   @brief `elementwise_callable` object computing the natural logarithm of the \f$\Gamma\f$ function.

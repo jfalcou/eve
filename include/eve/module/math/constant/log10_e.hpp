@@ -40,7 +40,7 @@ struct log10_e_t : constant_callable<log10_e_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var log10_e
 //!   @brief Callable object computing the constant \f$\log_{10}e\f$.

@@ -78,7 +78,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var welford_average
 //!   @brief `tuple_callable` computing the arithmetic mean of its arguments with the Welford algorithm, along with the number of elements involved.

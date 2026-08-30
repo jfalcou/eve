@@ -29,7 +29,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var gcd
 //!   @brief `elementwise_callable` object computing the greatest common divisor of the inputs.

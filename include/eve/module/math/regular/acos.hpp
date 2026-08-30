@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup eve_math_invtrig
 //! @{
 //!   @var acos
 //!   @brief `elementwise_callable` object computing the arc cosine.

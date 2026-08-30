@@ -35,7 +35,7 @@ namespace eve
 template<typename Type> struct logical;
 
 //==================================================================================================
-//! @ingroup simd_concepts
+//! @ingroup eve_simd_concepts
 //! @{
 //! @concept plain_scalar_value
 //! @brief Specify that a type represents a plain scalar value
@@ -53,7 +53,7 @@ concept plain_scalar_value = _::is_plain<translate_t<T>>();
 //================================================================================================
 
 //==================================================================================================
-//! @ingroup simd_concepts
+//! @ingroup eve_simd_concepts
 //! @{
 //! @concept logical_scalar_value
 //! @brief Specify that a type represents a logical scalar value
@@ -94,7 +94,7 @@ scalar_tuple() noexcept
 namespace eve
 {
 //==================================================================================================
-//! @ingroup simd_concepts
+//! @ingroup eve_simd_concepts
 //! @concept product_scalar_value
 //! @brief Specify that a type represents a product type made of scalars
 //! The concept `product_scalar_value<T>` is satisfied if and only if T is a eve::product_type
@@ -108,7 +108,7 @@ template<typename T>
 concept product_scalar_value = _::scalar_tuple<T>();
 
 //==================================================================================================
-//! @ingroup simd_concepts
+//! @ingroup eve_simd_concepts
 //! @concept arithmetic_scalar_value
 //! @brief Specify that a type represents a type suitable for vectorization
 //! The concept `arithmetic_scalar_value<T>` is satisfied if and only if T can be used as a base
@@ -138,7 +138,7 @@ template<typename T>
 concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 
 //================================================================================================
-//! @ingroup simd_concepts
+//! @ingroup eve_simd_concepts
 //! @{
 //! @concept relaxed_logical_scalar_value
 //! @brief The concept `relaxed_logical_scalar_value<T>` is satisfied if and only if T is a

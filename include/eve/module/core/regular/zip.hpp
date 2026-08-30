@@ -44,7 +44,7 @@ namespace eve
 
 // TODO DOC
 //================================================================================================
-//! @addtogroup core_simd
+//! @addtogroup eve_core_simd
 //! @{
 //!   @var zip
 //!   @brief Callable for SoA value constructions.

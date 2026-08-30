@@ -21,7 +21,7 @@ namespace eve
 // Why is the implementation split ?
 // Why is this function still old-style ?
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!    @var rotate
 //!    @brief rotates two halves of the register by a chosen number of elements.

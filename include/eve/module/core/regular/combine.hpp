@@ -36,7 +36,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_simd
+  //! @addtogroup eve_core_simd
   //! @{
   //!   @var combine
   //!   @brief Combines two SIMD values in a larger one

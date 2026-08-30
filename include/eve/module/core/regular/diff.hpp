@@ -55,7 +55,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var diff
 //!   @brief `tuple_callable` computing the nth  adjacent differences of its arguments.

@@ -40,7 +40,7 @@ struct two_o_sqrt_pi_t : constant_callable<two_o_sqrt_pi_t, Options, lower_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var two_o_sqrt_pi
 //!   @brief Callable object computing the constant \f$2/\sqrt\pi\f$.

@@ -40,7 +40,7 @@ struct cos_1_t : constant_callable<cos_1_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var cos_1
 //!   @brief Callable object computing the constant \f$\cos1\f$.

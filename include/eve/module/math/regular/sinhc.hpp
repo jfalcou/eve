@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_hyper
+//! @addtogroup eve_math_hyper
 //! @{
 //! @var sinhc
 //!

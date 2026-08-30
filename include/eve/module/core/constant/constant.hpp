@@ -15,7 +15,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var constant
 //!   @brief Computes a floating constant from its scalar hexadecimal integral representation.

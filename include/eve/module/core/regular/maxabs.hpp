@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var maxabs
 //!   @brief Computes the maximum  of the absolute value norm  (\f$l_\infty\f$) of its arguments.

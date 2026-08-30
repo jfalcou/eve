@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var sign
 //!   @brief `elementwise_callable` object computing the sign of the parameter.

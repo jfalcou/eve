@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup polynomial Polynomial functions
+//! @defgroup eve_polynomial Polynomial functions
 //!
 //! @brief  This module provides implementation for scalar and SIMD versions of polynomial
 //!         evaluation functions.

@@ -14,7 +14,7 @@
 namespace eve
 {
     //==================================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!   @struct comparisons
   //!   @brief Extension point for ordering and equality computation

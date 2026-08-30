@@ -40,7 +40,7 @@ struct sinh_1_t : constant_callable<sinh_1_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sinh_1
 //!   @brief Callable object computing the constant \f$\sinh(1)\f$.

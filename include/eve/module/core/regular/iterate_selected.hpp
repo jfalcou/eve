@@ -39,7 +39,7 @@ struct iterate_selected_t
 };
 
 //================================================================================================
-//! @addtogroup core_simd
+//! @addtogroup eve_core_simd
 //! @{
 //!    @var iterate_selected
 //!    @brief a utility to do scalar iteration over all true elements in a `logical`.

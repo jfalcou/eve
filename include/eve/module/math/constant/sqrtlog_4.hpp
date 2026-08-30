@@ -40,7 +40,7 @@ struct sqrtlog_4_t : constant_callable<sqrtlog_4_t, Options, lower_option, upper
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sqrtlog_4
 //!   @brief Callable object computing the constant \f$\sqrt{\log4}\f$.

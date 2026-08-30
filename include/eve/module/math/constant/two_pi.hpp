@@ -40,7 +40,7 @@ struct two_pi_t : constant_callable<two_pi_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var two_pi
 //!   @brief Callable object computing the constant \f$2\pi\f$.

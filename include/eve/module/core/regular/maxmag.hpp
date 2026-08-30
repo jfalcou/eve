@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var maxmag
 //!   @brief Computes the value for which the  maximum  of the absolute value of its arguments is obtained.

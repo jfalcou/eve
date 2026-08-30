@@ -40,7 +40,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_log
+//! @addtogroup eve_math_log
 //! @{
 //! @var logspace_add
 //!

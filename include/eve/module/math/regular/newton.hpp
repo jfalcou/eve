@@ -49,7 +49,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var newton
 //!   @brief Implement the Newton scheme to evaluate polynomials.

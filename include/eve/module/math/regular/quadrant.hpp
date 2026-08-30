@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_trig
+//! @addtogroup eve_math_trig
 //! @{
 //! @var quadrant
 //! @brief Callable object computing the quadrant value.

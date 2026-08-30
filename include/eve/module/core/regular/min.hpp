@@ -46,7 +46,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var min
 //!   @brief Computes the  minimum  of its arguments.

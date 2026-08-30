@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_notor
 //!   @brief `bit_callable` object computing the bitwise NOTOR of its arguments.

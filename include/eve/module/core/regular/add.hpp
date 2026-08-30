@@ -39,7 +39,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var add
 //!   @brief `tuple_callable` computing the sum of its arguments.

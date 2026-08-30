@@ -40,7 +40,7 @@ struct invlog_phi_t : constant_callable<invlog_phi_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var invlog_phi
 //!   @brief Callable object computing the inverse of the logarithm of the golden ratio :

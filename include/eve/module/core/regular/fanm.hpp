@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_fma_family
+//! @addtogroup eve_core_fma_family
 //! @{
 //!   @var fanm
 //!   @brief Computes the fused add negate multiply of its three parameters.

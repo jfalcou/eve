@@ -18,7 +18,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!   @struct backward_iterator
   //!   @brief An adapter over a `relaxed_iterator` that replaces going forward with going backward.
@@ -40,7 +40,7 @@ namespace eve::algo::views
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!   @struct backward_range
   //!   @brief An adapter over a `relaxed_range` that replaces going forward with going backward.
@@ -63,7 +63,7 @@ namespace eve::algo::views
 
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!   @var backward
   //!   @brief Takes an iterator or a range and returns an adapter for backward iteration.

@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var abel
 //!   @brief Computes the value of the Abel function of order `n` at `x`: \f$x(x-an)^{n-1}\f$.

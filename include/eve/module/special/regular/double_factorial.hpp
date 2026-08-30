@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var double_factorial
 //!   @brief `elementwise_callable` object computing the double factorial of `n`

@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_unset
 //!   @brief  `strict_elementwise_callable` object setting to 01 the ith bit of each element.

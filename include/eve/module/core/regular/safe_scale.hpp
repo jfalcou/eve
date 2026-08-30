@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var safe_scale
 //!   @brief `elementwise_callable` object computing underflow-safe and almost overflow-free

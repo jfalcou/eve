@@ -24,7 +24,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var frexp
 //!   @brief `elementwise_callable` computing the ieee  pair of mantissa and exponent of a floating value,

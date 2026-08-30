@@ -32,7 +32,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_logical
+  //! @addtogroup eve_core_logical
   //! @{
   //!    @var replace_ignored
   //!    @brief A small helper to replace ignored values

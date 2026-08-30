@@ -59,7 +59,7 @@ template<typename TraitsSupport> struct all_of_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var all_of
 //!

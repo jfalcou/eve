@@ -15,7 +15,7 @@ namespace eve
 {
 // DOC TODO
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //!   @var store_equivalent
 //!
@@ -32,7 +32,7 @@ namespace eve
 EVE_MAKE_CALLABLE(store_equivalent_, store_equivalent);
 
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //!   @concept has_store_equivalent
 //!

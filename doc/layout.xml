@@ -26,59 +26,59 @@
       <tab type="user" url="@ref eve"     title="EVE Namespace"/>
       <tab type="usergroup" visible="yes" title="Main API">
         <tab type="usergroup"  title="SIMD Abstractions">
-          <tab type="user" url="@ref simd_types"    title="SIMD Types"/>
-          <tab type="user" url="@ref conditional"   title="Conditional Expressions"/>
-          <tab type="user" url="@ref memory"        title="Memory Management"/>
-          <tab type="user" url="@ref simd_concepts" title="Concepts"/>
+          <tab type="user" url="@ref eve_simd_types"    title="SIMD Types"/>
+          <tab type="user" url="@ref eve_conditional"   title="Conditional Expressions"/>
+          <tab type="user" url="@ref eve_memory"        title="Memory Management"/>
+          <tab type="user" url="@ref eve_simd_concepts" title="Concepts"/>
         </tab>
         <tab type="usergroup" visible="yes" title="Core Functions">
-          <tab type="user" url="@ref core_arithmetic"     title="Arithmetic Operations"/>
-          <tab type="user" url="@ref core_fma_family"     title="FMA-like Operations"/>
-          <tab type="user" url="@ref core_bitops"         title="Bitwise Functions"/>
-          <tab type="user" url="@ref core_logical"        title="Logical Operations"/>
-          <tab type="user" url="@ref core_predicates"     title="Predicates"/>
-          <tab type="user" url="@ref core_conversions"    title="Conversions"/>
-          <tab type="user" url="@ref core_internal"       title="IEEE-754 Operations"/>
-          <tab type="user" url="@ref core_accuracy"       title="Accuracy Helpers"/>
-          <tab type="user" url="@ref core_decorators"     title="Options"/>
+          <tab type="user" url="@ref eve_core_arithmetic"     title="Arithmetic Operations"/>
+          <tab type="user" url="@ref eve_core_fma_family"     title="FMA-like Operations"/>
+          <tab type="user" url="@ref eve_core_bitops"         title="Bitwise Functions"/>
+          <tab type="user" url="@ref eve_core_logical"        title="Logical Operations"/>
+          <tab type="user" url="@ref eve_core_predicates"     title="Predicates"/>
+          <tab type="user" url="@ref eve_core_conversions"    title="Conversions"/>
+          <tab type="user" url="@ref eve_core_internal"       title="IEEE-754 Operations"/>
+          <tab type="user" url="@ref eve_core_accuracy"       title="Accuracy Helpers"/>
+          <tab type="user" url="@ref eve_core_decorators"     title="Options"/>
         </tab>
         <tab type="usergroup" visible="yes" title="Constants">
-          <tab type="user" url="@ref core_constants"      title="Generic Constants"/>
-          <tab type="user" url="@ref math_constants"      title="Math Constants"/>
+          <tab type="user" url="@ref eve_core_constants"      title="Generic Constants"/>
+          <tab type="user" url="@ref eve_math_constants"      title="Math Constants"/>
         </tab>
         <tab type="usergroup" visible="yes" title="Common Math Functions">
-          <tab type="user" url="@ref math_log"      title="Logarithm"/>
-          <tab type="user" url="@ref math_exp"      title="Exponential"/>
-          <tab type="user" url="@ref math_trig"     title="Trigonometric"/>
-          <tab type="user" url="@ref math_invtrig"  title="Inverse Trigonometric"/>
-          <tab type="user" url="@ref math_hyper"    title="Hyperbolic"/>
-          <tab type="user" url="@ref math_invhyper" title="Inverse Hyperbolic"/>
+          <tab type="user" url="@ref eve_math_log"      title="Logarithm"/>
+          <tab type="user" url="@ref eve_math_exp"      title="Exponential"/>
+          <tab type="user" url="@ref eve_math_trig"     title="Trigonometric"/>
+          <tab type="user" url="@ref eve_math_invtrig"  title="Inverse Trigonometric"/>
+          <tab type="user" url="@ref eve_math_hyper"    title="Hyperbolic"/>
+          <tab type="user" url="@ref eve_math_invhyper" title="Inverse Hyperbolic"/>
         </tab>
         <tab type="usergroup" visible="yes" title="Advanced Math Functions">
-          <tab type="user" url="@ref bessel"        title="Bessel functions"/>
-          <tab type="user" url="@ref combinatorial" title="Combinatorial functions"/>
-          <tab type="user" url="@ref elliptic"      title="Elliptic functions"/>
-          <tab type="user" url="@ref polynomial"    title="Polynomial functions"/>
-          <tab type="user" url="@ref special"       title="Special functions"/>
+          <tab type="user" url="@ref eve_bessel"        title="Bessel functions"/>
+          <tab type="user" url="@ref eve_combinatorial" title="Combinatorial functions"/>
+          <tab type="user" url="@ref eve_elliptic"      title="Elliptic functions"/>
+          <tab type="user" url="@ref eve_polynomial"    title="Polynomial functions"/>
+          <tab type="user" url="@ref eve_special"       title="Special functions"/>
         </tab>
         <tab type="usergroup" visible="yes" title="SIMD Specifics">
-          <tab type="user" url="@ref core_compress"       title="Compress functions"/>
-          <tab type="user" url="@ref core_simd"           title="SWAR Operations"/>
-          <tab type="user" url="@ref core_named_shuffles" title="Named Shuffles"/>
-          <tab type="user" url="@ref core_reduction"      title="Reductions"/>
+          <tab type="user" url="@ref eve_core_compress"       title="Compress functions"/>
+          <tab type="user" url="@ref eve_core_simd"           title="SWAR Operations"/>
+          <tab type="user" url="@ref eve_core_named_shuffles" title="Named Shuffles"/>
+          <tab type="user" url="@ref eve_core_reduction"      title="Reductions"/>
         </tab>
         <tab type="usergroup" visible="yes" title="Algorithms &amp; Views">
-          <tab type="user" url="@ref algos"         title="Algorithms"/>
-          <tab type="user" url="@ref views"         title="Views"/>
-          <tab type="user" url="@ref algo_traits"   title="Options"/>
-          <tab type="user" url="@ref algo_concepts" title="Concepts"/>
+          <tab type="user" url="@ref eve_algos"         title="Algorithms"/>
+          <tab type="user" url="@ref eve_views"         title="Views"/>
+          <tab type="user" url="@ref eve_algo_traits"   title="Options"/>
+          <tab type="user" url="@ref eve_algo_concepts" title="Concepts"/>
         </tab>
       </tab>
       <tab type="usergroup" visible="yes" title="Developer API">
-        <tab type="user" url="@ref traits"      title="Type Traits"/>
-        <tab type="user" url="@ref arch"        title="Architecture Helpers"/>
-        <tab type="user" url="@ref extensions"  title="Functions and Callables"/>
-        <tab type="user" url="@ref struct"      title="User-Defined Types Supports"/>
+        <tab type="user" url="@ref eve_traits"      title="Type Traits"/>
+        <tab type="user" url="@ref eve_arch"        title="Architecture Helpers"/>
+        <tab type="user" url="@ref eve_extensions"  title="Functions and Callables"/>
+        <tab type="user" url="@ref eve_struct"      title="User-Defined Types Supports"/>
       </tab>
       <tab type="concepts" visible="yes"      title="Concepts List"/>
     </tab>

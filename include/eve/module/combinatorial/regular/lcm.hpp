@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var lcm
 //!   @brief `elementwise_callable` object computing the least common multiple of the inputs.

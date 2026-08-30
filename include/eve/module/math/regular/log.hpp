@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_log
+//! @addtogroup eve_math_log
 //! @{
 //! @var log
 //! @brief `elementwise_callable` object computing the natural logarithm: \f$\log x\f$.

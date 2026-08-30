@@ -40,7 +40,7 @@ struct exp_pi_t : constant_callable<exp_pi_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var exp_pi
 //!   @brief Callable object computing the constant \f$e^\pi\f$.

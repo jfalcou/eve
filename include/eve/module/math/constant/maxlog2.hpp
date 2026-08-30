@@ -36,7 +36,7 @@ struct maxlog2_t : constant_callable<maxlog2_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var maxlog2
 //!   @brief Callable object computing the greatest positive value for which eve::exp2 is finite.

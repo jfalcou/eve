@@ -40,7 +40,7 @@ struct two_o_3_t : constant_callable<two_o_3_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var two_o_3
 //!   @brief Callable object computing the constant \f$2/3\f$.

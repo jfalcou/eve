@@ -30,7 +30,7 @@ struct true_t : constant_callable<true_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var true_
 //!   @brief Computes the logical true_ value.

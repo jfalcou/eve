@@ -40,7 +40,7 @@ struct rsqrt_e_t : constant_callable<rsqrt_e_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var rsqrt_e
 //!   @brief Callable object computing the constant \f$1/\sqrt{e}\f$.

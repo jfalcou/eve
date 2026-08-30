@@ -39,7 +39,7 @@ namespace _
 }
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!  @typedef value_type_t
   //!

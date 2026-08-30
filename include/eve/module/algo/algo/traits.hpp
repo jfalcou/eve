@@ -21,7 +21,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @struct traits
   //!
@@ -68,7 +68,7 @@ namespace eve::algo
   inline constexpr unroll_key_t unroll_key;
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var unroll
   //!
@@ -99,7 +99,7 @@ namespace eve::algo
   inline constexpr force_cardinal_key_t force_cardinal_key;
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var force_cardinal
   //!
@@ -119,7 +119,7 @@ namespace eve::algo
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var consider_types
   //!
@@ -137,7 +137,7 @@ namespace eve::algo
 
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!    @var force_type
   //!
@@ -157,7 +157,7 @@ namespace eve::algo
   inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!    @var common_with_types
   //!
@@ -177,7 +177,7 @@ namespace eve::algo
   inline constexpr auto common_with_types = (common_with_types_key = eve::common_type<Ts...>{});
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!    @var common_type
   //!
@@ -200,7 +200,7 @@ namespace eve::algo
   struct divisible_by_cardinal_tag {};
 
   //=============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!    @var divisible_by_cardinal
   //!
@@ -226,7 +226,7 @@ namespace eve::algo
   struct no_aligning_tag {};
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var no_aligning
   //!
@@ -240,7 +240,7 @@ namespace eve::algo
 
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var no_unrolling
   //!
@@ -252,7 +252,7 @@ namespace eve::algo
   struct expensive_callable_tag {};
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var expensive_callable
   //!
@@ -270,7 +270,7 @@ namespace eve::algo
   struct single_pass_tag {};
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var single_pass
   //!
@@ -290,7 +290,7 @@ namespace eve::algo
 
   struct fuse_operations_tag {};
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var fuse_operations
   //!
@@ -314,7 +314,7 @@ namespace eve::algo
   inline constexpr expect_smaller_range_key_t expect_smaller_range_key;
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var expect_smaller_range
   //!
@@ -332,7 +332,7 @@ namespace eve::algo
 
   struct allow_frequency_scaling_tag {};
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var allow_frequency_scaling
   //!
@@ -359,7 +359,7 @@ namespace eve::algo
   inline constexpr overflow_key_t overflow_key;
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var overflow
   //!
@@ -379,7 +379,7 @@ namespace eve::algo
   inline constexpr index_type_key_t index_type_key;
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var index_type
   //!
@@ -403,7 +403,7 @@ namespace eve::algo
   inline constexpr density_key_t density_key;
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var sparse_output
   //!
@@ -419,7 +419,7 @@ namespace eve::algo
   inline constexpr auto sparse_output = (density_key = eve::sparse);
 
   //============================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @{
   //!   @var dense_output
   //!
@@ -437,7 +437,7 @@ namespace eve::algo
   // getters -------------------
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns unrolling requested by traits (default 1)
   //! @tparam Traits
   //================================================================================================
@@ -448,7 +448,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns extra types to consider requested by traits as a kumi::tuple
   //! @tparam Traits
   //================================================================================================
@@ -456,7 +456,7 @@ namespace eve::algo
   using extra_types_to_consider = rbr::result::fetch_t<(consider_types_key | kumi::tuple{}), Traits>;
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns all types that should be considered for a given Traits and Range/Iterator
   //!        (as a kumi::tuple)
   //! @tparam Traits, RangeOrIterator
@@ -475,7 +475,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns cardinal which should be used.
   //! @tparam Traits, RangeOrIterator
   //================================================================================================
@@ -486,7 +486,7 @@ namespace eve::algo
                         >;
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns specified overflow
   //! @tparam Traits
   //================================================================================================
@@ -497,7 +497,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns expected_smaller_r if one is specified
   //! @tparam Traits
   //================================================================================================
@@ -523,7 +523,7 @@ namespace eve::algo
   }  // namespace _
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns specified if any, otherwise the default index type suggested by the library
   //! @tparam Traits
   //================================================================================================
@@ -533,7 +533,7 @@ namespace eve::algo
                            Traits>::type;
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @var default_to
   //! @brief taking user traits and default traits, returns new traits
   //!        where user take precedent over defaults
@@ -560,7 +560,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief removes a given key from traits.
   //================================================================================================
   template <typename K, typename Traits>
@@ -571,7 +571,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief removes a given key from traits if and only if the condition is true
   //================================================================================================
   template <bool cond, typename K, typename Traits>
@@ -582,7 +582,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @var has_type_overrides_v
   //! @brief (for zip traits) do the traits have any type overrides requested
   //================================================================================================
@@ -590,7 +590,7 @@ namespace eve::algo
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief returns eve::sparse or eve::dense (default is eve::dense)
   //! @tparam Traits
   //================================================================================================
@@ -603,7 +603,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @brief some traits should just be replaced with a combination of different traits.
   //! do that replacement
   //================================================================================================
@@ -617,7 +617,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @var default_simple_algo_traits
   //! @brief what we use by default for algorithms that do not execute too many instructions.
   //! At this point it is just unroll<4>
@@ -625,7 +625,7 @@ namespace eve::algo
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @var no_traits
   //! @brief empty algo traits.
   //================================================================================================
@@ -663,7 +663,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algo_traits
+  //! @addtogroup eve_algo_traits
   //! @var function_with_traits
   //!
   //! @brief A helper to declare algorithms like eve::algo. See how we do it in

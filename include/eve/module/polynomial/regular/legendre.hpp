@@ -48,7 +48,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var legendre
 //!   @brief Computes the value of the Legendre and associated

@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_ornot
 //!   @brief  `bit_callable` object Computing the bitwise ORNOT of its arguments.

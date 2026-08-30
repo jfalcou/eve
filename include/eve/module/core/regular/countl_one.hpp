@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var countl_one
 //!   @brief elementwise_callable object computing the number of consecutive bits set in a value starting from left

@@ -11,7 +11,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_compress
+//! @addtogroup eve_core_compress
 //! @{
 //!    @var compress_copy
 //!    @brief A function that copies selected elements from source to destination,

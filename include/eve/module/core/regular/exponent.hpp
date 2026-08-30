@@ -41,7 +41,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var exponent
 //!   @brief `elementwise_callable` object computing the integral IEEE exponent of the floating value.

@@ -26,7 +26,7 @@ struct hurwitz_t : callable<hurwitz_t, Options, pedantic_option, raw_option, fas
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var hurwitz
 //!   @brief `elementwise_callable` object computing the Hurwitz function i.e.

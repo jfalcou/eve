@@ -36,7 +36,7 @@ namespace eve::_
   };
 
   //================================================================================================
-  //! @addtogroup core_reduction
+  //! @addtogroup eve_core_reduction
   //! @{
   //!   @var sum
   //!   @brief Computes the horizontal sum of the lanes values of an

@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup combinatorial Combinatorial functions
+//! @defgroup eve_combinatorial Combinatorial functions
 //! @brief Combinatorial functions
 //!
 //! This module provides implementation for  scalar and SIMD versions of combinatorial functions

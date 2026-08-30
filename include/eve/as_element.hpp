@@ -15,7 +15,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //! @struct as_element
   //! @brief Lightweight type-wrapper over element type
