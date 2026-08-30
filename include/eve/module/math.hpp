@@ -58,7 +58,7 @@
 //!
 //!   * for example eve::cos[eve::rad],  eve::cos[eve::deg],  eve::cos[eve::radpi]. (eve::cos is equivalent to eve::cos[eve::rad])
 //!
-//!   * The main avantage of using `eve::cos[eve::radpi](x)` instead of `eve::cos(eve::pi(as(x)* x))`
+//!   * The main advantage of using `eve::cos[eve::radpi](x)` instead of `eve::cos(eve::pi(as(x)* x))`
 //!     (as well as the other radpi decorated functions) is that
 //!     if `x` is exactly representable the multiplication by the floating \f$\pi\f$ multiplier is not.
 //!

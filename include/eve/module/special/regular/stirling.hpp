@@ -61,7 +61,7 @@ namespace eve
 //!     1. The value of an approximation of the \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12}
 //!        e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$, where \f$P\f$ is a polynomial,
 //!        is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Stirling approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation)

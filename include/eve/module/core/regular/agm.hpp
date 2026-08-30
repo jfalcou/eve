@@ -43,7 +43,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var agm
-//!   @brief `elementwise_callable` object computing the the arithmetic-geometric mean.
+//!   @brief `elementwise_callable` object computing the arithmetic-geometric mean.
 //!
 //!   @groupheader{Header file}
 //!
@@ -75,7 +75,7 @@ namespace eve
 //!
 //!    1. The value of the arithmetic-geometric mean is returned. No overflow can occur.
 //!      The two parameters must share the same sign.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Arithmetic-GeometricMean.html)

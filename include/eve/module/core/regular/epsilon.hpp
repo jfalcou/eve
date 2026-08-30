@@ -73,7 +73,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The distance of abs(x) to the next representable element in the type of `x`. (Kahan definition)
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The distance of abs(x) to the previous representable element in the type of `x`. (Goldberg definition)
 //!      4. The distance of abs(x) to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
 //!

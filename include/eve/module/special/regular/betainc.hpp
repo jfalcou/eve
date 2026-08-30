@@ -52,7 +52,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
 //!      constexpr auto betainc(floating_value auto s,
 //!                             floating_value auto x, floating_value auto y)          noexcept; // 1
 //!
-//!      // semantic modifyers
+//!      // semantic modifiers
 //!      constexpr auto betainc[raw](/*any previous overload*/)                        noexcept; // 2
 //!      constexpr auto betainc[fast](/*any previous overload*/)                       noexcept; // 2
 //!
@@ -71,7 +71,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
 //!
 //!     1. The value of the incomplete betainc function is returned.
 //!     2. speedier computations at accuracy price,
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Incomplete Beta Function](https://dlmf.nist.gov/8.17)

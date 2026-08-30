@@ -86,9 +86,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!     1. the miniimal element is returned. If one of the elements is `NaN` the result is system dependant.
+//!     1. the miniimal element is returned. If one of the elements is `NaN` the result is system dependent.
 //!     2. equivalent to the call on the elements of the tuple.
-//!     3. [The operation is performed conditionnaly](@ref conditional)
+//!     3. [The operation is performed conditionally](@ref conditional)
 //!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
 //!       `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls
 //!       as if this scheme is recursively used.

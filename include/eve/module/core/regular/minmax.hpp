@@ -94,7 +94,7 @@ namespace eve
 //!
 //!      1. A `kumi::tuple` containing the value of the minimum and the maximum of the arguments.
 //!      2. Equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!      4. Equivalent to `{min[o], max[o]}` where `o` is one of these two options.
 //!
 //!   @note

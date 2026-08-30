@@ -74,15 +74,15 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!
 //!     1. value containing the [elementwise](@ref glossary_elementwise)
 //!        square of `x` if it is representable in this type.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3.  Contrary to the  non-decorated case, it guarantees
 //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
 //!      specifically, for any integer value `x`, the call evaluates to:
 //!      [`valmax(as(x))`](@ref valmax) as soon as `abs[saturated](x)`
 //!      is greater than `sqrtvalmax(as(x))`.
-//!     4. The square is done in a 'round toward \f$-\infty\f$ mode. The product is guaranted
+//!     4. The square is done in a 'round toward \f$-\infty\f$ mode. The product is guaranteed
 //!       to be less or equal to the exact one.
-//!     5. The square is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
+//!     5. The square is done in a 'round toward \f$\infty\f$ mode. The product is guaranteed
 //!       to be greater or equal to the exact one.
 //!     6. compute the result in modular arithmetic. the parameter must be flint positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.

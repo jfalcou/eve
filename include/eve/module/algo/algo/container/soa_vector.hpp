@@ -62,15 +62,15 @@ namespace eve::algo
 
     // They all satisfy eve::algo::relaxed_iterator but not std::iterator
 
-    //! Iterator over the the stored Type
+    //! Iterator over the stored Type
     using iterator               = decltype(views::convert(storage_type{}.data() , as<value_type>{}));
-    //! Const iterator over the the stored Type
+    //! Const iterator over the stored Type
     using const_iterator         = decltype(views::convert(std::declval<storage_type const>().data(), as<value_type>{}));
 
-    //! Iterator over the the stored Type using aligned data
+    //! Iterator over the stored Type using aligned data
     using iterator_aligned       = decltype(views::convert(storage_type{}.data_aligned(), as<value_type>{}));
 
-    //! Const iterator over the the stored Type using aligned data
+    //! Const iterator over the stored Type using aligned data
     using const_iterator_aligned = decltype(views::convert(std::declval<storage_type const>().data_aligned(), as<value_type>{}));
 
     //! Pointer to a eve::algo::views::zip_iterator over fields

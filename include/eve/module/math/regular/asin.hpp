@@ -80,11 +80,11 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!    2. very fast  around 1.0e-5 accracy.
+//!    2. very fast  around 1.0e-5 accuracy.
 //!    3. Same as 2.
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
-//!    6. [The operation is performed conditionnaly](@ref conditional).
+//!    6. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)

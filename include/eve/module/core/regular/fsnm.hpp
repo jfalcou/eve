@@ -75,7 +75,7 @@ namespace eve
 //!    1. The value of `-x-y*z` as if calculated to infinite precision
 //!       and rounded once is returned,  but only if the hardware is in capacity
 //!       to do it at reasonable cost.
-//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    2. [The operation is performed conditionally](@ref conditional)
 //!    3. `pedantic` option always ensures the full compliance to fsnm properties. This can be very expensive if the system
 //!       has no hardware capability.
 //!    4. The operation is performed as if the parameters where promoted to the common type of the three parameters.

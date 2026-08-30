@@ -61,7 +61,7 @@ namespace eve
 //!    **Return value**
 //!      1. The value of  number of bits needed to store the value `x`,
 //!        i.e. \f$1+\lfloor\log2(x)\rfloor\f$ is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_width.cpp}

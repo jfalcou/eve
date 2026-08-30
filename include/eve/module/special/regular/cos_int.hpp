@@ -61,7 +61,7 @@ namespace eve
 //!
 //!     1. The value of the cosine integral
 //!   \f$ \mathbf{Ci}(x) = \displaystyle -\int_x^\infty \frac{\cos t}{t}\;\mbox{d}t\f$, is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld:Cosine Integral ](https://mathworld.wolfram.com/CosineIntegral.html)

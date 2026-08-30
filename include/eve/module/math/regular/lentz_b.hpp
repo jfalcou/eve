@@ -79,7 +79,7 @@ namespace eve
 //!     The value of the continued fraction is returned.
 //!     \f$\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\frac{a_3}{b_3+\cdots\vphantom{\frac{1}{1}} }}}\f$
 //!
-//!     Note that the the first a value (a0) generated is not used here.
+//!     Note that the first a value (a0) generated is not used here.
 //!
 //!   @note the implementation is largely inspired by the boost/math/fraction one, with less requirements on the invocable.
 //!         Peculiarly lambda functions can be used.

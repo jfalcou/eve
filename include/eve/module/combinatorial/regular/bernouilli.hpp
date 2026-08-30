@@ -27,8 +27,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
-//!   @var bernouilli
-//!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
+//!   @var bernoulli
+//!   @brief  `elementwise_callable` object computing the nth Bernoulli number \f$b_n\f$ as a double.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,11 +43,11 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      template<unsigned_value  N, floating_value T>
-//!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
+//!      constexpr as_wide_as_t<T,N> bernoulli(unsigned_value auto n)             noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
-//!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
+//!      constexpr auto bernoulli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
+//!      constexpr auto bernoulli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -61,15 +61,15 @@ namespace eve
 //!       The result's element type is `double` to avoid overflow as possible and
 //!       its cardinal is the same as `n`.
 //!
-//!       1. The value of the nth Bernouilli number is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       1. The value of the nth Bernoulli number is returned.
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
 //!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/bernouilli.cpp}
+//!  @godbolt{doc/combinatorial/bernoulli.cpp}
 //================================================================================================
   inline constexpr auto bernouilli = functor<bernouilli_t>;
 //================================================================================================

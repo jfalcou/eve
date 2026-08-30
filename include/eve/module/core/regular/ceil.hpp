@@ -75,7 +75,7 @@ namespace eve
 //!     1. The smallest integer not less than `x`.
 //!        The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
 //!        `FE_TOWARDZERO`. This function object implements the `FE_UPWARD` version.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. `almost` allows a fuzzy interpretation of ceil associated to a scalar tolerance.
 //!         - with an integral value `tol`: computes the ceil of the previous nth
 //!           representable value in the `x` type.

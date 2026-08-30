@@ -69,7 +69,7 @@ namespace eve
 //!
 //!     1. returns true if and only if `x` is [normal](https://mathworld.wolfram.com/Floating-PointNormalNumber.html)
 //!     2. returns `x != 0`.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_normal.cpp}

@@ -13,7 +13,7 @@
 namespace eve::_
 {
 // Logical-wide conversions.
-// For interal utils for RVV, not expected to be used outsize of this file.
+// For internal utils for RVV, not expected to be used outside of this file.
 // Needed as for casting between logical-logical with different N,
 // as RISC-V needs to have an intermediate vector register type.
 // These functions cast logical to wide or wide to logical.

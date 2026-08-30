@@ -46,9 +46,9 @@ template<typename TraitsSupport> struct max_value_ : TraitsSupport
 //!   @brief SIMD algorithm that returns maximum value in the range.
 //!
 //!   The standard only has `_element` versions of `min/max` algorithms. However, in SIMD
-//!   finding the value is much faster then also finding the position - hense this algorithm.
+//!   finding the value is much faster then also finding the position - hence this algorithm.
 //!
-//!   @note for equivalent elements we return the second amoung equal.
+//!   @note for equivalent elements we return the second among equal.
 //!   @note we assume that `eve::is_less` defined for your type is total order.
 //!        (this comes up when switching `max` with `min`)
 //!

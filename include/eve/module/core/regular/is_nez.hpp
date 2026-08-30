@@ -63,7 +63,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. `is_nez(x)` is semantically equivalent `x != 0`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_nez.cpp}

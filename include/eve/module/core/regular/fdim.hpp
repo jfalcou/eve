@@ -64,7 +64,7 @@ namespace eve
 //!          * if `x>y`,   `x-y` is returned,
 //!          * if `x<=y`,  `+0` is returned,
 //!          * otherwise a `Nan` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/fdim)

@@ -16,7 +16,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of modifiesd cylindrical bessel
-// fnctions of the first kind.                  .
+// functions of the first kind.                  .
 // They are not meant to be called directly,  as their validities depends on
 // n and x ranges values which are not tested on entry.
 // The inspiration is from boost math

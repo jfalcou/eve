@@ -71,7 +71,7 @@ namespace eve
 //!
 //!     1. Returns the [elementwise](@ref glossary_elementwise) \f$(1+x)^y\f$, with good accuracy,
 //!        even when `x` is  small.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2. [The operation is performed conditionally](@ref conditional)
 //!     3. faster but less accurate call.
 //!
 //!  @groupheader{Example}

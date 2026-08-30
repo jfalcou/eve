@@ -67,11 +67,11 @@ namespace eve
 //!      1. Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
 //!          - If x is [positive](@ref eve::is_positive), 1 is returned.
 //!          - If x is [negative](@ref eve::is_negative), -1 is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. same as 1. but returns NaN for NaN input
 //!
 //!      @note `is_negative` and `is_positive` only look at the sign bit and a NaN has
-//!        generally unpredicable sign bit.
+//!        generally unpredictable sign bit.
 //!
 //!
 //!  @groupheader{Example}

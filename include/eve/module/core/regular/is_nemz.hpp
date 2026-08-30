@@ -64,7 +64,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. `is_nemz(x)` is semantically equivalent to `is_nan(x) || !is_eqmz(x)`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_nemz.cpp}

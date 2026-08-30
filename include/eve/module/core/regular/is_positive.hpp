@@ -64,7 +64,7 @@ namespace eve
 //!      1. this function coincides with `is_gtz` on [integral values](@ref eve::value),
 //!         but The call `is_positive(x)` [elementwise](@ref glossary_elementwise) returns true
 //!         if and only if the bit of sign (most significant bit) is not set.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note   this function coincides with `is_gez` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false

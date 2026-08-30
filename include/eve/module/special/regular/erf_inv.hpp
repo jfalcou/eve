@@ -62,7 +62,7 @@ namespace eve
 //!
 //!     1. The value `y` such that `erf(y)==x` is returned. For `x` outside of \f$[-1,1]\f$, the result
 //!        is `NaN`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Erf](https://mathworld.wolfram.com/InverseErf.html)

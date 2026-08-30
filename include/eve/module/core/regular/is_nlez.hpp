@@ -61,8 +61,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. `is_nlez(x)` is semantically equivalen to `!(x < 0)`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     1. `is_nlez(x)` is semantically equivalent to `!(x < 0)`.
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note  This is not equivalent to `(x >=   0)` for floating values because of `NaN` properties.
 //!

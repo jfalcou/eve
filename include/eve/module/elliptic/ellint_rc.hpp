@@ -59,7 +59,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating valuess](@ref eve::floating_value). `x` and `y` must be
+//!     * `x`, `y`: [floating values](@ref eve::floating_value). `x` and `y` must be
 //!                 strictly positive and `y` non zero or the result is `NaN`.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
@@ -69,7 +69,7 @@ namespace eve
 //!     1. the value of the Carlson degenerate elliptic integral:
 //!       \f$\mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
 //!       \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)

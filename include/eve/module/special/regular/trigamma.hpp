@@ -58,7 +58,7 @@ struct trigamma_t : elementwise_callable<trigamma_t, Options>
 //!   **Return value**
 //!
 //!     1. The value of the Trigamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)

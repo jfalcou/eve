@@ -70,8 +70,8 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The value of the  rising_factorial is returned( `a` and `x` must be strictly positive).
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
+//!     2. [The operation is performed conditionally](@ref conditional).
+//!     3. The `raw` option  uses the crude formula with all its limitations and inaccuracies and return a Nan if `a` and `a+x` are
 //!        not both positive.
 //!     4. The `pedantic` option  uses reflection tricks and computes
 //!        the function for all real `a` and `x`, returning nan if the result is really undefined.

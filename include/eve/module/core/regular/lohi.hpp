@@ -35,7 +35,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var lohi
-//!   @brief `elementwise_callable` computing the the lohi pair of values.
+//!   @brief `elementwise_callable` computing the lohi pair of values.
 //!
 //!   @groupheader{Header file}
 //!

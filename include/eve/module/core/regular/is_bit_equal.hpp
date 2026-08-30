@@ -76,7 +76,7 @@ namespace eve
 //!
 //!      1. Returns the logical value containing the [elementwise](@ref glossary_elementwise) bit equality
 //!        test result between `x` and `y`.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_bit_equal.cpp}

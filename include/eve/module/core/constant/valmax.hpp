@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var valmax
-//!   @brief Computes the  the greatest representable value.
+//!   @brief Computes the greatest representable value.
 //!
 //!   **Defined in Header**
 //!

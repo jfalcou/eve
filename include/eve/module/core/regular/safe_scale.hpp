@@ -72,7 +72,7 @@ namespace eve
 //!     1. provide a value s such that |x|/s, is much above the underflow threshold and much
 //!        below the overflow threshold (so that, for example, we can safely square it); (return maxflint for 0);
 //!        moreover it is an integer power of 2 (in order to avoid rounding errors when multiplying or dividing by it).
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. same as 1. but return 1 for 0
 //!
 //!  @groupheader{External references}

@@ -123,7 +123,7 @@ namespace eve
 //!         best unbiased estimator of the variance (population variance).
 //!
 //!  @note The Welford algorithm does not provides as much option as the [`variance`](@ref variance) function, but is a quite stable algorithm
-//!        that have the advantage to allow spliting the computation of the variance in
+//!        that have the advantage to allow splitting the computation of the variance in
 //!        multiple calls.  For instance: the call with two tuples:<br/>
 //!        &nbsp;   `wv = welford_corariance(kumi::cat(xs, ys))`<br/>
 //!        is equivalent to the sequence:<br/>

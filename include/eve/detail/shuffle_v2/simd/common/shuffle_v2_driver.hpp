@@ -14,7 +14,7 @@ namespace eve::_
 {
 
 // We'd like to avoid this because it leads to infinite recursions
-// in case of an unforseen problems but in certain situations
+// in case of an unforeseen problems but in certain situations
 // it proved very difficult.
 template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto shuffle_v2_driver_restart(NativeSelector     selector,
@@ -70,7 +70,7 @@ shuffle_emulated(pattern_t<I...>, fixed<G>, kumi::tuple<Ts...> xs)
 
 // shuffle_v2_combined_l-------
 
-// Takes multiple shuffle resuts and retuns a total level for the operation
+// Takes multiple shuffle results and returns a total level for the operation
 
 template<typename Tuple>
 constexpr auto

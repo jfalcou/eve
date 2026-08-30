@@ -42,7 +42,7 @@ namespace eve
   //!   #include <eve/module/core.hpp>
   //!   @endcode
   //!
-  //!   A convinience wrapper around if_else.
+  //!   A convenience wrapper around if_else.
   //!
   //!   @groupheader{Callable Signatures}
   //!

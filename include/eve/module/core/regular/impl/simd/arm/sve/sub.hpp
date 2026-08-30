@@ -33,7 +33,7 @@ namespace eve::_
       {
         return sub[opts][mask].retarget(cpu_{}, a, b);
       }
-      //  If not, we can mask if there is no alterative value
+      //  If not, we can mask if there is no alternative value
       else  if  constexpr( !C::has_alternative )
       {
         auto m = expand_mask(mask, as{a});

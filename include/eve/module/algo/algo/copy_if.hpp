@@ -101,7 +101,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!
 //!   The main difference from std::copy_if is that it accepts output range and not
 //!   an output iterator. If the output doesn't have enough space, algorithm will fill
-//!   all of the avaliable output and then stop.
+//!   all of the available output and then stop.
 //!   The interface difference allows eve to store more then just selected elements
 //!   which is important for efficiency.
 //!
@@ -133,7 +133,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!
 //!    * in - relaxed_range input
 //!    * out - relaxed_range output
-//!    * p - simd prediocate for elmenets of `in`
+//!    * p - simd prediocate for elements of `in`
 //!
 //!   ** Return value **
 //!

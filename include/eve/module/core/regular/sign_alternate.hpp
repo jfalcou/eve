@@ -70,8 +70,8 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. [elementwise](@ref glossary_elementwise) \f$(-1)^\tilde n\f$ is returned,  where \f$\tilde n\f$ is the truncation of `n`.
-//!      2. The chosen rounding option is applyied to `n` before computation, instead of truncation.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      2. The chosen rounding option is applied to `n` before computation, instead of truncation.
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sign_alternate.cpp}

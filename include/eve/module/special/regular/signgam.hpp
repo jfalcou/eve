@@ -58,7 +58,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The value of `eve::sign(eve::tgamma(x))` is returned (without computing `eve::tgamma(x)`);
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: tgamma](https://en.cppreference.com/w/cpp/numeric/math/tgamma)

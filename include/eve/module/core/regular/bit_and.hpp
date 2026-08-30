@@ -76,7 +76,7 @@ namespace eve
 //!
 //!     1. The value of the bitwise AND of its arguments converted to the common `bit_value` of the arguments
 //!     2. equivalent to the call on the elements of the tuple.
-//!     3. [The operation is performed conditionnaly](@ref conditional). This is only supported when all parameters
+//!     3. [The operation is performed conditionally](@ref conditional). This is only supported when all parameters
 //!         share the same number of lanes or are scalars.
 //!
 //!    @note

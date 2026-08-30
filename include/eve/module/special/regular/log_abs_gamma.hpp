@@ -64,7 +64,7 @@ namespace eve
 //!     1. the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
 //!     2. faster computations at accuracy price based on  "An accurate approximation formula for
 //!         gamma function" of Zhen-Hang Yang and Jing-Feng Tian.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html

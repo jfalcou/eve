@@ -23,7 +23,7 @@
 //!
 //! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
-//! These functions allows performing some basic arithmetics operations with greater accuracy
+//! These functions allows performing some basic arithmetic operations with greater accuracy
 //! even when a truly upgraded type is not available.
 //!
 //! [diff_of_prod](@ref eve::diff_of_prod), [safe_scale](@ref eve::safe_scale), [sufp](@ref eve::sufp),
@@ -39,7 +39,7 @@
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! These functions allows performing some basic arithmetics operations and some less basic.
+//! These functions allows performing some basic arithmetic operations and some less basic.
 //!
 //! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmin](@ref eve::absmin),
 //! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
@@ -65,7 +65,7 @@
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
-//! These functions are low level and acting on the bit or byte representation of the involved datas independantly of their type.
+//! These functions are low level and acting on the bit or byte representation of the involved data independently of their type.
 //!
 //! [bit_and](@ref eve::bit_and), [bit_andnot](@ref eve::bit_andnot), [bit_cast](@ref eve::bit_cast), [bit_ceil](@ref eve::bit_ceil),
 //! [bit_flip](@ref eve::bit_flip),[bit_floor](@ref eve::bit_floor),  [bit_mask](@ref eve::bit_mask),
@@ -94,7 +94,7 @@
 //!
 //! @note For mathematic constants whose value is (perhaps) not exactly represented in the floating point type used,
 //!       the regular call provides the value rounded to nearest even, but the semantic modifiyers `upper` and
-//!       `lower` can be used to provide values guaranted to be greater or equal (respectively less or equal) to
+//!       `lower` can be used to provide values guaranteed to be greater or equal (respectively less or equal) to
 //!       the real mathematical value. For instance the regular nearest values of \f$\pi\f$ for float and double are
 //!       greater (resp. less) than the mathematical value.
 //!
@@ -109,10 +109,10 @@
 //!   * general behaviour
 //!       - `raw`: indicates that the operation is performed minimally to gain speed generally at the expanse of accuracy
 //!          or/and proper treatment of corner cases values.
-//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed impovement against the regular call.
+//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed improvement against the regular call.
 //!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
 //!       - `pedantic` : indicates that the operation will aim to follow existing **C++** standard.
-//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranted less or
+//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranteed less or
 //!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
 //!
 //!   * integer roundings :
@@ -149,7 +149,7 @@
 //!
 //!       - `widen`: the result is computed in the upgraded type corresponding to the elements parameters. Presently, this has no effect
 //!          on 64 bits types as the upgrade type is the type itself.
-//!          If the widen decorator is used,  it is the responsability of the user to use [convert](@ref eve::convert)
+//!          If the widen decorator is used,  it is the responsibility of the user to use [convert](@ref eve::convert)
 //!          if it is  needed to get back to the input type sizes.
 //!
 //!    * Fuzzy
@@ -189,7 +189,7 @@
 //! Take care that can be very expensive if the proper hardware capabilities are not present.
 //!
 //! By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand
-//! and if there is no possibility of  maping the std implementation
+//! and if there is no possibility of  mapping the std implementation
 //!
 //! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnma](@ref eve::fnma),
 //! [fnms](@ref eve::fnms)[fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).

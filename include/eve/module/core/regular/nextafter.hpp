@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var nextafter
-//!   @brief `elementwise_callable` object computing the next representable element  element in
+//!   @brief `elementwise_callable` object computing the next representable element in
 //!    the second parameter direction.
 //!
 //!   @groupheader{Header file}
@@ -67,7 +67,7 @@ namespace eve
 //!
 //!      1. the next representable value after  `x` in the `y` direction is returned.
 //!         If `y == x` returns `x`.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!      3. Provides a version of `nextafter` for which floating plus zero and minus zero are distinct.
 //!
 //!  @groupheader{Example}

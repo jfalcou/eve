@@ -108,17 +108,17 @@ namespace eve
 //!      1. If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x/\prod_1^n x_i\f$
 //!      is returned.
 //!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!      4. If `z` denotes the prduct of the `xs`, the call `div[o](x, xs...)` produces:
 //!
 //!           * `eve::trunc(div(x, z))`, if `d` is `toward_zero`.
 //!           * `eve::floor(div(x, z))`, if `d` is `downward`.
 //!           * `eve::ceil(div(x,  z))`, if `d` is `upward`.
 //!           * `eve::nearest(div(x, z))`, if `d` is `to_nearest`.
-//!      5. The floating division is computed in a rounding mode such that the result is guaranted
+//!      5. The floating division is computed in a rounding mode such that the result is guaranteed
 //!       to be less or equal to the exact one (except for Nans).Combined with `strict` the option
 //!       ensures  generally faster computation, but strict inequality.
-//!      6. The floating division is computed in a rounding mode such that the result is guaranted
+//!      6. The floating division is computed in a rounding mode such that the result is guaranteed
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!      7. computes the saturated division of `x` by  `y`.

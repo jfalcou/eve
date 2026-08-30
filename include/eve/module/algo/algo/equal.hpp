@@ -51,7 +51,7 @@ template<typename TraitsSupport> struct equal_ : TraitsSupport
 //!
 //!   @brief a SIMD version of `std::equal`
 //!
-//!   Tests wether two ranges are equal (accepts anything that zips together as a range of 2 things)
+//!   Tests whether two ranges are equal (accepts anything that zips together as a range of 2 things)
 //!   By default aligns and unrolls 4 times.
 //!
 //!   **Alternative Header**
@@ -96,11 +96,11 @@ template<typename TraitsSupport> struct equal_ : TraitsSupport
 //!
 //!    * `rng`: zipped pair of 2 ranges to compare
 //!    * 'r1`, `r2` - two separate components that `zip` to a `zipped_range_pair`
-//!    * `p` - binary predicate for equivelence testing.
+//!    * `p` - binary predicate for equivalence testing.
 //!
 //!   **Return value**
 //!
-//!   bool wether any values matched the predicate
+//!   bool whether any values matched the predicate
 //!
 //!   @groupheader{Example}
 //!

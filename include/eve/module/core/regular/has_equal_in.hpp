@@ -45,7 +45,7 @@ namespace eve
   //!    Given two simd_values: `x`, `match_against` returns a logical mask.
   //!    The res[i] == eve::any(x[i] == match_against);
   //!
-  //!    Optional last parameter allows to ovewrite the equality from `eve::is_equal`
+  //!    Optional last parameter allows to overwrite the equality from `eve::is_equal`
   //!    to an arbitrary simd binary predicate.
   //!
   //!    We took the idea for the operation from:

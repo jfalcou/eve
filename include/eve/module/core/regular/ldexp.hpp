@@ -67,7 +67,7 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, raw_option, pedan
 //!    **Return value**
 //!
 //!     1. The value of \f$\textstyle x 2^n\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. Takes extra care to handling limit values.
 //!         * If `x` is \f$\pm0\f$, it is returned, unmodified.
 //!         * If `x` is \f$\pm\infty\f$, it is returned, unmodified.

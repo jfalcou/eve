@@ -79,7 +79,7 @@ namespace eve
 //!
 //!    1. The geometric mean of the inputs is returned
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!    4. uses kahan like compensated algorithm for better accuracy.
 //!
 //!

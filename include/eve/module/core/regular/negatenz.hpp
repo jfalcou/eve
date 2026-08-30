@@ -62,7 +62,7 @@ namespace eve
 //!
 //!      1. The [elementwise](@ref glossary_elementwise) product of the first parameter
 //!         by the never zero sign of the second is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/negatenz.cpp}

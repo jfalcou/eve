@@ -62,7 +62,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1.The value of the polynomial at `x` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Abel Polynomials](https://en.wikipedia.org/wiki/Abel_polynomials)

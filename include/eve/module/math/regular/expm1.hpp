@@ -65,7 +65,7 @@ namespace eve
 //!        * If the element is \f$-\infty\f$, \f$-1\f$ is returned
 //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!        * If the element is a `NaN`, `NaN` is returned
-//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/expm1.cpp}

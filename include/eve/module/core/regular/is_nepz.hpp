@@ -64,7 +64,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. `is_nepz(x)` is semantically equivalent to `!is_eqpz(x)`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_nepz.cpp}

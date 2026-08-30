@@ -48,7 +48,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw
 //!      // Regular overload
 //!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
 //!
-//!      // Semantic modifyers
+//!      // Semantic modifiers
 //!      constexpr auto digamma[raw](floating_value auto x)                     noexcept; // 2
 //!      constexpr auto digamma[fast](floating_value auto x)                    noexcept; // 2
 //!
@@ -69,7 +69,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw
 //!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!     2. speedier computations at  accuracy price inspired from pmineiro
 //!        library but also ok for negative values.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)

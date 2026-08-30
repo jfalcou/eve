@@ -710,7 +710,7 @@ namespace eve
   //! @param  c   eve::conditional_expr to transform
   //! @param  op  Unary callable object to apply
   //! @return A eve::conditional_expr of the same kind that `c` which alternative value, if
-  //!         any is repalced by `op(c.alternative)`
+  //!         any is replaced by `op(c.alternative)`
   //================================================================================================
   template <eve::relative_conditional_expr C>
   auto map_alternative(C c, auto op)
@@ -730,7 +730,7 @@ namespace eve
   //! @param  c   eve::conditional_expr to transform
   //! @param  tgt  [Target type](@ref eve::as)
   //! @return A eve::conditional_expr of the same kind that `c` which alternative value, if
-  //!         any is repalced by the bitcast of `c.alternative` to `Tgt`
+  //!         any is replaced by the bitcast of `c.alternative` to `Tgt`
   //================================================================================================
   template <eve::relative_conditional_expr C, typename Tgt>
   auto bit_cast_alternative(C c, as<Tgt> tgt)

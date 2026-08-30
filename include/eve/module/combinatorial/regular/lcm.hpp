@@ -65,7 +65,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. Returns the least common multiple of |p| and |n|.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor)

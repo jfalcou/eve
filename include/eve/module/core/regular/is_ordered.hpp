@@ -64,7 +64,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The call `eve::is_ordered(x,y)`  is semantically  equivalent to `is_not_nan(x) && is_not_nan(y)`:
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_ordered.cpp}

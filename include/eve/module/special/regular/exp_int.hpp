@@ -73,7 +73,7 @@ namespace eve
 //!     1. The value of the exponential integral
 //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$, is returned.
 //!     2. speedier computations at  accuracy price.
-//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld:Exponential Integral ](https://mathworld.wolfram.com/ExponentialIntegral.html)

@@ -65,7 +65,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The value of the double factorial of `n` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Double Factorial](https://mathworld.wolfram.com/DoubleFactorial.html)

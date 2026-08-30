@@ -59,7 +59,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. Returns the [elementwise](@ref glossary_elementwise) the  input divided by 180.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/div_180.cpp}

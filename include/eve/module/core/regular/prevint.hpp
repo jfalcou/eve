@@ -72,7 +72,7 @@ namespace eve
 //!    **Return value**
 //!
 //!       1. The greatest representable integer value less than `x` is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional)
+//!       2. [The operation is performed conditionally](@ref conditional)
 //!       3. same as 1. but inf returns nan.
 //!       4. ensures that the input is never less than the result of the call.
 //!          (It can be equal for minimal representable value)

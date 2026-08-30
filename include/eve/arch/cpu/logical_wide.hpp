@@ -58,7 +58,7 @@ namespace eve
   //! **Required header:** `#include <eve/logical.hpp>`
   //!
   //! This specialization of eve::logical is an architecture-agnostic representation of a low-level
-  //! SIMD register mask and provides standardized API to access informations, compute values and
+  //! SIMD register mask and provides standardized API to access information, compute values and
   //! manipulate such register.
   //!
   //! @tparam Type      Type of value to store in the register

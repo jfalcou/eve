@@ -147,7 +147,7 @@ copy_by_countr_zeroes_no_limits(I f, top_bits<L> m, O o) -> O
       int last_set = std::countr_zero(im);
       f += last_set / top_bits<L>::bits_per_element;
 
-      // 2 shifts avoid shift by full lengh
+      // 2 shifts avoid shift by full length
       im >>= last_set;
       im >>= top_bits<L>::bits_per_element;
       eve::write(eve::read(f++), o++);

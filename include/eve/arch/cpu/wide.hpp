@@ -81,7 +81,7 @@ namespace eve
   //! **Required header:** `#include <eve/wide.hpp>`
   //!
   //! eve::wide is an architecture-agnostic representation of a SIMD register and provides
-  //! standardized API to access informations, compute values and manipulate such register.
+  //! standardized API to access information, compute values and manipulate such register.
   //!
   //! @tparam Type      Type of value to store in the register
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
@@ -478,7 +478,7 @@ namespace eve
     }
 
     //! @brief Performs a bitwise and between all lanes of two wide instances.
-    //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
+    //! Do not participate to overload resolution if both wide does not have the same `sizeof`
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)

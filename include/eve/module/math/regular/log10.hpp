@@ -65,7 +65,7 @@ namespace eve
 //!        * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!        * If the element is less than 0, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)

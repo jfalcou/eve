@@ -69,7 +69,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The fractional part of `x` with the same sign as `x`: `x-trunc(x)`, but keeping the zero sign.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. just `x-trunc(x)`.
 //!     4. zeros and not finite values are all handled properly.
 //!     5. `almost` allows a fuzzy interpretation of `frac` using internally the `almost` version of `trunc`.

@@ -63,7 +63,7 @@ namespace eve
 //!
 //!     1. returns [elementwise](@ref glossary_elementwise) true if and only
 //!        if the element value is a floating zero with sign bit set (`mzero`).
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @note This function is not defined for integral typed entries to avoid misuse.
 //!

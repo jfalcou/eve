@@ -61,13 +61,13 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. Returns the remainder after division division of `x` by `y` and mimick
+//!     1. Returns the remainder after division of `x` by `y` and mimic
 //!        the behaviour of std::fmod. In particular:
 //!          * If `x` is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!          * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!          * If `y` is \f$\pm0\f$, `NaN` is returned.
 //!          * If `y` is \f$\pm\inf\f$ and `x` is finite, `x`is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/fmod)

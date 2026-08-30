@@ -16,7 +16,7 @@
 #endif
 
 //==================================================================================================
-// Additionnal ISA support
+// Additional ISA support
 namespace eve
 {
   inline constexpr bool supports_fma3               = spy::supports::fma_;

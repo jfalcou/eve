@@ -68,7 +68,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. The distance of x to the next representable element in the type of `x` in the x direction. (Kahan definition)
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The distance of x to the nearest representable element in the type of `x`,  not equal to x. (Harrisson definition).
 //!
 //!   @note invalid entries return NaN

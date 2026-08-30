@@ -38,7 +38,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var oneosqrteps
-//!   @brief Computes the  the inverse of the square root of the machine epsilon.
+//!   @brief Computes the inverse of the square root of the machine epsilon.
 //!
 //!   **Defined in Header**
 //!

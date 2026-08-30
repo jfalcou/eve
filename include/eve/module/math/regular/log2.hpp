@@ -66,7 +66,7 @@ namespace eve
 //!        * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!        * If the element is less than 0, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log2)
@@ -194,7 +194,7 @@ namespace eve
             T dk = convert(k, as<float>());
             T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(eve::as<T>()), dk);
             // The original algorithm does some extra calculation in place of the return line
-            // to get extra precision but this is uneeded for float as the exhaustive test shows
+            // to get extra precision but this is unneeded for float as the exhaustive test shows
             // a 0.5 ulp maximal error on the full range.
             // Moreover all log2(exp2(i)) i =  1..31 are flint
             // I leave the code here in case an exotic proc will not play the game.
@@ -369,7 +369,7 @@ namespace eve
             T hfsq = 0.5f * sqr(f);
             return -(hfsq - (s * (hfsq + R)) - f) * invlog_2(eve::as<T>()) + k;
             // The original algorithm does some extra calculation in place of the return line
-            // to get extra precision but this is uneeded for float as the exhaustive test shows
+            // to get extra precision but this is unneeded for float as the exhaustive test shows
             // a 0.5 ulp maximal error on the full range.
             // Moreover all log2(exp2(i)) i =  1..31 are flint
             // I leave the code here in case an exotic proc will not play the game.

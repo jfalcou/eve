@@ -58,7 +58,7 @@ namespace eve
 //!  **Return value**
 //!
 //!     1. Returns the [elementwise](@ref glossary_elementwise) exponential of minus the square of `x`: \f$e^{-x^2}\f$.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/expmx2.cpp}

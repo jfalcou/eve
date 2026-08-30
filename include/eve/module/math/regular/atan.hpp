@@ -77,7 +77,7 @@ namespace eve
 //!    3. accuracy not better than  5.0e-5 according Abramowitz & Stegun.
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
-//!    6. [The operation is performed conditionnaly](@ref conditional).
+//!    6. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: atan](https://en.cppreference.com/w/cpp/numeric/math/atan)

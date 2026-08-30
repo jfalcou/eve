@@ -73,7 +73,7 @@ namespace eve::algo::views
   //!         should work on both scalar and wide for the underlying iterator
   //!         for any cardinal.
   //!
-  //!         accepts the `as<value_type_t<Base>>` for convinience
+  //!         accepts the `as<value_type_t<Base>>` for convenience
   //!         (so that it can be defined without knowing the underlying type).
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
@@ -95,9 +95,9 @@ namespace eve::algo::views
   //!    @struct map_iterator
   //!    @brief An iterator for `map`, `map_convert`.
   //!    Should be created with one of those functions.
-  //!    If one of the operations is not avaliable, it's `eve::algo::nothing_t`.
+  //!    If one of the operations is not available, it's `eve::algo::nothing_t`.
   //!
-  //!    **Required header:** `#incude <eve/module/algo/algo/views/map.hpp>`
+  //!    **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
   //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
   //! @}
@@ -111,9 +111,9 @@ namespace eve::algo::views
   //!    @struct map_range
   //!    @brief A range for `map`, `map_covnert`.
   //!    Should be created via one of those functions.
-  //!    If the store operation is not avaliable, it's `eve::algo::nothing_t`.
+  //!    If the store operation is not available, it's `eve::algo::nothing_t`.
   //!
-  //!    **Required header:** `#incude <eve/module/algo/algo/views/map.hpp>`
+  //!    **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
   //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
   //! @}
@@ -135,7 +135,7 @@ namespace eve::algo::views
   //!    store operation, for conviniece accepts the as<underlying_type> as a second parameter.
   //!    (this allows to define load/store ops without knowing the underlying iterator).
   //!
-  //!    **Required header:** `#incude <eve/module/algo/algo/views/map.hpp>`
+  //!    **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
   //!    Has a shorthand `eve::views::map_convert` in `<eve/views/map.hpp>`
   //! @}
@@ -172,7 +172,7 @@ namespace eve::algo::views
   //!    operation has to be a template and accept scalar and all width wides for the value type
   //!    of the underlying iterator/range.
   //!
-  //!    **Required header:** `#incude <eve/module/algo/algo/views/map.hpp>`
+  //!    **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
   //!    Has a shorthand `eve::views::map` in `<eve/views/map.hpp>`
   //! @}

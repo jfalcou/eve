@@ -66,7 +66,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The values of the parameter elements are returned with bytes in reversed order.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
 //!   However, we decided to name it byte_reverse in order to keep a proper naming

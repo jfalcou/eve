@@ -86,7 +86,7 @@ namespace eve
 //!
 //!       1. The value of the sum of the absolute value of the arguments is returned.
 //!       2. equivalent to the call on the elements of the tuple.
-//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       3. [The operation is performed conditionally](@ref conditional)
 //!       4. internally uses `saturated` options.
 //!       5. returns \f$\infty\f$ as soon as after disabling possible `Nan` parameters the result is \f$\infty\f$.
 //!       6. uses kahan like compensated algorithm for better accuracy.

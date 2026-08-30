@@ -68,7 +68,7 @@ namespace eve
 //!
 //!    **Return value**
 //!       1. The value of the logical right shift is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!   @note
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is

@@ -77,7 +77,7 @@ namespace eve
 //!         interval: `]0, N[` or the result is undefined.
 //!      2. This call allows optimization for architectures that have an intrinsic requiring
 //!         an immediate parameter
-//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      3. [The operation is performed conditionally](@ref conditional)
 //!
 //!    @note
 //!      Although the infix notation with `<<` is supported, the `<<` operator on

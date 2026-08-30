@@ -32,12 +32,12 @@ namespace eve
   //!      * the mask type can be any logical with the same cardinal.
   //!
   //!    Compression in simd is moving selected elements to the front of the simd_value.
-  //!    Unfortunately, not for all `simd_value`, not for all plaftorms that can be done
+  //!    Unfortunately, not for all `simd_value`, not for all platforms that can be done
   //!    efficiently. So the operation splits the input into chunks for which it's possible.
   //!
-  //!    The function perfoms the following steps:
+  //!    The function performs the following steps:
   //!      1) splits the simd_value and mask into chunks, that can be processed in one go.
-  //!         This depends on what instructions are availiable.
+  //!         This depends on what instructions are available.
   //!      2) Each chunk, gets shuffled in a way that moves selected elements (mask == true) to
   //!         the front. The tail of the resulting value is unspecified.
   //!         [a, b, c, d], (false, true, false, true) -> [b, d, _, _]
@@ -71,7 +71,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * x - simd_value to compress
-  //!     * m - mask which markes selected elements as true
+  //!     * m - mask which marks selected elements as true
   //!     * ignore - optional eve::relative_conditional_expr, passed in `[]`.
   //!                Ignored elements are treated as not selected.
   //!
@@ -79,7 +79,7 @@ namespace eve
   //!
   //!    1. `kumi::tuple<kumi::tuple<simd_value, std::ptrdiff_t>, ...>` - tuple of compressed chunks,
   //!        constructed as described earlier.
-  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!    2. [The operation is performed conditionally](@ref conditional).
   //!
   //!  @groupheader{Example}
   //!

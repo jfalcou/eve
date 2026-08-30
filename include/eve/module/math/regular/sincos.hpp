@@ -73,7 +73,7 @@ namespace eve
 //!       1. assume a parameter in radian.
 //!       2. assume a parameter in degree.
 //!       3. assume a parameter in \f$\pi\f$ multiples. </br>
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   2. [The operation is performed conditionally](@ref conditional).
 //!   3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.

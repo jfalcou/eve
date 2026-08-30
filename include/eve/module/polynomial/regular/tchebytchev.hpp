@@ -80,7 +80,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1.The value of the polynomial at `x` is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. evaluates the nth polynomial of tchebytchev of second kind
 //!         \f$ \displaystyle U_n(x) =  \frac{\sin(n\arccos x)}{\sin(\arccos x)}\f$.
 //!         on \f$[-1, +1]\f$.

@@ -90,7 +90,7 @@ namespace eve
 //!     1. The value of the 'physicists' hermite polynomial
 //!        \f$ \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\f$
 //!        is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. implements the three terms recurrence
 //!        relation for the physicists Hermite polynomials,
 //!        \f$\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\f$.

@@ -62,7 +62,7 @@ namespace eve
 //!      1. Return `x` with pairs of contiguous groups of N bits swapped in each element.
 //!         - If n is greater or equal to sizeof(x)*8 0 is returned.
 //!         - If n is equal            to 0           x is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_swap_adjacent.cpp}

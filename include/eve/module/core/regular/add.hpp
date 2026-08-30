@@ -91,14 +91,14 @@ namespace eve
 //!       This call performs additions in reverse incoming order. If you have not changed the processor rounding mode,
 //!       round toward nearest mode tie to even is generally performed on standard systems.
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!    4. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
-//!    5. The summation is computed in a round toward \f$-\infty\f$ mode. The result is guaranted
+//!    5. The summation is computed in a round toward \f$-\infty\f$ mode. The result is guaranteed
 //!       to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
-//!    6. The summation is computed in a round toward \f$\infty\f$ mode. The result is guaranted
+//!    6. The summation is computed in a round toward \f$\infty\f$ mode. The result is guaranteed
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!    7. The summation is computed in the double sized element type (if available).

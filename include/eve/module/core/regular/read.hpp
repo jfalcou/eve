@@ -67,7 +67,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! Returns a signle value read at the memory location specified by `ptr`. If `ptr` is
+//! Returns a single value read at the memory location specified by `ptr`. If `ptr` is
 //! equivalent to `nullptr`, the behavior is undefined.
 //!
 //================================================================================================

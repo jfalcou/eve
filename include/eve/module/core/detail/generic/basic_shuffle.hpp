@@ -71,7 +71,7 @@ basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
   {
     return aggregate_shuffler(v, q);
   }
-  // Be sure we can shuffle everything ionside a single vector of ouput
+  // Be sure we can shuffle everything ionside a single vector of output
   else if constexpr( !has_aggregated_abi_v<that_t> )
   {
     // We're swizzling the first half of an aggregate

@@ -62,7 +62,7 @@ namespace eve
 //!
 //!     1. the value of the Dawson function:
 //!        \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2.5)

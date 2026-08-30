@@ -57,7 +57,7 @@ namespace eve
 //!
 //!     1. Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
 //!        trying to avoid overflow as possible.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/expx2.cpp}

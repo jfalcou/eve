@@ -142,7 +142,7 @@ namespace eve::algo
   //!    @var force_type
   //!
   //!    @brief A `zip` trait for converting all the types in a zip.
-  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!    You can get identical results with `views::convert` but this is a convenience.
   //!
   //!    Just adds conversion for all of the types in a zipped iterator/range to the given one.
   //!    No examples in the basic algorithms but we believe can be useful in a special case.
@@ -162,7 +162,7 @@ namespace eve::algo
   //!    @var common_with_types
   //!
   //!    @brief A `zip` trait for converting all the types in a zip.
-  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!    You can get identical results with `views::convert` but this is a convenience.
   //!
   //!    Figures out a common type between all of the types in a zipped iterator/range +
   //!    all types passed to the trait. Common type is computed via `eve::common_type`.
@@ -184,7 +184,7 @@ namespace eve::algo
   //!    @brief A `zip` trait for converting all the types in a zip,
   //!    equivalent of common_with_types<>.
   //!
-  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!    You can get identical results with `views::convert` but this is a convenience.
   //!
   //!    Take all types in a zip_iterator/zip_range and convert them to a common type.
   //!
@@ -204,9 +204,9 @@ namespace eve::algo
   //! @{
   //!    @var divisible_by_cardinal
   //!
-  //!    @brief an trait to tell that the input data is strictly divisble by cardinal.
+  //!    @brief an trait to tell that the input data is strictly divisible by cardinal.
   //!
-  //!    Aligning takes precident over this: if the data accesses are going to be aligned,
+  //!    Aligning takes precedent over this: if the data accesses are going to be aligned,
   //!    the tail handling comes back. You can pass `eve::algo::no_aligning`.
   //!
   //!    In other words only does anything if the pointer is aligned_ptr or `no_aligning` is passed.
@@ -216,7 +216,7 @@ namespace eve::algo
   //!    your data too.
   //!
   //!    @see inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries
-  //!    in parallel algoirthms.
+  //!    in parallel algorithms.
   //!
   //!    @see no_aligning
   //! @}
@@ -244,7 +244,7 @@ namespace eve::algo
   //! @{
   //!   @var no_unrolling
   //!
-  //!   @brief Convinient equivalent to unroll<1>.
+  //!   @brief Convenient equivalent to unroll<1>.
   //! @}
   //================================================================================================
   inline constexpr auto no_unrolling = unroll<1>;
@@ -338,7 +338,7 @@ namespace eve::algo
   //!
   //!   @brief You can find more explanations in the 'frequency scaling tutorial'.
   //!          On intel using 64 byte registers requires processor to scale down it's frequency.
-  //!          This is only benefitial if you have a very large set of data to process. Otherwise
+  //!          This is only beneficial if you have a very large set of data to process. Otherwise
   //!          it will likely degrade performance not only of the SIMD code but also of the code
   //!          that follows.
   //!
@@ -498,7 +498,7 @@ namespace eve::algo
 
   //================================================================================================
   //! @addtogroup algo_traits
-  //! @brief returns expected_smaller_r if one is specificed
+  //! @brief returns expected_smaller_r if one is specified
   //! @tparam Traits
   //================================================================================================
   template<typename Traits>

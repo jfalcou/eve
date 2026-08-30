@@ -17,8 +17,8 @@
 
 namespace eve
 {
-// TODO DOC is it to be in user inteface ?
-// Why is the implementation splitted ?
+// TODO DOC is it to be in user interface ?
+// Why is the implementation split ?
 // Why is this function still old-style ?
 //================================================================================================
 //! @addtogroup core

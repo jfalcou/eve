@@ -71,7 +71,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!     3. speedier,  less accurate and return a Nan if `a` and `a+x` are  not both positive.
 //!     4. The `pedantic` option  uses reflection tricks and computes
 //!        the function for all real `a` and `x`, and in fact computes the logarithm of the absolute

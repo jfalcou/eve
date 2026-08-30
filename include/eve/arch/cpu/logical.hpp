@@ -26,7 +26,7 @@ namespace eve
   //! **Required header:** `#include <eve/logical.hpp>`
   //!
   //! eve::logical is an architecture-agnostic representation of a boolean mask and provides
-  //! standardized API to access informations, compute values and manipulate such mask. Contrary
+  //! standardized API to access information, compute values and manipulate such mask. Contrary
   //! to `bool`, an instance of logical has the same sizeof as `T`, allowing seamless interaction
   //! with an instance eve::logical<eve::wide< T >>.
   //!
@@ -34,7 +34,7 @@ namespace eve
   //================================================================================================
   template<plain_scalar_value T> struct logical<T>
   {
-    //! The type resulting from translating the curent logical type.
+    //! The type resulting from translating the current logical type.
     using translated_type = logical<translate_t<T>>;
 
     //! The type associated to the boolean mask.

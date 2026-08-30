@@ -76,7 +76,7 @@ namespace eve
 //!             the call is identical to `reverse(x)`.
 //!           - otherwise the first n bits and the last n bits of each element of x are swapped in
 //!           reverse order and the central remaining bits are unchanged.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      3. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_reverse.cpp}

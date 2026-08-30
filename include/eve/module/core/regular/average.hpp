@@ -102,17 +102,17 @@ namespace eve
 //!        simd intrinsics to perform the operation, the scalar results may differ by one unit from
 //!        simd ones which are system dependent.
 //!
-//!        However the `dowward` (respectively `upward`) options can be used to ensure the result is equivalent to
+//!        However the `lower` (respectively `upward`) options can be used to ensure the result is equivalent to
 //!        the integral conversion of `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
 //!     2. the arithmetic mean of its arguments. No overflow occurs.
 //!     3. the arithmetic mean of the tuple arguments. No overflow occurs.
-//!     4. [The operation is performed conditionnaly](@ref conditional)
+//!     4. [The operation is performed conditionally](@ref conditional)
 //!     5. No provision is made to avoid overflows for more than 2 parameters.
-//!     6. The average is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!     6. The average is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
 //!        to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries, these are similar to `ceil((x+y)/2)`, but converted to an integral value.
-//!     7. The average is computed in a 'round toward \f$ +\infty\f$ mode. The result is guaranted
+//!     7. The average is computed in a 'round toward \f$ +\infty\f$ mode. The result is guaranteed
 //!        to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!        ensures generally faster computation, but strict inequality.
 //!        For integral type entries,  these are similar to `floor((x+y)/2)` but converted to an integral value.

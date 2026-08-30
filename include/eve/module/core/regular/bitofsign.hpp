@@ -62,7 +62,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of the bit of sign is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!    @note
 //!      * `bitofsign` does NOT return a [logical value](@ref eve::value)

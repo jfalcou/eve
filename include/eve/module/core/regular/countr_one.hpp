@@ -60,7 +60,7 @@ namespace eve
 //!
 //!       1.The value of the number of consecutive 1 ("one") bits in the value of `x`, starting
 //!         from the least significant bit ("right"), with same type as `x`, is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/countr_one)

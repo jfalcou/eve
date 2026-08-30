@@ -117,14 +117,14 @@ namespace eve
 //!         This struct is convertible to the covariance floating value. and possesses four fields
 //!          `averagex`, `averagey`, `mxy` and `count` and `covariance`,that can be output through an std:ostream.
 //!      2. The parameters are composed in a unique covariance struct as if the covariance was  computed on the whole original data set.
-//!         Moreover if only one covariance result simd parameter is present, the the lanes individual corariance are grouped in an unique
-//!         scalar covariance result, computed from all the datas of all the lanes.
+//!         Moreover if only one covariance result simd parameter is present, the lanes individual corariance are grouped in an unique
+//!         scalar covariance result, computed from all the data of all the lanes.
 //!      3. same as 3. on the tuple elements.
 //!      4. the computation is done in the upgraded element type.
 //!      5. with this option the normalisation is done by the number of elements involved, minus one.
 //!
 //!  @note The Welford algorithm does not provides as much option as the [`covariance`](@ref covariance) function, but is a quite stable algorithm
-//!        that have the advantage to allow spliting the computation of the covariance in
+//!        that have the advantage to allow splitting the computation of the covariance in
 //!        multiple calls.  For instance: the call with four tuples:<br/>
 //!        &nbsp;   `cwv = welford_corariance(kumi::cat(xs, ys), kumi::cat(ws, zs))`<br/>
 //!        is equivalent to the sequence:<br/>
@@ -247,7 +247,7 @@ namespace eve
       }
     }
 
-    // This call treat the case wher all enties are scalar values and numerous enough by chunking
+    // This call treat the case where all entries are scalar values and numerous enough by chunking
     template<scalar_value ... Ts, callable_options O>
     EVE_FORCEINLINE constexpr auto
     welford_covariance_(EVE_REQUIRES(cpu_), O const & o, Ts const &... args) noexcept

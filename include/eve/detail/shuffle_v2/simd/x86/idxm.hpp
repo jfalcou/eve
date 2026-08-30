@@ -9,7 +9,7 @@
 
 // idxm that needs some x86 math
 // we don't test it individually, only through shuffles,
-// since threre is no sense in hardcoding cryptic numbers.
+// since there is no sense in hardcoding cryptic numbers.
 namespace eve::_::idxm
 {
 

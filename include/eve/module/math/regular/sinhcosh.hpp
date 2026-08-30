@@ -69,7 +69,7 @@ namespace eve
 //! **Return value**
 //!
 //!   1 .The computation returns a tuple-like whose elements are `sinh(x)` and `cosh(x)`
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinhcosh.cpp}

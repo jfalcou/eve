@@ -76,14 +76,14 @@ namespace eve
 //!      1. The value of `x*y+z` as if calculated to infinite precision
 //!         and rounded once is returned,  but only if the hardware is in capacity
 //!         to do it at reasonable cost.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!      3. `pedantic` option always ensures the full compliance to fam properties. This can be very expensive if the system
 //!         has no hardware capability.
 //!      4. The operation is performed as if the parameters where promoted to the common type of the three parameters.
-//!      5. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!      5. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
 //!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
-//!      6. The operation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!      6. The operation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranteed
 //!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!

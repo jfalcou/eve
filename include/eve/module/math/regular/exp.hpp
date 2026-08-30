@@ -70,8 +70,8 @@ namespace eve
 //!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
 //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!       * If the element is a `NaN`, `NaN` is returned
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!   3. The `raw` and `fast` options use the very fast and quite inacurate Schraudolph's algorithm.
+//!   2. [The operation is performed conditionally](@ref conditional).
+//!   3. The `raw` and `fast` options use the very fast and quite inaccurate Schraudolph's algorithm.
 //!      and the implementation is largely inspired by pmineiro library. `raw` generally provides around 5%
 //       relative accuracy and `fast` 0.005%.
 //!

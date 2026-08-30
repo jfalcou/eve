@@ -72,12 +72,12 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of the distance of the arguments is returned,  i.e. `abs (x-y)`.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The call `dist[saturated](x, y)` computes a saturated distance.
 //!         Contrary to the non decorated case, it guarantees
 //!         that the result is always defined. If \f$|x-y|\f$ is not representable,
 //!         [the greatest representable positive value](@ref valmax) is returned.
-//!      4. `dist[pedantic](x, y)`computes a distance wich is `NaN` if and only
+//!      4. `dist[pedantic](x, y)`computes a distance which is `NaN` if and only
 //!          if one of the parameters is a `NaN`.
 //!
 //!  @groupheader{Example}

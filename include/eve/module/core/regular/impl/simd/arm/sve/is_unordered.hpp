@@ -23,7 +23,7 @@ namespace eve::_
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
-    //  If not, we can mask if there is no alterative value
+    //  If not, we can mask if there is no alternative value
     if  constexpr (!C::has_alternative)
     {
       auto m = expand_mask(mask, as(v));

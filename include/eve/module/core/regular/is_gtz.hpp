@@ -65,7 +65,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. Returns [elementwise](@ref glossary_elementwise) `x > 0`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_gtz.cpp}

@@ -67,7 +67,7 @@ namespace eve
 //!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
 //!        is returned. The call return a Nan for any entry which is not a flint or not positive.
 //!     3. With the pedantic option \f$\Gamma(x+1)\f$ is returned. (more expansive)
-//!     4. [The operation is performed conditionnaly](@ref conditional)
+//!     4. [The operation is performed conditionally](@ref conditional)
 //!
 //!
 //!  @warning

@@ -35,7 +35,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var exponentmask
-//!   @brief Computes the the exponent bit mask of IEEE float or double.
+//!   @brief Computes the exponent bit mask of IEEE float or double.
 //!
 //!   **Defined in Header**
 //!

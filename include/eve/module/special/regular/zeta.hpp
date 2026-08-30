@@ -61,7 +61,7 @@ namespace eve
 //!     1. The value of the Riemann function defined as
 //!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$ for \f$s > 1\f$
 //!        and using analytic continuation elsewhere, is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia: Riemann zeta function](https://en.wikipedia.org/wiki/Riemann_zeta_function)

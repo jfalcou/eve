@@ -75,7 +75,7 @@ namespace eve
 //!         If `N`is the size in bits  of the element type of `x`, all
 //!         [elements](@ref glossary_elementwise) of n must belong to the
 //!         interval: `]-N, N[` or the result is undefined.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rshl.cpp}

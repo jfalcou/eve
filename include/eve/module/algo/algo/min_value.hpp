@@ -53,7 +53,7 @@ template<typename TraitsSupport> struct min_value_ : TraitsSupport
 //!   position.
 //!   By default unrolls by 4 and aligned all memory accesses.
 //!
-//!   @note for equivalent elements we return the first amoung equal.
+//!   @note for equivalent elements we return the first among equal.
 //!   @note we assume that `eve::is_less` defined for your type is total order.
 //!        (this comes up when switching `min` with `max`)
 //!

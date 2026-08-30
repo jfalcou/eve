@@ -112,7 +112,7 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
-//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    2. [The operation is performed conditionally](@ref conditional)
 //!    3. faster but less accurate call
 //!    4. compute the result in modular arithmetic. the parameters must be flint positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.

@@ -27,7 +27,7 @@
 //!   We believe eve::compress_copy makes correct selection of which one to use
 //!   but this is exposed in case we didn't.
 //!
-//!   Api completly matches eve::compress_copy.
+//!   Api completely matches eve::compress_copy.
 //!
 //!   @note this internally just calls eve::compress_store
 //!

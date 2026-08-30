@@ -65,7 +65,7 @@ namespace eve
 //!      * If the element is \f$\pm1\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the absolute value of the element is greater than one or a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: atanh](https://en.cppreference.com/w/cpp/numeric/math/atanh)

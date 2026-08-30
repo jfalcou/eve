@@ -83,7 +83,7 @@ namespace eve
 //!       without causing unnecessary overflows or throwing away too much accuracy,  but its use is not recommended on
 //!       low precision types as float16_t
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    3. [The operation is performed conditionally](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/logspace_sub.cpp}

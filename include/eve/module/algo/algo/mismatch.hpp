@@ -98,11 +98,11 @@ template<typename TraitsSupport> struct mismatch_ : TraitsSupport
 //!
 //!    * `rng`: zipped pair of 2 ranges to compare
 //!    * 'r1`, `r2` - two separate components that `zip` to a `zipped_range_pair`
-//!    * `p` - binary predicate for equivelence testing.
+//!    * `p` - binary predicate for equivalence testing.
 //!
 //!   **Return value**
 //!
-//!   `eve::views::zip_iterator` to the place where the mismatch happend.
+//!   `eve::views::zip_iterator` to the place where the mismatch happened.
 //!   (if not found, will point past the end of both halves).
 //!
 //!   @groupheader{Example}

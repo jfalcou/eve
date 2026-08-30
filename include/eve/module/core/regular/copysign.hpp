@@ -64,7 +64,7 @@ namespace eve
 //!
 //!       1. The value of the [elementwise](@ref glossary_elementwise) composition of a
 //!          value with the magnitude of `x` and the bit of sign of `y` is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/copysign)

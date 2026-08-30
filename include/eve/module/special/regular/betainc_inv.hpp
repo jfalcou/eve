@@ -54,7 +54,7 @@ namespace eve
 //!      constexpr auto betainc_inv(floating_value auto s,
 //!                             floating_value auto x, floating_value auto y)              noexcept; // 1
 //!
-//!      // semantic modifyers
+//!      // semantic modifiers
 //!      constexpr auto betainc_inv[raw](/*any previous overload*/)                        noexcept; // 2
 //!      constexpr auto betainc_inv[fast](/*any previous overload*/)                       noexcept; // 2
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!   **Return value**
 //!
 //!    1. The value of the inverse of the incomplete beta function is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF](https://dlmf.nist.gov/8.17)

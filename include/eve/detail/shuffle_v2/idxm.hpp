@@ -475,7 +475,7 @@ is_rotate(std::span<const std::ptrdiff_t> idxs)
                                 idxs.end(),
                                 [](auto x, auto y)
                                 {
-                                  // we_ should be not prefered
+                                  // we_ should be not preferred
                                   // na_ means not a rotate, but we will detect it later
                                   return (unsigned)x < (unsigned)y;
                                 });
@@ -1179,7 +1179,7 @@ first_in_groups_then_groups(std::span<const std::ptrdiff_t, N> idxs)
 
     for( std::size_t j = group_start; j != group_end; ++j )
     {
-      // group can still be entierly we_ or na_
+      // group can still be entirely we_ or na_
       if( idxs[j] < 0 )
       {
         group_index = std::max(idxs[j], group_index);
@@ -1244,7 +1244,7 @@ group_within_group(std::span<const std::ptrdiff_t, N> idxs)
     // originally doing in_groups/groups was motivated
     // by shift on avx2.
     //
-    // This whole funciton a bit questionable,
+    // This whole function a bit questionable,
     // and is likely to need revisions at some point.
     if( auto r = first_in_groups_then_groups<G>(idxs) )
     {

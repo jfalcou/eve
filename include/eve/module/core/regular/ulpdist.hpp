@@ -70,7 +70,7 @@ namespace eve
 //!         between `x` and `y`.
 //!           * if is_ordered(x,y), nb_values(x,y)/2.0 is returned
 //!           * otherwise a `Nan` is returned
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/ulpdist.cpp}

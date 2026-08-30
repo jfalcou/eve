@@ -117,7 +117,7 @@ namespace eve
 //!       3. The computation and result use the upgraded data type if available
 //!
 //!  @note The Welford algorithm does not provides as much option as the [`average`](@ref average) function, but is a quite stable algorithm
-//!        that have the advantage to allow spliting the computation of the average in
+//!        that have the advantage to allow splitting the computation of the average in
 //!        multiple calls.  For instance: the call with two tuples:<br/>
 //!        &nbsp;   `wavg = welford_average(kumi::cat(xs, ys))`<br/>
 //!        is equivalent to the sequence:<br/>

@@ -77,7 +77,7 @@ namespace eve
 //!    3. accuracy not better than  5.0e-35according Abramowitz & Stegun.
 //!    4. Result in degrees
 //!    5. Result in \f$\pi\f$ multiples
-//!    6. [The operation is performed conditionnaly](@ref conditional).
+//!    6. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Cotangent](https://mathworld.wolfram.com/InverseCotangent.html)
