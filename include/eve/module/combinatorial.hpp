@@ -20,7 +20,7 @@
 //!
 //! @}
 //==================================================================================================
-#include <eve/module/combinatorial/regular/bernouilli.hpp>
+#include <eve/module/combinatorial/regular/bernoulli.hpp>
 #include <eve/module/combinatorial/regular/fibonacci.hpp>
 #include <eve/module/combinatorial/regular/gcd.hpp>
 #include <eve/module/combinatorial/regular/lcm.hpp>
