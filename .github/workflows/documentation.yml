@@ -107,19 +107,31 @@ jobs:
           # from it would be a green light nobody earned.
           parsed=$(grep -c '^Parsing file' doxygen.log || true)
           if [ "$parsed" -lt 100 ]; then
-            echo ":x: Doxygen only parsed $parsed files, so this run proves nothing." >> $GITHUB_STEP_SUMMARY
+            echo "::error title=Doxygen::❌ Doxygen only parsed $parsed files — this run proves nothing."
+            echo "### ❌ Doxygen did not run" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
+
           grep -E ': (warning|error):' doxygen.log > warnings.txt || true
           count=$(wc -l < warnings.txt)
+
           if [ "$count" -eq 0 ]; then
-            echo ":white_check_mark: Doxygen parsed $parsed files without a single warning." >> $GITHUB_STEP_SUMMARY
+            echo "::notice title=Doxygen::✅ 0 warning — the documentation built clean from $parsed files."
+            echo "### ✅ Doxygen — 0 warning" >> $GITHUB_STEP_SUMMARY
+            echo "The documentation built clean from **$parsed** parsed files." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-          echo ":warning: Doxygen emitted **$count** warning(s)." >> $GITHUB_STEP_SUMMARY
+
+          # One inline annotation per warning, anchored on the file and line Doxygen reported,
+          # so they land straight in the diff. Capped, because a broken alias yields hundreds.
+          sed -e "s|.*$GITHUB_WORKSPACE/||" warnings.txt \
+            | sed -E 's|^([^:]+):([0-9]+): [a-z]+: (.*)$|::warning file=\1,line=\2::\3|' \
+            | head -n 30
+
+          echo "::error title=Doxygen::❌ $count warning(s) — the generated documentation lost something."
+          echo "### ❌ Doxygen — $count warning(s)" >> $GITHUB_STEP_SUMMARY
           echo ''            >> $GITHUB_STEP_SUMMARY
           echo '```'         >> $GITHUB_STEP_SUMMARY
-          head -50 warnings.txt >> $GITHUB_STEP_SUMMARY
+          head -n 50 warnings.txt >> $GITHUB_STEP_SUMMARY
           echo '```'         >> $GITHUB_STEP_SUMMARY
-          cat warnings.txt
           exit 1
