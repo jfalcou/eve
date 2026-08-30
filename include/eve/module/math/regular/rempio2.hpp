@@ -62,7 +62,10 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `x`: [floating value](@ref eve::floating_value), which must be non negative. The
+//!           reduction is written for magnitudes, and the library always calls it on
+//!           `eve::abs(x)`. A negative argument is returned unchanged with a zero quadrant
+//!           instead of being reduced.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
