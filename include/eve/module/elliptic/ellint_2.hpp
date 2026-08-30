@@ -66,7 +66,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `phi`: [floating Jacobi amplitude](@ref eve::floating_value).
-//!     * `k`: amplitude parameter (\f$0\le k\le 1).
+//!     * `k`: amplitude parameter (\f$0\le k\le 1\f$).
 //!     * `alpha`: amodular angle given in radian (modular option).
 //!     * `m` : elliptic modulus or eccentricity (eccentric option).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
@@ -78,7 +78,7 @@ namespace eve
 //!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\f$ is returned.
 //!      2. the incomplete elliptic integrals of the second kind:
 //!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\f$ is returned.
-//!         \f$\alphaf$ is  \f$\sin k\f$ and \f$m\f$ is \sqrt(k)\f$
+//!         \f$\alpha\f$ is  \f$\sin k\f$ and \f$m\f$ is \f$\sqrt(k)\f$
 //!      3. [The operation is performed conditionally](@ref conditional)
 //!
 //!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point

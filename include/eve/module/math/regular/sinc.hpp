@@ -84,7 +84,7 @@ namespace eve
 //!         2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!         3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
-//!    5. returns \f$\sin \frac{\pi x}{\pi x}
+//!    5. returns \f$\frac{\sin \pi x}{\pi x}\f$
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)

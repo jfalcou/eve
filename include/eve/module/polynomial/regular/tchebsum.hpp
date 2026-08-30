@@ -96,7 +96,7 @@ namespace eve
 //!
 //!     If \f$(c_i)_{0\le i\le n-1}\f$ denotes the Tchebytchev coefficients of the polynomial
 //!     The Tchebsum scheme evaluates  :
-//!     \f$\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\f
+//!     \f$\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\f$
 //!
 //!     1. The value at  `x` f the polynom based on first kind Tchebytchev function is returned.
 //!     2. Same as the call with the elements of the tuple.
