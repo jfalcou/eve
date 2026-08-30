@@ -69,8 +69,8 @@ namespace eve
 //!      constexpr auto tchebsum(floating_value auto x, eve::coefficients auto tci)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto tchebsum[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
-//!      constexpr auto tchebsum[logical_value auto m](*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto tchebsum[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 3
+//!      constexpr auto tchebsum[logical_value auto m](/*any of the above overloads*/)          noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto tchebsum[pedantic](/*any of the above overloads*/)                     noexcept; // 4

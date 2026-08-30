@@ -45,7 +45,7 @@ If we suppose that the coefficients are still given in three `std::array` (any c
 
 Now  the lambda quad_it do the same kind of work as the primary scalar version, but in an simd way.
 Differences are:
-  - The lambda must have an unique paramater to fit the transform_to requirements. This parameter is bound to the three simd vectors by </br >
+  - The lambda must have an unique paramater to fit the transform_to requirements. This parameter is bound to the three simd vectors by <br>
     `auto [aaa, bbb, ccc] = e;`
   - The routine to solve the equation is also to be a bit changed :
     - we slightly optimize the computations by using `fnma` and `fma` (which turn to normal  computations using *+- if SIMD intrinsics

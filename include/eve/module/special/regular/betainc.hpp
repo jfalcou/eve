@@ -58,7 +58,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
 //!
 //!      // Lanes masking
 //!      constexpr auto betainc[conditional_expr auto c](/*any previous overload*/)    noexcept; // 3
-//!      constexpr auto betainc[logical_value auto m](*any previous overload*/)        noexcept; // 3
+//!      constexpr auto betainc[logical_value auto m](/*any previous overload*/)        noexcept; // 3
 //!   }
 //!   @endcode
 //!

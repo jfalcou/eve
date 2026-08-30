@@ -43,7 +43,7 @@ template<typename TraitsSupport> struct max_element_ : TraitsSupport
 //!   By default unrolls by 4 and aligned all memory accesses.
 //!
 //!   @note for equivalent elements we return the second among equal.
-//!   `std::max_element* returns first but this is more correct and this is also what
+//!   `std::max_element` returns first but this is more correct and this is also what
 //!   `std::minmax_element` will return as max.
 //!
 //!   @note we assume that `eve::is_less` defined for your type is total order.

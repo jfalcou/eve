@@ -48,7 +48,7 @@
 //! [covariance](@ref eve::covariance),
 //! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [dot](@ref eve::dot),
 //! [fdim](@ref eve::fdim), [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
-//! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
+//! [fracscale](@ref eve::fracscale), [heaviside](@ref eve::heaviside),
 //! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
 //! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
 //! [minabs](@ref eve::minabs), [minmag](@ref eve::minmag), [minmax](@ref eve::minmax), [minus](@ref eve::minus),

@@ -105,7 +105,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * ``xs...`:the parameters can be a mix of floating values and previous results of calls to `welford_average`
+//!     * `xs...`:the parameters can be a mix of floating values and previous results of calls to `welford_average`
 //!
 //!    **Return value**
 //!

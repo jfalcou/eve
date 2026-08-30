@@ -60,7 +60,7 @@ namespace eve
 //!
 //!      // Lanes masking
 //!      constexpr auto betainc_inv[conditional_expr auto c](/*any previous overload*/)    noexcept; // 3
-//!      constexpr auto betainc_inv[logical_value auto m](*any previous overload*/)        noexcept; // 3
+//!      constexpr auto betainc_inv[logical_value auto m](/*any previous overload*/)        noexcept; // 3
 //!   }
 //!   @endcode
 //!

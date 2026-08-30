@@ -56,7 +56,7 @@ namespace eve
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[f, e1]` such that:
 //!
 //!     * `f` is `fma(a, x, y)`
-//!     * `\f$ a\otimes x\oplus y = r1\oplus e1 with a very small error (less than 14*eps
+//!     * `\f$ a\otimes x\oplus y = r1\oplus e1\f$` with a very small error (less than 14*eps)
 //!
 //!    where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
 //!    infinite precision.
