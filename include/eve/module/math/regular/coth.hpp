@@ -65,6 +65,10 @@ namespace eve
 //!        * If the element is a `NaN`, `NaN` is returned.
 //!   2. [The operation is performed conditionally](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicCotangent.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/coth.cpp}
 //================================================================================================

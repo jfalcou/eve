@@ -68,6 +68,11 @@ namespace eve
 //!        * If the element is a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionally](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/sinh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicSine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinh.cpp}
 //================================================================================================

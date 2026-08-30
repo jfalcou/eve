@@ -80,6 +80,10 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/TrigonometricFunctions.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Trigonometric_functions)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sincos.cpp}
 //================================================================================================

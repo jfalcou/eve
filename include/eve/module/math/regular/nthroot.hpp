@@ -73,6 +73,10 @@ namespace eve
 //!    2. [The operation is performed conditionally](@ref conditional)
 //!    3. Speedier but less accurate computation.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Nth_root)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/nthRoot.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/nthroot.cpp}
 //================================================================================================

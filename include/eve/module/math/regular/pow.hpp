@@ -117,6 +117,11 @@ namespace eve
 //!    4. compute the result in modular arithmetic. the parameters must be flint positive
 //!       and less than the modulus. The modulus itself must be less than maxflint.
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/pow)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponentiation)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Power.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/pow.cpp}
 //================================================================================================
