@@ -66,7 +66,7 @@ namespace eve::algo::views
   //!            Supports `zip[eve::algo::force_type<T>]`,
   //!                     `zip[eve::algo::common_type<T>]`,
   //!                     `zip[common_with_types<Ts...>]` traits.
-  //!            `force_type<T>` will convert every component to the type <T>.
+  //!            `force_type<T>` will convert every component to the type `T`.
   //!            `common_type` and `common_with_types` will compute the common type (maybe including extra provided),
   //!             and convert to that.
   //!

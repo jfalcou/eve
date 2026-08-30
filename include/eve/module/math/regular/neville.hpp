@@ -51,7 +51,7 @@ namespace eve
 //! @{
 //!   @var neville
 //!   @brief `callable` computing the value of the interpolation polynomial \f$p\f$ of degree n, satisfying:
-//!   /f$ p(x_i) = y_i for i = 0..n\f$
+//!   \f$p(x_i) = y_i\f$ for \f$i = 0..n\f$
 //!
 //!   @groupheader{Header file}
 //!
@@ -77,7 +77,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      * 1. Return the value at x of the polynomial \f$p\f$ of degree n, atisfying: /f$ p(x_i) = y_i for i = 0..n\f$ where n+1 is the common number of `xs`, `ys`.
+//!      * 1. Return the value at x of the polynomial \f$p\f$ of degree n, satisfying \f$p(x_i) = y_i\f$ for \f$i = 0..n\f$, where n+1 is the common number of `xs`, `ys`.
 //!      * 2. Same as 1., using the tuple elements.
 //!
 //!  @groupheader{External references}

@@ -68,7 +68,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1 .The computation returns a tuple-like whose elements are `sin(x)` and `cos(x)`
+//!   1. The computation returns a tuple-like whose elements are `sin(x)` and `cos(x)`
 //!       In particular:
 //!       1. assume a parameter in radian.
 //!       2. assume a parameter in degree.

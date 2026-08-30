@@ -71,9 +71,9 @@ namespace eve
 //!       * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
 //!          where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//!     1. Classical algorithm, always valid.
-//!     2. 'Fast' algorithm, valid only if |x| < |y|.
-//!     3. Handles overflow.
+//!       1. Classical algorithm, always valid.
+//!       2. 'Fast' algorithm, valid only if |x| < |y|.
+//!       3. Handles overflow.
 //!
 //!  @groupheader{External references}
 //!   *  [On the Computation of Correctly-Rounded Sums](https://www.vinc17.net/research/papers/rr_ccrsums2.pdf)
