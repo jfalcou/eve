@@ -62,7 +62,7 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. Returns the remainder after division of `x` by `y` and is
-//!         equivalent to  `x- eve::nearest(eve:div(x, y))*y`. In particular:
+//!         equivalent to  `x- eve::nearest(eve::div(x, y))*y`. In particular:
 //!        * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!        * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
 //!        * If `y` is `NaN`, `NaN` is returned.

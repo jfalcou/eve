@@ -65,7 +65,7 @@
 //!     For example eve::cos(eve::pio_2(as<double>()))) is 6.1232e-17 (as pio_2 is not exact),
 //!     but eve::cos[radpi](0.5) is 0 (as 0.5 is exact).
 //!
-//! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,
+//! Moreover each function can be decorated with eve::quarter_circle,  eve::half_circle,
 //! eve::full_circle.
 //!
 //!   * eve::quarter_circle provides accurate result for the corresponding
