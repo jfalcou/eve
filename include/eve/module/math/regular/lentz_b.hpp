@@ -39,7 +39,8 @@ namespace eve
 //! @addtogroup contfrac
 //! @{
 //!   @var lentz_b
-//!   @brief Implement the lentz scheme to evaluate continued fractions
+//!   @brief Implement the Lentz scheme to evaluate a continued fraction with leading term \f$b_0\f$:
+//!          \f$\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}\f$
 //!
 //!   **Defined in header**
 //!

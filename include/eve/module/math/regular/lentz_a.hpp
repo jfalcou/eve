@@ -29,7 +29,8 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 //! @addtogroup contfrac
 //! @{
 //!   @var lentz_a
-//!   @brief Implement the lentz scheme to evaluate continued fractions
+//!   @brief Implement the Lentz scheme to evaluate a continued fraction with no leading term:
+//!          \f$\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}}\f$
 //!
 //!   **Defined in header**
 //!
@@ -68,6 +69,8 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 //!
 //!     The value of the continued fraction is returned.
 //!     \f$\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots\vphantom{\frac{1}{1}} }}}\f$
+//!
+//!     Note that the first a and b values (a0 and b0) generated are both used here.
 //!
 //!   @groupheader{Example}
 //!
