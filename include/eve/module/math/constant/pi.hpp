@@ -75,8 +75,10 @@ struct pi_t : constant_callable<pi_t, Options, lower_option, upper_option>
 //!
 //!   @var π
 //!   @brief Unicode alias for [eve::pi](@ref eve::pi), computing the constant \f$\pi\f$.
-//! @}
 //================================================================================================
 inline constexpr auto pi = functor<pi_t>;
 inline constexpr auto π = functor<pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

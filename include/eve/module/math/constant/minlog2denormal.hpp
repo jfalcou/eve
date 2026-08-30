@@ -64,7 +64,9 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, lower_o
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/minlog2denormal.cpp}
-//! @}
 //================================================================================================
 inline constexpr auto minlog2denormal = functor<minlog2denormal_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

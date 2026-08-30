@@ -73,7 +73,9 @@ struct rayleigh_skewness_t : constant_callable<rayleigh_skewness_t, Options, low
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/rayleigh_skewness.cpp}
-//! @}
 //================================================================================================
 inline constexpr auto rayleigh_skewness = functor<rayleigh_skewness_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

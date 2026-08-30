@@ -72,7 +72,9 @@ struct four_minus_pi_t : constant_callable<four_minus_pi_t, Options, lower_optio
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/four_minus_pi.cpp}
-//! @}
 //================================================================================================
 inline constexpr auto four_minus_pi = functor<four_minus_pi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
