@@ -135,3 +135,16 @@ jobs:
           head -n 50 warnings.txt >> $GITHUB_STEP_SUMMARY
           echo '```'         >> $GITHUB_STEP_SUMMARY
           exit 1
+
+      # Only when something went wrong: the summary shows the first fifty lines, the full log
+      # is what you need when the warning is a consequence of something further up.
+      - name: Upload the Doxygen log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doxygen-log
+          path: |
+            build/doxygen.log
+            build/warnings.txt
+          if-no-files-found: warn
+          retention-days: 7
