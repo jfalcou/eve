@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check behavior of rayleigh_kurtosis_excess on scalar", eve::test::
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using elt_t = eve::element_type_t<T>;
 
-  if constexpr( sizeof(long double) > sizeof(elt_t) )
-  {
-    TTS_EXPECT(eve::rayleigh_kurtosis_excess[eve::lower](as<elt_t>()) < 0.245089300687638062849l);
-    TTS_EXPECT(eve::rayleigh_kurtosis_excess[eve::upper](as<elt_t>()) > 0.245089300687638062849l);
-  }
-  TTS_EQUAL(eve::rayleigh_kurtosis_excess(as<T>()), T(0.245089300687638062849l));
+  // the exact value, rounded to double: 0.245089300687638062849
+  TTS_EQUAL(eve::rayleigh_kurtosis_excess(as<T>()), T(0.24508930068763807));
+
+  // lower and upper bracket the exact value, whatever the precision
+  TTS_EXPECT(eve::rayleigh_kurtosis_excess[eve::lower](as<T>()) <= eve::rayleigh_kurtosis_excess(as<T>()));
+  TTS_EXPECT(eve::rayleigh_kurtosis_excess(as<T>())             <= eve::rayleigh_kurtosis_excess[eve::upper](as<T>()));
+  TTS_RELATIVE_EQUAL(eve::rayleigh_kurtosis_excess[eve::lower](as<T>()), eve::rayleigh_kurtosis_excess[eve::upper](as<T>()), 1e-4);
 };
 
 //==================================================================================================

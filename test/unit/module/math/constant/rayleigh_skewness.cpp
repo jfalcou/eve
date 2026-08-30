@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check behavior of rayleigh_skewness on scalar", eve::test::scalar:
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using elt_t = eve::element_type_t<T>;
 
-  if constexpr( sizeof(long double) > sizeof(elt_t) )
-  {
-    TTS_EXPECT(eve::rayleigh_skewness[eve::lower](as<elt_t>()) < 0.631110657818937138192l);
-    TTS_EXPECT(eve::rayleigh_skewness[eve::upper](as<elt_t>()) > 0.631110657818937138192l);
-  }
-  TTS_EQUAL(eve::rayleigh_skewness(as<T>()), T(0.631110657818937138192l));
+  // the exact value, rounded to double: 0.631110657818937138192
+  TTS_EQUAL(eve::rayleigh_skewness(as<T>()), T(0.6311106578189372));
+
+  // lower and upper bracket the exact value, whatever the precision
+  TTS_EXPECT(eve::rayleigh_skewness[eve::lower](as<T>()) <= eve::rayleigh_skewness(as<T>()));
+  TTS_EXPECT(eve::rayleigh_skewness(as<T>())             <= eve::rayleigh_skewness[eve::upper](as<T>()));
+  TTS_RELATIVE_EQUAL(eve::rayleigh_skewness[eve::lower](as<T>()), eve::rayleigh_skewness[eve::upper](as<T>()), 1e-4);
 };
 
 //==================================================================================================

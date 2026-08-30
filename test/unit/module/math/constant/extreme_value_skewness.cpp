@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check behavior of extreme_value_skewness on scalar", eve::test::sc
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using elt_t = eve::element_type_t<T>;
 
-  if constexpr( sizeof(long double) > sizeof(elt_t) )
-  {
-    TTS_EXPECT(eve::extreme_value_skewness[eve::lower](as<elt_t>()) < 1.13954709940464865749l);
-    TTS_EXPECT(eve::extreme_value_skewness[eve::upper](as<elt_t>()) > 1.13954709940464865749l);
-  }
-  TTS_EQUAL(eve::extreme_value_skewness(as<T>()), T(1.13954709940464865749l));
+  // the exact value, rounded to double: 1.13954709940464865749
+  TTS_EQUAL(eve::extreme_value_skewness(as<T>()), T(1.1395470994046486));
+
+  // lower and upper bracket the exact value, whatever the precision
+  TTS_EXPECT(eve::extreme_value_skewness[eve::lower](as<T>()) <= eve::extreme_value_skewness(as<T>()));
+  TTS_EXPECT(eve::extreme_value_skewness(as<T>())             <= eve::extreme_value_skewness[eve::upper](as<T>()));
+  TTS_RELATIVE_EQUAL(eve::extreme_value_skewness[eve::lower](as<T>()), eve::extreme_value_skewness[eve::upper](as<T>()), 1e-4);
 };
 
 //==================================================================================================

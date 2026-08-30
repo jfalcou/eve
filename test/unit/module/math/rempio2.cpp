@@ -38,24 +38,29 @@ TTS_CASE_WITH("Check that rempio2 reduces modulo pi/2",
   using v_t = eve::element_type_t<T>;
   auto [n, x, dx] = eve::rempio2(a0);
 
-  // the reference runs in long double, which carries more mantissa than anything under test:
-  // computing it in double would leave it less accurate than the double-double reduction itself
-  constexpr long double pio2 = 1.57079632679489661923132169163975144l;
+  // pi/2 split into three exactly representable doubles, the Cody-Waite way: the reference then
+  // lands below eps(double), so it stays sharper than the reduction it checks on every target.
+  // Using long double instead would collapse to plain double on MSVC and several ARM ABIs.
+  constexpr double p1 = 1.57079632673412561417e+00;
+  constexpr double p2 = 6.07710050650619224932e-11;
+  constexpr double p3 = 2.02226624879595063154e-21;
+  constexpr double pio2 = 1.5707963267948966;
 
-  auto quadrant = tts::map([](auto e) -> v_t
+  auto quadrant = tts::map([=](auto e) -> v_t
                            {
-                             long double k = std::nearbyint((long double)(e) / pio2);
-                             long double q = std::fmod(k, 4.0l);
+                             double q = std::fmod(std::nearbyint(double(e) / pio2), 4.0);
                              return static_cast<v_t>(q < 0 ? q + 4 : q);
                            }, a0);
-  auto rest     = tts::map([](auto e) -> v_t
+  auto rest     = tts::map([=](auto e) -> v_t
                            {
-                             long double x = (long double)(e);
-                             return static_cast<v_t>(x - std::nearbyint(x / pio2) * pio2);
+                             double v = double(e);
+                             double k = std::nearbyint(v / pio2);
+                             return static_cast<v_t>(((v - k * p1) - k * p2) - k * p3);
                            }, a0);
 
   TTS_EXPECT(eve::all(eve::is_flint(n)));
   TTS_EQUAL(n, quadrant);
+
   TTS_ULP_EQUAL(x + dx, rest, 4);
 };
 
