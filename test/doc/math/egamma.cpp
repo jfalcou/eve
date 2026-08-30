@@ -20,7 +20,10 @@ int main()
 
   std::cout << "---- scalar" << std::endl
             << "-> egamma(as<float>())         = " << eve::egamma(eve::as(float())) << std::endl
-            << "-> egamma(as<xf))              = " << eve::egamma(eve::as(xf))      << std::endl;
+            << "-> egamma(as(xf))              = " << eve::egamma(eve::as(xf))      << std::endl;
+
+  std::cout << "---- unicode alias" << std::endl
+            << "-> \u03b3(as(xf))                  = " << eve::γ(eve::as(xf))           << std::endl;
 
 
   std::cout << "-> constexpr egamma            = " << constexpr_egamma<float>() << std::endl;

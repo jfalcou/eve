@@ -11,4 +11,5 @@ int main()
   std::cout << "-> omega(wf)                = " << eve::omega(wf) << "\n";
   std::cout << "-> omega[ignore_last(2)](wf)= " << eve::omega[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> omega[wf != -2.0f](wf)   = " << eve::omega[wf != -2.0f](wf) << "\n";
+  std::cout << "-> \u03c9(wf)  (unicode alias) = " << eve::ω(wf) << "\n";
 }
