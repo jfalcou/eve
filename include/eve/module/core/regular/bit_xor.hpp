@@ -68,7 +68,7 @@ namespace eve
 //!
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...` : other [arguments](@ref eve::value).
-//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::concepts::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

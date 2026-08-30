@@ -11,6 +11,10 @@ PROJECT_LOGO           = logo.svg
 OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
 CREATE_SUBDIRS         = NO
 
+## Consume KUMI's tagfile so the kumi:: symbols EVE re-exports link to the KUMI documentation.
+## cmake/config/doxygen.cmake downloads it next to the output directory before this runs.
+TAGFILES               = $(EVE_DOXYGEN_OUPUT)/../kumi.tag=https://jfalcou.github.io/kumi
+
 ## Lands in the deployed directory, so projects documenting on top of EVE can point their
 ## TAGFILES at https://jfalcou.github.io/eve/eve.tag and link back to these pages.
 GENERATE_TAGFILE       = $(EVE_DOXYGEN_OUPUT)/eve.tag
