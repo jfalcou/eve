@@ -102,76 +102,9 @@
 //! @ingroup eve_core
 //! Core semantic modifiers
 //!
-//!  Many core function semantics can be modified using decorator(s). The complete description of their effects can be found in
-//!  the proper documentation page of each implied function.
-//!
-//!  They can be classified in the following way:
-//!   * general behaviour
-//!       - `raw`: indicates that the operation is performed minimally to gain speed generally at the expanse of accuracy
-//!          or/and proper treatment of corner cases values.
-//!       - `fast`: is similar to `raw` but with better accuracy but generally a lesser speed improvement against the regular call.
-//!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
-//!       - `pedantic` : indicates that the operation will aim to follow existing **C++** standard.
-//!       -  `lower`, `upper` : when available enforce that the operation will lead to a result that will be guaranteed less or
-//!                 equal (resp. greater or equal) that the perfect not rounded result. (with nan exception).
-//!
-//!   * integer roundings :
-//!
-//!     These decorators can be used with the functions
-//!     eve::div, eve::rem, eve::round with floating or integral arguments
-//!     to choose the rounding to integer mode
-//!
-//!     - `to_nearest`: rounding to nearest or even
-//!     - `downward`: rounding toward \f$-\infty\f$
-//!     - `upward`: rounding toward \f$+\infty\f$
-//!     - `toward_zero`: rounding toward zero
-//!
-//!     All these decorators can be used with the functions eve::div, eve::rem, eve::round.
-//!
-//!    * floating point roundings;
-//!
-//!      - `lower`: the computed result of the floating operation is less than the mathematical exact value
-//!      - `upper`: the computed result of the floating operation is greater than the mathematical exact value
-//!      - `strict`: combined with lower or upper option strict ensures that the inequalities obtained are strict.
-//!           (so in general worse approximation but speedier).
-//!
-//!      These decorators can be used with the functions
-//!      eve::add, eve::average, eve::dec, eve::div, eve::fma,  eve::fms, eve::inc,
-//!      eve::mul, eve::oneminus, eve::rec, eve::sqr, eve::sqrt, eve::sub.
-//!
-//!      Experimentaly eve::add can accept an expansive `to_nearest_odd` decorator.
-//!
-//!      Also `lower` and `upper` (but not `strict`) can be used with all floating point constants.
-//!
-//!      Except for average with integral typed inputs these decocators have no impact on integer calls.
-//!
-//!    * upgraded computations
-//!
-//!       - `widen`: the result is computed in the upgraded type corresponding to the elements parameters. Presently, this has no effect
-//!          on 64 bits types as the upgrade type is the type itself.
-//!          If the widen decorator is used,  it is the responsibility of the user to use [convert](@ref eve::convert)
-//!          if it is  needed to get back to the input type sizes.
-//!
-//!    * Fuzzy
-//!
-//!       - `almost`: allows some laxity on the predicate result or the integer rounding direction
-//!       - `definitely`: impose some rigidity on the predicate result or the integer rounding direction
-//!
-//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, [eve::modf](@ref eve::modf), eve::trunc,
-//!       `almost` with the predicates eve::is_equal, eve::is_greater_equal, eve::is_less_equal, eve::is_not_greater, eve::is_not_less,
-//!       `definitely` with the predicates eve::is_not_equal, eve::is_not_greater_equal, ieve::s_not_less_equal, eve::is_greater, eve::is_less,
-//!
-//!    * saturation
-//!
-//!       - saturated: the operations are executed with saturation which avoids overflow.
-//!
-//!       This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::compare_absolute,
-//!       eve::dec, eve::dist,
-//!       eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
-//!       eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
-//!
-//! @note It must be noticed that the availabity of `raw`, `fast` does not guaranty speed improvement but
-//!        only no speed degradation against regular calls.
+//!  Many core functions accept one or more of these options to change what they compute or how.
+//!  Each is documented below; which functions accept which is stated on the page of every
+//!  function that does.
 //!
 //! @defgroup eve_core_fma_family  Fused multiply add family
 //! @ingroup eve_core
