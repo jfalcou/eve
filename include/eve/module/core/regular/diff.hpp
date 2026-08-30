@@ -81,7 +81,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` : [real](@ref eve::floating values) arguments
+//!     * `xs ...` : [real values](@ref eve::floating_value) arguments
 //!     * `x`      : kumi::tuple of arguments
 //!
 //!    **Return value**

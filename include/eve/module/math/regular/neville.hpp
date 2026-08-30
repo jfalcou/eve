@@ -72,7 +72,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...`, `ys ...: [real](@ref eve::floating values) arguments
+//!     * `xs ...`, `ys ...: [real values](@ref eve::floating_value) arguments
 //!     * `xx`, `yy`       : kumi::tuple of arguments
 //!
 //!    **Return value**

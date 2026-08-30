@@ -41,13 +41,13 @@
 //!
 //! These functions allows performing some basic arithmetics operations and some less basic.
 //!
-//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmi](@ref eve::absmin),
+//! [abs](@ref eve::abs), [absmax](@ref eve::absmax), [absmin](@ref eve::absmin),
 //! [add](@ref eve::add), [agm](@ref eve::agm), [average](@ref eve::average),
 //! [ceil](@ref eve::ceil), [chi](@ref eve::chi), [clamp](@ref eve::clamp),
-//! [copysign](@ref eve::copysign), [](@ref eve::), [cosine_similarity_](@ref eve::cosine_similarity_),
+//! [copysign](@ref eve::copysign), [cosine_similarity](@ref eve::cosine_similarity),
 //! [covariance](@ref eve::covariance),
 //! [dec](@ref eve::dec), [dist](@ref eve::dist), [div](@ref eve::div), [dot](@ref eve::dot),
-//! [fdim](@ref eve::fdim)], [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
+//! [fdim](@ref eve::fdim), [floor](@ref eve::floor), [fmod](@ref eve::fmod), [frac](@ref eve::frac),
 //! [fracscale](@ref eve:fracscale), [heaviside](@ref eve::heaviside),
 //! [inc](@ref eve::inc), [lerp](@ref eve::lerp), [manhattan](@ref eve::manhattan), [max](@ref eve::max),
 //! [maxabs](@ref eve::maxabs), [maxmag](@ref eve::maxmag), [min](@ref eve::min),
@@ -56,7 +56,7 @@
 //! [negabsmin](@ref eve::negabsmin), [negate](@ref eve::negate),[negatenz](@ref eve::negatenz),
 //! [negmaxabs](@ref eve::negmaxabs), [negminabs](@ref eve::negminabs), [oneminus](@ref eve::oneminus),
 //! [rat](@ref eve::rat), [rec](@ref eve::rec), [reldist](@ref eve::reldist), [rem](@ref eve::rem),
-//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale)],
+//! [remainder](@ref eve::remainder), [round](@ref eve::round), [roundscale](@ref eve::roundscale),
 //! [rsqrt](@ref eve::rsqrt), [saturate](@ref eve::saturate), [sign](@ref eve::sign), [sign_alternate](@ref eve::sign_alternate)
 //! [signnz](@ref eve::signnz), [sqr](@ref eve::sqr), [sqrt](@ref eve::sqrt), [sub](@ref eve::sub),
 //! [sum_of_squares](@ref eve::sum_of_squares),
@@ -75,7 +75,7 @@
 //! [bit_shr](@ref eve::bit_shr), [bit_swap_adjacent](@ref eve::bit_swap_adjacent), [bit_swap_pairs](@ref eve::bit_swap_pairs),
 //! [bit_ternary](@ref eve::bit_ternary), [bit_unset](@ref eve::bit_unset), [bit_width](@ref eve::bit_width), [bit_xor](@ref eve::bit_xor).
 //! [byte_reverse](@ref eve::byte_reverse), [byte_swap_adjacent](@ref eve::byte_swap_adjacent), [byte_swap_pairs](@ref eve::byte_swap_pairs),
-//! [countl](@ref eve::countl), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
+//! [countl_one](@ref eve::countl_one), [countl_zero](@ref eve::countl_zero), [countr_one](@ref eve::countr_one), [countr_zero](@ref eve::countr_zero).
 //!
 //! @defgroup core_constants  Constants
 //! @ingroup core
@@ -217,8 +217,8 @@
 //!
 //! [swap_if](@ref eve::swap_if), [logical_and](@ref eve::logical_and), [logical_andnot](@ref eve::logical_andnot),
 //! [logical_not](@ref eve::logical_not), [logical_notand](@ref eve::logical_notand), [logical_notor](@ref eve::logical_notor),
-//! [logical_or](@ref eve::logical_or). [logical_ornot](@ref eve::logical_ornot),
-//! [logical_select](@ref eve::logical_select), [replace_ignored](@ref eve::replace_ignored).
+//! [logical_or](@ref eve::logical_or), [logical_ornot](@ref eve::logical_ornot),
+//! [replace_ignored](@ref eve::replace_ignored).
 //!
 //! @defgroup core_predicates  Predicates
 //! @ingroup core
@@ -234,7 +234,7 @@
 //!
 //! *  With [numeric](@ref eve::numeric) decorator, Nan never wins against a definite value in a comparison.
 //! *  [pedantic](@ref eve::pedantic) try to mimic the corresponding standard function behaviour.
-//! *  [almost](@ref eve::almost) and [definitely](@ref eve::almost) allow a fuzzy treatment of comparisons.
+//! *  [almost](@ref eve::almost) and [definitely](@ref eve::definitely) allow a fuzzy treatment of comparisons.
 //!
 //! Supplementary comparisons functions take the bit of sign of zero into account,  namely
 //! [is_eqpz](@ref eve::is_eqpz), [is_eqmz](@ref eve::is_eqmz), [is_negative](@ref eve::is_negative), [is_positive](@ref eve::is_positive)

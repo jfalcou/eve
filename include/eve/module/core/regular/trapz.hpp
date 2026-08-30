@@ -92,8 +92,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` : [real](@ref eve::floating values) ordered arguments in increasing order.
-//!     * `x`,     : [tuple of real](@ref eve::floating values) ordered arguments in increasing order.
+//!     * `xs ...` : [real values](@ref eve::floating_value) ordered arguments in increasing order.
+//!     * `x`,     : [tuple of real values](@ref eve::floating_value) ordered arguments in increasing order.
 //!     * `y`      : tuple of real arguments
 //!     * `h`      : floating value scaling the abscissas
 //!     * `f`      : invocable

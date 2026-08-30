@@ -66,7 +66,7 @@ namespace eve
   //!
   //!    * `value` : The [SIMD value](@ref eve::simd_value) to store.
   //!    * `ptr`   : A pointer to the memory location where the elements of `value` will be stored.
-  //!    * `c`     : A [relative conditional expression](@ref eve::relativeconditional_expr) masking
+  //!    * `c`     : A [relative conditional expression](@ref eve::relative_conditional_expr) masking
   //!                the operation.
   //!
   //!   **Overloads**
