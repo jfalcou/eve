@@ -160,6 +160,36 @@ namespace eve
     }
   }
 
+  #if defined(EVE_DOXYGEN_INVOKED)
+  //====================================================================================================================
+  //! @addtogroup eve_simd_types
+  //! @{
+  //!   @struct float16_t
+  //!   @brief IEEE 754 binary16 floating-point type.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/wide.hpp>
+  //!   @endcode
+  //!
+  //!   Where the compiler provides a native half-precision type, `eve::float16_t` is an alias for
+  //!   `_Float16` and arithmetic runs on whatever the hardware offers. Everywhere else it is a type
+  //!   holding the 16 bits and converting to and from `float` around each operation: the results
+  //!   agree, the speed does not.
+  //!
+  //!   Either way it can be the element type of an eve::wide. How much the target actually supports
+  //!   is reported by `eve::_::supports_fp16_native_type`, `..._scalar_ops`, `..._vector_ops` and
+  //!   `..._vector_conversion`.
+  //!
+  //!   @note Conversions to other arithmetic types are explicit, so a `float16_t` never widens
+  //!         silently inside an expression.
+  //! @}
+  //====================================================================================================================
+  struct float16_t {};
+  #endif
+
+  #if !defined(EVE_DOXYGEN_INVOKED)
   #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16) && !defined(_MSC_VER)
     namespace _
     {
@@ -332,6 +362,7 @@ namespace eve
     {
       return float16_t{ static_cast<float>(lhs) / static_cast<float>(rhs) };
     }
+  #endif
   #endif
 
   namespace _
