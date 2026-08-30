@@ -80,7 +80,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
 //!   *  [DLMF](https://dlmf.nist.gov/4.2)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
-//!   *  [pmineiro fastapprox](github.com/pmineiro/fastapprox/tree/master/fastapprox)
+//!   *  [pmineiro fastapprox](https://github.com/pmineiro/fastapprox/tree/master/fastapprox)
 //!   *  [Schraudolph algorithm](https://nic.schraudolph.org/pubs/Schraudolph99.pdf)
 //!
 //!  @groupheader{Example}

@@ -74,7 +74,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw
 //!  @groupheader{External references}
 //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
 //!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
-//!   *  [pmineiro fastapprox](github.com/pmineiro/fastapprox/tree/master/fastapprox)
+//!   *  [pmineiro fastapprox](https://github.com/pmineiro/fastapprox/tree/master/fastapprox)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/digamma.cpp}
