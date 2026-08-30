@@ -75,6 +75,9 @@ namespace eve
   inline constexpr auto omega = functor<omega_t>;
   inline constexpr auto ω = functor<omega_t>;
 //================================================================================================
+//!
+//!   @var ω
+//!   @brief Unicode alias for [eve::omega](@ref eve::omega), computing the Wright \f$\omega\f$ function.
 //! @}
 //================================================================================================
 

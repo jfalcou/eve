@@ -79,6 +79,9 @@ struct egamma_t : constant_callable<egamma_t, Options, lower_option, upper_optio
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/egamma.cpp}
+//!
+//!   @var γ
+//!   @brief Unicode alias for [eve::egamma](@ref eve::egamma), computing the Euler-Mascheroni constant \f$\gamma\f$.
 //! @}
 //================================================================================================
 inline constexpr auto egamma = functor<egamma_t>;
