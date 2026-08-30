@@ -22,7 +22,6 @@ namespace eve
 {
   struct almost_mode          {};
   struct associated_mode      {};
-  struct compensated_mode     {};
   struct condon_shortley_mode {};
   struct cylindrical_mode     {};
   struct decreasing_mode      {};
@@ -73,7 +72,6 @@ namespace eve
   struct splat_mode       {};
 
   [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
-  [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto decreasing       = ::rbr::flag( decreasing_mode{}      );
@@ -117,7 +115,6 @@ namespace eve
 
 
   struct associated_option      : _::exact_option<associated>      {};
-  struct compensated_option     : _::exact_option<compensated>     {};
   struct condon_shortley_option : _::exact_option<condon_shortley> {};
   struct cylindrical_option     : _::exact_option<cylindrical>     {};
   struct decreasing_option      : _::exact_option<decreasing>      {};
