@@ -37,7 +37,7 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fsm
-//!   @brief `strict_elementwise_callable` computing the fused add multiply of its three parameters.
+//!   @brief `strict_elementwise_callable` computing the fused subtract multiply of its three parameters.
 //!
 //!   @groupheader{Callable Signatures}
 //!

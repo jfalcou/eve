@@ -39,7 +39,7 @@ namespace eve
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fnma
-//!   @brief `strict_elementwise_callable` computing the fused multiply add of its three parameters.
+//!   @brief `strict_elementwise_callable` computing the fused negated multiply add of its three parameters.
 //!
 //!   @groupheader{Header file}
 //!

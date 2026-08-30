@@ -85,7 +85,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var welford_variance
-//!   @brief `tuple_callable` computing the arithmetic mean of its arguments.
+//!   @brief `tuple_callable` computing the variance of its arguments with the Welford algorithm, along with their average, second centered moment and count.
 //!
 //!   @groupheader{Header file}
 //!

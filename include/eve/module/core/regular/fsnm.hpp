@@ -38,7 +38,7 @@ namespace eve
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fsnm
-//!   @brief `strict_elementwise_callable` computing the fused add multiply of its three parameters.
+//!   @brief `strict_elementwise_callable` computing the fused negated subtract multiply of its three parameters.
 //!
 //!   @groupheader{Callable Signatures}
 //!

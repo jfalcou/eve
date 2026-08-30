@@ -42,7 +42,7 @@ namespace eve
 //! @{
 //!   @var is_not_greater_equal
 //!   @brief `elementwise callable` returning a logical true  if and only if the element value of the first parameter is
-//!          greater or equal to the second one.
+//!          not greater or equal to the second one.
 //!
 //!   @groupheader{Header file}
 //!
