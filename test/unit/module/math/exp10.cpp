@@ -75,7 +75,7 @@ TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals_wf16)
       TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::minlog10(eve::as<T>())),
                     T(std_exp(elt_t(std::log(10.0)) * eve::minlog10(eve::as<elt_t>()))),
                     256) <<
-        std::hexfloat << eve::minlog10(eve::as<T>()) <<  " ==== " << eve::minlog10denormal(eve::as<T>()) << '\n';
+        eve::minlog10(eve::as<T>()) <<  " ==== " << eve::minlog10denormal(eve::as<T>()) << '\n';
       TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::prev(eve::minlog10(eve::as<T>()))),
                     T(std_exp(elt_t(std::log(10.0)) * eve::prev(eve::minlog10(eve::as<elt_t>())))),
                     256);

@@ -104,7 +104,7 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
+    TTS_RELATIVE_EQUAL(mul(tup), v_t(v_t(100)*std::pow(v_t(5), tup.size() - 1)), tts::prec<T>());
   }
 };
 

@@ -378,21 +378,7 @@ namespace tts
     // when T is double. Both bounds of a generator must land on T or v3 cannot deduce it.
     if constexpr(std::convertible_to<decltype(r), T>)
     {
-      auto that = static_cast<T>(r);
-
-      // TTS v2 drew floating point through a distribution it called realistic, which clamped
-      // its bounds to +/-1/epsilon. v3 draws log-uniformly over whatever it is given, so
-      // `randoms(valmin, valmax)` now reaches magnitudes the suite was never written against -
-      // on float16 three such values overflow to inf inside a sum. Restore the old ceiling.
-      if constexpr(eve::floating_value<T>)
-      {
-        // eve::eps rather than std::numeric_limits: the latter is not specialised for float16.
-        auto const ceiling = T(1) / eve::eps(eve::as<T>{});
-        if(that >  ceiling) return  ceiling;
-        if(that < -ceiling) return -ceiling;
-      }
-
-      return that;
+      return static_cast<T>(r);
     }
     else return r;
   }
@@ -438,19 +424,6 @@ namespace tts
   template<typename T> requires(std::is_arithmetic_v<T> && !std::is_same_v<T,bool>)
   struct boolean_type<T> { using type = eve::logical<T>; };
   template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
-
-  //================================================================================================
-  // v3 owns the name `random_bits` and gives it the other meaning: a full-width bit pattern.
-  // What the shift tests need is a valid shift count, which is what EVE's generator always was.
-  //================================================================================================
-  struct random_shift
-  {
-    template<typename D> auto operator()(tts::type<D>, auto...) const
-    {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      return tts::random_value<i_t>(0, 8*sizeof(i_t)-1);
-    }
-  };
 
   //================================================================================================
   // v3 ships its own limits(), but it is built on std::numeric_limits, which knows nothing of
@@ -510,7 +483,8 @@ namespace tts
 
   //================================================================================================
   // A randoms generator has to be drawn against float16's own bounds. Falling through to float
-  // would apply float's magnitude ceiling and then narrow, which lands on infinity.
+  // evaluates `valmin`/`valmax` against float, so the draw spans +/-3.4e38 and every narrowing
+  // to float16 lands on infinity.
   //================================================================================================
   template<typename Mx, typename Mn>
   auto produce(type<eve::float16_t> const&, randoms<Mx, Mn> g, auto...)

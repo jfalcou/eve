@@ -151,7 +151,7 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_ULP_EQUAL(add(tup), v_t(100)+v_t(5)*(3*T::size()/2-1), 0.5);
+    TTS_ULP_EQUAL(add(tup), v_t(v_t(100)+v_t(5)*(3*T::size()/2-1)), 0.5);
   }
 };
 
