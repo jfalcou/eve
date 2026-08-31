@@ -46,4 +46,48 @@ int main()
 
   auto tup = kumi::tuple{1.0f, sqteps_2, sqteps_2, sqteps_2, sqteps_2};
   std::cout << "-> sum_of_squares[kahan](tup)   = " << eve::sum_of_squares[eve::kahan](tup) << "\n";
+
+
+  float o = 1.0f;
+  float i = eve::inf(eve::as(o));
+  float n = eve::nan(eve::as(o));
+  float v = eve::valmax(eve::as(o));
+  float z = eve::zero(eve::as(o));
+  float m = (v/3)*2;
+  std::cout << "<- o                                        = " << o << "\n";
+  std::cout << "-> i                                        = " << i << "\n";
+  std::cout << "-> n                                        = " << n << "\n";
+  std::cout << "-> m                                        = " << m << "\n";
+  std::cout << "-> v                                        = " << v << "\n";
+  std::cout << "-> sum_of_squares(i, o, -i)                 = " << eve::sum_of_squares(i, o, -i) << "\n";
+  std::cout << "-> sum_of_squares(i, o, n)                  = " << eve::sum_of_squares(i, o,  n) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](i, o, -i)       = " << eve::sum_of_squares[eve::pedantic](i, o, -i) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](i, o, n)        = " << eve::sum_of_squares[eve::pedantic](i, o,  n) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](o, o, n)        = " << eve::sum_of_squares[eve::pedantic](o, o, n) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](o, n, o)        = " << eve::sum_of_squares[eve::pedantic](o, n, o) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](n, o, o)        = " << eve::sum_of_squares[eve::pedantic](n, o, o) << "\n";
+  std::cout << "-> sum_of_squares          (o, o, n)        = " << eve::sum_of_squares(o, o, n) << "\n";
+  std::cout << "-> sum_of_squares          (o, n, o)        = " << eve::sum_of_squares(o, n, o) << "\n";
+  std::cout << "-> sum_of_squares          (n, o, o)        = " << eve::sum_of_squares(n, o, o) << "\n";
+  std::cout << "-> sum_of_squares(n, n, n)                  = " << eve::sum_of_squares(n, n, n) << "\n";
+  std::cout << "-> sum_of_squares(m, o, o)                  = " << eve::sum_of_squares(m, o, o)<< "\n";
+  std::cout << "-> sum_of_squares(m, m, n)                  = " << eve::sum_of_squares(m, m, n)<< "\n";
+  std::cout << "-> sum_of_squares(i, n)                     = " << eve::sum_of_squares(i, n) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](m, m)           = " << eve::sum_of_squares[eve::pedantic](m, m)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](m, m, n)        = " << eve::sum_of_squares[eve::pedantic](m, m, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](i, n)           = " << eve::sum_of_squares[eve::pedantic](i, n) << "\n";
+  std::cout << "-> sum_of_squares[pedantic](v, v, n)        = " << eve::sum_of_squares[eve::pedantic](v, v, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](m, m)           = " << eve::sum_of_squares[eve::pedantic](m, m)<< "\n";
+  std::cout << "-> sum_of_squares(m, m, n)                  = " << eve::sum_of_squares(m, m, n)<< "\n";
+  std::cout << "-> sum_of_squares(i, n, n)                  = " << eve::sum_of_squares(i, n, n) << "\n";
+  std::cout << "-> sum_of_squares(i, n)                     = " << eve::sum_of_squares(i, n)    << "\n";
+  std::cout << "-> sum_of_squares(v, v, n)                  = " << eve::sum_of_squares(v, v, n)<< "\n";
+  std::cout << "-> sum_of_squares(n, z)                     = " << eve::sum_of_squares(n, z)<< "\n";
+  std::cout << "-> sum_of_squares(z, n)                     = " << eve::sum_of_squares(z, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](n, z)           = " << eve::sum_of_squares[eve::pedantic](n, z)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](z, n)           = " << eve::sum_of_squares[eve::pedantic](z, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](n, n)           = " << eve::sum_of_squares[eve::pedantic](n, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](i, n)           = " << eve::sum_of_squares[eve::pedantic](n, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](n, i)           = " << eve::sum_of_squares[eve::pedantic](n, n)<< "\n";
+  std::cout << "-> sum_of_squares[pedantic](v, v)           = " << eve::sum_of_squares[eve::pedantic](v, v)<< "\n";  
 }
