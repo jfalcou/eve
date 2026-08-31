@@ -2964,6 +2964,14 @@ namespace tts
       return tts::random_value<i_t>(0, std::numeric_limits<i_t>::max());
     }
   };
+  struct random_shift
+  {
+    template<typename D> auto operator()(tts::type<D>, auto...) const
+    {
+      using i_t = tts::_::sized_integer_t<tts::base_type_t<D>>;
+      return tts::random_value<i_t>(0, static_cast<i_t>(8 * sizeof(i_t) - 1));
+    }
+  };
   template<typename G> struct as_integer
   {
     constexpr explicit as_integer(G g)
@@ -3733,8 +3741,12 @@ namespace tts
     }
     else
     {
-      using common_t = std::common_type_t<T, U>;
-      return absolute_check(static_cast<common_t>(a), static_cast<common_t>(b));
+      static_assert(std::is_same_v<T, U>,
+                    "[TTS] TTS_ABSOLUTE_EQUAL needs both operands to have the same type. "
+                    "Comparing through their common type would express the distance in the unit "
+                    "of the promoted type, which is not the one being tested. Convert the "
+                    "expected value at the call site instead.");
+      return 0.;
     }
   }
   template<typename T, typename U> inline double relative_check(T const& a, U const& b)
@@ -3769,8 +3781,12 @@ namespace tts
     }
     else
     {
-      using common_t = std::common_type_t<T, U>;
-      return relative_check(static_cast<common_t>(a), static_cast<common_t>(b));
+      static_assert(std::is_same_v<T, U>,
+                    "[TTS] TTS_RELATIVE_EQUAL needs both operands to have the same type. "
+                    "Comparing through their common type would express the distance in the unit "
+                    "of the promoted type, which is not the one being tested. Convert the "
+                    "expected value at the call site instead.");
+      return 0.;
     }
   }
   template<typename T, typename U> inline double ulp_check(T const& a, U const& b)
@@ -3820,8 +3836,12 @@ namespace tts
     }
     else
     {
-      using common_t = std::common_type_t<T, U>;
-      return ulp_check(static_cast<common_t>(a), static_cast<common_t>(b));
+      static_assert(std::is_same_v<T, U>,
+                    "[TTS] TTS_ULP_EQUAL needs both operands to have the same type. "
+                    "Comparing through their common type would express the distance in the unit "
+                    "of the promoted type, which is not the one being tested. Convert the "
+                    "expected value at the call site instead.");
+      return 0.;
     }
   }
   template<typename T, typename U> inline bool ieee_check(T const& a, U const& b)

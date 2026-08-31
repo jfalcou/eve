@@ -57,7 +57,7 @@
     };
 
     auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
-      TTS_WHEN("cardinal = " << N)
+      TTS_WHEN(tts::text("cardinal = %ld", static_cast<long>(N)).data())
       {
         using wf16_t = eve::wide<eve::float16_t, eve::fixed<N>>;
         using wf32_t = eve::wide<float, eve::fixed<N>>;
@@ -109,7 +109,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
 TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
 {
   auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
-    TTS_WHEN("cardinal = " << N)
+    TTS_WHEN(tts::text("cardinal = %ld", static_cast<long>(N)).data())
     {
       using wf16_t = eve::wide<eve::float16_t, eve::fixed<N>>;
       using wf32_t = eve::wide<float, eve::fixed<N>>;
