@@ -122,7 +122,7 @@ $(function(){initNavTree('intro-04.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>In the previous tutorial, we laid out how <b>EVE</b> can use SIMD-aware tuples to handle more complex cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md110"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md106"></a>
 Adapting UDT to SIMD processing</h1>
 <p>Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one would prefer names over field numbers, thus rising the level of abstraction.</p>
 <p>Following this trend, we can rewrite our scalar <span class="tt">to_polar</span> function to return a proper structure.</p>
@@ -152,13 +152,13 @@ Adapting UDT to SIMD processing</h1>
 <div class="line"><span class="comment">// Standard Structured Bindings adaptation</span></div>
 <div class="line"><span class="keyword">namespace </span>adapt</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span>&amp; get( polar_coords&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span>&amp; <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record_abc2cd329ad25d155458850c19cc3b137.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords&amp; p) <span class="keyword">noexcept</span></div>
 <div class="line">  {</div>
 <div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
 <div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span> get( polar_coords <span class="keyword">const</span>&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span> <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record_abc2cd329ad25d155458850c19cc3b137.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords <span class="keyword">const</span>&amp; p) <span class="keyword">noexcept</span></div>
 <div class="line">  {</div>
 <div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
 <div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>
@@ -183,13 +183,13 @@ Adapting UDT to SIMD processing</h1>
 <div class="line">{</div>
 <div class="line">  <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Note how the semantic improved by being able to explicitly states we return a SIMD register made of instance of <span class="tt">polar_coords</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md111"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md107"></a>
 Creating SIMD-aware UDT</h1>
 <p>All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build a new user-defined type directly usable as a SIMD type. <b>EVE</b> provides an intrusive protocol to do just that via the use of the <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> helper.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/traits/product_type.hpp&gt;</span></div>
@@ -219,7 +219,7 @@ Creating SIMD-aware UDT</h1>
 <li>We then define friend functions to assign names to numbered fields. As the structure thus defined will be usable in both scalar and SIMD contexts, we use the <a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a> concept to overload them. <span class="tt"><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;polar_coords&gt;</span> used as a parameters concept means that the function accepts any type that behaves like a <span class="tt">polar_coords</span>, i.e <span class="tt">polar_coords</span> and <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</span>. Such function can also be defined as regular function, but this form is easier and safer.</li>
 </ul>
 <p>This is the bare minimum we can do with <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>. Additional operators can be added along with stream insertion. Check <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> documentation for more informations.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md112"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md108"></a>
 Storage and Processing</h1>
 <p>The last step in this situation is now to process multiples <span class="tt">udt::polar_coords</span> using algorithms. The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either adapted or created using <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>.</p>
 <p>eve::soa_vector provides a <span class="tt">std::vector</span>-like interface but perform automatic Structure of Array storage optimisation, ensures the best alignment possible for each sub-members and is directly usable as <b>EVE</b> algorithm input or output.</p>
@@ -232,8 +232,8 @@ Storage and Processing</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;polar_coords&gt;</a>{rho, theta};</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -241,7 +241,7 @@ Storage and Processing</h1>
 <div class="line">  {</div>
 <div class="line">    eve::algo::soa_vector&lt;polar_coords&gt; outs(xs.size());</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_variable" href="group__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a>[<a class="code hl_variable" href="group__algo__traits_ga31ef5302d899fb36aeff5146a7187cef.html#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a>]</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a>[<a class="code hl_variable" href="group__eve__algo__traits_ga31ef5302d899fb36aeff5146a7187cef.html#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a>]</div>
 <div class="line">                           ( eve::views::zip(xs, ys), outs</div>
 <div class="line">                            , [](<span class="keyword">auto</span> in) { <span class="keywordflow">return</span> to_polar( get&lt;0&gt;(in), get&lt;1&gt;(in) ); }</div>
 <div class="line">                            );</div>
@@ -274,22 +274,22 @@ Storage and Processing</h1>
 <div class="line">  <span class="keyword">auto</span> to_cartesian(eve::like&lt;polar_coords&gt; <span class="keyword">auto</span> in) {</div>
 <div class="line">    <span class="keyword">auto</span> r = rho(in);</div>
 <div class="line">    <span class="keyword">auto</span> t = theta(in);</div>
-<div class="line">    <span class="keyword">auto</span> [s, c] = <a class="code hl_variable" href="group__math__trig_gae52069dae490294ee836af9c366bbbac.html#gae52069dae490294ee836af9c366bbbac">eve::sincos</a>(t);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__simd_ga35f397f99a9981ec14e2d162ce530ee9.html#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(eve::as&lt;cartesian_coords&gt;{}, r*s, r*t);</div>
+<div class="line">    <span class="keyword">auto</span> [s, c] = <a class="code hl_variable" href="group__eve__math__trig_gae52069dae490294ee836af9c366bbbac.html#gae52069dae490294ee836af9c366bbbac">eve::sincos</a>(t);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__simd_ga35f397f99a9981ec14e2d162ce530ee9.html#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(eve::as&lt;cartesian_coords&gt;{}, r*s, r*t);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> to_cartesian( eve::algo::soa_vector&lt;polar_coords&gt; <span class="keyword">const</span>&amp; ins)</div>
 <div class="line">  {</div>
 <div class="line">    eve::algo::soa_vector&lt;cartesian_coords&gt; outs(ins.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector.html#acfa067cbe1080920388e2637eb920180">size</a>());</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_variable" href="group__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a> ( ins, outs,</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a> ( ins, outs,</div>
 <div class="line">      [](eve::like&lt;polar_coords&gt; <span class="keyword">auto</span> in) { <span class="keywordflow">return</span> to_cartesian(in); }</div>
 <div class="line">    );</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> outs;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md113"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md109"></a>
 Conclusion</h1>
 <p>In this tutorial, we managed to:</p><ul>
 <li>adapt existing UDT to be compatible with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></li>

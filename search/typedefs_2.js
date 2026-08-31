@@ -7,5 +7,6 @@ var searchData=
   ['const_5fiterator_4',['const_iterator',['../structeve_1_1algo_1_1soa__vector.html#a08ca84b8e41391cf3323531322cb0838',1,'eve::algo::soa_vector']]],
   ['const_5fiterator_5faligned_5',['const_iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a06409dfeb9c697552b3cbc4bbba13663',1,'eve::algo::soa_vector']]],
   ['const_5fpointer_6',['const_pointer',['../structeve_1_1algo_1_1soa__vector.html#aa69ac173d5f52992f17bfa1b3db7cb4c',1,'eve::algo::soa_vector']]],
-  ['const_5fpointer_5faligned_7',['const_pointer_aligned',['../structeve_1_1algo_1_1soa__vector.html#a10087850fe16634a56678b967843875d',1,'eve::algo::soa_vector']]]
+  ['const_5fpointer_5faligned_7',['const_pointer_aligned',['../structeve_1_1algo_1_1soa__vector.html#a10087850fe16634a56678b967843875d',1,'eve::algo::soa_vector']]],
+  ['container_5ftype_5ft_8',['container_type_t',['https://jfalcou.github.io/kumi/group__traits_gab1e24accb210d4757ba7701ed56ad6cc.html#gab1e24accb210d4757ba7701ed56ad6cc',1,'kumi']]]
 ];

@@ -118,7 +118,7 @@ $(function(){initNavTree('concepteve_1_1signed__simd__value.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">eve::signed_simd_value Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::signed_simd_value Concept Reference<div class="ingroups"><a class="el" href="group__eve__simd__concepts.html">SIMD Concepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -136,8 +136,9 @@ $(function(){initNavTree('concepteve_1_1signed__simd__value.html','',''); });
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1signed__simd__value.html">signed_simd_value</a> = arithmetic_simd_value&lt;T&gt; &amp;&amp; (std::is_signed_v&lt;translated_element_type_t&lt;T&gt;&gt;</div>
-<div class="line">                                                          || std::same_as&lt;translated_element_type_t&lt;T&gt;, eve::float16_t&gt;)</div>
+<div class="line">                                                          || std::same_as&lt;translated_element_type_t&lt;T&gt;, <a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a>&gt;)</div>
 <div class="ttc" id="aconcepteve_1_1signed__simd__value_html"><div class="ttname"><a href="concepteve_1_1signed__simd__value.html">eve::signed_simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type with signed elements.</div><div class="ttdef"><b>Definition</b> vectorized.hpp:72</div></div>
+<div class="ttc" id="astructeve_1_1float16__t_html"><div class="ttname"><a href="structeve_1_1float16__t.html">eve::float16_t</a></div><div class="ttdoc">IEEE 754 binary16 floating-point type.</div><div class="ttdef"><b>Definition</b> float16.hpp:189</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

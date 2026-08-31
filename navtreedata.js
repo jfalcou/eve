@@ -48,59 +48,59 @@ var NAVTREE =
       [ "EVE Namespace", "namespaceeve.html", null ],
       [ "Main API", "usergroup5.html", [
         [ "SIMD Abstractions", "usergroup6.html", [
-          [ "SIMD Types", "group__simd__types.html", null ],
-          [ "Conditional Expressions", "conditional.html", null ],
-          [ "Memory Management", "group__memory.html", null ],
-          [ "Concepts", "group__simd__concepts.html", null ]
+          [ "SIMD Types", "group__eve__simd__types.html", null ],
+          [ "Conditional Expressions", "group__eve__conditional.html", null ],
+          [ "Memory Management", "group__eve__memory.html", null ],
+          [ "Concepts", "group__eve__simd__concepts.html", null ]
         ] ],
         [ "Core Functions", "usergroup7.html", [
-          [ "Arithmetic Operations", "group__core__arithmetic.html", null ],
-          [ "FMA-like Operations", "group__core__fma__family.html", null ],
-          [ "Bitwise Functions", "group__core__bitops.html", null ],
-          [ "Logical Operations", "group__core__logical.html", null ],
-          [ "Predicates", "group__core__predicates.html", null ],
-          [ "Conversions", "group__core__conversions.html", null ],
-          [ "IEEE-754 Operations", "group__core__internal.html", null ],
-          [ "Accuracy Helpers", "group__core__accuracy.html", null ],
-          [ "Options", "group__core__decorators.html", null ]
+          [ "Arithmetic Operations", "group__eve__core__arithmetic.html", null ],
+          [ "FMA-like Operations", "group__eve__core__fma__family.html", null ],
+          [ "Bitwise Functions", "group__eve__core__bitops.html", null ],
+          [ "Logical Operations", "group__eve__core__logical.html", null ],
+          [ "Predicates", "group__eve__core__predicates.html", null ],
+          [ "Conversions", "group__eve__core__conversions.html", null ],
+          [ "IEEE-754 Operations", "group__eve__core__internal.html", null ],
+          [ "Accuracy Helpers", "group__eve__core__accuracy.html", null ],
+          [ "Options", "group__eve__core__decorators.html", null ]
         ] ],
         [ "Constants", "usergroup8.html", [
-          [ "Generic Constants", "group__core__constants.html", null ],
-          [ "Math Constants", "group__math__constants.html", null ]
+          [ "Generic Constants", "group__eve__core__constants.html", null ],
+          [ "Math Constants", "group__eve__math__constants.html", null ]
         ] ],
         [ "Common Math Functions", "usergroup9.html", [
-          [ "Logarithm", "group__math__log.html", null ],
-          [ "Exponential", "group__math__exp.html", null ],
-          [ "Trigonometric", "group__math__trig.html", null ],
-          [ "Inverse Trigonometric", "group__math__invtrig.html", null ],
-          [ "Hyperbolic", "group__math__hyper.html", null ],
-          [ "Inverse Hyperbolic", "group__math__invhyper.html", null ]
+          [ "Logarithm", "group__eve__math__log.html", null ],
+          [ "Exponential", "group__eve__math__exp.html", null ],
+          [ "Trigonometric", "group__eve__math__trig.html", null ],
+          [ "Inverse Trigonometric", "group__eve__math__invtrig.html", null ],
+          [ "Hyperbolic", "group__eve__math__hyper.html", null ],
+          [ "Inverse Hyperbolic", "group__eve__math__invhyper.html", null ]
         ] ],
         [ "Advanced Math Functions", "usergroup10.html", [
-          [ "Bessel functions", "group__bessel.html", null ],
-          [ "Combinatorial functions", "group__combinatorial.html", null ],
-          [ "Elliptic functions", "group__elliptic.html", null ],
-          [ "Polynomial functions", "group__polynomial.html", null ],
-          [ "Special functions", "group__special.html", null ]
+          [ "Bessel functions", "group__eve__bessel.html", null ],
+          [ "Combinatorial functions", "group__eve__combinatorial.html", null ],
+          [ "Elliptic functions", "group__eve__elliptic.html", null ],
+          [ "Polynomial functions", "group__eve__polynomial.html", null ],
+          [ "Special functions", "group__eve__special.html", null ]
         ] ],
         [ "SIMD Specifics", "usergroup11.html", [
-          [ "Compress functions", "group__core__compress.html", null ],
-          [ "SWAR Operations", "group__core__simd.html", null ],
-          [ "Named Shuffles", "group__core__named__shuffles.html", null ],
-          [ "Reductions", "group__core__reduction.html", null ]
+          [ "Compress functions", "group__eve__core__compress.html", null ],
+          [ "SWAR Operations", "group__eve__core__simd.html", null ],
+          [ "Named Shuffles", "group__eve__core__named__shuffles.html", null ],
+          [ "Reductions", "group__eve__core__reduction.html", null ]
         ] ],
         [ "Algorithms & Views", "usergroup12.html", [
-          [ "Algorithms", "group__algos.html", null ],
-          [ "Views", "group__views.html", null ],
-          [ "Options", "group__algo__traits.html", null ],
-          [ "Concepts", "group__algo__concepts.html", null ]
+          [ "Algorithms", "group__eve__algos.html", null ],
+          [ "Views", "group__eve__views.html", null ],
+          [ "Options", "group__eve__algo__traits.html", null ],
+          [ "Concepts", "group__eve__algo__concepts.html", null ]
         ] ]
       ] ],
       [ "Developer API", "usergroup13.html", [
-        [ "Type Traits", "group__traits.html", null ],
-        [ "Architecture Helpers", "group__arch.html", null ],
-        [ "Functions and Callables", "group__extensions.html", null ],
-        [ "User-Defined Types Supports", "group__struct.html", null ]
+        [ "Type Traits", "group__eve__traits.html", null ],
+        [ "Architecture Helpers", "group__eve__arch.html", null ],
+        [ "Functions and Callables", "group__eve__extensions.html", null ],
+        [ "User-Defined Types Supports", "group__eve__struct.html", null ]
       ] ],
       [ "Concepts List", "concepts.html", "concepts" ]
     ] ],

@@ -118,7 +118,7 @@ $(function(){initNavTree('concepteve_1_1floating__simd__value.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">eve::floating_simd_value Concept Reference<div class="ingroups"><a class="el" href="group__simd__concepts.html">SIMD Concepts</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::floating_simd_value Concept Reference<div class="ingroups"><a class="el" href="group__eve__simd__concepts.html">SIMD Concepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -137,8 +137,9 @@ $(function(){initNavTree('concepteve_1_1floating__simd__value.html','',''); });
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1floating__simd__value.html">floating_simd_value</a> = arithmetic_simd_value&lt;T&gt;</div>
 <div class="line">                                &amp;&amp; (std::floating_point&lt;translated_element_type_t&lt;T&gt;&gt;</div>
-<div class="line">                                  || std::same_as&lt;translated_element_type_t&lt;T&gt;, eve::float16_t&gt;)</div>
+<div class="line">                                  || std::same_as&lt;translated_element_type_t&lt;T&gt;, <a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a>&gt;)</div>
 <div class="ttc" id="aconcepteve_1_1floating__simd__value_html"><div class="ttname"><a href="concepteve_1_1floating__simd__value.html">eve::floating_simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type with floating elements.</div><div class="ttdef"><b>Definition</b> vectorized.hpp:132</div></div>
+<div class="ttc" id="astructeve_1_1float16__t_html"><div class="ttname"><a href="structeve_1_1float16__t.html">eve::float16_t</a></div><div class="ttdoc">IEEE 754 binary16 floating-point type.</div><div class="ttdef"><b>Definition</b> float16.hpp:189</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

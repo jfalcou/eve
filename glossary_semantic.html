@@ -123,14 +123,14 @@ $(function(){initNavTree('glossary_semantic.html','',''); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__2____w_2eve_2eve_2doc_2internals_2semantic"></a></p>
 <p><b>EVE</b> provides a lot of function that operates on similar premises. This page gather the general behaviors <b>EVE</b> types and functions can exhibit.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
 Property of EVE types</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 Cardinal</h2>
 <p>For any <a class="el" href="concepteve_1_1value.html" title="eve::value">value type</a>, the <b>cardinal</b> is the number of elements it contains. This information is retrieved via the <a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a> type trait.</p>
 <p>For any <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD type</a> <span class="tt">T</span>, <span class="tt"><a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a>&lt;T&gt;::type</span> evaluates to <span class="tt"><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;</span>, where <span class="tt">N</span> is the number of lanes of the underlying SIMD register.</p>
 <p>Two types are said to be <b>cardinal compatible</b> if they have the same cardinal or at least one of them is a <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar type</a>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
 Element type</h2>
 <p>For any <a class="el" href="concepteve_1_1value.html" title="eve::value">value type</a>, its underlying <b>element type</b> is the type used to represent its internal values. This information is retrieved via the <a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a> type trait.</p>
 <ul>
@@ -138,7 +138,7 @@ Element type</h2>
 <li>For any <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD type</a> <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T,N&gt;</span>, <span class="tt"><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T,N&gt;&gt;::type</span> evaluates to <span class="tt">T</span>.</li>
 <li>For any <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical type</a> <span class="tt">eve::logical&lt;T&gt;</span>, <span class="tt"><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;eve::logical&lt;T&gt;&gt;::type</span> evaluates to <span class="tt">eve::logical&lt;T&gt;</span>.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
 ABI traits</h2>
 <p><a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD type</a> internals depend on the actual architecture and instruction set available. This information is retrieved via the eve::abi_of type trait.</p>
 <ul>
@@ -147,9 +147,9 @@ ABI traits</h2>
 <li>When the type uses an emulated SIMD register, the resulting type is eve::emulated_.</li>
 <li>When the type elements are tuple-like, the resulting type is eve::bundle_.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
 Operations Classification</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
 Generalized Element Access</h2>
 <p><b>EVE</b> functions' semantics rely on a generic way to access an element of a <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>, be it <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar</a> or <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD</a>.</p>
 <p>To do so, we define a synthetic function <span class="tt">get(v,i)</span> that retrieve the <span class="tt">i</span>th element of a value <span class="tt">v</span>.</p>
@@ -173,7 +173,7 @@ Reductions</h2>
 <p>For any <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> <span class="tt">x</span> of type <span class="tt">T</span>, a Callable Object <span class="tt">f</span> returning a <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar value</a> of type <span class="tt">R</span> is said to be a <b>Reduction</b> if the expression <span class="tt">R r = f(x)</span> is semantically equivalent to:</p>
 <div class="fragment"><div class="line">R r = f(get(x,0),  ..., get(x,cardinal_v&lt;T&gt;-1));</div>
 </div><!-- fragment --><p>Most reduction operations are not defined on <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar values</a> unless their definition is required by the internal implementation.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
 Function Semantic</h1>
 <h2 class="doxsection"><a class="anchor" id="glossary_arithmetic"></a>
 Arithmetic Functions</h2>
@@ -187,30 +187,30 @@ Arithmetic Functions</h2>
 <p>In a less formal way, <b>EVE</b> <a class="el" href="#glossary_arithmetic" title="Arithmetic Functions">Arithmetic Functions</a> generalizes the notion of native C++ arithmetic operations. By construction, a large majority of <a class="el" href="#glossary_arithmetic" title="Arithmetic Functions">Arithmetic Functions</a> are <em>de facto</em> <a class="el" href="#glossary_elementwise" title="Element-wise Operations">Element-wise Operations</a>.</p>
 <h2 class="doxsection"><a class="anchor" id="glossary_bitwise"></a>
 Bitwise Functions</h2>
-<p><b>EVE</b> <a class="el" href="#glossary_bitwise" title="Bitwise Functions">Bitwise Functions</a> are <a class="el" href="#glossary_arithmetic" title="Arithmetic Functions">Arithmetic Functions</a> that are quite type agnostic as long as they are all <b>size-compatible</b>. By construction, all but <a class="el" href="group__core__bitops_ga83c87079ec3aa4037974b9a319aa3c5a.html#ga83c87079ec3aa4037974b9a319aa3c5a" title="eve::bit_select">bit_select</a> <a class="el" href="#glossary_bitwise" title="Bitwise Functions">Bitwise Functions</a> are de facto_ <a class="el" href="#glossary_elementwise" title="Element-wise Operations">Element-wise Operations</a> and return a value in the (possibly vector extended) type of their first parameter.</p>
+<p><b>EVE</b> <a class="el" href="#glossary_bitwise" title="Bitwise Functions">Bitwise Functions</a> are <a class="el" href="#glossary_arithmetic" title="Arithmetic Functions">Arithmetic Functions</a> that are quite type agnostic as long as they are all <b>size-compatible</b>. By construction, all but <a class="el" href="group__eve__core__bitops_ga83c87079ec3aa4037974b9a319aa3c5a.html#ga83c87079ec3aa4037974b9a319aa3c5a" title="eve::bit_select">bit_select</a> <a class="el" href="#glossary_bitwise" title="Bitwise Functions">Bitwise Functions</a> are de facto_ <a class="el" href="#glossary_elementwise" title="Element-wise Operations">Element-wise Operations</a> and return a value in the (possibly vector extended) type of their first parameter.</p>
 <h2 class="doxsection"><a class="anchor" id="glossary_logical"></a>
 Logical Functions</h2>
 <p><b>EVE</b> <a class="el" href="#glossary_logical" title="Logical Functions">Logical Functions</a> are <a class="el" href="#glossary_arithmetic" title="Arithmetic Functions">Arithmetic Functions</a> that can only be applied to <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical values</a> <span class="tt">L1, ..., Ln</span> as long as they are all <b>cardinal-compatible</b>. By construction, a large majority of <a class="el" href="#glossary_logical" title="Logical Functions">Logical Functions</a> are <em>de facto</em> <a class="el" href="#glossary_elementwise" title="Element-wise Operations">Element-wise Operations</a>.</p>
 <h2 class="doxsection"><a class="anchor" id="glossary_constant"></a>
 Constant Functions</h2>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
 General Principles</h2>
 <p><b>EVE</b> constant generator are <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> that takes a single argument of type <a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>. This argument provides the information about the type used to generate the constant. E.g:</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> z  = <a class="code hl_variable" href="group__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a>(as&lt;int&gt;());         <span class="comment">//  equivalent to auto z  = static_cast&lt;int&gt;(0);</span></div>
-<div class="line"><span class="keyword">auto</span> vp = <a class="code hl_variable" href="group__core__constants_ga615c9124768fecc05e04d58ae24f8870.html#ga615c9124768fecc05e04d58ae24f8870">eve::half</a>(as&lt;wide&lt;float&gt;&gt;()); <span class="comment">//  equivalent to auto vp = wide&lt;float&gt;(0.5);</span></div>
-<div class="ttc" id="agroup__core__constants_ga615c9124768fecc05e04d58ae24f8870_html_ga615c9124768fecc05e04d58ae24f8870"><div class="ttname"><a href="group__core__constants_ga615c9124768fecc05e04d58ae24f8870.html#ga615c9124768fecc05e04d58ae24f8870">eve::half</a></div><div class="ttdeci">constexpr auto half</div><div class="ttdoc">Computes the constant .</div><div class="ttdef"><b>Definition</b> half.hpp:67</div></div>
-<div class="ttc" id="agroup__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f_html_gab4ecebb6ef8d0c73695dee1eb7371e6f"><div class="ttname"><a href="group__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> z  = <a class="code hl_variable" href="group__eve__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a>(as&lt;int&gt;());         <span class="comment">//  equivalent to auto z  = static_cast&lt;int&gt;(0);</span></div>
+<div class="line"><span class="keyword">auto</span> vp = <a class="code hl_variable" href="group__eve__core__constants_ga615c9124768fecc05e04d58ae24f8870.html#ga615c9124768fecc05e04d58ae24f8870">eve::half</a>(as&lt;wide&lt;float&gt;&gt;()); <span class="comment">//  equivalent to auto vp = wide&lt;float&gt;(0.5);</span></div>
+<div class="ttc" id="agroup__eve__core__constants_ga615c9124768fecc05e04d58ae24f8870_html_ga615c9124768fecc05e04d58ae24f8870"><div class="ttname"><a href="group__eve__core__constants_ga615c9124768fecc05e04d58ae24f8870.html#ga615c9124768fecc05e04d58ae24f8870">eve::half</a></div><div class="ttdeci">constexpr auto half</div><div class="ttdoc">Computes the constant .</div><div class="ttdef"><b>Definition</b> half.hpp:67</div></div>
+<div class="ttc" id="agroup__eve__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f_html_gab4ecebb6ef8d0c73695dee1eb7371e6f"><div class="ttname"><a href="group__eve__core__constants_gab4ecebb6ef8d0c73695dee1eb7371e6f.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
 Precision handling</h2>
 <p>Some constants are exactly representable in IEEE754 types. However, some mathematical constants can be under-represented on a given type while simultaneously be over-represented on other. For example, \(\pi\) in <span class="tt">float</span> is greater than its mathematical value. Meanwhile \(\pi\) in <span class="tt">double</span> is less than its mathematical value.</p>
 <p>The constant implementation is so that, for any constant generator <span class="tt">g</span>:</p>
 <ul>
 <li><span class="tt">g(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span>returns the nearest representable value of the mathematical constant</li>
-<li><span class="tt">g[eve::downward](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span>returns a value no lesser than 0.5 ULP from the mathematical constant</li>
-<li><span class="tt">g[eve::upward](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span>returns a value no greater than 0.5 ULP from the mathematical constant</li>
+<li><span class="tt">g[<a class="el" href="group__eve__core__decorators_ga8e43b606df3ea6bfb3d00a9951f3e5a2.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2" title="Rounds toward .">eve::downward</a>](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span>returns a value no lesser than 0.5 ULP from the mathematical constant</li>
+<li><span class="tt">g[<a class="el" href="group__eve__core__decorators_gadc91b5f931296ee665ed345a84f1f629.html#gadc91b5f931296ee665ed345a84f1f629" title="Rounds toward .">eve::upward</a>](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span>returns a value no greater than 0.5 ULP from the mathematical constant</li>
 </ul>
 <p>For all constants,</p>
-<p><span class="tt">g[eve::downward](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;()) &lt;= g(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;()) &lt;= g[eve::upward](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span></p>
+<p><span class="tt">g[<a class="el" href="group__eve__core__decorators_ga8e43b606df3ea6bfb3d00a9951f3e5a2.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2" title="Rounds toward .">eve::downward</a>](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;()) &lt;= g(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;()) &lt;= g[<a class="el" href="group__eve__core__decorators_gadc91b5f931296ee665ed345a84f1f629.html#gadc91b5f931296ee665ed345a84f1f629" title="Rounds toward .">eve::upward</a>](<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;T&gt;())</span></p>
 <p>is always verified.</p>
 <p>We encourage user facing issue with reproducible computation to use those decorators to make all constant generation stable across types. </p>
 </div></div><!-- contents -->

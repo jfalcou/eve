@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['floating_5fscalar_5fvalue_0',['floating_scalar_value',['../concepteve_1_1floating__scalar__value.html',1,'eve']]],
-  ['floating_5fsimd_5fvalue_1',['floating_simd_value',['../concepteve_1_1floating__simd__value.html',1,'eve']]],
-  ['floating_5fvalue_2',['floating_value',['../concepteve_1_1floating__value.html',1,'eve']]]
+  ['empty_5fproduct_5ftype_0',['empty_product_type',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1empty__product__type.html',1,'kumi::concepts']]],
+  ['equality_5fcomparable_1',['equality_comparable',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1equality__comparable.html',1,'kumi::concepts']]],
+  ['equivalent_2',['equivalent',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1equivalent.html',1,'kumi::concepts']]]
 ];

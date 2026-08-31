@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['integral_5fscalar_5fvalue_0',['integral_scalar_value',['../concepteve_1_1integral__scalar__value.html',1,'eve']]],
-  ['integral_5fsimd_5fvalue_1',['integral_simd_value',['../concepteve_1_1integral__simd__value.html',1,'eve']]],
-  ['integral_5fvalue_2',['integral_value',['../concepteve_1_1integral__value.html',1,'eve']]],
-  ['invocable_5freturning_3',['invocable_returning',['../concepteve_1_1invocable__returning.html',1,'eve']]],
-  ['irregular_5fpredicate_4',['irregular_predicate',['../concepteve_1_1irregular__predicate.html',1,'eve']]]
+  ['has_5fnamed_5ffields_0',['has_named_fields',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1has__named__fields.html',1,'kumi::concepts']]],
+  ['has_5fplain_5ftranslation_1',['has_plain_translation',['../concepteve_1_1has__plain__translation.html',1,'eve']]],
+  ['has_5fstore_5fequivalent_2',['has_store_equivalent',['../concepteve_1_1has__store__equivalent.html',1,'eve']]],
+  ['homogeneous_5fproduct_5ftype_3',['homogeneous_product_type',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1homogeneous__product__type.html',1,'kumi::concepts']]]
 ];

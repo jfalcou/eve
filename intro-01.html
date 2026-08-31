@@ -121,7 +121,7 @@ $(function(){initNavTree('intro-01.html','',''); });
   <div class="headertitle"><div class="title">Basic Operations </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
 Initial problem</h1>
 <p>Let's say we want to convert 2D cartesian coordinates to 2D polar coordinates. This is a rather common exercise and will only require basic arithmetic and trigonometric functions.</p>
 <p>Cartesian coordinates are usually represented by a pair of floating point values \((x,y)\). In a similar way, polar coordinate can be represented as a pair \((\rho,\theta)\) where \(\rho\) represents the length of the ray and \(\theta\) represents the angle with the X axis.</p>
@@ -139,7 +139,7 @@ Initial problem</h1>
 <div class="line">  <span class="keywordflow">return</span> std::atan2(y, x);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>As expected, the code only requires arithmetic operations and some trigonometry. Fellow mathematicians in the audience may have some remarks on this code. For now, we will deal with the fact that it requires \(\theta\) to be in radians and that the accuracy of computing \(\rho\) this way is maybe sub-optimal. We will address those concerns later.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md99"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
 From scalar to SIMD using eve::wide</h1>
 <p>The next step is to work a SIMD version of those functions. When dealing with SIMD data types, one has to remember that a single operation has to be performed on multiple values. There, we will be working on multiple <span class="tt">x</span>and <span class="tt">y</span> to computes multiple \(\rho\) and \(\theta\).</p>
 <p>SIMD instructions sets provides architecture-specific types for SIMD register along with ISA specific functions. Of course, handling such types and functions is highly non-portable. To overcome this issue, <b>EVE</b> provides a generic, architecture agnostic type for SIMD computation: <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
@@ -155,15 +155,15 @@ From scalar to SIMD using eve::wide</h1>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> rho(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(x * x + y * y);</div>
+<div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__eve__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(x * x + y * y);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> theta(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> behaves like a regular type and can just be dropped as a replacement for any C++ arithmetic types.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md100"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
 Handling eve::wide</h1>
 <p>The remaining question is how to put data inside an instance of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> so we can write tests for our SIMD cartesian to polar conversion function.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -199,19 +199,19 @@ Handling eve::wide</h1>
 <div class="fragment"><div class="line">(4, 4, 4, 4, 4, 4, 4, 4) (1.5, 3, 4.5, 6, 7.5, 9, 10.5, 12) =&gt; (4.272, 5, 6.0208, 7.2111, 8.5, 9.84886, 11.2361, 12.6491)</div>
 <div class="line">(4, 4, 4, 4, 4, 4, 4, 4) (1.5, 3, 4.5, 6, 7.5, 9, 10.5, 12) =&gt; (0.358771, 0.643501, 0.844154, 0.982794, 1.08084, 1.15257, 1.20682, 1.24905)</div>
 </div><!-- fragment --><p>As expected, <b>EVE</b> code scales naturally with the selected architecture at compile time.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md101"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md97"></a>
 Mathematical Epilogue</h1>
 <p>As stated earlier, we are currently using a slightly brutal computation for \(\rho\). Indeed, if the magnitudes of <span class="tt">x</span> and <span class="tt">y</span> vary greatly, we may end up with overflow or cancellation, both classic IEEE 754 floating-point issues.</p>
-<p>Computing the square root of the sum of the squares of x and y, without undue overflow or underflow at intermediate stages of the computation is the job of a very specific function: <span class="tt">std::hypot</span>. Quite handily, <b>EVE</b> also proposes a SIMD implementation via <a class="el" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370" title="tuple_callable computing the  norm of its inputs.">eve::hypot</a>.</p>
+<p>Computing the square root of the sum of the squares of x and y, without undue overflow or underflow at intermediate stages of the computation is the job of a very specific function: <span class="tt">std::hypot</span>. Quite handily, <b>EVE</b> also proposes a SIMD implementation via <a class="el" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370" title="tuple_callable computing the  norm of its inputs.">eve::hypot</a>.</p>
 <p>A better implementation is then given as:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> better_rho(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
+<div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md102"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
 Conclusion</h1>
 <p>In this first tutorial, we managed to:</p><ul>
 <li>get familiar with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>, the main SIMD enabling type from <b>EVE</b></li>
