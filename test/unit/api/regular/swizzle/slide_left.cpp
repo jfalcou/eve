@@ -13,7 +13,7 @@
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
 inline constexpr
-constexpr auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
+auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
                                                 {
                                                   return (i+Shift) < c ? i+Shift : eve::na_;
                                                 }
