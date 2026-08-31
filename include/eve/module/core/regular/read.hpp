@@ -37,7 +37,7 @@ namespace eve
   };
 // TODO DOC
 //================================================================================================
-//! @addtogroup memory
+//! @addtogroup eve_memory
 //! @{
 //! @var read
 //!

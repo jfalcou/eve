@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var factorial
 //!   @brief `elementwise_callable` computing \f$\displaystyle n! = \prod_{i=1}^n i\f$.

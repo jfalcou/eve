@@ -46,7 +46,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var average
 //!   @brief `tuple_callable` computing the arithmetic mean of its arguments.
@@ -87,7 +87,7 @@ namespace eve
 //!
 //!     * `x`, `y`: [integral value](@ref eve::integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
-//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::concepts::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

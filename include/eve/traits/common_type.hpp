@@ -17,7 +17,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!
   //! @struct common_type

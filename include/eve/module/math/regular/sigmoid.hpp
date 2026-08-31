@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_sigmoid
+//! @addtogroup eve_math_sigmoid
 //! @{
 //! @var sigmoid
 //! @brief `elementwise_callable` object computing the sigmoid (logistic function).
@@ -44,7 +44,7 @@ namespace eve
 //!      constexpr auto sigmoid(floating_value auto x)                              noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto sigmoid[conditional_sigmoidr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sigmoid[conditional_expr auto c](floating_value auto x) noexcept; // 2
 //!      constexpr auto sigmoid[logical_value auto m](floating_value auto x)        noexcept; // 2
 //!   }
 //!   @endcode
@@ -52,7 +52,7 @@ namespace eve
 //! **Parameters**
 //!
 //!    * `x`: [floating value](@ref eve::floating_value).
-//!    * `c`: [Conditional sigmoidression](@ref conditional_sigmoidr) masking the operation.
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**

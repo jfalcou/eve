@@ -51,7 +51,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var next
 //!   @brief `strict_elementwise_callable` computing the nth next representable element

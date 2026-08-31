@@ -40,7 +40,7 @@ struct phi_t : constant_callable<phi_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var phi
 //!   @brief Callable object computing the golden ratio : \f$\frac{1+\sqrt5}2\f$.

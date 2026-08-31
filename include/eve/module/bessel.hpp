@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup bessel Bessel function
+//! @defgroup eve_bessel Bessel function
 //! @brief Bessel functions
 //!
 //! This module provides implementation for the

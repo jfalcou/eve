@@ -40,7 +40,7 @@ struct euler_t : constant_callable<euler_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var euler
 //!   @brief Callable object computing the constant e basis of the natural logarithms.

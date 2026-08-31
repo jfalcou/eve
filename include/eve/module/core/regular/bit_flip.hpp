@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_flip
 //!   @brief  `strict_elementwise_callable` object flipping the value the ith bit of each element.

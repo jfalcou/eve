@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup simd
+//! @addtogroup eve_simd
 //! @{
-//!   @defgroup algorithms Algorithms and Views
+//!   @defgroup eve_algorithms Algorithms and Views
 //!   @brief Algorithms and Views
 //!
 //!   This module provides implementation of SIMD versions of some std ranges algorithms.

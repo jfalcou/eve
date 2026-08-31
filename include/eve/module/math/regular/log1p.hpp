@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_log
+//! @addtogroup eve_math_log
 //! @{
 //! @var log1p
 //! @brief `elementwise_callable` object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.

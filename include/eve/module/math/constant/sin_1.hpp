@@ -40,7 +40,7 @@ struct sin_1_t : constant_callable<sin_1_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sin_1
 //!   @brief Callable object computing the constant \f$\sin(1)\f$.

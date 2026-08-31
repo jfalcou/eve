@@ -28,7 +28,7 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options, pedantic_option, raw_opt
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var lbeta
 //!   @brief `elementwise_callable` object computing the natural logarithm of the beta function.

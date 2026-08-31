@@ -28,7 +28,7 @@ namespace eve
 };
 
 //================================================================================================
-//! @addtogroup math_invhyper
+//! @addtogroup eve_math_invhyper
 //! @{
 //! @var acosh
 //! @brief `elementwise_callable` object computing  \f$\log(x+\sqrt{x^2-1})\f$.

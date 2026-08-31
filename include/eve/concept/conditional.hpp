@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept conditional_expr
   //! @brief Specifies that a type is a Conditional Expression
@@ -36,7 +36,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept relative_conditional_expr
   //! @brief Specifies that a type is a Conditional Expression using relative mask

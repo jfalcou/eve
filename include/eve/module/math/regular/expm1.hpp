@@ -26,7 +26,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(expm1_t, expm1_);
   };
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var expm1
 //! @brief Callable object computing \f$e^x-1\f$.

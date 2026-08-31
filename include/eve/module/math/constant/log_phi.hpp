@@ -40,7 +40,7 @@ struct log_phi_t : constant_callable<log_phi_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var log_phi
 //!   @brief Callable object computing the logarithm of the golden ratio : \f$\log((1+\sqrt5)/2)\f$.

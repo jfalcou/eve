@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var negmaxabs
 //!   @brief `tuple_callable` object computing the negated value of the element of maximal absolute value.
@@ -68,7 +68,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [arguments](@ref eve::value).
-//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::concepts::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

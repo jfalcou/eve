@@ -40,7 +40,7 @@ struct inv_pi_t : constant_callable<inv_pi_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var inv_pi
 //!   @brief Callable object computing the constant \f$\frac{1}{\pi}\f$.

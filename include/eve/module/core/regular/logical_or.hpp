@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_logical
+//! @addtogroup eve_core_logical
 //! @{
 //!   @var logical_or
 //!   @brief Computes the logical OR of its arguments.

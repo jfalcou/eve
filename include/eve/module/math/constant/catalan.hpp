@@ -40,7 +40,7 @@ struct catalan_t : constant_callable<catalan_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var catalan
 //!   @brief Callable object computing the catalan constant \f$\beta(2) = \sum_0^\infty

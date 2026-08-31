@@ -32,7 +32,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var minus
 //!   @brief Computes the opposite of the parameter that must be signed.
@@ -81,7 +81,7 @@ namespace eve
 //!
 //!  @note  Although the operator notation with `-` is supported, the `-` operator on
 //!     standard scalar type is the original one and so can lead to automatic promotion.
-//!     Also contrarily to `-` on signed scalar integral values,  `eve::minus is never undefined behaviour.
+//!     Also contrarily to `-` on signed scalar integral values,  `eve::minus` is never undefined behaviour.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minus.cpp}

@@ -44,7 +44,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!   @var horner
 //!   @brief Implement the horner scheme to evaluate polynomials with coefficients
@@ -72,8 +72,8 @@ namespace eve
 //!      constexpr auto horner(floating_value auto x, eve::coefficients auto tci)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
-//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto horner[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](/*any of the above overloads*/)          noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto horner[pedantic](/*any of the above overloads*/)                     noexcept; // 4
@@ -88,7 +88,7 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in decreasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: eve::coefficients is a specialization of [tuple](@ref eve::product_type) of floating values,
+//!    * `tci`: eve::coefficients is a specialization of [tuple](@ref kumi::concepts::product_type) of floating values,
 //!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.

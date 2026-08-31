@@ -15,17 +15,17 @@
 namespace eve
 {
   template<typename Options>
-  struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
+  struct bernoulli_t : elementwise_callable<bernoulli_t, Options>
   {
     template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE
     as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
 
-    EVE_CALLABLE_OBJECT(bernouilli_t, bernouilli_);
+    EVE_CALLABLE_OBJECT(bernoulli_t, bernoulli_);
   };
 
 //================================================================================================
-//! @addtogroup combinatorial
+//! @addtogroup eve_combinatorial
 //! @{
 //!   @var bernoulli
 //!   @brief  `elementwise_callable` object computing the nth Bernoulli number \f$b_n\f$ as a double.
@@ -69,9 +69,9 @@ namespace eve
 //!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/bernouilli.cpp}
+//!  @godbolt{doc/combinatorial/bernoulli.cpp}
 //================================================================================================
-  inline constexpr auto bernouilli = functor<bernouilli_t>;
+  inline constexpr auto bernoulli = functor<bernoulli_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -80,9 +80,9 @@ namespace eve
   {
     template<unsigned_value T, callable_options O>
     constexpr EVE_FORCEINLINE auto
-    bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
+    bernoulli_(EVE_REQUIRES(cpu_), O const&, T n)
     {
-      constexpr double dbernouilli_b2ns[130] = {
+      constexpr double dbernoulli_b2ns[130] = {
          +1.00000000000000000000000000000000000000000,
          +0.166666666666666666666666666666666666666667,
          -0.0333333333333333333333333333333333333333333,
@@ -219,8 +219,8 @@ namespace eve
         if( n == one(as(n)) ) return -0.5; // mhalf(as<double>());
         if( is_odd(n) ) return 0.0;
         auto no2 = n / 2;
-        if constexpr( sizeof(T) == 1 ) return dbernouilli_b2ns[no2];
-        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>());
+        if constexpr( sizeof(T) == 1 ) return dbernoulli_b2ns[no2];
+        else return (no2 < 130) ? dbernoulli_b2ns[no2] : inf(as<double>());
       }
       else
       {
@@ -229,7 +229,7 @@ namespace eve
         auto nlt130 = no2 < T(130);
         auto test   = nlt130 && even_n;
         auto nn     = if_else(test, no2, zero);
-        auto r      = gather(dbernouilli_b2ns, nn);
+        auto r      = gather(dbernoulli_b2ns, nn);
         r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
         r           = if_else(n == one(as(n)), mhalf(as(r)), r);
         if constexpr( sizeof(element_type_t<T>) == 1 ) return r;

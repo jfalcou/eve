@@ -75,3 +75,76 @@ jobs:
       - name: Run Documentation Tests
         run:  |
           cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
+
+  #################################################################################################
+  # DOXYGEN WARNINGS
+  #
+  # Not part of the required checks: a warning here never blocks a merge, it only says the
+  # generated documentation lost something on the way.
+  #################################################################################################
+  doxygen:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Prepare EVE
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=ON
+      - name: Generate the documentation
+        run: |
+          cd build
+          # No pipe here: the runner shell in this image is sh, which has no pipefail, so
+          # piping into tee would hide a doxygen failure behind tee's exit status.
+          ninja doxygen > doxygen.log 2>&1 || { tail -n 50 doxygen.log; exit 1; }
+          cat doxygen.log
+      - name: Report Doxygen warnings
+        run: |
+          cd build
+          # A log that parsed nothing means the run did not happen; reporting zero warnings
+          # from it would be a green light nobody earned.
+          parsed=$(grep -c '^Parsing file' doxygen.log || true)
+          if [ "$parsed" -lt 100 ]; then
+            echo "::error title=Doxygen::❌ Doxygen only parsed $parsed files — this run proves nothing."
+            echo "### ❌ Doxygen did not run" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          grep -E ': (warning|error):' doxygen.log > warnings.txt || true
+          count=$(wc -l < warnings.txt)
+
+          if [ "$count" -eq 0 ]; then
+            echo "::notice title=Doxygen::✅ 0 warning — the documentation built clean from $parsed files."
+            echo "### ✅ Doxygen — 0 warning" >> $GITHUB_STEP_SUMMARY
+            echo "The documentation built clean from **$parsed** parsed files." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          # One inline annotation per warning, anchored on the file and line Doxygen reported,
+          # so they land straight in the diff. Capped, because a broken alias yields hundreds.
+          sed -e "s|.*$GITHUB_WORKSPACE/||" warnings.txt \
+            | sed -E 's|^([^:]+):([0-9]+): [a-z]+: (.*)$|::warning file=\1,line=\2::\3|' \
+            | head -n 30
+
+          echo "::error title=Doxygen::❌ $count warning(s) — the generated documentation lost something."
+          echo "### ❌ Doxygen — $count warning(s)" >> $GITHUB_STEP_SUMMARY
+          echo ''            >> $GITHUB_STEP_SUMMARY
+          echo '```'         >> $GITHUB_STEP_SUMMARY
+          head -n 50 warnings.txt >> $GITHUB_STEP_SUMMARY
+          echo '```'         >> $GITHUB_STEP_SUMMARY
+          exit 1
+
+      # Only when something went wrong: the summary shows the first fifty lines, the full log
+      # is what you need when the warning is a consequence of something further up.
+      - name: Upload the Doxygen log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doxygen-log
+          path: |
+            build/doxygen.log
+            build/warnings.txt
+          if-no-files-found: warn
+          retention-days: 7

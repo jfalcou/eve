@@ -28,7 +28,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var two_sqrt_approx
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
@@ -57,7 +57,7 @@ namespace eve
 //!
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!       * `a` is `eve::sqrt(x)`
-//!       * `e` is a value such that `a`\f$\oplus\f$`e` is an approximation in doubled precision to `\f$\sqrt\f$`x`,
+//!       * `e` is a value such that `a`\f$\oplus\f$`e` is an approximation in doubled precision to \f$\sqrt\f$`x`,
 //!          where \f$\oplus\f$ (resp. \f$\sqrt\f$) adds (resp. take the square roots of) its parameters with
 //!          infinite precision.
 //!

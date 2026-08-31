@@ -23,7 +23,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_trig
+//! @addtogroup eve_math_trig
 //! @{
 //! @var deginrad
 //!

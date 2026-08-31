@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_hyper
+//! @addtogroup eve_math_hyper
 //! @{
 //! @var coth
 //! @brief `elementwise_callable` object computing the hyperbolic cotangent: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.

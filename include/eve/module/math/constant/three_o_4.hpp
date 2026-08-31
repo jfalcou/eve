@@ -40,7 +40,7 @@ struct three_o_4_t : constant_callable<three_o_4_t, Options, lower_option, upper
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var three_o_4
 //!   @brief Callable object computing the constant \f$3/4\f$.

@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept integral_scalar_value
   //! @brief Specify that a type represents an integral scalar value.
@@ -31,7 +31,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_scalar_value
   //! @brief Specify that a type represents a signed scalar value.
@@ -50,7 +50,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept unsigned_scalar_value
   //! @brief Specify that a type represents an unsigned scalar value.
@@ -67,7 +67,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept signed_integral_scalar_value
   //! @brief Specify that a type represents an integral scalar value.
@@ -84,7 +84,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept floating_scalar_value
   //! @brief Specify that a type represents a floating scalar value.

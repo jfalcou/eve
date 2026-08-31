@@ -15,7 +15,7 @@
 #include <type_traits>
 
 //==================================================================================================
-//! @defgroup struct Structured Types Management
+//! @defgroup eve_struct Structured Types Management
 //! @brief Traits and functions to handle user defined types in SIMD registers
 //!
 //! **EVE** provides various elements to simplify the management of user-defined structures
@@ -27,7 +27,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup struct
+  //! @addtogroup eve_struct
   //! @{
   //================================================================================================
 

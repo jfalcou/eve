@@ -41,7 +41,7 @@ struct sqrt_3_t : constant_callable<sqrt_3_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sqrt_3
 //!   @brief Callable object computing  constant \f$\sqrt{3}\f$.

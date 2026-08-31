@@ -40,7 +40,7 @@ struct egamma_sqr_t : constant_callable<egamma_sqr_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var egamma_sqr
 //!   @brief Callable object computing the square of the [Euler-Mascheroni constant](@ref

@@ -27,7 +27,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var polygamma
 //!   @brief `elementwise_callable` object computing the Polygamma function i.e.

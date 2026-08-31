@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup contfrac
+//! @addtogroup eve_contfrac
 //! @{
 //!   @var lentz_b
 //!   @brief Implement the Lentz scheme to evaluate a continued fraction with leading term \f$b_0\f$:

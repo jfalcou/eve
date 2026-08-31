@@ -30,7 +30,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var gamma_p
 //!   @brief `elementwise_callable` object computing the normalized lower incomplete \f$\Gamma\f$ function.

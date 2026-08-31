@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var ellint_rc
 //!   @brief  `elementwise_callable` object computing the degenerate Carlson's elliptic integral

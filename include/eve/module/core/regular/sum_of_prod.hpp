@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_accuracy
+//! @addtogroup eve_core_accuracy
 //! @{
 //!   @var sum_of_prod
 //!   @brief `elementwise_callable` object computing the sum of products operation with better accuracy

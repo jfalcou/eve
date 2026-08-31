@@ -8,7 +8,7 @@
 #pragma once
 
 //==================================================================================================
-//! @defgroup traits Type traits
+//! @defgroup eve_traits Type traits
 //! @brief  Type traits for SIMD related types and functions
 //!
 //! Using **EVE** types and functions may require information about some properties of the processed

@@ -28,7 +28,6 @@ namespace eve
   struct decreasing_mode      {};
   struct definitely_mode      {};
   struct eccentric_mode       {};
-  struct fast                 {};
   struct increasing_mode      {};
   struct harrisson_mode       {};
   struct kahan_mode           {};
@@ -238,3 +237,333 @@ namespace eve
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
 }
+
+#if defined(EVE_DOXYGEN_INVOKED)
+namespace eve
+{
+//======================================================================================================================
+//! @addtogroup eve_core_decorators
+//! @{
+//!   @var saturated
+//!   @brief Keeps the result inside the range of its type instead of wrapping or overflowing.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   An operation that would leave the representable range returns the nearest bound rather than the
+//!   value C++ would produce, so `eve::abs[saturated](valmin(as<T>()))` gives `valmax(as<T>())`
+//!   instead of wrapping back to a negative number.
+//======================================================================================================================
+  inline constexpr auto saturated = {};
+
+//======================================================================================================================
+//!   @var pedantic
+//!   @brief Follows the corner cases of the corresponding standard function.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The undecorated call is free to take the shortest route the hardware offers. This option asks
+//!   instead for the behaviour the C++ standard prescribes on infinities, zeroes and NaNs, which is
+//!   usually slower.
+//======================================================================================================================
+  inline constexpr auto pedantic = {};
+
+//======================================================================================================================
+//!   @var numeric
+//!   @brief Makes NaN lose against any definite value.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Comparisons and reductions normally propagate NaN, and which operand carries it decides the
+//!   result: `eve::max(nan, x)` is a NaN while `eve::max(x, nan)` is `x`. Under this option a NaN
+//!   never wins either way, so both spellings return `x`.
+//======================================================================================================================
+  inline constexpr auto numeric = {};
+
+//======================================================================================================================
+//!   @var almost
+//!   @brief Turns an equality or an ordering into its tolerant form.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Written `f[almost]` the tolerance defaults to `3*eps(as(x))`. Written `f[almost = tol]` it is
+//!   whatever `tol` says, and the way it is read depends on its type:
+//!
+//!     * a floating `tol` is a relative distance: \f$|x - y| \le \mbox{tol}\cdot\max(|x|, |y|)\f$
+//!     * an integral `tol` is a number of representable values between the two operands
+//!
+//!   @note Only defined for floating point values.
+//!   @see [`definitely`](@ref eve::definitely) for the opposite bias.
+//======================================================================================================================
+  inline constexpr auto almost = {};
+
+//======================================================================================================================
+//!   @var definitely
+//!   @brief Requires a strict comparison to hold by a margin.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Mirror image of [`almost`](@ref eve::almost): where `almost` widens a test so that near misses
+//!   pass, `definitely` narrows it so that near misses fail. `is_greater[definitely = tol](x, y)`
+//!   holds when \f$x > y + \mbox{tol}\cdot\max(|x|, |y|)\f$ for a floating `tol`, or when `x`
+//!   exceeds the `tol`-th representable value after `y` for an integral one. Omitting `tol` uses
+//!   `3*eps(as(x))`.
+//!
+//!   @note Only defined for floating point values.
+//======================================================================================================================
+  inline constexpr auto definitely = {};
+//======================================================================================================================
+//!   @var raw
+//!   @brief Performs the operation minimally, trading accuracy for speed.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Corner cases and the last bits of accuracy are given up in exchange for the shortest code path.
+//!   [`fast`](@ref eve::fast) makes the opposite trade, keeping more accuracy for less of a gain.
+//!
+//!   @note Neither option guarantees a speed improvement, only that the call will not be slower than
+//!         the regular one.
+//======================================================================================================================
+  inline constexpr auto raw = {};
+
+//======================================================================================================================
+//!   @var fast
+//!   @brief Performs the operation faster than the regular call while keeping more accuracy than `raw`.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Same intent as [`raw`](@ref eve::raw), with a smaller loss of accuracy and, usually, a smaller gain.
+//======================================================================================================================
+  inline constexpr auto fast = {};
+
+//======================================================================================================================
+//!   @var lower
+//!   @brief Guarantees a result no greater than the exact mathematical one.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The computed value is less than or equal to the value an infinitely precise computation would
+//!   give, NaN excepted. Combine with [`strict`](@ref eve::strict) to make the inequality strict.
+//!
+//!   @note Except for `average` on integral inputs, this has no effect on integer calls.
+//======================================================================================================================
+  inline constexpr auto lower = {};
+
+//======================================================================================================================
+//!   @var upper
+//!   @brief Guarantees a result no smaller than the exact mathematical one.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Mirror image of [`lower`](@ref eve::lower): the computed value is greater than or equal to the
+//!   exact one, NaN excepted.
+//======================================================================================================================
+  inline constexpr auto upper = {};
+
+//======================================================================================================================
+//!   @var strict
+//!   @brief Turns the guarantee of `lower` or `upper` into a strict inequality.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Only meaningful next to [`lower`](@ref eve::lower) or [`upper`](@ref eve::upper). The bound is
+//!   then strict, which usually costs one bit of accuracy and buys some speed.
+//!
+//!   @note Unlike `lower` and `upper`, this is not accepted by the constants.
+//======================================================================================================================
+  inline constexpr auto strict = {};
+
+//======================================================================================================================
+//!   @var widen
+//!   @brief Computes the result in the upgraded element type.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The computation and its result use the type twice as wide as the parameters' element type.
+//!   Returning to the original width, when needed, is left to the caller through
+//!   [`convert`](@ref eve::convert).
+//!
+//!   @note 64 bits types are their own upgrade, so the option does nothing for them.
+//======================================================================================================================
+  inline constexpr auto widen = {};
+
+//======================================================================================================================
+//!   @var to_nearest
+//!   @brief Rounds to the nearest integer, ties going to the even one.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   One of the four integer rounding modes.
+//======================================================================================================================
+  inline constexpr auto to_nearest = {};
+
+//======================================================================================================================
+//!   @var downward
+//!   @brief Rounds toward \f$-\infty\f$.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   One of the four integer rounding modes.
+//======================================================================================================================
+  inline constexpr auto downward = {};
+
+//======================================================================================================================
+//!   @var upward
+//!   @brief Rounds toward \f$+\infty\f$.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   One of the four integer rounding modes.
+//======================================================================================================================
+  inline constexpr auto upward = {};
+
+//======================================================================================================================
+//!   @var toward_zero
+//!   @brief Rounds toward zero.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   One of the four integer rounding modes.
+//======================================================================================================================
+  inline constexpr auto toward_zero = {};
+
+//======================================================================================================================
+//!   @var to_nearest_odd
+//!   @brief Rounds to the nearest integer, ties going to the odd one.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Experimental, and accepted by `add` only.
+//======================================================================================================================
+  inline constexpr auto to_nearest_odd = {};
+
+//======================================================================================================================
+//!   @var left
+//!   @brief Swaps the two operands before applying the operation.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   `sub[left](a, b)` is `sub(b, a)`, and the same holds for the other operations that accept it.
+//!   Useful when the order comes from the call site rather than from the intent.
+//======================================================================================================================
+  inline constexpr auto left = {};
+
+//======================================================================================================================
+//!   @var right
+//!   @brief Applies the operation in the order the operands are written.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The behaviour of an undecorated call, spelled out. It exists so that a call site pairing with
+//!   [`left`](@ref eve::left) elsewhere can state which of the two it means instead of relying on
+//!   the reader knowing the default.
+//======================================================================================================================
+  inline constexpr auto right = {};
+
+//======================================================================================================================
+//!   @var spherical
+//!   @brief Selects the spherical form of a Bessel function.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   `bessel_j[spherical](n, z)` computes \f$j_n(z)\f$ where the plain call computes
+//!   \f$J_n(z)\f$. Accepted by the four Bessel families.
+//======================================================================================================================
+  inline constexpr auto spherical = {};
+
+//======================================================================================================================
+//!   @var cylindrical
+//!   @brief Selects the cylindrical form of a Bessel function.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   The form the undecorated call already computes, \f$J_n(z)\f$, named so that a call site can
+//!   say which of the two it wants rather than leaving it to the default. Mirror of
+//!   [`spherical`](@ref eve::spherical).
+//======================================================================================================================
+  inline constexpr auto cylindrical = {};
+
+//======================================================================================================================
+//! @}
+//======================================================================================================================
+}
+#endif

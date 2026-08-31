@@ -15,7 +15,7 @@ namespace eve
   template<std::ptrdiff_t Cardinal> struct fixed;
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
   //!   @struct cardinal
   //!   @brief Computes the cardinal of a given type

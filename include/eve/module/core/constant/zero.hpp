@@ -41,7 +41,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var zero
 //!   @brief Computes the constant 0

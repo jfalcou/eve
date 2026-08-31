@@ -24,7 +24,7 @@ EVE_CALLABLE_API(compress_copy_scalar_impl_, compress_copy_scalar_impl)
 }
 
 //================================================================================================
-//! @addtogroup core_compress
+//! @addtogroup eve_core_compress
 //! @{
 //!    @var compress_copy_scalar
 //!    @brief One of the implementations for eve::compress_copy that relies on

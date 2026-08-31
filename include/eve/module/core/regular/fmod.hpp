@@ -28,7 +28,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var fmod
 //!   @brief `elementwise_callable` object mimicking the std::fmod function for floating values.

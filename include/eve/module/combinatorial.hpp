@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup combinatorial Combinatorial functions
+//! @defgroup eve_combinatorial Combinatorial functions
 //! @brief Combinatorial functions
 //!
 //! This module provides implementation for  scalar and SIMD versions of combinatorial functions
@@ -20,7 +20,7 @@
 //!
 //! @}
 //==================================================================================================
-#include <eve/module/combinatorial/regular/bernouilli.hpp>
+#include <eve/module/combinatorial/regular/bernoulli.hpp>
 #include <eve/module/combinatorial/regular/fibonacci.hpp>
 #include <eve/module/combinatorial/regular/gcd.hpp>
 #include <eve/module/combinatorial/regular/lcm.hpp>

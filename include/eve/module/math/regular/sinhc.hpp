@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_hyper
+//! @addtogroup eve_math_hyper
 //! @{
 //! @var sinhc
 //!
@@ -54,7 +54,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!   `x`:   [floating value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!

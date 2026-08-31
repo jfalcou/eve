@@ -40,7 +40,7 @@ struct invcbrt_pi_t : constant_callable<invcbrt_pi_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var invcbrt_pi
 //!   @brief Callable object computing the constant \f$\pi^{-1/3}\f$.

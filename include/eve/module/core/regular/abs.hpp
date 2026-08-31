@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var abs
 //!   @brief `elementwise_callable` object computing the absolute value of the parameter.
@@ -64,7 +64,7 @@ namespace eve
 //!   1. The absolute value of `x` if it is representable.
 //!   2. [The operation is performed conditionally](@ref conditional).
 //!   3. The saturated absolute value of `x`. More specifically, for signed
-//!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
+//!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve::valmax(as<T>{}))`
 //!
 //!   @note The absolute value of `x` is always representable except for
 //!    The minimum value of integral signed values. In that case, contrarily to the standard, the result is not

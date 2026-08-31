@@ -46,7 +46,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var prev
 //!   @brief Computes the nth previous representable element

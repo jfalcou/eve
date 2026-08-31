@@ -34,9 +34,10 @@ namespace eve
   //================================================================================================
   //! @brief Translates an `std::array` to an `std::array` of its translated value type and the same size.
   //!
-  //! @param T The element type of the array to translate
-  //! @param N The size of the array to translate
-  //! @return The translated array of type `std::array<translate_t<V>, N>`
+  //! @tparam T The element type of the array to translate
+  //! @tparam N The size of the array to translate
+  //! @param  val The array to translate
+  //! @return The translated array of type `std::array<translate_t<T>, N>`
   //================================================================================================
   template <typename T, size_t N>
   constexpr std::array<translate_t<T>, N> translate(std::array<T, N> val)
@@ -63,7 +64,6 @@ namespace eve
   //! @tparam V The wrapper type to translate
   //! @return Type tag for the translated type
   //!
-  //! @example
   //! @code
   //!   enum class E: int { };
   //!   eve::as<E> tag;
@@ -82,7 +82,6 @@ namespace eve
   //! @param ptr The pointer to translate
   //! @return A pointer of the translated type
   //!
-  //! @example
   //! @code
   //!   enum class E: int { };
   //!   E* ptr;
@@ -117,7 +116,6 @@ namespace eve
   //! @param val The source value to translate
   //! @tparam Dst The destination type to translate into
   //!
-  //! @example
   //! @code
   //!   enum class A : int { };
   //!   enum class B : int { };

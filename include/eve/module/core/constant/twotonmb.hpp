@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var twotonmb
 //!   @brief Computes the  2 power of the number of mantissa bits of a floating value.

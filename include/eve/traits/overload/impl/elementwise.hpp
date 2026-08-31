@@ -30,7 +30,7 @@ namespace eve::_
 namespace eve
 {
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct elementwise_callable
   //!   @brief CRTP base class giving an EVE's @callable the elementwise function semantic

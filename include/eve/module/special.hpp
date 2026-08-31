@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup special Special functions
+//! @defgroup eve_special Special functions
 //! @brief Special functions
 //!
 //! This module provides implementation for various special functions

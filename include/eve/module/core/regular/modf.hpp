@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var modf
 //!   @brief `elementwise_callable` object computing the [elementwise](@ref glossary_elementwise)

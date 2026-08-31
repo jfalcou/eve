@@ -12,7 +12,7 @@
 namespace eve::views
 {
   //================================================================================================
-  // @addtogroup views
+  // @addtogroup eve_views
   // @{
   //    @var map_load_op
   //    @brief a shorthand for `eve::algo::views::map_load_op`.

@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_trig
+//! @addtogroup eve_math_trig
 //! @{
 //! @var cot
 //! @brief `elementwise_callable` object computing the cotangent of the input.
@@ -69,7 +69,7 @@ namespace eve
 //!       In particular:
 //!       1. assume a parameter in radian.
 //!       2. assume a parameter in degree.
-//!       3. assume a parameter in \f$\pi\f$ multiples. </br>
+//!       3. assume a parameter in \f$\pi\f$ multiples. <br>
 //!    2. [The operation is performed conditionally](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.

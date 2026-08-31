@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var minf
 //!   @brief Computes the -infinity ieee value.
@@ -57,7 +57,7 @@ namespace eve
 //!    **Return value**
 //!
 //!    The call `eve::minf(as<T>())` is semantically equivalent to
-//!    T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
+//!    `T(-std::numeric_limits<eve::element_type_t<T>>::infinity())`
 //!
 //!  @groupheader{Example}
 //!

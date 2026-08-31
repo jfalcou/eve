@@ -87,7 +87,7 @@ concept invocable = requires(F&& f, Args&&...args)
 };
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief std::predicate but doesn't require regularity
   //!
@@ -102,7 +102,7 @@ concept invocable = requires(F&& f, Args&&...args)
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Specifies that the function `Op`, when called with arguments of types `Args...`,
   //!        returns a value convertible to `R`.
@@ -120,7 +120,7 @@ concept invocable = requires(F&& f, Args&&...args)
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Specifies a predicate that returns a logical value
   //! @brief Specifies a predicate that accepts [simd values](@ref eve::simd_value) of the same
@@ -140,7 +140,7 @@ concept invocable = requires(F&& f, Args&&...args)
   //================================================================================================
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Specifies that `Op` is a abelian monoid function operating on values of type `T`.
   //!

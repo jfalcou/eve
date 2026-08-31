@@ -33,7 +33,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_reduction
+  //! @addtogroup eve_core_reduction
   //! @{
   //!   @var count_true
   //!   @brief Computes the number of elements of the input which evaluates to `true`.

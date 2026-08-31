@@ -46,7 +46,7 @@ namespace eve::algo::views
   }
 
   //================================================================================================
-  //! @addtogroup algo_concepts
+  //! @addtogroup eve_algo_concepts
   //! @{
   //!  @struct map_load_op
   //!  @brief requirement for the operation applied on read/load in map.
@@ -66,7 +66,7 @@ namespace eve::algo::views
     && std::regular_invocable<Op, as_wide_t<value_type_t<Base>>>;
 
   //================================================================================================
-  //! @addtogroup algo_concepts
+  //! @addtogroup eve_algo_concepts
   //! @{
   //!  @struct map_store_op
   //!  @brief requirement for the operation applied on store in map.
@@ -90,7 +90,7 @@ namespace eve::algo::views
     && std::regular_invocable<Op, as_wide_t<_::map_value_type_t<LoadOp, Base>>, as<value_type_t<Base>>>);
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @struct map_iterator
   //!    @brief An iterator for `map`, `map_convert`.
@@ -106,7 +106,7 @@ namespace eve::algo::views
   struct map_iterator;
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @struct map_range
   //!    @brief A range for `map`, `map_covnert`.
@@ -122,7 +122,7 @@ namespace eve::algo::views
   struct map_range;
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @var map_convert
   //!    @brief Given a relaxed iterator/range and 2 operations return
@@ -163,7 +163,7 @@ namespace eve::algo::views
   } map_convert;
 
   //================================================================================================
-  //! @addtogroup views
+  //! @addtogroup eve_views
   //! @{
   //!    @var map
   //!    @brief Given a relaxed iterator/range and an operation return

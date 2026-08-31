@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup math  Mathematical functions
+//! @defgroup eve_math  Mathematical functions
 //! @brief Current Mathematical functions
 //!
 //! This module provides implementation for
@@ -22,11 +22,11 @@
 //==================================================================================================
 
 //==================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!
-//! @defgroup math_constants  Constants
-//! @ingroup math
+//! @defgroup eve_math_constants  Constants
+//! @ingroup eve_math
 //! These functions allows access to scalar and SIMD values of some mathematical constants.
 //! In particular,  all libc++ constants are here, sometimes with a different name.
 //!
@@ -49,8 +49,8 @@
 //!        * inv_pi is the inverse of \f$\pi\f$.
 //!        * four_pio_3 stands for \f$4\pi/3\f$ (the `o` meanings over).
 //!
-//! @defgroup math_trig  Trigonometric
-//! @ingroup math
+//! @defgroup eve_math_trig  Trigonometric
+//! @ingroup eve_math
 //! These functions allows performing trigonometric computations
 //!
 //! All trigonometric functions admits three flavors for parameters being radian,
@@ -65,7 +65,7 @@
 //!     For example eve::cos(eve::pio_2(as<double>()))) is 6.1232e-17 (as pio_2 is not exact),
 //!     but eve::cos[radpi](0.5) is 0 (as 0.5 is exact).
 //!
-//! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,
+//! Moreover each function can be decorated with eve::quarter_circle,  eve::half_circle,
 //! eve::full_circle.
 //!
 //!   * eve::quarter_circle provides accurate result for the corresponding
@@ -77,29 +77,29 @@
 //!   * regular call (not decorated) choose the best call and is
 //!     valid on the full range.
 //!
-//! @defgroup contfrac  Continued Fractions
-//! @ingroup math
+//! @defgroup eve_contfrac  Continued Fractions
+//! @ingroup eve_math
 //! These functions computes continued fractions
 //!
-//! @defgroup math_invtrig  Inverse trigonometric
-//! @ingroup math
+//! @defgroup eve_math_invtrig  Inverse trigonometric
+//! @ingroup eve_math
 //! These functions allows performing inverse trigonometric computations. As the direct functions they admit options
 //! such that the return value is exprressed in radian,  degrees or \f$\pi\f$ multiples,  namely eve::rad,  eve::deg and eve::radpi.
 //!
-//! @defgroup math_hyper  Hyperbolic
-//! @ingroup math
+//! @defgroup eve_math_hyper  Hyperbolic
+//! @ingroup eve_math
 //! These functions allows performing hyperbolic computations
 //!
-//! @defgroup math_invhyper  Inverse hyperbolic
-//! @ingroup math
+//! @defgroup eve_math_invhyper  Inverse hyperbolic
+//! @ingroup eve_math
 //! These functions allows performing inverse hyperbolic computations
 //!
-//! @defgroup math_log  Logarithm
-//! @ingroup math
+//! @defgroup eve_math_log  Logarithm
+//! @ingroup eve_math
 //! These functions allows performing logarithm computations
 //!
-//! @defgroup math_exp  Exponential
-//! @ingroup math
+//! @defgroup eve_math_exp  Exponential
+//! @ingroup eve_math
 //! These functions allows performing exponential computations
 //!
 ///! @}

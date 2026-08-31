@@ -32,7 +32,7 @@ struct bitincrement_t : constant_callable<bitincrement_t, Options, lower_option,
 };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var bitincrement
 //!   @brief Computes a constant with only the least significant bit set.

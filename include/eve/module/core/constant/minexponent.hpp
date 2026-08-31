@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var minexponent
 //!   @brief Computes the least exponent of a floating point IEEE value
@@ -59,7 +59,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::limitexponent(as<T>())` is semantically equivalent to
+//!      The call `eve::minexponent(as<T>())` is semantically equivalent to
 //!       * `as_integer_t<T>(-126)` if `eve::element_type_t<T>` is float
 //!       * `as_integer_t<T>(-1022)` if `eve::element_type_t<T>` is double
 //!

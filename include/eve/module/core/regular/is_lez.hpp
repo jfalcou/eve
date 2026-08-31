@@ -28,7 +28,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(is_lez_t, is_lez_);
   };
 //================================================================================================
-//! @addtogroup core_predicates
+//! @addtogroup eve_core_predicates
 //! @{
 //!   @var is_lez
 //!   @brief `elementwise callable` returning a logical true  if and only if the element value is less or equal to 0.

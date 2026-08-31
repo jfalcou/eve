@@ -39,7 +39,7 @@ template<typename TraitsSupport> struct max_value_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var max_value
 //!

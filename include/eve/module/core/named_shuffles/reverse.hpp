@@ -14,7 +14,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!    @var reverse
 //!    @brief a named shuffle for reversing a register.

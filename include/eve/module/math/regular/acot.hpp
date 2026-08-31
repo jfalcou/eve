@@ -26,7 +26,7 @@ namespace eve
 };
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup eve_math_invtrig
 //! @{
 //!   @var acot
 //!   @brief `elementwise_callable` object computing the arc cotangent.

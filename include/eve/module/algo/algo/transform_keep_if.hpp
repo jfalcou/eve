@@ -62,7 +62,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!   @var transform_keep_if
   //!   @brief In-place version of `eve::algo::transform_copy_if`

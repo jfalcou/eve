@@ -24,7 +24,7 @@ struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option
 };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var ifrexp
 //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee

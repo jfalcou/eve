@@ -58,7 +58,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var trapz
 //!   @brief `tuple_callable` object applying the trapezoidal composite rule to its arguments.
@@ -100,15 +100,15 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!       1. Computes elementwise the integral of the piecewise linear function defined by \$f(x_i) = y_i\f$ (trapezoidal rule)
+//!       1. Computes elementwise the integral of the piecewise linear function defined by \f$f(x_i) = y_i\f$ (trapezoidal rule)
 //!       2. the missing `x` parameter is assumed equal to be an arithmetic progression of common difference h (1 if h is omitted).
 //!       3. the missing `y` parameter is assumed equal to the call of f applied to the x elements
 //!       4. the computation is made with the upgraded types
 //!       5. Internal summation use kahan algorithm for better accuracy
 //!
 //!  @note definition of `f` or of `y` ?
-//!      - If `f` is a parameter the `y` values are defined by  \$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
-//!      - If `y` (or `ys...`) is a parameter `f` is defined by  \$f(x_i) = y_i\f$. and the values of \f$x_i\f$ are not needed
+//!      - If `f` is a parameter the `y` values are defined by  \f$y_i = \mathrm{f}(x_i)\f$ and `x` or `xs`must be defined
+//!      - If `y` (or `ys...`) is a parameter `f` is defined by  \f$f(x_i) = y_i\f$. and the values of \f$x_i\f$ are not needed
 //!        as they are equally spaced with space `h` (defaulted to one).
 //!      - If `x` (or `xs ...`) is a parameter its must be sorted in increasing order.
 //!

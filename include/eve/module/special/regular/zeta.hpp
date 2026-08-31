@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var zeta
 //!   @brief Computes the Riemann \f$\zeta\f$ function.

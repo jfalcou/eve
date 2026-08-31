@@ -12,7 +12,7 @@
 namespace eve
 {
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct constant_callable
   //!   @brief CRTP base class giving an EVE's @callable the constant function semantic

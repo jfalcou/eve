@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var absmin
 //!   @brief `tuple_callable` computing the absolute value of the minimal element.
@@ -72,7 +72,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [real](@ref eve::value) arguments.
-//!     * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::concepts::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

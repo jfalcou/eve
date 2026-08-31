@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var nearest
 //!   @brief  `strict_elementwise_callable` object computing the nearest integer to the input.
@@ -60,7 +60,7 @@ namespace eve
 //!     * `x` :[value](@ref eve::value) argument.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
-//!     * `tol' [scalar_value](@ref eve::value) tolerance.
+//!     * `tol` [scalar_value](@ref eve::value) tolerance.
 //!
 //!   **Return value**
 //!

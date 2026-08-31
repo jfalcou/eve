@@ -32,7 +32,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var sqr
 //!   @brief Computes the square of the parameter.

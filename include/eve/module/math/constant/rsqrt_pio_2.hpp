@@ -40,7 +40,7 @@ struct rsqrt_pio_2_t : constant_callable<rsqrt_pio_2_t, Options, lower_option, u
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var rsqrt_pio_2
 //!   @brief Callable object computing the constant \f$(\pi/2)^{-1/2}\f$.

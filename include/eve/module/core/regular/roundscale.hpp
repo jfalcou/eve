@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var roundscale
 //!   @brief `strict_elementwise_callable` object computing the scaled input rounding.
@@ -72,7 +72,7 @@ namespace eve
 //!          The number of fraction bits retained is specified by scale. By default the internal
 //!          rounding after scaling is done to nearest integer.
 //!          The call `roundscale(x, scale)` is equivalent to  `ldexp(eve::nearest(ldexp(x,scale), -scale))`
-//!      2. with `o` denoting one of these options the call is equivalent to ldexp(round[o](ldexp(x,scale), -scale))`
+//!      2. with `o` denoting one of these options the call is equivalent to `ldexp(round[o](ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/roundscale.cpp}

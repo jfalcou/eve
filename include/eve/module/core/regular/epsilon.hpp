@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_fma_internal
+//! @addtogroup eve_core_fma_internal
 //! @{
 //!   @var epsilon
 //!   @brief `elementwise_callable` object computing the distance of the absolute value of the parameter

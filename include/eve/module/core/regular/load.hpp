@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup simd
+  //! @addtogroup eve_simd
   //! @{
   //!   @var load
   //!   @brief Loads data from a pointer or a pair of iterators into a [SIMD value](@ref eve::simd_value)

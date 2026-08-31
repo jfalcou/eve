@@ -32,9 +32,9 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
-  //!  @var same_types
+  //!  @concept same_types
   //!
   //!  @tparam Ts Type to process
   //!
@@ -48,9 +48,9 @@ namespace eve
   concept same_types = same_lanes_or_scalar<Ts...> && _::type_check<Ts...>();
 
   //================================================================================================
-  //! @addtogroup traits
+  //! @addtogroup eve_traits
   //! @{
-  //!  @var same_types_tuple
+  //!  @concept same_types_tuple
   //!
   //!  @tparam T Product type to process
   //!

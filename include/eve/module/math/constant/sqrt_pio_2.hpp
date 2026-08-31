@@ -40,7 +40,7 @@ struct sqrt_pio_2_t : constant_callable<sqrt_pio_2_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sqrt_pio_2
 //!   @brief Callable object computing the constant \f$\sqrt{\pi/2}\f$.

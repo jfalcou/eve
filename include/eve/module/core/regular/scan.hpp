@@ -36,7 +36,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_simd
+  //! @addtogroup eve_core_simd
   //! @{
   //!   @var scan
   //!   @brief Computes the generalized prefix sum over a [simd value](@ref eve::simd_value).

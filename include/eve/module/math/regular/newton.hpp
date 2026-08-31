@@ -49,7 +49,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var newton
 //!   @brief Implement the Newton scheme to evaluate polynomials.
@@ -77,8 +77,8 @@ namespace eve
 //!                                                   eve::nodes auto ni)                  noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/)     noexcept; // 3
-//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)        noexcept; // 3
+//!      constexpr auto newton[conditional_expr auto c](/*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto newton[logical_value auto m](/*any of the above overloads*/)        noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto newton[pedantic](/*any of the above overloads*/)                   noexcept; // 4

@@ -45,7 +45,7 @@ template<typename TraitsSupport> struct equal_ : TraitsSupport
 
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var equal
 //!
@@ -95,7 +95,7 @@ template<typename TraitsSupport> struct equal_ : TraitsSupport
 //!   **Parameters**
 //!
 //!    * `rng`: zipped pair of 2 ranges to compare
-//!    * 'r1`, `r2` - two separate components that `zip` to a `zipped_range_pair`
+//!    * `r1`, `r2` - two separate components that `zip` to a `zipped_range_pair`
 //!    * `p` - binary predicate for equivalence testing.
 //!
 //!   **Return value**

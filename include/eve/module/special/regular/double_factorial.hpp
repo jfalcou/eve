@@ -28,10 +28,10 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var double_factorial
-//!   @brief elementwise_callable` object computing the double factorial of `n`
+//!   @brief `elementwise_callable` object computing the double factorial of `n`
 //!
 //!   THe double factorial is defined as \f$\displaystyle (2n)!! =
 //!   \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$

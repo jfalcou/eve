@@ -33,7 +33,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!   @var copy
   //!   @brief SIMD optimized copy algorithm
@@ -101,7 +101,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!   @var copy_backward
   //!   @brief SIMD optimized backward copy algorithm

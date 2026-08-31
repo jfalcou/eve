@@ -31,7 +31,7 @@ namespace eve
   };
 
 //======================================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
 //!   @var  bessel_j
 //!   @brief Computes the spherical or cylindrical Bessel functions of the first kind,

@@ -25,7 +25,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_hyper
+//! @addtogroup eve_math_hyper
 //! @{
 //! @var csch
 //! @brief `elementwise_callable` object computing  \f$\frac2{e^x+e^{-x}}\f$.

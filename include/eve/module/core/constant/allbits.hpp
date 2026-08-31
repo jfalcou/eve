@@ -34,7 +34,7 @@ struct allbits_t : constant_callable<allbits_t, Options, lower_option, upper_opt
 };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var allbits
 //!   @brief Computes a constant with all bits set.

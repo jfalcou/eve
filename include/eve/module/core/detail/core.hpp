@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//! @defgroup core Core functions
+//! @defgroup eve_core Core functions
 //! @brief Core functions
 //!
 //!  This module provides implementation for various fundamental functions

@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_reduction
+//! @addtogroup eve_core_reduction
 //! @{
 //!   @var minimum
 //!   @brief Computes the minimal value in a simd vector or [majorant](@ref eve::majorant) if the input is fully masked.

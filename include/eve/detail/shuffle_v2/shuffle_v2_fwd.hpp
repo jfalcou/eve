@@ -35,7 +35,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!    @var shuffle_v2_core
 //!
@@ -101,7 +101,7 @@ namespace eve
 constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!    @var shuffle_v2
 //!
@@ -164,7 +164,7 @@ template<int max_level> struct shuffle_l_t
 };
 
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup eve_core
 //! @{
 //!    @var shuffle_l
 //!

@@ -19,7 +19,7 @@ namespace eve
   }
 
   //====================================================================================================================
-  //! @addtogroup extensions
+  //! @addtogroup eve_extensions
   //! @{
   //!   @struct callable
   //!   @brief CRTP base class defining an EVE's @callable.

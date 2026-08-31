@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_select
 //!   @brief  `strict_elementwise_callable` object selecting bits from a mask and two entries.

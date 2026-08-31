@@ -32,7 +32,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_fma_family
+//! @addtogroup eve_core_fma_family
 //! @{
 //!   @var fma
 //!   @brief `strict_elementwise_callable` computing the fused multiply add of its three parameters.

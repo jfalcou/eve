@@ -23,7 +23,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup bessel
+//! @addtogroup eve_bessel
 //! @{
 //!   @var airy_bi
 //!   @brief `elementwise_callable` object computing the airy function \f$ Bi(x)\f$.

@@ -30,7 +30,7 @@ struct epso_2_t : constant_callable<epso_2_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var epso_2
 //!   @brief Callable object computing the half of the machine epsilon.

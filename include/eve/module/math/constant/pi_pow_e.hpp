@@ -40,7 +40,7 @@ struct pi_pow_e_t : constant_callable<pi_pow_e_t, Options, lower_option, upper_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pi_pow_e
 //!   @brief Callable object computing the constant \f$\pi^e\f$.

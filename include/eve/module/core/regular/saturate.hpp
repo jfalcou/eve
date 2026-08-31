@@ -36,7 +36,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var saturate
 //!   @brief `strict_elementwise_callable` computing the saturation of a value in a type.

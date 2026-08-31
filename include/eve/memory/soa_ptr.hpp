@@ -16,7 +16,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //!    @struct soa_ptr
   //!    @brief a low level abstraction that is like a tuple of pointers to parallel arrays.

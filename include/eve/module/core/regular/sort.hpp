@@ -30,7 +30,7 @@ namespace eve
   };
 // TODO DOC
 //================================================================================================
-//! @addtogroup core_simd
+//! @addtogroup eve_core_simd
 //! @{
 //!   @var sort
 //!   @brief sorts a register in a accedning order according to a comparator.

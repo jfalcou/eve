@@ -26,7 +26,7 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 };
 
 //================================================================================================
-//! @addtogroup contfrac
+//! @addtogroup eve_contfrac
 //! @{
 //!   @var lentz_a
 //!   @brief Implement the Lentz scheme to evaluate a continued fraction with no leading term:

@@ -122,7 +122,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_logical
+  //! @addtogroup eve_core_logical
   //! @{
   //!   @var if_else
   //!   @brief Select value based on conditional mask or values

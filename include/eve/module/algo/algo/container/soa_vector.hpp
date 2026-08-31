@@ -29,7 +29,7 @@ namespace eve::algo
   inline constexpr no_init_t no_init = {};
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //!   @class soa_vector
   //!   @brief SIMD-aware container for product types

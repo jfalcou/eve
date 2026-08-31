@@ -63,7 +63,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup eve_algos
   //! @{
   //!   @var keep_if
   //!   @brief In-place version of `std::copy_if`

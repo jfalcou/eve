@@ -19,7 +19,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //================================================================================================
   //! @brief  Standard-compliant allocator handling the allocation and deallocation of segment of

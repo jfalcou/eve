@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var sqrt
 //!   @brief Computes the [elementwise](@ref glossary_elementwise) square root of the parameter.

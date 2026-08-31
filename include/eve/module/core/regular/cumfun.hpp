@@ -47,7 +47,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var cumfun
 ///!   @brief `callable` converting a pack of values into

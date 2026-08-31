@@ -43,7 +43,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_reduction
+  //! @addtogroup eve_core_reduction
   //! @{
   //!   @var all
   //!   @brief Computes a bool value which is true if and only if every elements of `x` evaluates to true.

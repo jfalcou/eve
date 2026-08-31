@@ -40,7 +40,7 @@ struct sixth_t : constant_callable<sixth_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var sixth
 //!   @brief Callable object computing the constant \f$1/6\f$.

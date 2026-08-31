@@ -22,7 +22,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var expx2
 //! @brief Callable object computing \f$e^{x^2}\f$.

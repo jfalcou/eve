@@ -14,7 +14,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!   @var swap_adjacent
 //!   @brief a named shuffle that goes all pairs of elements and swaps them:

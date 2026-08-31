@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @{
   //! @concept substitute_for
   //! @brief Specify that a type can be used as a substitute for another type after calling

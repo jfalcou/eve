@@ -19,7 +19,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup arch
+  //! @addtogroup eve_arch
   //! @{
   //!   @struct fundamental_cardinal
   //!   @brief Computes the fundamental cardinal of a given type

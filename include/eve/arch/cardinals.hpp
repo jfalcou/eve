@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup simd_types
+  //! @addtogroup eve_simd_types
   //! @{
   //================================================================================================
 
@@ -89,7 +89,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @ingroup simd_concepts
+  //! @ingroup eve_simd_concepts
   //! @brief concept to determine if this is cardinal type of a wide
   //!
   //! @tparam T

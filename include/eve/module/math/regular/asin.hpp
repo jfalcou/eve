@@ -34,7 +34,7 @@ namespace eve
 
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup eve_math_invtrig
 //! @{
 //!   @var asin
 //!   @brief `elementwise_callable` object computing the arc sine.

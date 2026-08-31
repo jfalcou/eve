@@ -50,7 +50,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @addtogroup simd_types
+  //! @addtogroup eve_simd_types
   //! @{
   //================================================================================================
   //! @brief Wrapper for SIMD registers holding logical types with compile-time size

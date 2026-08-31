@@ -14,7 +14,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!    @var blend
 //!    @brief a named shuffle for mixing 2 registers together, without changing positions.

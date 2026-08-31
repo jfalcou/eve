@@ -40,7 +40,7 @@ struct pio_6_t : constant_callable<pio_6_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pio_6
 //!   @brief Callable object computing the constant \f$\pi/6\f$.

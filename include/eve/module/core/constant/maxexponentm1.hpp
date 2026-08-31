@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var maxexponentm1
 //!   @brief Computes the greatest exponent of a floating point IEEE value minus one.

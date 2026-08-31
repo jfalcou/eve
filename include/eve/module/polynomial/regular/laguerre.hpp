@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var laguerre
 //!   @brief `strict_elementwise_callable` object computing the value of the Laguerre and associated

@@ -38,7 +38,7 @@ namespace eve
   constexpr inline auto expected_cardinal_v = _::find_expected_cardinal<Type, ABI>();
 
   //================================================================================================
-  //! @addtogroup arch
+  //! @addtogroup eve_arch
   //! @{
   //!   @typedef expected_cardinal_t
   //!   @brief Computes the expected cardinal of a given type

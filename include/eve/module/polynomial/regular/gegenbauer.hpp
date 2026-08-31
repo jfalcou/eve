@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var gegenbauer
 //!   @brief  `strict_elementwise_callable` object computing the value of a  gegenbauer

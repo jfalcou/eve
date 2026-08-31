@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var oneotwoeps
 //!   @brief Computes a constant to the machine oneotwoepsilon.

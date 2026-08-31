@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var nbmantissabits
 //!   @brief Returns the number of mantissa bits of a floating point value.

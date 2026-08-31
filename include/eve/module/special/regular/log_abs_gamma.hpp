@@ -26,7 +26,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var log_abs_gamma
 //!   @brief `elementwise_callable` object computing the natural logarithm of the absolute value of the \f$\Gamma\f$ function.

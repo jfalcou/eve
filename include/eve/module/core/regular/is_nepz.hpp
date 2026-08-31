@@ -29,7 +29,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_predicates
+//! @addtogroup eve_core_predicates
 //! @{
 //!   @var is_nepz
 //!   @brief `elementwise callable` returning a logical true unless the element value is a floating

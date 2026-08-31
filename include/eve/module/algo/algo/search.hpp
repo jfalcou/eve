@@ -359,7 +359,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 };
 
 //=================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var search
 //!

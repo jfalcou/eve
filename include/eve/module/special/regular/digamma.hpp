@@ -28,7 +28,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw
 };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var digamma
 //!   @brief `elementwise_callable` object computing the Digamma function i.e.

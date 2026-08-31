@@ -40,7 +40,7 @@ struct zeta_3_t : constant_callable<zeta_3_t, Options, lower_option, upper_optio
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var zeta_3
 //!   @brief Callable object computing the constant \f$\zeta(3)\f$.

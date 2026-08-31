@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup eve_core_internal
 //! @{
 //!   @var nb_values
 //!   @brief `elementwise_callable` object computing the number of values representable in the type between the

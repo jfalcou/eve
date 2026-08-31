@@ -40,7 +40,7 @@ struct invsqrt_2_t : constant_callable<invsqrt_2_t, Options, lower_option, upper
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var invsqrt_2
 //!   @brief Callable object computing the constant \f$2^{-1/2}\f$.

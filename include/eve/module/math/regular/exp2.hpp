@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var exp2
 //! @brief  `elementwise_callable` object computing \f$2^x\f$.

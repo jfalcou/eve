@@ -40,7 +40,7 @@ struct rayleigh_kurtosis_t : constant_callable<rayleigh_kurtosis_t, Options, low
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var rayleigh_kurtosis
 //!   @brief Callable object computing the Rayleigh kurtosis value :

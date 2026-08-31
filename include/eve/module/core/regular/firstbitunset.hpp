@@ -23,7 +23,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var firstbitunset
 //!   @brief Computes [elementwise](@ref glossary_elementwise) the bit pattern

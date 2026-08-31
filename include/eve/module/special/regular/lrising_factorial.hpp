@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup special
+//! @addtogroup eve_special
 //! @{
 //!   @var lrising_factorial
 //!   @brief `elementwise_callable` object computing the natural logarithm of the rising Factorial function i.e.

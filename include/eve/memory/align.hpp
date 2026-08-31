@@ -15,7 +15,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @enum over
   //! @brief Strong integral type that represents the notion of over-alignment constraints.
@@ -48,7 +48,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @enum under
   //! @brief Strong integral type that represents the notion of under-alignment constraints.
@@ -81,7 +81,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @brief Realigns integral value over a given power-of-2 alignment constraint.
   //!
@@ -106,7 +106,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @brief Realigns integral value under a given power-of-2 alignment constraint.
   //!
@@ -131,7 +131,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @brief Realigns a pointer over a given power-of-2 alignment constraint.
   //!
@@ -155,7 +155,7 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  //! @addtogroup memory
+  //! @addtogroup eve_memory
   //! @{
   //! @brief Realigns a pointer under a given power-of-2 alignment constraint.
   //!

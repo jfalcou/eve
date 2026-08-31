@@ -9,7 +9,7 @@
 
 
 //================================================================================================
-//! @addtogroup core_compress
+//! @addtogroup eve_core_compress
 //! @{
 //!    @var compress_copy_simd
 //!    @brief One of the implementations for eve::compress_copy that relies on

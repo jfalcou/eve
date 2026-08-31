@@ -42,7 +42,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math
+//! @addtogroup eve_math
 //! @{
 //!   @var tchebsum
 //!   @brief Implement the evaluation of tchebytchev  polynomials with coefficients
@@ -69,8 +69,8 @@ namespace eve
 //!      constexpr auto tchebsum(floating_value auto x, eve::coefficients auto tci)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto tchebsum[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
-//!      constexpr auto tchebsum[logical_value auto m](*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto tchebsum[conditional_expr auto c](/*any of the above overloads*/)       noexcept; // 3
+//!      constexpr auto tchebsum[logical_value auto m](/*any of the above overloads*/)          noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto tchebsum[pedantic](/*any of the above overloads*/)                     noexcept; // 4
@@ -87,7 +87,7 @@ namespace eve
 //!    * `ci...`: [floating values](@ref eve::floating_value) tchebytchev coefficients in increasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!    * `tci`: eve::coefficients is a specialization of [tuple](@ref eve::product_type) of floating values,
+//!    * `tci`: eve::coefficients is a specialization of [tuple](@ref kumi::concepts::product_type) of floating values,
 //!             used to avoid possible ambiguities
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
@@ -96,7 +96,7 @@ namespace eve
 //!
 //!     If \f$(c_i)_{0\le i\le n-1}\f$ denotes the Tchebytchev coefficients of the polynomial
 //!     The Tchebsum scheme evaluates  :
-//!     \f$\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\f
+//!     \f$\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\f$
 //!
 //!     1. The value at  `x` f the polynom based on first kind Tchebytchev function is returned.
 //!     2. Same as the call with the elements of the tuple.

@@ -30,7 +30,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_predicates
+//! @addtogroup eve_core_predicates
 //! @{
 //!   @var is_ordered
 //!   @brief `elementwise callable` returning a logical true  if and only no parameter is NaN.

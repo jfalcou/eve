@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup elliptic
+//! @addtogroup eve_elliptic
 //! @{
 //!   @var am
 //!   @brief `elementwise_callable` object computing the  Jacobi's Amplitude function.
@@ -66,7 +66,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `u`: argument.
-//!     * `x`: amplitude parameter (\f$0\le m\le 1).
+//!     * `x`: amplitude parameter (\f$0\le m\le 1\f$).
 //!     * `alpha`: modular angle given in radian (modular option).
 //!     * `m` : elliptic modulus or eccentricity (eccentric option).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.

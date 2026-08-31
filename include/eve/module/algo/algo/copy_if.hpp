@@ -85,7 +85,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var copy_if
 //!  @brief SIMD variation on std::copy_if.

@@ -20,7 +20,7 @@
 #include <compare>
 
 //==================================================================================================
-//! @defgroup conditional Conditional Expressions
+//! @defgroup eve_conditional Conditional Expressions
 //! @brief    Types and operations to defines conditional mask expressions
 //!
 //! Masking lanes from an eve::simd_value is a frequent operations. To simplify and optimize such
@@ -32,7 +32,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup conditional
+  //! @addtogroup eve_conditional
   //! @{
   //================================================================================================
 

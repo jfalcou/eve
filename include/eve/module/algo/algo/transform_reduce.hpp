@@ -101,7 +101,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!  @var transform_reduce
 //!

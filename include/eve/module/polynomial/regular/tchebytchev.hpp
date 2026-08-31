@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup eve_polynomial
 //! @{
 //!   @var tchebytchev
 //!   @brief Computes the value of the Tchebytchev polynomial of order `n` at `x`:

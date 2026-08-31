@@ -33,7 +33,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var fracscale
 //!   @brief `strict_elementwise_callable` object computing the reduced part of the scaled input.

@@ -16,7 +16,7 @@ namespace eve
 {
 
 //================================================================================================
-//! @addtogroup core_named_shuffles
+//! @addtogroup eve_core_named_shuffles
 //! @{
 //!    @var reverse_in_subgroups
 //!    @brief a named shuffle for reversing all subgroups in a register

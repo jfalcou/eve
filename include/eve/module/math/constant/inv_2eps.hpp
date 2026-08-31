@@ -32,7 +32,7 @@ struct inv_2eps_t : constant_callable<inv_2eps_t, Options, lower_option, upper_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var inv_2eps
 //!   @brief Callable object computing half the inverse of the machine epsilon.

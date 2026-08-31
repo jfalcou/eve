@@ -48,7 +48,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup eve_core_arithmetic
 //! @{
 //!   @var dec
 //!   @brief `elementwise_callable` object returning the input decremented by 1.
@@ -92,7 +92,7 @@ namespace eve
 //!      1. The value of `x - 1` is returned.
 //!      2. [The operation is performed conditionally](@ref conditional).
 //!      3. The saturated decrementation of `x`. More specifically, for signed integral,
-//!         `dec[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`. This has no effect on floating types.
+//!         `dec[saturated](valmin(as<T>{}))` returns `eve::valmin(as<T>{}))`. This has no effect on floating types.
 //!      4. The decrement is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranteed
 //!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality. This has no effect on integral types.

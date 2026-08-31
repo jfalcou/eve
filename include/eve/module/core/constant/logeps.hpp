@@ -31,7 +31,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_constants
+//! @addtogroup eve_core_constants
 //! @{
 //!   @var logeps
 //!   @brief Computes the natural logarithm of the machine [epsilon](@ref eve::eps).

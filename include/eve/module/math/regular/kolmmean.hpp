@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var kolmmean
 //!
@@ -68,7 +68,7 @@ namespace eve
 //!
 //!    * `f`, `g`: two functions that will be used to compute the mean (see note above).
 //!    * `xs`: [real](@ref eve::value) arguments.
-//!    * `tup`: [non empty tuple](@ref eve::non_empty_product_type) of arguments.
+//!    * `tup`: [non empty tuple](@ref kumi::concepts::non_empty_product_type) of arguments.
 //!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

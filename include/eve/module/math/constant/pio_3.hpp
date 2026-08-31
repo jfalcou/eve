@@ -40,7 +40,7 @@ struct pio_3_t : constant_callable<pio_3_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var pio_3
 //!   @brief Callable object computing the constant \f$\pi/3\f$.

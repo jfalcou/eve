@@ -34,7 +34,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core_reduction
+  //! @addtogroup eve_core_reduction
   //! @{
   //!   @var last_true
   //!   @brief Returns the index of the last element in the input which evaluates to `true`, if there is one.

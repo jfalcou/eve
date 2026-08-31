@@ -8,9 +8,9 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup eve_functions
 //! @{
-//!   @defgroup elliptic Elliptic functions
+//!   @defgroup eve_elliptic Elliptic functions
 //!   @brief Elliptic functions
 //!
 //!   This module provides implementation for scalar and SIMD versions of elliptic functions.

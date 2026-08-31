@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var lpnorm
 //!
@@ -75,7 +75,7 @@ namespace eve
 //!
 //!   * `p`: [positive value](@ref eve::floating_value)
 //!   * `x`, `... xs`: [floating values](@ref eve::floating_value)
-//!   * `tup': kumi tuple (of the xs)
+//!   * `tup`: kumi tuple (of the xs)
 //!   * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!   * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

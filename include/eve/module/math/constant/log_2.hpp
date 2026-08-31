@@ -40,7 +40,7 @@ struct log_2_t : constant_callable<log_2_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var log_2
 //!   @brief Callable object computing the constant \f$\log 2\f$.

@@ -8,7 +8,7 @@
 #pragma once
 
 //================================================================================================
-//! @defgroup memory Memory Management
+//! @defgroup eve_memory Memory Management
 //!
 //! **EVE** provides various elements to simplify the management of SIMD-compatible memory like
 //! functions and allocators for requesting SIMD-compatible block of memory, pointer wrappers

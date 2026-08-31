@@ -24,7 +24,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup eve_core_bitops
 //! @{
 //!   @var bit_mask
 //!   @brief `elementwise_callable` object computing a bit mask full of zeroes or ones

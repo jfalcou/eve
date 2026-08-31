@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup arch
+  //! @addtogroup eve_arch
   //! @{
   //! @struct platform
   //! @brief  Platform specific constexpr information

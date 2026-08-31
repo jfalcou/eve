@@ -24,7 +24,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(expmx2_t, expmx2_);
   };
 //================================================================================================
-//! @addtogroup math_exp
+//! @addtogroup eve_math_exp
 //! @{
 //! @var expmx2
 //! @brief `elementwise_callable` object computing \f$e^{-x^2}\f$.

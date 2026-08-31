@@ -189,7 +189,7 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algos
+//! @addtogroup eve_algos
 //! @{
 //!   @var min_element
 //!

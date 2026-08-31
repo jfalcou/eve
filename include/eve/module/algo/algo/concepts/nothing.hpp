@@ -11,7 +11,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algo_concepts
+  //! @addtogroup eve_algo_concepts
   //! @{
   //!   @struct nothing_t;
   //!   @brief a type to indicate that there is nothing there

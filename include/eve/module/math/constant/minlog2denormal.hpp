@@ -32,7 +32,7 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, lower_o
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var minlog2denormal
 //!   @brief Callable object computing the least value for which eve::exp2 is denormal and not zero.

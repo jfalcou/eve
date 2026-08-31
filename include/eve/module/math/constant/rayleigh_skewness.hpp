@@ -40,7 +40,7 @@ struct rayleigh_skewness_t : constant_callable<rayleigh_skewness_t, Options, low
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var rayleigh_skewness
 //!   @brief Callable object computing the Rayleigh skewness value :

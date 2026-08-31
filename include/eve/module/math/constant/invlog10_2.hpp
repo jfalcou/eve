@@ -40,7 +40,7 @@ struct invlog10_2_t : constant_callable<invlog10_2_t, Options, lower_option, upp
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var invlog10_2
 //!   @brief Callable object computing the constant \f$1/\log_{10}2\f$.

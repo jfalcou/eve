@@ -40,7 +40,7 @@ struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var rayleigh_kurtosis_excess
 //!   @brief Callable object computing the Rayleigh kurtosis excess value :

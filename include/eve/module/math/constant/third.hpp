@@ -40,7 +40,7 @@ struct third_t : constant_callable<third_t, Options, lower_option, upper_option>
 };
 
 //================================================================================================
-//! @addtogroup math_constants
+//! @addtogroup eve_math_constants
 //! @{
 //!   @var third
 //!   @brief Callable object computing the constant \f$1/3\f$.
