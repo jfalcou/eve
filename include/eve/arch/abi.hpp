@@ -129,39 +129,23 @@ namespace eve
   //! @addtogroup eve_traits
   //! @{
   //!
-  //! @struct abi
-  //! @brief Find proper ABI for Type/Lanes pair
+  //! @typedef abi_t
+  //! @brief Find proper ABI type for Type/Lanes pair
   //!
   //! Computes the best ABI to use to efficiently store `Lanes` elements of type `Type` in
-  //! order to use SIMD implementations.
+  //! order to use SIMD implementations and returns it's type.
   //!
   //! @tparam Type  Type of the element to store
   //! @tparam Lanes Number of elements to store
   //!
-  //! #### Member types
-  //!
-  //! |Name   | Definition                                                  |
-  //! |:------|:------------------------------------------------------------|
-  //! |`type` | The tag for the ABI to use for current Type/lanes selection |
-  //!
-  //! <br/>
-  //! #### Helper types
-  //!
-  //! @code{.cpp}
-  //! template<typename Type, typename Lanes>
-  //! using abi_t = typename abi<Type,Lanes>::type;
-  //! @endcode
-  //!
   //! @}
   //================================================================================================
-  #if defined (EVE_DOXYGEN_INVOKED)
+#if defined (EVE_DOXYGEN_INVOKED)
   template<typename Type, typename Lanes>
-  requires( _::arithmetic<Type> || eve::product_type<Type> || _::is_logical<Type> )
-  struct abi {};
-  #endif
-
-  // Type short-cut
+  using abi_t = /* Implementation defined */; 
+#else
   template<typename Type, typename Lanes>
   requires( _::arithmetic<Type> || eve::product_type<Type> || _::is_logical<Type> )
   using abi_t = decltype(_::software_abi_of<translate_t<Type>, Lanes::value>()); 
+#endif
 }
