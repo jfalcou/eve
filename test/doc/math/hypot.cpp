@@ -26,6 +26,7 @@ int main()
   float i = eve::inf(eve::as(o));
   float n = eve::nan(eve::as(o));
   float v = eve::valmax(eve::as(o));
+  float z = eve::zero(eve::as(o));
   float m = (v/3)*2;
   std::cout << "<- o                               = " << o << "\n";
   std::cout << "-> i                               = " << i << "\n";
@@ -54,4 +55,11 @@ int main()
   std::cout << "-> hypot(i, n, n)                  = " << eve::hypot(i, n, n) << "\n";
   std::cout << "-> hypot(i, n)                     = " << eve::hypot(i, n)    << "\n";
   std::cout << "-> hypot(v, v, n)                  = " << eve::hypot(v, v, n)<< "\n";
+  std::cout << "-> hypot(n, z)                     = " << eve::hypot(n, z)<< "\n";
+  std::cout << "-> hypot(z, n)                     = " << eve::hypot(z, n)<< "\n";
+  std::cout << "-> hypot[pedantic](n, z)           = " << eve::hypot[eve::pedantic](n, z)<< "\n";
+  std::cout << "-> hypot[pedantic](z, n)           = " << eve::hypot[eve::pedantic](z, n)<< "\n";
+  std::cout << "-> hypot[pedantic](n, n)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
+  std::cout << "-> hypot[pedantic](i, n)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
+  std::cout << "-> hypot[pedantic](n, i)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
 }
