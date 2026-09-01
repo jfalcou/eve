@@ -72,20 +72,21 @@ EVE requires a C++20-compliant compiler. The main features from C++17/20 we requ
 
 Here is the current minimal compiler version supported:
 
-| Compiler       | Version       |
-| -------------- | ------------- |
-| g++            | 13 or above   |
-| clang++        | 16 or above   |
-| Visual Studio  | *TBD*         |
+| Compiler       | Version          |
+| -------------- | ---------------- |
+| g++            | 13 or above      |
+| clang++        | 16 or above      |
+| Visual Studio  | 19.44 or above   |
 
 Visual Studio support is currently being added.
 
 The current **recommended** compiler version are:
 
-| Compiler       | Version       |
-| -------------- | ------------- |
-| g++            | 14 or above   |
-| clang++        | 19 or above   |
+| Compiler       | Version          |
+| -------------- | ---------------- |
+| g++            | 14 or above      |
+| clang++        | 19 or above      |
+| Visual Studio  | 19.44 or above   |
 
 ## FAQ
 
