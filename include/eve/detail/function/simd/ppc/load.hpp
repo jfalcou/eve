@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
 #  define EVE_CURRENT_ABI ::eve::emulated_

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 
 #include <eve/arch/arm/predef.hpp>
 #include <eve/arch/x86/predef.hpp>
