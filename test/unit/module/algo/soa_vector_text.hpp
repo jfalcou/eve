@@ -9,19 +9,22 @@
 
 #include <eve/module/algo.hpp>
 
-namespace eve::algo
+namespace tts
 {
-  //================================================================================================
+  //==================================================================================================
   // TTS renders an unknown range with `for(auto const& v : e)`, which a soa_vector cannot serve:
   // its iterator is a proxy and has no operator*. Read each element through the container instead.
   //
-  // Declared here rather than in namespace tts: TTS finds to_text by ADL, so the hook has to live
-  // in the namespace of its argument.
-  //================================================================================================
-  template<typename T, typename A> auto to_text(soa_vector<T,A> const& v)
+  // A specialization rather than a to_text overload: the trait is keyed on the type, so the hook no
+  // longer has to be written in the namespace of its argument to be found.
+  //==================================================================================================
+  template<typename T, typename A> struct display<eve::algo::soa_vector<T, A>>
   {
-    ::tts::text that("{ ");
-    for(std::size_t i = 0; i < v.size(); ++i) that += ::tts::as_text(v.get(i)) + " ";
-    return that + "}";
-  }
+    static text render(eve::algo::soa_vector<T, A> const& v)
+    {
+      text that("{ ");
+      for(std::size_t i = 0; i < v.size(); ++i) that += as_text(v.get(i)) + " ";
+      return that + "}";
+    }
+  };
 }

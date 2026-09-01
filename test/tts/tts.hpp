@@ -1547,76 +1547,96 @@ namespace tts
 }
 namespace tts
 {
-  template<typename T> text as_text(T const& e)
+  // Declared before the base because its body recurses through it: the elements of a sequence are
+  // rendered by as_text, and for a scalar element ADL alone would find nothing.
+  template<typename T> text as_text(T const& e);
+
+  namespace _
   {
-    if constexpr(requires { to_text(e); })
+  // How TTS renders a value when nothing more specific is known. Pulled into a base so a
+  // specialization of tts::display only has to say what it changes.
+  template<typename T> struct builtin_display
+  {
+    static text render(T const& e)
     {
-      return to_text(e);
-    }
-    else if constexpr(std::floating_point<T>)
-    {
-      auto precision = ::tts::arguments().value(16, "--precision");
-      bool hexmode   = ::tts::arguments()("-x", "--hex");
-      bool scimode   = ::tts::arguments()("-s", "--scientific");
-      if(scimode) return text("%.*E", precision, e);
-      else if(hexmode) return text("%#.*A", precision, e);
-      else return text("%.*g", precision, e);
-    }
-    else if constexpr(std::integral<T>)
-    {
-      if constexpr(sizeof(T) > 4)
+      if constexpr(requires { to_text(e); })
       {
-        auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
-        return text(fmt, e);
+        return to_text(e);
+      }
+      else if constexpr(std::floating_point<T>)
+      {
+        auto precision = ::tts::arguments().value(16, "--precision");
+        bool hexmode   = ::tts::arguments()("-x", "--hex");
+        bool scimode   = ::tts::arguments()("-s", "--scientific");
+        if(scimode) return text("%.*E", precision, e);
+        else if(hexmode) return text("%#.*A", precision, e);
+        else return text("%.*g", precision, e);
+      }
+      else if constexpr(std::integral<T>)
+      {
+        if constexpr(sizeof(T) > 4)
+        {
+          auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
+          return text(fmt, e);
+        }
+        else
+        {
+          auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
+          return text(fmt, e);
+        }
+      }
+      else if constexpr(_::string<T>)
+      {
+        return text("'%.*s'", static_cast<int>(e.size()), e.data() ? e.data() : "");
+      }
+      else if constexpr(_::optional<T>)
+      {
+        auto type_desc = as_text(typename_<typename T::value_type>);
+        text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
+        if(e.has_value())
+        {
+          auto val_desc = as_text(e.value());
+          return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
+        }
+        else return base + "{}";
+      }
+      else if constexpr(std::is_pointer_v<T>)
+      {
+        auto type_desc = as_text(typename_<T>);
+        return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
+      }
+      else if constexpr(_::sequence<T>)
+      {
+        text that("{ ");
+        for(auto const& v: e)
+          that += as_text(v) + " ";
+        that += "}";
+        return that;
       }
       else
       {
-        auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
-        return text(fmt, e);
+        unsigned char bytes[ sizeof(e) ];
+        std::memcpy(bytes, &e, sizeof(e));
+        text txt_bytes("[ ");
+        for(auto const& b: bytes)
+          txt_bytes += text("%2.2X", b) + " ";
+        txt_bytes      += "]";
+        auto type_desc  = as_text(typename_<T>);
+        return text("%s: %s",
+                    type_desc.data() ? type_desc.data() : "unknown",
+                    txt_bytes.data() ? txt_bytes.data() : "[]");
       }
     }
-    else if constexpr(_::string<T>)
-    {
-      return text("'%.*s'", static_cast<int>(e.size()), e.data() ? e.data() : "");
-    }
-    else if constexpr(_::optional<T>)
-    {
-      auto type_desc = as_text(typename_<typename T::value_type>);
-      text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
-      if(e.has_value())
-      {
-        auto val_desc = as_text(e.value());
-        return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
-      }
-      else return base + "{}";
-    }
-    else if constexpr(std::is_pointer_v<T>)
-    {
-      auto type_desc = as_text(typename_<T>);
-      return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
-    }
-    else if constexpr(_::sequence<T>)
-    {
-      text that("{ ");
-      for(auto const& v: e)
-        that += as_text(v) + " ";
-      that += "}";
-      return that;
-    }
-    else
-    {
-      unsigned char bytes[ sizeof(e) ];
-      std::memcpy(bytes, &e, sizeof(e));
-      text txt_bytes("[ ");
-      for(auto const& b: bytes)
-        txt_bytes += text("%2.2X", b) + " ";
-      txt_bytes      += "]";
-      auto type_desc  = as_text(typename_<T>);
-      return text("%s: %s",
-                  type_desc.data() ? type_desc.data() : "unknown",
-                  txt_bytes.data() ? txt_bytes.data() : "[]");
-    }
+  };
   }
+
+  //! @brief How a value of type T is rendered in a report.
+  //!
+  //! Specialize this rather than overloading to_text: a specialization that does not match is
+  //! a compilation error, where a misnamed overload fell back on the byte dump in silence.
+  template<typename T> struct display : _::builtin_display<T> {};
+
+  template<typename T> text as_text(T const& e) { return display<T>::render(e); }
   template<std::size_t N> auto as_text(char const (&t)[ N ])
   {
     return text(t);
@@ -3707,93 +3727,74 @@ namespace tts::_
 #else
 #define TTS_EXPECT_NOT_COMPILES(...) TTS_VAL(TTS_EXPECT_NOT_COMPILES_IMPL TTS_REVERSE(__VA_ARGS__))
 #endif
-namespace tts
+namespace tts::_
 {
-  template<typename T, typename U> inline double absolute_check(T const& a, U const& b)
+  // The built-in behaviour of v3, pulled into a base so that a specialization of tts::precision
+  // only has to redefine what it actually changes.
+  template<typename T> struct builtin_precision
   {
-    if constexpr(requires { absolute_distance(a, b); }) return absolute_distance(a, b);
-    else if constexpr(std::is_same_v<T, U>)
+    static double absolute(T const& a, T const& b)
     {
-      if constexpr(std::is_same_v<T, bool>)
-      {
-        return a == b ? 0. : 1.;
-      }
+      static_assert(!requires { absolute_distance(a, b); },
+                    "[TTS] tts::absolute_distance is no longer a customization point. "
+                    "Specialize tts::precision<T>::absolute instead.");
+
+      if constexpr(std::is_same_v<T, bool>) { return a == b ? 0. : 1.; }
       else if constexpr(std::is_floating_point_v<T>)
       {
-        if((a == b) || (_::is_nan(a) && _::is_nan(b))) return 0.;
-        if(_::is_inf(a) || _::is_inf(b) || _::is_nan(a) || _::is_nan(b))
+        if((a == b) || (is_nan(a) && is_nan(b))) return 0.;
+        if(is_inf(a) || is_inf(b) || is_nan(a) || is_nan(b))
           return std::numeric_limits<double>::infinity();
-        return _::abs(a - b);
+        return abs(a - b);
       }
-      else if constexpr(std::is_integral_v<T> && !std::is_same_v<T, bool>)
+      else if constexpr(std::is_integral_v<T>)
       {
-        auto d0 = static_cast<double>(a), d1 = static_cast<double>(b);
-        return absolute_check(d0, d1);
+        return builtin_precision<double>::absolute(static_cast<double>(a), static_cast<double>(b));
       }
       else
       {
-        static_assert(
-        std::is_floating_point_v<T> || std::is_integral_v<T>,
-        "[TTS] TTS_ABSOLUTE_EQUAL requires integral or floating points data to compare."
-        "Did you mean to use TTS_ALL_ABSOLUTE_EQUAL or to overload tts::absolute_check ?");
+        static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>,
+                      "[TTS] TTS_ABSOLUTE_EQUAL requires integral or floating points data to "
+                      "compare. Did you mean to use TTS_ALL_ABSOLUTE_EQUAL or to specialize "
+                      "tts::precision<T>::absolute ?");
         return 0.;
       }
     }
-    else
+
+    static double relative(T const& a, T const& b)
     {
-      static_assert(std::is_same_v<T, U>,
-                    "[TTS] TTS_ABSOLUTE_EQUAL needs both operands to have the same type. "
-                    "Comparing through their common type would express the distance in the unit "
-                    "of the promoted type, which is not the one being tested. Convert the "
-                    "expected value at the call site instead.");
-      return 0.;
-    }
-  }
-  template<typename T, typename U> inline double relative_check(T const& a, U const& b)
-  {
-    if constexpr(requires { relative_distance(a, b); }) return relative_distance(a, b);
-    else if constexpr(std::is_same_v<T, U>)
-    {
-      if constexpr(std::is_same_v<T, bool>)
-      {
-        return a == b ? 0. : 100.;
-      }
+      static_assert(!requires { relative_distance(a, b); },
+                    "[TTS] tts::relative_distance is no longer a customization point. "
+                    "Specialize tts::precision<T>::relative instead.");
+
+      if constexpr(std::is_same_v<T, bool>) { return a == b ? 0. : 1.; }
       else if constexpr(std::is_floating_point_v<T>)
       {
-        if((a == b) || (_::is_nan(a) && _::is_nan(b))) return 0.;
-        if(_::is_inf(a) || _::is_inf(b) || _::is_nan(a) || _::is_nan(b))
+        if((a == b) || (is_nan(a) && is_nan(b))) return 0.;
+        if(is_inf(a) || is_inf(b) || is_nan(a) || is_nan(b))
           return std::numeric_limits<double>::infinity();
-        return 100. * (_::abs(a - b) / _::max(T(1), _::max(_::abs(a), _::abs(b))));
+        return abs(a - b) / max(T(1), max(abs(a), abs(b)));
       }
-      else if constexpr(std::is_integral_v<T> && !std::is_same_v<T, bool>)
+      else if constexpr(std::is_integral_v<T>)
       {
-        auto d0 = static_cast<double>(a), d1 = static_cast<double>(b);
-        return relative_check(d0, d1);
+        return builtin_precision<double>::relative(static_cast<double>(a), static_cast<double>(b));
       }
       else
       {
-        static_assert(
-        std::is_floating_point_v<T> || std::is_integral_v<T>,
-        "[TTS] TTS_RELATIVE_EQUAL requires integral or floating points data to compare."
-        "Did you mean to use TTS_ALL_RELATIVE_EQUAL or to overload tts::relative_check ?");
+        static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>,
+                      "[TTS] TTS_RELATIVE_EQUAL requires integral or floating points data to "
+                      "compare. Did you mean to use TTS_ALL_RELATIVE_EQUAL or to specialize "
+                      "tts::precision<T>::relative ?");
         return 0.;
       }
     }
-    else
+
+    static double ulp(T const& a, T const& b)
     {
-      static_assert(std::is_same_v<T, U>,
-                    "[TTS] TTS_RELATIVE_EQUAL needs both operands to have the same type. "
-                    "Comparing through their common type would express the distance in the unit "
-                    "of the promoted type, which is not the one being tested. Convert the "
-                    "expected value at the call site instead.");
-      return 0.;
-    }
-  }
-  template<typename T, typename U> inline double ulp_check(T const& a, U const& b)
-  {
-    if constexpr(requires { ulp_distance(a, b); }) return ulp_distance(a, b);
-    else if constexpr(std::is_same_v<T, U>)
-    {
+      static_assert(!requires { ulp_distance(a, b); },
+                    "[TTS] tts::ulp_distance is no longer a customization point. "
+                    "Specialize tts::precision<T>::ulp instead.");
+
       if constexpr(std::is_same_v<T, bool>)
       {
         return a == b ? 0. : std::numeric_limits<double>::infinity();
@@ -3801,25 +3802,19 @@ namespace tts
       else if constexpr(std::is_floating_point_v<T>)
       {
         using ui_t = std::conditional_t<std::is_same_v<T, float>, std::uint32_t, std::uint64_t>;
-        if((a == b) || (_::is_nan(a) && _::is_nan(b)))
-        {
-          return 0.;
-        }
-        else if(_::is_unordered(a, b))
-        {
-          return std::numeric_limits<double>::infinity();
-        }
+        if((a == b) || (is_nan(a) && is_nan(b)))  return 0.;
+        else if(is_unordered(a, b))               return std::numeric_limits<double>::infinity();
         else
         {
-          auto aa = _::bitinteger(a);
-          auto bb = _::bitinteger(b);
+          auto aa = bitinteger(a);
+          auto bb = bitinteger(b);
           if(aa > bb) std::swap(aa, bb);
           auto z = static_cast<ui_t>(bb - aa);
-          if(_::signbit(a) != _::signbit(b)) ++z;
+          if(signbit(a) != signbit(b)) ++z;
           return static_cast<double>(z) / 2.;
         }
       }
-      else if constexpr(std::is_integral_v<T> && !std::is_same_v<T, bool>)
+      else if constexpr(std::is_integral_v<T>)
       {
         using u_t = typename std::make_unsigned<T>::type;
         auto ua   = static_cast<u_t>(a);
@@ -3829,32 +3824,76 @@ namespace tts
       else
       {
         static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>,
-                      "[TTS] TTS_ULP_EQUAL requires integral or floating points data to compare."
-                      "Did you mean to use TTS_ALL_ULP_EQUAL or to overload tts::ulp_check ?");
+                      "[TTS] TTS_ULP_EQUAL requires integral or floating points data to compare. "
+                      "Did you mean to use TTS_ALL_ULP_EQUAL or to specialize "
+                      "tts::precision<T>::ulp ?");
         return 0.;
       }
     }
-    else
+
+    static bool ieee(T const& a, T const& b)
     {
-      static_assert(std::is_same_v<T, U>,
-                    "[TTS] TTS_ULP_EQUAL needs both operands to have the same type. "
-                    "Comparing through their common type would express the distance in the unit "
-                    "of the promoted type, which is not the one being tested. Convert the "
-                    "expected value at the call site instead.");
-      return 0.;
+      static_assert(!requires { ieee_equal(a, b); },
+                    "[TTS] tts::ieee_equal is no longer a customization point. "
+                    "Specialize tts::precision<T>::ieee instead.");
+
+      if constexpr(std::is_floating_point_v<T>) return (a == b) || (is_nan(a) && is_nan(b));
+      else                                      return eq(a, b);
     }
+  };
+}
+
+namespace tts
+{
+  //================================================================================================
+  //! @brief How far apart two values of the same type are, and when they count as IEEE-equal.
+  //!
+  //! Specialize this for your own types rather than overloading free functions: a specialization
+  //! that does not match is a compilation error, where a misnamed overload used to be ignored in
+  //! silence. Inherit from tts::_::builtin_precision<T> to keep the members you do not redefine.
+  //================================================================================================
+  template<typename T> struct precision : _::builtin_precision<T> {};
+
+  template<typename T, typename U> inline double absolute_check(T const& a, U const& b)
+  {
+    static_assert(std::is_same_v<T, U>,
+                  "[TTS] TTS_ABSOLUTE_EQUAL needs both operands to have the same type. "
+                  "Comparing through their common type would express the distance in the unit "
+                  "of the promoted type, which is not the one being tested. Convert the "
+                  "expected value at the call site instead.");
+    if constexpr(std::is_same_v<T, U>) return precision<T>::absolute(a, b);
+    else                               return 0.;
   }
+
+  template<typename T, typename U> inline double relative_check(T const& a, U const& b)
+  {
+    static_assert(std::is_same_v<T, U>,
+                  "[TTS] TTS_RELATIVE_EQUAL needs both operands to have the same type. "
+                  "Comparing through their common type would express the distance in the unit "
+                  "of the promoted type, which is not the one being tested. Convert the "
+                  "expected value at the call site instead.");
+    if constexpr(std::is_same_v<T, U>) return precision<T>::relative(a, b);
+    else                               return 0.;
+  }
+
+  template<typename T, typename U> inline double ulp_check(T const& a, U const& b)
+  {
+    static_assert(std::is_same_v<T, U>,
+                  "[TTS] TTS_ULP_EQUAL needs both operands to have the same type. "
+                  "Comparing through their common type would express the distance in the unit "
+                  "of the promoted type, which is not the one being tested. Convert the "
+                  "expected value at the call site instead.");
+    if constexpr(std::is_same_v<T, U>) return precision<T>::ulp(a, b);
+    else                               return 0.;
+  }
+
   template<typename T, typename U> inline bool ieee_check(T const& a, U const& b)
   {
-    if constexpr(requires { ieee_equal(a, b); }) return ieee_equal(a, b);
-    else if constexpr(std::is_floating_point_v<T>)
-    {
-      return (a == b) || (_::is_nan(a) && _::is_nan(b));
-    }
-    else
-    {
-      return _::eq(a, b);
-    }
+    static_assert(std::is_same_v<T, U>,
+                  "[TTS] TTS_IEEE_EQUAL needs both operands to have the same type. Convert the "
+                  "expected value at the call site instead.");
+    if constexpr(std::is_same_v<T, U>) return precision<T>::ieee(a, b);
+    else                               return false;
   }
 }
 #define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, FUNC, PREC, FAILURE)                                 \
@@ -3904,7 +3943,7 @@ namespace tts
 #define TTS_RELATIVE_EQUAL(L, R, N, ...)
 #else
 #define TTS_RELATIVE_EQUAL(L, R, N, ...)                                                           \
-  TTS_PRECISION(L, R, N, "%", ::tts::relative_check, 8, __VA_ARGS__)
+  TTS_PRECISION(L, R, N, "rel", ::tts::relative_check, 8, __VA_ARGS__)
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ULP_EQUAL(L, R, N, ...)
@@ -4040,7 +4079,7 @@ namespace tts::_
 #define TTS_ALL_RELATIVE_EQUAL(L, R, N, ...)
 #else
 #define TTS_ALL_RELATIVE_EQUAL(L, R, N, ...)                                                       \
-  TTS_ALL(L, R, ::tts::relative_check, N, "%", __VA_ARGS__)
+  TTS_ALL(L, R, ::tts::relative_check, N, "rel", __VA_ARGS__)
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ALL_ULP_EQUAL(L, R, N, ...)
