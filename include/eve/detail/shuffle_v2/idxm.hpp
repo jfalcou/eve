@@ -11,6 +11,7 @@
 #include <eve/pattern.hpp>
 
 #include <span>
+#include <optional>
 
 /*
  * idxm => index math
