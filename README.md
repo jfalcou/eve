@@ -78,8 +78,6 @@ Here is the current minimal compiler version supported:
 | clang++        | 16 or above      |
 | Visual Studio  | 19.44 or above   |
 
-Visual Studio support is currently being added.
-
 The current **recommended** compiler version are:
 
 | Compiler       | Version          |
