@@ -42,7 +42,8 @@ namespace eve::_
   {
     constexpr auto width = sizeof(Type) * Cardinal * 8;
 
-         if constexpr( width > spy::simd_instruction_set.width     )  return;
+          // Risc-V handles register aggregating up to max_lmul natively
+         if constexpr( width > spy::simd_instruction_set.width && spy::simd_instruction_set != spy::fixed_rvv_) return;
     else if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
     {
            if constexpr( width <= 128 ) return x86_128_{};
@@ -53,16 +54,16 @@ namespace eve::_
     else if constexpr( spy::simd_instruction_set >= spy::vmx_ && width <= 128 ) return ppc_{};
     else if constexpr( (spy::simd_instruction_set == spy::fixed_sve_) || (spy::simd_instruction_set == spy::fixed_sve2_) )
     {
-           if constexpr( width <= 128 ) return arm_sve_128_{};
-      else if constexpr( width == 256 ) return arm_sve_256_{};
-      else if constexpr( width == 512 ) return arm_sve_512_{};
+           if constexpr( spy::simd_instruction_set.width == 128 ) return arm_sve_128_{};
+      else if constexpr( spy::simd_instruction_set.width == 256 ) return arm_sve_256_{};
+      else if constexpr( spy::simd_instruction_set.width == 512 ) return arm_sve_512_{};
     }
     else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
     {
              if constexpr ( width <=  64 ) return arm_64_{};
         else if constexpr ( width == 128 ) return arm_128_{};
     }
-    else if constexpr( (spy::simd_instruction_set == spy::fixed_rvv_) && width >= 64 )  return riscv_{};
+    else if constexpr( (spy::simd_instruction_set == spy::fixed_rvv_) && spy::simd_instruction_set.width >= 64)  return riscv_{};
   }
 
   template<typename T>
@@ -78,8 +79,8 @@ namespace eve::_
     
     if constexpr ( std::is_same_v<eve::current_abi_type, emulated_> ) return true;
     else if constexpr( !supports_simd || !supported_simd_type       ) return true; 
-    else if constexpr( spy::simd_instruction_set >= vmx  &&           
-                       spy::simd_instruction_set < vsx              ) return f64; // no doubles on altivec
+    else if constexpr( spy::simd_instruction_set >= spy::vmx_  &&           
+                       spy::simd_instruction_set  < spy::vsx_       ) return f64; // no doubles on altivec
     else if constexpr( spy::simd_instruction_set == spy::arm_simd_  ) 
     {
       // 32bit arm does not support f16 nor f64
@@ -92,7 +93,7 @@ namespace eve::_
   // Checks if a Type has a native abi so that we can aggregate registers 
   template<typename T, std::ptrdiff_t Cardinal> consteval bool should_aggregate()
   {
-    constexpr bool native_register     = !std::same_as<eve::expected_abi_t<T>, eve::_::no_hardware_abi>; 
+    constexpr bool native_register     = !std::same_as<eve::_::expected_abi_t<T>, eve::_::no_hardware_abi>; 
     constexpr bool require_aggregation = Cardinal > eve::current_abi_type::template expected_cardinal<T>;
     if constexpr( require_aggregation ) return native_register;
     else                                return false;
@@ -106,8 +107,8 @@ namespace eve::_
   { 
          if constexpr( eve::_::is_logical<T>          ) return software_abi_of<typename T::value_type, Cardinal>();
     else if constexpr( eve::product_type<T>           ) return bundle_{};
-    else if constexpr( should_aggregate<T, Cardinal>()) return aggregated_{};
     else if constexpr( should_emulate<T>()            ) return emulated_{}; 
+    else if constexpr( should_aggregate<T, Cardinal>()) return aggregated_{};
     else 
     {
       using abi = decltype(_::hardware_abi_of<T,Cardinal>());

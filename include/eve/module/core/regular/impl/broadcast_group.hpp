@@ -11,6 +11,7 @@
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/pattern.hpp>
+#include <optional>
 
 namespace eve::_
 {
