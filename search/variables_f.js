@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['partition_0',['partition',['https://jfalcou.github.io/kumi/group__generators_ga4643116b2dc0dfbd0d15fee408a9c18c.html#ga4643116b2dc0dfbd0d15fee408a9c18c',1,'kumi::partition'],['https://jfalcou.github.io/kumi/group__generators_ga4643116b2dc0dfbd0d15fee408a9c18c.html#ga4643116b2dc0dfbd0d15fee408a9c18c',1,'kumi::partition']]],
+  ['partition_0',['partition',['https://jfalcou.github.io/kumi/group__kumi__generators.html#ga4643116b2dc0dfbd0d15fee408a9c18c',1,'kumi::partition'],['https://jfalcou.github.io/kumi/group__kumi__generators.html#ga4643116b2dc0dfbd0d15fee408a9c18c',1,'kumi::partition']]],
   ['pattern_1',['pattern',['../group__eve__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd',1,'eve']]],
   ['pedantic_2',['pedantic',['../group__eve__core__decorators_gaf3483e5e000367c812b507ed46399367.html#gaf3483e5e000367c812b507ed46399367',1,'eve']]],
   ['phi_3',['phi',['../group__eve__math__constants_ga0f8fbe6ec946f1ecfc3e2463ab90db22.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22',1,'eve']]],
@@ -15,9 +15,9 @@ var searchData=
   ['pio_5f3_12',['pio_3',['../group__eve__math__constants_gac30b29df2f7d7903ac7e0097a51b22e4.html#gac30b29df2f7d7903ac7e0097a51b22e4',1,'eve']]],
   ['pio_5f4_13',['pio_4',['../group__eve__math__constants_ga2a706e8a2c1d95d557f32f1aa54d1ada.html#ga2a706e8a2c1d95d557f32f1aa54d1ada',1,'eve']]],
   ['pio_5f6_14',['pio_6',['../group__eve__math__constants_ga61628074a13f5a890b80f5338f7ad6c6.html#ga61628074a13f5a890b80f5338f7ad6c6',1,'eve']]],
-  ['plus_15',['plus',['https://jfalcou.github.io/kumi/group__functional.html#gab83f5dbd77ab8618b7925c9de6adb54d',1,'kumi::function']]],
+  ['plus_15',['plus',['https://jfalcou.github.io/kumi/group__kumi__functional.html#gab83f5dbd77ab8618b7925c9de6adb54d',1,'kumi::function']]],
   ['polygamma_16',['polygamma',['../group__eve__special_ga1e9de30f261edeef4271c47b7683c980.html#ga1e9de30f261edeef4271c47b7683c980',1,'eve']]],
-  ['pop_5ffront_17',['pop_front',['https://jfalcou.github.io/kumi/group__generators_ga38d1ddeb5090405e79e9b7d898a85133.html#ga38d1ddeb5090405e79e9b7d898a85133',1,'kumi::pop_front'],['https://jfalcou.github.io/kumi/group__generators_ga38d1ddeb5090405e79e9b7d898a85133.html#ga38d1ddeb5090405e79e9b7d898a85133',1,'kumi::pop_front']]],
+  ['pop_5ffront_17',['pop_front',['https://jfalcou.github.io/kumi/group__kumi__generators.html#ga38d1ddeb5090405e79e9b7d898a85133',1,'kumi::pop_front'],['https://jfalcou.github.io/kumi/group__kumi__generators.html#ga38d1ddeb5090405e79e9b7d898a85133',1,'kumi::pop_front']]],
   ['popcount_18',['popcount',['../group__eve__core__bitops_gaae5db78cfc6d7dbce0141f945d1516d7.html#gaae5db78cfc6d7dbce0141f945d1516d7',1,'eve']]],
   ['pow_19',['pow',['../group__eve__math__exp_ga67952622d4400abecd8ca1b9986f9648.html#ga67952622d4400abecd8ca1b9986f9648',1,'eve']]],
   ['pow1p_20',['pow1p',['../group__eve__math__exp_ga26151ac8cead2b5ebc679abb9e9c3f9b.html#ga26151ac8cead2b5ebc679abb9e9c3f9b',1,'eve']]],
@@ -27,6 +27,6 @@ var searchData=
   ['prevint_24',['prevint',['../group__eve__core__internal_ga3ad43aa378eecf62d5b437b320d45d84.html#ga3ad43aa378eecf62d5b437b320d45d84',1,'eve']]],
   ['prime_5fceil_25',['prime_ceil',['../group__eve__combinatorial_ga4da0702dc11efa19b527fe8020267bf5.html#ga4da0702dc11efa19b527fe8020267bf5',1,'eve']]],
   ['prime_5ffloor_26',['prime_floor',['../group__eve__combinatorial_gab62baf715bca909acd246288c46f68b3.html#gab62baf715bca909acd246288c46f68b3',1,'eve']]],
-  ['prod_27',['prod',['https://jfalcou.github.io/kumi/group__reductions_ga6c139ebafaebc0f7dbca2fd57aee943c.html#ga6c139ebafaebc0f7dbca2fd57aee943c',1,'kumi::prod'],['https://jfalcou.github.io/kumi/group__reductions_ga6c139ebafaebc0f7dbca2fd57aee943c.html#ga6c139ebafaebc0f7dbca2fd57aee943c',1,'kumi::prod']]],
-  ['push_5ffront_28',['push_front',['https://jfalcou.github.io/kumi/group__generators_gad4bd53f162f63af0cbfbd68d8adb5d5c.html#gad4bd53f162f63af0cbfbd68d8adb5d5c',1,'kumi::push_front'],['https://jfalcou.github.io/kumi/group__generators_gad4bd53f162f63af0cbfbd68d8adb5d5c.html#gad4bd53f162f63af0cbfbd68d8adb5d5c',1,'kumi::push_front']]]
+  ['prod_27',['prod',['https://jfalcou.github.io/kumi/group__kumi__reductions.html#ga6c139ebafaebc0f7dbca2fd57aee943c',1,'kumi::prod'],['https://jfalcou.github.io/kumi/group__kumi__reductions.html#ga6c139ebafaebc0f7dbca2fd57aee943c',1,'kumi::prod']]],
+  ['push_5ffront_28',['push_front',['https://jfalcou.github.io/kumi/group__kumi__generators.html#gad4bd53f162f63af0cbfbd68d8adb5d5c',1,'kumi::push_front'],['https://jfalcou.github.io/kumi/group__kumi__generators.html#gad4bd53f162f63af0cbfbd68d8adb5d5c',1,'kumi::push_front']]]
 ];

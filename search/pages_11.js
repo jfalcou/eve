@@ -7,6 +7,6 @@ var searchData=
   ['problem_4',['problem',['../intro-01.html#autotoc_md94',1,'Initial problem'],['../intro-02.html#autotoc_md99',1,'Initial problem']]],
   ['processing_5',['Storage and Processing',['../intro-04.html#autotoc_md108',1,'']]],
   ['processing_6',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md106',1,'']]],
-  ['product_20types_7',['Product Types',['https://jfalcou.github.io/kumi/product.html',1,'']]],
+  ['product_20types_7',['Product Types',['https://jfalcou.github.io/kumi/kumi_product.html',1,'']]],
   ['property_20of_20eve_20types_8',['Property of EVE types',['../glossary_semantic.html#autotoc_md63',1,'']]]
 ];

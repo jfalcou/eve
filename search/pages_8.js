@@ -5,7 +5,7 @@ var searchData=
   ['for_20any_2',['for any',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md20',1,'Should you check for any?']]],
   ['for_20testing_3',['Building for Testing',['../dev_cmake.html',1,'']]],
   ['for_20this_20release_3a_20sve_4',['The One Big News for this release: SVE',['../changelog.html#autotoc_md36',1,'']]],
-  ['foundations_5',['Type Theoretic Foundations',['https://jfalcou.github.io/kumi/introduction.html',1,'']]],
+  ['foundations_5',['Type Theoretic Foundations',['https://jfalcou.github.io/kumi/kumi_introduction.html',1,'']]],
   ['frequency_20scaling_6',['Frequency Scaling.',['../freqscale.html',1,'']]],
   ['from_20scalar_20to_20simd_20using_20eve_3a_3awide_7',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md95',1,'']]],
   ['from_20source_8',['Installation from Source',['../setup.html#autotoc_md78',1,'']]],

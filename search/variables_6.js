@@ -6,7 +6,7 @@ var searchData=
   ['gcd_3',['gcd',['../group__eve__combinatorial_gadcf37697731fa4c94ebe972425b2dbc3.html#gadcf37697731fa4c94ebe972425b2dbc3',1,'eve']]],
   ['gd_4',['gd',['../group__eve__math__hyper_gac2f0fbac24a6b4ca2f12dcdd07c054bc.html#gac2f0fbac24a6b4ca2f12dcdd07c054bc',1,'eve']]],
   ['gegenbauer_5',['gegenbauer',['../group__eve__polynomial_ga654af420c26859a9b088461f2b49d336.html#ga654af420c26859a9b088461f2b49d336',1,'eve']]],
-  ['generate_6',['generate',['https://jfalcou.github.io/kumi/group__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate'],['https://jfalcou.github.io/kumi/group__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate']]],
+  ['generate_6',['generate',['https://jfalcou.github.io/kumi/group__kumi__generators.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate'],['https://jfalcou.github.io/kumi/group__kumi__generators.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate']]],
   ['geommean_7',['geommean',['../group__eve__math__exp_ga7871a1e2f6b0faa5834acd8f8f7bddef.html#ga7871a1e2f6b0faa5834acd8f8f7bddef',1,'eve']]],
   ['glaisher_8',['glaisher',['../group__eve__math__constants_ga389fcb593b079afea5381d192593443e.html#ga389fcb593b079afea5381d192593443e',1,'eve']]]
 ];

@@ -10,7 +10,7 @@ var searchData=
   ['algorithms_7',['Tuning algorithms',['../intro-02.html#autotoc_md101',1,'']]],
   ['algorithms_20traits_8',['Algorithms traits',['../algo_rationale.html#autotoc_md59',1,'']]],
   ['alternative_9',['Mask with alternative',['../conditional.html#autotoc_md90',1,'']]],
-  ['and_201_20of_20types_10',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/identity.html',1,'']]],
+  ['and_201_20of_20types_10',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/kumi_identity.html',1,'']]],
   ['and_20depreciation_11',['Removal and Depreciation',['../changelog.html#autotoc_md34',1,'']]],
   ['and_20processing_12',['Storage and Processing',['../intro-04.html#autotoc_md108',1,'']]],
   ['and_20using_20dynamic_20kernels_13',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md115',1,'']]],

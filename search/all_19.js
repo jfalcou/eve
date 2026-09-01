@@ -32,7 +32,7 @@ var searchData=
   ['wide_5fstorage_3c_20as_5fregister_5ft_3c_20translate_5ft_3c_20type_20_3e_2c_20n_2c_20abi_5ft_3c_20translate_5ft_3c_20type_20_3e_2c_20n_20_3e_20_3e_20_3e_29',['wide_storage&lt; as_register_t&lt; translate_t&lt; Type &gt;, N, abi_t&lt; translate_t&lt; Type &gt;, N &gt; &gt; &gt;',['../structeve_1_1___1_1wide__storage.html',1,'eve::_']]],
   ['wide_5fvalue_5ftype_5ft_30',['wide_value_type_t',['../group__eve__traits_ga55234286d380ec9a9baef96a65649356.html#ga55234286d380ec9a9baef96a65649356',1,'eve']]],
   ['widen_31',['widen',['../group__eve__core__decorators_ga41df7824f33624e9f1febcb4c72bdd6a.html#ga41df7824f33624e9f1febcb4c72bdd6a',1,'eve']]],
-  ['windows_32',['windows',['https://jfalcou.github.io/kumi/group__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
+  ['windows_32',['windows',['https://jfalcou.github.io/kumi/group__kumi__generators.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__generators.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
   ['wise_20operations_33',['Element-wise Operations',['../glossary_semantic.html#glossary_elementwise',1,'']]],
   ['with_20alternative_34',['Mask with alternative',['../conditional.html#autotoc_md90',1,'']]],
   ['with_20cmake_35',['Use with CMake',['../setup.html#autotoc_md85',1,'']]],

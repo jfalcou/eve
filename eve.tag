@@ -13136,18 +13136,6 @@
     <docanchor file="changelog.html" title="/__w/eve/eve/doc/changelog.md">md__2____w_2eve_2eve_2doc_2changelog</docanchor>
   </compound>
   <compound kind="page">
-    <name>licence</name>
-    <title>Licence</title>
-    <filename>licence.html</filename>
-    <docanchor file="licence.html" title="/__w/eve/eve/doc/licence.md">md__2____w_2eve_2eve_2doc_2licence</docanchor>
-  </compound>
-  <compound kind="page">
-    <name>setup</name>
-    <title>Installation &amp; Quick Start</title>
-    <filename>setup.html</filename>
-    <docanchor file="setup.html" title="/__w/eve/eve/doc/setup.md">md__2____w_2eve_2eve_2doc_2setup</docanchor>
-  </compound>
-  <compound kind="page">
     <name>algo_rationale</name>
     <title>SIMD Algorithms</title>
     <filename>algo_rationale.html</filename>
@@ -13189,6 +13177,18 @@
     <docanchor file="glossary_semantic.html" title="Bitwise Functions">glossary_bitwise</docanchor>
     <docanchor file="glossary_semantic.html" title="Logical Functions">glossary_logical</docanchor>
     <docanchor file="glossary_semantic.html" title="Constant Functions">glossary_constant</docanchor>
+  </compound>
+  <compound kind="page">
+    <name>licence</name>
+    <title>Licence</title>
+    <filename>licence.html</filename>
+    <docanchor file="licence.html" title="/__w/eve/eve/doc/licence.md">md__2____w_2eve_2eve_2doc_2licence</docanchor>
+  </compound>
+  <compound kind="page">
+    <name>setup</name>
+    <title>Installation &amp; Quick Start</title>
+    <filename>setup.html</filename>
+    <docanchor file="setup.html" title="/__w/eve/eve/doc/setup.md">md__2____w_2eve_2eve_2doc_2setup</docanchor>
   </compound>
   <compound kind="page">
     <name>conditional</name>

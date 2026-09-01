@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['label_0',['label',['https://jfalcou.github.io/kumi/group__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label'],['https://jfalcou.github.io/kumi/group__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label']]],
+  ['label_0',['label',['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label']]],
   ['laguerre_1',['laguerre',['../group__eve__polynomial_ga79168b37417f76520ad0cf3e7cdef489.html#ga79168b37417f76520ad0cf3e7cdef489',1,'eve']]],
   ['lambert_2',['lambert',['../group__eve__special_ga87ab5feda409075628e3c53c8022ffac.html#ga87ab5feda409075628e3c53c8022ffac',1,'eve']]],
   ['last_5ftrue_3',['last_true',['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#gabc10fff649535870a897cef2a1e1673e',1,'eve']]],
@@ -15,7 +15,7 @@ var searchData=
   ['lfactorial_12',['lfactorial',['../group__eve__special_gaf0da94be6b92a70b4b5887a1db7cc256.html#gaf0da94be6b92a70b4b5887a1db7cc256',1,'eve']]],
   ['lo_13',['lo',['../group__eve__core__bitops_ga61fa2a64540198462d0aed12e93967a1.html#ga61fa2a64540198462d0aed12e93967a1',1,'eve']]],
   ['load_14',['load',['../group__eve__simd_gac2eed14dbdfb4cf1b36d157e27825cba.html#gac2eed14dbdfb4cf1b36d157e27825cba',1,'eve']]],
-  ['locate_15',['locate',['https://jfalcou.github.io/kumi/group__queries_ga39f807d6c2b8909a712d431acde4153e.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate'],['https://jfalcou.github.io/kumi/group__queries_ga39f807d6c2b8909a712d431acde4153e.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate']]],
+  ['locate_15',['locate',['https://jfalcou.github.io/kumi/group__kumi__queries.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate'],['https://jfalcou.github.io/kumi/group__kumi__queries.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate']]],
   ['log_16',['log',['../group__eve__math__log_ga9b4217fd31e1641227ea37686686d31d.html#ga9b4217fd31e1641227ea37686686d31d',1,'eve']]],
   ['log10_17',['log10',['../group__eve__math__log_gac249fe99bf31089a24fd212763e94c9e.html#gac249fe99bf31089a24fd212763e94c9e',1,'eve']]],
   ['log10_5fe_18',['log10_e',['../group__eve__math__constants_ga6572c51acce451620fdfeeb5c450160e.html#ga6572c51acce451620fdfeeb5c450160e',1,'eve']]],

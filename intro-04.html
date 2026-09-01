@@ -152,13 +152,13 @@ Adapting UDT to SIMD processing</h1>
 <div class="line"><span class="comment">// Standard Structured Bindings adaptation</span></div>
 <div class="line"><span class="keyword">namespace </span>adapt</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span>&amp; <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record_abc2cd329ad25d155458850c19cc3b137.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span>&amp; <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords&amp; p) <span class="keyword">noexcept</span></div>
 <div class="line">  {</div>
 <div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
 <div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span> <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record_abc2cd329ad25d155458850c19cc3b137.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords <span class="keyword">const</span>&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span> <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1record.html#abc2cd329ad25d155458850c19cc3b137">get</a>( polar_coords <span class="keyword">const</span>&amp; p) <span class="keyword">noexcept</span></div>
 <div class="line">  {</div>
 <div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
 <div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>

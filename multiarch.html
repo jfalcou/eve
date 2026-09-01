@@ -168,7 +168,7 @@ Writing the dynamic function hub</h2>
 <div class="line"><span class="keyword">auto</span> load_kernel()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Load the dynamic library</span></div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__functional.html#ga9063c98870899aef10f0cc080e4fea51">selector</a> = []()</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__functional.html#ga9063c98870899aef10f0cc080e4fea51">selector</a> = []()</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordtype">void</span>* handle = <span class="keyword">nullptr</span>;</div>
 <div class="line">    <span class="keywordflow">if</span>(!handle &amp;&amp; eve::is_supported(eve::avx2)  ) handle = dlopen(<span class="stringliteral">&quot;./libcompute_perfect.so&quot;</span> , RTLD_NOW);</div>
@@ -177,7 +177,7 @@ Writing the dynamic function hub</h2>
 <div class="line">    <span class="keywordflow">return</span> handle;</div>
 <div class="line">  }();</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__functional.html#ga9063c98870899aef10f0cc080e4fea51">selector</a>;</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__functional.html#ga9063c98870899aef10f0cc080e4fea51">selector</a>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> compute(std::span&lt;float&gt; data)</div>

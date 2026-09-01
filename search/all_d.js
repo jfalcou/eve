@@ -10,5 +10,5 @@ var searchData=
   ['know_20there_20is_20a_20match_7',['know there is a match',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md21',1,'What if I know there is a match?']]],
   ['kolmmean_8',['kolmmean',['../group__eve__math__exp_gafa20e073c378a3eb096b3b3f3ee37741.html#gafa20e073c378a3eb096b3b3f3ee37741',1,'eve']]],
   ['kumi_9',['kumi',['https://jfalcou.github.io/kumi/namespacekumi.html',1,'']]],
-  ['kumi_20types_10',['Kumi Types',['https://jfalcou.github.io/kumi/group__types.html',1,'']]]
+  ['kumi_20types_10',['Kumi Types',['https://jfalcou.github.io/kumi/group__kumi__types.html',1,'']]]
 ];

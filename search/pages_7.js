@@ -3,7 +3,7 @@ var searchData=
   ['element_20access_0',['Generalized Element Access',['../glossary_semantic.html#autotoc_md68',1,'']]],
   ['element_20type_1',['Element type',['../glossary_semantic.html#autotoc_md65',1,'']]],
   ['element_20wise_20operations_2',['Element-wise Operations',['../glossary_semantic.html#glossary_elementwise',1,'']]],
-  ['elements_20the_200_20and_201_20of_20types_3',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/identity.html',1,'']]],
+  ['elements_20the_200_20and_201_20of_20types_3',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/kumi_identity.html',1,'']]],
   ['engine_4',['The Expressive Vector Engine',['../index.html',1,'']]],
   ['environment_5',['Development Environment',['../dev_environment.html',1,'']]],
   ['epilogue_6',['Mathematical Epilogue',['../intro-01.html#autotoc_md97',1,'']]],
