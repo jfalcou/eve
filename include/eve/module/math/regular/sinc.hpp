@@ -13,7 +13,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/detail/generic/sinc_kernel.hpp>
 #include <eve/module/math/regular/sin.hpp>
-//#include <eve/module/math/regular/sinpic.hpp>
 
 namespace eve
 {
