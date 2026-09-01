@@ -8,7 +8,7 @@
 #pragma once
 
 #include <utility>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 namespace eve
 {

@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>

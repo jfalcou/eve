@@ -182,11 +182,11 @@ namespace kumi::_
 #define KUMI_MEMBERS(N, _)                                                                                             \
   T##N member##N;                                                                                                      \
   using index##N = std::integral_constant<std::size_t, N>;                                                             \
-  KUMI_ABI constexpr auto& operator()(index##N)& noexcept                                                              \
+  KUMI_ABI constexpr auto& operator()(index##N) & noexcept                                                             \
   {                                                                                                                    \
     return member##N;                                                                                                  \
   }                                                                                                                    \
-  KUMI_ABI constexpr auto&& operator()(index##N)&& noexcept                                                            \
+  KUMI_ABI constexpr auto&& operator()(index##N) && noexcept                                                           \
   {                                                                                                                    \
     return static_cast<T##N&&>(member##N);                                                                             \
   }                                                                                                                    \
@@ -1745,8 +1745,7 @@ namespace kumi
 #ifndef KUMI_DOXYGEN_INVOKED
       explicit(!kumi::_::piecewise_convertible<tuple<Ts const&...>, tuple<Us...>>)
 #endif
-        constexpr
-        operator tuple<Us...>() const
+        constexpr operator tuple<Us...>() const
     requires(sizeof...(Us) == sizeof...(Ts)) && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
 #ifndef KUMI_DOXYGEN_INVOKED
             && (kumi::_::piecewise_constructible<tuple<Ts const&...>, tuple<Us...>>)
@@ -1761,8 +1760,7 @@ namespace kumi
 #ifndef KUMI_DOXYGEN_INVOKED
       explicit(!kumi::_::piecewise_convertible<tuple<Ts&...>, tuple<Us...>>)
 #endif
-        constexpr
-        operator tuple<Us...>()
+        constexpr operator tuple<Us...>()
     requires(sizeof...(Us) == sizeof...(Ts)) && (!std::same_as<tuple<Ts...>, tuple<Us...>>)
 #ifndef KUMI_DOXYGEN_INVOKED
             && (kumi::_::piecewise_constructible<tuple<Ts&...>, tuple<Us...>>)
@@ -4315,12 +4313,12 @@ namespace kumi
   namespace _
   {
     template<typename T, typename Pred, std::size_t... I>
-    KUMI_HIDDEN_ABI constexpr bool all_of_(kumi::_::adl_tag_t, T&& t, Pred p, std::index_sequence<I...>)
+    KUMI_HIDDEN_ABI constexpr auto all_of_(kumi::_::adl_tag_t, T&& t, Pred p, std::index_sequence<I...>)
     {
       return (kumi::invoke(p, get<I>(KUMI_FWD(t))) && ...);
     }
     template<typename T, typename Pred, std::size_t... I>
-    KUMI_HIDDEN_ABI constexpr bool any_of_(kumi::_::adl_tag_t, T&& t, Pred p, std::index_sequence<I...>)
+    KUMI_HIDDEN_ABI constexpr auto any_of_(kumi::_::adl_tag_t, T&& t, Pred p, std::index_sequence<I...>)
     {
       return (kumi::invoke(p, get<I>(KUMI_FWD(t))) || ...);
     }
@@ -4371,11 +4369,11 @@ namespace kumi
   struct none_of_t : private kumi::any_of_t
   {
     template<typename Pred, kumi::concepts::product_type T>
-    [[nodiscard]] KUMI_ABI constexpr bool operator()(T&& t, Pred p) const noexcept
+    [[nodiscard]] KUMI_ABI constexpr auto operator()(T&& t, Pred p) const noexcept
     {
       return !kumi::any_of_t::operator()(KUMI_FWD(t), p);
     }
-    template<kumi::concepts::product_type T> [[nodiscard]] KUMI_ABI constexpr bool operator()(T&& t) const noexcept
+    template<kumi::concepts::product_type T> [[nodiscard]] KUMI_ABI constexpr auto operator()(T&& t) const noexcept
     {
       return !kumi::any_of_t::operator()(KUMI_FWD(t));
     }

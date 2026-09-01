@@ -14,7 +14,7 @@
 #   error "[EVE] External KUMI dependencies requested but none are available"
 #   include <kumi/kumi.hpp>
 # else
-#   include <eve/deps/kumi/tuple.hpp>
+#   include <eve/deps/kumi/kumi.hpp>
 # endif
 #endif
 

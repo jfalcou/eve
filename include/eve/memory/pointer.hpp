@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/concept/range.hpp>
 
 #include <concepts>

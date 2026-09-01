@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/concept/same_lanes.hpp>

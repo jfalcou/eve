@@ -12,7 +12,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 namespace eve
 {

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/arch/float16.hpp>
 #include <eve/as.hpp>
 

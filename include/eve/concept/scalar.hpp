@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/translation.hpp>
 #include <eve/concept/translation.hpp>

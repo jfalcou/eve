@@ -10,7 +10,7 @@
 #include <eve/module/algo/algo/copy.hpp>
 #include <eve/module/algo/algo/views/zip.hpp>
 #include <eve/concept/simd_allocator.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits/product_type.hpp>
