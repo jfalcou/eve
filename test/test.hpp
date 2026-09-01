@@ -35,106 +35,6 @@ namespace eve
 
 namespace tts
 {
-  // Defined by TTS further down, forward-declared so the element-wise loops below can reach them.
-  template<typename T, typename U> inline double ulp_check(T const& a, U const& b);
-  template<typename T, typename U> inline double relative_check(T const& a, U const& b);
-
-  //================================================================================================
-  // v3 hooks on these by name: `if constexpr(requires { ulp_distance(a,b); })`. Declaring an
-  // unconstrained generic here would satisfy that test for every type and hijack the fallback,
-  // so only the EVE types are declared, and element-wise recursion goes back through v3's own
-  // ulp_check / relative_check / absolute_check.
-  //================================================================================================
-  template<std::same_as<eve::float16_t> T> inline double ulp_distance(T const &l, T const &r)
-  {
-    return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
-  }
-
-  template<typename T, typename N>
-  inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_ulp = 0;
-    for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, ulp_check(T(l.get(i)), T(r.get(i))));
-
-    return max_ulp;
-  }
-
-  template<typename T>
-  inline double ulp_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
-  }
-
-  template<typename T, typename N>
-  inline bool ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
-  {
-    for(auto i = 0; i < a.size(); ++i)
-    {
-      if( (a.get(i) != b.get(i)) && !(eve::is_nan(a.get(i)) && eve::is_nan(b.get(i))))
-        return false;
-    }
-    return true;
-  }
-
-  template<typename T>
-  inline bool ieee_equal(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r);
-  }
-
-  template<typename T, typename N>
-  inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_dr = 0;
-    for(auto i = 0; i < l.size(); ++i)
-    {
-      if constexpr(eve::integral_value<T>)
-      {
-        auto dr =  static_cast<double>(relative_check(T(l.get(i)), T(r.get(i))));
-        max_dr = (dr > max_dr) ? dr : max_dr;
-      }
-      else
-      {
-        auto dr = static_cast<double>(eve::reldist(T(l.get(i)), T(r.get(i))));
-        max_dr = (dr > max_dr) ? dr : max_dr;
-      }
-    }
-    return max_dr;
-  }
-
-  template<typename T>
-  inline double relative_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : 1;
-  }
-
-  template<typename T, typename N>
-  inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_d = 0;
-    for(auto i = 0; i < l.size(); ++i)
-    {
-      auto d = static_cast<double>(eve::dist(T(l.get(i)), T(r.get(i))));
-      max_d = (d > max_d) ? d : max_d;
-    }
-    return max_d;
-  }
-
-  template<typename T>
-  inline double absolute_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : 1;
-  }
-
-  template<std::same_as<eve::float16_t> T> inline double absolute_distance(T const &l, T const &r)
-  {
-    return static_cast<double>(eve::dist(l, r));
-  }
-}
-
-namespace tts
-{
 
   template<typename T, typename V> auto as_value(V const&);
 
@@ -167,19 +67,155 @@ namespace tts
 namespace tts
 {
   //================================================================================================
-  // v3 renders a streamed value through as_text, which only knows numbers, ranges and its own
-  // types. The suite also logs index constants and shuffle patterns; both stream to an ostream.
+  // EVE measures distances its own way on the three shapes it adds. Specializing the trait rather
+  // than overloading a free function means a name that no longer matches is a compilation error
+  // instead of a silent fall back onto the built-in path.
   //================================================================================================
-  template<typename T, T V> auto to_text(std::integral_constant<T,V> const&)
+  template<typename T, typename N>
+  struct precision<eve::wide<T, N>>
   {
-    std::ostringstream os; os << V; return ::tts::text(os.str().c_str());
-  }
+    using w_t = eve::wide<T, N>;
 
-  template<std::ptrdiff_t... I> auto to_text(eve::pattern_t<I...> const& p)
+    static double ulp(w_t const& l, w_t const& r)
+    {
+      double max_ulp = 0;
+      for(auto i = 0; i < l.size(); ++i)
+        max_ulp = std::max(max_ulp, precision<T>::ulp(T(l.get(i)), T(r.get(i))));
+      return max_ulp;
+    }
+
+    // Every lane goes through precision<T>::relative, including the floating ones, which used to
+    // call eve::reldist. The two now compute the same quotient, but going through the trait keeps
+    // one implementation of the convention rather than two that only happened to agree.
+    static double relative(w_t const& l, w_t const& r)
+    {
+      double max_dr = 0;
+      for(auto i = 0; i < l.size(); ++i)
+      {
+        auto dr = precision<T>::relative(T(l.get(i)), T(r.get(i)));
+        max_dr = (dr > max_dr) ? dr : max_dr;
+      }
+      return max_dr;
+    }
+
+    static double absolute(w_t const& l, w_t const& r)
+    {
+      double max_d = 0;
+      for(auto i = 0; i < l.size(); ++i)
+      {
+        auto d = static_cast<double>(eve::dist(T(l.get(i)), T(r.get(i))));
+        max_d = (d > max_d) ? d : max_d;
+      }
+      return max_d;
+    }
+
+    static bool ieee(w_t const& a, w_t const& b)
+    {
+      for(auto i = 0; i < a.size(); ++i)
+        if((a.get(i) != b.get(i)) && !(eve::is_nan(a.get(i)) && eve::is_nan(b.get(i))))
+          return false;
+      return true;
+    }
+  };
+
+  template<typename T>
+  struct precision<eve::logical<T>>
   {
-    std::ostringstream os; os << p; return ::tts::text(os.str().c_str());
-  }
+    using l_t = eve::logical<T>;
 
+    static double ulp(l_t const& l, l_t const& r)
+    {
+      return eve::compare_equal(l, r) ? 0. : std::numeric_limits<double>::infinity();
+    }
+    static double relative(l_t const& l, l_t const& r) { return eve::compare_equal(l, r) ? 0. : 1.; }
+    static double absolute(l_t const& l, l_t const& r) { return eve::compare_equal(l, r) ? 0. : 1.; }
+    static bool   ieee    (l_t const& l, l_t const& r) { return eve::compare_equal(l, r); }
+  };
+
+  //================================================================================================
+  // float16_t keeps the two members EVE has always defined for it. relative and ieee are left out
+  // rather than inherited: the built-in ones branch on std::is_floating_point_v, false for _Float16
+  // in C++20, so they would refuse to compile anyway — and a missing member says so more plainly
+  // than a static_assert three frames down. None of the three shapes inherits, for the same reason:
+  // no built-in member can work on a type the standard traits do not recognize.
+  //================================================================================================
+  template<>
+  struct precision<eve::float16_t>
+  {
+    using f_t = eve::float16_t;
+
+    static double ulp(f_t const& l, f_t const& r)
+    {
+      return eve::convert(eve::ulpdist(l, r), eve::as<double>());
+    }
+    static double absolute(f_t const& l, f_t const& r) { return static_cast<double>(eve::dist(l, r)); }
+
+    // A relative distance is a ratio, so it is worth more than half precision can hold: the two
+    // values are exact in double, and the quotient is taken there. Measured in half, a ratio of the
+    // size the tolerances use would be rounded as coarsely as the tolerance itself.
+    static double relative(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::relative( eve::convert(l, eve::as<double>())
+                                                   , eve::convert(r, eve::as<double>())
+                                                   );
+    }
+  };
+
+  //================================================================================================
+  // Without these, TTS falls back on a byte dump and a failure on a wide<double> reads as sixteen
+  // hex pairs. Specializing the trait rather than overloading to_text means a shape TTS cannot
+  // render is a compilation error instead of that dump.
+  //================================================================================================
+  template<typename T, typename N> struct display<eve::wide<T, N>>
+  {
+    static text render(eve::wide<T, N> const& v)
+    {
+      text that("(");
+      for(std::size_t i = 0; i < v.size(); ++i)
+      {
+        if(i) that += ", ";
+        that += as_text(T(v.get(i)));
+      }
+      return that + ")";
+    }
+  };
+
+  template<typename T> struct display<eve::logical<T>>
+  {
+    static text render(eve::logical<T> const& v)
+    {
+      if constexpr(eve::simd_value<T>)
+      {
+        text that("(");
+        for(std::size_t i = 0; i < v.size(); ++i)
+        {
+          if(i) that += ", ";
+          that += v.get(i) ? "true" : "false";
+        }
+        return that + ")";
+      }
+      else return text(v.value() ? "true" : "false");
+    }
+  };
+
+  //================================================================================================
+  // The suite also logs index constants and shuffle patterns; both stream to an ostream.
+  //================================================================================================
+  template<typename T, T V> struct display<std::integral_constant<T, V>>
+  {
+    static text render(std::integral_constant<T, V> const&)
+    {
+      std::ostringstream os; os << V; return text(os.str().c_str());
+    }
+  };
+
+  template<std::ptrdiff_t... I> struct display<eve::pattern_t<I...>>
+  {
+    static text render(eve::pattern_t<I...> const& p)
+    {
+      std::ostringstream os; os << p; return text(os.str().c_str());
+    }
+  };
 }
 
 
