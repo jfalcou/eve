@@ -98,12 +98,15 @@ namespace tts
       return max_dr;
     }
 
+    // Through precision<T> rather than eve::dist, for the same reason as relative: dist reports an
+    // unordered pair as allbits, and a NaN loses `(d > max_d)`, so a lane that could never match
+    // contributed nothing at all. The built-in path answers infinity instead.
     static double absolute(w_t const& l, w_t const& r)
     {
       double max_d = 0;
       for(auto i = 0; i < l.size(); ++i)
       {
-        auto d = static_cast<double>(eve::dist(T(l.get(i)), T(r.get(i))));
+        auto d = precision<T>::absolute(T(l.get(i)), T(r.get(i)));
         max_d = (d > max_d) ? d : max_d;
       }
       return max_d;
@@ -148,7 +151,14 @@ namespace tts
     {
       return eve::convert(eve::ulpdist(l, r), eve::as<double>());
     }
-    static double absolute(f_t const& l, f_t const& r) { return static_cast<double>(eve::dist(l, r)); }
+    // Through the built-in path in double, like relative: eve::dist answers allbits on an unordered
+    // pair, which the caller's maximum would drop instead of reporting.
+    static double absolute(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::absolute( eve::convert(l, eve::as<double>())
+                                                   , eve::convert(r, eve::as<double>())
+                                                   );
+    }
 
     // A relative distance is a ratio, so it is worth more than half precision can hold: the two
     // values are exact in double, and the quotient is taken there. Measured in half, a ratio of the
@@ -180,6 +190,13 @@ namespace tts
     }
   };
 
+  // _Float16 is not std::floating_point in C++20, so TTS has no branch for it and falls back on the
+  // byte dump. Rendered through double, which holds every half exactly.
+  template<> struct display<eve::float16_t>
+  {
+    static text render(eve::float16_t const& v) { return as_text(eve::convert(v, eve::as<double>())); }
+  };
+
   template<typename T> struct display<eve::logical<T>>
   {
     static text render(eve::logical<T> const& v)
@@ -203,10 +220,7 @@ namespace tts
   //================================================================================================
   template<typename T, T V> struct display<std::integral_constant<T, V>>
   {
-    static text render(std::integral_constant<T, V> const&)
-    {
-      std::ostringstream os; os << V; return text(os.str().c_str());
-    }
+    static text render(std::integral_constant<T, V> const&) { return as_text(T(V)); }
   };
 
   template<std::ptrdiff_t... I> struct display<eve::pattern_t<I...>>

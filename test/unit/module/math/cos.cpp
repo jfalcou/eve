@@ -77,12 +77,15 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cos)(eve::wide)",
 };
 
 
+// quarter_circle assumes its argument lies in [-pi/4, pi/4] and returns NaN outside, so both
+// arguments are drawn inside that range rather than in [-1.5, 1.5] and [-pi/2, pi/2].
 TTS_CASE_WITH("Check behavior of cos on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(-1.5, 1.5), tts::randoms(-1, 1))
+              tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
+              tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
-  auto pa1 = a1*eve::pio_2(eve::as(a1));
+  auto pa1 = a1*eve::pio_4(eve::as(a1));
    using eve::raw;
    using eve::quarter_circle;
    auto prec = tts::prec<T>(0.005, 0.005);
