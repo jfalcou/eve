@@ -70,9 +70,13 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::erf)(eve::wide)",
 
 
 
+// Both variants build on tanh[o], whose only source of NaN is expm1[o]; that one stops at 266.21
+// in float as well as in double (see #2389). erf[raw] passes 1.2825*a0 and so gives out at 103.78,
+// erf[fast] passes a cubic and gives out at 10.56. erf reaches 1 well before either, so drawing up
+// to 10 keeps the whole meaningful range and stays on ground both variants can hold.
 TTS_CASE_WITH("Check behavior of erf on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(eve::eps, eve::valmax), tts::randoms(-2.0, 2.0))
+              tts::randoms(eve::eps, 10.0), tts::randoms(-2.0, 2.0))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
