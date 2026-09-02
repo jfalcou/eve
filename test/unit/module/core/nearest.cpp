@@ -56,7 +56,12 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
     TTS_EQUAL(eve::nearest(a0, eve::as<signed>()), r);
 
     TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
-              uwi_t([&](auto i, auto) { return ui_t(std_nearbyint(std_abs(a0.get(i)))); }));
+              uwi_t([&](auto i, auto) {
+                    // Saturating, as the signed case above already does: converting an
+                    // out-of-range double to an unsigned is undefined, where eve::nearest saturates.
+                    return eve::convert[eve::saturated](std_nearbyint(std_abs(a0.get(i))),
+                                                        eve::as<ui_t>{});
+                  }));
   }
   else { TTS_EQUAL(eve::nearest(a0), a0); }
 };
