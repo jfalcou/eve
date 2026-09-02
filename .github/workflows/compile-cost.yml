@@ -55,15 +55,21 @@ jobs:
         uses: actions/checkout@v6
 
       ##############################################################################################
-      ## In one go rather than in the chunks the other hosted jobs use: their target lists leave
-      ## unit.regression.exe out, and a unit missing from the table reads as a unit that costs
-      ## nothing. The precompiled header is off for the same reason, it would hide what a unit
-      ## opens for itself.
+      ## The toolchain file and the ISA are those of the no_pch job, so the figures describe the
+      ## build the rest of the CI performs. Naming the compiler alone leaves CMAKE_CXX_FLAGS empty,
+      ## which drops EVE_NO_FORCEINLINE and hands always_inline back to every function EVE has: six
+      ## units out of 1543 were enough to end that build, on the runner where no_pch compiles all of
+      ## them at -j 4 in the hour.
+      ##
+      ## In one go rather than in the chunks no_pch uses: its target lists leave unit.regression.exe
+      ## out, and a unit missing from the table reads as a unit that costs nothing. The precompiled
+      ## header stays off for the same reason, it would hide what a unit opens for itself.
       ##############################################################################################
       - name: Measure
         run: |
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
-                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
+                -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/clang.x86.cmake                  \
+                -DEVE_OPTIONS="-msse2" -DEVE_USE_PCH=0
           cmake --build build -j 2 --target unit.exe
 
       ##############################################################################################
