@@ -7,9 +7,11 @@ name: EVE - Compile Cost
 run-name: compile-cost
 
 ####################################################################################################
-## Both measurements run on the machine we control, at -j 16. Same hardware and therefore same
-## clang on either side is what makes a peak comparable at all: the figure belongs to the compiler
-## that produced it as much as to the code.
+## Both measurements run on the machine we control, at -j 16, inside the pinned image the rest of
+## the CI uses. The image is what makes the numbers comparable: a peak belongs to the compiler that
+## produced it as much as to the code, and the machine's own clang moves with its packages. A
+## reference measured on main weeks earlier would otherwise be read against a different compiler,
+## and the delta would be reporting an upgrade.
 ##
 ## The pull request measurement waits for the unit tests to be done rather than competing with them
 ## for the runner, hence workflow_run instead of pull_request.
@@ -42,6 +44,8 @@ jobs:
   pull-request:
     if: github.event_name == 'workflow_run'
     runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
     steps:
       - name: Fetch the commit the unit tests ran on
         uses: actions/checkout@v6
@@ -56,20 +60,35 @@ jobs:
 
       ##########################################################################################
       ## The reference lives in the last successful run of this workflow on main, not in the run
-      ## that triggered this one, so it has to be looked up rather than named.
+      ## that triggered this one, so it has to be looked up rather than named. Both steps are
+      ## JavaScript actions, which the runner provides its own node for, so they work inside the
+      ## container where the image's own tooling might not.
       ##########################################################################################
+      - name: Find the reference run
+        id: reference
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'compile-cost.yml',
+              branch: 'main',
+              status: 'success',
+              per_page: 1
+            });
+            return runs.data.workflow_runs.length ? String(runs.data.workflow_runs[0].id) : '';
+
       - name: Fetch the reference measured on main
+        if: steps.reference.outputs.result != ''
         continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          run=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "EVE - Compile Cost" \
-                            --branch main --status success --limit 1                    \
-                            --json databaseId -q '.[0].databaseId')
-          if [ -n "$run" ]; then
-            gh run download "$run" --repo "$GITHUB_REPOSITORY" \
-                            --name compile-cost-reference --dir reference
-          fi
+        uses: actions/download-artifact@v4
+        with:
+          name: compile-cost-reference
+          path: reference
+          run-id: ${{ steps.reference.outputs.result }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Report
         run: |
@@ -101,6 +120,8 @@ jobs:
   reference:
     if: github.event_name == 'push'
     runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
     steps:
       - name: Fetch main
         uses: actions/checkout@v6
