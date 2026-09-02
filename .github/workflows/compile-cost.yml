@@ -6,58 +6,82 @@
 name: EVE - Compile Cost
 run-name: compile-cost
 
+####################################################################################################
+## Both measurements run on the machine we control, at -j 16. Same hardware and therefore same
+## clang on either side is what makes a peak comparable at all: the figure belongs to the compiler
+## that produced it as much as to the code.
+##
+## The pull request measurement waits for the unit tests to be done rather than competing with them
+## for the runner, hence workflow_run instead of pull_request.
+####################################################################################################
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["EVE - Unit Tests"]
+    types:
+      - completed
   push:
     branches:
       - main
 
+####################################################################################################
+## One measurement at a time on the runner. Two at once still produce numbers, and nothing in them
+## says they are wrong.
+####################################################################################################
+concurrency:
+  group: compile-cost
+  cancel-in-progress: false
+
 jobs:
   ##################################################################################################
-  ## PULL REQUESTS - on a GitHub runner, because the self-hosted one is already busy with the rest
-  ## of the CI at that moment.
+  ## A PULL REQUEST, once its unit tests are through.
   ##
-  ## -j 2 comes from the measurements: the heaviest translation unit peaks near 3 GiB and a standard
-  ## runner has 16, so two at a time leaves room and four would not. Peak memory is per process and
-  ## does not care about the parallelism anyway; the timings do, which is why they are read as a
-  ## ranking rather than as seconds.
-  ##
-  ## Both sides are measured here rather than reusing the reference below: a peak depends on the
-  ## compiler that produced it, and comparing across two machines would compare two clangs.
+  ## The baseline is the artifact the reference job left on the last push to main. Downloading it
+  ## rather than rebuilding halves the work, and costs nothing in accuracy now that both sides come
+  ## from the same runner and the same image.
   ##################################################################################################
   pull-request:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run'
+    runs-on: [self-hosted, generic-x86]
     steps:
-      - name: Fetch the pull request
+      - name: Fetch the commit the unit tests ran on
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Measure this branch
+      - name: Measure
         run: |
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
                 -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
-          cmake --build build -j 2 --target unit.exe
+          cmake --build build -j 16 --target unit.exe
 
-      - name: Fetch the base branch
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ github.base_ref }}
-          path: base
-
-      - name: Measure the base branch
+      ##########################################################################################
+      ## The reference lives in the last successful run of this workflow on main, not in the run
+      ## that triggered this one, so it has to be looked up rather than named.
+      ##########################################################################################
+      - name: Fetch the reference measured on main
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cmake -S base -B base-build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
-                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
-          cmake --build base-build -j 2 --target unit.exe
+          run=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "EVE - Compile Cost" \
+                            --branch main --status success --limit 1                    \
+                            --json databaseId -q '.[0].databaseId')
+          if [ -n "$run" ]; then
+            gh run download "$run" --repo "$GITHUB_REPOSITORY" \
+                            --name compile-cost-reference --dir reference
+          fi
 
       - name: Report
         run: |
-          python3 tools/compile_cost.py build/compile-cost.csv           \
-                  --baseline base-build/compile-cost.csv                 \
-                  --full compile-cost-full.md                            \
-                  --title "Compile cost against ${{ github.base_ref }}"  \
+          if [ -f reference/compile-cost.csv ]; then
+            baseline="--baseline reference/compile-cost.csv"
+          else
+            baseline=""
+            echo "> No reference from main was found, so this run has no delta." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          python3 tools/compile_cost.py build/compile-cost.csv $baseline \
+                  --full compile-cost-full.md                           \
+                  --title "Compile cost"                                \
                   >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload the measurements
@@ -68,22 +92,15 @@ jobs:
           path: |
             compile-cost-full.md
             build/compile-cost.csv
-            base-build/compile-cost.csv
           if-no-files-found: warn
           retention-days: 14
 
   ##################################################################################################
-  ## MAIN - on the machine we control, which is where a figure gets to mean something over time.
-  ##
-  ## Serialised: two measurements at once still produce numbers, and nothing in them would say they
-  ## are wrong.
+  ## MAIN - the reference every pull request is read against, kept long enough to see a trend.
   ##################################################################################################
   reference:
     if: github.event_name == 'push'
-    runs-on: [self-hosted, linux, x64]
-    concurrency:
-      group: compile-cost-reference
-      cancel-in-progress: false
+    runs-on: [self-hosted, generic-x86]
     steps:
       - name: Fetch main
         uses: actions/checkout@v6
@@ -96,9 +113,9 @@ jobs:
 
       - name: Report
         run: |
-          python3 tools/compile_cost.py build/compile-cost.csv  \
-                  --full compile-cost-full.md                   \
-                  --title "Compile cost of main"                \
+          python3 tools/compile_cost.py build/compile-cost.csv \
+                  --full compile-cost-full.md                  \
+                  --title "Compile cost of main"               \
                   >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload the reference
