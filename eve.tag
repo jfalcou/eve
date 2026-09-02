@@ -8301,6 +8301,14 @@
       <arglist>(adl_helper_t const &amp;, cpu_ const &amp;, O const &amp;, T x, T y, T z, T p)</arglist>
     </member>
   </compound>
+  <compound kind="namespace">
+    <name>literal</name>
+    <filename>namespaceliteral.html</filename>
+  </compound>
+  <compound kind="namespace">
+    <name>supports</name>
+    <filename>namespacesupports.html</filename>
+  </compound>
   <compound kind="group">
     <name>eve_core_accuracy</name>
     <title>Accuracy helpers</title>
@@ -11810,6 +11818,11 @@
       <anchor>ga427432fa10542d6737316973309004e4</anchor>
       <arglist></arglist>
     </member>
+  </compound>
+  <compound kind="group">
+    <name>eve_api</name>
+    <title>Main API</title>
+    <filename>group__eve__api.html</filename>
   </compound>
   <compound kind="group">
     <name>eve_math</name>

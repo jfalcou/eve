@@ -11,7 +11,8 @@ var searchData=
   ['and_20functions_8',['and Functions',['https://jfalcou.github.io/kumi/group__kumi__details.html',1,'Helper Types and Functions'],['https://jfalcou.github.io/kumi/group__kumi__utility.html',1,'Helper Types and Functions']]],
   ['and_20helpers_9',['Architecture related Types and Helpers',['../group__eve__arch.html',1,'']]],
   ['and_20views_10',['Algorithms and Views',['../group__eve__algorithms.html',1,'']]],
-  ['architecture_20related_20types_20and_20helpers_11',['Architecture related Types and Helpers',['../group__eve__arch.html',1,'']]],
-  ['arithmetic_20operations_12',['Arithmetic operations',['../group__eve__core__arithmetic.html',1,'']]],
-  ['associated_20functions_13',['associated Functions',['https://jfalcou.github.io/kumi/group__kumi__tuple__related.html',1,'Product Types and associated Functions'],['https://jfalcou.github.io/kumi/group__kumi__record__related.html',1,'Record Types and associated Functions']]]
+  ['api_11',['Main API',['../group__eve__api.html',1,'']]],
+  ['architecture_20related_20types_20and_20helpers_12',['Architecture related Types and Helpers',['../group__eve__arch.html',1,'']]],
+  ['arithmetic_20operations_13',['Arithmetic operations',['../group__eve__core__arithmetic.html',1,'']]],
+  ['associated_20functions_14',['associated Functions',['https://jfalcou.github.io/kumi/group__kumi__tuple__related.html',1,'Product Types and associated Functions'],['https://jfalcou.github.io/kumi/group__kumi__record__related.html',1,'Record Types and associated Functions']]]
 ];
