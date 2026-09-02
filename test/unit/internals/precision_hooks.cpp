@@ -124,4 +124,8 @@ TTS_CASE("tts::precision<eve::float16_t> measures in half precision, not in floa
   // the whole reason this specialization exists.
   TTS_EXPECT(p<f_t>::absolute(one, next) < 1e-3);
   TTS_EXPECT(p<f_t>::absolute(one, next) > 0.);
+
+  // The fourth member: three_fma.cpp reaches it through TTS_IEEE_EQUAL on a scalar half.
+  TTS_EXPECT(p<f_t>::ieee(one, one));
+  TTS_EXPECT_NOT(p<f_t>::ieee(one, next));
 };
