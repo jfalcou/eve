@@ -9,6 +9,7 @@ Installation & Quick Start {#setup}
 | -------------- | ---------------------- | ---------------------- |
 | g++            | 13  or above           | 14  or above           |
 | clang++        | 16  or above           | 19  or above           |
+| Visual Studio  | 19.44 or above         | 19.44 or above         |
 
 In term of SIMD extension sets, the supports status are as follows:
 
