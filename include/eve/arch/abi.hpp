@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/arch/float16.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 #include <concepts>
 #include <type_traits>
