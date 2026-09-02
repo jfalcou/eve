@@ -10,7 +10,7 @@ run-name: compile-cost
 ## What every translation unit of the unit test suite costs to compile, on a pull request and on
 ## main, so the two can be subtracted.
 ##
-## The measurement runs on a hosted runner rather than on the machine we own, and takes a -j of 3.
+## The measurement runs on a hosted runner rather than on the machine we own, and takes a -j of 2.
 ## The self-hosted host carries four runner agents behind one label, which places up to four builds
 ## on the same 64 GiB at once with no ordering between them; a peak recorded there belongs to its
 ## neighbours as much as to the code, and one of those crowds ended with the reaper taking a job
@@ -64,7 +64,7 @@ jobs:
         run: |
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
                 -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
-          cmake --build build -j 3 --target unit.exe
+          cmake --build build -j 2 --target unit.exe
 
       ##############################################################################################
       ## The reference sits in the last successful run of this workflow on main, so it is looked up
