@@ -10,7 +10,7 @@
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <cstring>
@@ -98,18 +98,6 @@ namespace eve
 
       template<std::size_t I>
       friend EVE_FORCEINLINE auto const&  get(blob const& b) noexcept { return kumi::get<I>(b.storage); }
-
-      template<typename Func>
-      EVE_FORCEINLINE void for_each(Func f, auto... w)       { kumi::for_each(f, *this, w.storage()...); }
-
-      template<typename Func>
-      EVE_FORCEINLINE void for_each(Func f, auto... w) const { kumi::for_each(f, *this, w.storage()...); }
-
-      template<typename Func>
-      EVE_FORCEINLINE decltype(auto) apply(Func f)        { return kumi::apply(f,*this); }
-
-      template<typename Func>
-      EVE_FORCEINLINE decltype(auto) apply(Func f) const  { return kumi::apply(f,*this); }
     };
   }
 

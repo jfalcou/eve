@@ -17,10 +17,9 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/logical_notand.hpp>
 
-// This is a help for programming efiicient horizontal branching
-// see dawson .hpp for an example
-// the tests can be incompatible or in increasing order when
-// using next interval
+// This is a help for programming efficient horizontal branching
+// see dawson.hpp for an example the tests can be incompatible 
+// or in increasing order when using next interval
 
 namespace eve
 {

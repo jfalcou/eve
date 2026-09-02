@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/twotonmb.hpp>
 #include <eve/module/core/regular/abs.hpp>

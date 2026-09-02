@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <type_traits>
 
 #ifndef EVE_NO_STRICT_ALIASING

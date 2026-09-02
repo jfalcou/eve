@@ -9,7 +9,6 @@
 
 #include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/majorant.hpp>
 #include <eve/module/core/regular/bit_or.hpp>

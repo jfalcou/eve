@@ -8,9 +8,6 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/pragmas.hpp>
-
-EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 
 namespace eve::_
 {
@@ -28,12 +25,7 @@ namespace eve::_
   {
     using storage_type = Storage;
 
-    // gcc fix
-  #if defined(SPY_SIMD_IS_ARM_FIXED_SVE2) || defined(SPY_SIMD_IS_ARM_FIXED_SVE)
-    wide_storage() {};
-  #else
-    wide_storage() : data_{} {}; // gcc fix
-  #endif
+    wide_storage() : data_{} {}; 
 
     wide_storage(storage_type const &r) : data_(r) {}
 
@@ -59,5 +51,3 @@ namespace eve::_
     Storage data_;
   };
 }
-
-EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA

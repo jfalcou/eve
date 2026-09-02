@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/ptr_translation.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/conditional.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
@@ -40,12 +40,12 @@ namespace eve::_
       }
       else if constexpr (has_aggregated_abi_v<T>)
       {
-        value.storage().apply(
+        kumi::apply(
           [&]<typename... Sub>(Sub&...v)
           {
             int k = 0;
             ((store(v, dst + k), k += Sub::size()), ...);
-          });
+          }, value.storage());
       }
     }
     else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);

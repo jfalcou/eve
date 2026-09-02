@@ -67,10 +67,6 @@ namespace eve
   //================================================================================================
   // ARM SVE ABI concept
   //================================================================================================
-  template<typename T> concept sve_abi = _::is_one_of<T> ( _::types < arm_sve_128_
-                                                                              , arm_sve_256_
-                                                                              , arm_sve_512_
-                                                                              > {}
-                                                              );
+  template<typename T> concept sve_abi = _::one_of<T, arm_sve_128_, arm_sve_256_, arm_sve_512_>;
   template<typename T> concept sve_tag = requires(T) { typename T::is_sve; };
 }

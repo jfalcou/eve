@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 namespace eve::algo
 {

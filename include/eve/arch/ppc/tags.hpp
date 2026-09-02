@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include "eve/detail/spy.hpp"
+#include "eve/deps/spy.hpp"
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/ppc/predef.hpp>
 #include <eve/detail/meta.hpp>
@@ -70,6 +70,6 @@ namespace eve
   //================================================================================================
   // PPC ABI concept
   //================================================================================================
-  template<typename T> concept ppc_abi = _::is_one_of<T>(_::types<ppc_> {});
+  template<typename T> concept ppc_abi = _::one_of<T, ppc_>;
   template<typename T> concept ppc_tag = requires(T) { typename T::is_ppc; };
 }

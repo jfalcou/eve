@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/arch/fundamental_cardinal.hpp>
 #include <eve/as.hpp>

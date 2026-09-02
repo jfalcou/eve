@@ -8,9 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/constant/maxexponentm1.hpp>

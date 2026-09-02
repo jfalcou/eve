@@ -63,7 +63,7 @@ namespace eve::_
     constexpr auto sz = Shuffler::size();
     constexpr auto b = sizeof(typename Pack::value_type);
 
-    return values< (p(I/b,sz) == na_ ? 0xFF : p(I/b,sz)*b+I%b)... >{};
+    return std::index_sequence< (p(I/b,sz) == na_ ? 0xFF : p(I/b,sz)*b+I%b)... >{};
   }
 
   template<typename Pack, typename Shuffler, typename Bytes>

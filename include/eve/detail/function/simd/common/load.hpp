@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/memory/aligned_ptr.hpp>
@@ -95,14 +95,12 @@ namespace eve::_
       else                                  return a_p{p.get()};
     };
 
-    that.storage().apply
-    (
+    kumi::apply(
       [&]<typename... Sub>(Sub&... v)
       {
         int offset = 0;
         (((v = Sub(cast(ptr, as<Sub>{}) + offset), offset += Sub::size()), ...));
-      }
-    );
+      }, that.storage());
 
     return that;
   }

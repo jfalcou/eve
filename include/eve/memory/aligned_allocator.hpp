@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/memory/align.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <cstddef>
 #include <bit>
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/meta.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/arch/predef.hpp>
 
 #include <cstddef>
@@ -124,10 +124,10 @@ namespace eve
   };
 
   template<typename T>
-  concept non_native_abi = _::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
+  concept non_native_abi = _::one_of<T, aggregated_, emulated_, bundle_>;
 
   template<typename T>
-  concept native_abi = !_::is_one_of<T>(_::types<aggregated_, emulated_, bundle_> {});
+  concept native_abi = !_::one_of<T, aggregated_, emulated_, bundle_>;
 
   //================================================================================================
   // Checks if a type fills all its storage

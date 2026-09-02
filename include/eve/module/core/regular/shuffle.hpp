@@ -7,7 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wshadow"

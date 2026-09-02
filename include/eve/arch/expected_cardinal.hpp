@@ -9,12 +9,12 @@
 
 #include <eve/arch/cardinals.hpp>
 #include <eve/arch/spec.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve::_
 {
-  template<typename T> struct fec_box { using type = always<T>; };
+  template<typename T> struct fec_box { using type = std::type_identity<T>; };
 
   template<typename Type, regular_abi ABI>
   constexpr std::ptrdiff_t find_expected_cardinal()

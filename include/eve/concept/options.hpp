@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/raberu.hpp>
+#include <eve/deps/raberu.hpp>
 
 namespace eve
 {
@@ -29,6 +29,5 @@ namespace eve
 
   /// Checks if the type is one of the Choices
   template<typename T, typename... Choices>
-  concept only_if = _::is_one_of<T>(_::types<Choices...> {});
-
+  concept only_if = _::one_of<T, Choices...>;
 }

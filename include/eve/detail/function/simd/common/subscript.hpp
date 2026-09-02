@@ -88,13 +88,11 @@ namespace eve::_
     else
     {
       // g++ need that
-      EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
-      typename Wide::value_type data[Wide::size()] = {};
+      typename Wide::value_type data[Wide::size()];
       [[maybe_unused]] auto s = p.storage();
       std::memcpy((char*)(&data[0]),(char*)(&s),sizeof(data));
       data[i] = v;
       std::memcpy((char*)(&p),(char*)(&data[0]),sizeof(data));
-      EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
     }
   }
 }

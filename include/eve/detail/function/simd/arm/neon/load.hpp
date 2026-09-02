@@ -12,7 +12,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 

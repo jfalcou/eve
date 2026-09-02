@@ -127,10 +127,9 @@ namespace eve
             z = eve::reverse_horner(x2, T(0x1.000000p+0f), T(-0x1.55535ap-3f), T(0x1.329362p-4f)
                                    , T(-0x1.5dcb02p-5f), T(0x1.49adccp-6f))* x;
             if( nb >= cardinal_v<T> ) return bit_xor(z, bts);
-          }
-          auto case_1 = [](T const& vx) { return vx; };                                       // great x
-          auto case_2 = [](T const& vx) { return average(vx, hypot(one(eve::as<T>()), vx)); }; // lesser x
-          auto tmp    = branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x);
+          }                        
+          //                               great x , lesser x
+          auto tmp    = if_else(x_gt_oneosqrteps, x, average(x, hypot(one(eve::as<T>()), x)) 
           auto z1     = bit_xor(if_else(x_lt_half, z, log(tmp) + log_2(eve::as<T>())), bts);
           if constexpr( eve::platform::supports_invalids )  return if_else(is_nan(a0), eve::allbits, z1);
           else                                              return z1;

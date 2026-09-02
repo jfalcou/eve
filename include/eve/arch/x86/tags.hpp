@@ -10,7 +10,7 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/x86/predef.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 
 namespace eve
 {
@@ -76,9 +76,6 @@ namespace eve
   //================================================================================================
   // x86 ABI concept
   //================================================================================================
-  template<typename T>
-  concept x86_abi = _::is_one_of<T>(_::types<x86_128_, x86_256_, x86_512_> {});
-
-  template<typename T>
-  concept x86_tag = requires(T) { typename T::is_x86; };
+  template<typename T> concept x86_abi = _::one_of<T, x86_128_, x86_256_, x86_512_>;
+  template<typename T> concept x86_tag = requires(T) { typename T::is_x86; };
 }

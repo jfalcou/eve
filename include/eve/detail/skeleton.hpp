@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
@@ -20,94 +20,70 @@
 
 namespace eve::_
 {
-  // Extract ith element of a wide or propagate the value if non SIMD
-  template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) get_at(T &&t, std::size_t i) noexcept
+  // Extract Ith element of a wide or propagate the value if non SIMD
+  template<std::size_t I, typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) get_at(T &&t) noexcept
   {
-    if constexpr(simd_value<std::decay_t<T>>) return EVE_FWD(t).get(i);
-    else                                      return EVE_FWD(t);
+    if constexpr(simd_value<T>) return EVE_FWD(t).get(I);
+    else                        return EVE_FWD(t);
   }
-
-  // Checks that a map is valid so that callable that discard this and try another route
-  template<typename F, typename... Ts>
-  concept supports_mapping =  requires(F func, Ts... ts)
-  {
-    { func(eve::_::get_at(ts, 0)...) };
-  };
 
   // Compute a transformed wide type
   template<typename F, typename... Ts>
   struct wide_result;
 
+  // Checks that a map is valid so that callable that discard this and try another route
   template<typename F, typename... Ts>
-  requires supports_mapping<F,Ts...>
-  struct wide_result<F,Ts...>
+  requires std::invocable<F, decltype(eve::_::get_at<0>(std::declval<Ts>()))...> // Feels wrong
+  struct  wide_result<F,Ts...>
   {
-    template<typename T>
-    static constexpr std::ptrdiff_t card() noexcept
-    {
-      if constexpr(simd_value<T>) return T::size(); else return 1;
-    }
+    static constexpr std::size_t card = std::max({cardinal_v<std::decay_t<Ts>>...});
+    using value_t                     = std::invoke_result_t<F, decltype(eve::_::get_at<0>(std::declval<Ts>()))...>;
+    using fixed_t                     = fixed<card>;
 
-    static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
-    using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
-    using fixed_t                       = fixed<card_v>;
-
-    template<typename S> struct widen : as_wide<S, fixed_t> {};
+    template<typename S> 
+    using widen = as_wide<S, fixed_t>;
 
     using base  = _::conditional_t< eve::product_type<value_t>
-                                    , kumi::as_tuple<value_t,widen>
-                                    , as_wide<value_t, fixed_t>
-                                    >;
+                                  , kumi::as_tuple<value_t,widen>   // tuple of chunked element
+                                  , as_wide<value_t, fixed_t>       // scalar -> simd
+                                  >;
     using type = typename base::type;
   };
 
-  template<typename Out, typename... Bs>
-  EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
+  struct build
   {
-    auto const inside = [&]<typename I>(I)
+    template<typename... Ts>
+    EVE_FORCEINLINE auto operator()( Ts const&... ts ) const noexcept
     {
-      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
-    };
+      constexpr std::size_t cardinal = sizeof...(Ts);
 
-    return _::apply<kumi::size<Out>::value>( [&]( auto const&... I)
-    {
-      Out that;
-      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
-      return that;
-    }
-    );
+      if constexpr ( eve::product_type<Ts> && ...)
+      {
+        return 
+      }
+      else
+
+      //auto const inside = [&]<typename I>(I)
+      //{
+      //  return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
+      //};
+      //
+      //return _::apply<kumi::size<Out>::value>( [&]( auto const&... I)
+      //{
+      //  Out that;
+      //  ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+      //  return that;
+      //}
+      //);
+    } inline constexpr builder;
   }
 
-  // MAP skeleton used to emulate SIMD operations
-  struct map_
+  template<typename Func, typename... Ts>
+  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Func f, Ts &&... ts) noexcept
   {
-    // Not a lambda as we need force-inlining
-    template<typename Func, typename Idx, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
-    {
-      return EVE_FWD(fn)(eve::_::get_at(EVE_FWD(vs), i)...);
-    }
-  };
-
-  template<typename Fn, typename... Ts>
-  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
-  {
-    using w_t = typename wide_result<Fn, Ts...>::type;
-
-    if constexpr( eve::product_type<element_type_t<w_t>> )
-    {
-      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
-              ( [&](auto... I)
-                {
-                  return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
-                }
-              );
-    }
-    else
-    {
-      return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
-    }
+    constexpr std::size_t cardinal = std::max({cardinal_v<Ts>...});
+    return map_<cardinal>(builder, [&, f](auto I){ return f(eve::_::get_at<I>(EVE_FWD(ts))...); });
   }
 
   // Apply the function `f` to every `ts` once sliced.
@@ -156,6 +132,58 @@ namespace eve::_
     return ((( replication<Ts>() == max_repl) || (replication<Ts>() == 0) ) && ...);
   }
 
+  // Returns decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
+  template<typename T>
+  constexpr decltype(auto) rewrap(T const& inner)
+  {
+    // Handle the case where the returned type's storage is itself a product type.
+    // Functions returning zipped values need an extra level of storage wrapping.
+    // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
+    // The check on range is used due to arrays now being considered `product types`
+
+    //if constexpr (!range<storage_t> && eve::product_type<storage_t> && !instance_of<storage_t, blob>)
+    //{
+    //  return kumi::generate<kumi::size_v<storage_t>>([&]<std::size_t I>(kumi::index_t<I>)
+    //    {
+    //      using inner_wide_t = kumi::element_t<I, storage_t>;
+    //      // Whether we should re-wrap the inner storage into the proper product type.
+    //      if constexpr (has_aggregated_abi_v<inner_wide_t> || eve::product_type<kumi::element_t<0, T>>)
+    //      {
+    //        return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<I>(m.storage())... }; }, inner);
+    //      }
+    //      else
+    //      {
+    //        return kumi::get<I>(inner);
+    //      }
+    //    });
+    //}
+    else
+    {
+      using current_wide = kumi::element_t<0, T>;
+      constexpr std::ptrdiff_t current_card = current_wide::size();
+      constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
+      using expected_wide = typename current_wide::template rescale<fixed<expected_card>>;
+
+      if constexpr (current_card < expected_card)
+      {
+        auto chunks = kumi::map([&]<typename W>(W const& w) -> decltype(auto)
+        {
+          return kumi::apply([](auto... c)
+          {
+            return expected_wide { c... };
+          }, w);
+        }, kumi::chunks<expected_card / current_card>(inner));
+
+        if constexpr (kumi::size_v<decltype(chunks)> == 1) return expected_wide{ kumi::get<0>(chunks) };
+        else                                               return chunks;
+      }
+      else
+      {
+        return inner;
+      }
+    }
+  };
+
   template<typename Func, typename... Ts>
   EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
   {
@@ -170,77 +198,30 @@ namespace eve::_
         else                         return kumi::fill<max_repl>(t);
       };
 
-      // Build the lists of all ready-to-aggregate values
-      auto parts = kumi::make_tuple(slicer(ts)...);
-      auto process = [&]<std::size_t I>(kumi::index_t<I>) { return kumi::apply([&](auto... p) { return f( get<I>(p)... ); }, parts); };
-
-      using small_result_t = decltype(process(kumi::index<0>));
-      using wide_t = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
-      using storage_t = typename wide_t::storage_type;
-
+      // Zip all tuples of ready-to-aggregate value to gather corresponding chunks
       // Flatten the per-slice result in case it still contains aggregated values.
       // In order to prepare them for the `rewrap` operation.
-      auto inner_output = kumi::apply([&](auto... m)
-        {
-          auto v_or_t = []<typename V>(V v) {
-            if constexpr (has_aggregated_abi_v<V>) return v.storage().slice_to_expected();
-            else                                   return kumi::make_tuple(v);
-          };
+      auto parts        = kumi::zip(slicer(ts)...);
+      auto processed    = kumi::map([f](auto e){ return kumi::apply(f, e); }, parts);
+      auto fundamental  = kumi::flatten_all(processed);
+       // Imo here the idea is transpose -> rebuild final type
 
-          return kumi::cat(v_or_t(m)...);
-        }, kumi::generate<max_repl>(process));
+      using small_result_t  = kumi::element_t<0,decltype(fundamental)>; //decltype(process(kumi::index<0>));
+      using wide_t          = typename small_result_t::template rescale<fixed<small_result_t::size() * max_repl>>;
+      using storage_t       = typename wide_t::storage_type;
 
-      // Returns decltype(auto) to ensure optimal codegen when dealing with non-product-type outputs
-      auto rewrap = [](auto const& inner) -> decltype(auto)
-      {
-        // Handle the case where the returned type's storage is itself a product type.
-        // Functions returning zipped values need an extra level of storage wrapping.
-        // This doesn't applies to blobs as they are already in the correct format and the result was already flattened.
-        // The check on range is used due to arrays now being considered `product types`
-        if constexpr (!range<storage_t> && eve::product_type<storage_t> && !instance_of<storage_t, blob>)
-        {
-          return kumi::generate<kumi::size_v<storage_t>>([&]<std::size_t I>(kumi::index_t<I>)
-            {
-              using inner_wide_t = kumi::element_t<I, storage_t>;
-              // Whether we should re-wrap the inner storage into the proper product type.
-              if constexpr (has_aggregated_abi_v<inner_wide_t> || eve::product_type<kumi::element_t<0, decltype(inner)>>)
-              {
-                return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<I>(m.storage())... }; }, inner);
-              }
-              else
-              {
-                return kumi::get<I>(inner);
-              }
-            });
-        }
-        else
-        {
-          using current_wide = kumi::element_t<0, decltype(inner)>;
-          constexpr std::ptrdiff_t current_card = current_wide::size();
-          constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
-          using expected_wide = typename current_wide::template rescale<fixed<expected_card>>;
-
-          if constexpr (current_card < expected_card)
-          {
-            auto chunks = kumi::map([&]<typename W>(W const& w) -> decltype(auto)
-            {
-              return kumi::apply([](auto... c)
-              {
-                return expected_wide { c... };
-              }, w);
-            }, kumi::chunks<expected_card / current_card>(inner));
-
-            if constexpr (kumi::size_v<decltype(chunks)> == 1) return expected_wide{ kumi::get<0>(chunks) };
-            else                                               return chunks;
-          }
-          else
-          {
-            return inner;
-          }
-        }
-      };
-
-      const auto out = rewrap(inner_output);
+     
+      //auto inner_output = kumi::apply([&](auto... m)
+      //  {
+      //    auto v_or_t = []<typename V>(V v) {
+      //      if constexpr (has_aggregated_abi_v<V>) return v.storage().slice_to_expected();
+      //      else                                   return kumi::make_tuple(v);
+      //    };
+      //
+      //    return kumi::cat(v_or_t(m)...);
+      //  }, kumi::generate<max_repl>(process));     
+      //
+      const auto out = rewrap(fundamental);
 
       if constexpr (has_emulated_abi_v<wide_t> && product_type<decltype(out)>)
         return kumi::apply([](auto... m) { return wide_t{m...}; }, out);
