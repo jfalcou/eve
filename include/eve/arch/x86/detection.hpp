@@ -9,7 +9,7 @@
 
 #include <eve/arch/x86/tags.hpp>
 #include <eve/detail/cpuid.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/deps/spy.hpp>
 
 namespace eve
 {

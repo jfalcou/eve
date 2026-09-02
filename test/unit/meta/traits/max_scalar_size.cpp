@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "eve/detail/kumi.hpp"
+#include "eve/deps/kumi.hpp"
 #include "test.hpp"
 #include <eve/traits/max_scalar_size.hpp>
 

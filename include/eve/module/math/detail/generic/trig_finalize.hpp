@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>

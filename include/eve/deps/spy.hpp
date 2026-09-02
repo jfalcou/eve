@@ -7,9 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/deps/spy.hpp>
-
-#include <eve/arch/arm/predef.hpp>
-#include <eve/arch/x86/predef.hpp>
-#include <eve/arch/ppc/predef.hpp>
-#include <eve/arch/riscv/predef.hpp>
+#if __has_include(<spy/spy.hpp>)
+# include <spy/spy.hpp>
+#else
+# if defined(EVE_USE_EXTERNAL_DEPENDENCIES)
+#   error "[EVE] External SPY dependencies requested but none is available"
+#   include <spy/spy.hpp>
+# else
+#   include <eve/deps/spy/spy.hpp>
+# endif
+#endif

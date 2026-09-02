@@ -21,7 +21,7 @@
 
 #include <eve/module/algo/algo/views/detail/preprocess_zip_range.hpp>
 
-#include <eve/detail/kumi.hpp>
+#include <eve/deps/kumi.hpp>
 
 namespace eve::algo::views
 {
