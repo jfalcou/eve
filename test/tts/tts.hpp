@@ -2399,8 +2399,16 @@ namespace tts
       T value = {};
       if(mini > 0)
       {
-        if(mini < 1 && maxi > 1) mini = max(T(1) / _::sqrt(maxi), mini);
-        mini      = (maxi == 1) ? eps : mini;
+        // Both adjustments below raise the floor of the draw, and both apply only when mini is
+        // the placeholder rather than a bound the caller asked for: smvlp is what the zero-crossing
+        // branch recurses with, and what an explicit 0 becomes above. A log-uniform roll from there
+        // up to 1 would practically never come near 1. A bound the caller wrote is left alone, as
+        // it is the range they asked to be tested over.
+        if(mini == smvlp)
+        {
+          if(maxi >  1) mini = max(T(1) / _::sqrt(maxi), mini);
+          if(maxi == 1) mini = eps;
+        }
         T log_min = _::log10(mini);
         T log_max = _::log10(maxi);
         T log_val = _::roll(log_min, log_max);
@@ -2408,8 +2416,12 @@ namespace tts
       }
       else if(maxi < 0)
       {
-        if(mini < -1 && maxi > -1) maxi = min(T(1) / _::sqrt(-mini), maxi);
-        maxi      = (mini == -1) ? -eps : maxi;
+        // Mirror of the above, for a range entirely below zero.
+        if(maxi == -smvlp)
+        {
+          if(mini <  -1) maxi = min(T(1) / _::sqrt(-mini), maxi);
+          if(mini == -1) maxi = -eps;
+        }
         T log_min = _::log10(-maxi);
         T log_max = _::log10(-mini);
         T log_val = _::roll(log_min, log_max);

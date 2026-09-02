@@ -45,7 +45,10 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
   auto ref  = [](auto e) -> v_t
   {
     auto d = eve::sinpi(e);
-    return d ? eve::cospi(e) / d : eve::nan(eve::as(e));
+      // No guard on d: at the pole sinpi is a zero and IEEE division answers the signed infinity
+      // that cot really takes there. Testing d as a boolean also treated -0 as absent and turned
+      // the pole into a NaN, which cotpi rightly disagreed with.
+      return eve::cospi(e) / d;
   };
   TTS_ULP_EQUAL(cotpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a0), tts::map(ref, a0), 2);
