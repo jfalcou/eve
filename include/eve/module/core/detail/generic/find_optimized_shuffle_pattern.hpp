@@ -17,7 +17,7 @@
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/pattern.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 
 #include <iosfwd>
 

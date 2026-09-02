@@ -20,7 +20,7 @@ namespace eve
 {
 namespace _
 {
-  template<typename T> constexpr auto value_type_impl()
+  template<typename T> consteval auto value_type_impl()
   {
     if constexpr( requires { typename T::value_type; } )
     {

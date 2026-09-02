@@ -19,36 +19,30 @@ namespace eve
   template<typename Options>
   struct diff_t : callable<diff_t, Options, widen_option>
   {
-    template<std::size_t N, typename... Ts>
-    struct result;
-
-    template < size_t N,  size_t SZ> static constexpr size_t sz = SZ > N ? SZ-N : 0;
+    template <size_t N, size_t SZ> static constexpr std::size_t sz = SZ > N ? SZ-N : 0;
 
     template<std::size_t N, floating_value... Ts>
-    struct result<N,Ts...> : kumi::result::fill<sz<N, sizeof...(Ts)>, eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>> {};
+    using scalar_result = kumi::result::fill_t<sz<N,sizeof...(Ts)>,eve::upgrade_if_t<Options, eve::common_value_t<Ts...>>>;
 
     template<std::size_t N, eve::same_lanes_or_scalar_tuple Tup>
-    struct result<N, Tup> : kumi::result::fill<sz<N, kumi::size_v<Tup>>, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>> {};
+    using mixed_result = kumi::result::fill_t<sz<N, kumi::size_v<Tup>>, eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, Tup>>;
 
     template<eve::same_lanes_or_scalar_tuple Tup>
-    EVE_FORCEINLINE typename result<1, Tup>::type constexpr operator()(Tup const& t) const noexcept
+    EVE_FORCEINLINE mixed_result<1, Tup> constexpr operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<std::size_t N, eve::same_lanes_or_scalar_tuple Tup>
-    EVE_FORCEINLINE typename result<N, Tup>::type constexpr
-    operator()(kumi::index_t<N>, Tup const& t) const noexcept
+    EVE_FORCEINLINE mixed_result<N, Tup> constexpr operator()(kumi::index_t<N>, Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, t); }
 
     template<floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-    EVE_FORCEINLINE typename result<1, Ts...>::type constexpr
-    operator()(Ts const& ...ts) const noexcept
+    EVE_FORCEINLINE scalar_result<1, Ts...> constexpr operator()(Ts const& ...ts) const noexcept
     { return EVE_DISPATCH_CALL(kumi::make_tuple(ts...)); }
 
     template<size_t N, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-    EVE_FORCEINLINE typename result<N, Ts...>::type constexpr
-    operator()(kumi::index_t<N>, Ts const&...ts) const
+    EVE_FORCEINLINE scalar_result<N, Ts...> constexpr operator()(kumi::index_t<N>, Ts const&...ts) const
     { return EVE_DISPATCH_CALL(kumi::index_t<N>{}, kumi::make_tuple(ts...)); }
 
     EVE_CALLABLE_OBJECT(diff_t, diff_);

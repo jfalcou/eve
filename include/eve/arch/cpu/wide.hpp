@@ -9,7 +9,7 @@
 
 #include <eve/arch/as_register.hpp>
 #include <eve/arch/cpu/base.hpp>
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/combinable.hpp>
 #include <eve/concept/invocable.hpp>

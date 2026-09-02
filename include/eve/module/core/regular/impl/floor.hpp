@@ -25,7 +25,7 @@
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 
 namespace eve::_
 {
