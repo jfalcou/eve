@@ -111,15 +111,18 @@ TTS_CASE( "Check for detection of emulated ABI")
   {
     TTS_EXPECT(( eve::emulated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
     TTS_EXPECT(( eve::emulated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+
+    TTS_EXPECT( eve::emulated_abi<eve::wide<float>>                );
+    TTS_EXPECT( eve::emulated_abi<eve::logical<eve::wide<float>>>  );
   }
   else
   {
     TTS_EXPECT_NOT(( eve::emulated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
     TTS_EXPECT_NOT(( eve::emulated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
-  }
 
-  TTS_EXPECT_NOT( eve::emulated_abi<eve::wide<float>>                );
-  TTS_EXPECT_NOT( eve::emulated_abi<eve::logical<eve::wide<float>>>  );
+    TTS_EXPECT_NOT( eve::emulated_abi<eve::wide<float>>                );
+    TTS_EXPECT_NOT( eve::emulated_abi<eve::logical<eve::wide<float>>>  );
+  }
 
   TTS_EXPECT_NOT( eve::emulated_abi<float>                           );
   TTS_EXPECT_NOT( eve::emulated_abi<eve::logical<float>>             );
