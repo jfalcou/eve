@@ -7,8 +7,8 @@ name: EVE - Compile Cost
 run-name: compile-cost
 
 ####################################################################################################
-## Both measurements run on the machine we control, at -j 16, inside the pinned image the rest of
-## the CI uses. The image is what makes the numbers comparable: a peak belongs to the compiler that
+## Both measurements run on the machine we control, inside the pinned image the rest of the CI
+## uses. The image is what makes the numbers comparable: a peak belongs to the compiler that
 ## produced it as much as to the code, and the machine's own clang moves with its packages. A
 ## reference measured on main weeks earlier would otherwise be read against a different compiler,
 ## and the delta would be reporting an upgrade.
@@ -63,11 +63,24 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
+      ##########################################################################################
+      ## The parallelism comes from the memory left on the runner, not from its core count. One
+      ## clang on the heaviest unit of the suite peaks near 3 GiB, and the runner is shared with
+      ## the unit tests of every other branch: a fixed -j 16 exhausted 64 GiB and the OOM killer
+      ## took a job from an unrelated pull request down with it. Eight GiB stay reserved for the
+      ## rest of the machine and the ceiling stays low, so only the wall clock pays. The figures
+      ## themselves are per process and do not move with -j.
+      ##########################################################################################
       - name: Measure
         run: |
+          available=$(awk '/MemAvailable/ { print int($2 / 1048576) }' /proc/meminfo)
+          jobs=$(( (available - 8) / 4 ))
+          if [ "$jobs" -lt 2 ]; then jobs=2; fi
+          if [ "$jobs" -gt 6 ]; then jobs=6; fi
+          echo "Measuring with -j $jobs, out of $available GiB available"
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
                 -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
-          cmake --build build -j 16 --target unit.exe
+          cmake --build build -j "$jobs" --target unit.exe
 
       ##########################################################################################
       ## The reference lives in the last successful run of this workflow on main, not in the run
@@ -137,11 +150,24 @@ jobs:
       - name: Fetch main
         uses: actions/checkout@v6
 
+      ##########################################################################################
+      ## The parallelism comes from the memory left on the runner, not from its core count. One
+      ## clang on the heaviest unit of the suite peaks near 3 GiB, and the runner is shared with
+      ## the unit tests of every other branch: a fixed -j 16 exhausted 64 GiB and the OOM killer
+      ## took a job from an unrelated pull request down with it. Eight GiB stay reserved for the
+      ## rest of the machine and the ceiling stays low, so only the wall clock pays. The figures
+      ## themselves are per process and do not move with -j.
+      ##########################################################################################
       - name: Measure
         run: |
+          available=$(awk '/MemAvailable/ { print int($2 / 1048576) }' /proc/meminfo)
+          jobs=$(( (available - 8) / 4 ))
+          if [ "$jobs" -lt 2 ]; then jobs=2; fi
+          if [ "$jobs" -gt 6 ]; then jobs=6; fi
+          echo "Measuring with -j $jobs, out of $available GiB available"
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
                 -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
-          cmake --build build -j 16 --target unit.exe
+          cmake --build build -j "$jobs" --target unit.exe
 
       - name: Report
         run: |
