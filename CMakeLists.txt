@@ -48,6 +48,8 @@ if( EVE_BUILD_TEST )
   include(config/compiler)
   include(config/types)
   include(config/pch)
+  include(config/proc-stat)
+  include(config/time-trace)
 
   include(target/add_parent_target)
   include(target/targets)

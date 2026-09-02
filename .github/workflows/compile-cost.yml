@@ -1,0 +1,113 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Compile Cost
+run-name: compile-cost
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  ##################################################################################################
+  ## PULL REQUESTS - on a GitHub runner, because the self-hosted one is already busy with the rest
+  ## of the CI at that moment.
+  ##
+  ## -j 2 comes from the measurements: the heaviest translation unit peaks near 3 GiB and a standard
+  ## runner has 16, so two at a time leaves room and four would not. Peak memory is per process and
+  ## does not care about the parallelism anyway; the timings do, which is why they are read as a
+  ## ranking rather than as seconds.
+  ##
+  ## Both sides are measured here rather than reusing the reference below: a peak depends on the
+  ## compiler that produced it, and comparing across two machines would compare two clangs.
+  ##################################################################################################
+  pull-request:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the pull request
+        uses: actions/checkout@v6
+
+      - name: Measure this branch
+        run: |
+          cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
+                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
+          cmake --build build -j 2 --target unit.exe
+
+      - name: Fetch the base branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+
+      - name: Measure the base branch
+        run: |
+          cmake -S base -B base-build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
+                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
+          cmake --build base-build -j 2 --target unit.exe
+
+      - name: Report
+        run: |
+          python3 tools/compile_cost.py build/compile-cost.csv           \
+                  --baseline base-build/compile-cost.csv                 \
+                  --full compile-cost-full.md                            \
+                  --title "Compile cost against ${{ github.base_ref }}"  \
+                  >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-cost
+          path: |
+            compile-cost-full.md
+            build/compile-cost.csv
+            base-build/compile-cost.csv
+          if-no-files-found: warn
+          retention-days: 14
+
+  ##################################################################################################
+  ## MAIN - on the machine we control, which is where a figure gets to mean something over time.
+  ##
+  ## Serialised: two measurements at once still produce numbers, and nothing in them would say they
+  ## are wrong.
+  ##################################################################################################
+  reference:
+    if: github.event_name == 'push'
+    runs-on: [self-hosted, linux, x64]
+    concurrency:
+      group: compile-cost-reference
+      cancel-in-progress: false
+    steps:
+      - name: Fetch main
+        uses: actions/checkout@v6
+
+      - name: Measure
+        run: |
+          cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
+                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
+          cmake --build build -j 16 --target unit.exe
+
+      - name: Report
+        run: |
+          python3 tools/compile_cost.py build/compile-cost.csv  \
+                  --full compile-cost-full.md                   \
+                  --title "Compile cost of main"                \
+                  >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the reference
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-cost-reference
+          path: |
+            compile-cost-full.md
+            build/compile-cost.csv
+          if-no-files-found: warn
+          retention-days: 90
