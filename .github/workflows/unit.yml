@@ -476,9 +476,98 @@ jobs:
 
 
   ##################################################################################################
+  ## Host 1 - What the test suite costs to compile
+  ##
+  ## First on the host, with the rest of its chain waiting behind: the measurement builds every
+  ## translation unit at -j 16, and a peak recorded while another build holds the same 64 GiB says
+  ## as much about that build as about the code. Sharing also has a harder failure than a bad
+  ## number, since the reaper takes whichever job it finds largest.
+  ##
+  ## The group spans the whole repository, so a pull request never measures while main does.
+  ##################################################################################################
+  compile-cost:
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    concurrency:
+      group: compile-cost
+      cancel-in-progress: false
+    ## Reading the reference off another run asks more than the contents scope the token defaults to.
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+
+      - name: Measure
+        run: |
+          cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
+                -DCMAKE_CXX_COMPILER=clang++ -DEVE_USE_PCH=0
+          cmake --build build -j 16 --target unit.exe
+
+      ################################################################################################
+      ## The reference sits in the last successful run of the compile cost workflow on main, so it is
+      ## looked up rather than named. Both steps are JavaScript actions, which the runner supplies its
+      ## own node for, so they work inside a container that carries none.
+      ################################################################################################
+      - name: Find the reference run
+        id: reference
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'compile-cost.yml',
+              branch: 'main',
+              status: 'success',
+              per_page: 1
+            });
+            return runs.data.workflow_runs.length ? String(runs.data.workflow_runs[0].id) : '';
+
+      - name: Fetch the reference measured on main
+        if: steps.reference.outputs.result != ''
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: compile-cost-reference
+          path: reference
+          run-id: ${{ steps.reference.outputs.result }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report
+        run: |
+          if [ -f reference/compile-cost.csv ]; then
+            baseline="--baseline reference/compile-cost.csv"
+          else
+            baseline=""
+            echo "> No reference from main was found, so this run has no delta." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          python3 tools/compile_cost.py build/compile-cost.csv $baseline \
+                  --full compile-cost-full.md                           \
+                  --title "Compile cost"                                \
+                  >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compile-cost
+          path: |
+            compile-cost-full.md
+            build/compile-cost.csv
+          if-no-files-found: warn
+          retention-days: 14
+
+  ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
   x86-clang:
+    needs: compile-cost
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
