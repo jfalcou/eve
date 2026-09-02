@@ -136,11 +136,10 @@ namespace tts
   };
 
   //================================================================================================
-  // float16_t keeps the two members EVE has always defined for it. relative and ieee are left out
-  // rather than inherited: the built-in ones branch on std::is_floating_point_v, false for _Float16
-  // in C++20, so they would refuse to compile anyway — and a missing member says so more plainly
-  // than a static_assert three frames down. None of the three shapes inherits, for the same reason:
-  // no built-in member can work on a type the standard traits do not recognize.
+  // float16_t defines all four members. relative and ieee take the built-in path in double rather
+  // than inheriting it: the built-in branches on std::is_floating_point_v, false for _Float16 in
+  // C++20, so an inherited member would refuse to compile. None of the three shapes inherits, for
+  // the same reason — no built-in member works on a type the standard traits do not recognize.
   //================================================================================================
   template<>
   struct precision<eve::float16_t>
@@ -168,6 +167,13 @@ namespace tts
       return _::builtin_precision<double>::relative( eve::convert(l, eve::as<double>())
                                                    , eve::convert(r, eve::as<double>())
                                                    );
+    }
+
+    static bool ieee(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::ieee( eve::convert(l, eve::as<double>())
+                                               , eve::convert(r, eve::as<double>())
+                                               );
     }
   };
 
