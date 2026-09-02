@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/deps/kumi.hpp>

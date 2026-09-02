@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/comparable.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
 
 namespace eve

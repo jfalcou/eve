@@ -18,8 +18,8 @@
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/replace.hpp>
-#include <eve/module/core/regular/safe.hpp>
-#include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/traits/wide_value_type.hpp>
 #include <eve/traits/as_translation.hpp>

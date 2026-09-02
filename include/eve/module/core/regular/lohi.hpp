@@ -19,14 +19,13 @@ namespace eve
   struct lohi_t : elementwise_callable<lohi_t, Options>
   {
     template<typename T>
-    struct result
-    {
-      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
-      using type = zipped<base, base>;
-    };
+    using duplicate = zipped<T,T>;
+
+    template<typename T>
+    using result = duplicate<as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>>;
 
     template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE result<T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lohi_t, lohi_);
   };

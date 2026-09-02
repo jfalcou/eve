@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
-#include <eve/module/core/detail/modular.hpp>
+#include <eve/module/core/decorator/modular.hpp>
 
 namespace eve
 {

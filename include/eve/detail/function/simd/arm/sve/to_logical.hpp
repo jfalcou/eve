@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 
 namespace eve::_
 {
