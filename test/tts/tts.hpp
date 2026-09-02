@@ -295,10 +295,6 @@ namespace tts
     {
       return data_ + size_;
     }
-    friend auto const& to_text(text const& t)
-    {
-      return t;
-    }
     friend bool operator==(text const& a, text const& b) noexcept
     {
       if(a.size_ != b.size_) return false;
@@ -1347,6 +1343,35 @@ namespace tts
 }
 namespace tts::_
 {
+  class source_location
+  {
+  public:
+    [[nodiscard]] static auto current(char const* file = __builtin_FILE(),
+                                      int         line = __builtin_LINE()) noexcept
+    {
+      int  offset = 0;
+      auto slash  = strrchr(file, '/');
+      auto bslash = strrchr(file, '\\');
+      auto end    = (bslash && (!slash || bslash > slash)) ? bslash : slash;
+      if(end) offset = static_cast<int>(end - file + 1);
+      source_location that {};
+      that.desc_ = text {"[%s:%d]", file + offset, line};
+      return that;
+    }
+    decltype(auto) data() const
+    {
+      return desc_.data();
+    }
+    template<_::stream OS> friend OS& operator<<(OS& os, source_location const& s)
+    {
+      return os << s.desc_;
+    }
+  private:
+    text desc_ {"[unknown:?]"};
+  };
+}
+namespace tts::_
+{
   template<typename T> struct typename_impl
   {
   private:
@@ -1368,10 +1393,6 @@ namespace tts::_
     constexpr auto size() const
     {
       return data_.size;
-    }
-    friend text to_text(typename_impl const& t)
-    {
-      return text("%.*s", t.size(), t.data());
     }
     template<_::stream OS> friend OS& operator<<(OS& os, typename_impl t)
     {
@@ -1513,10 +1534,6 @@ namespace tts
   };
   template<typename T> struct type
   {
-    friend text to_text(type)
-    {
-      return as_text(typename_<T>);
-    }
     template<_::stream OS> friend OS& operator<<(OS& os, type const&)
     {
       return os << typename_<T>;
@@ -1547,96 +1564,126 @@ namespace tts
 }
 namespace tts
 {
-  // Declared before the base because its body recurses through it: the elements of a sequence are
-  // rendered by as_text, and for a scalar element ADL alone would find nothing.
   template<typename T> text as_text(T const& e);
-
   namespace _
   {
-  // How TTS renders a value when nothing more specific is known. Pulled into a base so a
-  // specialization of tts::display only has to say what it changes.
-  template<typename T> struct builtin_display
-  {
-    static text render(T const& e)
+    template<typename T> struct builtin_display
     {
-      if constexpr(requires { to_text(e); })
+      static text render(T const& e)
       {
-        return to_text(e);
-      }
-      else if constexpr(std::floating_point<T>)
-      {
-        auto precision = ::tts::arguments().value(16, "--precision");
-        bool hexmode   = ::tts::arguments()("-x", "--hex");
-        bool scimode   = ::tts::arguments()("-s", "--scientific");
-        if(scimode) return text("%.*E", precision, e);
-        else if(hexmode) return text("%#.*A", precision, e);
-        else return text("%.*g", precision, e);
-      }
-      else if constexpr(std::integral<T>)
-      {
-        if constexpr(sizeof(T) > 4)
+        static_assert(
+        !requires { to_text(e); },
+        "[TTS] tts::to_text is no longer a customization point. "
+        "Specialize tts::display<T>::render instead.");
+        if constexpr(std::floating_point<T>)
         {
-          auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
-          return text(fmt, e);
+          auto precision = ::tts::arguments().value(16, "--precision");
+          bool hexmode   = ::tts::arguments()("-x", "--hex");
+          bool scimode   = ::tts::arguments()("-s", "--scientific");
+          if(scimode) return text("%.*E", precision, e);
+          else if(hexmode) return text("%#.*A", precision, e);
+          else return text("%.*g", precision, e);
+        }
+        else if constexpr(std::integral<T>)
+        {
+          if constexpr(sizeof(T) > 4)
+          {
+            auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
+            return text(fmt, e);
+          }
+          else
+          {
+            auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
+            return text(fmt, e);
+          }
+        }
+        else if constexpr(_::string<T>)
+        {
+          return text("'%.*s'", static_cast<int>(e.size()), e.data() ? e.data() : "");
+        }
+        else if constexpr(_::optional<T>)
+        {
+          auto type_desc = as_text(typename_<typename T::value_type>);
+          text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
+          if(e.has_value())
+          {
+            auto val_desc = as_text(e.value());
+            return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
+          }
+          else return base + "{}";
+        }
+        else if constexpr(std::is_pointer_v<T>)
+        {
+          auto type_desc = as_text(typename_<T>);
+          return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
+        }
+        else if constexpr(_::sequence<T>)
+        {
+          text that("{ ");
+          for(auto const& v: e)
+            that += as_text(v) + " ";
+          that += "}";
+          return that;
         }
         else
         {
-          auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
-          return text(fmt, e);
+          unsigned char bytes[ sizeof(e) ];
+          std::memcpy(bytes, &e, sizeof(e));
+          text txt_bytes("[ ");
+          for(auto const& b: bytes)
+            txt_bytes += text("%2.2X", b) + " ";
+          txt_bytes      += "]";
+          auto type_desc  = as_text(typename_<T>);
+          return text("%s: %s",
+                      type_desc.data() ? type_desc.data() : "unknown",
+                      txt_bytes.data() ? txt_bytes.data() : "[]");
         }
       }
-      else if constexpr(_::string<T>)
-      {
-        return text("'%.*s'", static_cast<int>(e.size()), e.data() ? e.data() : "");
-      }
-      else if constexpr(_::optional<T>)
-      {
-        auto type_desc = as_text(typename_<typename T::value_type>);
-        text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
-        if(e.has_value())
-        {
-          auto val_desc = as_text(e.value());
-          return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
-        }
-        else return base + "{}";
-      }
-      else if constexpr(std::is_pointer_v<T>)
-      {
-        auto type_desc = as_text(typename_<T>);
-        return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
-      }
-      else if constexpr(_::sequence<T>)
-      {
-        text that("{ ");
-        for(auto const& v: e)
-          that += as_text(v) + " ";
-        that += "}";
-        return that;
-      }
-      else
-      {
-        unsigned char bytes[ sizeof(e) ];
-        std::memcpy(bytes, &e, sizeof(e));
-        text txt_bytes("[ ");
-        for(auto const& b: bytes)
-          txt_bytes += text("%2.2X", b) + " ";
-        txt_bytes      += "]";
-        auto type_desc  = as_text(typename_<T>);
-        return text("%s: %s",
-                    type_desc.data() ? type_desc.data() : "unknown",
-                    txt_bytes.data() ? txt_bytes.data() : "[]");
-      }
+    };
+  }
+  template<typename T> struct display : _::builtin_display<T>
+  {
+  };
+  template<> struct display<text>
+  {
+    static text render(text const& t)
+    {
+      return t;
     }
   };
+  template<typename T> struct display<type<T>>
+  {
+    static text render(type<T> const&)
+    {
+      return as_text(typename_<T>);
+    }
+  };
+  template<typename T> struct display<_::typename_impl<T>>
+  {
+    static text render(_::typename_impl<T> const& t)
+    {
+      return text("%.*s", t.size(), t.data());
+    }
+  };
+  template<> struct display<_::source_location>
+  {
+    static text render(_::source_location const& s)
+    {
+      return text(s.data());
+    }
+  };
+}
+namespace tts::_
+{
+  template<typename T>
+  concept described = !std::is_base_of_v<builtin_display<T>, display<T>>;
+}
+namespace tts
+{
+  template<typename T> text as_text(T const& e)
+  {
+    return display<T>::render(e);
   }
-
-  //! @brief How a value of type T is rendered in a report.
-  //!
-  //! Specialize this rather than overloading to_text: a specialization that does not match is
-  //! a compilation error, where a misnamed overload fell back on the byte dump in silence.
-  template<typename T> struct display : _::builtin_display<T> {};
-
-  template<typename T> text as_text(T const& e) { return display<T>::render(e); }
   template<std::size_t N> auto as_text(char const (&t)[ N ])
   {
     return text(t);
@@ -2376,11 +2423,19 @@ namespace tts
     {
       return _::roll(mini, maxi);
     }
+    template<std::floating_point T> T rolling_floor(T mini, T maxi)
+    {
+      constexpr T smvlp = std::numeric_limits<T>::min();
+      constexpr T eps   = std::numeric_limits<T>::epsilon();
+      if(mini != smvlp) return mini;
+      if(maxi == 1) return eps;
+      if(maxi > 1) return max(T(1) / _::sqrt(maxi), mini);
+      return mini;
+    }
     template<std::floating_point T> T roll_random(T mini, T maxi)
     {
       constexpr T smvlp     = std::numeric_limits<T>::min();
       constexpr T valmax    = std::numeric_limits<T>::max();
-      constexpr T eps       = std::numeric_limits<T>::epsilon();
       constexpr T quiet_nan = std::numeric_limits<T>::quiet_NaN();
       if(mini == maxi) return mini;
       if(mini == 0) mini = smvlp;
@@ -2399,16 +2454,7 @@ namespace tts
       T value = {};
       if(mini > 0)
       {
-        // Both adjustments below raise the floor of the draw, and both apply only when mini is
-        // the placeholder rather than a bound the caller asked for: smvlp is what the zero-crossing
-        // branch recurses with, and what an explicit 0 becomes above. A log-uniform roll from there
-        // up to 1 would practically never come near 1. A bound the caller wrote is left alone, as
-        // it is the range they asked to be tested over.
-        if(mini == smvlp)
-        {
-          if(maxi >  1) mini = max(T(1) / _::sqrt(maxi), mini);
-          if(maxi == 1) mini = eps;
-        }
+        mini      = rolling_floor(mini, maxi);
         T log_min = _::log10(mini);
         T log_max = _::log10(maxi);
         T log_val = _::roll(log_min, log_max);
@@ -2416,12 +2462,7 @@ namespace tts
       }
       else if(maxi < 0)
       {
-        // Mirror of the above, for a range entirely below zero.
-        if(maxi == -smvlp)
-        {
-          if(mini <  -1) maxi = min(T(1) / _::sqrt(-mini), maxi);
-          if(mini == -1) maxi = -eps;
-        }
+        maxi      = -rolling_floor(-maxi, -mini);
         T log_min = _::log10(-maxi);
         T log_max = _::log10(-mini);
         T log_val = _::roll(log_min, log_max);
@@ -2659,39 +2700,6 @@ TTS_DISABLE_WARNING_POP
 #endif
 namespace tts::_
 {
-  class source_location
-  {
-  public:
-    [[nodiscard]] static auto current(char const* file = __builtin_FILE(),
-                                      int         line = __builtin_LINE()) noexcept
-    {
-      int  offset = 0;
-      auto slash  = strrchr(file, '/');
-      auto bslash = strrchr(file, '\\');
-      auto end    = (bslash && (!slash || bslash > slash)) ? bslash : slash;
-      if(end) offset = static_cast<int>(end - file + 1);
-      source_location that {};
-      that.desc_ = text {"[%s:%d]", file + offset, line};
-      return that;
-    }
-    friend text to_text(source_location const& s)
-    {
-      return s.desc_;
-    }
-    decltype(auto) data() const
-    {
-      return desc_.data();
-    }
-    template<_::stream OS> friend OS& operator<<(OS& os, source_location const& s)
-    {
-      return os << s.desc_;
-    }
-  private:
-    text desc_ {"[unknown:?]"};
-  };
-}
-namespace tts::_
-{
   void report_pass(char const* location, char const* message);
   void report_fail(char const* location, char const* message, ::tts::text const& type);
   void report_fatal(char const* location, char const* message, ::tts::text const& type);
@@ -2774,10 +2782,20 @@ namespace tts
     };
     template<typename T, bool Signed = false>
     using sized_integer_t = typename sized_integer<sizeof(T), Signed>::type;
+    template<typename T, typename V> struct builtin_conversion
+    {
+      static auto from(V const& v)
+      {
+        return static_cast<T>(v);
+      }
+    };
   }
+  template<typename T, typename V> struct conversion : _::builtin_conversion<T, V>
+  {
+  };
   template<typename T, typename V> auto convert_as(V const& v, type<T> const&)
   {
-    return static_cast<T>(v);
+    return conversion<T, V>::from(v);
   }
   template<tts::_::sequence Seq, typename U> struct rebuild;
   template<template<typename, typename...> typename Seq, typename T, typename... S, typename U>
@@ -2790,23 +2808,43 @@ namespace tts
   {
     using type = Seq<U, N>;
   };
-  template<typename T> auto produce(type<T> const& t, auto g, auto... others)
+  template<typename T> auto produce(type<T> const& t, auto g, auto... others);
+}
+namespace tts::_
+{
+  template<typename T> struct builtin_generation
   {
-    return g(t, others...);
-  }
-  template<tts::_::sequence T> auto produce(type<T> const&, auto g, auto... args)
-  {
-    using elmt_type  = std::remove_cvref_t<decltype(*begin(tts::_::declval<T>()))>;
-    using value_type = decltype(produce(tts::type<elmt_type> {}, g, 0, 0ULL, args...));
-    typename rebuild<T, value_type>::type that;
-    auto                                  b  = begin(that);
-    auto                                  e  = end(that);
-    std::ptrdiff_t                        sz = e - b;
-    for(std::ptrdiff_t i = 0; i < sz; ++i)
+    static auto make(auto g, auto... others)
     {
-      *b++ = produce(tts::type<value_type> {}, g, i, sz, args...);
+      return g(tts::type<T> {}, others...);
     }
-    return that;
+  };
+  template<sequence T> struct builtin_generation<T>
+  {
+    static auto make(auto g, auto... args)
+    {
+      using elmt_type  = std::remove_cvref_t<decltype(*begin(tts::_::declval<T>()))>;
+      using value_type = decltype(produce(tts::type<elmt_type> {}, g, 0, 0ULL, args...));
+      typename rebuild<T, value_type>::type that;
+      auto                                  b  = begin(that);
+      auto                                  e  = end(that);
+      std::ptrdiff_t                        sz = e - b;
+      for(std::ptrdiff_t i = 0; i < sz; ++i)
+      {
+        *b++ = produce(tts::type<value_type> {}, g, i, sz, args...);
+      }
+      return that;
+    }
+  };
+}
+namespace tts
+{
+  template<typename T> struct generation : _::builtin_generation<T>
+  {
+  };
+  template<typename T> auto produce(type<T> const&, auto g, auto... others)
+  {
+    return generation<T>::make(g, others...);
   }
   template<typename T> struct base_type
   {
@@ -2870,7 +2908,7 @@ namespace tts
     }
     template<typename D> D operator()(tts::type<D>, auto...) const
     {
-      return convert_as(seed, type<D> {});
+      return ::tts::convert_as(seed, type<D> {});
     }
     T seed;
   };
@@ -2883,11 +2921,11 @@ namespace tts
     }
     template<typename D> auto operator()(tts::type<D>) const
     {
-      return convert_as(false, type<tts::boolean_type_t<D>> {});
+      return ::tts::convert_as(false, type<tts::boolean_type_t<D>> {});
     }
     template<typename D> auto operator()(tts::type<D>, auto idx, auto...) const
     {
-      return convert_as(((start + idx) % range) == 0, type<tts::boolean_type_t<D>> {});
+      return ::tts::convert_as(((start + idx) % range) == 0, type<tts::boolean_type_t<D>> {});
     }
     T start;
     U range;
@@ -2906,11 +2944,11 @@ namespace tts
     }
     template<typename D> D operator()(tts::type<D>, auto idx, auto...) const
     {
-      return convert_as(start + idx * step, type<D> {});
+      return ::tts::convert_as(start + idx * step, type<D> {});
     }
     template<typename D> D operator()(tts::type<D>) const
     {
-      return convert_as(start, type<D> {});
+      return ::tts::convert_as(start, type<D> {});
     }
     T start;
     U step;
@@ -2929,11 +2967,11 @@ namespace tts
     }
     template<typename D> D operator()(tts::type<D>, auto idx, auto...) const
     {
-      return convert_as(start - idx * step, type<D> {});
+      return ::tts::convert_as(start - idx * step, type<D> {});
     }
     template<typename D> D operator()(tts::type<D>) const
     {
-      return convert_as(start, type<D> {});
+      return ::tts::convert_as(start, type<D> {});
     }
     T start;
     U step;
@@ -2947,19 +2985,18 @@ namespace tts
     }
     template<typename D> D operator()(tts::type<D>, auto idx, auto sz, auto...) const
     {
-      auto w1 = convert_as(first_, type<D> {});
-      auto w2 = convert_as(last_, type<D> {});
-      D    step =
-      (sz - 1)
-      ? static_cast<D>(convert_as(last_ - first_, type<D> {}) / convert_as(sz - 1, type<D> {}))
-      : convert_as(0, type<D> {});
-      auto value =
-      convert_as(w1 + convert_as(idx, type<D> {}) * convert_as(step, type<D> {}), type<D> {});
+      auto w1    = ::tts::convert_as(first_, type<D> {});
+      auto w2    = ::tts::convert_as(last_, type<D> {});
+      D    step  = (sz - 1) ? static_cast<D>(::tts::convert_as(last_ - first_, type<D> {}) /
+                                             ::tts::convert_as(sz - 1, type<D> {}))
+                            : ::tts::convert_as(0, type<D> {});
+      auto value = ::tts::convert_as(
+      w1 + ::tts::convert_as(idx, type<D> {}) * ::tts::convert_as(step, type<D> {}), type<D> {});
       return (w1 <= w2) ? _::min(value, w2) : _::max(value, w2);
     }
     template<typename D> D operator()(tts::type<D>) const
     {
-      return convert_as(first_, type<D> {});
+      return ::tts::convert_as(first_, type<D> {});
     }
     T first_;
     U last_;
@@ -2983,11 +3020,19 @@ namespace tts
         assert(maxi >= 0 &&
                "Maximum value for unsigned type random generator must be non-negative");
       }
-      return random_value(convert_as(mini, type<D> {}), convert_as(maxi, type<D> {}));
+      return random_value(::tts::convert_as(mini, type<D> {}), ::tts::convert_as(maxi, type<D> {}));
     }
     Mn mini;
     Mx maxi;
   };
+  template<typename G> struct is_randoms : std::false_type
+  {
+  };
+  template<typename Mx, typename Mn> struct is_randoms<randoms<Mx, Mn>> : std::true_type
+  {
+  };
+  template<typename G>
+  inline constexpr bool is_randoms_v = is_randoms<std::remove_cvref_t<G>>::value;
   struct random_bits
   {
     template<typename D> auto operator()(tts::type<D>, auto...)
@@ -3130,7 +3175,7 @@ namespace tts::_
     {
       current_type = as_text(typename_<T>);
       if(::tts::is_detailed()) ::tts::output().writeln(">  With <T = %s>", current_type.data());
-      process_call(body, produce(type<T> {}, Generators)...);
+      process_call(body, ::tts::produce(type<T> {}, Generators)...);
     }
     friend auto operator<<(test_generators tg, auto body)
     {
@@ -3355,10 +3400,34 @@ namespace tts::_
 #define TTS_NO_THROW_REQUIRED(EXPR) TTS_NO_THROW_IMPL(EXPR, TTS_FATAL)
 namespace tts::_
 {
-  template<typename L, typename R>
-  concept comparable_equal = requires(L l, R r) { compare_equal(l, r); };
-  template<typename L, typename R>
-  concept comparable_less = requires(L l, R r) { compare_less(l, r); };
+  template<typename L, typename R> struct builtin_comparison
+  {
+    static constexpr bool equal(L const& l, R const& r)
+    {
+      static_assert(
+      !requires { compare_equal(l, r); },
+      "[TTS] tts::compare_equal is no longer a customization point. "
+      "Specialize tts::comparison<L, R>::equal instead.");
+      return l == r;
+    }
+    static constexpr bool less(L const& l, R const& r)
+    {
+      static_assert(
+      !requires { compare_less(l, r); },
+      "[TTS] tts::compare_less is no longer a customization point. "
+      "Specialize tts::comparison<L, R>::less instead.");
+      return l < r;
+    }
+  };
+}
+namespace tts
+{
+  template<typename L, typename R = L> struct comparison : _::builtin_comparison<L, R>
+  {
+  };
+}
+namespace tts::_
+{
   template<typename L, typename R> inline constexpr bool bit_eq(L const& l, R const& r)
   {
     static_assert(sizeof(L) == sizeof(R), "Types must have the same size for bitwise comparison");
@@ -3371,8 +3440,7 @@ namespace tts::_
   }
   template<typename L, typename R> inline constexpr bool eq(L const& l, R const& r)
   {
-    if constexpr(comparable_equal<L, R>) return compare_equal(l, r);
-    else return l == r;
+    return comparison<L, R>::equal(l, r);
   }
   template<typename L, typename R> inline constexpr bool neq(L const& l, R const& r)
   {
@@ -3380,8 +3448,7 @@ namespace tts::_
   }
   template<typename L, typename R> inline constexpr bool lt(L const& l, R const& r)
   {
-    if constexpr(comparable_less<L, R>) return compare_less(l, r);
-    else return l < r;
+    return comparison<L, R>::less(l, r);
   }
   template<typename L, typename R> inline constexpr bool le(L const& l, R const& r)
   {
@@ -3741,17 +3808,15 @@ namespace tts::_
 #endif
 namespace tts::_
 {
-  // The built-in behaviour of v3, pulled into a base so that a specialization of tts::precision
-  // only has to redefine what it actually changes.
   template<typename T> struct builtin_precision
   {
     static double absolute(T const& a, T const& b)
     {
-      static_assert(!requires { absolute_distance(a, b); },
-                    "[TTS] tts::absolute_distance is no longer a customization point. "
-                    "Specialize tts::precision<T>::absolute instead.");
-
-      if constexpr(std::is_same_v<T, bool>) { return a == b ? 0. : 1.; }
+      static_assert(
+      !requires { absolute_distance(a, b); },
+      "[TTS] tts::absolute_distance is no longer a customization point. "
+      "Specialize tts::precision<T>::absolute instead.");
+      if constexpr(std::is_same_v<T, bool>) return a == b ? 0. : 1.;
       else if constexpr(std::is_floating_point_v<T>)
       {
         if((a == b) || (is_nan(a) && is_nan(b))) return 0.;
@@ -3760,26 +3825,24 @@ namespace tts::_
         return abs(a - b);
       }
       else if constexpr(std::is_integral_v<T>)
-      {
         return builtin_precision<double>::absolute(static_cast<double>(a), static_cast<double>(b));
-      }
       else
       {
-        static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>,
-                      "[TTS] TTS_ABSOLUTE_EQUAL requires integral or floating points data to "
-                      "compare. Did you mean to use TTS_ALL_ABSOLUTE_EQUAL or to specialize "
-                      "tts::precision<T>::absolute ?");
+        static_assert(
+        std::is_floating_point_v<T> || std::is_integral_v<T>,
+        "[TTS] TTS_ABSOLUTE_EQUAL requires integral or floating points data to compare. "
+        "Did you mean to use TTS_ALL_ABSOLUTE_EQUAL or to specialize "
+        "tts::precision<T>::absolute ?");
         return 0.;
       }
     }
-
     static double relative(T const& a, T const& b)
     {
-      static_assert(!requires { relative_distance(a, b); },
-                    "[TTS] tts::relative_distance is no longer a customization point. "
-                    "Specialize tts::precision<T>::relative instead.");
-
-      if constexpr(std::is_same_v<T, bool>) { return a == b ? 0. : 1.; }
+      static_assert(
+      !requires { relative_distance(a, b); },
+      "[TTS] tts::relative_distance is no longer a customization point. "
+      "Specialize tts::precision<T>::relative instead.");
+      if constexpr(std::is_same_v<T, bool>) return a == b ? 0. : 1.;
       else if constexpr(std::is_floating_point_v<T>)
       {
         if((a == b) || (is_nan(a) && is_nan(b))) return 0.;
@@ -3788,34 +3851,30 @@ namespace tts::_
         return abs(a - b) / max(T(1), max(abs(a), abs(b)));
       }
       else if constexpr(std::is_integral_v<T>)
-      {
         return builtin_precision<double>::relative(static_cast<double>(a), static_cast<double>(b));
-      }
       else
       {
-        static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>,
-                      "[TTS] TTS_RELATIVE_EQUAL requires integral or floating points data to "
-                      "compare. Did you mean to use TTS_ALL_RELATIVE_EQUAL or to specialize "
-                      "tts::precision<T>::relative ?");
+        static_assert(
+        std::is_floating_point_v<T> || std::is_integral_v<T>,
+        "[TTS] TTS_RELATIVE_EQUAL requires integral or floating points data to compare. "
+        "Did you mean to use TTS_ALL_RELATIVE_EQUAL or to specialize "
+        "tts::precision<T>::relative ?");
         return 0.;
       }
     }
-
     static double ulp(T const& a, T const& b)
     {
-      static_assert(!requires { ulp_distance(a, b); },
-                    "[TTS] tts::ulp_distance is no longer a customization point. "
-                    "Specialize tts::precision<T>::ulp instead.");
-
+      static_assert(
+      !requires { ulp_distance(a, b); },
+      "[TTS] tts::ulp_distance is no longer a customization point. "
+      "Specialize tts::precision<T>::ulp instead.");
       if constexpr(std::is_same_v<T, bool>)
-      {
         return a == b ? 0. : std::numeric_limits<double>::infinity();
-      }
       else if constexpr(std::is_floating_point_v<T>)
       {
         using ui_t = std::conditional_t<std::is_same_v<T, float>, std::uint32_t, std::uint64_t>;
-        if((a == b) || (is_nan(a) && is_nan(b)))  return 0.;
-        else if(is_unordered(a, b))               return std::numeric_limits<double>::infinity();
+        if((a == b) || (is_nan(a) && is_nan(b))) return 0.;
+        else if(is_unordered(a, b)) return std::numeric_limits<double>::infinity();
         else
         {
           auto aa = bitinteger(a);
@@ -3842,30 +3901,22 @@ namespace tts::_
         return 0.;
       }
     }
-
     static bool ieee(T const& a, T const& b)
     {
-      static_assert(!requires { ieee_equal(a, b); },
-                    "[TTS] tts::ieee_equal is no longer a customization point. "
-                    "Specialize tts::precision<T>::ieee instead.");
-
+      static_assert(
+      !requires { ieee_equal(a, b); },
+      "[TTS] tts::ieee_equal is no longer a customization point. "
+      "Specialize tts::precision<T>::ieee instead.");
       if constexpr(std::is_floating_point_v<T>) return (a == b) || (is_nan(a) && is_nan(b));
-      else                                      return eq(a, b);
+      else return eq(a, b);
     }
   };
 }
-
 namespace tts
 {
-  //================================================================================================
-  //! @brief How far apart two values of the same type are, and when they count as IEEE-equal.
-  //!
-  //! Specialize this for your own types rather than overloading free functions: a specialization
-  //! that does not match is a compilation error, where a misnamed overload used to be ignored in
-  //! silence. Inherit from tts::_::builtin_precision<T> to keep the members you do not redefine.
-  //================================================================================================
-  template<typename T> struct precision : _::builtin_precision<T> {};
-
+  template<typename T> struct precision : _::builtin_precision<T>
+  {
+  };
   template<typename T, typename U> inline double absolute_check(T const& a, U const& b)
   {
     static_assert(std::is_same_v<T, U>,
@@ -3874,9 +3925,8 @@ namespace tts
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
     if constexpr(std::is_same_v<T, U>) return precision<T>::absolute(a, b);
-    else                               return 0.;
+    else return 0.;
   }
-
   template<typename T, typename U> inline double relative_check(T const& a, U const& b)
   {
     static_assert(std::is_same_v<T, U>,
@@ -3885,9 +3935,8 @@ namespace tts
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
     if constexpr(std::is_same_v<T, U>) return precision<T>::relative(a, b);
-    else                               return 0.;
+    else return 0.;
   }
-
   template<typename T, typename U> inline double ulp_check(T const& a, U const& b)
   {
     static_assert(std::is_same_v<T, U>,
@@ -3896,16 +3945,14 @@ namespace tts
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
     if constexpr(std::is_same_v<T, U>) return precision<T>::ulp(a, b);
-    else                               return 0.;
+    else return 0.;
   }
-
   template<typename T, typename U> inline bool ieee_check(T const& a, U const& b)
   {
-    static_assert(std::is_same_v<T, U>,
-                  "[TTS] TTS_IEEE_EQUAL needs both operands to have the same type. Convert the "
-                  "expected value at the call site instead.");
     if constexpr(std::is_same_v<T, U>) return precision<T>::ieee(a, b);
-    else                               return false;
+    else if constexpr(std::is_floating_point_v<T>)
+      return (a == b) || (_::is_nan(a) && _::is_nan(b));
+    else return _::eq(a, b);
   }
 }
 #define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, FUNC, PREC, FAILURE)                                 \
@@ -4240,8 +4287,7 @@ namespace tts
     template<typename P> void print_producer(P const& prod, auto alt)
     {
       if(::tts::is_quiet()) return;
-      if constexpr(requires(P const& p) { to_text(p); })
-        ::tts::output().writeln(::tts::as_text(prod));
+      if constexpr(::tts::_::described<P>) ::tts::output().writeln(::tts::as_text(prod));
       else ::tts::output().writeln(alt);
     }
   }
@@ -4254,7 +4300,7 @@ namespace tts
     buffer<out_type> ref_out(count), new_out(count);
     buffer<RefType>  inputs(count);
     for(std::size_t i = 0; i < inputs.size(); ++i)
-      inputs[ i ] = produce(type<RefType> {}, g, i, count);
+      inputs[ i ] = ::tts::produce(type<RefType> {}, g, i, count);
     std::size_t          repetition = ::tts::arguments().value(std::size_t {1}, "--loop");
     double               max_ulp    = 0.;
     std::size_t          nb_buckets = 2 + 1 + 16;
@@ -4353,14 +4399,18 @@ namespace tts
     {
       return ::tts::random_value(mini, maxi);
     }
-    friend tts::text to_text(realistic_generator const& s)
-    {
-      return tts::text {"realistic_generator<%s>(%s,%s)",
-                        tts::as_text(typename_<T>).data(),
-                        tts::as_text(s.mini).data(),
-                        tts::as_text(s.maxi).data()};
-    }
   private:
+    template<typename> friend struct display;
     T mini, maxi;
+  };
+  template<typename T> struct display<realistic_generator<T>>
+  {
+    static text render(realistic_generator<T> const& s)
+    {
+      return text {"realistic_generator<%s>(%s,%s)",
+                   as_text(typename_<T>).data(),
+                   as_text(s.mini).data(),
+                   as_text(s.maxi).data()};
+    }
   };
 }

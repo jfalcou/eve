@@ -17,35 +17,6 @@
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>
 
-namespace eve
-{
-  template<typename T, typename N>
-  inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
-  {
-    return eve::all(l == r);
-  }
-
-  template<typename T>
-  inline bool compare_equal(logical<T> const &l, logical<T> const &r)
-  {
-    if constexpr(eve::simd_value<T>)  return eve::all(l == r);
-    else                              return l == r;
-  }
-}
-
-namespace tts
-{
-
-  template<typename T, typename V> auto as_value(V const&);
-
-  template<typename T, typename V>
-  auto as_value(V const& v)
-  requires( requires { v(eve::as<T>{}); } )
-  {
-    return v(eve::as<T>{});
-  }
-}
-
 #include <tts/tts.hpp>
 
 //==================================================================================================
@@ -66,6 +37,35 @@ namespace tts
 
 namespace tts
 {
+  //================================================================================================
+  // A wide and a logical answer a comparison lane by lane, so equality is the whole register being
+  // equal rather than the register the operator hands back. Only the same-type pairs are given:
+  // comparing a wide against something else keeps the built-in path.
+  //
+  // Neither carries `less`. The free functions these replace defined none either, so ordering two
+  // registers has never compiled, and settling here what `a < b` means for a register would be
+  // deciding it in passing.
+  //================================================================================================
+  template<typename T, typename N>
+  struct comparison<eve::wide<T, N>, eve::wide<T, N>>
+  {
+    using w_t = eve::wide<T, N>;
+
+    static bool equal(w_t const& l, w_t const& r) { return eve::all(l == r); }
+  };
+
+  template<typename T>
+  struct comparison<eve::logical<T>, eve::logical<T>>
+  {
+    using l_t = eve::logical<T>;
+
+    static bool equal(l_t const& l, l_t const& r)
+    {
+      if constexpr(eve::simd_value<T>)  return eve::all(l == r);
+      else                              return l == r;
+    }
+  };
+
   //================================================================================================
   // EVE measures distances its own way on the three shapes it adds. Specializing the trait rather
   // than overloading a free function means a name that no longer matches is a compilation error
@@ -126,13 +126,15 @@ namespace tts
   {
     using l_t = eve::logical<T>;
 
+    static bool same(l_t const& l, l_t const& r) { return comparison<l_t>::equal(l, r); }
+
     static double ulp(l_t const& l, l_t const& r)
     {
-      return eve::compare_equal(l, r) ? 0. : std::numeric_limits<double>::infinity();
+      return same(l, r) ? 0. : std::numeric_limits<double>::infinity();
     }
-    static double relative(l_t const& l, l_t const& r) { return eve::compare_equal(l, r) ? 0. : 1.; }
-    static double absolute(l_t const& l, l_t const& r) { return eve::compare_equal(l, r) ? 0. : 1.; }
-    static bool   ieee    (l_t const& l, l_t const& r) { return eve::compare_equal(l, r); }
+    static double relative(l_t const& l, l_t const& r) { return same(l, r) ? 0. : 1.; }
+    static double absolute(l_t const& l, l_t const& r) { return same(l, r) ? 0. : 1.; }
+    static bool   ieee    (l_t const& l, l_t const& r) { return same(l, r); }
   };
 
   //================================================================================================
@@ -187,7 +189,7 @@ namespace tts
     static text render(eve::wide<T, N> const& v)
     {
       text that("(");
-      for(std::size_t i = 0; i < v.size(); ++i)
+      for(std::ptrdiff_t i = 0; i < v.size(); ++i)
       {
         if(i) that += ", ";
         that += as_text(T(v.get(i)));
@@ -210,7 +212,7 @@ namespace tts
       if constexpr(eve::simd_value<T>)
       {
         text that("(");
-        for(std::size_t i = 0; i < v.size(); ++i)
+        for(std::ptrdiff_t i = 0; i < v.size(); ++i)
         {
           if(i) that += ", ";
           that += v.get(i) ? "true" : "false";
@@ -380,16 +382,6 @@ namespace eve::test::simd
 //==================================================================================================
 
 
-namespace eve::_
-{
-  template<typename T, typename V> auto as_value(callable_object<V> const& v)
-  {
-    return v(eve::as<T>{});
-  }
-}
-
-
-
 namespace tts
 {
 
@@ -417,27 +409,25 @@ namespace tts
     template<typename D> constexpr auto operator()(D d) const { return F{}(d); }
   };
 
-  template<typename T, typename V> auto as_value(constant<V> const& v)
-  {
-    return v(eve::as<T>{});
-  }
-
   //================================================================================================
-  // v3 funnels a generator bound through convert_as, which static_casts it to the tested type.
-  // A constant is a per-type recipe, not a value: it has to be evaluated against T instead.
+  // v3 funnels a generator bound through convert_as, which casts it to the tested type. A constant
+  // is a per-type recipe, not a value: it has to be evaluated against T instead.
+  //
+  // The argument list is the primary's, and it is the constraint that makes this the better match,
+  // so anything that is not callable with an eve::as keeps the plain cast.
   //================================================================================================
-  template<typename T, typename V> auto convert_as(V const& v, type<T> const&)
-  requires( requires { v(eve::as<T>{}); } )
+  template<typename T, typename V> requires( requires(V v) { v(eve::as<T>{}); } )
+  struct conversion<T, V>
   {
-    auto r = v(eve::as<T>{});
-    // A recipe is free to answer in whatever type it finds natural - `-128 : 0` is an int even
-    // when T is double. Both bounds of a generator must land on T or v3 cannot deduce it.
-    if constexpr(std::convertible_to<decltype(r), T>)
+    static auto from(V const& v)
     {
-      return static_cast<T>(r);
+      auto r = v(eve::as<T>{});
+      // A recipe is free to answer in whatever type it finds natural - `-128 : 0` is an int even
+      // when T is double. Both bounds of a generator must land on T or v3 cannot deduce it.
+      if constexpr(std::convertible_to<decltype(r), T>) return static_cast<T>(r);
+      else                                              return r;
     }
-    else return r;
-  }
+  };
 
   //================================================================================================
   // Poison wide data when using sub-sized types
@@ -482,95 +472,108 @@ namespace tts
   template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
 
   //================================================================================================
-  // v3 ships its own limits(), but it is built on std::numeric_limits, which knows nothing of
-  // eve::wide. Constrained on EVE values so it wins over v3's for those and only those.
+  // v3 ships its own limits_set, built on std::numeric_limits, which knows nothing of eve::wide and
+  // static_asserts on it. Specializing the class rather than overloading limits() puts EVE's values
+  // where v3 already looks, and leaves one entry point instead of two overloads competing.
+  //
+  // Nothing is inherited: every member here comes from an eve constant, which answers for a
+  // register as readily as for a scalar, where a built-in one would have to be cast lane by lane.
   //================================================================================================
-  template<eve::value T>
-  inline auto limits(tts::type<T>)
+  template<typename T> requires(eve::floating_value<T>)
+  struct limits_set<T>
   {
-    if constexpr(eve::floating_value<T>)
+    using type = T;
+
+    type nan            = eve::nan           (eve::as<type>{});
+    type inf            = eve::inf           (eve::as<type>{});
+    type minf           = eve::minf          (eve::as<type>{});
+    type mzero          = eve::mzero         (eve::as<type>{});
+    type zero           = eve::zero          (eve::as<type>{});
+    type maxflint       = eve::maxflint      (eve::as<type>{});
+    type valmax         = eve::valmax        (eve::as<type>{});
+    type valmin         = eve::valmin        (eve::as<type>{});
+    type mindenormal    = eve::mindenormal   (eve::as<type>{});
+    type smallestposval = eve::smallestposval(eve::as<type>{});
+    type mone           = eve::mone          (eve::as<type>{});
+    type one            = eve::one           (eve::as<type>{});
+  };
+
+  template<typename T> requires(eve::value<T> && !eve::floating_value<T>)
+  struct limits_set<T>
+  {
+    using type = T;
+
+    type valmax = eve::valmax(eve::as<type>{});
+    type valmin = eve::valmin(eve::as<type>{});
+  };
+
+  //================================================================================================
+  // Customization point for argument building. A register is drawn as an array of its element type
+  // and loaded, so a generator only ever has to answer for a scalar.
+  //================================================================================================
+  template<typename T> requires(eve::simd_value<T>)
+  struct generation<T>
+  {
+    static auto make(auto g, auto... args)
     {
-      struct values
+      using e_t = eve::element_type_t<T>;
+      auto data = produce(type<std::array<e_t,T::size()>>{}, g, args...);
+
+      using v_t = typename decltype(data)::value_type;
+      eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
+
+      return poison(that);
+    }
+  };
+
+  //================================================================================================
+  // float16 has to be drawn against its own bounds. Falling through to float evaluates
+  // `valmin`/`valmax` against float, so the draw spans +/-3.4e38 and every narrowing to float16
+  // lands on infinity.
+  //
+  // The overload this replaces named randoms in its signature. The trait keys on the type being
+  // built, so the branch moves inside the member, and tts::is_randoms_v keeps it a question about
+  // the generator's type rather than about the members it happens to carry.
+  //================================================================================================
+  template<>
+  struct generation<eve::float16_t>
+  {
+    static auto make(auto g, auto... args)
+    {
+      if constexpr( tts::is_randoms_v<decltype(g)> )
       {
-        using type  = T;
-        type nan            = eve::nan           (eve::as<type>{});
-        type inf            = eve::inf           (eve::as<type>{});
-        type minf           = eve::minf          (eve::as<type>{});
-        type mzero          = eve::mzero         (eve::as<type>{});
-        type zero           = eve::zero          (eve::as<type>{});
-        type maxflint       = eve::maxflint      (eve::as<type>{});
-        type valmax         = eve::valmax        (eve::as<type>{});
-        type valmin         = eve::valmin        (eve::as<type>{});
-        type mindenormal    = eve::mindenormal   (eve::as<type>{});
-        type smallestposval = eve::smallestposval(eve::as<type>{});
-        type mone           = eve::mone          (eve::as<type>{});
-        type one            = eve::one           (eve::as<type>{});
-      };
-
-      return values{};
-    }
-    else
-    {
-      struct values
+        return static_cast<eve::float16_t>
+        ( tts::random_value<float>
+          ( static_cast<float>(convert_as(g.mini, type<eve::float16_t>{}))
+          , static_cast<float>(convert_as(g.maxi, type<eve::float16_t>{}))
+          )
+        );
+      }
+      else
       {
-        using type  = T;
-        type valmax = eve::valmax(eve::as<type>{});
-        type valmin = eve::valmin(eve::as<type>{});
-      };
-
-      return values{};
+        auto data = produce(type<float>{}, g, args...);
+        if constexpr(eve::logical_value<decltype(data)>)
+          return static_cast<eve::logical<eve::float16_t>>(data);
+        else
+          return static_cast<eve::float16_t>(data);
+      }
     }
-  }
+  };
 
   //================================================================================================
-  // Customization point for argument building
+  // More specialized than the simd_value case above, and it has to be: the generic one would draw
+  // an array of float16 through the scalar path, which is right, then load it as a wide of the
+  // element type the array reports, which is where the two part company.
   //================================================================================================
-  template<eve::simd_value T>
-  auto produce(type<T> const&, auto g, auto... args)
-  {
-    using e_t = eve::element_type_t<T>;
-    auto data = produce(type<std::array<e_t,T::size()>>{},g, args...);
-
-    using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
-
-    return poison(that);
-  }
-
-  //================================================================================================
-  // A randoms generator has to be drawn against float16's own bounds. Falling through to float
-  // evaluates `valmin`/`valmax` against float, so the draw spans +/-3.4e38 and every narrowing
-  // to float16 lands on infinity.
-  //================================================================================================
-  template<typename Mx, typename Mn>
-  auto produce(type<eve::float16_t> const&, randoms<Mx, Mn> g, auto...)
-  {
-    return static_cast<eve::float16_t>
-    ( tts::random_value<float>( static_cast<float>(convert_as(g.mini, type<eve::float16_t>{}))
-                              , static_cast<float>(convert_as(g.maxi, type<eve::float16_t>{}))
-                              )
-    );
-  }
-
-  auto produce(type<eve::float16_t> const&, auto g, auto... args)
-  {
-    auto data = produce(type<float>{}, g, args...);
-    if constexpr (eve::logical_value<decltype(data)>)
-    {
-      return static_cast<eve::logical<eve::float16_t>>(data);
-    }
-    else
-    {
-      return static_cast<eve::float16_t>(data);
-    }
-  }
-
   template<std::ptrdiff_t N>
-  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto... args)
+  struct generation<eve::wide<eve::float16_t, eve::fixed<N>>>
   {
-    auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
-    return poison(eve::load(arr.data(), eve::fixed<N>{}));
-  }
+    static auto make(auto g, auto... args)
+    {
+      auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
+      return poison(eve::load(arr.data(), eve::fixed<N>{}));
+    }
+  };
 
 
   template<typename Fn, typename Wm, typename... Args>
