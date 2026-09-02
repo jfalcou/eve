@@ -14,13 +14,20 @@ run-name: compile-cost
 ## and the delta would be reporting an upgrade.
 ##
 ## The pull request measurement waits for the unit tests to be done rather than competing with them
-## for the runner, hence workflow_run instead of pull_request.
+## for the runner, hence workflow_run instead of pull_request. The exception is a pull request that
+## touches the measurement itself: workflow_run only ever dispatches the copy of this file sitting
+## on the default branch, so such a change would otherwise reach main having never run once.
 ####################################################################################################
 on:
   workflow_run:
     workflows: ["EVE - Unit Tests"]
     types:
       - completed
+  pull_request:
+    paths:
+      - '.github/workflows/compile-cost.yml'
+      - 'cmake/config/proc-stat.cmake'
+      - 'tools/compile_cost.py'
   push:
     branches:
       - main
@@ -42,15 +49,19 @@ jobs:
   ## from the same runner and the same image.
   ##################################################################################################
   pull-request:
-    if: github.event_name == 'workflow_run'
+    if: github.event_name != 'push'
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
+    ## Reading the reference off another run asks for more than the contents scope the token defaults to.
+    permissions:
+      actions: read
+      contents: read
     steps:
       - name: Fetch the commit the unit tests ran on
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Measure
         run: |
