@@ -566,8 +566,12 @@ jobs:
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
+  ## The dependency is there to keep the host free while the measurement runs, so it orders the two
+  ## and nothing more. A measurement that dies must never take the tests with it, which is what the
+  ## guard says: run once compile-cost is done, whatever became of it, unless the run itself is gone.
   x86-clang:
     needs: compile-cost
+    if: ${{ !cancelled() }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
