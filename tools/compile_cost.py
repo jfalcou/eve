@@ -8,6 +8,12 @@ actionable.
 
   compile_cost.py current.csv                        # a plain ranking
   compile_cost.py current.csv --baseline main.csv    # with the delta against main
+
+CPU time is added up wherever it appears, because compiling two units really does cost the sum of
+the two. Peak memory is never added up: the peaks belong to processes that do not run at the same
+time, and their sum matches no quantity any machine ever has to hold. What answers the question a
+peak is asked for -- how much memory a build needs, and how many compilers a host can carry -- is
+the largest single unit and the shape of the distribution behind it.
 """
 
 import argparse
@@ -69,6 +75,11 @@ def duration(usec):
     return "%.1f s" % s if s < 90 else "%.0f min" % (s / 60)
 
 
+def quantile(values, q):
+    """Nearest-rank, on an already sorted list."""
+    return values[min(len(values) - 1, int(q * len(values)))]
+
+
 def delta_cell(now, before):
     if before is None:
         return "new"
@@ -95,11 +106,45 @@ def table(rows, header, with_delta):
     return "\n".join(out)
 
 
+def by_module(measures):
+    """Units grouped under their module, each group sorted heaviest first."""
+    groups = {}
+    for unit, (mem, cpu) in measures.items():
+        groups.setdefault(module_of(unit), []).append((unit, mem, cpu))
+    for units in groups.values():
+        units.sort(key=lambda u: u[1], reverse=True)
+    return groups
+
+
+def headline(measures, title, level, grew_line=None):
+    """The facts worth stating before any table, as a list rather than a paragraph."""
+    peaks = sorted(m for m, _ in measures.values())
+    total_cpu = sum(c for _, c in measures.values())
+    worst, (worst_mem, worst_cpu) = max(measures.items(), key=lambda kv: kv[1][0])
+
+    groups = by_module(measures)
+    top_mod, top_units = max(groups.items(), key=lambda kv: sum(u[2] for u in kv[1]))
+    top_cpu = sum(u[2] for u in top_units)
+
+    out = ["%s %s\n" % ("#" * level, title)]
+    out.append("- **%d translation units**, %s of CPU in all."
+               % (len(measures), duration(total_cpu)))
+    out.append("- The heaviest one is `%s`, peaking at **%s** over %s."
+               % (worst, size(worst_mem), duration(worst_cpu)))
+    out.append("- Half of them peak under %s, a tenth above %s."
+               % (size(quantile(peaks, 0.5)), size(quantile(peaks, 0.9))))
+    out.append("- `%s` carries %s of that CPU on its own, %.0f %% of the build, over %d units."
+               % (top_mod, duration(top_cpu), 100.0 * top_cpu / total_cpu, len(top_units)))
+    if grew_line:
+        out.append(grew_line)
+    return "\n".join(out) + "\n"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("current")
     ap.add_argument("--baseline")
-    ap.add_argument("--top", type=int, default=20)
+    ap.add_argument("--top", type=int, default=3, help="units shown per module (default 3)")
     ap.add_argument("--title", default="Compile cost")
     ap.add_argument("--full", help="write the complete per-unit table, as Markdown, to this file")
     args = ap.parse_args()
@@ -112,60 +157,47 @@ def main():
     was = read(args.baseline) if args.baseline else {}
     d = bool(was)
 
-    total_mem = sum(v[0] for v in now.values())
-    total_cpu = sum(v[1] for v in now.values())
-    worst, (worst_mem, _) = max(now.items(), key=lambda kv: kv[1][0])
-
-    print("## %s\n" % args.title)
-    print("%d translation unit%s. Peak memory adds up to %s, and the whole build costs %s of CPU. "
-          "The heaviest single unit is `%s` at %s.\n"
-          % (len(now), "" if len(now) == 1 else "s", size(total_mem), duration(total_cpu),
-             worst, size(worst_mem)))
-
     # Regressions first: what changed is what gets acted on.
+    grew = []
     if d:
         grew = [(k, v[0], was[k][0]) for k, v in now.items()
                 if k in was and v[0] > was[k][0] * 1.05 and v[0] - was[k][0] > 16 * 1024]
         grew.sort(key=lambda t: t[1] - t[2], reverse=True)
-        if grew:
-            print("> **%d unit%s grew by more than 5 %% and 16 MiB.**\n"
-                  % (len(grew), "" if len(grew) == 1 else "s"))
-            print(table([(k, m, now[k][1], delta_cell(m, b)) for k, m, b in grew[:10]],
-                        "Grew", True))
-            print()
-        else:
-            print("> Nothing grew by more than 5 % against the baseline.\n")
 
-    # Per module: ten-odd rows, which is the only view that fits a suite this size.
-    mods = {}
-    for k, (mem, cpu) in now.items():
-        m = module_of(k)
-        a = mods.setdefault(m, [0, 0, 0])
-        a[0] += mem
-        a[1] += cpu
-        a[2] += 1
-    base_mods = {}
-    for k, (mem, _) in was.items():
-        base_mods[module_of(k)] = base_mods.get(module_of(k), 0) + mem
+    grew_line = None
+    if d:
+        grew_line = ("- **%d unit%s grew** by more than 5 %% and 16 MiB against the baseline."
+                     % (len(grew), "" if len(grew) == 1 else "s")) if grew \
+                    else "- Nothing grew by more than 5 % against the baseline."
 
-    rows = sorted(((m, v[0], v[1], delta_cell(v[0], base_mods.get(m))) for m, v in mods.items()),
-                  key=lambda r: r[1], reverse=True)
-    print("### By module\n")
-    print(table(rows, "Module", d))
-    print()
+    print(headline(now, args.title, 2, grew_line))
 
-    ranked = sorted(now.items(), key=lambda kv: kv[1][0], reverse=True)
-    print("### The %d heaviest units\n" % min(args.top, len(ranked)))
-    print(table([(k, v[0], v[1], delta_cell(v[0], was.get(k, (None,))[0]))
-                 for k, v in ranked[: args.top]], "Translation unit", d))
+    if grew:
+        print("\n### What grew\n")
+        print(table([(k, m, now[k][1], delta_cell(m, b)) for k, m, b in grew[:10]],
+                    "Translation unit", True))
+
+    # One table per module: a suite this size has no single ranking anybody reads, but every module
+    # has an owner who recognises its own three worst files.
+    groups = by_module(now)
+    ordered = sorted(groups.items(), key=lambda kv: sum(u[2] for u in kv[1]), reverse=True)
+
+    for module, units in ordered:
+        cpu = sum(u[2] for u in units)
+        print("\n### `%s`\n" % module)
+        print("%d unit%s, %s of CPU, heaviest at %s.\n"
+              % (len(units), "" if len(units) == 1 else "s", duration(cpu), size(units[0][1])))
+        rows = [(u[0][len(module) + 1:], u[1], u[2], delta_cell(u[1], was.get(u[0], (None,))[0]))
+                for u in units[: args.top]]
+        print(table(rows, "Translation unit", d))
 
     if args.full:
         # The summary is capped at a mebibyte and nobody reads seven hundred rows on a run page.
         # The whole table goes to a file the workflow attaches, so nothing measured is thrown away.
+        ranked = sorted(now.items(), key=lambda kv: kv[1][0], reverse=True)
         with open(args.full, "w") as f:
-            f.write("# %s, every translation unit\n\n" % args.title)
-            f.write("%d unit%s, %s of peak memory, %s of CPU.\n\n"
-                    % (len(now), "" if len(now) == 1 else "s", size(total_mem), duration(total_cpu)))
+            f.write(headline(now, "%s, every translation unit" % args.title, 1, grew_line))
+            f.write("\n")
             f.write(table([(k, v[0], v[1], delta_cell(v[0], was.get(k, (None,))[0]))
                            for k, v in ranked], "Translation unit", d))
             f.write("\n")
