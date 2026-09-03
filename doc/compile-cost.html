@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<!--=================================================================================================
+    EVE - Expressive Vector Engine
+    Copyright : EVE Project Contributors
+    SPDX-License-Identifier: BSL-1.0
+
+    A reader for the CSV that clang's -fproc-stat-report leaves behind, attached to every run of the
+    compile cost workflow. Everything happens in the browser: the file is read locally and never
+    leaves the machine, so a measurement can be opened from a laptop with no network at all.
+
+    The theme variables are copied from doxygen-awesome.css rather than linked, so the page survives
+    being saved and opened on its own.
+==================================================================================================-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EVE &mdash; Compile Cost Explorer</title>
+<style>
+html {
+  --primary-dark-color: hsl(90, 69%, 20%);
+  --primary-color: hsl(90, 69%, 30%);
+  --primary-light-color: hsl(90, 69%, 40%);
+  --page-background-color: white;
+  --page-foreground-color: hsl(90, 69%, 20%);
+  --page-secondary-foreground-color: hsl(90, 69%, 40%);
+  --separator-color: #dedede;
+  --odd-color: rgba(0,0,0,.028);
+  --tablehead-background: #f1f1f1;
+  --blockquote-background: #f8f9fa;
+  --code-background: #f5f5f5;
+  --box-shadow: 0 2px 8px 0 rgba(0,0,0,.075);
+  --grid-color: rgba(0,0,0,.10);
+  --drop-hint: rgba(0,0,0,.02);
+  --border-radius-large: 8px;
+  --border-radius-medium: 6px;
+  --border-radius-small: 4px;
+  --spacing-small: 5px;
+  --spacing-medium: 10px;
+  --spacing-large: 16px;
+  --font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  --font-family-monospace: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+  --page-font-size: 15.6px;
+  --code-font-size: 14px;
+  --title-font-size: 22px;
+  color-scheme: light;
+}
+
+/* Declared twice, exactly as the theme does it, so the toggle wins over the system in both
+   directions and the untouched page still follows the system. */
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode) {
+    color-scheme: dark;
+    --primary-color: #1982d2;
+    --primary-dark-color: #86a9c4;
+    --primary-light-color: #4779ac;
+    --page-background-color: #1C1D1F;
+    --page-foreground-color: #d2dbde;
+    --page-secondary-foreground-color: #859399;
+    --separator-color: #38393b;
+    --odd-color: rgba(100,100,100,.06);
+    --tablehead-background: #2a2c2f;
+    --blockquote-background: #222325;
+    --code-background: #2a2c2f;
+    --box-shadow: 0 2px 8px 0 rgba(0,0,0,.35);
+    --grid-color: rgba(255,255,255,.10);
+    --drop-hint: rgba(255,255,255,.03);
+  }
+}
+html.dark-mode {
+  color-scheme: dark;
+  --primary-color: #1982d2;
+  --primary-dark-color: #86a9c4;
+  --primary-light-color: #4779ac;
+  --page-background-color: #1C1D1F;
+  --page-foreground-color: #d2dbde;
+  --page-secondary-foreground-color: #859399;
+  --separator-color: #38393b;
+  --odd-color: rgba(100,100,100,.06);
+  --tablehead-background: #2a2c2f;
+  --blockquote-background: #222325;
+  --code-background: #2a2c2f;
+  --box-shadow: 0 2px 8px 0 rgba(0,0,0,.30);
+  --grid-color: rgba(255,255,255,.10);
+  --drop-hint: rgba(255,255,255,.03);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 var(--spacing-large) 64px;
+  background: var(--page-background-color);
+  color: var(--page-foreground-color);
+  font-family: var(--font-family);
+  font-size: var(--page-font-size);
+  line-height: 1.6;
+}
+
+main { max-width: 1180px; margin: 0 auto; }
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-medium);
+  flex-wrap: wrap;
+  padding: 28px 0 var(--spacing-large);
+  border-bottom: 1px solid var(--separator-color);
+}
+header h1 {
+  margin: 0;
+  font-size: var(--title-font-size);
+  font-weight: 600;
+  color: var(--page-foreground-color);
+}
+header p { margin: 0; color: var(--page-secondary-foreground-color); font-size: 14px; }
+header .spacer { flex: 1 1 auto; }
+
+button, label.filebtn {
+  position: relative;                    /* holds the hidden file input inside the button */
+  overflow: hidden;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--separator-color);
+  background: var(--page-background-color);
+  color: var(--page-secondary-foreground-color);
+  border-radius: var(--border-radius-medium);
+  padding: var(--spacing-small) var(--spacing-medium);
+  transition: color .08s ease-in-out, background-color .1s ease-in-out;
+}
+button:hover, label.filebtn:hover { color: var(--page-foreground-color); background: var(--odd-color); }
+button:focus-visible, label.filebtn:focus-within,
+input:focus-visible, select:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 1px; }
+button.primary { background: var(--primary-color); color: var(--page-background-color); border-color: transparent; }
+button.primary:hover { background: var(--primary-light-color); color: var(--page-background-color); }
+
+/* ---- the two drop slots ------------------------------------------------------------------- */
+.slots { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-large); margin: var(--spacing-large) 0; }
+@media (max-width: 720px) { .slots { grid-template-columns: 1fr; } }
+
+.slot {
+  border: 2px dashed var(--separator-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--spacing-large);
+  background: var(--drop-hint);
+  text-align: center;
+  transition: border-color .1s ease-in-out, background-color .1s ease-in-out;
+}
+.slot.over { border-color: var(--primary-color); background: var(--odd-color); }
+.slot.filled { border-style: solid; border-color: var(--primary-light-color); }
+.slot h2 { margin: 0 0 var(--spacing-small); font-size: 15px; font-weight: 600; }
+.slot p { margin: 0 0 var(--spacing-medium); font-size: 13px; color: var(--page-secondary-foreground-color); }
+.slot .name { font-family: var(--font-family-monospace); font-size: 13px; word-break: break-all; }
+.slot input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+/* ---- summary ------------------------------------------------------------------------------ */
+.facts { list-style: none; padding: 0; margin: var(--spacing-large) 0; }
+.facts li { padding: 4px 0 4px var(--spacing-large); position: relative; }
+.facts li::before {
+  content: ""; position: absolute; left: 2px; top: 14px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--primary-color);
+}
+.facts b { font-weight: 600; }
+code, .mono { font-family: var(--font-family-monospace); font-size: var(--code-font-size); }
+code { background: var(--code-background); border-radius: var(--border-radius-small); padding: 1px 5px; }
+
+h2.section {
+  font-size: 17px; font-weight: 600; margin: 32px 0 var(--spacing-medium);
+  padding-bottom: var(--spacing-small); border-bottom: 1px solid var(--separator-color);
+}
+
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-large); }
+@media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
+.card {
+  border: 1px solid var(--separator-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--spacing-large);
+  background: var(--page-background-color);
+}
+.card h3 { margin: 0 0 2px; font-size: 14px; font-weight: 600; }
+.card p.hint { margin: 0 0 var(--spacing-medium); font-size: 12.5px; color: var(--page-secondary-foreground-color); }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { font-family: var(--font-family); font-size: 11px; fill: var(--page-secondary-foreground-color); }
+svg .grid { stroke: var(--grid-color); stroke-width: 1; }
+svg .axis { stroke: var(--separator-color); stroke-width: 1; }
+svg .mark { stroke: var(--primary-color); stroke-width: 1; stroke-dasharray: 3 3; }
+svg .bar { fill: var(--primary-color); }
+svg .bar:hover, svg .modbar:hover { opacity: .75; }
+svg .modbar { cursor: pointer; }
+svg .dot { opacity: .72; }
+svg .dot:hover { opacity: 1; stroke: var(--page-foreground-color); stroke-width: 1.5; }
+
+/* ---- controls and table ------------------------------------------------------------------- */
+.controls { display: flex; gap: var(--spacing-medium); align-items: center; flex-wrap: wrap; margin-bottom: var(--spacing-medium); }
+input[type=search], select {
+  font-family: inherit; font-size: 14px;
+  color: var(--page-foreground-color); background: var(--page-background-color);
+  border: 1px solid var(--separator-color); border-radius: var(--border-radius-medium);
+  padding: var(--spacing-small) var(--spacing-medium);
+}
+input[type=search] { min-width: 260px; }
+.controls .count { margin-left: auto; font-size: 13px; color: var(--page-secondary-foreground-color); }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--separator-color); border-radius: var(--border-radius-large); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 7px var(--spacing-medium); text-align: left; white-space: nowrap; }
+th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--tablehead-background); color: var(--page-foreground-color);
+  font-weight: 600; cursor: pointer; user-select: none;
+  border-bottom: 1px solid var(--separator-color);
+}
+th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+th[aria-sort]::after { content: " \25B4"; color: var(--primary-color); }
+th[aria-sort="descending"]::after { content: " \25BE"; }
+tbody tr:nth-child(even) { background: var(--odd-color); }
+tbody tr:hover { background: var(--odd-color); }
+td.unit { font-family: var(--font-family-monospace); font-size: 13px; white-space: normal; }
+td.swatch-cell { width: 1px; padding-right: 0; }
+.swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px; vertical-align: middle; }
+.up { color: #b61825; font-weight: 600; }
+.down { color: var(--primary-color); }
+
+.empty { text-align: center; padding: 48px var(--spacing-large); color: var(--page-secondary-foreground-color); }
+.empty code { display: inline-block; margin-top: var(--spacing-medium); text-align: left; white-space: pre; padding: var(--spacing-medium); }
+
+#tip {
+  position: fixed; pointer-events: none; z-index: 10; display: none;
+  background: var(--page-background-color); color: var(--page-foreground-color);
+  border: 1px solid var(--separator-color); border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow); padding: var(--spacing-small) var(--spacing-medium);
+  font-size: 12.5px; max-width: 340px;
+}
+#tip .mono { display: block; word-break: break-all; }
+footer { margin-top: 40px; padding-top: var(--spacing-large); border-top: 1px solid var(--separator-color);
+         font-size: 13px; color: var(--page-secondary-foreground-color); }
+footer a { color: var(--primary-color); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Compile Cost Explorer</h1>
+    <p>What each translation unit of EVE&rsquo;s test suite costs to compile.</p>
+    <span class="spacer"></span>
+    <button id="theme" type="button" title="Switch between the light and the dark theme">Theme</button>
+  </header>
+
+  <div class="slots">
+    <div class="slot" id="slot-now">
+      <h2>Measurement</h2>
+      <p>Drop <code>compile-cost.csv</code> here, or</p>
+      <label class="filebtn">choose a file<input type="file" accept=".csv,text/csv" id="file-now"/></label>
+      <div class="name" id="name-now"></div>
+    </div>
+    <div class="slot" id="slot-base">
+      <h2>Baseline <span style="font-weight:400">(optional)</span></h2>
+      <p>Drop the CSV measured on <code>main</code> to get a delta.</p>
+      <label class="filebtn">choose a file<input type="file" accept=".csv,text/csv" id="file-base"/></label>
+      <div class="name" id="name-base"></div>
+    </div>
+  </div>
+
+  <div id="report" hidden>
+    <ul class="facts" id="facts"></ul>
+
+    <h2 class="section">Where the cost sits</h2>
+    <div class="charts">
+      <div class="card">
+        <h3>Distribution of peak memory</h3>
+        <p class="hint">How many units fall in each band. The dashed lines are the median and the ninth decile.</p>
+        <svg id="hist" viewBox="0 0 520 240" role="img" aria-label="Histogram of peak memory"></svg>
+      </div>
+      <div class="card">
+        <h3>Time against memory</h3>
+        <p class="hint">One dot per unit, coloured by module. Hover for the name.</p>
+        <svg id="scatter" viewBox="0 0 520 240" role="img" aria-label="Peak memory against CPU time"></svg>
+      </div>
+      <div class="card" style="grid-column: 1 / -1;">
+        <h3>Modules by CPU time</h3>
+        <p class="hint">Click a bar to keep only that module in the table below.</p>
+        <svg id="modules" viewBox="0 0 1080 320" role="img" aria-label="CPU time per module"></svg>
+      </div>
+    </div>
+
+    <h2 class="section">Every unit</h2>
+    <div class="controls">
+      <input type="search" id="q" placeholder="Filter by name, e.g. shuffle or bit_" aria-label="Filter units"/>
+      <select id="mod" aria-label="Filter by module"><option value="">All modules</option></select>
+      <button type="button" id="csv">Download the filtered rows</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr id="head"></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="empty" id="empty">
+    <p>Nothing loaded yet. The file is the one every <em>compile-cost</em> workflow run attaches,<br/>
+       written by clang&rsquo;s <code>-fproc-stat-report</code>, one line per compiler process:</p>
+    <code>"clang","…/unit.core.add.exe.dir/module/core/add.cpp.o",2508731,2450112,2570184</code>
+    <p style="margin-top:var(--spacing-large)">It is read in this tab and goes nowhere else.</p>
+  </div>
+
+  <footer>
+    Peak memory is never summed here: the peaks belong to processes that do not run at the same time,
+    and their total matches no quantity a machine ever holds. CPU time is summed, because compiling
+    two units really does cost the sum of the two.
+  </footer>
+</main>
+<div id="tip" role="tooltip"></div>
+
+<script>
+"use strict";
+(function () {
+
+// ---- reading -----------------------------------------------------------------------------------
+// clang writes, with no header: "program","output",total_us,user_us,peak_rss_kb
+
+// The source a CMake object path came from. Objects live in
+// <build>/test/unit/CMakeFiles/<target>.dir/<path>.o, so everything before the .dir/ is build
+// layout and everything after it is what a reader recognises.
+function unitOf(output) {
+  var i = output.indexOf(".dir/");
+  var name = i >= 0 ? output.slice(i + 5) : output.slice(output.lastIndexOf("/") + 1);
+  return name.slice(-2) === ".o" ? name.slice(0, -2) : name;
+}
+
+function moduleOf(unit) {
+  var p = unit.split("/");
+  if (p.length > 2) return p[0] + "/" + p[1];
+  return p.length > 1 ? p[0] : "top level";
+}
+
+// A quoted field may itself hold a comma, so the split has to know about the quotes.
+function splitRow(line) {
+  var out = [], cur = "", quoted = false;
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (c === '"') { quoted = !quoted; continue; }
+    if (c === "," && !quoted) { out.push(cur); cur = ""; continue; }
+    cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+
+function parse(text) {
+  var rows = [], seen = Object.create(null);
+  var lines = text.split(/\r?\n/);
+  for (var i = 0; i < lines.length; i++) {
+    if (!lines[i]) continue;
+    var f = splitRow(lines[i]);
+    if (f.length !== 5) continue;
+    var rss = parseInt(f[4], 10), cpu = parseInt(f[3], 10);
+    if (!isFinite(rss) || !isFinite(cpu)) continue;
+    var unit = unitOf(f[1]);
+    seen[unit] = { unit: unit, module: moduleOf(unit), rss: rss, cpu: cpu };
+  }
+  for (var k in seen) rows.push(seen[k]);
+  return rows;
+}
+
+// ---- formatting --------------------------------------------------------------------------------
+function size(kib) {
+  return kib < 1024 * 1024 ? (kib / 1024).toFixed(0) + " MiB"
+                           : (kib / 1048576).toFixed(2) + " GiB";
+}
+function duration(usec) {
+  var s = usec / 1e6;
+  return s < 90 ? s.toFixed(1) + " s" : (s / 60).toFixed(0) + " min";
+}
+function quantile(sorted, q) {           // nearest-rank, as the report generator does it
+  return sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))];
+}
+function pct(now, before) {
+  if (before === undefined) return { text: "new", cls: "" };
+  if (before === 0) return { text: "—", cls: "" };
+  var p = 100 * (now - before) / before;
+  if (Math.abs(p) < 1) return { text: "=", cls: "" };
+  return { text: (p > 0 ? "+" : "") + p.toFixed(0) + " %", cls: p > 0 ? "up" : "down" };
+}
+
+// Golden-angle hues: neighbours in the ordering never land on a close colour.
+function moduleColor(i) {
+  return "hsl(" + ((i * 137.508) % 360).toFixed(0) + ", 58%, " +
+         (document.documentElement.classList.contains("dark-mode") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches &&
+           !document.documentElement.classList.contains("light-mode")) ? "62%" : "42%") + ")";
+}
+
+// ---- state -------------------------------------------------------------------------------------
+var state = { rows: [], base: null, sort: { key: "rss", dir: -1 }, q: "", mod: "", colors: {} };
+var SVGNS = "http://www.w3.org/2000/svg";
+
+function el(name, attrs, text) {
+  var n = document.createElementNS(SVGNS, name);
+  for (var k in attrs) n.setAttribute(k, attrs[k]);
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+
+var tip = document.getElementById("tip");
+function showTip(evt, html) {
+  tip.innerHTML = html;
+  tip.style.display = "block";
+  var r = tip.getBoundingClientRect();
+  var x = Math.min(evt.clientX + 14, window.innerWidth - r.width - 8);
+  var y = Math.max(8, evt.clientY - r.height - 12);
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+
+function attachTip(node, html) {
+  node.addEventListener("mousemove", function (e) { showTip(e, html); });
+  node.addEventListener("mouseleave", hideTip);
+}
+
+// ---- the facts ---------------------------------------------------------------------------------
+function renderFacts() {
+  var rows = state.rows;
+  var peaks = rows.map(function (r) { return r.rss; }).sort(function (a, b) { return a - b; });
+  var totalCpu = rows.reduce(function (a, r) { return a + r.cpu; }, 0);
+  var worst = rows.reduce(function (a, r) { return r.rss > a.rss ? r : a; }, rows[0]);
+
+  var mods = groupByModule(rows);
+  var top = mods[0];
+
+  var out = [];
+  out.push("<b>" + rows.length + " translation units</b>, " + duration(totalCpu) + " of CPU in all.");
+  out.push("The heaviest one is <span class=\"mono\">" + esc(worst.unit) + "</span>, peaking at <b>" +
+           size(worst.rss) + "</b> over " + duration(worst.cpu) + ".");
+  out.push("Half of them peak under " + size(quantile(peaks, 0.5)) +
+           ", a tenth above " + size(quantile(peaks, 0.9)) + ".");
+  out.push("<span class=\"mono\">" + esc(top.module) + "</span> carries " + duration(top.cpu) +
+           " of that CPU on its own, " + (100 * top.cpu / totalCpu).toFixed(0) +
+           " % of the build, over " + top.units.length + " units.");
+
+  if (state.base) {
+    var grew = rows.filter(function (r) {
+      var b = state.base[r.unit];
+      return b !== undefined && r.rss > b * 1.05 && r.rss - b > 16 * 1024;
+    });
+    out.push(grew.length
+      ? "<b>" + grew.length + " unit" + (grew.length === 1 ? "" : "s") +
+        " grew</b> by more than 5 % and 16 MiB against the baseline."
+      : "Nothing grew by more than 5 % against the baseline.");
+  }
+
+  var ul = document.getElementById("facts");
+  ul.innerHTML = "";
+  out.forEach(function (h) {
+    var li = document.createElement("li");
+    li.innerHTML = h;
+    ul.appendChild(li);
+  });
+}
+
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function groupByModule(rows) {
+  var by = {};
+  rows.forEach(function (r) {
+    var g = by[r.module] || (by[r.module] = { module: r.module, cpu: 0, units: [] });
+    g.cpu += r.cpu;
+    g.units.push(r);
+  });
+  var list = Object.keys(by).map(function (k) { return by[k]; });
+  list.sort(function (a, b) { return b.cpu - a.cpu; });
+  list.forEach(function (g) { g.units.sort(function (a, b) { return b.rss - a.rss; }); });
+  return list;
+}
+
+// ---- charts ------------------------------------------------------------------------------------
+function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+function histogram() {
+  var svg = document.getElementById("hist");
+  clear(svg);
+  var W = 520, H = 240, L = 34, R = 8, T = 10, B = 30;
+  var peaks = state.rows.map(function (r) { return r.rss; }).sort(function (a, b) { return a - b; });
+  var max = peaks[peaks.length - 1], bins = 32, counts = new Array(bins).fill(0);
+  peaks.forEach(function (v) { counts[Math.min(bins - 1, Math.floor(v / max * bins))]++; });
+  var top = Math.max.apply(null, counts);
+
+  for (var g = 0; g <= 4; g++) {
+    var y = T + (H - T - B) * g / 4;
+    svg.appendChild(el("line", { class: "grid", x1: L, y1: y, x2: W - R, y2: y }));
+    svg.appendChild(el("text", { x: L - 6, y: y + 4, "text-anchor": "end" },
+                       Math.round(top * (1 - g / 4))));
+  }
+
+  var bw = (W - L - R) / bins;
+  counts.forEach(function (c, i) {
+    if (!c) return;
+    var h = (H - T - B) * c / top;
+    var rect = el("rect", { class: "bar", x: L + i * bw + 0.5, y: H - B - h,
+                            width: Math.max(1, bw - 1), height: h, rx: 1 });
+    attachTip(rect, "<b>" + c + " unit" + (c === 1 ? "" : "s") + "</b><br/>between " +
+                    size(max * i / bins) + " and " + size(max * (i + 1) / bins));
+    svg.appendChild(rect);
+  });
+
+  [[0.5, "median"], [0.9, "ninth decile"]].forEach(function (m) {
+    var x = L + (W - L - R) * quantile(peaks, m[0]) / max;
+    svg.appendChild(el("line", { class: "mark", x1: x, y1: T, x2: x, y2: H - B }));
+    svg.appendChild(el("text", { x: x + 4, y: T + 10 }, m[1]));
+  });
+
+  svg.appendChild(el("line", { class: "axis", x1: L, y1: H - B, x2: W - R, y2: H - B }));
+  svg.appendChild(el("text", { x: L, y: H - B + 16 }, "0"));
+  svg.appendChild(el("text", { x: W - R, y: H - B + 16, "text-anchor": "end" }, size(max)));
+  svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 4, "text-anchor": "middle" },
+                     "peak resident memory"));
+}
+
+function scatter() {
+  var svg = document.getElementById("scatter");
+  clear(svg);
+  var W = 520, H = 240, L = 44, R = 8, T = 10, B = 34;
+  var maxRss = 0, maxCpu = 0;
+  state.rows.forEach(function (r) {
+    if (r.rss > maxRss) maxRss = r.rss;
+    if (r.cpu > maxCpu) maxCpu = r.cpu;
+  });
+
+  for (var g = 0; g <= 4; g++) {
+    var y = T + (H - T - B) * g / 4;
+    svg.appendChild(el("line", { class: "grid", x1: L, y1: y, x2: W - R, y2: y }));
+    svg.appendChild(el("text", { x: L - 6, y: y + 4, "text-anchor": "end" },
+                       size(maxRss * (1 - g / 4))));
+  }
+
+  state.rows.forEach(function (r) {
+    var x = L + (W - L - R) * (r.cpu / maxCpu);
+    var y = T + (H - T - B) * (1 - r.rss / maxRss);
+    var c = el("circle", { class: "dot", cx: x, cy: y, r: 2.6, fill: state.colors[r.module] });
+    attachTip(c, "<span class=\"mono\">" + esc(r.unit) + "</span>" +
+                 size(r.rss) + " &middot; " + duration(r.cpu));
+    svg.appendChild(c);
+  });
+
+  svg.appendChild(el("line", { class: "axis", x1: L, y1: H - B, x2: W - R, y2: H - B }));
+  svg.appendChild(el("text", { x: L, y: H - B + 16 }, "0"));
+  svg.appendChild(el("text", { x: W - R, y: H - B + 16, "text-anchor": "end" }, duration(maxCpu)));
+  svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 4, "text-anchor": "middle" }, "CPU time"));
+}
+
+function modules() {
+  var svg = document.getElementById("modules");
+  clear(svg);
+  var list = groupByModule(state.rows);
+  var W = 1080, L = 150, R = 96, T = 6, rowH = 20;
+  var H = T + list.length * rowH + 24;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+
+  var max = list[0].cpu;
+  list.forEach(function (g, i) {
+    var y = T + i * rowH;
+    var w = (W - L - R) * g.cpu / max;
+
+    var label = el("text", { x: L - 8, y: y + 13, "text-anchor": "end",
+                             fill: "var(--page-foreground-color)" }, g.module);
+    svg.appendChild(label);
+
+    var rect = el("rect", { class: "modbar", x: L, y: y + 3, width: Math.max(1, w),
+                            height: rowH - 7, rx: 2, fill: state.colors[g.module] });
+    rect.addEventListener("click", function () {
+      document.getElementById("mod").value = state.mod === g.module ? "" : g.module;
+      state.mod = document.getElementById("mod").value;
+      renderTable();
+    });
+    attachTip(rect, "<b>" + esc(g.module) + "</b><br/>" + g.units.length + " units &middot; " +
+                    duration(g.cpu) + " of CPU<br/>heaviest " + size(g.units[0].rss) + " in " +
+                    "<span class=\"mono\">" + esc(g.units[0].unit) + "</span>");
+    svg.appendChild(rect);
+
+    svg.appendChild(el("text", { x: L + w + 8, y: y + 13 },
+                       duration(g.cpu) + "  ·  " + g.units.length + " units"));
+  });
+}
+
+// ---- table -------------------------------------------------------------------------------------
+var COLS = [
+  { key: "unit",   label: "Translation unit", num: false },
+  { key: "module", label: "Module",           num: false },
+  { key: "rss",    label: "Peak RSS",         num: true  },
+  { key: "cpu",    label: "CPU",              num: true  }
+];
+
+function visible() {
+  var q = state.q.toLowerCase();
+  var rows = state.rows.filter(function (r) {
+    if (state.mod && r.module !== state.mod) return false;
+    return !q || r.unit.toLowerCase().indexOf(q) >= 0;
+  });
+  var k = state.sort.key, d = state.sort.dir;
+  rows.sort(function (a, b) {
+    if (k === "delta") {
+      var da = delta(a), db = delta(b);
+      return (da - db) * d;
+    }
+    var va = a[k], vb = b[k];
+    if (typeof va === "string") return va.localeCompare(vb) * d;
+    return (va - vb) * d;
+  });
+  return rows;
+}
+
+function delta(r) {
+  if (!state.base) return 0;
+  var b = state.base[r.unit];
+  return b === undefined || b === 0 ? 0 : (r.rss - b) / b;
+}
+
+function renderHead() {
+  var tr = document.getElementById("head");
+  tr.innerHTML = "";
+  tr.appendChild(document.createElement("th")).className = "swatch-cell";
+  var cols = COLS.slice();
+  if (state.base) cols.push({ key: "delta", label: "Δ RSS", num: true });
+  cols.forEach(function (c) {
+    var th = document.createElement("th");
+    th.textContent = c.label;
+    if (c.num) th.className = "num";
+    if (state.sort.key === c.key) th.setAttribute("aria-sort", state.sort.dir < 0 ? "descending" : "ascending");
+    th.addEventListener("click", function () {
+      if (state.sort.key === c.key) state.sort.dir = -state.sort.dir;
+      else state.sort = { key: c.key, dir: c.num ? -1 : 1 };
+      renderHead();
+      renderTable();
+    });
+    tr.appendChild(th);
+  });
+}
+
+function renderTable() {
+  var rows = visible();
+  var body = document.getElementById("body");
+  body.innerHTML = "";
+  var frag = document.createDocumentFragment();
+
+  rows.forEach(function (r) {
+    var tr = document.createElement("tr");
+
+    var sw = document.createElement("td");
+    sw.className = "swatch-cell";
+    var dot = document.createElement("span");
+    dot.className = "swatch";
+    dot.style.background = state.colors[r.module];
+    sw.appendChild(dot);
+    tr.appendChild(sw);
+
+    var u = document.createElement("td");
+    u.className = "unit";
+    u.textContent = r.unit;
+    tr.appendChild(u);
+
+    var m = document.createElement("td");
+    m.textContent = r.module;
+    tr.appendChild(m);
+
+    var a = document.createElement("td");
+    a.className = "num";
+    a.textContent = size(r.rss);
+    tr.appendChild(a);
+
+    var c = document.createElement("td");
+    c.className = "num";
+    c.textContent = duration(r.cpu);
+    tr.appendChild(c);
+
+    if (state.base) {
+      var d = document.createElement("td");
+      d.className = "num";
+      var p = pct(r.rss, state.base[r.unit]);
+      d.textContent = p.text;
+      if (p.cls) d.className += " " + p.cls;
+      tr.appendChild(d);
+    }
+    frag.appendChild(tr);
+  });
+
+  body.appendChild(frag);
+  document.getElementById("count").textContent =
+    rows.length + " of " + state.rows.length + " units shown";
+}
+
+function renderModuleFilter() {
+  var sel = document.getElementById("mod");
+  var keep = sel.value;
+  sel.innerHTML = "<option value=\"\">All modules</option>";
+  groupByModule(state.rows).forEach(function (g) {
+    var o = document.createElement("option");
+    o.value = g.module;
+    o.textContent = g.module + "  (" + g.units.length + ")";
+    sel.appendChild(o);
+  });
+  sel.value = keep;
+}
+
+function renderAll() {
+  if (!state.rows.length) return;
+  groupByModule(state.rows).forEach(function (g, i) { state.colors[g.module] = moduleColor(i); });
+  document.getElementById("empty").hidden = true;
+  document.getElementById("report").hidden = false;
+  renderFacts();
+  histogram();
+  scatter();
+  modules();
+  renderModuleFilter();
+  renderHead();
+  renderTable();
+}
+
+// ---- loading -------------------------------------------------------------------------------
+function load(file, which) {
+  var reader = new FileReader();
+  reader.onload = function () {
+    var rows = parse(String(reader.result));
+    if (!rows.length) {
+      document.getElementById("name-" + which).textContent =
+        "no -fproc-stat-report line in that file";
+      return;
+    }
+    if (which === "now") {
+      state.rows = rows;
+    } else {
+      state.base = {};
+      rows.forEach(function (r) { state.base[r.unit] = r.rss; });
+    }
+    document.getElementById("slot-" + which).classList.add("filled");
+    document.getElementById("name-" + which).textContent = file.name + " — " + rows.length + " units";
+    renderAll();
+  };
+  reader.readAsText(file);
+}
+
+["now", "base"].forEach(function (which) {
+  var slot = document.getElementById("slot-" + which);
+  var input = document.getElementById("file-" + which);
+  input.addEventListener("change", function () {
+    if (input.files && input.files[0]) load(input.files[0], which);
+  });
+  ["dragenter", "dragover"].forEach(function (e) {
+    slot.addEventListener(e, function (ev) { ev.preventDefault(); slot.classList.add("over"); });
+  });
+  ["dragleave", "drop"].forEach(function (e) {
+    slot.addEventListener(e, function (ev) { ev.preventDefault(); slot.classList.remove("over"); });
+  });
+  slot.addEventListener("drop", function (ev) {
+    var f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
+    if (f) load(f, which);
+  });
+});
+
+document.getElementById("q").addEventListener("input", function (e) {
+  state.q = e.target.value;
+  renderTable();
+});
+document.getElementById("mod").addEventListener("change", function (e) {
+  state.mod = e.target.value;
+  renderTable();
+});
+
+document.getElementById("csv").addEventListener("click", function () {
+  var rows = visible();
+  var head = "unit,module,peak_rss_kb,cpu_us" + (state.base ? ",baseline_rss_kb" : "") + "\n";
+  var text = head + rows.map(function (r) {
+    var b = state.base ? "," + (state.base[r.unit] === undefined ? "" : state.base[r.unit]) : "";
+    return r.unit + "," + r.module + "," + r.rss + "," + r.cpu + b;
+  }).join("\n") + "\n";
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type: "text/csv" }));
+  a.download = "compile-cost-selection.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// The theme toggle uses the class names doxygen-awesome uses, so a reader who has already picked
+// a side in the documentation recognises the behaviour here.
+document.getElementById("theme").addEventListener("click", function () {
+  var root = document.documentElement;
+  var dark = root.classList.contains("dark-mode") ||
+             (window.matchMedia("(prefers-color-scheme: dark)").matches &&
+              !root.classList.contains("light-mode"));
+  root.classList.remove("dark-mode", "light-mode");
+  root.classList.add(dark ? "light-mode" : "dark-mode");
+  if (state.rows.length) renderAll();
+});
+
+// Dropping anywhere else must not navigate the browser away from the page.
+["dragover", "drop"].forEach(function (e) {
+  window.addEventListener(e, function (ev) { ev.preventDefault(); }, false);
+});
+
+})();
+</script>
+</body>
+</html>
