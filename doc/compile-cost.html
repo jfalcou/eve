@@ -15,7 +15,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EVE &mdash; Compile Cost Explorer</title>
+<title>EVE - Compile Time Report</title>
 <style>
 html {
   --primary-dark-color: hsl(90, 69%, 20%);
@@ -97,7 +97,7 @@ body {
   line-height: 1.6;
 }
 
-main { max-width: 1180px; margin: 0 auto; }
+main { width: 94%; margin: 0 auto; }
 
 header {
   display: flex;
@@ -171,18 +171,40 @@ h2.section {
   padding-bottom: var(--spacing-small); border-bottom: 1px solid var(--separator-color);
 }
 
-.charts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-large); }
-@media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
-.card {
-  border: 1px solid var(--separator-color);
-  border-radius: var(--border-radius-large);
-  padding: var(--spacing-large);
-  background: var(--page-background-color);
+.tabs { display: flex; gap: var(--spacing-small); margin: 28px 0 0; border-bottom: 1px solid var(--separator-color); }
+.tabs [role=tab] {
+  border: none; border-bottom: 2px solid transparent; border-radius: 0; background: none;
+  padding: var(--spacing-medium) var(--spacing-large); margin-bottom: -1px;
 }
-.card h3 { margin: 0 0 2px; font-size: 14px; font-weight: 600; }
-.card p.hint { margin: 0 0 var(--spacing-medium); font-size: 12.5px; color: var(--page-secondary-foreground-color); }
+.tabs [role=tab]:hover { background: none; color: var(--page-foreground-color); }
+.tabs [role=tab][aria-selected=true] { color: var(--page-foreground-color); border-bottom-color: var(--primary-color); }
+.panel {
+  position: relative;
+  border: 1px solid var(--separator-color); border-top: none;
+  border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
+  padding: var(--spacing-large) var(--spacing-large) var(--spacing-medium);
+  margin-bottom: 32px;
+}
+
+/* ---- the square icon buttons: the theme switch in the header, one PNG export per chart -------- */
+button.icon {
+  width: 28px; height: 28px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--border-radius-small);
+}
+button.icon svg { width: 18px; height: 18px; display: block; }
+#theme svg { transition: transform .4s ease; }
+/* Above the drawing and on its left, where it sits over nothing: a chart has its axis on the left
+   edge but only from the top of the drawing down, and the drawing starts below the button. */
+.panel.chart { padding-top: 48px; }
+button.save {
+  position: absolute; top: var(--spacing-medium); left: var(--spacing-large); z-index: 2;
+  opacity: .7; transition: opacity .2s ease, background-color .2s ease;
+}
+.panel:hover button.save, button.save:focus-visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { #theme svg { transition: none; } }
 svg { display: block; width: 100%; height: auto; overflow: visible; }
-svg text { font-family: var(--font-family); font-size: 11px; fill: var(--page-secondary-foreground-color); }
+svg text { font-family: var(--font-family); font-size: 12px; fill: var(--page-secondary-foreground-color); }
 svg .grid { stroke: var(--grid-color); stroke-width: 1; }
 svg .axis { stroke: var(--separator-color); stroke-width: 1; }
 svg .mark { stroke: var(--primary-color); stroke-width: 1; stroke-dasharray: 3 3; }
@@ -226,6 +248,8 @@ td.swatch-cell { width: 1px; padding-right: 0; }
 .empty { text-align: center; padding: 48px var(--spacing-large); color: var(--page-secondary-foreground-color); }
 .empty code { display: inline-block; margin-top: var(--spacing-medium); text-align: left; white-space: pre; padding: var(--spacing-medium); }
 
+.panel .controls { margin-top: 0; }
+
 #tip {
   position: fixed; pointer-events: none; z-index: 10; display: none;
   background: var(--page-background-color); color: var(--page-foreground-color);
@@ -242,22 +266,24 @@ footer a { color: var(--primary-color); }
 <body>
 <main>
   <header>
-    <h1>Compile Cost Explorer</h1>
-    <p>What each translation unit of EVE&rsquo;s test suite costs to compile.</p>
+    <h1>EVE - Compile Time Report</h1>
     <span class="spacer"></span>
-    <button id="theme" type="button" title="Switch between the light and the dark theme">Theme</button>
+    <button id="theme" class="icon" type="button" title="Switch between the light and the dark theme" aria-label="Switch theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor"/>
+      </svg>
+    </button>
   </header>
 
   <div class="slots">
     <div class="slot" id="slot-now">
       <h2>Measurement</h2>
-      <p>Drop <code>compile-cost.csv</code> here, or</p>
       <label class="filebtn">choose a file<input type="file" accept=".csv,text/csv" id="file-now"/></label>
       <div class="name" id="name-now"></div>
     </div>
     <div class="slot" id="slot-base">
-      <h2>Baseline <span style="font-weight:400">(optional)</span></h2>
-      <p>Drop the CSV measured on <code>main</code> to get a delta.</p>
+      <h2>Baseline</h2>
       <label class="filebtn">choose a file<input type="file" accept=".csv,text/csv" id="file-base"/></label>
       <div class="name" id="name-base"></div>
     </div>
@@ -266,52 +292,49 @@ footer a { color: var(--primary-color); }
   <div id="report" hidden>
     <ul class="facts" id="facts"></ul>
 
-    <h2 class="section">Where the cost sits</h2>
-    <div class="charts">
-      <div class="card">
-        <h3>Distribution of peak memory</h3>
-        <p class="hint">How many units fall in each band. The dashed lines are the median and the ninth decile.</p>
-        <svg id="hist" viewBox="0 0 520 240" role="img" aria-label="Histogram of peak memory"></svg>
-      </div>
-      <div class="card">
-        <h3>Time against memory</h3>
-        <p class="hint">One dot per unit, coloured by module. Hover for the name.</p>
-        <svg id="scatter" viewBox="0 0 520 240" role="img" aria-label="Peak memory against CPU time"></svg>
-      </div>
-      <div class="card" style="grid-column: 1 / -1;">
-        <h3>Modules by CPU time</h3>
-        <p class="hint">Click a bar to keep only that module in the table below.</p>
-        <svg id="modules" viewBox="0 0 1080 320" role="img" aria-label="CPU time per module"></svg>
-      </div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-hist" aria-controls="panel-hist" aria-selected="true">Peak memory</button>
+      <button type="button" role="tab" id="tab-scatter" aria-controls="panel-scatter" aria-selected="false">Time against memory</button>
+      <button type="button" role="tab" id="tab-modules-cpu" aria-controls="panel-modules-cpu" aria-selected="false">Modules by CPU time</button>
+      <button type="button" role="tab" id="tab-modules-rss" aria-controls="panel-modules-rss" aria-selected="false">Modules by peak RSS</button>
+      <button type="button" role="tab" id="tab-units" aria-controls="panel-units" aria-selected="false">Every unit</button>
     </div>
 
-    <h2 class="section">Every unit</h2>
-    <div class="controls">
-      <input type="search" id="q" placeholder="Filter by name, e.g. shuffle or bit_" aria-label="Filter units"/>
-      <select id="mod" aria-label="Filter by module"><option value="">All modules</option></select>
-      <button type="button" id="csv">Download the filtered rows</button>
-      <span class="count" id="count"></span>
+    <div class="panel chart" id="panel-hist" role="tabpanel" aria-labelledby="tab-hist">
+      <button type="button" class="icon save" data-chart="hist" title="Save as PNG" aria-label="Save as PNG"></button>
+      <svg id="hist" viewBox="0 0 1080 380" role="img" aria-label="Histogram of peak memory"></svg>
     </div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr id="head"></tr></thead>
-        <tbody id="body"></tbody>
-      </table>
+    <div class="panel chart" id="panel-scatter" role="tabpanel" aria-labelledby="tab-scatter" hidden>
+      <button type="button" class="icon save" data-chart="scatter" title="Save as PNG" aria-label="Save as PNG"></button>
+      <svg id="scatter" viewBox="0 0 1080 380" role="img" aria-label="Peak memory against CPU time"></svg>
+    </div>
+    <div class="panel chart" id="panel-modules-cpu" role="tabpanel" aria-labelledby="tab-modules-cpu" hidden>
+      <button type="button" class="icon save" data-chart="modules-cpu" title="Save as PNG" aria-label="Save as PNG"></button>
+      <svg id="modules-cpu" viewBox="0 0 1080 320" role="img" aria-label="CPU time per module"></svg>
+    </div>
+    <div class="panel chart" id="panel-modules-rss" role="tabpanel" aria-labelledby="tab-modules-rss" hidden>
+      <button type="button" class="icon save" data-chart="modules-rss" title="Save as PNG" aria-label="Save as PNG"></button>
+      <svg id="modules-rss" viewBox="0 0 1080 320" role="img" aria-label="Peak memory per module"></svg>
+    </div>
+    <div class="panel" id="panel-units" role="tabpanel" aria-labelledby="tab-units" hidden>
+      <div class="controls">
+        <input type="search" id="q" placeholder="Filter by name" aria-label="Filter units"/>
+        <select id="mod" aria-label="Filter by module"><option value="">All modules</option></select>
+        <button type="button" id="csv">Download the filtered rows</button>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr id="head"></tr></thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <div class="empty" id="empty">
-    <p>Nothing loaded yet. The file is the one every <em>compile-cost</em> workflow run attaches,<br/>
-       written by clang&rsquo;s <code>-fproc-stat-report</code>, one line per compiler process:</p>
-    <code>"clang","…/unit.core.add.exe.dir/module/core/add.cpp.o",2508731,2450112,2570184</code>
-    <p style="margin-top:var(--spacing-large)">It is read in this tab and goes nowhere else.</p>
+    <p>Drop the <code>compile-cost.csv</code> a run attaches, or choose it above.</p>
   </div>
-
-  <footer>
-    Peak memory is never summed here: the peaks belong to processes that do not run at the same time,
-    and their total matches no quantity a machine ever holds. CPU time is summed, because compiling
-    two units really does cost the sum of the two.
-  </footer>
 </main>
 <div id="tip" role="tooltip"></div>
 
@@ -371,28 +394,60 @@ function size(kib) {
   return kib < 1024 * 1024 ? (kib / 1024).toFixed(0) + " MiB"
                            : (kib / 1048576).toFixed(2) + " GiB";
 }
+// Tenths of a second under a minute, then hours, minutes and seconds, a part written only when it
+// is not zero: "4 min 12 s", "1 h 14 min", "3 h 49 s". Rounding the seconds can carry upwards.
 function duration(usec) {
   var s = usec / 1e6;
-  return s < 90 ? s.toFixed(1) + " s" : (s / 60).toFixed(0) + " min";
+  if (s < 59.95) return s.toFixed(1) + " s";
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = Math.round(s % 60);
+  if (r === 60) { r = 0; m += 1; }
+  if (m === 60) { m = 0; h += 1; }
+  var parts = [];
+  if (h) parts.push(h + " h");
+  if (m) parts.push(m + " min");
+  if (r) parts.push(r + " s");
+  return parts.join(" ");
 }
 function quantile(sorted, q) {           // nearest-rank, as the report generator does it
   return sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))];
 }
 function pct(now, before) {
   if (before === undefined) return { text: "new", cls: "" };
-  if (before === 0) return { text: "—", cls: "" };
+  if (before === 0) return { text: "n/a", cls: "" };
   var p = 100 * (now - before) / before;
   if (Math.abs(p) < 1) return { text: "=", cls: "" };
   return { text: (p > 0 ? "+" : "") + p.toFixed(0) + " %", cls: p > 0 ? "up" : "down" };
 }
 
-// Golden-angle hues, started on the documentation's own green so the heaviest module wears it and
-// nothing lands on an alarm red by accident of being first. Neighbours never get a close colour.
-function moduleColor(i) {
-  return "hsl(" + ((90 + i * 137.508) % 360).toFixed(0) + ", 58%, " +
-         (document.documentElement.classList.contains("dark-mode") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches &&
-           !document.documentElement.classList.contains("light-mode")) ? "62%" : "42%") + ")";
+// Modules are ranked, so they take an ordered palette rather than one hue apiece: inferno, sampled
+// at thirty-two stops from matplotlib, reads in order for everyone, colour vision aside, and prints
+// in grey. The heaviest module takes the hot end. The ends themselves are left out, black on the dark
+// theme and pale yellow on the light one being the two colours a page cannot show a dot in.
+var INFERNO = ["#000004","#040312","#0B0724","#150B37","#230C4C","#310A5C","#3E0966","#4C0C6B","#5A116E","#67166E","#741A6E","#801F6C","#8F2469","#9B2964","#A82E5F","#B43359","#C13A50","#CC4248","#D74B3F","#E05536","#E9612B","#EF6E21","#F57B17","#F8890C","#FB9906","#FCA80D","#FBB81D","#F9C72F","#F5D949","#F2E865","#F3F586","#FCFFA4"];
+
+function inferno(t) {
+  var x = Math.min(1, Math.max(0, t)) * (INFERNO.length - 1);
+  var i = Math.floor(x), f = x - i;
+  if (i >= INFERNO.length - 1) return INFERNO[INFERNO.length - 1];
+  var a = INFERNO[i], b = INFERNO[i + 1], out = "#";
+  for (var k = 1; k < 7; k += 2) {
+    var v = Math.round(parseInt(a.substr(k, 2), 16) * (1 - f) + parseInt(b.substr(k, 2), 16) * f);
+    out += (v < 16 ? "0" : "") + v.toString(16);
+  }
+  return out;
+}
+
+function darkTheme() {
+  var root = document.documentElement;
+  return root.classList.contains("dark-mode") ||
+         (window.matchMedia("(prefers-color-scheme: dark)").matches && !root.classList.contains("light-mode"));
+}
+
+// Rank i of n modules, the heaviest first, spread over the readable part of the ramp for the theme.
+function moduleColor(i, n) {
+  var lo = darkTheme() ? 0.35 : 0.12, hi = darkTheme() ? 0.95 : 0.82;
+  var t = n > 1 ? 1 - i / (n - 1) : 1;
+  return inferno(lo + (hi - lo) * t);
 }
 
 // ---- state -------------------------------------------------------------------------------------
@@ -486,9 +541,9 @@ function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
 function histogram() {
   var svg = document.getElementById("hist");
   clear(svg);
-  var W = 520, H = 240, L = 34, R = 8, T = 10, B = 30;
+  var W = 1080, H = 380, L = 44, R = 8, T = 14, B = 34;
   var peaks = state.rows.map(function (r) { return r.rss; }).sort(function (a, b) { return a - b; });
-  var max = peaks[peaks.length - 1], bins = 32, counts = new Array(bins).fill(0);
+  var max = peaks[peaks.length - 1], bins = 48, counts = new Array(bins).fill(0);
   peaks.forEach(function (v) { counts[Math.min(bins - 1, Math.floor(v / max * bins))]++; });
   var top = Math.max.apply(null, counts);
 
@@ -526,7 +581,7 @@ function histogram() {
 function scatter() {
   var svg = document.getElementById("scatter");
   clear(svg);
-  var W = 520, H = 240, L = 44, R = 8, T = 10, B = 34;
+  var W = 1080, H = 380, L = 64, R = 8, T = 14, B = 34;
   var maxRss = 0, maxCpu = 0;
   state.rows.forEach(function (r) {
     if (r.rss > maxRss) maxRss = r.rss;
@@ -543,7 +598,7 @@ function scatter() {
   state.rows.forEach(function (r) {
     var x = L + (W - L - R) * (r.cpu / maxCpu);
     var y = T + (H - T - B) * (1 - r.rss / maxRss);
-    var c = el("circle", { class: "dot", cx: x, cy: y, r: 2.6, fill: state.colors[r.module] });
+    var c = el("circle", { class: "dot", cx: x, cy: y, r: 3.4, fill: state.colors[r.module] });
     attachTip(c, "<span class=\"mono\">" + esc(r.unit) + "</span>" +
                  size(r.rss) + " &middot; " + duration(r.cpu));
     svg.appendChild(c);
@@ -555,18 +610,24 @@ function scatter() {
   svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 4, "text-anchor": "middle" }, "CPU time"));
 }
 
-function modules() {
-  var svg = document.getElementById("modules");
+// One bar per module, ranked either by the CPU it adds up to or by the heaviest unit it holds. The
+// second is deliberately not a sum: peaks belong to processes that never run at the same time, and
+// what a module costs in memory is the one unit a machine has to fit.
+function moduleBars(id, metric) {
+  var svg = document.getElementById(id);
   clear(svg);
-  var list = groupByModule(state.rows);
-  var W = 1080, L = 150, R = 96, T = 6, rowH = 20;
+  var list = groupByModule(state.rows).slice();
+  var value = metric === "cpu" ? function (g) { return g.cpu; } : function (g) { return g.units[0].rss; };
+  list.sort(function (a, b) { return value(b) - value(a); });
+
+  var W = 1080, L = 150, R = 110, T = 6, rowH = 20;
   var H = T + list.length * rowH + 24;
   svg.setAttribute("viewBox", "0 0 " + W + " " + H);
 
-  var max = list[0].cpu;
+  var max = value(list[0]);
   list.forEach(function (g, i) {
     var y = T + i * rowH;
-    var w = (W - L - R) * g.cpu / max;
+    var w = (W - L - R) * value(g) / max;
 
     var label = el("text", { x: L - 8, y: y + 13, "text-anchor": "end",
                              fill: "var(--page-foreground-color)" }, g.module);
@@ -578,6 +639,7 @@ function modules() {
       document.getElementById("mod").value = state.mod === g.module ? "" : g.module;
       state.mod = document.getElementById("mod").value;
       renderTable();
+      showTab("tab-units");
     });
     attachTip(rect, "<b>" + esc(g.module) + "</b><br/>" + g.units.length + " units &middot; " +
                     duration(g.cpu) + " of CPU<br/>heaviest " + size(g.units[0].rss) + " in " +
@@ -585,7 +647,8 @@ function modules() {
     svg.appendChild(rect);
 
     svg.appendChild(el("text", { x: L + w + 8, y: y + 13 },
-                       duration(g.cpu) + "  ·  " + g.units.length + " units"));
+                       metric === "cpu" ? duration(g.cpu) + "  ·  " + g.units.length + " units"
+                                        : size(g.units[0].rss) + "  ·  " + g.units.length + " units"));
   });
 }
 
@@ -710,13 +773,15 @@ function renderModuleFilter() {
 
 function renderAll() {
   if (!state.rows.length) return;
-  groupByModule(state.rows).forEach(function (g, i) { state.colors[g.module] = moduleColor(i); });
+  var groups = groupByModule(state.rows);
+  groups.forEach(function (g, i) { state.colors[g.module] = moduleColor(i, groups.length); });
   document.getElementById("empty").hidden = true;
   document.getElementById("report").hidden = false;
   renderFacts();
   histogram();
   scatter();
-  modules();
+  moduleBars("modules-cpu", "cpu");
+  moduleBars("modules-rss", "rss");
   renderModuleFilter();
   renderHead();
   renderTable();
@@ -788,7 +853,10 @@ document.getElementById("csv").addEventListener("click", function () {
 
 // The theme toggle uses the class names doxygen-awesome uses, so a reader who has already picked
 // a side in the documentation recognises the behaviour here.
+var turns = 0;
 document.getElementById("theme").addEventListener("click", function () {
+  turns += 1;
+  document.querySelector("#theme svg").style.transform = "rotate(" + (turns * 180) + "deg)";
   var root = document.documentElement;
   var dark = root.classList.contains("dark-mode") ||
              (window.matchMedia("(prefers-color-scheme: dark)").matches &&
@@ -796,6 +864,81 @@ document.getElementById("theme").addEventListener("click", function () {
   root.classList.remove("dark-mode", "light-mode");
   root.classList.add(dark ? "light-mode" : "dark-mode");
   if (state.rows.length) renderAll();
+});
+
+var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+function showTab(id) {
+  tabs.forEach(function (tab) {
+    var on = tab.id === id;
+    tab.setAttribute("aria-selected", String(on));
+    document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+  });
+}
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () { showTab(tab.id); });
+});
+
+// ---- saving a chart --------------------------------------------------------------------------
+// The SVG is drawn with classes and theme variables, none of which survive a trip through an image.
+// So a clone gets every visual property written down as an attribute, a background the colour of
+// the page, and goes through a canvas three times the size it is drawn at.
+var SAVE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" ' +
+                'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                '<path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M4 19h16"/></svg>';
+var INLINED = ["fill", "stroke", "stroke-width", "stroke-dasharray", "opacity",
+               "font-family", "font-size", "font-weight"];
+
+function inlineStyles(source, clone) {
+  var from = [source].concat(Array.prototype.slice.call(source.querySelectorAll("*")));
+  var to = [clone].concat(Array.prototype.slice.call(clone.querySelectorAll("*")));
+  from.forEach(function (node, i) {
+    var cs = getComputedStyle(node);
+    INLINED.forEach(function (prop) {
+      var v = cs.getPropertyValue(prop);
+      if (v && v !== "none" || prop === "fill") to[i].setAttribute(prop, v);
+    });
+    to[i].removeAttribute("class");
+  });
+}
+
+function savePng(svg, name) {
+  var vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
+  var clone = svg.cloneNode(true);
+  inlineStyles(svg, clone);
+  clone.setAttribute("xmlns", SVGNS);
+  clone.setAttribute("width", w);
+  clone.setAttribute("height", h);
+  var bg = el("rect", { x: vb.x, y: vb.y, width: w, height: h,
+                        fill: getComputedStyle(document.body).backgroundColor });
+  clone.insertBefore(bg, clone.firstChild);
+
+  var url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)],
+                                         { type: "image/svg+xml;charset=utf-8" }));
+  var img = new Image();
+  img.onload = function () {
+    var scale = 3, canvas = document.createElement("canvas");
+    canvas.width = w * scale;
+    canvas.height = h * scale;
+    var ctx = canvas.getContext("2d");
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, 0, 0, w, h);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(function (blob) {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name + ".png";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }, "image/png");
+  };
+  img.src = url;
+}
+
+Array.prototype.slice.call(document.querySelectorAll("button.save")).forEach(function (btn) {
+  btn.innerHTML = SAVE_ICON;
+  btn.addEventListener("click", function () {
+    savePng(document.getElementById(btn.getAttribute("data-chart")), "compile-cost-" + btn.getAttribute("data-chart"));
+  });
 });
 
 // Dropping anywhere else must not navigate the browser away from the page.

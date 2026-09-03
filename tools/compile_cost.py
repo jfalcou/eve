@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
+##======================================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+##======================================================================================================================
 """Turn clang's -fproc-stat-report output into a Markdown report.
 
-The report is meant to be written straight into $GITHUB_STEP_SUMMARY, where GitHub renders it on the
-run page. Give it a baseline to get a delta column, which is the part worth reading: a ranking of
-what is expensive today gets looked at twice, whereas "this file gained 400 MB since main" is
-actionable.
+The summary is written for $GITHUB_STEP_SUMMARY, where GitHub renders it on the run page, and the full
+table for a file the run attaches. Give it a baseline to get a delta column, which is the part worth
+reading: a ranking of what is expensive today gets looked at twice, where "this file gained 400 MB
+since main" is acted on.
 
-  compile_cost.py current.csv                        # a plain ranking
+  compile_cost.py current.csv                        # a plain ranking, to stdout
   compile_cost.py current.csv --baseline main.csv    # with the delta against main
 
 CPU time is added up wherever it appears, because compiling two units really does cost the sum of
 the two. Peak memory is never added up: the peaks belong to processes that do not run at the same
 time, and their sum matches no quantity any machine ever has to hold. What answers the question a
-peak is asked for -- how much memory a build needs, and how many compilers a host can carry -- is
-the largest single unit and the shape of the distribution behind it.
+peak is asked for, how much memory a build needs and how many compilers a host can carry, is the
+largest single unit and the shape of the distribution behind it.
 """
 
 import argparse
@@ -43,15 +48,22 @@ def module_of(unit):
     return "/".join(parts[:2]) if len(parts) > 2 else (parts[0] if len(parts) > 1 else "top level")
 
 
-def read(path):
-    """Peak RSS in KiB and CPU microseconds, keyed by the translation unit."""
+def read(path, strip=""):
+    """Peak RSS in KiB and CPU microseconds, keyed by the translation unit.
+
+    A multi-config generator files the objects under `<target>.dir/<config>/`, and that segment is
+    build layout too: `strip` names it, and is left alone where it is not there.
+    """
     out = {}
     with open(path, newline="") as f:
         for row in csv.reader(f):
             if len(row) != FIELDS:
                 continue
             try:
-                out[unit_of(row[1])] = (int(row[4]), int(row[3]))
+                unit = unit_of(row[1])
+                if strip and unit.startswith(strip):
+                    unit = unit[len(strip):]
+                out[unit] = (int(row[4]), int(row[3]))
             except ValueError:
                 continue
     return out
@@ -71,8 +83,14 @@ def size(kib):
 
 
 def duration(usec):
+    """Tenths of a second under a minute, then hours, minutes and seconds, a part written only when it is not zero."""
     s = sec(usec)
-    return "%.1f s" % s if s < 90 else "%.0f min" % (s / 60)
+    if s < 59.95:
+        return "%.1f s" % s
+    hours, rest = divmod(int(round(s)), 3600)
+    minutes, seconds = divmod(rest, 60)
+    parts = [(hours, "h"), (minutes, "min"), (seconds, "s")]
+    return " ".join("%d %s" % (value, unit) for value, unit in parts if value)
 
 
 def quantile(values, q):
@@ -84,7 +102,7 @@ def delta_cell(now, before):
     if before is None:
         return "new"
     if before == 0:
-        return "—"
+        return "n/a"
     pct = 100.0 * (now - before) / before
     if abs(pct) < 1.0:
         return "="
@@ -133,8 +151,9 @@ def headline(measures, title, level, grew_line=None):
                % (worst, size(worst_mem), duration(worst_cpu)))
     out.append("- Half of them peak under %s, a tenth above %s."
                % (size(quantile(peaks, 0.5)), size(quantile(peaks, 0.9))))
-    out.append("- `%s` carries %s of that CPU on its own, %.0f %% of the build, over %d units."
-               % (top_mod, duration(top_cpu), 100.0 * top_cpu / total_cpu, len(top_units)))
+    share = "%.0f %%" % (100.0 * top_cpu / total_cpu) if total_cpu else "n/a"
+    out.append("- `%s` carries %s of that CPU on its own, %s of the build, over %d units."
+               % (top_mod, duration(top_cpu), share, len(top_units)))
     if grew_line:
         out.append(grew_line)
     return "\n".join(out) + "\n"
@@ -147,14 +166,18 @@ def main():
     ap.add_argument("--top", type=int, default=3, help="units shown per module (default 3)")
     ap.add_argument("--title", default="Compile cost")
     ap.add_argument("--full", help="write the complete per-unit table, as Markdown, to this file")
+    ap.add_argument("--summary", help="write the summary to this file rather than to stdout")
+    ap.add_argument("--strip", default="", help="path segment a multi-config generator adds, e.g. Debug/")
     args = ap.parse_args()
 
-    now = read(args.current)
+    out = open(args.summary, "w") if args.summary else sys.stdout
+
+    now = read(args.current, args.strip)
     if not now:
-        print("No measurement in `%s`." % args.current)
+        print("No measurement in `%s`." % args.current, file=out)
         return 0
 
-    was = read(args.baseline) if args.baseline else {}
+    was = read(args.baseline, args.strip) if args.baseline else {}
     d = bool(was)
 
     # Regressions first: what changed is what gets acted on.
@@ -170,12 +193,12 @@ def main():
                      % (len(grew), "" if len(grew) == 1 else "s")) if grew \
                     else "- Nothing grew by more than 5 % against the baseline."
 
-    print(headline(now, args.title, 2, grew_line))
+    print(headline(now, args.title, 2, grew_line), file=out)
 
     if grew:
-        print("\n### What grew\n")
+        print("\n### What grew\n", file=out)
         print(table([(k, m, now[k][1], delta_cell(m, b)) for k, m, b in grew[:10]],
-                    "Translation unit", True))
+                    "Translation unit", True), file=out)
 
     # One table per module: a suite this size has no single ranking anybody reads, but every module
     # has an owner who recognises its own three worst files.
@@ -184,12 +207,14 @@ def main():
 
     for module, units in ordered:
         cpu = sum(u[2] for u in units)
-        print("\n### `%s`\n" % module)
+        print("\n### `%s`\n" % module, file=out)
         print("%d unit%s, %s of CPU, heaviest at %s.\n"
-              % (len(units), "" if len(units) == 1 else "s", duration(cpu), size(units[0][1])))
-        rows = [(u[0][len(module) + 1:], u[1], u[2], delta_cell(u[1], was.get(u[0], (None,))[0]))
+              % (len(units), "" if len(units) == 1 else "s", duration(cpu), size(units[0][1])), file=out)
+        # The module is a prefix of its units' names, except for the synthetic top level, where the name is kept whole.
+        rows = [(u[0][len(module) + 1:] if u[0].startswith(module + "/") else u[0], u[1], u[2],
+                 delta_cell(u[1], was.get(u[0], (None,))[0]))
                 for u in units[: args.top]]
-        print(table(rows, "Translation unit", d))
+        print(table(rows, "Translation unit", d), file=out)
 
     if args.full:
         # The summary is capped at a mebibyte and nobody reads seven hundred rows on a run page.
@@ -201,9 +226,12 @@ def main():
             f.write(table([(k, v[0], v[1], delta_cell(v[0], was.get(k, (None,))[0]))
                            for k, v in ranked], "Translation unit", d))
             f.write("\n")
-        print("\n*Every unit is measured. The complete table and the raw CSV are attached to this run.*")
+        print("\n*Every unit is measured. The complete table and the raw CSV are attached to this run.*", file=out)
     else:
-        print("\n*Every unit is measured; the full table is in the attached CSV.*")
+        print("\n*Every unit is measured; the full table is in the attached CSV.*", file=out)
+
+    if args.summary:
+        out.close()
     return 0
 
 

@@ -115,13 +115,17 @@ jobs:
             fi
           fi
           python3 tools/compile_cost.py build/compile-cost.csv $baseline                            \
-                  --full compile-cost-full.md                                                       \
+                  --full build/compile-cost-full.md                                                 \
                   --title "${{ github.event_name == 'push' && 'Compile cost of main' || 'Compile cost' }}" \
                   >> "$GITHUB_STEP_SUMMARY"
 
       ##############################################################################################
       ## Main leaves the reference every pull request is read against, kept long enough to see a
       ## trend. A pull request leaves its own table, kept only while the review lasts.
+      ##
+      ## Both files come from the same directory, so they sit at the artifact's root. Listed from
+      ## two, the artifact kept the build/ segment and the reference was looked for one level too
+      ## high: no pull request ever got its delta.
       ##############################################################################################
       - name: Upload the measurements
         if: always()
@@ -129,7 +133,7 @@ jobs:
         with:
           name: ${{ github.event_name == 'push' && 'compile-cost-reference' || 'compile-cost' }}
           path: |
-            compile-cost-full.md
+            build/compile-cost-full.md
             build/compile-cost.csv
           if-no-files-found: warn
           retention-days: ${{ github.event_name == 'push' && 90 || 14 }}
