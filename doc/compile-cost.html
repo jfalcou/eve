@@ -386,9 +386,10 @@ function pct(now, before) {
   return { text: (p > 0 ? "+" : "") + p.toFixed(0) + " %", cls: p > 0 ? "up" : "down" };
 }
 
-// Golden-angle hues: neighbours in the ordering never land on a close colour.
+// Golden-angle hues, started on the documentation's own green so the heaviest module wears it and
+// nothing lands on an alarm red by accident of being first. Neighbours never get a close colour.
 function moduleColor(i) {
-  return "hsl(" + ((i * 137.508) % 360).toFixed(0) + ", 58%, " +
+  return "hsl(" + ((90 + i * 137.508) % 360).toFixed(0) + ", 58%, " +
          (document.documentElement.classList.contains("dark-mode") ||
           (window.matchMedia("(prefers-color-scheme: dark)").matches &&
            !document.documentElement.classList.contains("light-mode")) ? "62%" : "42%") + ")";
