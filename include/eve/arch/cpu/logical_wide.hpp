@@ -89,7 +89,7 @@ namespace eve
     using storage_type = typename storage_base::storage_type;
 
     //! Type describing the size of the current wide
-    using width_type = fixed<Width>;
+    //using width_type = fixed<Width>;
 
     //! Type representing the bits of the logical value
     using bits_type = wide<_::make_integer_t<sizeof(translated_element_type), unsigned>, Width>;
