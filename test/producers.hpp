@@ -70,9 +70,9 @@ namespace tts
       return type(src);
     }
 
-    static void display(type const& v, std::ostream& os) noexcept
+    static void display(type const& v) noexcept
     {
-      os << v;
+      ::tts::output().write(::tts::as_text(v));
     }
   };
 
@@ -99,9 +99,9 @@ namespace tts
       return type(src);
     }
 
-    static void display(type const& v, std::ostream& os) noexcept
+    static void display(type const& v) noexcept
     {
-      os << v;
+      ::tts::output().write(::tts::as_text(v));
     }
   };
 }
