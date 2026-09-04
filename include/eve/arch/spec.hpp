@@ -35,13 +35,9 @@ namespace eve
   inline constexpr undefined_simd_ current_api  = {};
   inline constexpr bool supports_simd           = false;
 # else
-#   if !defined(EVE_INCOMPLETE_AVX512_SUPPORT)
   inline constexpr EVE_CURRENT_API  current_api = {};
-#   else
-  inline constexpr eve::avx2_       current_api = {};
-#   endif
   inline constexpr bool supports_simd = true;
-# endif
+#endif
 
   //================================================================================================
   // Types & objects for ABI/API detection

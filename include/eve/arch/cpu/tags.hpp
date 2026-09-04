@@ -104,9 +104,9 @@ namespace eve
   // Dispatching tag for emulated SIMD implementation
   struct emulated_
   {
-    static constexpr std::size_t bits                     = 128;
-    static constexpr std::size_t bytes                    = 16;
-    static constexpr bool        is_wide_logical = true;
+    static constexpr std::size_t bits             = 128;
+    static constexpr std::size_t bytes            = 16;
+    static constexpr bool        is_wide_logical  = true;
 
     template<typename> static constexpr bool is_full = true;
 
