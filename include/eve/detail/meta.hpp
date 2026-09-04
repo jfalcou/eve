@@ -108,7 +108,7 @@ namespace eve::_
   using abi_type_t = typename abi_type<T>::type;
 
   // Generate integral types from sign + size
-  template<std::size_t Width, typename Sign = unsigned>
+  template<std::size_t Size, typename Sign = unsigned>
   struct make_integer;
 
   template<>
@@ -152,14 +152,14 @@ namespace eve::_
     using type = std::uint64_t;
   };
 
-  template<std::size_t Width, typename Sign = unsigned>
-  using make_integer_t = typename make_integer<Width, Sign>::type;
+  template<std::size_t Size, typename Sign = unsigned>
+  using make_integer_t = typename make_integer<Size, Sign>::type;
 
 
   ///////////////////////////////////////////////////////////////////
 
   // Generate integral types from sign + size
-  template<std::size_t Width>
+  template<std::size_t Size>
   struct make_floating_point;
 
   template<>
@@ -180,8 +180,8 @@ namespace eve::_
     using type = double;
   };
 
-  template<std::size_t Width>
-  using make_floating_point_t = typename make_floating_point<Width>::type;
+  template<std::size_t Size>
+  using make_floating_point_t = typename make_floating_point<Size>::type;
 
   // false_ value with dependent type
   template<typename... T>

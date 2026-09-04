@@ -161,11 +161,11 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
         first_wide_ignore = eve::keep_first(iterator_width_v<I2>);
 
         // the unsigned cast removes some negative number checks.
-        auto remainder   = ((std::size_t)needle_len) % iterator_width_v<I2>;
-        long_tail_offset = (remainder != 0) ? remainder : (std::size_t) iterator_width_v<I2>;
+        auto remainder   = static_cast<std::size_t>(needle_len) % iterator_width_v<I2>;
+        long_tail_offset = (remainder != 0) ? remainder : static_cast<std::size_t>(iterator_width_v<I2>);
 
         long_tail_start = eve::unalign(f) + long_tail_offset;
-        long_tail_n     = (std::size_t)(needle_len - long_tail_offset) / iterator_width_v<I2>;
+        long_tail_n     = static_cast<std::size_t>(needle_len - long_tail_offset) / iterator_width_v<I2>;
       }
     }
 

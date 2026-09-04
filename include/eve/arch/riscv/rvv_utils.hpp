@@ -22,7 +22,7 @@
 namespace eve::_
 {
 // natural lmul if > 0, frac otherwise
-template<plain_scalar_value scalar_type, std::ptrdiff_t Width>
+template<plain_scalar_value scalar_type, width_type Width>
 constexpr auto rvv_lmul_v = []
 {
   constexpr std::ptrdiff_t m1_len       = __riscv_v_fixed_vlen;
@@ -33,7 +33,7 @@ constexpr auto rvv_lmul_v = []
   else return -static_cast<int>(m1_len / reg_len);
 }();
 
-template<plain_scalar_value scalar_type, std::ptrdiff_t Width>
+template<plain_scalar_value scalar_type, width_type Width>
 constexpr auto rvv_logical_ratio_v = []
 {
   auto           lmul         = rvv_lmul_v<scalar_type, Width>;

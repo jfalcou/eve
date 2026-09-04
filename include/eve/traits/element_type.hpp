@@ -47,7 +47,6 @@ namespace eve
   };
 
   template<typename T, auto S>       struct element_type<wide<T, S>> { using type = T; };
-  // template<typename T>               struct element_type<wide<T>>    { using type = T; };
 
   template<typename T>
   struct element_type<logical<T>>     { using type = logical<typename element_type<T>::type>; };

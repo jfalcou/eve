@@ -44,13 +44,10 @@ namespace eve::_
   };
 
   template<typename T>
-  struct is_aligned_ptr_impl : std::false_type {};
+  inline constexpr bool is_aligned_ptr_v = false;
 
   template<typename Type, std::ptrdiff_t Lanes>
-  struct is_aligned_ptr_impl<aligned_ptr<Type, Lanes>> : std::true_type{};
-
-  template<typename Ptr>
-  constexpr bool is_aligned_ptr_v = is_aligned_ptr_impl<Ptr>::value;
+  inline constexpr bool is_aligned_ptr_v<aligned_ptr<Type, Lanes>> = true;
 
   template <typename Ptr>
   concept scalar_pointer = std::is_pointer_v<Ptr> || is_aligned_ptr_v<Ptr>;

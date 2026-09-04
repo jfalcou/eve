@@ -103,7 +103,7 @@ EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, N> value, aligned
   }
 }
 #else
-template<relative_conditional_expr C, arithmetic_scalar_value T, std::ptrdiff_t S, std::ptrdiff_t Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, width_type S, width_type Lanes>
 EVE_FORCEINLINE void store_impl(neon128_, C const& cx, wide<T, S> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, S>>
 {

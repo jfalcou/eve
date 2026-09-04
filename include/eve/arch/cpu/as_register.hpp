@@ -112,13 +112,13 @@ namespace eve
     };
 
     template<typename T>
-    struct is_blob_impl : std::false_type {};
+    inline constexpr bool is_blob_impl = false;
 
     template<typename Type, auto S>
-    struct is_blob_impl<blob<Type, S>> : std::true_type {};
+    inline constexpr bool is_blob_impl<blob<Type, S>> = true;
 
     template<typename T>
-    concept is_blob = is_blob_impl<std::remove_cvref_t<T>>::value;
+    concept is_blob = is_blob_impl<std::remove_cvref_t<T>>;
   }
 
   template<typename T, width_type N>

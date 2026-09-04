@@ -85,7 +85,7 @@ namespace eve::algo
     //! Const aligned pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer_aligned = const_iterator_aligned;
 
-    //! Width type
+    //! Size type
     using size_type = std::size_t;
 
     //==============================================================================================

@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  template<typename Type, std::ptrdiff_t Width = expected_width_v<Type>>
+  template<typename Type, width_type Width = expected_width_v<Type>>
   struct as_wide
   {
     // This case should never be picked up but clang++ insists on trying to

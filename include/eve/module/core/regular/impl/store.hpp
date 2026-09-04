@@ -63,7 +63,7 @@ namespace eve::_
       using e_t = element_type_t<T>;
 
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, T::size()>(storage.begin()));
+      store(value, eve::aligned_ptr<e_t, T::size()>(storage.data()));
 
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});

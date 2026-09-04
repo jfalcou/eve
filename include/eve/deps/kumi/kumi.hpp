@@ -12,8 +12,8 @@
 #else
 namespace kumi::config
 {
-  using default_width_type = unsigned int;
-  inline constexpr default_width_type max_size = 64;
+  using default_size_type = unsigned int;
+  inline constexpr default_size_type max_size = 64;
 }
 #endif
 namespace kumi
@@ -124,10 +124,10 @@ namespace kumi::_
   {
     return (Sz <= Extent) ? 1 : (Sz - Extent + Stride - 1) / Stride + 1;
   }
-  consteval std::size_t block_size(std::size_t I, std::size_t Stride, std::size_t Extent, std::size_t Width) noexcept
+  consteval std::size_t block_size(std::size_t I, std::size_t Stride, std::size_t Extent, std::size_t Size) noexcept
   {
     std::size_t s = I * Stride;
-    return (s < Width) ? ((s + Extent > Width) ? (Width - s) : Extent) : 0;
+    return (s < Size) ? ((s + Extent > Size) ? (Size - s) : Extent) : 0;
   }
   template<typename F, std::size_t... Base, std::size_t... Is>
   consteval auto make_digits(F func, std::index_sequence<Base...>, std::index_sequence<Is...>) noexcept
@@ -326,7 +326,7 @@ namespace kumi::_
   template<typename T>
   concept container_like = requires(T const& t) {
     typename T::value_type;
-    typename T::width_type;
+    typename T::size_type;
     { t.size() } -> std::convertible_to<std::size_t>;
     { t.begin() };
     { t.end() };
@@ -472,12 +472,12 @@ namespace kumi
 {
   struct str
   {
-    using width_type = kumi::config::default_width_type;
-    static constexpr width_type max_size = kumi::config::max_size;
-    static constexpr width_type npos = static_cast<width_type>(-1);
+    using size_type = kumi::config::default_size_type;
+    static constexpr size_type max_size = kumi::config::max_size;
+    static constexpr size_type npos = static_cast<size_type>(-1);
     static constexpr char separator = '.';
     char data_[max_size + 1] = {0};
-    width_type size_;
+    size_type size_;
     constexpr str() = default;
     template<std::size_t N, std::size_t... Is>
     requires(N <= max_size)
@@ -515,50 +515,50 @@ namespace kumi
     friend std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, str const& s) noexcept
     {
       os << '\'';
-      for (width_type i = 0; i < s.size(); ++i) os << s.data_[i];
+      for (size_type i = 0; i < s.size(); ++i) os << s.data_[i];
       return os << '\'';
     }
-    KUMI_ABI constexpr str remove_prefix(width_type n) const
+    KUMI_ABI constexpr str remove_prefix(size_type n) const
     {
       if (n > size_) throw "Out of range";
       return substr(n, size_ - n);
     }
-    KUMI_ABI constexpr str remove_suffix(width_type n) const
+    KUMI_ABI constexpr str remove_suffix(size_type n) const
     {
       if (n > size_) throw "Out of range";
       return substr(0, size_ - n);
     }
-    KUMI_ABI constexpr str substr(width_type pos = 0, width_type count = npos) const
+    KUMI_ABI constexpr str substr(size_type pos = 0, size_type count = npos) const
     {
-      width_type len = (count == npos || pos + count > size_) ? (size_ - pos) : count;
+      size_type len = (count == npos || pos + count > size_) ? (size_ - pos) : count;
       str res{};
       res.size_ = len;
-      for (width_type i = 0; i < len; ++i) res.data_[i] = data_[pos + i];
+      for (size_type i = 0; i < len; ++i) res.data_[i] = data_[pos + i];
       return res;
     }
     KUMI_ABI constexpr bool starts_with(str const& s) const
     {
       if (s.size_ > size_) return false;
-      for (width_type i = 0; i < s.size_; ++i)
+      for (size_type i = 0; i < s.size_; ++i)
         if (data_[i] != s.data_[i]) return false;
       return true;
     }
     KUMI_ABI constexpr bool ends_with(str const& s) const
     {
       if (s.size_ > size_) return false;
-      for (width_type i = 0; i < s.size_; ++i)
+      for (size_type i = 0; i < s.size_; ++i)
         if (data_[size_ - s.size_ + i] != s.data_[i]) return false;
       return true;
     }
     KUMI_ABI constexpr bool contains(str const& s) const { return find(s) != npos; }
-    constexpr width_type find(str const& s, width_type pos = 0) const
+    constexpr size_type find(str const& s, size_type pos = 0) const
     {
       if (s.size_ == 0) return pos <= size_ ? pos : npos;
       if (s.size_ > size_) return npos;
-      for (width_type i = pos; i <= size_ - s.size_; ++i)
+      for (size_type i = pos; i <= size_ - s.size_; ++i)
       {
         bool match = true;
-        for (width_type j = 0; j < s.size_; ++j)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i + j] != s.data_[j])
           {
             match = false;
@@ -570,8 +570,8 @@ namespace kumi
     }
     constexpr int compare(str const& other) const noexcept
     {
-      width_type min_size = (size_ < other.size_) ? size_ : other.size_;
-      for (width_type i = 0; i < min_size; ++i)
+      size_type min_size = (size_ < other.size_) ? size_ : other.size_;
+      for (size_type i = 0; i < min_size; ++i)
       {
         if (data_[i] < other.data_[i]) return -1;
         if (data_[i] > other.data_[i]) return 1;
@@ -586,15 +586,15 @@ namespace kumi
     friend constexpr bool operator<=(str const& lhs, str const& rhs) noexcept { return lhs.compare(rhs) <= 0; }
     friend constexpr bool operator>(str const& lhs, str const& rhs) noexcept { return lhs.compare(rhs) > 0; }
     friend constexpr bool operator>=(str const& lhs, str const& rhs) noexcept { return lhs.compare(rhs) >= 0; }
-    constexpr width_type rfind(str const& s, width_type pos = npos) const
+    constexpr size_type rfind(str const& s, size_type pos = npos) const
     {
       if (s.size_ == 0) return (pos > size_ ? size_ : pos);
       if (s.size_ > size_) return npos;
-      width_type start = (pos > size_ - s.size_) ? (size_ - s.size_) : pos;
-      for (width_type i = start; i > 0; --i)
+      size_type start = (pos > size_ - s.size_) ? (size_ - s.size_) : pos;
+      for (size_type i = start; i > 0; --i)
       {
         bool match = true;
-        for (width_type j = 0; j < s.size_; ++j)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i + j] != s.data_[j])
           {
             match = false;
@@ -604,30 +604,30 @@ namespace kumi
       }
       return npos;
     }
-    KUMI_ABI constexpr width_type find_first_of(str const& s, width_type pos = 0) const
+    KUMI_ABI constexpr size_type find_first_of(str const& s, size_type pos = 0) const
     {
-      for (width_type i = pos; i < size_; ++i)
-        for (width_type j = 0; j < s.size_; ++j)
+      for (size_type i = pos; i < size_; ++i)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i] == s.data_[j]) return i;
       return npos;
     }
-    KUMI_ABI constexpr width_type find_last_of(str const& s, width_type pos = npos) const
+    KUMI_ABI constexpr size_type find_last_of(str const& s, size_type pos = npos) const
     {
       if (size_ == 0) return npos;
-      for (width_type i = (pos >= size_ ? size_ - 1 : pos);; --i)
+      for (size_type i = (pos >= size_ ? size_ - 1 : pos);; --i)
       {
-        for (width_type j = 0; j < s.size_; ++j)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i] == s.data_[j]) return i;
         if (i == 0) break;
       }
       return npos;
     }
-    KUMI_ABI constexpr width_type find_first_not_of(str const& s, width_type pos = 0) const
+    KUMI_ABI constexpr size_type find_first_not_of(str const& s, size_type pos = 0) const
     {
-      for (width_type i = pos; i < size_; ++i)
+      for (size_type i = pos; i < size_; ++i)
       {
         bool found = false;
-        for (width_type j = 0; j < s.size_; ++j)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i] == s.data_[j])
           {
             found = true;
@@ -637,13 +637,13 @@ namespace kumi
       }
       return npos;
     }
-    KUMI_ABI constexpr width_type find_last_not_of(str const& s, width_type pos = npos) const
+    KUMI_ABI constexpr size_type find_last_not_of(str const& s, size_type pos = npos) const
     {
       if (size_ == 0) return npos;
-      for (width_type i = (pos >= size_ ? size_ - 1 : pos);; --i)
+      for (size_type i = (pos >= size_ ? size_ - 1 : pos);; --i)
       {
         bool found = false;
-        for (width_type j = 0; j < s.size_; ++j)
+        for (size_type j = 0; j < s.size_; ++j)
           if (data_[i] == s.data_[j])
           {
             found = true;
@@ -656,21 +656,21 @@ namespace kumi
     }
     constexpr str operator+(str const& other) const
     {
-      width_type new_size = size_ + 1 + other.size_;
+      size_type new_size = size_ + 1 + other.size_;
       if (new_size > max_size) throw "Overflow";
       str res{};
       res.size_ = static_cast<unsigned int>(new_size);
-      for (width_type i = 0; i < size_; ++i) res.data_[i] = data_[i];
+      for (size_type i = 0; i < size_; ++i) res.data_[i] = data_[i];
       res.data_[size_] = kumi::str::separator;
-      for (width_type i = 0; i < other.size_; ++i) res.data_[size_ + 1 + i] = other.data_[i];
+      for (size_type i = 0; i < other.size_; ++i) res.data_[size_ + 1 + i] = other.data_[i];
       res.data_[new_size] = '\0';
       return res;
     }
-    static constexpr str from(char const* s, width_type n)
+    static constexpr str from(char const* s, size_type n)
     {
       str res{};
       if (n > str::max_size) throw "Overflow";
-      for (width_type i = 0; i < n; ++i) res.data_[i] = s[i];
+      for (size_type i = 0; i < n; ++i) res.data_[i] = s[i];
       res.size_ = static_cast<unsigned int>(n);
       return res;
     }
@@ -679,7 +679,7 @@ namespace kumi
   {
     constexpr auto operator""_str(char const* s, std::size_t n)
     {
-      return kumi::str::from(s, kumi::str::width_type(n));
+      return kumi::str::from(s, kumi::str::size_type(n));
     }
   }
   struct unknown

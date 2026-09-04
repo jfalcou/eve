@@ -73,7 +73,7 @@ namespace eve::_
     // doubles
 #if defined(SPY_SIMD_IS_ARM_ASIMD)
     else if constexpr ( std::same_as<T, double> && N == 1 ) return float64x1x2_t{};
-    else if constexpr ( std::same_as<T, double>             ) return float64x2x2_t{};
+    else if constexpr ( std::same_as<T, double>           ) return float64x2x2_t{};
 #endif
   }
 
