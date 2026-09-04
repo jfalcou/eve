@@ -7,6 +7,8 @@
 #include <vector>
 
 #include <tts/tts.hpp>
+// soa_vector prints through the display specialisation the unit tests carry
+#include "unit/module/algo/soa_vector_text.hpp"
 
 void
 basic_example()
