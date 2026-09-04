@@ -140,21 +140,21 @@ jobs:
           cd 3rdparty
           git clone https://github.com/jfalcou/kumi.git
           cd kumi 
-          cmake -B build -G Ninja
+          cmake -B build -G Ninja -DKUMI_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Install RABERU
         run: |
           cd 3rdparty
           git clone https://github.com/jfalcou/raberu.git
           cd raberu
-          cmake -B build -G Ninja
+          cmake -B build -G Ninja -DRABERU_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Install SPY 
         run: |
           cd 3rdparty
           git clone https://github.com/jfalcou/spy.git
           cd spy
-          cmake -B build -G Ninja
+          cmake -B build -G Ninja -DSPY_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Fetch current branch
         uses: actions/checkout@v6
