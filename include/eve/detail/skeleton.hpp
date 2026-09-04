@@ -11,7 +11,7 @@
 #include <eve/deps/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits/apply_fp16.hpp>
 #include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
@@ -97,7 +97,7 @@ namespace eve::_
 
     if constexpr( eve::product_type<element_type_t<w_t>> )
     {
-      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
+      return  apply<width_v<std::tuple_element_t<0,w_t>>>
               ( [&](auto... I)
                 {
                   return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
@@ -106,7 +106,7 @@ namespace eve::_
     }
     else
     {
-      return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
+      return apply<width_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
     }
   }
 
@@ -163,7 +163,7 @@ namespace eve::_
     {
       constexpr auto max_repl = max_replication<Ts...>();
 
-      // Convert all values to tuples of wides of the expected cardinal
+      // Convert all values to tuples of wides of the expected width
       auto slicer = []<typename T>(T t)
       {
         if constexpr (simd_value<T>) return t.storage().slice_to_expected();
@@ -217,7 +217,7 @@ namespace eve::_
         {
           using current_wide = kumi::element_t<0, decltype(inner)>;
           constexpr std::ptrdiff_t current_card = current_wide::size();
-          constexpr std::ptrdiff_t expected_card = expected_cardinal_v<typename current_wide::value_type>;
+          constexpr std::ptrdiff_t expected_card = expected_width_v<typename current_wide::value_type>;
           using expected_wide = typename current_wide::template rescale<expected_card>;
 
           if constexpr (current_card < expected_card)

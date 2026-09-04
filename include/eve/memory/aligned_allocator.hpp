@@ -39,7 +39,7 @@ namespace eve
   //!               current SIMD ABI requirements.
   //================================================================================================
   template< typename T
-          , std::ptrdiff_t Lanes = expected_cardinal_v<T>
+          , std::ptrdiff_t Lanes = expected_width_v<T>
           >
   struct aligned_allocator
   {

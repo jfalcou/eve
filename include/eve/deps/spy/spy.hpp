@@ -725,7 +725,7 @@ namespace spy::supports
 #define SPY_SIMD_IS_ARM_FIXED_SVE2
 #define SPY_SIMD_DETECTED ::spy::_::simd_version::fixed_sve2_
 #else
-#error "[SPY] - No support for non-power of 2 SVE-2 cardinals"
+#error "[SPY] - No support for non-power of 2 SVE-2 widths"
 #endif
 #endif
 #endif
@@ -747,7 +747,7 @@ namespace spy::supports
 #define SPY_SIMD_IS_ARM_FIXED_SVE
 #define SPY_SIMD_DETECTED ::spy::_::simd_version::fixed_sve_
 #else
-#error "[SPY] - No support for non-power of 2 SVE cardinals"
+#error "[SPY] - No support for non-power of 2 SVE widths"
 #endif
 #endif
 #endif
@@ -1132,7 +1132,7 @@ namespace spy::_
       }
       else return -1;
     }();
-    static constexpr bool               has_fixed_cardinal() { return width != -1; }
+    static constexpr bool               has_fixed_width() { return width != -1; }
     template<_::stream OS> friend auto& operator<<(OS& os, simd_info const&)
     {
       if constexpr(Version == simd_version::simd128_) os << "WASM SIMD128";

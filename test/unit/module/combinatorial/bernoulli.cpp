@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::bernoulli on wide",
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using d_t = eve::wide<double, eve::cardinal_v<T>>;
+  using d_t = eve::wide<double, eve::width_v<T>>;
   TTS_EQUAL(eve::bernoulli(T(10)), d_t(5.0 / 66));
   TTS_EQUAL(eve::bernoulli(T(4)), d_t(-1.0 / 30));
   TTS_EQUAL(eve::bernoulli(T(0)), d_t(1));

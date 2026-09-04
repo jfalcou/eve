@@ -9,21 +9,21 @@
 
 namespace eve::_
 {
-template<scalar_value T, size_type N, std::ptrdiff_t Shift>
+template<scalar_value T, width_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto
 slide_right_(EVE_SUPPORTS(sve_), wide<T, N> v, index_t<Shift>) noexcept
 requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)
 {
-  constexpr auto i = expected_cardinal_v<T> - Shift;
+  constexpr auto i = expected_width_v<T> - Shift;
   return wide<T, N>(svext(eve::zero(as(v)),v,i));
 }
 
-template<scalar_value T, size_type N, std::ptrdiff_t Shift>
+template<scalar_value T, width_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto
 slide_right_(EVE_SUPPORTS(sve_), wide<T, N> v, wide<T, N> w, index_t<Shift> s) noexcept
 requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)
 {
-  if constexpr(N == expected_cardinal_v<T>)
+  if constexpr(N == expected_width_v<T>)
   {
     constexpr auto i = N - Shift;
     return wide<T, N>(svext(v,w,i));
@@ -34,7 +34,7 @@ requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)
   }
 }
 
-template<scalar_value T, size_type N, std::ptrdiff_t Shift>
+template<scalar_value T, width_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto
 slide_right_(EVE_SUPPORTS(sve_), logical<wide<T, N>> v, index_t<Shift> s) noexcept
 requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)
@@ -42,7 +42,7 @@ requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)
   return to_logical(slide_right(v.mask(),s));
 }
 
-template<scalar_value T, size_type N, std::ptrdiff_t Shift>
+template<scalar_value T, width_type N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE auto
 slide_right_(EVE_SUPPORTS(sve_), logical<wide<T, N>> v, logical<wide<T, N>> w, index_t<Shift> s) noexcept
 requires(Shift > 0 && Shift < N && sve_abi<abi_t<T, N>>)

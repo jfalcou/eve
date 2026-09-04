@@ -33,7 +33,7 @@ namespace eve
 //! @{
 //! @var sinc
 //!
-//! @brief `elementwise_callable` object computing the sine cardinal.
+//! @brief `elementwise_callable` object computing the sine width.
 //!
 //!   @groupheader{Header file}
 //!
@@ -85,8 +85,8 @@ namespace eve
 //!       these options can be combined with the previous ones with ranges adapted to the chosen unity.
 //!    5. returns \f$\frac{\sin \pi x}{\pi x}\f$
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
+//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_width)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineWidthFunction.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinc.cpp}

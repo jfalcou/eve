@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 
 #include <bitset>
 
@@ -24,7 +24,7 @@ namespace eve::_
 //================================================================================================
 // Wide to Logical
 //================================================================================================
-template<typename T, size_type N>
+template<typename T, width_type N>
 EVE_FORCEINLINE auto
 to_logical(wide<T, N> const& v) noexcept
 {
@@ -83,9 +83,9 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
   }
   else if constexpr( std::same_as<C, ignore_none_> )
   {
-    if constexpr (T::size() < fundamental_cardinal_v<element_type_t<as_arithmetic_t<T>>>)
+    if constexpr (T::size() < fundamental_width_v<element_type_t<as_arithmetic_t<T>>>)
     {
-      return to_logical(keep_first(cardinal_v<T>), tgt);
+      return to_logical(keep_first(width_v<T>), tgt);
     }
     else
     {
@@ -97,7 +97,7 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
     // Use the most full type to be sure to fill outside values of small wide with false
     using e_t   = eve::element_type_t<i_t>;
     using abi_t = typename i_t::abi_type;
-    using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t>>;
+    using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t>>;
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
     {

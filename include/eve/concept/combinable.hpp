@@ -19,7 +19,7 @@ namespace eve
   //! @ingroup eve_simd_concepts
   //! @{
   //! @brief Checks that the types passed are all SIMD values that can be passed to `eve::combine`. i.e they share a
-  //!        common value type and their cardinals and numbers are consistent with `eve::combine` semantics
+  //!        common value type and their widths and numbers are consistent with `eve::combine` semantics
   //================================================================================================
   template <typename W0, typename W1, typename... Ws>
   concept combinable = std::has_single_bit(sizeof...(Ws) + 2)

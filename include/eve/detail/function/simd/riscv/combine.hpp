@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-template<typename T, size_type N>
+template<typename T, width_type N>
 EVE_FORCEINLINE wide<T, N * 2> combine(rvv_ const&, wide<T, N> l, wide<T, N> h) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -38,7 +38,7 @@ requires rvv_abi<abi_t<T, N>>
   }
 }
 
-template<typename T, size_type N>
+template<typename T, width_type N>
 EVE_FORCEINLINE logical<wide<T, N * 2>>
 combine(rvv_ const&, logical<wide<T, N>> l, logical<wide<T, N>> h) noexcept
 requires rvv_abi<abi_t<T, N>>

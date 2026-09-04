@@ -203,12 +203,12 @@ void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
   M m = tts::poison(M{ [](auto i, auto) { return i % 2 == 0; } });
   logical_test_simd_inner_cx(ff, l0, l1, a0, m);
 
-  constexpr auto cardinal = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
-  if constexpr (cardinal >= 2)
+  if constexpr (width >= 2)
   {
     logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(1, 1));
-    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(width / 2, width / 2));
+    logical_test_simd_inner_cx(ff, l0, l1, a0, eve::ignore_extrema(width / 4, width / 4));
   }
 }

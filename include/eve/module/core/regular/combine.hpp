@@ -59,7 +59,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!      * `a`, `b`: two SIMD values of the same type and cardinal
+  //!      * `a`, `b`: two SIMD values of the same type and width
   //!
   //!    **Return value**
   //!

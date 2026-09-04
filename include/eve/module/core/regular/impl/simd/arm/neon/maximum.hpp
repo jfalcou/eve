@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size_type N>
+  template<callable_options O, arithmetic_scalar_value T, width_type N>
   EVE_FORCEINLINE auto maximum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
@@ -51,7 +51,7 @@ namespace eve::_
         else if constexpr( N == 2 ) return type(eve::max(v.get(0), v.get(1)));
         else if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
         {
-          if( N == expected_cardinal_v<T, abi_t<T, N>> )
+          if( N == expected_width_v<T, abi_t<T, N>> )
           {
             wide<T, N> s = pairwise_max(v, v);
             if constexpr( N >= 2 ) s = pairwise_max(s, s);
@@ -77,7 +77,7 @@ namespace eve::_
     {
       if constexpr( eve::current_api >= eve::asimd )
       {
-        constexpr auto ec = expected_cardinal_v<T, abi_t<T, N>>;
+        constexpr auto ec = expected_width_v<T, abi_t<T, N>>;
         constexpr auto fp16v = _::supports_fp16_vector_ops;
 
         if constexpr( N == 1 ) return v.get(0);

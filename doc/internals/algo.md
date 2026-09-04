@@ -47,7 +47,7 @@ have `static_assert`s that will tell you it's not supported.
 
 Many things that we want to accept in the interfaces as `range` and/or `iterator` are not ideal for
 writing code against. We also need to strip things like `vector::iterator` to pointers.
-What also we want is to associate a `cardinal` with `iterator`.
+What also we want is to associate a `width` with `iterator`.
 
 This is why we have two layers: `relaxed_range`/`relaxed_iterator` and `iterator`.
 There are a few things that `relaxed_*` should be able to do but the main one is `preprocess_range(traits, f, l)`
@@ -62,7 +62,7 @@ The more common ones are:
 
   * `no_aliging` - stop aligning data accesses
   * `unroll<N>` - unroll N times (1 for no unrolling).
-  * `force_cardinal<N>` - force how many elements in per step to process, needed for writing code
+  * `force_width<N>` - force how many elements in per step to process, needed for writing code
     dealing with intrinsics.
 
 The values used by default are documented by algorithm.

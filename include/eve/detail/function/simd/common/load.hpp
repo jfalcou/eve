@@ -111,7 +111,7 @@ namespace eve::_
   // Load impl
   //================================================================================================
 
-  template<_::data_source DS, typename T,  size_type N>
+  template<_::data_source DS, typename T,  width_type N>
   EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
     using w_src = wide_value_type_t<DS>;
@@ -139,7 +139,7 @@ namespace eve::_
     }
     else if constexpr (is_aligned_ptr_v<DS>)
     {
-      constexpr bool is_aligned_enough = cardinal_v<Wide> * sizeof(e_t) >= DS::alignment();
+      constexpr bool is_aligned_enough = width_v<Wide> * sizeof(e_t) >= DS::alignment();
 
       if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {

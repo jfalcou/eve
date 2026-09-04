@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-  template<typename T, size_type N, typename Idx, typename Ptr, callable_options O>
+  template<typename T, width_type N, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void
   scatter_(EVE_REQUIRES(avx512_), O const& opts, wide<T,N> const& v, Ptr ptr, Idx const& idx) noexcept
   requires x86_abi<abi_t<T, N>>

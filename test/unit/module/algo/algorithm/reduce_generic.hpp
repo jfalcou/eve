@@ -104,7 +104,7 @@ void reduce_generic_all_test_cases(eve::as<T> tgt, Alg basic_reduce)
 
   // no unroll, precise tgt
   {
-    auto alg = basic_reduce[eve::algo::unroll<1>][eve::algo::force_cardinal<T::size()>];
+    auto alg = basic_reduce[eve::algo::unroll<1>][eve::algo::force_width<T::size()>];
     reduce_generic_test_page_ends(tgt, e_t{10}, alg);
   }
 

@@ -29,7 +29,7 @@ namespace eve::algo
         EVE_FORCEINLINE
         bool tail(auto f, auto ignore)
         {
-          auto out_ignore   = eve::keep_first(std::min(ol - of, static_cast<std::ptrdiff_t>(eve::iterator_cardinal_v<O>)));
+          auto out_ignore   = eve::keep_first(std::min(ol - of, static_cast<std::ptrdiff_t>(eve::iterator_width_v<O>)));
           auto loaded = eve::load[ignore](f);
           auto [vals, mask] = func(loaded);
           of = eve::compress_store[eve::unsafe][ignore][out_ignore](vals, mask, of);
@@ -54,7 +54,7 @@ namespace eve::algo
         EVE_FORCEINLINE
         bool step_2(auto f)
         {
-          // ol - of < cardinal
+          // ol - of < width
           auto out_ignore   = eve::keep_first(ol - of);
           auto loaded = eve::load(f);
           auto [vals, mask] = func(loaded);

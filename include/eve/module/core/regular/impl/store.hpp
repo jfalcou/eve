@@ -125,7 +125,7 @@ namespace eve::_
     else store_common(current_api, opts[condition_key], value, dst);
   }
 
-  template<callable_options O, typename T, size_type N, typename Dst>
+  template<callable_options O, typename T, width_type N, typename Dst>
   EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
     using mask_type_t = typename logical<T>::mask_type;

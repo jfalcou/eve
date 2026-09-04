@@ -157,7 +157,7 @@ void reduction_test_case(Callable callable, T v, Runner runner)
 
   if constexpr (eve::simd_value<T>)
   {
-    constexpr auto cardinal = eve::cardinal_v<T>;
+    constexpr auto width = eve::width_v<T>;
 
     using LT = eve::as_logical_t<T>;
     LT m = tts::poison(LT{ [](auto i, auto) { return i % 2 == 0; } });
@@ -166,11 +166,11 @@ void reduction_test_case(Callable callable, T v, Runner runner)
     runner.call_cx(callable, v, eve::ignore_all);
     runner.call_cx(callable, v, eve::keep_first(0));
 
-    if constexpr (cardinal >= 2)
+    if constexpr (width >= 2)
     {
       runner.call_cx(callable, v, eve::ignore_extrema(1, 1));
-      runner.call_cx(callable, v, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-      runner.call_cx(callable, v, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+      runner.call_cx(callable, v, eve::ignore_extrema(width / 2, width / 2));
+      runner.call_cx(callable, v, eve::ignore_extrema(width / 4, width / 4));
     }
   }
 }
@@ -185,17 +185,17 @@ void logical_reduction_test_case(Callable callable, T v)
 template<typename TruthFn, typename Callable, typename T, bool SupportsTopBits>
 void logical_reduction_simd_test_cases_inner(Callable callable, eve::as<T> typ)
 {
-  constexpr auto cardinal = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
   constexpr auto runner = logical_runner<TruthFn, SupportsTopBits>;
 
   reduction_test_case<TruthFn>(callable, eve::true_(typ), runner);
   reduction_test_case<TruthFn>(callable, eve::false_(typ), runner);
 
-  for (std::ptrdiff_t j = 0; j < cardinal; ++j)
+  for (std::ptrdiff_t j = 0; j < width; ++j)
   {
     eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
 
-    for (std::ptrdiff_t i = 0; i < cardinal; ++i)
+    for (std::ptrdiff_t i = 0; i < width; ++i)
     {
       rhs1.set(i, i >= j ? true : false);
       rhs2.set(i, i <= j ? false : true);

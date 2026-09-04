@@ -55,7 +55,7 @@ TTS_CASE_TPL( "ignore_all behavior", eve::test::simd::all_types)
   {
     using e_t   = eve::element_type_t<type>;
     using abi_t = typename type::abi_type;
-    using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+    using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
     eve::logical<w_t> values = eve::bit_cast( ignore_all.mask(as<type>())
                                             , eve::as<eve::logical<w_t>>()
@@ -93,10 +93,10 @@ TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     using abi_t = typename type::abi_type;
-    using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+    using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
     eve::logical<w_t> values = eve::bit_cast( ignore_none.mask(as<type>())
                                             , eve::as<eve::logical<w_t>>()
@@ -144,12 +144,12 @@ TTS_CASE_TPL( "keep_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       using abi_t = typename type::abi_type;
-      using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+      using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
       eve::logical<w_t> values = eve::bit_cast( keep_first(i).mask(as<type>())
                                                 , eve::as<eve::logical<w_t>>()
@@ -197,12 +197,12 @@ TTS_CASE_TPL( "ignore_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       using abi_t = typename type::abi_type;
-      using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+      using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
       eve::logical<w_t> values = eve::bit_cast( ignore_last(i).mask(as<type>())
                                               , eve::as<eve::logical<w_t>>()
@@ -250,12 +250,12 @@ TTS_CASE_TPL( "keep_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       using abi_t = typename type::abi_type;
-      using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+      using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
       eve::logical<w_t> values = eve::bit_cast( keep_last(i).mask(as<type>())
                                               , eve::as<eve::logical<w_t>>()
@@ -305,12 +305,12 @@ TTS_CASE_TPL( "ignore_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       using abi_t = typename type::abi_type;
-      using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+      using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
       eve::logical<w_t> values = eve::bit_cast( ignore_first(i).mask(as<type>())
                                               , eve::as<eve::logical<w_t>>()
@@ -364,14 +364,14 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       for(std::ptrdiff_t j = 0;j <= type::size();j++)
       {
         using abi_t = typename type::abi_type;
-        using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+        using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
         if(i<=j)
         {
@@ -438,14 +438,14 @@ TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr( !eve::has_emulated_abi<type>() && (eve::cardinal_v<type> < eve::fundamental_cardinal_v<e_t>) )
+  if constexpr( !eve::has_emulated_abi<type>() && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
     {
       for(std::ptrdiff_t j = 0;j <= type::size();j++)
       {
         using abi_t = typename type::abi_type;
-        using w_t   = eve::wide<e_t, eve::expected_cardinal_v<e_t, abi_t> >;
+        using w_t   = eve::wide<e_t, eve::expected_width_v<e_t, abi_t> >;
 
         if(i+j <= type::size())
         {

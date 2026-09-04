@@ -22,7 +22,7 @@ namespace eve::algo
 {
   namespace _
   {
-    template <typename T, size_type A>
+    template <typename T, width_type A>
     EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
     {
       return ptr_iterator<eve::aligned_ptr<T, A>, A>{ptr};
@@ -31,17 +31,17 @@ namespace eve::algo
     template <typename T>
     EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
     {
-      constexpr auto N = eve::nofs_cardinal_v<std::remove_const_t<T>>;
+      constexpr auto N = eve::nofs_width_v<std::remove_const_t<T>>;
       return ptr_iterator<T*, N>{ptr};
     }
 
     template <typename Traits, typename I>
-    EVE_FORCEINLINE auto fix_up_cardinal(Traits, I i)
+    EVE_FORCEINLINE auto fix_up_width(Traits, I i)
     {
-      if constexpr( iterator_cardinal_v<I> != iteration_cardinal_t<Traits, I> {}() )
+      if constexpr( iterator_width_v<I> != iteration_width_t<Traits, I> {}() )
       {
-        using N = iteration_cardinal_t<Traits, I>;
-        auto i_ = i.cardinal_cast(N {});
+        using N = iteration_width_t<Traits, I>;
+        auto i_ = i.width_cast(N {});
         return i_;
       }
       else
@@ -55,10 +55,10 @@ namespace eve::algo
     requires _::pointer_iterator_sentinel<I_, S_>
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
-    // We have to force cardinal here, because iterators
-    // with different cardinals don't form a valid range.
-    auto f = _::fix_up_cardinal(traits_, _::ptr_to_iterator(f_));
-    auto l = _::fix_up_cardinal(traits_, _::ptr_to_iterator(l_));
+    // We have to force width here, because iterators
+    // with different widths don't form a valid range.
+    auto f = _::fix_up_width(traits_, _::ptr_to_iterator(f_));
+    auto l = _::fix_up_width(traits_, _::ptr_to_iterator(l_));
 
     return operator()(traits_, f, l);
   }
@@ -79,8 +79,8 @@ namespace eve::algo
   {
     auto traits_ = process_equivalents(with_equivalents_);
 
-    auto f = _::fix_up_cardinal(traits_, f_);
-    auto l = _::fix_up_cardinal(traits_, l_);
+    auto f = _::fix_up_width(traits_, f_);
+    auto l = _::fix_up_width(traits_, l_);
 
     using I = decltype(f);
     using S = decltype(l);
@@ -90,7 +90,7 @@ namespace eve::algo
       if constexpr( partially_aligned_iterator<I> &&
                     std::same_as<I, S> &&
                     !always_aligned_iterator<I> )
-          return algo::traits(divisible_by_cardinal);
+          return algo::traits(divisible_by_width);
       else return algo::traits();
     }();
 

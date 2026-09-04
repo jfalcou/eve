@@ -51,15 +51,15 @@ TTS_CASE_WITH("Check behavior of gegenbauer on wide",
   auto boost_gegenbauerv = [&](auto i, auto)
   { return boost::math::gegenbauer(i0.get(i), l, a0.get(i)); };
   TTS_ULP_EQUAL(eve__gegenbauerv(i0, a0), T(boost_gegenbauerv), 256);
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
     auto boost_gegenbauer2 = [&](auto i, auto)
     { return boost::math::gegenbauer(i0.get(i), l, a0.get(j)); };
     TTS_ULP_EQUAL(eve__gegenbauerv(i0, a0.get(j)), T(boost_gegenbauer2), 256);
   }
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
+    for( unsigned int n = 0; n < eve::width_v<T>; ++n )
     {
       TTS_ULP_EQUAL(eve__gegenbauerv(i0.get(j), a0.get(n)),
                     v_t(boost::math::gegenbauer(i0.get(j), l, a0.get(n))),

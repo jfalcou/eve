@@ -6,19 +6,19 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits/element_type.hpp>
 
 template<typename T>
-using extra_wide = eve::wide<T, 2 * eve::expected_cardinal_v<T>>;
+using extra_wide = eve::wide<T, 2 * eve::expected_width_v<T>>;
 
 template<typename T>
-inline constexpr auto small_size  = (eve::expected_cardinal_v<T>/2 !=0 )
-                                  ? eve::expected_cardinal_v<T>/2 : 1;
+inline constexpr auto small_size  = (eve::expected_width_v<T>/2 !=0 )
+                                  ? eve::expected_width_v<T>/2 : 1;
 
 template<typename T>
-inline constexpr auto smaller_size  = (eve::expected_cardinal_v<T>/4 !=0 )
-                                    ? eve::expected_cardinal_v<T>/4 : 1;
+inline constexpr auto smaller_size  = (eve::expected_width_v<T>/4 !=0 )
+                                    ? eve::expected_width_v<T>/4 : 1;
 
 template<typename T>
 using small_wide = eve::wide<T, small_size<T>>;
@@ -31,7 +31,7 @@ using tiny_wide = eve::wide<T, 1>;
 
 #define EVE_SIMD_TESTS
 #define EVE_TYPE      ${target}
-#define EVE_CARDINAL  ::eve::cardinal_v<T>
+#define EVE_CARDINAL  ::eve::width_v<T>
 #define EVE_VALUE     ::eve::element_type_t<T>
 
 #include "${header}.hpp"

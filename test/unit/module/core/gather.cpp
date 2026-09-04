@@ -35,19 +35,19 @@ TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", eve::test::simd:
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 
   const v_t *cdata = &data[0];
-  TTS_EQUAL(ref, eve::gather(eve::as_aligned(cdata, eve::cardinal_t<T> {}), maps));
-  TTS_EQUAL(ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T> {}), maps));
+  TTS_EQUAL(ref, eve::gather(eve::as_aligned(cdata, eve::width_t<T> {}), maps));
+  TTS_EQUAL(ref, eve::gather(eve::as_aligned(&data[0], eve::width_t<T> {}), maps));
 
   eve::as_logical_t<T> mask = [](auto i, auto) { return i % 2 == 0; };
   T mref([&](auto i, auto) { return mask.get(i) ? data[maps.get(i)] : v_t{0}; });
 
   auto cgathered  = eve::if_else( mask
-                                , eve::gather[mask](eve::as_aligned(cdata, eve::cardinal_t<T> {}), maps)
+                                , eve::gather[mask](eve::as_aligned(cdata, eve::width_t<T> {}), maps)
                                 , eve::zero
                                 );
 
   auto gathered = eve::if_else( mask
-                              , eve::gather[mask](eve::as_aligned(&data[0], eve::cardinal_t<T> {}), maps)
+                              , eve::gather[mask](eve::as_aligned(&data[0], eve::width_t<T> {}), maps)
                               , eve::zero
                               );
 
@@ -69,20 +69,20 @@ TTS_CASE_TPL("Check eve::gather behavior with 64 bits indexes", eve::test::simd:
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 
   const v_t *cdata = &data[0];
-  TTS_EQUAL(ref, eve::gather(eve::as_aligned(cdata, eve::cardinal_t<T> {}), maps));
-  TTS_EQUAL(ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T> {}), maps));
+  TTS_EQUAL(ref, eve::gather(eve::as_aligned(cdata, eve::width_t<T> {}), maps));
+  TTS_EQUAL(ref, eve::gather(eve::as_aligned(&data[0], eve::width_t<T> {}), maps));
 
   eve::as_logical_t<T> mask = [](auto i, auto) { return i % 2 == 0; };
 
   T mref([&](auto i, auto) { return mask.get(i) ? data[maps.get(i)] : v_t{0}; });
 
   auto cgathered  = eve::if_else( mask
-                                , eve::gather[mask](eve::as_aligned(cdata, eve::cardinal_t<T> {}), maps)
+                                , eve::gather[mask](eve::as_aligned(cdata, eve::width_t<T> {}), maps)
                                 , eve::zero
                                 );
 
   auto gathered = eve::if_else( mask
-                              , eve::gather[mask](eve::as_aligned(&data[0], eve::cardinal_t<T> {}), maps)
+                              , eve::gather[mask](eve::as_aligned(&data[0], eve::width_t<T> {}), maps)
                               , eve::zero
                               );
 

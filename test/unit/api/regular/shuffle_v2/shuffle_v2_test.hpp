@@ -64,7 +64,7 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
 
     std::array idxs {I...};
 
-    if( g() >= T::size() || g() >= eve::expected_cardinal_v<e_t> || idxs.size() == 1 )
+    if( g() >= T::size() || g() >= eve::expected_width_v<e_t> || idxs.size() == 1 )
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }
@@ -87,7 +87,7 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
 
     std::array idxs {I...};
 
-    if( g() >= T::size() || g() >= eve::expected_cardinal_v<e_t> || idxs.size() == 1 )
+    if( g() >= T::size() || g() >= eve::expected_width_v<e_t> || idxs.size() == 1 )
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }
@@ -274,7 +274,7 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... extra_args_g
   named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, extra_args_gen...);
 }
 
-template<bool supports_G_eq_T_Size, typename T, eve::size_type N, typename NamedShuffle>
+template<bool supports_G_eq_T_Size, typename T, eve::width_type N, typename NamedShuffle>
 void
 named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto extra_args_gen)
 {

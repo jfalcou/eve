@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/conditional.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 
 namespace eve::_
 {
@@ -25,7 +25,7 @@ EVE_FORCEINLINE svbool_t sve_true()
   else if constexpr( sizeof(T) == 8 ) return svptrue_b64();
 }
 
-// Returns clear sve_true for type of a given cardinal
+// Returns clear sve_true for type of a given width
 // while masking potential garbage value
 template<relative_conditional_expr C, typename T>
 EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
@@ -33,7 +33,7 @@ EVE_FORCEINLINE T sve_true(C cond, as<T> tgt)
   if constexpr(C::is_complete && C::is_inverted)
   {
     using v_t   = element_type_t<T>;
-    constexpr auto fc  = fundamental_cardinal_v<v_t>;
+    constexpr auto fc  = fundamental_width_v<v_t>;
 
     if constexpr ( eve::has_aggregated_abi_v<T> )
     {

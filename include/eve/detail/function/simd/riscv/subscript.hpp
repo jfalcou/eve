@@ -12,7 +12,7 @@
 
 namespace eve::_
 {
-template<callable_options O, typename T, size_type N>
+template<callable_options O, typename T, width_type N>
 EVE_FORCEINLINE T
 extract_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -29,7 +29,7 @@ requires rvv_abi<abi_t<T, N>>
   else return __riscv_vmv_x(on_first_needed);
 }
 
-template<callable_options O, typename T, size_type N>
+template<callable_options O, typename T, width_type N>
 EVE_FORCEINLINE void
 insert_(EVE_REQUIRES(rvv_),
         O const&,
@@ -43,7 +43,7 @@ requires rvv_abi<abi_t<T, N>>
   v = if_else(mask, static_cast<T>(x), v);
 }
 
-template<callable_options O, typename T, size_type N>
+template<callable_options O, typename T, width_type N>
 EVE_FORCEINLINE logical<T>
 extract_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -55,7 +55,7 @@ requires rvv_abi<abi_t<T, N>>
   return mask_data[needed_element_id] & (1 << (i % 8));
 }
 
-template<callable_options O, typename T, size_type N>
+template<callable_options O, typename T, width_type N>
 EVE_FORCEINLINE void
 insert_(EVE_REQUIRES(rvv_),
         O const&,

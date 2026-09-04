@@ -81,7 +81,7 @@ namespace eve
     template <typename Tgt>
     constexpr auto bit_cast_alternative(as<Tgt>)
     {
-      if constexpr (simd_value<V>) return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<wide<Tgt, cardinal_t<V>>>{}); });
+      if constexpr (simd_value<V>) return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<wide<Tgt, width_t<V>>>{}); });
       else                         return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<Tgt>{}); });
     }
 

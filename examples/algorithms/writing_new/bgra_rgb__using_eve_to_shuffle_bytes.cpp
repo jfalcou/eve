@@ -112,7 +112,7 @@ std::uint8_t* convert_bgra_to_rgb(std::span<std::uint8_t const> in, std::uint8_t
     // On sse2 the byte shuffles are very poor, so we are going to use 8 bytes at a time.
     // This can be done better with some effort
     else if constexpr( eve::current_api == eve::sse2 ) return eve::lane<8>;
-    else                                               return eve::lane<eve::expected_cardinal_v<std::uint8_t>>;
+    else                                               return eve::lane<eve::expected_width_v<std::uint8_t>>;
   }();
 
   // Algorithm works like this:
@@ -132,7 +132,7 @@ std::uint8_t* convert_bgra_to_rgb(std::span<std::uint8_t const> in, std::uint8_t
     std::uint8_t const *precise_l = l - n();
     precise_l                     = f + (precise_l - f) / n() * n();
 
-    // Here we can use `eve::algo::for_each` with no_aligning and divisible_by_cardinal.
+    // Here we can use `eve::algo::for_each` with no_aligning and divisible_by_width.
     // This could be useful to ask eve to unroll the loop for us.
     // But compiler seems perfectly OK unrolling this so it won't give us anything.
 

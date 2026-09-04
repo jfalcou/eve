@@ -58,7 +58,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
     // lanes value
     auto lanes = eve::lane<T::size()>;
 
-    TTS_AND_THEN("load is applied on pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](ptr, lanes)                 , full_ref        );
       TTS_EQUAL((eve::load[il](ptr, lanes))                             , ignore_last_ref );
@@ -70,7 +70,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](ptr, lanes) ) , others          );
     }
 
-    TTS_AND_THEN("load is applied on constant pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on constant pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](const_ptr, lanes)               , full_ref        );
       TTS_EQUAL((eve::load[il](const_ptr, lanes))                           , ignore_last_ref );
@@ -82,7 +82,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](const_ptr, lanes)), others          );
     }
 
-    TTS_AND_THEN("load is applied on iterator for a specific cardinal")
+    TTS_AND_THEN("load is applied on iterator for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](data_list.begin(), lanes)                 , full_ref        );
       TTS_EQUAL((eve::load[il](data_list.begin(), lanes))                             , ignore_last_ref );
@@ -94,9 +94,9 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](data_list.begin(), lanes) ) , others          );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
-      TTS_AND_THEN("load is applied on pointer for default cardinal")
+      TTS_AND_THEN("load is applied on pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](ptr)                , full_ref        );
         TTS_EQUAL((eve::load[il](ptr) )                           , ignore_last_ref );
@@ -108,7 +108,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
         TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](ptr)) , others          );
       }
 
-      TTS_AND_THEN("load is applied on constant pointer for default cardinal")
+      TTS_AND_THEN("load is applied on constant pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](const_ptr)                , full_ref        );
         TTS_EQUAL((eve::load[il](const_ptr) )                           , ignore_last_ref );
@@ -120,7 +120,7 @@ TTS_CASE_WITH( "Check conditional load to wides from unaligned pointer with alte
         TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](const_ptr)) , others          );
       }
 
-      TTS_AND_THEN("load is applied on iterator for default cardinal")
+      TTS_AND_THEN("load is applied on iterator for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](data_list.begin())                 , full_ref        );
         TTS_EQUAL((eve::load[il](data_list.begin()))                             , ignore_last_ref );

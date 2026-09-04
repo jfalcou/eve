@@ -16,8 +16,8 @@ namespace eve
   template<typename T> struct logical;
 
   //================================================================================================
-  // Select ABI from Type x Cardinal combo
-  template<typename Type, size_type Size> struct abi_of
+  // Select ABI from Type x Width combo
+  template<typename Type, width_type Width> struct abi_of
   {
     static constexpr auto find()
     {
@@ -26,7 +26,7 @@ namespace eve
 
       if constexpr(supports_simd && !is_fp16_no_support)
       {
-        constexpr auto width  = sizeof(Type) * Size;
+        constexpr auto width  = sizeof(Type) * Width;
         constexpr bool f64    = std::is_same_v<Type,double>;
 
         if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
@@ -90,11 +90,11 @@ namespace eve
 
   //================================================================================================
   // ABI for logical<T>
-  template<typename Type, size_type Size>
-  struct abi_of<logical<Type>, Size> : abi_of<Type, Size> {};
+  template<typename Type, width_type Width>
+  struct abi_of<logical<Type>, Width> : abi_of<Type, Width> {};
 
   //================================================================================================
   // Typename shortcut
-  template<typename Type, size_type Size>
-  using abi_of_t = typename abi_of<Type, Size>::type;
+  template<typename Type, width_type Width>
+  using abi_of_t = typename abi_of<Type, Width>::type;
 }

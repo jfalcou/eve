@@ -47,16 +47,16 @@ using `preprocess_range`.
 *TODO*
 
 Main models:
-* `algined_ptr` with attached cardinal
-* pointer with attached cardinal
+* `algined_ptr` with attached width
+* pointer with attached width
 * zip of `aligned_ptr` and pointer
 
 The basic concept for writing algorithms against.
 
 The minimum requirements are:
 * `eve::load` or `eve::store` are defined (returned types are not restricted).
-* `iterator_cardinal<I>` is defined and returns `eve::fixed`.
-* `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_cardinal_v<I>`
+* `iterator_width<I>` is defined and returns `eve::fixed`.
+* `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_width_v<I>`
 * `I - I` - returns the distance between two iterators (in elements).
 * I is totally ordered
 * `eve::unaligned(I)` - returns an `unaligned_iterator` pointing to the same place.
@@ -78,7 +78,7 @@ I and partially_aligned_t<I> are the same.
 
 The main model is `ptr_iterator<aligned_ptr, N>`, `zip_iterator<ptr_iterator<aligned_ptr, N>, ptr_iterator<T*, N>>`
 
-Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_cardinal_v<I>` divisible steps.
+Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_width_v<I>` divisible steps.
 
 ### unaligned_iterator(concept)
 
@@ -114,8 +114,8 @@ However for some algorithms, like `reverse` and maybe `partition` it's not a goo
 * `function_with_traits`
 
 algorithm traits
-* `divisible_by_cardinal`
-* `force_cardinal`
+* `divisible_by_width`
+* `force_width`
 * `no_aligning`
 * `unroll`
 * `consider_types`
@@ -158,12 +158,12 @@ common_type/common_with_types
 For zip makes all the individual components convert to a common_type
 (common_with_types allows to add to the list).
 
-divisible_by_cardinal
-you know for a fact that the range is divisible by cardinal
+divisible_by_width
+you know for a fact that the range is divisible by width
 
-force_cardinal
-ignore default cardinal deduction and try to force smth.
-Currently might fail compilation if you try to increase the cardinal, for example if you fail the alignment requirement.
+force_width
+ignore default width deduction and try to force smth.
+Currently might fail compilation if you try to increase the width, for example if you fail the alignment requirement.
 
 no_aligning
 By default we will try to find previous aligned address if  the iterators allow.
@@ -205,7 +205,7 @@ since it will generate instructions that can be executed in parallel.
 * `convert`
 
 An iterator on top of a different iterator that applies a convertion to a different type.
-Cardinal stays the same.
+Width stays the same.
 In the future this should use some more efficient platform loads.
 
 convert is a helper function to get a converting iterator.
@@ -214,13 +214,13 @@ convert is a helper function to get a converting iterator.
 
 `zip_iterator`
 
-A tuple of iterators with the same cardinal.
+A tuple of iterators with the same width.
 
 ### ptr_iterator
 
 * `ptr_iterator`
 
-A pointer + cardinal with the `iterator` interface.
+A pointer + width with the `iterator` interface.
 
 
 ### preprocess_range
@@ -249,7 +249,7 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 
 `zip`
 `zip[common_type]`
-`zip[divisible_by_cardinal]`
+`zip[divisible_by_width]`
 `zip[common_with_types<double>]`
 
 `zip` is an entry point for everything over parallel arrays.
@@ -260,4 +260,4 @@ All ranges passed to `zip` have to have the same length.
 
 The traits supported are `common_type` - converts all the individual iterators to the biggest type.
 `common_with_types<types...>` - same as common_type only will take the listed types into account.
-`divisible_by_cardinal` - just if you know that this range is `divisible` - this will be propagated up.
+`divisible_by_width` - just if you know that this range is `divisible` - this will be propagated up.

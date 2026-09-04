@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
@@ -22,7 +22,7 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, size_type N>
+template<arithmetic_scalar_value T, width_type N>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
                 rvv_make_splat(eve::as<wide<T, N>>, T x) noexcept
@@ -30,9 +30,9 @@ EVE_FORCEINLINE wide<T, N>
   constexpr auto c    = categorize<wide<T, N>>();
   constexpr auto lmul = rvv_lmul_v<T, N>;
   wide<T, N>     fill_zero;
-  if constexpr( N < eve::fundamental_cardinal_v<T> )
+  if constexpr( N < eve::fundamental_width_v<T> )
   {
-    auto tgt              = as<wide<T, eve::fundamental_cardinal_v<T>>> {};
+    auto tgt              = as<wide<T, eve::fundamental_width_v<T>>> {};
     auto fundamental_zero = rvv_make_splat(tgt, static_cast<T>(0));
     fill_zero             = bit_cast(fundamental_zero, eve::as<wide<T, N>> {});
   }
@@ -147,7 +147,7 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<arithmetic_scalar_value T, size_type N, arithmetic_scalar_value... Vs>
+template<arithmetic_scalar_value T, width_type N, arithmetic_scalar_value... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
                 rvv_make_enumerated(eve::as<wide<T, N>>, Vs... vs)
@@ -157,7 +157,7 @@ EVE_FORCEINLINE wide<T, N>
   return load(on_stack.data(), as<wide<T, N>>{});
 }
 
-template<callable_options O, arithmetic_scalar_value T, size_type N, typename V1, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, width_type N, typename V1, typename... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto
 make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) noexcept
@@ -169,7 +169,7 @@ make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) no
 //================================================================================================
 // logical cases
 //================================================================================================
-template<callable_options O, arithmetic_scalar_value T, size_type N, typename V1, typename... Vs>
+template<callable_options O, arithmetic_scalar_value T, width_type N, typename V1, typename... Vs>
 EVE_FORCEINLINE logical<wide<T, N>>
 make_(EVE_REQUIRES(rvv_), O const&, as<logical<wide<T, N>>>, V1 v1, Vs... vs) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -185,9 +185,9 @@ requires rvv_abi<abi_t<T, N>>
                                v1 ? static_cast<e_t>(-1) : static_cast<e_t>(0),
                                (vs ? static_cast<e_t>(-1) : static_cast<e_t>(0))...);
   auto logic_tgt = as<logical<wide<T, N>>> {};
-  if constexpr( N < eve::fundamental_cardinal_v<T> )
+  if constexpr( N < eve::fundamental_width_v<T> )
   {
-    auto tgt          = as<wide<e_t, fundamental_cardinal_v<T>>> {};
+    auto tgt          = as<wide<e_t, fundamental_width_v<T>>> {};
     auto full_bits    = bit_cast(bits, tgt);
     auto full_logical = full_bits > static_cast<e_t>(0);
     return call_simd_cast(full_logical, logic_tgt);

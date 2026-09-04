@@ -84,10 +84,10 @@ TTS_CASE_TPL("Check eve::scatter behavior with aligned_ptr", eve::test::simd::al
   for( std::size_t i = 0; i < 2*T::size(); ++i ) data[i] = e_t(99);
   T values = [](auto i, auto) { return 2*i+1; };
 
-  test_scatter<std::int32_t >(values,eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::uint32_t>(values,eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::int64_t >(values,eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::uint64_t>(values,eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
+  test_scatter<std::int32_t >(values,eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::uint32_t>(values,eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::int64_t >(values,eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::uint64_t>(values,eve::as_aligned(&data[0], eve::width_t<T>{}));
 };
 
 TTS_CASE_TPL("Check eve::scatter behavior with aligned_ptr and mask", eve::test::simd::all_types)
@@ -98,8 +98,8 @@ TTS_CASE_TPL("Check eve::scatter behavior with aligned_ptr and mask", eve::test:
   for( std::size_t i = 0; i < 2*T::size(); ++i ) data[i] = e_t(99);
   T values = [](auto i, auto) { return 2*i+1; };
 
-  test_scatter<std::int32_t >(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::uint32_t>(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::int64_t >(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
-  test_scatter<std::uint64_t>(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::cardinal_t<T>{}));
+  test_scatter<std::int32_t >(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::uint32_t>(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::int64_t >(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
+  test_scatter<std::uint64_t>(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
 };

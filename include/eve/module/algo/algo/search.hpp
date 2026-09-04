@@ -141,13 +141,13 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     template<typename S2>
     needle_checker(I2 f, S2 l, Equal _equal)
         : equal_fn(_equal)
-        , first_wide_ignore(iterator_cardinal_v<I2>)
+        , first_wide_ignore(iterator_width_v<I2>)
     {
       std::ptrdiff_t needle_len = l - f;
 
       // This code probably only makes sense after looking at the main check
       // function
-      if( needle_len < iterator_cardinal_v<I2> )
+      if( needle_len < iterator_width_v<I2> )
       {
         first_wide_ignore = eve::keep_first(needle_len);
         first_wide        = eve::load[first_wide_ignore](f);
@@ -158,14 +158,14 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       else
       {
         first_wide        = eve::load(f);
-        first_wide_ignore = eve::keep_first(iterator_cardinal_v<I2>);
+        first_wide_ignore = eve::keep_first(iterator_width_v<I2>);
 
         // the unsigned cast removes some negative number checks.
-        auto remainder   = ((std::size_t)needle_len) % iterator_cardinal_v<I2>;
-        long_tail_offset = (remainder != 0) ? remainder : (std::size_t) iterator_cardinal_v<I2>;
+        auto remainder   = ((std::size_t)needle_len) % iterator_width_v<I2>;
+        long_tail_offset = (remainder != 0) ? remainder : (std::size_t) iterator_width_v<I2>;
 
         long_tail_start = eve::unalign(f) + long_tail_offset;
-        long_tail_n     = (std::size_t)(needle_len - long_tail_offset) / iterator_cardinal_v<I2>;
+        long_tail_n     = (std::size_t)(needle_len - long_tail_offset) / iterator_width_v<I2>;
       }
     }
 
@@ -184,9 +184,9 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
         auto test = equal_fn(eve::load(haystack_i), eve::load(needle_i));
         if( !eve::all(test) ) return false;
 
-        haystack_i += iterator_cardinal_v<I1>;
-        needle_i += iterator_cardinal_v<I2>; // I1, I2 are interchangeable,
-                                             // cardinals are the same
+        haystack_i += iterator_width_v<I1>;
+        needle_i += iterator_width_v<I2>; // I1, I2 are interchangeable,
+                                             // widths are the same
       }
 
       return true;
@@ -227,7 +227,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       }
     } verify {{}, check};
 
-    _::for_each_possibly_matching_for_search(drop_key(divisible_by_cardinal, traits),
+    _::for_each_possibly_matching_for_search(drop_key(divisible_by_width, traits),
                                                   haystack_f,
                                                   haystack_main_part_l,
                                                   needle_front,
@@ -248,7 +248,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
                                                         Checker        checker) const
   {
     // no small tail
-    if( needle_len > eve::iterator_cardinal_v<UnalignedI1> ) return {};
+    if( needle_len > eve::iterator_width_v<UnalignedI1> ) return {};
 
     eve::wide_value_type_t<UnalignedI1> haystack =
         eve::load[eve::keep_first(haystack_l - small_tail_start)](small_tail_start);
@@ -260,7 +260,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       UnalignedI1                small_tail_start;
 
       // store small haystack in the stack buffer.
-      stack_buffer<wide<value_type_t<UnalignedI1>, 2 * iterator_cardinal_v<UnalignedI1>>>
+      stack_buffer<wide<value_type_t<UnalignedI1>, 2 * iterator_width_v<UnalignedI1>>>
           buf;
 
       Checker checker;
@@ -319,9 +319,9 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
 
     auto haystack_main_part_l = eve::unalign(haystack_f);
 
-    if( haystack_len > iterator_cardinal_v<I1> )
+    if( haystack_len > iterator_width_v<I1> )
     {
-      haystack_main_part_l += haystack_len - std::max(needle_len, static_cast<std::ptrdiff_t>(iterator_cardinal_v<I1>)) + 1;
+      haystack_main_part_l += haystack_len - std::max(needle_len, static_cast<std::ptrdiff_t>(iterator_width_v<I1>)) + 1;
 
       if( auto res = main_part(processed_haystack.traits(),
                                haystack_f,

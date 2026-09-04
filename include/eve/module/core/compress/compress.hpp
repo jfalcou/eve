@@ -29,7 +29,7 @@ namespace eve
   //!
   //!    @note
   //!      * FIX-1647: eve::compress doesn't support `wide<tuple>` yet.
-  //!      * the mask type can be any logical with the same cardinal.
+  //!      * the mask type can be any logical with the same width.
   //!
   //!    Compression in simd is moving selected elements to the front of the simd_value.
   //!    Unfortunately, not for all `simd_value`, not for all platforms that can be done

@@ -59,7 +59,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
     // lanes value
     auto lanes = eve::lane<T::size()>;
 
-    TTS_AND_THEN("load is applied on unaligned pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on unaligned pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](ptr, lanes)               , full_ref          );
       TTS_EQUAL((eve::load[il](ptr  , lanes) &  ml.mask() )           , ignore_last_ref   );
@@ -71,7 +71,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
       TTS_EQUAL((eve::load[eve::ignore_all](ptr, lanes) & mia.mask()) , T{0}              );
     }
 
-    TTS_AND_THEN("load is applied on unaligned constant pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on unaligned constant pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](const_ptr, lanes)               , full_ref        );
       TTS_EQUAL((eve::load[il](const_ptr, lanes) & ml.mask() )              , ignore_last_ref );
@@ -83,9 +83,9 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
       TTS_EQUAL((eve::load[eve::ignore_all](const_ptr, lanes) & mia.mask()) , T{0}            );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
-      TTS_AND_THEN("load is applied on unaligned pointer for default cardinal")
+      TTS_AND_THEN("load is applied on unaligned pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](ptr)              , full_ref        );
         TTS_EQUAL((eve::load[il](ptr) & ml.mask() )             , ignore_last_ref );
@@ -97,7 +97,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
         TTS_EQUAL((eve::load[eve::ignore_all](ptr) & mia.mask()), T{0}            );
       }
 
-      TTS_AND_THEN("load is applied on unaligned constant pointer for default cardinal")
+      TTS_AND_THEN("load is applied on unaligned constant pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](const_ptr)              , full_ref        );
         TTS_EQUAL((eve::load[il](const_ptr) & ml.mask() )             , ignore_last_ref );

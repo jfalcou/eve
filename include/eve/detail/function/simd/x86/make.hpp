@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/deps/spy.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 #include <eve/as.hpp>
 
 #if defined(SPY_COMPILER_IS_GCC)
@@ -22,7 +22,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, width_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
   {
@@ -35,12 +35,12 @@ namespace eve::_
     if constexpr (sizeof...(vs) == 0)
     {
       // splat make
-      if constexpr(wide<T, N>::size() < eve::fundamental_cardinal_v<T>)
+      if constexpr(wide<T, N>::size() < eve::fundamental_width_v<T>)
       {
         return [&]<std::size_t... I>(std::index_sequence<I...> const&)
         {
-          return make(as<wide<T, fundamental_cardinal_v<T>>>{}, (I < N ? v : 0)...);
-        }(std::make_index_sequence<fundamental_cardinal_v<T>>());
+          return make(as<wide<T, fundamental_width_v<T>>>{}, (I < N ? v : 0)...);
+        }(std::make_index_sequence<fundamental_width_v<T>>());
       }
       else
       {
@@ -252,7 +252,7 @@ namespace eve::_
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<callable_options O, arithmetic_scalar_value T, size_type N, typename V0, typename... Vs>
+  template<callable_options O, arithmetic_scalar_value T, width_type N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
   EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
   {

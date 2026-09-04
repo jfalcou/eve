@@ -284,12 +284,12 @@ void bit_test_simd(F fn, TruthFn truthFn, T a, T b, T c)
   bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(24));
   bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(T{ 30 }));
 
-  constexpr auto cardinal = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
-  if constexpr (cardinal >= 2)
+  if constexpr (width >= 2)
   {
     bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(1, 1));
-    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(width / 2, width / 2));
+    bit_test_simd_inner_cx(fn, a, b, c, eve::ignore_extrema(width / 4, width / 4));
   }
 }

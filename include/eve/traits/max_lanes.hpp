@@ -14,7 +14,7 @@ namespace eve
     template<typename... Ts>
     consteval auto compute_max_lanes()
     {
-      std::ptrdiff_t cards[] = { cardinal_v<Ts>... };
+      std::ptrdiff_t cards[] = { width_v<Ts>... };
 
       auto max_card = cards[0];
       for(auto c : cards) max_card = max_card < c ? c : max_card;
@@ -43,7 +43,7 @@ namespace eve
   //!
   //!  @tparam Ts Types to process
   //!
-  //!  @brief The cardinal type of the maximum lane count of given wide or scalar types.
+  //!  @brief The width type of the maximum lane count of given wide or scalar types.
   //! @}
   //================================================================================================
   template <typename... Ts>

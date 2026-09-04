@@ -307,7 +307,7 @@ the output directory the Doxyfile expects and fetches the tagfiles the cross-ref
 resolve against. **It should stay silent** — a warning here is a broken link on the website.
 
 If your change is architecture-dependent — anything under an `impl/simd/` directory, anything
-touching an ABI or a cardinal — run the test on the targets you cannot boot, from inside the
+touching an ABI or a width — run the test on the targets you cannot boot, from inside the
 CI image:
 
 ```bash

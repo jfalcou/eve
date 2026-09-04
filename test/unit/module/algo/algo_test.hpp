@@ -27,7 +27,7 @@ namespace algo_test
     , eve::wide<std::int8_t, 1>
     , eve::nofs_wide<float>
     , eve::wide<std::uint64_t>
-    , eve::wide<std::uint32_t, eve::nofs_cardinal_v<std::uint32_t> * 2>
+    , eve::wide<std::uint32_t, eve::nofs_width_v<std::uint32_t> * 2>
 #endif
   >;
 
@@ -38,7 +38,7 @@ namespace algo_test
     , eve::nofs_wide<kumi::tuple<std::int32_t, std::uint16_t>>
     , eve::wide<kumi::tuple<float, double>, 2>
     , eve::wide<kumi::tuple<float, double>>
-    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>, eve::expected_cardinal_v<std::uint32_t> * 2>
+    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>, eve::expected_width_v<std::uint32_t> * 2>
     > ;
 
 
@@ -77,7 +77,7 @@ namespace algo_test
     return std::vector<T, alloc>(ts_in_page, 0);
   }
 
-  template<eve::size_type N, typename T>
+  template<eve::width_type N, typename T>
   auto optional_aligned_ptr(T* ptr) {
     static constexpr std::ptrdiff_t alignment = sizeof(T) * N;
     if (eve::is_aligned<alignment>(ptr)) return eve::aligned_ptr<T, N>{ptr};
@@ -133,7 +133,7 @@ namespace algo_test
     run_f_l();
   }
 
-  template <eve::size_type N>
+  template <eve::width_type N>
   auto select_offsets() {
     if constexpr ( N <= 7 )
     {

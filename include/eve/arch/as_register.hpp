@@ -32,7 +32,7 @@ namespace eve
   template<typename T> consteval auto unpack_register(T)     { return T{}; }
   template<typename T> consteval auto unpack_register(as<T>) { return T{}; }
 
-  template<typename T, size_type N, typename ABI>
+  template<typename T, width_type N, typename ABI>
   consteval auto as_register(as<T> t, fixed<N> n, ABI abi)
   {
     using found_type = decltype(unpack_register(find_register_type(t, n, abi)));
@@ -41,10 +41,10 @@ namespace eve
     return found_type{};
   }
 
-  template<typename T, size_type N, typename ABI>
+  template<typename T, width_type N, typename ABI>
   using as_register_t = decltype(as_register(as<T>{}, fixed<N>{}, ABI{}));
 
-  template<typename T, size_type N, typename ABI>
+  template<typename T, width_type N, typename ABI>
   consteval auto as_logical_register(as<T> t, fixed<N> n, ABI abi)
   {
     using found_type = decltype(find_logical_register_type(t, n, abi));
@@ -54,6 +54,6 @@ namespace eve
     return found_type{};
   }
 
-  template<typename T, size_type N, typename ABI>
+  template<typename T, width_type N, typename ABI>
   using as_logical_register_t = decltype(as_logical_register(as<T>{}, fixed<N>{}, ABI{}));
 }

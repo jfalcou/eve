@@ -20,7 +20,7 @@ namespace eve
     struct  is_native_for_abi
           : std::bool_constant
             < ( (std::is_same_v<typename Wide::abi_type, ABI> &&
-                 Wide::size() == expected_cardinal_v<element_type_t<Wide>, ABI> )
+                 Wide::size() == expected_width_v<element_type_t<Wide>, ABI> )
               || ...
               )>
     {};

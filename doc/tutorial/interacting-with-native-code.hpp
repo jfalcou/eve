@@ -14,7 +14,7 @@ convertible to and from the intrinsic type you would expect.
   * neon: int8x8_t, int8x16_t for int8s etc.
   * sve, powerpc: ....
 
-To combine this with `eve::algorithm`s we have to force a specific cardinal. All algorithms
+To combine this with `eve::algorithm`s we have to force a specific width. All algorithms
 are designed to do not require templated callbacks so this remains possible.
 But, unfortunately views still require a templated callback.
 
@@ -27,7 +27,7 @@ still represented as a full register. For example wide<int, 2>
 on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can
 be garbage.
 
-If the cardinal is larger than the one that can be natively represented, you can
+If the width is larger than the one that can be natively represented, you can
 use slice to get to the half the wide size.
 
 @snippet tutorial/interacting_with_native.cpp slicing_aggregate

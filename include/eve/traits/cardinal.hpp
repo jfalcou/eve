@@ -12,17 +12,17 @@
 
 namespace eve
 {
-  template<std::ptrdiff_t Cardinal> struct fixed;
+  template<std::ptrdiff_t Width> struct fixed;
 
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!   @struct cardinal
-  //!   @brief Computes the cardinal of a given type
+  //!   @struct width
+  //!   @brief Computes the width of a given type
   //!
-  //!   **Required header:** `#include <eve/traits/cardinal.hpp>`
+  //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
-  //!   For a given type `T`, computes the type of its cardinal.
+  //!   For a given type `T`, computes the type of its width.
   //!
   //!   @tparam T Type to process
   //!
@@ -30,7 +30,7 @@ namespace eve
   //!
   //!   |Name   | Definition               |
   //!   |:------|:-------------------------|
-  //!   |`type` | The cardinal type of `T` |
+  //!   |`type` | The width type of `T` |
   //!
   //!    <br/>
   //!
@@ -38,35 +38,35 @@ namespace eve
   //!
   //!   @code{.cpp}
   //!   template<typename Type>
-  //!   using cardinal_t = typename cardinal<Type>::type;
+  //!   using width_t = typename width<Type>::type;
   //!   @endcode
   //!
   //!   @groupheader{Helper variable template}
   //!
   //!   @code{.cpp}
   //!   template<typename Type>
-  //!   inline constexpr auto cardinal_v = cardinal<Type>::value;
+  //!   inline constexpr auto width_v = width<Type>::value;
   //!   @endcode
   //! @}
   //================================================================================================
   template<typename Type>
-  struct cardinal : fixed<1>
+  struct width : fixed<1>
   {};
 
-  template<typename Type, std::ptrdiff_t Size>
-  struct cardinal<wide<Type, Size>> : fixed<Size>
+  template<typename Type, std::ptrdiff_t Width>
+  struct width<wide<Type, Width>> : fixed<Width>
   {
-    using type = fixed<Size>;
+    using type = fixed<Width>;
   };
 
   template<typename Type>
-  struct cardinal<logical<Type>> : cardinal<Type>
+  struct width<logical<Type>> : width<Type>
   {
   };
 
   template<typename Type>
-  using cardinal_t = typename cardinal<std::remove_cvref_t<Type>>::type;
+  using width_t = typename width<std::remove_cvref_t<Type>>::type;
 
   template<typename Type>
-  inline constexpr size_type cardinal_v = cardinal<std::remove_cvref_t<Type>>::value;
+  inline constexpr width_type width_v = width<std::remove_cvref_t<Type>>::value;
 }

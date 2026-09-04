@@ -66,7 +66,7 @@ just_shuffle_test(Selector selector)
 
 TTS_CASE("shuffle_driver with lambdas")
 {
-  // using very_wide to not care for fundamental cardinals
+  // using very_wide to not care for fundamental widths
   constexpr auto shuffle = just_shuffle_test(
       [](auto p, auto, auto x)
       {
@@ -96,7 +96,7 @@ TTS_CASE("shuffle_driver propagates not found")
   }
 
   // Propagate sfinae
-  constexpr auto op = []<typename T, eve::size_type N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
+  constexpr auto op = []<typename T, eve::width_type N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
   requires(sizeof(T) > 1)
   {
     if constexpr( sizeof(T) == 4 ) return eve::_::no_matching_shuffle;
@@ -265,7 +265,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
   }
 
   auto shuffle = just_shuffle_test(
-      []<typename U, eve::size_type N, std::ptrdiff_t G>(
+      []<typename U, eve::width_type N, std::ptrdiff_t G>(
           auto, eve::fixed<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
       {
         TTS_CONSTEXPR_EXPECT(std::unsigned_integral<U>);
@@ -341,7 +341,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
       auto shuffle = eve::_::make_shuffle_v2(
           [&]<typename G, typename U>(auto p, G, U x, auto...)
           {
-            constexpr std::ptrdiff_t cardinal = U::size() / G {}();
+            constexpr std::ptrdiff_t width = U::size() / G {}();
             
             auto expected = [](int i, int)
             {
@@ -357,7 +357,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
               return (std::ptrdiff_t)i;
             };
 
-            TTS_EQUAL(p, eve::fix_pattern<cardinal>(expected));
+            TTS_EQUAL(p, eve::fix_pattern<width>(expected));
             return kumi::tuple {x, eve::index<2>};
           });
 

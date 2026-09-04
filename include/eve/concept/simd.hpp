@@ -16,8 +16,8 @@ namespace eve
 {
   inline namespace EVE_ABI_NAMESPACE
   {
-    template<arithmetic_scalar_value Type, size_type Size>
-    requires (is_valid_size<Size>)
+    template<arithmetic_scalar_value Type, width_type Width>
+    requires (is_valid_width<Width>)
     struct wide;
   }
 
@@ -26,14 +26,14 @@ namespace eve
     template<typename T>
     struct is_wide_impl : std::false_type {};
 
-    template<arithmetic_scalar_value Type, size_type Size>
-    struct is_wide_impl<wide<Type, Size>> : std::true_type {};
+    template<arithmetic_scalar_value Type, width_type Width>
+    struct is_wide_impl<wide<Type, Width>> : std::true_type {};
 
     template<typename T>
     struct is_wide_logical_impl : std::false_type {};
 
-    template<arithmetic_scalar_value Type, size_type Size>
-    struct is_wide_logical_impl<logical<wide<Type, Size>>> : std::true_type {};
+    template<arithmetic_scalar_value Type, width_type Width>
+    struct is_wide_logical_impl<logical<wide<Type, Width>>> : std::true_type {};
   }
 
   template<typename T>

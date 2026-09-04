@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check that we can copy to an address after beginning (copy/copy_ba
 
       std::vector<eve::element_type_t<T>> expected(from, from + r_size);
 
-      eve::algo::copy_backward[eve::algo::force_cardinal<T::size()>](from_r, to_r);
+      eve::algo::copy_backward[eve::algo::force_width<T::size()>](from_r, to_r);
 
       std::vector<eve::element_type_t<T>> actual(to, to + r_size);
 

@@ -16,7 +16,7 @@ namespace eve::_
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<callable_options O, typename T, size_type N, typename Slice>
+  template<callable_options O, typename T, width_type N, typename Slice>
   EVE_FORCEINLINE wide<T, N / 2>
   slice_(EVE_REQUIRES(sse2_), O const&, wide<T,N> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>>
@@ -74,7 +74,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, size_type N, typename Slice>
+  template<callable_options O, typename T, width_type N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, N / 2>>
   slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a, Slice) noexcept
       requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
@@ -92,7 +92,7 @@ namespace eve::_
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<callable_options O, typename T, size_type N>
+  template<callable_options O, typename T, width_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -100,7 +100,7 @@ namespace eve::_
     return that;
   }
 
-  template<callable_options O, typename T, size_type N>
+  template<callable_options O, typename T, width_type N>
   EVE_FORCEINLINE auto slice_(EVE_REQUIRES(sse2_), O const&, logical<wide<T,N>> a) noexcept
       requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {

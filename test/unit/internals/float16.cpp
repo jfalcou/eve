@@ -57,7 +57,7 @@
     };
 
     auto run_for = [&]<std::ptrdiff_t N>(std::integral_constant<std::ptrdiff_t, N>) {
-      TTS_WHEN("cardinal = " << N)
+      TTS_WHEN("width = " << N)
       {
         using wf16_t = eve::wide<eve::float16_t, N>;
         using wf32_t = eve::wide<float, N>;
@@ -80,7 +80,7 @@
       }
     };
 
-    constexpr uint32_t max_c = eve::expected_cardinal_v<float> * 2;
+    constexpr uint32_t max_c = eve::expected_width_v<float> * 2;
     constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
     [&]<std::size_t... I>(std::index_sequence<I...>) {
@@ -109,7 +109,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip")
 TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
 {
   auto run_for = [&]<uint32_t N>(std::integral_constant<uint32_t, N>) {
-    TTS_WHEN("cardinal = " << N)
+    TTS_WHEN("width = " << N)
     {
       using wf16_t = eve::wide<eve::float16_t, N>;
       using wf32_t = eve::wide<float, N>;
@@ -128,7 +128,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
     }
   };
 
-  constexpr uint32_t max_c = eve::expected_cardinal_v<eve::float16_t> * 2;
+  constexpr uint32_t max_c = eve::expected_width_v<eve::float16_t> * 2;
   constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
   [&]<std::size_t... I>(std::index_sequence<I...>) {

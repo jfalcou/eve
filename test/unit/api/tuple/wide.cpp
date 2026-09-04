@@ -18,7 +18,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 TTS_CASE_TPL( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  constexpr auto c = eve::cardinal_v<eve::wide<tuple_t<T>>>;
+  constexpr auto c = eve::width_v<eve::wide<tuple_t<T>>>;
 
   TTS_EQUAL ( sizeof(eve::wide<kumi::tuple<std::int8_t,T,double>>)
             , sizeof(kumi::tuple<eve::wide<std::int8_t, c>,eve::wide<T, c>,eve::wide<double, c>>)

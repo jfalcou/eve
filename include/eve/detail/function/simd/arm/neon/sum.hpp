@@ -13,7 +13,7 @@
 
 namespace eve::_
 {
-  template<typename T, size_type N>
+  template<typename T, width_type N>
   EVE_FORCEINLINE wide<T,N> arm_sum_impl(wide<T,N> v) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -27,7 +27,7 @@ namespace eve::_
     else  if constexpr( c== category::int8x8    ) return vpadd_s8(v,v);
   }
 
-  template<callable_options O, typename T, size_type N>
+  template<callable_options O, typename T, width_type N>
   EVE_FORCEINLINE auto sum_(EVE_REQUIRES(neon128_), O const& opts, wide<T,N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {

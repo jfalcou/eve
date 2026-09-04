@@ -51,7 +51,7 @@ namespace eve::algo::views
   //!  @struct map_load_op
   //!  @brief requirement for the operation applied on read/load in map.
   //!         should work on both scalar and wide for the underlying iterator
-  //!         for any cardinal.
+  //!         for any width.
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve::algo::views
   //!  @struct map_store_op
   //!  @brief requirement for the operation applied on store in map.
   //!         should work on both scalar and wide for the underlying iterator
-  //!         for any cardinal.
+  //!         for any width.
   //!
   //!         accepts the `as<value_type_t<Base>>` for convenience
   //!         (so that it can be defined without knowing the underlying type).
@@ -221,7 +221,7 @@ namespace eve::algo::views
     using types_to_consider = typename _::map_types_to_consider<LoadOp, I>;
 
     // need to define this to workaround a clang bug.
-    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_v<I>>;
+    using vw_type    = eve::as_wide_t<value_type, iterator_width_v<I>>;
 
     using unaligned_me = map_iterator<unaligned_t<I>, LoadOp, StoreOp>;
 
@@ -314,16 +314,16 @@ namespace eve::algo::views
       return map_convert(base.next_partially_aligned(), load_op, store_op);
     }
 
-    static auto iterator_cardinal() requires iterator<I>
+    static auto iterator_width() requires iterator<I>
     {
-      return I::iterator_cardinal();
+      return I::iterator_width();
     }
 
-    template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_FORCEINLINE auto width_cast(_Width N) const
       requires iterator<I>
     {
-      return map_convert(base.cardinal_cast(N), load_op, store_op);
+      return map_convert(base.width_cast(N), load_op, store_op);
     }
 
     template<callable_options O>

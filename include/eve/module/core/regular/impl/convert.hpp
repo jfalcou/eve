@@ -30,7 +30,7 @@ namespace eve::_
     }
     else
     {
-      using out_t = _::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_v<T>>>;
+      using out_t = _::conditional_t<scalar_value<T>, U, as_wide_t<U, width_v<T>>>;
       out_t res;
 
       auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
@@ -42,15 +42,15 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename U, size_type N>
+  template<callable_options O, typename U, width_type N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t> && !O::contains(saturated))
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
-    // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
+    // proper widthity to keep the code size of `emulated_simd_fp16_to_fp32` under control.
     if constexpr( has_aggregated_abi_v<wide<float, N>> )
     {
-      constexpr auto card = expected_cardinal_v<float>;
+      constexpr auto card = expected_width_v<float>;
       using base   = typename wide<eve::float16_t, N>::template rescale<card>;
       auto parts   = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card>(v.storage()));
       auto cvt     = kumi::map([](auto p) { return convert(p, as<U>{}); }, parts);
@@ -62,7 +62,7 @@ namespace eve::_
     }
   }
 
-  template<callable_options O, typename T, size_type N>
+  template<callable_options O, typename T, width_type N>
   EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t> && !O::contains(saturated))
   {
@@ -153,7 +153,7 @@ namespace eve::_
       }
       else // wide
       {
-        constexpr auto N   = cardinal_v<In>;
+        constexpr auto N   = width_v<In>;
         constexpr auto c_i = categorize<In>();
         constexpr auto c_o = categorize<wide<Out, N>>();
 

@@ -122,7 +122,7 @@ namespace eve::_
     }
   };
 
-  template <typename T, size_type N>
+  template <typename T, width_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
@@ -165,7 +165,7 @@ namespace eve::_
     }
   }
 
-  template <typename T, size_type N>
+  template <typename T, width_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
   {
@@ -176,7 +176,7 @@ namespace eve::_
     }
   }
 
-  template <typename T, size_type N, typename U>
+  template <typename T, width_type N, typename U>
   constexpr bool compress_using_masks_should_aggregate()
   {
     constexpr std::size_t reg_size = max_scalar_size_v<T> * N;
@@ -187,7 +187,7 @@ namespace eve::_
     else                                                        return true;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, size_type N>
+  template<relative_conditional_expr C, typename T, typename U, width_type N>
   EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
                              C c,

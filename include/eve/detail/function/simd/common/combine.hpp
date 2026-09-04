@@ -25,7 +25,7 @@ namespace eve::_
     }
   };
 
-  template<typename T, size_type N>
+  template<typename T, width_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
@@ -47,7 +47,7 @@ namespace eve::_
     }
   }
 
-  template<typename T, size_type N>
+  template<typename T, width_type N>
   EVE_FORCEINLINE auto
   combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {

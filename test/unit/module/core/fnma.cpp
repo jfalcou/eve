@@ -132,7 +132,7 @@ TTS_CASE_WITH("Check behavior of promote(fnma) on all types",
   using eve::fnma;
   using eve::promote;
 
-  constexpr int N = eve::cardinal_v<T>;
+  constexpr int N = eve::width_v<T>;
   eve::wide<float, N> fa([](auto i,  auto){return float(i)/2; });
   auto r1 = fnma[eve::promote](a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;

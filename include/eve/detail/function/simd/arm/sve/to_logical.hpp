@@ -12,11 +12,11 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 
 namespace eve::_
 {
-  template<typename T, size_type N>
+  template<typename T, width_type N>
   EVE_FORCEINLINE auto to_logical(wide<T, N> const& v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
@@ -30,9 +30,9 @@ namespace eve::_
     using T = element_type_t<as_arithmetic_t<S>>;
     if constexpr (std::same_as<C, ignore_none_>)
     {
-      if constexpr (S::size() < fundamental_cardinal_v<T>)
+      if constexpr (S::size() < fundamental_width_v<T>)
       {
-        return to_logical_impl(tag, keep_first(cardinal_v<S>), tgt);
+        return to_logical_impl(tag, keep_first(width_v<S>), tgt);
       }
       else
       {
@@ -51,7 +51,7 @@ namespace eve::_
     }
     else if constexpr (std::same_as<C, ignore_first> || std::same_as<C, keep_last>)
     {
-      return svnot_z(to_logical_impl(tag, keep_first(cardinal_v<S>), tgt), to_logical_impl(tag, keep_first(c.offset(tgt)), tgt));
+      return svnot_z(to_logical_impl(tag, keep_first(width_v<S>), tgt), to_logical_impl(tag, keep_first(c.offset(tgt)), tgt));
     }
     else if constexpr (std::same_as<C, keep_between> || std::same_as<C, ignore_extrema>)
     {

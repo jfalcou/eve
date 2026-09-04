@@ -70,7 +70,7 @@ TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals_wf16)
 
     TTS_ULP_EQUAL(eve::exp10[eve::pedantic](T(-1)), T(0.1), 0.5);
     TTS_IEEE_EQUAL(eve::exp10[eve::pedantic](T(-0.)), T(1));
-    if constexpr( eve::platform::supports_denormals && std::same_as<elt_t, double> && eve::cardinal_v<T> == 1)
+    if constexpr( eve::platform::supports_denormals && std::same_as<elt_t, double> && eve::width_v<T> == 1)
     {
       TTS_ULP_EQUAL(eve::exp10[eve::pedantic](eve::minlog10(eve::as<T>())),
                     T(std_exp(elt_t(std::log(10.0)) * eve::minlog10(eve::as<elt_t>()))),

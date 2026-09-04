@@ -128,14 +128,14 @@ TTS_CASE("fix_indexes_to_fundamental")
   auto test =
       []<std::ptrdiff_t Fundamental, std::size_t N1, std::size_t N2>(eve::fixed<Fundamental>,
                                                                      std::array<int, N1> _p,
-                                                                     std::ptrdiff_t      cardinal,
+                                                                     std::ptrdiff_t      width,
                                                                      std::array<int, N2> _expected)
   {
     auto p        = to_idxs(_p);
     auto expected = to_idxs(_expected);
-    auto actual   = eve::_::idxm::fix_indexes_to_fundamental<Fundamental>(p, cardinal);
+    auto actual   = eve::_::idxm::fix_indexes_to_fundamental<Fundamental>(p, width);
 
-    TTS_EQUAL(expected, actual) << tts::as_string(p) << ", " << cardinal;
+    TTS_EQUAL(expected, actual) << tts::as_string(p) << ", " << width;
   };
 
   test(eve::lane<4>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3});
@@ -709,11 +709,11 @@ TTS_CASE("just_first_shuffle")
 
 TTS_CASE("is_blend")
 {
-  auto test = [](auto _in, std::ptrdiff_t cardinal, bool expected)
+  auto test = [](auto _in, std::ptrdiff_t width, bool expected)
   {
     auto in     = to_idxs(_in);
-    auto actual = eve::_::idxm::is_blend(in, cardinal);
-    TTS_EQUAL(expected, actual) << tts::as_string(in) << "cardinal: " << cardinal;
+    auto actual = eve::_::idxm::is_blend(in, width);
+    TTS_EQUAL(expected, actual) << tts::as_string(in) << "width: " << width;
   };
   test(std::array {0, 1}, 2, true);
   test(std::array {2, 1}, 2, true);
@@ -728,11 +728,11 @@ TTS_CASE("extract_blends")
 {
   using eve::_::idxm::extracted_blends_info;
   auto test = []<std::size_t NumRegs, std::size_t N>(std::array<int, N>                idxs,
-                                                     std::ptrdiff_t                    cardinal,
+                                                     std::ptrdiff_t                    width,
                                                      eve::_::idxm::extracted_blends_info<NumRegs, N> expected)
   {
     extracted_blends_info<NumRegs, N> actual =
-        eve::_::idxm::extract_blends<NumRegs>(to_idxs(idxs), cardinal);
+        eve::_::idxm::extract_blends<NumRegs>(to_idxs(idxs), width);
 
     TTS_EQUAL(expected.finished_pattern, actual.finished_pattern, REQUIRED);
     TTS_EQUAL(expected.zeroes.present_in_blend, actual.zeroes.present_in_blend, REQUIRED);

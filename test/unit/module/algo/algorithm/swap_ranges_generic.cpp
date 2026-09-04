@@ -70,7 +70,7 @@ TTS_CASE_TPL("Check swap ranges", algo_test::selected_pairs_types)
 
   swap_ranges_test_page_ends(native_tgt, eve::algo::swap_ranges);
 
-  auto with_cardinal = eve::algo::swap_ranges[eve::algo::force_cardinal<T::size()>];
+  auto with_width = eve::algo::swap_ranges[eve::algo::force_width<T::size()>];
 
-  swap_ranges_test_page_ends(eve::as<T>{}, with_cardinal[eve::algo::unroll<1>][eve::algo::no_aligning]);
+  swap_ranges_test_page_ends(eve::as<T>{}, with_width[eve::algo::unroll<1>][eve::algo::no_aligning]);
 };

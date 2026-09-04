@@ -49,9 +49,9 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
   auto [data1,idx1] = page<T            , w8_t::size() >();
   auto [data2,idx2] = page<double       , w8_t::size() >();
 
-  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0], eve::cardinal_t<w8_t>{})
+  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0], eve::width_t<w8_t>{})
                               , &data1[idx1] - 1
-                              , eve::as_aligned(&data2[idx2], eve::cardinal_t<w8_t>{})
+                              , eve::as_aligned(&data2[idx2], eve::width_t<w8_t>{})
                               );
 
 

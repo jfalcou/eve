@@ -134,7 +134,7 @@ namespace eve::_
       else  if constexpr( std::is_signed_v<type>   ) value = value | category::int_;
       else  if constexpr( std::is_unsigned_v<type> ) value = value | category::uint_;
 
-      // Base type size & Cardinal
+      // Base type size & Width
       constexpr auto card = static_cast<category>(sizeof(storage_t) / sizeof(type));
       constexpr auto sz   = static_cast<category>(sizeof(type) << 20);
 

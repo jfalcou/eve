@@ -10,7 +10,7 @@
 #include <eve/memory/aligned_allocator.hpp>
 #include <vector>
 
-TTS_CASE_TPL("aligned_allocator behavior", eve::test::cardinals)
+TTS_CASE_TPL("aligned_allocator behavior", eve::test::widths)
 <typename Lanes>(tts::type<Lanes>)
 {
   using alloc_t = eve::aligned_allocator<char, Lanes::value>;
@@ -19,7 +19,7 @@ TTS_CASE_TPL("aligned_allocator behavior", eve::test::cardinals)
   TTS_EXPECT(eve::is_aligned(x.data(), Lanes{}));
 };
 
-TTS_CASE_TPL("aligned_allocator comparisons", eve::test::cardinals)
+TTS_CASE_TPL("aligned_allocator comparisons", eve::test::widths)
 <typename Lanes>(tts::type<Lanes>)
 {
   eve::aligned_allocator<double , Lanes::value>     a1, a2;
@@ -31,7 +31,7 @@ TTS_CASE_TPL("aligned_allocator comparisons", eve::test::cardinals)
   TTS_NOT_EQUAL(a1, c1);
 };
 
-TTS_CASE_TPL("aligned_allocator rebind", eve::test::cardinals)
+TTS_CASE_TPL("aligned_allocator rebind", eve::test::widths)
 <typename Lanes>(tts::type<Lanes>)
 {
   TTS_TYPE_IS ( (typename eve::aligned_allocator<double, Lanes::value>::template rebind<float>::other)

@@ -16,24 +16,24 @@
 namespace eve::_
 {
 // Find the proper broadcast group shape. If none is found, returns {-1,-1}
-template<std::size_t Cardinal, std::size_t Size>
+template<std::size_t Width, std::size_t Width>
 constexpr inline auto
-find_broadcast_group(std::array<std::ptrdiff_t, Size> const& pattern)
+find_broadcast_group(std::array<std::ptrdiff_t, Width> const& pattern)
 {
   struct bg
   {
     std::ptrdiff_t group = -1, index = -1;
   };
 
-  for( std::ptrdiff_t g = Size; g > 0; g /= 2 )
+  for( std::ptrdiff_t g = Width; g > 0; g /= 2 )
   {
-    std::ptrdiff_t nb_idx = Cardinal / g;
+    std::ptrdiff_t nb_idx = Width / g;
 
     for( std::ptrdiff_t idx = 0; idx < nb_idx; idx++ )
     {
       // Compute what we expect
-      std::array<std::ptrdiff_t, Size> expected;
-      for( std::size_t i = 0; i < Size; ++i ) expected[i] = idx * g + (i % g);
+      std::array<std::ptrdiff_t, Width> expected;
+      for( std::size_t i = 0; i < Width; ++i ) expected[i] = idx * g + (i % g);
 
       // Is it what we want ?
       if( pattern == expected ) return bg {g, idx};
@@ -55,18 +55,18 @@ inline constexpr auto is_broadcast_group = []()
   else return std::optional<int> {};
 }();
 
-template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
-requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Width>
+requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0)
+         && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           Wide           w,
                           fixed<Group>   g,
                           index_t<Index> i,
-                          fixed<Size>    sz)
+                          fixed<Width>    sz)
 {
-  using that_t        = as_wide_t<Wide, Size>;
+  using that_t        = as_wide_t<Wide, Width>;
   using v_t           = element_type_t<Wide>;
-  constexpr auto card = cardinal_v<Wide>;
+  constexpr auto card = width_v<Wide>;
 
   if constexpr( is_bundle_v<typename Wide::abi_type> )
   {
@@ -74,24 +74,24 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   }
   else
   {
-    // If the output size is equal to the group size and the cardinal, we just return the input
-    if constexpr( Size == Group && Size == card ) { return w; }
+    // If the output size is equal to the group size and the width, we just return the input
+    if constexpr( Width == Group && Width == card ) { return w; }
     // If the input wide is not aggregated and we don't bcast more than 64 bits
     else if constexpr( sizeof(v_t) * Group <= 8 )
     {
       using outer_type = _::make_integer_t<sizeof(v_t) * Group>;
       using w_t        = as_wide_t<outer_type, card / Group>;
-      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Size / Group>), as<that_t>());
+      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Width / Group>), as<that_t>());
     }
     // If the output Greater than the Group size, we slice by half
-    else if constexpr( Size > Group )
+    else if constexpr( Width > Group )
     {
-      auto const r = broadcast_group(w, g, i, lane<Size / 2>);
+      auto const r = broadcast_group(w, g, i, lane<Width / 2>);
       return eve::combine(r, r);
     }
     else
     {
-      // If the beginning of the indexed group is beyond half the cardinal
+      // If the beginning of the indexed group is beyond half the width
       if constexpr( Index * Group >= card / 2 )
       {
         // We recompute the index and broadcast something from the upper slice of w
@@ -106,14 +106,14 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   }
 }
 
-template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
-requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Width>
+requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0)
+         && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           logical<Wide>  w,
                           fixed<Group>   g,
                           index_t<Index> i,
-                          fixed<Size>    sz)
+                          fixed<Width>    sz)
 {
   using abi_t = typename logical<Wide>::abi_type;
   if constexpr( !abi_t::is_wide_logical )
@@ -131,10 +131,10 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
 }
 
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index>
-requires((Group > 0) && (Group <= cardinal_v<Wide>)&&(Index >= 0)
-         && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
+requires((Group > 0) && (Group <= width_v<Wide>)&&(Index >= 0)
+         && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_), Wide w, fixed<Group> g, index_t<Index> i)
 {
-  return broadcast_group(w, g, i, cardinal_t<Wide> {});
+  return broadcast_group(w, g, i, width_t<Wide> {});
 }
 }

@@ -60,7 +60,7 @@ TTS_CASE("eve::views::map, preprocess")
   using ap = eve::nofs_aligned_ptr<int>;
 
   // double because the map operation returns double
-  constexpr auto N = eve::nofs_cardinal_v<double>;
+  constexpr auto N = eve::nofs_width_v<double>;
 
   using ui     = eve::algo::ptr_iterator<int*, N>;
   using ai     = eve::algo::ptr_iterator<eve::aligned_ptr<int, N>, N>;

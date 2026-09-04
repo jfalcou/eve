@@ -226,17 +226,17 @@ validate_pattern(eve::fixed<G>, pattern_t<I...>, eve::as<T>, eve::as<Ts>...)
 template<std::size_t Fundamental, std::size_t PatternSize>
 constexpr auto
 fix_indexes_to_fundamental(const std::array<std::ptrdiff_t, PatternSize>& p,
-                           std::ptrdiff_t                                 cardinal)
+                           std::ptrdiff_t                                 width)
 {
   std::array<std::ptrdiff_t, std::max(PatternSize, Fundamental)> res {};
   std::size_t                                                    i = 0;
 
-  std::ptrdiff_t wide_offest = (std::ptrdiff_t)Fundamental - cardinal;
+  std::ptrdiff_t wide_offest = (std::ptrdiff_t)Fundamental - width;
 
   for( ; i != PatternSize; ++i )
   {
     std::ptrdiff_t x = p[i];
-    if( x >= cardinal ) { x += wide_offest * (x / cardinal); }
+    if( x >= width ) { x += wide_offest * (x / width); }
     res[i] = x;
   }
 
@@ -572,11 +572,11 @@ slice_pattern(pattern_t<I...>)
   }
 }
 
-template<std::ptrdiff_t Cardinal, std::ptrdiff_t... I>
+template<std::ptrdiff_t Width, std::ptrdiff_t... I>
 constexpr auto
 drop_unused_wides(eve::pattern_t<I...>)
 {
-  constexpr std::size_t kSizeNeeded = std::max(std::ptrdiff_t {1}, std::max({I...}) / Cardinal + 1);
+  constexpr std::size_t kSizeNeeded = std::max(std::ptrdiff_t {1}, std::max({I...}) / Width + 1);
 
   constexpr auto used_buffer_size = [&]
   {
@@ -584,7 +584,7 @@ drop_unused_wides(eve::pattern_t<I...>)
     for( auto i : {I...} )
     {
       if( i < 0 ) continue;
-      register_used[i / Cardinal] = 1;
+      register_used[i / Width] = 1;
     }
     std::array<int, kSizeNeeded> r   = {};
     int                         *out = r.data();
@@ -612,7 +612,7 @@ drop_unused_wides(eve::pattern_t<I...>)
 
     for( int new_wide_idx = 0; int wide_idx : used_wide_indexes )
     {
-      reduce_offset_by[(std::size_t)wide_idx] = (wide_idx - new_wide_idx) * Cardinal;
+      reduce_offset_by[(std::size_t)wide_idx] = (wide_idx - new_wide_idx) * Width;
       ++new_wide_idx;
     }
 
@@ -621,7 +621,7 @@ drop_unused_wides(eve::pattern_t<I...>)
     for( auto& i : res )
     {
       if( i < 0 ) continue;
-      int wide_idx = i / Cardinal;
+      int wide_idx = i / Width;
       i -= reduce_offset_by[(std::size_t)wide_idx];
     }
 
@@ -738,10 +738,10 @@ just_first_shuffle(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t wit
 }
 
 constexpr bool
-is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t cardinal)
+is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t width)
 {
   std::ptrdiff_t s = std::ssize(idxs);
-  if( s == 1 || s != cardinal ) return false;
+  if( s == 1 || s != width ) return false;
 
   // std::all_of
   for( int i = 0; i != s; ++i )
@@ -775,7 +775,7 @@ template<std::size_t NumRegisters, std::size_t N> struct extracted_blends_info
 template<std::size_t NumRegisters, std::size_t N>
 constexpr void
 adjust_indexes_to_skip_unusued_inputs(extracted_blends_info<NumRegisters, N>& res,
-                                      std::ptrdiff_t                          cardinal)
+                                      std::ptrdiff_t                          width)
 {
   std::array<std::ptrdiff_t, NumRegisters> offsets        = {};
   std::ptrdiff_t                           current_offset = 0;
@@ -783,19 +783,19 @@ adjust_indexes_to_skip_unusued_inputs(extracted_blends_info<NumRegisters, N>& re
   {
     const auto& blend = res.register_blends[i];
     offsets[i]        = current_offset;
-    current_offset += blend.present_in_shuffle ? 0 : cardinal;
+    current_offset += blend.present_in_shuffle ? 0 : width;
   }
 
   for( auto& idx : res.finished_pattern )
   {
-    auto wide_i = static_cast<std::size_t>(idx / cardinal);
+    auto wide_i = static_cast<std::size_t>(idx / width);
     idx -= offsets[wide_i];
   }
 }
 
 template<std::size_t NumRegisters, std::size_t N>
 constexpr extracted_blends_info<NumRegisters, N>
-extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t cardinal)
+extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t width)
 {
   extracted_blends_info<NumRegisters, N> res;
 
@@ -815,8 +815,8 @@ extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t cardinal)
       continue;
     }
 
-    auto wide_i      = static_cast<std::size_t>(idxs[i] / cardinal);
-    auto pos_in_wide = static_cast<std::size_t>(idxs[i] % cardinal);
+    auto wide_i      = static_cast<std::size_t>(idxs[i] / width);
+    auto pos_in_wide = static_cast<std::size_t>(idxs[i] % width);
 
     if( i == pos_in_wide )
     {
@@ -831,16 +831,16 @@ extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t cardinal)
     }
   }
 
-  adjust_indexes_to_skip_unusued_inputs(res, cardinal);
+  adjust_indexes_to_skip_unusued_inputs(res, width);
 
   return res;
 }
 
 template<std::size_t NumRegisters, std::size_t N>
 constexpr extracted_blends_info<NumRegisters, N>
-extract_blends(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t cardinal)
+extract_blends(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t width)
 {
-  return extract_blends<NumRegisters>(std::span<const std::ptrdiff_t, N>(idxs), cardinal);
+  return extract_blends<NumRegisters>(std::span<const std::ptrdiff_t, N>(idxs), width);
 }
 
 template<std::ptrdiff_t G, std::size_t N>

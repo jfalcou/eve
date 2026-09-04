@@ -72,7 +72,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. Bitwise rotation of each lane of `x` by `n` bits to the right.
-//!         The types must share the same cardinal or be scalar and if `N` is the size in bits of
+//!         The types must share the same width or be scalar and if `N` is the size in bits of
 //!         the element type of `T`, all [elements](@ref glossary_elementwise) of n must belong to the
 //!         interval: `[0, N[` or the result is undefined.
 //!       2. [The operation is performed conditionally](@ref conditional)

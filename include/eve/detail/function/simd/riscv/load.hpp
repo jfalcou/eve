@@ -20,14 +20,14 @@ namespace eve::_
 {
 
 // Fills undefined values with zeros
-template<arithmetic_scalar_value T, size_type N, typename PtrTy>
+template<arithmetic_scalar_value T, width_type N, typename PtrTy>
 EVE_FORCEINLINE wide<T, N>
                 perform_alternative_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
   wide<T, N> zero_init {0};
-  if constexpr( N < eve::fundamental_cardinal_v<T> )
+  if constexpr( N < eve::fundamental_width_v<T> )
   {
-    auto tgt              = as<wide<T, eve::fundamental_cardinal_v<T>>> {};
+    auto tgt              = as<wide<T, eve::fundamental_width_v<T>>> {};
     auto fundamental_zero = rvv_make_splat(tgt, static_cast<T>(0));
     zero_init             = bit_cast(fundamental_zero, eve::as<wide<T, N>> {});
   }
@@ -42,7 +42,7 @@ EVE_FORCEINLINE wide<T, N>
 }
 
 // Undefined values are undefined
-template<arithmetic_scalar_value T, size_type N, typename PtrTy>
+template<arithmetic_scalar_value T, width_type N, typename PtrTy>
 EVE_FORCEINLINE wide<T, N>
                 perform_load(logical<wide<T, N>> mask, as<wide<T, N>>, PtrTy p)
 {
@@ -53,7 +53,7 @@ EVE_FORCEINLINE wide<T, N>
   else if constexpr( match(c, category::size64_) ) return __riscv_vle64(mask, p, N);
 }
 
-template<relative_conditional_expr C, arithmetic_scalar_value T, size_type N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
   requires rvv_abi<abi_t<T, N>>
 {
@@ -74,7 +74,7 @@ EVE_FORCEINLINE wide<T, N> load_impl(rvv_, C const& cx, Ptr p, as<wide<T, N>> tg
   else return perform_alternative_load(expand_mask(cx, tgt), tgt, ptr);
 }
 
-template<relative_conditional_expr C, typename T, size_type N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
+template<relative_conditional_expr C, typename T, width_type N, simd_compatible_ptr<logical<wide<T, N>>> Ptr>
 EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<logical<wide<T, N>>>) noexcept
 {
   auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });
@@ -82,7 +82,7 @@ EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Ptr ptr, as<log
   return to_logical(block);
 }
 
-template<relative_conditional_expr C, typename Iterator, typename T, size_type N>
+template<relative_conditional_expr C, typename Iterator, typename T, width_type N>
 EVE_FORCEINLINE logical<wide<T, N>> load_impl(rvv_, C const& cx, Iterator b, Iterator e, as<logical<wide<T, N>>>) noexcept
 {
   auto const c1    = map_alternative(cx, [](auto alt) { return alt.mask(); });

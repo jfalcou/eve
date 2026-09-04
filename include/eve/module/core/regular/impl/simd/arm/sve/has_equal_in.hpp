@@ -18,7 +18,7 @@
 
 namespace eve::_
 {
-  template<callable_options O, typename T, size_type N, typename Pred>
+  template<callable_options O, typename T, width_type N, typename Pred>
   constexpr EVE_FORCEINLINE logical<wide<T, N>> has_equal_in_(EVE_REQUIRES(sve2_), O const& opts, wide<T, N> x, wide<T, N> match_against, Pred op) noexcept
     requires (sve_abi<abi_t<T, N>> && (sizeof(T) <= 2) && integral_scalar_value<T>)
   {
@@ -28,7 +28,7 @@ namespace eve::_
     }
     else
     {
-      using fw_t = wide<T, fundamental_cardinal_v<T>>;
+      using fw_t = wide<T, fundamental_width_v<T>>;
       constexpr auto byte_size = sizeof(T) * N;
 
       // note: svmatch only works in lanes of 128 bits.

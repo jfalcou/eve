@@ -430,7 +430,7 @@ struct shuffle_v2_driver_bundle
     return kumi::map(
         []<typename Field, typename... Fields>(kumi::tuple<Field, Fields...> field_res)
         {
-          using T1 = typename Bundle::template rescale<Field::cardinal_type::value>;
+          using T1 = typename Bundle::template rescale<Field::width_type::value>;
           return T1 {field_res};
         },
         field_results);

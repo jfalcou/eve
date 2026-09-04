@@ -23,7 +23,7 @@ void remove_spaces(std::string& s)
   // eve only supports std::int8_t and std::uint8_t, not char.
   std::span s_bytes{reinterpret_cast<std::uint8_t*>(s.data()), s.size()};
 
-  auto end = eve::algo::remove_if[eve::algo::force_cardinal<16>](
+  auto end = eve::algo::remove_if[eve::algo::force_width<16>](
     s_bytes,[](u8x16 v) -> eve::logical<u8x16> {
     // A simd is_space we took from @aqrit
     __m128i lut = _mm_setr_epi8(' ',    0,    0,  0,

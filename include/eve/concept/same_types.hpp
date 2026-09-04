@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/deps/kumi.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/concept/same_lanes.hpp>
 
