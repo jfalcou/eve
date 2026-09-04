@@ -10,7 +10,7 @@ int main()
   {
     std::cout << eve::hurwitz(i, z) << std::endl;
   }
-//   using w_t =  eve::wide<double, eve::fixed<1>>;
+//   using w_t =  eve::wide<double, 1>;
 //   std::cout << eve::hurwitz(3.0, 15.0) << std::endl;
 //   std::cout << " ================================ "<< std::endl;
 //   std::cout << eve::hurwitz(3.0, w_t(15.0)) << std::endl;

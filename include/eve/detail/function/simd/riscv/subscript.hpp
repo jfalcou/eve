@@ -17,7 +17,7 @@ EVE_FORCEINLINE T
 extract_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  auto on_first_needed = __riscv_vslidedown(v, i, N::value);
+  auto on_first_needed = __riscv_vslidedown(v, i, N);
 
   // __riscv_vfmv_f requires zvfh
   if constexpr (std::same_as<T, eve::float16_t> && !supports_fp16_vector_ops)
