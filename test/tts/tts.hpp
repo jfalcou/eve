@@ -1575,69 +1575,74 @@ namespace tts
         !requires { to_text(e); },
         "[TTS] tts::to_text is no longer a customization point. "
         "Specialize tts::display<T>::render instead.");
-        if constexpr(std::floating_point<T>)
-        {
-          auto precision = ::tts::arguments().value(16, "--precision");
-          bool hexmode   = ::tts::arguments()("-x", "--hex");
-          bool scimode   = ::tts::arguments()("-s", "--scientific");
-          if(scimode) return text("%.*E", precision, e);
-          else if(hexmode) return text("%#.*A", precision, e);
-          else return text("%.*g", precision, e);
-        }
-        else if constexpr(std::integral<T>)
-        {
-          if constexpr(sizeof(T) > 4)
-          {
-            auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
-            return text(fmt, e);
-          }
-          else
-          {
-            auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
-            return text(fmt, e);
-          }
-        }
+        if constexpr(std::floating_point<T>) return floating(e);
+        else if constexpr(std::integral<T>) return integral(e);
         else if constexpr(_::string<T>)
-        {
           return text("'%.*s'", static_cast<int>(e.size()), e.data() ? e.data() : "");
-        }
-        else if constexpr(_::optional<T>)
+        else if constexpr(_::optional<T>) return optional(e);
+        else if constexpr(std::is_pointer_v<T>) return pointer(e);
+        else if constexpr(_::sequence<T>) return sequence(e);
+        else return bytes(e);
+      }
+    private:
+      static text floating(T const& e)
+      {
+        auto precision = ::tts::arguments().value(16, "--precision");
+        bool hexmode   = ::tts::arguments()("-x", "--hex");
+        bool scimode   = ::tts::arguments()("-s", "--scientific");
+        if(scimode) return text("%.*E", precision, e);
+        else if(hexmode) return text("%#.*A", precision, e);
+        else return text("%.*g", precision, e);
+      }
+      static text integral(T const& e)
+      {
+        if constexpr(sizeof(T) > 4)
         {
-          auto type_desc = as_text(typename_<typename T::value_type>);
-          text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
-          if(e.has_value())
-          {
-            auto val_desc = as_text(e.value());
-            return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
-          }
-          else return base + "{}";
-        }
-        else if constexpr(std::is_pointer_v<T>)
-        {
-          auto type_desc = as_text(typename_<T>);
-          return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
-        }
-        else if constexpr(_::sequence<T>)
-        {
-          text that("{ ");
-          for(auto const& v: e)
-            that += as_text(v) + " ";
-          that += "}";
-          return that;
+          auto fmt = ::tts::arguments()("-x", "--hex") ? "%lX" : "%ld";
+          return text(fmt, e);
         }
         else
         {
-          unsigned char bytes[ sizeof(e) ];
-          std::memcpy(bytes, &e, sizeof(e));
-          text txt_bytes("[ ");
-          for(auto const& b: bytes)
-            txt_bytes += text("%2.2X", b) + " ";
-          txt_bytes      += "]";
-          auto type_desc  = as_text(typename_<T>);
-          return text("%s: %s",
-                      type_desc.data() ? type_desc.data() : "unknown",
-                      txt_bytes.data() ? txt_bytes.data() : "[]");
+          auto fmt = ::tts::arguments()("-x", "--hex") ? "%X" : "%d";
+          return text(fmt, e);
         }
+      }
+      static text optional(T const& e)
+      {
+        auto type_desc = as_text(typename_<typename T::value_type>);
+        text base {"optional<%s>", type_desc.data() ? type_desc.data() : "unknown"};
+        if(e.has_value())
+        {
+          auto val_desc = as_text(e.value());
+          return base + text("{%s}", val_desc.data() ? val_desc.data() : "?");
+        }
+        else return base + "{}";
+      }
+      static text pointer(T const& e)
+      {
+        auto type_desc = as_text(typename_<T>);
+        return text("%p (%s)", (void*)(e), type_desc.data() ? type_desc.data() : "unknown");
+      }
+      static text sequence(T const& e)
+      {
+        text that("{ ");
+        for(auto const& v: e)
+          that += as_text(v) + " ";
+        that += "}";
+        return that;
+      }
+      static text bytes(T const& e)
+      {
+        unsigned char raw[ sizeof(e) ];
+        std::memcpy(raw, &e, sizeof(e));
+        text txt_bytes("[ ");
+        for(auto const& b: raw)
+          txt_bytes += text("%2.2X", b) + " ";
+        txt_bytes      += "]";
+        auto type_desc  = as_text(typename_<T>);
+        return text("%s: %s",
+                    type_desc.data() ? type_desc.data() : "unknown",
+                    txt_bytes.data() ? txt_bytes.data() : "[]");
       }
     };
   }
