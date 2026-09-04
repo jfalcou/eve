@@ -1,0 +1,139 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Compile Cost
+run-name: compile-cost
+
+####################################################################################################
+## What every translation unit of the unit test suite costs to compile, on a pull request and on
+## main, so the two can be subtracted.
+##
+## The measurement runs on a hosted runner rather than on the machine we own, and takes a -j of 2.
+## The self-hosted host carries four runner agents behind one label, which places up to four builds
+## on the same 64 GiB at once with no ordering between them; a peak recorded there belongs to its
+## neighbours as much as to the code, and one of those crowds ended with the reaper taking a job
+## from an unrelated pull request. A hosted runner is smaller and slower, and it is the same one
+## every time.
+##
+## The image is what makes the two sides comparable: a peak belongs to the compiler that produced
+## it as much as to the code, and a machine's own clang moves with its packages. A reference read
+## against a different compiler would be describing the upgrade.
+####################################################################################################
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: compile-cost-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    ## Reading the reference off another run asks more than the contents scope the token defaults to.
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Print Runner Info
+        run: |
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
+          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
+
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+
+      ##############################################################################################
+      ## The toolchain file and the ISA are those of the no_pch job, so the figures describe the
+      ## build the rest of the CI performs. Naming the compiler alone leaves CMAKE_CXX_FLAGS empty,
+      ## which drops EVE_NO_FORCEINLINE and hands always_inline back to every function EVE has: six
+      ## units out of 1543 were enough to end that build, on the runner where no_pch compiles all of
+      ## them at -j 4 in the hour.
+      ##
+      ## In one go rather than in the chunks no_pch uses: its target lists leave unit.regression.exe
+      ## out, and a unit missing from the table reads as a unit that costs nothing. The precompiled
+      ## header stays off for the same reason, it would hide what a unit opens for itself.
+      ##############################################################################################
+      - name: Measure
+        run: |
+          cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
+                -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/clang.x86.cmake                  \
+                -DEVE_OPTIONS="-msse2" -DEVE_USE_PCH=0
+          cmake --build build -j 2 --target unit.exe
+
+      ##############################################################################################
+      ## The reference sits in the last successful run of this workflow on main, so it is looked up
+      ## rather than named. Both steps are JavaScript actions, which the runner supplies its own node
+      ## for, so they work inside a container that carries none.
+      ##############################################################################################
+      - name: Find the reference run
+        id: reference
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'compile-cost.yml',
+              branch: 'main',
+              status: 'success',
+              per_page: 1
+            });
+            return runs.data.workflow_runs.length ? String(runs.data.workflow_runs[0].id) : '';
+
+      - name: Fetch the reference measured on main
+        if: steps.reference.outputs.result != ''
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: compile-cost-reference
+          path: reference
+          run-id: ${{ steps.reference.outputs.result }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report
+        run: |
+          if [ -f reference/compile-cost.csv ]; then
+            baseline="--baseline reference/compile-cost.csv"
+          else
+            baseline=""
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "> No reference from main was found, so this run has no delta." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
+          python3 tools/compile_cost.py build/compile-cost.csv $baseline                            \
+                  --full build/compile-cost-full.md                                                 \
+                  --title "${{ github.event_name == 'push' && 'Compile cost of main' || 'Compile cost' }}" \
+                  >> "$GITHUB_STEP_SUMMARY"
+
+      ##############################################################################################
+      ## Main leaves the reference every pull request is read against, kept long enough to see a
+      ## trend. A pull request leaves its own table, kept only while the review lasts.
+      ##
+      ## Both files come from the same directory, so they sit at the artifact's root. Listed from
+      ## two, the artifact kept the build/ segment and the reference was looked for one level too
+      ## high: no pull request ever got its delta.
+      ##############################################################################################
+      - name: Upload the measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event_name == 'push' && 'compile-cost-reference' || 'compile-cost' }}
+          path: |
+            build/compile-cost-full.md
+            build/compile-cost.csv
+          if-no-files-found: warn
+          retention-days: ${{ github.event_name == 'push' && 90 || 14 }}

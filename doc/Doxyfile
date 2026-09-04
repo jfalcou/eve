@@ -866,6 +866,8 @@ HTML_EXTRA_FILES   = godbolt.js
 HTML_EXTRA_FILES  += fragment.js
 HTML_EXTRA_FILES  += paragraph.js
 HTML_EXTRA_FILES  += eve.bibtex
+# Copied whole rather than generated, and served at compile-cost.html next to the documentation.
+HTML_EXTRA_FILES  += compile-cost.html
 
 HTML_COLORSTYLE_HUE    = 90
 HTML_COLORSTYLE_SAT    = 74
