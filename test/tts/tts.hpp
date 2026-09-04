@@ -3806,6 +3806,7 @@ namespace tts::_
 #else
 #define TTS_EXPECT_NOT_COMPILES(...) TTS_VAL(TTS_EXPECT_NOT_COMPILES_IMPL TTS_REVERSE(__VA_ARGS__))
 #endif
+#include <limits>
 namespace tts::_
 {
   template<typename T> struct builtin_precision
@@ -3917,6 +3918,19 @@ namespace tts
   template<typename T> struct precision : _::builtin_precision<T>
   {
   };
+  namespace _
+  {
+    template<typename T>
+    concept native_precision = std::is_base_of_v<builtin_precision<T>, precision<T>>;
+    template<typename T, typename N> constexpr bool reads_as_percent(N const& n)
+    {
+      using type = std::remove_cvref_t<T>;
+      if constexpr(native_precision<type> && std::is_arithmetic_v<type> &&
+                   !std::is_same_v<type, bool>)
+        return n >= 1 && n != std::numeric_limits<N>::infinity();
+      else return false;
+    }
+  }
   template<typename T, typename U> inline double absolute_check(T const& a, U const& b)
   {
     static_assert(std::is_same_v<T, U>,
@@ -4002,7 +4016,21 @@ namespace tts
 #define TTS_RELATIVE_EQUAL(L, R, N, ...)
 #else
 #define TTS_RELATIVE_EQUAL(L, R, N, ...)                                                           \
-  TTS_PRECISION(L, R, N, "rel", ::tts::relative_check, 8, __VA_ARGS__)
+  (                                                                                                \
+  ::tts::_::reads_as_percent<decltype(L)>(N)                                                       \
+  ? TTS_PERCENT_TOLERANCE_##__VA_ARGS__(N)                                                         \
+  : TTS_PRECISION(L, R, N, "rel", ::tts::relative_check, 8, __VA_ARGS__))
+#define TTS_PERCENT_TOLERANCE_(N)         TTS_PERCENT_TOLERANCE_IMPL(N, TTS_FAIL)
+#define TTS_PERCENT_TOLERANCE_REQUIRED(N) TTS_PERCENT_TOLERANCE_IMPL(N, TTS_FATAL)
+#define TTS_PERCENT_TOLERANCE_IMPL(N, FAILURE)                                                     \
+  [ & ]()                                                                                          \
+  {                                                                                                \
+    FAILURE("Tolerance %.*g reads as a percentage: TTS 4 compares a ratio, divide it by a "        \
+            "hundred.",                                                                            \
+            8,                                                                                     \
+            static_cast<double>(N));                                                               \
+    return ::tts::_::logger {};                                                                    \
+  }()
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ULP_EQUAL(L, R, N, ...)
@@ -4138,7 +4166,10 @@ namespace tts::_
 #define TTS_ALL_RELATIVE_EQUAL(L, R, N, ...)
 #else
 #define TTS_ALL_RELATIVE_EQUAL(L, R, N, ...)                                                       \
-  TTS_ALL(L, R, ::tts::relative_check, N, "rel", __VA_ARGS__)
+  (                                                                                                \
+  ::tts::_::reads_as_percent<decltype(*::tts::_::begin(L))>(N)                                     \
+  ? TTS_PERCENT_TOLERANCE_##__VA_ARGS__(N)                                                         \
+  : TTS_ALL(L, R, ::tts::relative_check, N, "rel", __VA_ARGS__))
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ALL_ULP_EQUAL(L, R, N, ...)
