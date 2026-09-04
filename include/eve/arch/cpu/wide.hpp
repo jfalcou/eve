@@ -111,7 +111,7 @@ namespace eve
     using storage_type = typename storage_base::storage_type;
 
     //! Type describing the size of the current wide
-    using width_type = fixed<Width>;
+    // using width_type = fixed<Width>;
 
     //! Opt-in for like concept
     using is_like = value_type;

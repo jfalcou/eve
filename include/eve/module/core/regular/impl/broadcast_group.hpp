@@ -16,24 +16,24 @@
 namespace eve::_
 {
 // Find the proper broadcast group shape. If none is found, returns {-1,-1}
-template<std::size_t Width, std::size_t Width>
+template<std::size_t Width, std::size_t Size>
 constexpr inline auto
-find_broadcast_group(std::array<std::ptrdiff_t, Width> const& pattern)
+find_broadcast_group(std::array<std::ptrdiff_t, Size> const& pattern)
 {
   struct bg
   {
     std::ptrdiff_t group = -1, index = -1;
   };
 
-  for( std::ptrdiff_t g = Width; g > 0; g /= 2 )
+  for( std::ptrdiff_t g = Size; g > 0; g /= 2 )
   {
-    std::ptrdiff_t nb_idx = Width / g;
+    std::ptrdiff_t nb_idx = Size / g;
 
     for( std::ptrdiff_t idx = 0; idx < nb_idx; idx++ )
     {
       // Compute what we expect
-      std::array<std::ptrdiff_t, Width> expected;
-      for( std::size_t i = 0; i < Width; ++i ) expected[i] = idx * g + (i % g);
+      std::array<std::ptrdiff_t, Size> expected;
+      for( std::size_t i = 0; i < Size; ++i ) expected[i] = idx * g + (i % g);
 
       // Is it what we want ?
       if( pattern == expected ) return bg {g, idx};
