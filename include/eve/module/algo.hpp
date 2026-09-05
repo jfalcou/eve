@@ -28,6 +28,7 @@
 #include <eve/module/algo/algo/container/soa_vector.hpp>
 #include <eve/module/algo/algo/copy.hpp>
 #include <eve/module/algo/algo/copy_if.hpp>
+#include <eve/module/algo/algo/count_if.hpp>
 #include <eve/module/algo/algo/equal.hpp>
 #include <eve/module/algo/algo/fill.hpp>
 #include <eve/module/algo/algo/find_last.hpp>
