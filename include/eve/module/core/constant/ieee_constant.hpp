@@ -78,8 +78,8 @@ namespace eve
   constexpr T ieee_constant(eve::as<T>)
   {
     using e_t = eve::element_type_t<T>;
-         if constexpr(std::same_as<double,e_t>) return T(BD.value);
-         else return T(BF.value);
+    if constexpr(std::same_as<double,e_t>) return T(BD.value);
+    else return T(BF.value);
   }
 
   template<eve::_::real64 BD, eve::_::real32 BF, eve::_::real32 BF16, floating_value T>
