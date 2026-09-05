@@ -8,7 +8,6 @@
 #include "test.hpp"
 
 #include <eve/module/algo.hpp>
-#include "unit/module/algo/soa_vector_text.hpp"
 
 #include "unit/module/algo/udt.hpp"
 
