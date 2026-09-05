@@ -20,8 +20,8 @@
 #include <tts/tts.hpp>
 
 //==================================================================================================
-// TTS v2's amalgamated header pulled these in; v3 does not, and the suite has always leant on
-// them being there. Kept in one place rather than sprinkled over seven hundred test files.
+// The suite leans on these everywhere. Kept in one place rather than sprinkled over seven
+// hundred test files.
 //==================================================================================================
 #include <algorithm>
 #include <cmath>
@@ -398,10 +398,8 @@ namespace tts
 
   //================================================================================================
   // Constant wrapper
-  //================================================================================================
-  //================================================================================================
-  // v3 passes generators as non-type template parameters, which requires a structural type.
-  // Deriving from the closure is not: the type carries the lambda, the object stores nothing.
+  //
+  // A generator has to be structural: the type carries the lambda, the object stores nothing.
   //================================================================================================
   template<typename F> struct constant
   {
@@ -410,11 +408,9 @@ namespace tts
   };
 
   //================================================================================================
-  // v3 funnels a generator bound through convert_as, which casts it to the tested type. A constant
-  // is a per-type recipe, not a value: it has to be evaluated against T instead.
-  //
-  // The argument list is the primary's, and it is the constraint that makes this the better match,
-  // so anything that is not callable with an eve::as keeps the plain cast.
+  // An eve constant is a per-type recipe: evaluate it against T rather than casting it. The
+  // constraint alone makes this the better match, so anything not callable with an eve::as keeps
+  // the plain cast.
   //================================================================================================
   template<typename T, typename V> requires( requires(V v) { v(eve::as<T>{}); } )
   struct conversion<T, V>
@@ -422,8 +418,8 @@ namespace tts
     static auto from(V const& v)
     {
       auto r = v(eve::as<T>{});
-      // A recipe is free to answer in whatever type it finds natural - `-128 : 0` is an int even
-      // when T is double. Both bounds of a generator must land on T or v3 cannot deduce it.
+      // Both bounds of a generator must land on T. A recipe answers in whatever type it finds
+      // natural, and `-128 : 0` is an int even when T is double.
       if constexpr(std::convertible_to<decltype(r), T>) return static_cast<T>(r);
       else                                              return r;
     }
@@ -461,8 +457,8 @@ namespace tts
   }
 
   //================================================================================================
-  // v3 unwraps a generated type through tts::base_type before sizing its integer counterpart.
-  // Left unspecialized it would size against sizeof(wide<T,N>) rather than sizeof(T).
+  // A wide has to name its element here, or its integer counterpart gets sized against
+  // sizeof(wide<T,N>) rather than sizeof(T).
   //================================================================================================
   template<typename T, typename N> struct base_type<eve::wide<T,N>>    { using type = T; };
   template<typename T, typename N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
@@ -472,12 +468,8 @@ namespace tts
   template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
 
   //================================================================================================
-  // v3 ships its own limits_set, built on std::numeric_limits, which knows nothing of eve::wide and
-  // static_asserts on it. Specializing the class rather than overloading limits() puts EVE's values
-  // where v3 already looks, and leaves one entry point instead of two overloads competing.
-  //
-  // Nothing is inherited: every member here comes from an eve constant, which answers for a
-  // register as readily as for a scalar, where a built-in one would have to be cast lane by lane.
+  // std::numeric_limits knows nothing of eve::wide and static_asserts on it. Every member here
+  // comes from an eve constant, which answers for a register as readily as for a scalar.
   //================================================================================================
   template<typename T> requires(eve::floating_value<T>)
   struct limits_set<T>
