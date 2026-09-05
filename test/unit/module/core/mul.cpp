@@ -212,11 +212,24 @@ TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
                  eve::if_else(mask, eve::mul(a0, a1), a0));
 };
 
+//==================================================================================================
+// The two ways of multiplying three values only agree while their product is representable: past
+// that, widen answers infinity where kahan compensates infinity against itself and answers a NaN.
+//==================================================================================================
+constexpr auto cubic_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::cbrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_cubic_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -cubic_root_of_valmax(tgt); };
+
 TTS_CASE_WITH("Check behavior of mul kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::mul;
