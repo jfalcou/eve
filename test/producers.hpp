@@ -54,12 +54,12 @@ namespace eve
     {
       if constexpr(std::floating_point<T>)
       {
-        constexpr T lo = std::numeric_limits<T>::epsilon();
-        constexpr T hi = T(1) / lo;
+        constexpr T mag_min = std::numeric_limits<T>::epsilon();
+        constexpr T mag_max = T(1) / mag_min;
 
         T m = v < 0 ? -v : v;
-        if(m > hi)              m = hi;
-        else if(m != 0 && m < lo) m = lo;
+        if(m > mag_max)                m = mag_max;
+        else if(m != 0 && m < mag_min) m = mag_min;
 
         return v < 0 ? -m : m;
       }
