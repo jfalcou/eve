@@ -12,7 +12,7 @@
 TTS_CASE("eve::unaligned_t")
 {
   using v_i = std::vector<int>::const_iterator;
-  using a_p = eve::aligned_ptr<int const, eve::fixed<2>>;
+  using a_p = eve::aligned_ptr<int const, 2>;
   using soa_a = eve::soa_ptr<a_p, int*>;
   using soa_u = eve::soa_ptr<int const*, int*>;
 

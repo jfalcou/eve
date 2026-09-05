@@ -133,7 +133,7 @@ shuffle_reverse_arguments(NativeSelector) -> shuffle_reverse_arguments<NativeSel
  * * converts all types to std::uint<>_t.
  * * ups the group size if the pattern allows it ({2, 3, 0, 1} => {1, 0})
  * * ups the element size if the group size allows it: uint32x2 => uint64x1
- * * smaller than fundamental cardinals get padded with we_ to fundamental
+ * * smaller than fundamental widths get padded with we_ to fundamental
  * * calls the native selector with (pattern, group_size, wides...);
  */
 template<typename NativeSelector>

@@ -49,16 +49,16 @@ TTS_CASE_TPL("Check behavior of cos_int on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::cos_int(T(2.5))   ,       T(  0.2858711963653835    ), ulp);
   TTS_ULP_EQUAL(eve::cos_int(T(0.9241388730)), T(  0.29226964555971935   ), ulp);
 
-  eve::wide<double, eve::fixed<8>> w {
+  eve::wide<double, 8> w {
       0.0, 1.0, 2.0, 4.0, 8.0, 2.0, eve::inf(eve::as<double>()), eve::nan(eve::as<double>())};
-  eve::wide<double, eve::fixed<8>> rr {eve::cos_int((0.0)),
-                                     eve::cos_int((1.0)),
-                                     eve::cos_int((2.0)),
-                                     eve::cos_int((4.0)),
-                                     eve::cos_int((8.0)),
-                                     eve::cos_int((2.0)),
-                                     eve::cos_int(eve::inf(eve::as<double>())),
-                                     eve::cos_int(eve::nan(eve::as<double>()))};
+  eve::wide<double, 8> rr {eve::cos_int((0.0)),
+                           eve::cos_int((1.0)),
+                           eve::cos_int((2.0)),
+                           eve::cos_int((4.0)),
+                           eve::cos_int((8.0)),
+                           eve::cos_int((2.0)),
+                           eve::cos_int(eve::inf(eve::as<double>())),
+                           eve::cos_int(eve::nan(eve::as<double>()))};
   TTS_ULP_EQUAL(eve::cos_int(w), rr, 2);
 };
 

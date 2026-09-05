@@ -25,10 +25,10 @@ TTS_CASE("eve.algo basic traits testing")
     }(just_unroll);
   }
   {
-    auto divisible_by_cardinal = eve::algo::traits(eve::algo::divisible_by_cardinal);
+    auto divisible_by_width = eve::algo::traits(eve::algo::divisible_by_width);
     []<typename Traits>(Traits){
-      TTS_CONSTEXPR_EXPECT(Traits::contains(eve::algo::divisible_by_cardinal));
-    }(divisible_by_cardinal);
+      TTS_CONSTEXPR_EXPECT(Traits::contains(eve::algo::divisible_by_width));
+    }(divisible_by_width);
   }
 };
 
@@ -38,20 +38,20 @@ TTS_CASE("eve.algo defaulting")
     eve::algo::traits out =
       eve::algo::default_to(eve::algo::traits(eve::algo::unroll<1>), eve::algo::traits(eve::algo::unroll<4>));
     TTS_CONSTEXPR_EXPECT(eve::algo::get_unrolling<decltype(out)>() == 1);
-    TTS_CONSTEXPR_EXPECT(!decltype(out)::contains((eve::algo::divisible_by_cardinal)));
+    TTS_CONSTEXPR_EXPECT(!decltype(out)::contains((eve::algo::divisible_by_width)));
     TTS_CONSTEXPR_EXPECT(!decltype(out)::contains((eve::algo::no_aligning)));
   }
   {
     eve::algo::traits out = eve::algo::default_to(
-      eve::algo::traits(eve::algo::divisible_by_cardinal),
+      eve::algo::traits(eve::algo::divisible_by_width),
       eve::algo::traits(eve::algo::unroll<4>,
                         eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(eve::algo::get_unrolling<decltype(out)>() == 4);
-    TTS_CONSTEXPR_EXPECT(decltype(out)::contains((eve::algo::divisible_by_cardinal)));
+    TTS_CONSTEXPR_EXPECT(decltype(out)::contains((eve::algo::divisible_by_width)));
     TTS_CONSTEXPR_EXPECT(decltype(out)::contains((eve::algo::no_aligning)));
   }
   {
-    constexpr auto expected = eve::algo::traits(eve::algo::divisible_by_cardinal);
+    constexpr auto expected = eve::algo::traits(eve::algo::divisible_by_width);
     constexpr auto actual = eve::algo::default_to(eve::algo::traits(), expected);
 
     TTS_TYPE_IS(decltype(expected), decltype(actual));
@@ -89,31 +89,31 @@ TTS_CASE("eve.algo.traits consider types")
   }
 };
 
-TTS_CASE("eve.algo.traits, type and cardinal")
+TTS_CASE("eve.algo.traits, type and width")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::nofs_cardinal_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<eve::nofs_width_v<int>>);
     eve::algo::traits tr1{eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<eve::expected_cardinal_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<eve::expected_width_v<int>>);
   }
   {
-    eve::algo::traits tr{eve::algo::force_cardinal<2>};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<2>);
-    eve::algo::traits tr1{eve::algo::force_cardinal<2>, eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<2>);
+    eve::algo::traits tr{eve::algo::force_width<2>};
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<2>);
+    eve::algo::traits tr1{eve::algo::force_width<2>, eve::algo::allow_frequency_scaling};
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<2>);
   }
   {
     eve::algo::traits tr{eve::algo::consider_types<double>};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::nofs_cardinal_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<eve::nofs_width_v<double>>);
     eve::algo::traits tr1{eve::algo::consider_types<double>, eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<eve::expected_width_v<double>>);
   }
   {
     eve::algo::traits tr;
-    eve::algo::traits big_step{eve::algo::force_cardinal<64>};
+    eve::algo::traits big_step{eve::algo::force_width<64>};
     eve::algo::traits tr2 = eve::algo::default_to(tr, big_step);
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr2), std::int8_t*>), eve::fixed<64>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr2), std::int8_t*>), eve::fixed<64>);
   }
 };
 
@@ -211,9 +211,9 @@ struct func_ : TraitsSupport
     return eve::algo::get_unrolling<traits_type>();
   }
 
-  constexpr bool is_divisible_by_cardinal() const
+  constexpr bool is_divisible_by_width() const
   {
-    return traits_type::contains(eve::algo::divisible_by_cardinal);
+    return traits_type::contains(eve::algo::divisible_by_width);
   }
 };
 
@@ -224,7 +224,7 @@ TTS_CASE("eve.algo.support_traits")
   constexpr auto unroll = func[eve::algo::traits{eve::algo::unroll<2>}];
   TTS_CONSTEXPR_EQUAL(unroll.get_unrolling(), 2);
 
-  constexpr auto is_divisible = unroll[eve::algo::divisible_by_cardinal];
-  TTS_CONSTEXPR_EXPECT(is_divisible.is_divisible_by_cardinal());
+  constexpr auto is_divisible = unroll[eve::algo::divisible_by_width];
+  TTS_CONSTEXPR_EXPECT(is_divisible.is_divisible_by_width());
   TTS_CONSTEXPR_EQUAL(is_divisible.get_unrolling(), 2);
 };

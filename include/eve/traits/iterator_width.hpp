@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits/value_type.hpp>
 
 namespace eve
@@ -15,39 +15,39 @@ namespace eve
   namespace _
   {
     template <typename T>
-    constexpr auto iterator_cardinal_impl()
+    constexpr auto iterator_width_impl()
     {
-      if constexpr ( requires { T::iterator_cardinal(); } ) return decltype(T::iterator_cardinal()){};
-      else                                                  return expected_cardinal_t<value_type_t<T>>{};
+      if constexpr ( requires { T::iterator_width(); } ) return decltype(T::iterator_width()){};
+      else                                                  return expected_width_t<value_type_t<T>>{};
     }
   }
 
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!  @typedef iterator_cardinal_t
+  //!  @typedef iterator_width_t
   //!
   //!  @tparam T Type to process
   //!
-  //!  @brief A meta-function that returns a cardinal for a relaxed iterator/range.
-  //!         If T defines a nested static function `iterator_cardinal()` (which should return eve::fixed)
+  //!  @brief A meta-function that returns a width for a relaxed iterator/range.
+  //!         If T defines a nested static function `iterator_width()` (which should return eve::fixed)
   //!         - returns it's return type.
-  //!         Otherwise returns `expected_cardinal_t<value_type_t<T>>`.
+  //!         Otherwise returns `expected_width_t<value_type_t<T>>`.
   //!
-  //!  *NOTE*: for aligned_ptr we return expected_cardinal.
+  //!  *NOTE*: for aligned_ptr we return expected_width.
   //!
-  //!  **Required header**: `#include <eve/traits/iterator_cardinal.hpp>`,
+  //!  **Required header**: `#include <eve/traits/iterator_width.hpp>`,
   //!                       `#include <eve/traits.hpp>`
   //!   @code{.cpp}
   //!   template<typename T>
-  //!   inline constexpr auto iterator_cardinal_v = iterator_cardinal<T>::value;
+  //!   inline constexpr auto iterator_width_v = iterator_width<T>::value;
   //!   @endcode
   //! @}
   //================================================================================================
 
   template <typename T>
-  using iterator_cardinal_t = decltype(_::iterator_cardinal_impl<T>());
+  using iterator_width_t = decltype(_::iterator_width_impl<T>());
 
   template <typename T>
-  constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<T>::value;
+  constexpr width_type iterator_width_v = iterator_width_t<T>::value;
 }

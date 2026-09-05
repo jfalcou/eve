@@ -18,12 +18,12 @@ namespace
 {
 struct fixture
 {
-  fixture() { std::iota(data.begin(), data.end(), 0); }
+  fixture() { std::iota(data.data(), data.data()+data.size(), 0); }
 
   auto aligned_begin() const
   {
-    using ap = eve::aligned_ptr<const int, eve::fixed<4>>;
-    return eve::algo::ptr_iterator<ap, eve::fixed<4>> {ap(data.data())};
+    using ap = eve::aligned_ptr<const int, 4>;
+    return eve::algo::ptr_iterator<ap, 4> {ap(data.data())};
   }
 
   auto aligned_end() const { return aligned_begin() + data.size(); }
@@ -59,7 +59,7 @@ TTS_CASE("eve.algo for_each_iteration, selection")
 
   // precise f, l
   {
-    auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+    auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_width);
     auto sel = eve::algo::for_each_iteration(tr, f, l);
 
     TTS_TYPE_IS(decltype(sel),
@@ -117,7 +117,7 @@ struct ignore
 
   std::ptrdiff_t count() const
   {
-    auto as = eve::as<eve::wide<int, eve::fixed<4>>> {};
+    auto as = eve::as<eve::wide<int, 4>> {};
     return std::visit([&](auto elem) { return elem.count(as); }, body);
   }
 };
@@ -257,7 +257,7 @@ TTS_CASE("eve.algo for_each_iteration border cases, precise")
 
     if( (f - l) % 4 == 0 )
     {
-      auto traits = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+      auto traits = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_width);
       one_test(traits, f, l, expected);
     }
   };
@@ -408,7 +408,7 @@ TTS_CASE("eve.algo for_each_iteration unrolling, precise")
     for( auto up_to = pattern.begin() + 1; up_to != pattern.end(); ++up_to )
     {
       auto traits =
-          eve::algo::traits(unroll, eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+          eve::algo::traits(unroll, eve::algo::no_aligning, eve::algo::divisible_by_width);
       test(traits, overall_l, {pattern.begin(), up_to});
     }
   };

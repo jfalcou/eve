@@ -10,8 +10,8 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 
-template<typename T> using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
-template<typename T> using tiny_wide  = eve::wide<T,eve::fixed<1>>;
+template<typename T> using extra_wide = eve::wide<T, 2 * eve::expected_width_v<T>>;
+template<typename T> using tiny_wide  = eve::wide<T, 1>;
 
 #if !defined(EVE_NO_SIMD)
 #if defined(SPY_SIMD_IS_X86)
@@ -153,7 +153,7 @@ TTS_CASE_TPL( "Check that wide<T,k*N> does not satisfy any native_simd_for_abi"
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<extra_wide<T>>, eve::arm_sve_128_, eve::arm_sve_256_, eve::arm_sve_512_>  ));
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<extra_wide<T>>, eve::ppc_>  ));
 
-  if constexpr( eve::cardinal_v<tiny_wide<T>> != 1)
+  if constexpr( eve::width_v<tiny_wide<T>> != 1)
   {
     TTS_EXPECT_NOT((eve::native_simd_for_abi<tiny_wide<T>, eve::x86_128_ , eve::x86_256_, eve::x86_512_> ));
     TTS_EXPECT_NOT((eve::native_simd_for_abi<tiny_wide<T>, eve::arm_64_ , eve::arm_128_>  ));

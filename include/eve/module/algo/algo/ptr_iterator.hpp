@@ -22,28 +22,28 @@ namespace eve::algo
   //!
   //!   This should not be created directly but rather constructed from preprocess_range.
   //!
-  //!   When ptr is aligned, the alignment should match the cardinal.
+  //!   When ptr is aligned, the alignment should match the width.
   //!
   //!    **Required header:** `#include <eve/module/algo/algo/ptr_iterator.hpp>`
   //! @}
   //================================================================================================
-  template <typename Ptr, typename Cardinal>
+  template <typename Ptr, width_type Width>
   struct ptr_iterator;
 
   namespace _
   {
-    template <typename Ptr, typename Cardinal>
+    template <typename Ptr, width_type Width>
     constexpr bool check_aligned_ptr_validity()
     {
-      if constexpr (!eve::_::instance_of<Ptr, aligned_ptr>) return true;
-      else return sizeof(value_type_t<Ptr>) * Cardinal{}() == Ptr::alignment();
+      if constexpr (!eve::_::is_aligned_ptr_v<Ptr>) return true;
+      else return sizeof(value_type_t<Ptr>) * Width == Ptr::alignment();
     }
   }
 
-  template <typename Ptr, typename Cardinal>
+  template <typename Ptr, width_type Width>
   struct ptr_iterator : operations_with_distance
   {
-    static_assert(_::check_aligned_ptr_validity<Ptr, Cardinal>());
+    static_assert(_::check_aligned_ptr_validity<Ptr, Width>());
 
     using value_type = value_type_t<Ptr>;
     using ptr_type   = Ptr;
@@ -51,48 +51,48 @@ namespace eve::algo
     // internal helpers
     using reference_type = decltype(*Ptr{});
     using cv_value_type  = std::remove_reference_t<reference_type>;
-    using wv_type        = eve::wide<value_type, Cardinal>;
-    using unaligned_me   = ptr_iterator<unaligned_t<Ptr>, Cardinal>;
+    using wv_type        = eve::wide<value_type, Width>;
+    using unaligned_me   = ptr_iterator<unaligned_t<Ptr>, Width>;
 
     ptr_iterator() = default;
     explicit ptr_iterator(Ptr p) : ptr(p) {}
 
     template <std::convertible_to<Ptr> UPtr>
-    ptr_iterator(ptr_iterator<UPtr, Cardinal> const& x) : ptr(x.ptr) {}
+    ptr_iterator(ptr_iterator<UPtr, Width> const& x) : ptr(x.ptr) {}
 
     EVE_FORCEINLINE auto unalign() const noexcept { return unaligned_me{eve::unalign(ptr)}; }
 
     auto previous_partially_aligned() const
     {
-      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::previous_aligned_address(ptr, Cardinal{});
-        return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
+        auto a_ptr = eve::previous_aligned_address(ptr, fixed<Width>{});
+        return ptr_iterator<decltype(a_ptr), Width>{a_ptr};
       }
     }
 
     auto next_partially_aligned() const
     {
-      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::next_aligned_address(ptr, Cardinal{});
-        return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
+        auto a_ptr = eve::next_aligned_address(ptr, fixed<Width>{});
+        return ptr_iterator<decltype(a_ptr), Width>{a_ptr};
       }
     }
 
-    static Cardinal iterator_cardinal() { return {}; }
+    static fixed<Width> iterator_width() { return {}; }
 
-    template <typename _Cardinal>
-    auto cardinal_cast(_Cardinal c) const
+    template <width_type _Width>
+    auto width_cast(fixed<_Width> c) const
     {
-           if constexpr (!eve::_::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
-      else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unalign().cardinal_cast(c);
+           if constexpr (!eve::_::is_aligned_ptr_v<Ptr> ) return ptr_iterator<Ptr, _Width>(ptr);
+      else if constexpr (_Width > Width                   ) return unalign().width_cast(c);
       else
       {
-        using other_ptr = aligned_ptr<cv_value_type, _Cardinal>;
-        using other_it  = ptr_iterator<other_ptr, _Cardinal>;
+        using other_ptr = aligned_ptr<cv_value_type, _Width>;
+        using other_it  = ptr_iterator<other_ptr, _Width>;
         return other_it{other_ptr{ptr.get()}};
       }
     }
@@ -102,13 +102,13 @@ namespace eve::algo
     ptr_iterator& operator+=(std::ptrdiff_t n) { ptr += n; return *this; }
 
     template <typename OtherPtr>
-    friend std::ptrdiff_t operator-(ptr_iterator x, ptr_iterator<OtherPtr, Cardinal> y) { return x.ptr - y.ptr; }
+    friend std::ptrdiff_t operator-(ptr_iterator x, ptr_iterator<OtherPtr, Width> y) { return x.ptr - y.ptr; }
 
     template <typename OtherPtr>
-    bool operator==(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr == x.ptr; }
+    bool operator==(ptr_iterator<OtherPtr, Width> const &x) const { return ptr == x.ptr; }
 
     template <typename OtherPtr>
-    auto operator<=>(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr <=> x.ptr; }
+    auto operator<=>(ptr_iterator<OtherPtr, Width> const &x) const { return ptr <=> x.ptr; }
 
     template<callable_options O>
     EVE_FORCEINLINE auto load(O const& opts, as<wv_type> tgt) const

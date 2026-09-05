@@ -52,15 +52,15 @@ TTS_CASE_WITH("Check behavior of legendre p on wide",
   auto boost_legendrev = [&](auto i, auto)
   { return boost::math::legendre_p(i0.get(i), a0.get(i)); };
   TTS_ULP_EQUAL(eve__legendrev(i0, a0), T(boost_legendrev), 200);
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
     auto boost_legendre2 = [&](auto i, auto)
     { return boost::math::legendre_p(i0.get(i), a0.get(j)); };
     TTS_RELATIVE_EQUAL(eve__legendrev(i0, a0.get(j)), T(boost_legendre2), 0.01);
   }
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
+    for( unsigned int n = 0; n < eve::width_v<T>; ++n )
     {
       TTS_RELATIVE_EQUAL(eve__legendrev(i0.get(j), a0.get(n)),
                          v_t(boost::math::legendre_p(i0.get(j), a0.get(n))),
@@ -88,16 +88,16 @@ TTS_CASE_WITH("Check behavior of legendre q on wide",
   auto boost_legendrev = [&](auto i, auto)
   { return boost::math::legendre_q(i0.get(i), a0.get(i)); };
   TTS_ULP_EQUAL(eve__legendrev(i0, a0), T(boost_legendrev), 100);
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
     auto boost_legendre2 = [&](auto i, auto)
     { return boost::math::legendre_q(i0.get(i), a0.get(j)); };
     TTS_RELATIVE_EQUAL(eve__legendrev(i0, a0.get(j)), T(boost_legendre2), 0.01);
   }
 
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
+    for( unsigned int n = 0; n < eve::width_v<T>; ++n )
     {
       TTS_RELATIVE_EQUAL(eve__legendrev(i0.get(j), a0.get(n)),
                          v_t(boost::math::legendre_q(i0.get(j), a0.get(n))),
@@ -122,11 +122,11 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
       { return eve::legendre[eve::condon_shortley](m, n, x); };
     auto boost_legendrev = [](auto m, auto n, auto x) { return boost::math::legendre_p(m, n, x); };
 
-    for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+    for( unsigned int k = 0; k < eve::width_v<T>; ++k )
     {
-      for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
+      for( unsigned int n = 0; n < eve::width_v<I>; ++n )
       {
-        for( unsigned int p = 0; p < eve::cardinal_v<I>; ++p )
+        for( unsigned int p = 0; p < eve::width_v<I>; ++p )
         {
           TTS_RELATIVE_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 0.01);
         }
@@ -156,9 +156,9 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
       { return boost::math::spherical_harmonic_r(m, n, x, 0); };
 #endif
 
-    for( unsigned int k = 0; k < eve::cardinal_v<T>; ++k )
+    for( unsigned int k = 0; k < eve::width_v<T>; ++k )
     {
-      for( unsigned int n = 0; n < eve::cardinal_v<I>; ++n )
+      for( unsigned int n = 0; n < eve::width_v<I>; ++n )
       {
         for( unsigned int p = 0; p < n; ++p )
         {

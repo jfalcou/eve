@@ -53,7 +53,7 @@ function(make_all_units)
                         )
         endif()
 
-        # SIMD case uses the types x cardinals as setup
+        # SIMD case uses the types x widths as setup
         if( arch STREQUAL simd)
 
           if( EVE_TEST_TYPE )

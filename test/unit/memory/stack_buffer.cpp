@@ -15,7 +15,7 @@
 
 TTS_CASE("stack_buffer types")
 {
-  using N = eve::fixed<8>;
+  constexpr auto N = 8;
 
   {
     using T = eve::wide<int, N>;

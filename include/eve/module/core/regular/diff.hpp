@@ -143,7 +143,7 @@ namespace eve
     {
       using r_t = kumi::apply_traits_t<eve::common_value, PT>;
       constexpr auto S = PT::size();
-      constexpr auto nblanes = eve::cardinal_v<eve::wide<r_t>>;
+      constexpr auto nblanes = eve::width_v<eve::wide<r_t>>;
       constexpr auto remain = S % nblanes;
       constexpr auto del = remain == 0 ? 0 :nblanes-remain;
       auto chks = eve::as_wides(eve::zero(eve::as<r_t>()), x);

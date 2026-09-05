@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check for_each_selected", algo_test::selected_types)
 
     std::size_t num_times_called = i;
 
-    bool was_interupted = eve::algo::for_each_selected[eve::algo::force_cardinal<T::size()>](
+    bool was_interupted = eve::algo::for_each_selected[eve::algo::force_width<T::size()>](
         arr,
         predicate,
         [&, expected = std::ptrdiff_t(0)](typename std::vector<eve::element_type_t<T>>::iterator cur) mutable
@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check for_each_selected", algo_test::selected_types)
 
     num_times_called = i + 5;
     was_interupted =
-        eve::algo::for_each_selected[eve::algo::force_cardinal<T::size()>](arr,
+        eve::algo::for_each_selected[eve::algo::force_width<T::size()>](arr,
                                                                            predicate,
                                                                            [&](auto)
                                                                            {

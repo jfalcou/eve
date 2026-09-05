@@ -14,8 +14,8 @@ TTS_CASE_TPL( "Check for experimental::simd compliance", ::tts::arithmetic_types
   using eve_type      = eve::experimental::simd<T>;
   using eve_mask_type = eve::experimental::simd_mask<T>;
 
-  TTS_EQUAL(sizeof(eve_type)      , sizeof(eve::wide<T,eve::fixed<16/sizeof(T)>>));
-  TTS_EQUAL(sizeof(eve_mask_type) , sizeof(eve::logical<eve::wide<T,eve::fixed<16/sizeof(T)>>>));
+  TTS_EQUAL(sizeof(eve_type)      , sizeof(eve::wide<T, 16 / sizeof(T)>));
+  TTS_EQUAL(sizeof(eve_mask_type) , sizeof(eve::logical<eve::wide<T, 16 / sizeof(T)>>));
 };
 
 TTS_CASE_TPL( "Check for experimental::native_simd compliance", ::tts::arithmetic_types)
@@ -26,8 +26,8 @@ TTS_CASE_TPL( "Check for experimental::native_simd compliance", ::tts::arithmeti
 
   if constexpr( std::integral<T> && eve::current_api == eve::avx )
   {
-    TTS_EQUAL(sizeof(eve_type)     , sizeof(eve::wide<T,eve::fixed<16/sizeof(T)>>));
-    TTS_EQUAL(sizeof(eve_mask_type), sizeof(eve::logical<eve::wide<T,eve::fixed<16/sizeof(T)>>>));
+    TTS_EQUAL(sizeof(eve_type)     , sizeof(eve::wide<T, 16 / sizeof(T)>));
+    TTS_EQUAL(sizeof(eve_mask_type), sizeof(eve::logical<eve::wide<T, 16 / sizeof(T)>>));
   }
   else
   {

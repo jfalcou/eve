@@ -73,7 +73,7 @@ TTS_CASE_TPL("Check  pow1p", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(eve::pow1p(eve::eps(eve::as<T>()), T(4)), 1 + 4 * eve::eps(eve::as<T>()));
 
   using v_t  = eve::element_type_t<T>;
-  using w8_t = eve::wide<v_t, eve::fixed<8>>;
+  using w8_t = eve::wide<v_t, 8>;
   auto Inf   = eve::inf(eve::as<v_t>());
   {
     w8_t a(-1.0, -1.0, -1.0, -1.0, -2.0, -2.0, -Inf, -Inf);
@@ -83,7 +83,7 @@ TTS_CASE_TPL("Check  pow1p", eve::test::simd::ieee_reals)
     TTS_ULP_EQUAL(c, rr, 2);
   }
   {
-    using w4_t = eve::wide<v_t, eve::fixed<4>>;
+    using w4_t = eve::wide<v_t, 4>;
     w4_t a(-Inf, -Inf, -Inf, -1.0);
     w4_t b(-4.5, 4.0, 4.5, 0.0);
     w4_t rr(0.0, Inf, Inf, 1.0);

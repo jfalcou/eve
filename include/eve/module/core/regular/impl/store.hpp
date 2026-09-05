@@ -36,7 +36,7 @@ namespace eve::_
     {
       if constexpr (has_emulated_abi_v<T>)
       {
-        apply<T::cardinal_type::value>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
+        apply<T::size()>([&](auto... I) { ((*dst++ = value.get(I)), ...); });
       }
       else if constexpr (has_aggregated_abi_v<T>)
       {
@@ -63,7 +63,7 @@ namespace eve::_
       using e_t = element_type_t<T>;
 
       alignas(sizeof(T)) std::array<e_t, T::size()> storage;
-      store(value, eve::aligned_ptr<e_t, typename T::cardinal_type>(storage.data()));
+      store(value, eve::aligned_ptr<e_t, T::size()>(storage.data()));
 
       auto offset = cx.offset(as<T> {});
       auto count  = cx.count(as<T> {});
@@ -125,7 +125,7 @@ namespace eve::_
     else store_common(current_api, opts[condition_key], value, dst);
   }
 
-  template<callable_options O, typename T, typename N, typename Dst>
+  template<callable_options O, typename T, width_type N, typename Dst>
   EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
     using mask_type_t = typename logical<T>::mask_type;

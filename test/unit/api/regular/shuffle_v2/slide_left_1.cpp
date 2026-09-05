@@ -27,7 +27,7 @@ test_indexes()
 
 #if 0
 TTS_CASE("Slide left 1, example") {
-  using w_i =  eve::wide<unsigned int, eve::fixed<8>>;
+  using w_i =  eve::wide<unsigned int, 8>;
   w_i x{[](int i, int) { return i; } };
   std::cerr << eve::shuffle_v2(x, eve::pattern<3, 4, 5, 6, 7, -1, -1, -1>) << std::endl;
   TTS_PASS("");
@@ -37,7 +37,7 @@ TTS_CASE("Slide left 1, example") {
 #if 0
 TTS_CASE("Explicit") {
   // constexpr auto na_ = eve::na_;
-  using w_i = eve::wide<std::uint32_t, eve::fixed<16>>;
+  using w_i = eve::wide<std::uint32_t, 16>;
   w_i x {[](int i, int) { return i + 1; }};
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1>);
   TTS_EQUAL(l(), 4);

@@ -69,7 +69,7 @@ struct swap_adjacent_t
   {
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
-    const std::size_t fund_size = eve::fundamental_cardinal_v<std::uint8_t>;
+    const std::size_t fund_size = eve::fundamental_width_v<std::uint8_t>;
 
     if( current_api >= sve )
     {

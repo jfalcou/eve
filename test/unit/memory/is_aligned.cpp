@@ -48,7 +48,7 @@ TTS_CASE("is_aligned for pointers")
   TTS_EXPECT(eve::is_aligned<8>(&v128));
 };
 
-TTS_CASE_TPL("is_aligned for pointers with respect to SIMD lanes", eve::test::cardinals)
+TTS_CASE_TPL("is_aligned for pointers with respect to SIMD lanes", eve::test::widths)
 <typename Lanes>(tts::type<Lanes>)
 {
   alignas(sizeof(std::uint8_t)  * Lanes::value) std::uint8_t  v8;

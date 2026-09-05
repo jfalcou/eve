@@ -23,9 +23,9 @@ TTS_CASE_WITH( "Check load to wides from aligned pointer"
 <typename T>(T reference)
 {
   using v_t = eve::element_type_t<T>;
-  using lanes_t = eve::cardinal_t<T>;
+  using lanes_t = eve::width_t<T>;
 
-  auto [data  ,idx  ] = page<v_t , lanes_t>();
+  auto [data  ,idx  ] = page<v_t , lanes_t::value>();
 
   auto* ptr              = &data[idx];
   auto const* const_ptr  = ptr;
@@ -35,7 +35,7 @@ TTS_CASE_WITH( "Check load to wides from aligned pointer"
   TTS_EQUAL((eve::load(eve::as_aligned(ptr,lanes_t{})      , lanes_t{})), reference );
   TTS_EQUAL((eve::load(eve::as_aligned(const_ptr,lanes_t{}), lanes_t{})), reference );
 
-  if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+  if constexpr(T::size() == eve::expected_width_v<v_t>)
   {
     TTS_EQUAL(eve::load(eve::as_aligned(ptr,lanes_t{}))       , reference  );
     TTS_EQUAL(eve::load(eve::as_aligned(const_ptr,lanes_t{})) , reference  );
@@ -60,7 +60,7 @@ TTS_CASE_TPL( "Check load to wides from re-aligned pointer", eve::test::simd::al
 
     if constexpr (A*sizeof(P) >= D::alignment())
     {
-      eve::aligned_ptr<P, eve::fixed<A>> ptr{f};
+      eve::aligned_ptr<P, A> ptr{f};
       TTS_EQUAL(D{ptr}                                           , expected);
       TTS_EQUAL(eve::load[eve::unsafe](ptr, eve::lane<D::size()>), expected);
     }

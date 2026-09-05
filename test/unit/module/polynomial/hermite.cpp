@@ -55,14 +55,14 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
   }
    auto std_hermitev = [&](auto i, auto) { return NAMESPACE::hermite(i0.get(i), a0.get(i)); };
    TTS_ULP_EQUAL(eve__hermitev(i0, a0), T(std_hermitev), 16);
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
     auto std_hermite2 = [&](auto i, auto) { return NAMESPACE::hermite(int(i0.get(i)), a0.get(j)); };
     TTS_ULP_EQUAL(eve__hermitev(i0, a0.get(j)), T(std_hermite2), 64);
   }
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
+    for( unsigned int n = 0; n < eve::width_v<T>; ++n )
     {
       TTS_ULP_EQUAL(
         eve__hermitev(i0.get(j), a0.get(n)), v_t(NAMESPACE::hermite(int(i0.get(j)), a0.get(n))), 64);

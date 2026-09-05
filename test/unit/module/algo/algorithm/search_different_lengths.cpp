@@ -31,7 +31,7 @@ runTestForLen(eve::as<T>, int len)
     {
       e = 1;
 
-      auto search = eve::algo::search[eve::algo::force_cardinal<T::size()>];
+      auto search = eve::algo::search[eve::algo::force_width<T::size()>];
 
       TTS_EQUAL((std::ptrdiff_t)start, search(haystack, needle) - haystack.begin(), REQUIRED)
           << "\nneedle len: " << needle.size() << "\ne in haystack: " << (&e - haystack.data())

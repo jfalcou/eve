@@ -38,8 +38,8 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed cardinal = eve::iterator_cardinal_t<I>{};
-    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, decltype(cardinal));
+    eve::fixed width = eve::iterator_width_t<I>{};
+    TTS_TYPE_IS(eve::iterator_width_t<I>, decltype(width));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
@@ -49,17 +49,17 @@ namespace algo_test
 
     {
       I next = f;
-      next += cardinal();
+      next += width();
 
       TTS_LESS         (f, next);
       TTS_LESS_EQUAL   (f, next);
       TTS_GREATER      (next, f);
       TTS_GREATER_EQUAL(next, f);
 
-      TTS_EQUAL(next, (f + cardinal()));
-      TTS_EQUAL((next - f), cardinal());
+      TTS_EQUAL(next, (f + width()));
+      TTS_EQUAL((next - f), width());
 
-      next -= cardinal();
+      next -= width();
       TTS_EQUAL(f, next);
     }
 
@@ -99,8 +99,8 @@ namespace algo_test
     auto f = eve::unalign(f_);
     if (f == f.previous_partially_aligned()) f += 1;
 
-    if (eve::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
-      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_cardinal_v<I>);
+    if (eve::iterator_width_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
+      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_width_v<I>);
     }
 
     f = f.previous_partially_aligned();
@@ -108,10 +108,10 @@ namespace algo_test
   }
 
   template <typename I>
-  void cardinal_cast_test(I f)
+  void width_cast_test(I f)
   {
-    auto res = f.cardinal_cast(eve::lane<1>);
-    TTS_TYPE_IS(typename decltype(res)::cardinal, eve::fixed<1>);
+    auto res = f.width_cast(eve::lane<1>);
+    TTS_TYPE_IS(typename decltype(res)::width, eve::fixed<1>);
   }
 
   void is_relaxed_test(eve::algo::relaxed_iterator auto, eve::algo::relaxed_iterator auto) {}
@@ -192,7 +192,7 @@ namespace algo_test
     T expected = or_;
     expected.set(0, v.back());
 
-    eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>> mask{false};
+    eve::logical<eve::wide<std::uint16_t, T::size()>> mask{false};
     mask.set(T::size() - 1, true);
     eve::unaligned_t<I> res = eve::compress_store[eve::safe](v, mask, f);
     TTS_EQUAL(eve::load(f), expected);

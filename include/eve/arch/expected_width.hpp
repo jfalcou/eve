@@ -7,8 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cardinals.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/scalar.hpp>
 #include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
 
@@ -16,36 +17,36 @@ namespace eve::_
 {
   template<typename T> struct fec_box { using type = always<T>; };
 
-  template<typename Type, regular_abi ABI>
-  constexpr std::ptrdiff_t find_expected_cardinal()
+  template<scalar_value Type, regular_abi ABI>
+  consteval width_type find_expected_width()
   {
     if constexpr(eve::product_type<Type>)
     {
       return kumi::min_flat ( kumi::as_tuple_t<Type, fec_box>{}
-                            , []<typename M>(M) { return find_expected_cardinal<typename M::type,ABI>(); }
+                            , []<typename M>(M) { return find_expected_width<typename M::type,ABI>(); }
                             );
     }
     else
     {
-      return ABI::template expected_cardinal<Type>;
+      return ABI::template expected_width<Type>;
     }
   }
 }
 
 namespace eve
 {
-  template<typename Type, regular_abi ABI = eve::current_abi_type>
-  constexpr inline auto expected_cardinal_v = _::find_expected_cardinal<Type, ABI>();
+  template<scalar_value Type, regular_abi ABI = eve::current_abi_type>
+  constexpr inline width_type expected_width_v = _::find_expected_width<Type, ABI>();
 
   //================================================================================================
   //! @addtogroup eve_arch
   //! @{
-  //!   @typedef expected_cardinal_t
-  //!   @brief Computes the expected cardinal of a given type
+  //!   @typedef expected_width_t
+  //!   @brief Computes the expected width of a given type
   //!
-  //!   **Required header:** `#include <eve/arch/expected_cardinal.hpp>`
+  //!   **Required header:** `#include <eve/arch/expected_width.hpp>`
   //!
-  //!   @ref eve::expected_cardinal_t is the exact cardinal type of the register able to store
+  //!   @ref eve::expected_width_t is the exact width type of the register able to store
   //!   values of type `Type` for a given SIMD `ABI` as a native register type.
   //!
   //!   @tparam Type  Type of value to assess
@@ -55,10 +56,10 @@ namespace eve
   //!
   //!    @code{.cpp}
   //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
-  //!    inline constexpr auto expected_cardinal_v = expected_cardinal_t<Type, ABI>::value;
+  //!    inline constexpr auto expected_width_v = expected_width_t<Type, ABI>::value;
   //!    @endcode
   //! @}
   //================================================================================================
   template<typename Type, regular_abi ABI = eve::current_abi_type>
-  using expected_cardinal_t = fixed<expected_cardinal_v<Type,ABI>>;
+  using expected_width_t = fixed<expected_width_v<Type,ABI>>;
 }

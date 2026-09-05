@@ -5,8 +5,8 @@
 
 int main()
 {
-  eve::wide<float, eve::fixed<4>> a = {1.2f, 3.4f, 5.6f, 7.8f};
-  eve::wide<float, eve::fixed<4>> b = {0.1f,1e-2f,1e-3f,1e-4f};
+  eve::wide<float, 4> a = {1.2f, 3.4f, 5.6f, 7.8f};
+  eve::wide<float, 4> b = {0.1f,1e-2f,1e-3f,1e-4f};
 
   std::cout << "Before swap_if(a < 4.f,a,b)\n"
             << "<- a                    = " << a << '\n'

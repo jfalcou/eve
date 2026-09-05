@@ -24,9 +24,9 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   using e_t = eve::element_type_t<T>;
-  using lanes_t = eve::cardinal_t<T>;
+  using lanes_t = eve::width_t<T>;
 
-  auto [ldata ,lidx ] = logical_page<v_t, lanes_t>();
+  auto [ldata ,lidx ] = logical_page<v_t, lanes_t::value>();
 
   auto l_ptr        = eve::as_aligned(&ldata[lidx], lanes_t{});
   auto l_const_ptr  = eve::as_aligned((e_t const*)(&ldata[lidx]), lanes_t{});
@@ -56,7 +56,7 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
     // lanes value
     auto lanes = eve::lane<T::size()>;
 
-    TTS_AND_THEN("load is applied on aligned pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on aligned pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](l_ptr, lanes)   , l_full_ref          );
       TTS_EQUAL((eve::load[il](l_ptr, lanes))               , l_ignore_last_ref   );
@@ -68,7 +68,7 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](l_ptr, lanes) ) , others              );
     }
 
-    TTS_AND_THEN("load is applied on aligned constant pointer for a specific cardinal")
+    TTS_AND_THEN("load is applied on aligned constant pointer for a specific width")
     {
       TTS_EQUAL(eve::load[eve::ignore_none](l_const_ptr, lanes) , l_full_ref        );
       TTS_EQUAL((eve::load[il](l_const_ptr, lanes))             , l_ignore_last_ref );
@@ -80,9 +80,9 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](l_const_ptr, lanes)), others            );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
-      TTS_AND_THEN("load is applied on aligned pointer for default cardinal")
+      TTS_AND_THEN("load is applied on aligned pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](l_ptr)                , l_full_ref        );
         TTS_EQUAL((eve::load[il](l_ptr))                            , l_ignore_last_ref );
@@ -94,7 +94,7 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
         TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](l_ptr)) , others            );
       }
 
-      TTS_AND_THEN("load is applied on aligned constant pointer for default cardinal")
+      TTS_AND_THEN("load is applied on aligned constant pointer for default width")
       {
         TTS_EQUAL(eve::load[eve::ignore_none](l_const_ptr)                , l_full_ref        );
         TTS_EQUAL((eve::load[il](l_const_ptr) )                           , l_ignore_last_ref );

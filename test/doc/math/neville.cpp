@@ -8,7 +8,7 @@ int main()
   {
     kumi::tuple xd{1.0, 2.0};
     kumi::tuple yd = kumi::map([](auto x){return 2*x+1; }, xd);
-    eve::wide<double, eve::fixed<4>> x(0.5, 2.0, -2.5, 5.0);
+    eve::wide<double, 4> x(0.5, 2.0, -2.5, 5.0);
 
     std::cout << "<- xd                                   = " << xd << '\n';
     std::cout << "<- yd                                   = " << yd  << '\n';
@@ -21,7 +21,7 @@ int main()
    {
     kumi::tuple xd{1.0, 2.0, 3.0, 4.0};
     kumi::tuple yd = kumi::map([](auto x){return x*x; }, xd);
-    eve::wide<double, eve::fixed<8>> x(0.5, 2.0, -2.5, 5.0,0.5, 2.0, -2.5, 5.0 );
+    eve::wide<double, 8> x(0.5, 2.0, -2.5, 5.0,0.5, 2.0, -2.5, 5.0 );
 
     std::cout << "<- xd                                   = " << xd << '\n';
     std::cout << "<- yd                                   = " << yd  << '\n';

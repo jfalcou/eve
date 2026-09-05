@@ -21,7 +21,7 @@ namespace eve
     constexpr EVE_FORCEINLINE as_wide_t<T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<scalar_value T, std::ptrdiff_t N>
-    constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>>
+    constexpr EVE_FORCEINLINE as_wide_t<T, N>
     operator()(T v, fixed<N> lanes) const noexcept { return EVE_DISPATCH_CALL(v, lanes); }
 
     // TODO: Remove this as it is a duplicata of broadcast_lane
@@ -30,7 +30,7 @@ namespace eve
     T operator()(T v, index_t<I> idx) const noexcept { return EVE_DISPATCH_CALL(v,idx); }
 
     template<simd_value T, std::ptrdiff_t I, std::ptrdiff_t N>
-    constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>>
+    constexpr EVE_FORCEINLINE as_wide_t<T, N>
     operator()(T v, index_t<I> idx, fixed<N> lanes) const noexcept { return EVE_DISPATCH_CALL(v, idx, lanes); }
 
     EVE_CALLABLE_OBJECT(broadcast_t, broadcast_);

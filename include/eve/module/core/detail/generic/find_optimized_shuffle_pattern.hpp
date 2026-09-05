@@ -17,7 +17,7 @@
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/pattern.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 
 #include <iosfwd>
 
@@ -54,9 +54,9 @@ struct identity_swizzle
 
   template<typename Wide, typename Pattern> EVE_FORCEINLINE auto operator()(Wide v, Pattern p) const
   {
-    constexpr auto cd = cardinal_v<Wide>;
+    constexpr auto cd = width_v<Wide>;
     constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<Wide, fixed<sz>>;
+    using that_t      = as_wide_t<Wide, sz>;
 
     if constexpr( sz >= cd ) return that_t(v.storage());
     else if constexpr( cd / sz == 2 ) return that_t(v.slice(lower_).storage());
@@ -69,13 +69,13 @@ struct zero_swizzle
   template<typename C, typename Ct>
   friend auto& operator<<(std::basic_ostream<C, Ct>& os, zero_swizzle) { return os << "zero_swizzle"; }
 
-  template<typename Wide, typename Cardinal>
-  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
+  template<typename Wide, std::ptrdiff_t Width>
+  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, fixed<Width>) const
   {
-    using w_t = as_wide_t<Wide, Cardinal>;
+    using w_t = as_wide_t<Wide, Width>;
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
-      return w_t(kumi::map([]<typename T>(T) { return as_wide_t<T, Cardinal> {0}; }, w));
+      return w_t(kumi::map([]<typename T>(T) { return as_wide_t<T, Width> {0}; }, w));
     }
     else { return w_t{ typename w_t::value_type{0} }; }
   }
@@ -104,7 +104,7 @@ template<typename Callable, typename... Args> struct bound
 
 // Part time migration to shuffle_v2
 
-template<std::ptrdiff_t G, std::ptrdiff_t N>
+template<std::ptrdiff_t G, width_type N>
 inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
     [](auto i, auto)
     {
@@ -144,7 +144,7 @@ inline constexpr bool is_reverse = []
 //================================================================================================
 // Look to see if a given pattern is optimizable and returns the optimized function object
 //================================================================================================
-template<std::ptrdiff_t InCardinal, std::ptrdiff_t I0, std::ptrdiff_t... I>
+template<std::ptrdiff_t InWidth, std::ptrdiff_t I0, std::ptrdiff_t... I>
 consteval auto
 find_optimized_shuffle_pattern()
 {
@@ -158,7 +158,7 @@ find_optimized_shuffle_pattern()
   {
     return bound {swap_adjacent, is_swag<I0, I...>};
   }
-  else if constexpr( constexpr auto st = is_broadcast_group<InCardinal, I0, I...> )
+  else if constexpr( constexpr auto st = is_broadcast_group<InWidth, I0, I...> )
   {
     return bound {broadcast_group, st->first, st->second, sz};
   }
@@ -170,10 +170,10 @@ find_optimized_shuffle_pattern()
   {
     return bound {slide_right, index<is_slide_right<I0, I...>>};
   }
-  else if constexpr( is_reverse<InCardinal, I0, I...> ) return bound {reverse};
-  else if constexpr( is_rotate<InCardinal, I0, I...> != 0 )
+  else if constexpr( is_reverse<InWidth, I0, I...> ) return bound {reverse};
+  else if constexpr( is_rotate<InWidth, I0, I...> != 0 )
   {
-    return bound {rotate, index<is_rotate<InCardinal, I0, I...>>};
+    return bound {rotate, index<is_rotate<InWidth, I0, I...>>};
   }
   else if constexpr( is_deinterleave_groups_shuffle<I0, I...> != sz )
   {

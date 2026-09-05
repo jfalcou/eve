@@ -12,40 +12,48 @@
 
 namespace eve
 {
+  namespace _ {
+    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
+  }
+
+  using width_type = std::ptrdiff_t;
+
+  template<width_type Width>
+  concept is_valid_width = (Width > 0) && _::is_pow2(Width);
+
   //================================================================================================
   //! @addtogroup eve_simd_types
   //! @{
   //================================================================================================
 
   //================================================================================================
-  //! @brief SIMD register cardinal type
+  //! @brief SIMD register width type
   //!
   //! eve::fixed wraps an integral power of two constant that represents the number of lanes in a
   //! given eve::simd_value type.
   //
-  //!  @tparam Cardinal Number of lane. If `Cardinal` is not a power of two, code is invalid.
+  //!  @tparam Width Number of lane. If `Width` is not a power of two, code is invalid.
   //!
   //!  @groupheader{Member type}
   //!
   //!   | Member          | Definition                                                    |
   //!   |:----------------|:--------------------------------------------------------------|
-  //!   | `type`          | `eve::fixed``<Cardinal>`                                      |
-  //!   | `split_type`    | `eve::fixed``<Cardinal / 2>`. Only defined if `Cardinal` > 1  |
-  //!   | `combined_type` | `eve::fixed``<Cardinal * 2>`                                  |
+  //!   | `type`          | `eve::fixed``<Width>`                                      |
+  //!   | `split_type`    | `eve::fixed``<Width / 2>`. Only defined if `Width` > 1  |
+  //!   | `combined_type` | `eve::fixed``<Width * 2>`                                  |
   //!
   //================================================================================================
-  template<std::ptrdiff_t Cardinal>
-  struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
+  template<width_type Width>
+  struct fixed : std::integral_constant<width_type, Width>
   {
-    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }
-    static_assert((Cardinal > 0) && is_pow2(Cardinal), "Cardinal must be a non-zero power of 2");
+    static_assert(is_valid_width<Width>, "Width must be a non-zero power of 2");
 
-    using type          = fixed<Cardinal>;
-    using split_type    = fixed<Cardinal / 2>;
-    using combined_type = fixed<Cardinal * 2>;
+    using type          = fixed<Width>;
+    using split_type    = fixed<Width / 2>;
+    using combined_type = fixed<Width * 2>;
   };
 
-  template<> struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
+  template<> struct fixed<1ULL> : std::integral_constant<width_type, 1ULL>
   {
     using type          = fixed<1ULL>;
     using combined_type = fixed<2>;
@@ -54,15 +62,15 @@ namespace eve
   namespace _ {
 
   template <typename>
-  struct is_wide_cardinal  : std::false_type {};
+  struct is_wide_width  : std::false_type {};
 
   template <std::ptrdiff_t N>
-  struct is_wide_cardinal<eve::fixed<N>> : std::true_type {};
+  struct is_wide_width<eve::fixed<N>> : std::true_type {};
 
   }  // namespace _
 
-  template<std::ptrdiff_t Cardinal>
-  inline constexpr fixed<Cardinal> const lane = {};
+  template<std::ptrdiff_t Width>
+  inline constexpr fixed<Width> const lane = {};
 
   //================================================================================================
   // Constant index template class
@@ -81,16 +89,17 @@ namespace eve
   //================================================================================================
 
   //================================================================================================
-  // Hardware-agnostic cardinal
+  // Hardware-agnostic width
   //================================================================================================
   namespace _
   {
-    template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
+    template<typename T>
+    constexpr width_type cache_line_width = 64 / sizeof(T);
   }
 
   //================================================================================================
   //! @ingroup eve_simd_concepts
-  //! @brief concept to determine if this is cardinal type of a wide
+  //! @brief concept to determine if this is width type of a wide
   //!
   //! @tparam T
   //!
@@ -99,5 +108,5 @@ namespace eve
   //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
   //================================================================================================
   template <typename T>
-  concept wide_cardinal = _::is_wide_cardinal<T>::value;
+  concept wide_width = _::is_wide_width<T>::value;
 }

@@ -1,25 +1,25 @@
 Design Decisions {#design_rationale}
 ================
 
-@section rationale-simd SIMD registers as Type x Cardinal
+@section rationale-simd SIMD registers as Type x Width
 
 There is multiple way to abstract away SIMD registers. The choice made by **EVE** is to provide
-a type interface based on the underlying **type** and **cardinal** (or number of lanes).
+a type interface based on the underlying **type** and **width** (or number of lanes).
 
 One can then define a SIMD type by specifying:
 
   - **Only the base type: `eve::wide<float>`**
 
-    In this case, the best cardinal for the current architecture
+    In this case, the best width for the current architecture
     will be selected and will ensure optimal performance for the user.
 
-  - **The base type and cardinal: `eve::wide< float, eve::fixed< 8 > >`**
+  - **The base type and width: `eve::wide< float, eve::fixed< 8 > >`**
 
-    This interface is more geared toward power users that may requires a specific cardinal for
+    This interface is more geared toward power users that may requires a specific width for
     their algorithm on any architecture. In this case, **EVE** will take care of ensuring the
     semantic of such code is correct over any architecture. This includes emulating smaller than
-    usual cardinal using regular registers or aggregating multiple registers to support greater
-    than usual cardinal.
+    usual width using regular registers or aggregating multiple registers to support greater
+    than usual width.
 
 This enables for SIMD code to be written in a complete architecture-agnostic way from the get go.
 

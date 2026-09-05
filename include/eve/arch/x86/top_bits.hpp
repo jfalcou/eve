@@ -20,17 +20,17 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   static constexpr bool           is_aggregated = false;
 
   static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
-  using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
+  using half_logical = logical<wide<scalar_type, half_size>>;
 
   private:
-  static constexpr std::ptrdiff_t storage_cardinal = []
+  static constexpr std::ptrdiff_t storage_width = []
   {
     std::ptrdiff_t min_size = sizeof(scalar_type) == 1 ? 16 : 8;
     return std::max(min_size, static_size);
   }();
 
   public:
-  using storage_type = eve::logical<eve::wide<scalar_type, eve::fixed<storage_cardinal>>>;
+  using storage_type = eve::logical<eve::wide<scalar_type, storage_width>>;
 
   private:
   using raw_storage_type = typename storage_type::storage_type;

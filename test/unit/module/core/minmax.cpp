@@ -67,7 +67,7 @@ TTS_CASE_WITH ( "Check predicate version of minmax",
 
   // Check for stability a la Stepanov
   using e_t = eve::element_type_t<T>;
-  using w_t = eve::wide<kumi::tuple<e_t, e_t>, eve::cardinal_t<T>>;
+  using w_t = eve::wide<kumi::tuple<e_t, e_t>, T::size()>;
 
   w_t a {[](auto i, auto) { return i % 2 ? i / 2 + 1 : 0; }, [](auto i, auto) { return i + 1; }};
   w_t b {[](auto i, auto) { return i % 2 ? i / 2 : 0; }, [](auto i, auto) { return -(i + 1); }};

@@ -94,8 +94,8 @@ namespace eve
 
         if constexpr( simd_value<T> )
         {
-          using ui_t = wide<si_t, typename cardinal_t<T>::combined_type>;
-          using vi_t = wide<si_t, cardinal_t<T>>;
+          using ui_t = wide<si_t, T::size() * 2>;
+          using vi_t = wide<si_t, T::size()>;
           auto constexpr p = as_pattern([](auto i, auto c) { return (i < c/2) ? 2*i : 2*(i - c/2) + 1; });
 
           auto uia0 = bit_cast(a0, as<ui_t>());

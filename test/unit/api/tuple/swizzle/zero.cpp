@@ -33,7 +33,7 @@ TTS_CASE_TPL( "Check behavior of zero swizzle", eve::test::scalar::all_types)
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
               constexpr std::size_t sz = 1ULL << N;
-              using type = eve::as_wide_t<S,eve::fixed<sz>>;
+              using type = eve::as_wide_t<S, sz>;
               type ref(s_t{'\0',T{0},0.});
 
               TTS_EQUAL(eve::shuffle(simd,n_zeros<sz>), ref);

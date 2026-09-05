@@ -49,16 +49,16 @@ TTS_CASE_TPL("Check behavior of sin_int on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::sin_int(T(2.5))   ,       T( 1.7785201734438265), ulp);
   TTS_ULP_EQUAL(eve::sin_int(T(0.9241388730)), T( 0.8813991752023395), ulp);
 
-  eve::wide<double, eve::fixed<8>> w {
+  eve::wide<double, 8> w {
       0.0, 1.0, 2.0, 4.0, 8.0, 2.0, eve::inf(eve::as<double>()), eve::nan(eve::as<double>())};
-  eve::wide<double, eve::fixed<8>> rr {eve::sin_int((0.0)),
-                                     eve::sin_int((1.0)),
-                                     eve::sin_int((2.0)),
-                                     eve::sin_int((4.0)),
-                                     eve::sin_int((8.0)),
-                                     eve::sin_int((2.0)),
-                                     eve::sin_int(eve::inf(eve::as<double>())),
-                                     eve::sin_int(eve::nan(eve::as<double>()))};
+  eve::wide<double, 8> rr {eve::sin_int((0.0)),
+                           eve::sin_int((1.0)),
+                           eve::sin_int((2.0)),
+                           eve::sin_int((4.0)),
+                           eve::sin_int((8.0)),
+                           eve::sin_int((2.0)),
+                           eve::sin_int(eve::inf(eve::as<double>())),
+                           eve::sin_int(eve::nan(eve::as<double>()))};
   TTS_ULP_EQUAL(eve::sin_int(w), rr, 2.5);
 };
 

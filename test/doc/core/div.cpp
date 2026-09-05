@@ -5,7 +5,7 @@
 
 int main()
 {
-  using wf_t = eve::wide<float, eve::fixed<4>>;
+  using wf_t = eve::wide<float, 4>;
   wf_t pf = {3.2, 1.6, 3, 32700}, qf = {4.1, 2.345, 1, 100};
 
   std::cout << "---- simd" << std::setprecision(10) << '\n'

@@ -40,7 +40,7 @@ namespace eve
     {
       template<typename W> struct result
       {
-        using type = typename W::template rescale<typename W::cardinal_type::split_type>;
+        using type = typename W::split_type;
       };
 
       template<typename W>

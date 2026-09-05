@@ -24,7 +24,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup eve_arch
   //! @{
-  //!   @var nofs_cardinal_v
+  //!   @var nofs_width_v
   //!   @brief nofs stands for "no frequency scaling".
   //!
   //!   You can find more explanations in the 'frequency scaling tutorial'.
@@ -32,7 +32,7 @@ namespace eve
   //!   registers on intel. The processor scales frequency drammatically for a substantial
   //!   period of time. So even if the algorithm itself will run faster the overall perf
   //!   will go down. Generally speaking, 64 byte registers on intel make sense only
-  //!   for really big data sets. `nofs_cardinal` will produce 32 byte registers on avx512.
+  //!   for really big data sets. `nofs_width` will produce 32 byte registers on avx512.
   //!   If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES.
   //!   This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.
   //!
@@ -40,7 +40,7 @@ namespace eve
   //!   acceptable. For example popular implementations of libc use avx2, so you are very
   //!   likely already have it. You can always set the width manually if needed.
   //!
-  //!   @note `eve::algo` by default will use `nofs_cardinal`. See `allow_frequency_scaling`
+  //!   @note `eve::algo` by default will use `nofs_width`. See `allow_frequency_scaling`
   //!   trait.
   //!
   //!   @tparam Type  Type of value to assess
@@ -51,10 +51,10 @@ namespace eve
   //!
   //!    @code{.cpp}
   //!    template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  //!    using nofs_cardinal_t = fixed<nofs_cardinal_v<T>>;
+  //!    using nofs_width_t = fixed<nofs_width_v<T>>;
   //!
   //!    template <scalar_value T>
-  //!    using nofs_wide = wide<T, nofs_cardinal_t<T>>;
+  //!    using nofs_wide = wide<T, nofs_width_t<T>>;
   //!
   //!    template <plain_scalar_value T>
   //!    using nofs_logical = logical<nofs_wide<T>>;
@@ -65,19 +65,19 @@ namespace eve
   //================================================================================================
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  constexpr std::ptrdiff_t nofs_cardinal_v =
+  constexpr width_type nofs_width_v =
     (std::same_as<ABI, x86_512_> && !_::avx512_default_64_bytes)
-     ? expected_cardinal_v<T, x86_256_> : expected_cardinal_v<T, ABI>;
+     ? expected_width_v<T, x86_256_> : expected_width_v<T, ABI>;
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  using nofs_cardinal_t = fixed<nofs_cardinal_v<T>>;
+  using nofs_width_t = fixed<nofs_width_v<T>>;
 
   template <scalar_value T>
-  using nofs_wide = wide<T, nofs_cardinal_t<T>>;
+  using nofs_wide = wide<T, nofs_width_v<T>>;
 
   template <plain_scalar_value T>
   using nofs_logical = logical<nofs_wide<T>>;
 
   template <typename T>
-  using nofs_aligned_ptr = aligned_ptr<T, nofs_cardinal_t<T>>;
+  using nofs_aligned_ptr = aligned_ptr<T, nofs_width_v<T>>;
 }

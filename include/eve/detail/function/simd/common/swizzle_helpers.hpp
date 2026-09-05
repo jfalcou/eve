@@ -19,7 +19,7 @@ namespace eve::_
   template<typename Pack, typename Pattern>
   EVE_FORCEINLINE auto process_zeros( Pack const& v, Pattern p ) noexcept
   {
-    constexpr auto sz = cardinal_v<Pack>;
+    constexpr auto sz = width_v<Pack>;
     using type = typename Pack::value_type;
 
     if constexpr( p.has_zeros() )
@@ -46,13 +46,13 @@ namespace eve::_
   EVE_FORCEINLINE auto as_indexes(Pattern const&)
   {
     using i_t = as_integer_t<Wide>;
-    using c_t = cardinal_t<Wide>;
+    constexpr auto c = width_v<Wide>;
 
     return  []<std::size_t... I>(std::index_sequence<I...>)
     {
       Pattern q;
-      return i_t{q(I,c_t::value)...};
-    }(std::make_index_sequence<c_t::value>{});
+      return i_t{q(I, c)...};
+    }(std::make_index_sequence<c>{});
   }
 
   //----------------------------------------------------------------------------------------------

@@ -12,8 +12,8 @@ int main()
   eve::wide wf1{eve::eps(eve::as(1.0f))/4, -eve::eps(eve::as(1.0f))/4, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f};
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
-  eve::wide<std::uint16_t, eve::fixed<8>> wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};
-  eve::wide<std::uint16_t, eve::fixed<8>> wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
+  eve::wide<std::uint16_t, 8> wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide<std::uint16_t, 8> wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
   std::cout << std::setprecision(15) << "<- wf0                           = " << wf0 << "\n";
   std::cout << "<- wf1                           = " << wf1 << "\n";
