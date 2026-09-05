@@ -8,7 +8,7 @@
 #include "test.hpp"
 
 //==================================================================================================
-// EVE overloads tts::produce for its own shapes, and for float16 it converts the bounds against the
+// EVE overloads tts::produce for its own dataset, and for float16 it converts the bounds against the
 // half format before drawing. Nothing checked that the values that come back honour the bounds that
 // were asked for: a test drawing in [0.01, 1] and receiving 1e-5 reads as a precision failure of the
 // function under test, which is where asech.cpp sent us looking.
@@ -72,20 +72,11 @@ TTS_CASE_WITH("logicals draws both values and nothing else",
   TTS_EXPECT(eve::all(m || !m));
 };
 
-//==================================================================================================
-// The cases above reach the generators through the suite's own entry point, which is where a wrong
-// value shows up. These name tts::generation itself.
-//
-// The distinction matters because a specialization that stopped being selected still produces
-// values: the built-in path draws them the plain way and answers something for every shape. What
-// it loses is the conversion EVE puts in the middle, and only a bound quietly widened would say so.
-//==================================================================================================
-
 TTS_CASE("tts::generation<eve::wide> fills every lane, not just the first")
 {
   using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
 
-  auto const v = tts::generation<w_t>::make(tts::value(3));
+  auto v = tts::generation<w_t>::make(tts::value(3));
 
   TTS_TYPE_IS(decltype(v), w_t);
   TTS_EQUAL(v, (w_t{3, 3, 3, 3}));
@@ -98,7 +89,7 @@ TTS_CASE("tts::generation<eve::wide> fills every lane, not just the first")
 //==================================================================================================
 TTS_CASE("tts::generation<eve::float16_t> draws against float16's own bounds")
 {
-  auto const v = tts::generation<eve::float16_t>::make(tts::randoms(eve::valmin, eve::valmax));
+  auto v = tts::generation<eve::float16_t>::make(tts::randoms(eve::valmin, eve::valmax));
 
   TTS_TYPE_IS(decltype(v), eve::float16_t);
   TTS_EXPECT(eve::is_finite(v));
@@ -108,7 +99,7 @@ TTS_CASE("tts::generation of a float16 register keeps every lane finite")
 {
   using w_t = eve::wide<eve::float16_t, eve::fixed<4>>;
 
-  auto const v = tts::generation<w_t>::make(tts::randoms(eve::valmin, eve::valmax));
+  auto v = tts::generation<w_t>::make(tts::randoms(eve::valmin, eve::valmax));
 
   TTS_TYPE_IS(decltype(v), w_t);
   TTS_EXPECT(eve::all(eve::is_finite(v)));
@@ -126,8 +117,6 @@ TTS_CASE("tts::produce routes the EVE shapes through the trait")
            , tts::generation<w_t>::make(tts::value(7))
            );
 
-  // A scalar the built-in path already handles goes through untouched, which is what keeps the
-  // trait an addition rather than a detour every type has to pay for.
   TTS_EQUAL(tts::produce(tts::type<int>{}, tts::value(7)), 7);
 };
 
@@ -140,7 +129,6 @@ TTS_CASE("tts::produce routes the EVE shapes through the trait")
 // recipe would still convert, to whatever the recipe object happens to cast to, and the draw would
 // simply span the wrong range.
 //==================================================================================================
-
 TTS_CASE("tts::conversion casts a plain value")
 {
   TTS_EQUAL(tts::convert_as(3, tts::type<double>{}), 3.0);
@@ -151,8 +139,6 @@ TTS_CASE("tts::conversion casts a plain value")
 
 TTS_CASE("tts::conversion evaluates a constant against the type asked for")
 {
-  // The whole point: the same bound answers a different value per type, where a cast would answer
-  // the same one converted.
   TTS_EQUAL(tts::convert_as(eve::valmax, tts::type<std::int8_t>{}),  std::int8_t(127));
   TTS_EQUAL(tts::convert_as(eve::valmax, tts::type<std::int16_t>{}), std::int16_t(32767));
 
@@ -164,7 +150,7 @@ TTS_CASE("tts::conversion evaluates a constant against a register too")
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
 
-  auto const v = tts::convert_as(eve::valmax, tts::type<w_t>{});
+  auto v = tts::convert_as(eve::valmax, tts::type<w_t>{});
 
   TTS_TYPE_IS(decltype(v), w_t);
   TTS_EXPECT(eve::all(v == eve::valmax(eve::as<w_t>{})));
