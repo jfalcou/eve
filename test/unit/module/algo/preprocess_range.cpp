@@ -124,12 +124,12 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // Not aligned enough
   if constexpr (N > 1) {
     common_test(
-      arr.begin(), eve::aligned_ptr<e_t, 1>{arr.end()},
+      b, eve::aligned_ptr<e_t, 1>{e},
       u_it{},
       u_it{}
     );
     common_test(
-      eve::aligned_ptr<e_t, 1>{arr.begin()}, eve::aligned_ptr<e_t, 1>{arr.end()},
+      eve::aligned_ptr<e_t, 1>{b}, eve::aligned_ptr<e_t, 1>{e},
       u_it{},
       u_it{}
     );
@@ -138,7 +138,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // over aligned
   {
     common_test(
-      eve::aligned_ptr<e_t, N * 2>{arr.begin()}, eve::aligned_ptr<e_t, N>{arr.end()},
+      eve::aligned_ptr<e_t, N * 2>{b}, eve::aligned_ptr<e_t, N>{e},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{}
     );

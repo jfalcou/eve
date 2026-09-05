@@ -18,12 +18,12 @@ namespace
 {
 struct fixture
 {
-  fixture() { std::iota(data.begin(), data.end(), 0); }
+  fixture() { std::iota(data.data(), data.data()+data.size(), 0); }
 
   auto aligned_begin() const
   {
     using ap = eve::aligned_ptr<const int, 4>;
-    return eve::algo::ptr_iterator<ap, 4> {ap(data.begin())};
+    return eve::algo::ptr_iterator<ap, 4> {ap(data.data())};
   }
 
   auto aligned_end() const { return aligned_begin() + data.size(); }
