@@ -33,7 +33,8 @@ TTS_CASE("tts::precision<eve::wide> reports the widest distance over the lanes")
 
   float const one  = 1.0f;
   float const next = std::nextafter(one, 2.0f);   // exactly one ULP above
-  float const far  = std::nextafter(std::nextafter(next, 2.0f), 2.0f);
+  // Not named far: MSVC still defines that as an empty macro from its memory model days.
+  float const third = std::nextafter(std::nextafter(next, 2.0f), 2.0f);
 
   w_t const a{one, one, one, one};
 
@@ -42,7 +43,7 @@ TTS_CASE("tts::precision<eve::wide> reports the widest distance over the lanes")
   // TTS counts a whole ULP as 0.5, and the lane distance is a maximum, not a sum.
   TTS_EQUAL(p<w_t>::ulp(a, w_t{next, one, one, one}), 0.5);
   TTS_EQUAL(p<w_t>::ulp(a, w_t{next, next, next, next}), 0.5);
-  TTS_EQUAL(p<w_t>::ulp(a, w_t{one, one, one, far}), 1.5);
+  TTS_EQUAL(p<w_t>::ulp(a, w_t{one, one, one, third}), 1.5);
 
   TTS_EQUAL(p<w_t>::absolute(a, a), 0.);
   TTS_EQUAL(p<w_t>::absolute(a, w_t{one, one, one, 4.0f}), 3.);
