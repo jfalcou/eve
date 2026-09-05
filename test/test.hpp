@@ -19,6 +19,8 @@
 
 #include <tts/tts.hpp>
 
+#include "soa_vector_text.hpp"
+
 //==================================================================================================
 // The suite leans on these everywhere. Kept in one place rather than sprinkled over seven
 // hundred test files.
