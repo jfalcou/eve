@@ -12,16 +12,6 @@
 #include <cmath>
 
 //==================================================================================================
-// Specific generator - valmin or valmin+1 if T is signed
-//==================================================================================================
-constexpr auto minimal = tts::constant(
-    []<typename T>(eve::as<T> const& tgt)
-    {
-      constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
-      return eve::valmin(tgt) + sign;
-    });
-
-//==================================================================================================
 // Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types_wf16)
