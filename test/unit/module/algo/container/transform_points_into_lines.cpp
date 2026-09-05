@@ -10,7 +10,6 @@
 #include "unit/module/algo/udt.hpp"
 
 #include <eve/module/algo.hpp>
-#include "unit/module/algo/soa_vector_text.hpp"
 
 #include <eve/module/core.hpp>
 #include <vector>
