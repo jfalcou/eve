@@ -18,7 +18,7 @@
 
 TTS_CASE("Bilateral filter, SIMD against scalar")
 {
-  auto size = ::tts::arguments().value("--size", 512);
+  auto size = ::tts::arguments().value(512, "--size");
 
   std::vector<float> input(size);
   std::vector<float> out_scalar(size, 0.0f);
