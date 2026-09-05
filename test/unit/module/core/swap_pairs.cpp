@@ -13,7 +13,7 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of swap_pairs(simd) on all types",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(eve::valmin, eve::valmax)
              )
 <typename T>(T const& a0)
 {

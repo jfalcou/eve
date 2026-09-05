@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of gegenbauer on wide", eve::test::simd::ieee_r
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of gegenbauer on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(0.0, 1.0), tts::as_integer(tts::ramp(0))))
+              tts::between(0.0, 1.0), tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, I const& i0)
 {
   using v_t             = eve::element_type_t<T>;

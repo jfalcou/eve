@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of eve::firstbitunset(simd)", eve::test::simd::
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::firstbitunset(simd)",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, const M t)
 {
   using vi_t = eve::element_type_t<T>;

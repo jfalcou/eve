@@ -26,14 +26,14 @@ TTS_CASE_TPL("Check return types of eve::is_normal(simd)", eve::test::simd::ieee
 //==================================================================================================
 // Tests for eve::is_normal
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return 2 * eve::smallestposval(tgt); });
+constexpr auto mini = tts::constant([](auto tgt) { return 2 * eve::smallestposval(tgt); });
 
 TTS_CASE_WITH("Check behavior of eve::is_normal(simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::smallestposval, mini),
+              tts::randoms(eve::smallestposval, mini),
                             tts::randoms(eve::zero, eve::mindenormal),
                             tts::randoms(eve::zero, mini),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
   using v_t = eve::element_type_t<T>;

@@ -26,13 +26,13 @@ TTS_CASE_TPL("Check return types of eve::is_flint(simd)", eve::test::simd::all_t
 //==================================================================================================
 // Tests for eve::is_flint
 //==================================================================================================
-auto mf2 = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::maxflint(tgt) * 4; });
+constexpr auto mf2 = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::maxflint(tgt) * 4; });
 
 TTS_CASE_WITH("Check behavior of eve::is_flint(simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::maxflint, mf2),
+              tts::randoms(eve::maxflint, mf2),
                             tts::randoms(eve::maxflint, mf2),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
   using v_t = eve::element_type_t<T>;

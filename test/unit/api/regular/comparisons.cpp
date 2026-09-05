@@ -52,9 +52,9 @@ TTS_CASE_TPL( "Check comparison operators' return types", eve::test::simd::all_t
 //==================================================================================================
 TTS_CASE_WITH( "Check comparison operators behavior between wide"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+        ,  tts::randoms(eve::valmin, eve::valmax)
                               , tts::randoms(eve::valmin, eve::valmax)
-                              )
+                              
         )
 <typename T> (T lhs, T rhs)
 {
@@ -114,9 +114,9 @@ TTS_CASE( "Check comparison operators compilation behavior")
 
 TTS_CASE_WITH( "Check comparison operators behavior between wide & scalar"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+        ,  tts::randoms(eve::valmin, eve::valmax)
                               , tts::randoms(eve::valmin, eve::valmax)
-                              )
+                              
         )
 <typename T> (T lhs, T rhs)
 {

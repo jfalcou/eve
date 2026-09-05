@@ -9,7 +9,7 @@ int main()
   std::vector<int>  v = {2,5,-9,3,-8,2,-5,7,-2,3};
 
   std::cout << " -> v                                   = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> eve::algo::none_of(v, i == 0)       = "

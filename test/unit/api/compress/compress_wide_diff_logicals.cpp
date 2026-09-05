@@ -10,7 +10,7 @@
 
 TTS_CASE_WITH("Check compress wide diff logicals",
               simd_types_for_compress<eve::test::simd::all_types>,
-              tts::generate(tts::ramp(1)))
+              tts::ramp(1))
 <typename T> (T data)
 {
   using N = eve::fixed<T::size()>;

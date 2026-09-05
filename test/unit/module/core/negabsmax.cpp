@@ -45,10 +45,10 @@ TTS_CASE_TPL("Check return types of negabsmax", eve::test::simd::signed_types_wf
 
 TTS_CASE_WITH("Check behavior of negabsmax on all types full range",
               eve::test::simd::signed_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
   using eve::abs;

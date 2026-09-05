@@ -10,7 +10,7 @@ int main()
   std::vector<float>  v = {1.0f, 2.0f, 3.0f, 4.0f, -1.0f, -2.0f, -3.0f, -4.0f, 1.0f, 2.0f, 3.0f, 4.0f};
 
   std::cout << " -> v                                                                                                                        = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> eve::algo::transform_reduce(v, [](auto x) { return x + x }, 0.f)                                                         = "

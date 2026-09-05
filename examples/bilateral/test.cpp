@@ -18,7 +18,7 @@
 
 TTS_CASE("Bilateral filter, SIMD against scalar")
 {
-  auto size = ::tts::arguments().value("--size", 512);
+  auto size = ::tts::arguments().value(512, "--size");
 
   std::vector<float> input(size);
   std::vector<float> out_scalar(size, 0.0f);
@@ -34,5 +34,5 @@ TTS_CASE("Bilateral filter, SIMD against scalar")
   bilateral::filter_simd  (input, out_raw   , eve::exp[eve::raw]                );
 
   TTS_ALL_ULP_EQUAL(out_scalar, out_eve, 3);
-  TTS_ALL_RELATIVE_EQUAL(out_scalar, out_raw, 1.0);
+  TTS_ALL_RELATIVE_EQUAL(out_scalar, out_raw, 0.01);
 };

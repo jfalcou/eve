@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check return types of eve::is_not_less(simd)", eve::test::simd::al
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_not_less(simd)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3)))
+              tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
   using v_t = eve::element_type_t<T>;

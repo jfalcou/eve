@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of eve::prev", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::prev(eve::wide<eve)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -155,8 +155,8 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::prev)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

@@ -29,15 +29,15 @@ TTS_CASE_TPL("Check return types of atan2", eve::test::simd::ieee_reals)
 //==================================================================================================
 // atan2  tests
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
-auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
+constexpr auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
+constexpr auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 TTS_CASE_WITH("Check behavior of atan2 on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(mini, maxi),
+              tts::randoms(mini, maxi),
                             tts::randoms(mini, maxi),
                             tts::randoms(-1.0, 1.0),
-                            tts::randoms(-1.0, 1.0)))
+                            tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
@@ -127,9 +127,9 @@ TTS_CASE_TPL("Check behavior of pedantic(atan2)", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::atan2)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)
@@ -141,7 +141,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::atan2)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of atan2 on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1, 1), tts::randoms(-1, 1)))
+              tts::randoms(-1, 1), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

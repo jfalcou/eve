@@ -20,7 +20,7 @@ TTS_CASE_TPL("Check return types of airy_ai", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH ( "Check behavior of airy on wide"
               , eve::test::simd::ieee_reals
-              , tts::generate(tts::randoms(-20.0, 0.0), tts::randoms(0.0, 20.0))
+              , tts::randoms(-20.0, 0.0), tts::randoms(0.0, 20.0)
               )
 <typename T>(T a0, T a1)
 {

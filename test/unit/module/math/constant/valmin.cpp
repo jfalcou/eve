@@ -35,8 +35,8 @@ TTS_CASE_TPL("Check behavior of valmin(wide)", eve::test::simd::all_types)
 
 TTS_CASE_WITH("Check behavior of valmin[mask] on :wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmin),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmin),
+              tts::logicals(0, 3))
 <typename T, typename M>(T, M m)
 {
   TTS_EQUAL(eve::valmin[m](eve::as<T>()), eve::if_else(m, T{ std::numeric_limits<eve::element_type_t<T>>::lowest() }, eve::zero));

@@ -51,11 +51,10 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle size 1, swizzle", ev
   T res = eve::deinterleave_groups_shuffle(in, eve::lane<1>);
 
   TTS_EQUAL(expected, res)
-    << std::hex
     << "\ni : " << in
     << "\ne : " << expected
     << "\nr : " << res
-    << '\n' << std::dec;
+    << '\n';
 };
 
 // This is identity
@@ -102,12 +101,11 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, 
     auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
 
     TTS_EQUAL(expected, r)
-      << std::hex
       << "\nG: "  << G
       << "\ni : " << in
       << "\ne : " << expected
       << "\nr : " << r
-      << '\n' << std::dec;
+      << '\n';
   };
 
   [&]<std::size_t... I>( std::index_sequence<I...> )

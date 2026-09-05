@@ -27,22 +27,22 @@ TTS_CASE_TPL("Check return types of sin", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // sin  tests
 //==================================================================================================
-auto mquarter_c = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_4(tgt); };
-auto quarter_c  = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_4(tgt); };
-auto mhalf_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_2(tgt); };
-auto half_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_2(tgt); };
-auto mfull_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pi(tgt); };
-auto full_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pi(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
-auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium](tgt); };
+constexpr auto mquarter_c = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_4(tgt); };
+constexpr auto quarter_c  = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_4(tgt); };
+constexpr auto mhalf_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_2(tgt); };
+constexpr auto half_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_2(tgt); };
+constexpr auto mfull_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pi(tgt); };
+constexpr auto full_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pi(tgt); };
+constexpr auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
+constexpr auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium](tgt); };
 
 TTS_CASE_WITH("Check behavior of sin on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
+              tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
                             tts::randoms(tts::constant(mhalf_c), tts::constant(half_c)),
                             tts::randoms(tts::constant(mfull_c), tts::constant(full_c)),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4)
 {
   using eve::sin;
@@ -68,8 +68,8 @@ TTS_CASE_WITH("Check behavior of sin on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sin)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -80,10 +80,13 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sin)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of sin on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1.5, 1.5), tts::randoms(-1, 1)))
+              tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
+              tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
-  auto pa1 = a1*eve::pio_2(eve::as(a1));
+  // quarter_circle computes raw and leaves any intermediate NaN alone, so both arguments stay in
+  // the [-pi/4, pi/4] it documents rather than in [-1.5, 1.5] and [-pi/2, pi/2].
+  auto pa1 = a1*eve::pio_4(eve::as(a1));
    using eve::raw;
    using eve::quarter_circle;
    auto prec = tts::prec<T>(0.005, 0.005);

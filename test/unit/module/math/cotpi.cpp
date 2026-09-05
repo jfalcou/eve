@@ -27,17 +27,17 @@ TTS_CASE_TPL("Check return types of cotpi", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // cotpi  tests
 //==================================================================================================
-auto mmed = [](auto const& tgt)
+constexpr auto mmed = [](auto const& tgt)
 { return -eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
-auto med = [](auto const& tgt)
+constexpr auto med = [](auto const& tgt)
 { return eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of cotpi on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-0.25, 0.25),
+              tts::randoms(-0.25, 0.25),
                             tts::randoms(-0.5, 0.5),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cotpi;
@@ -45,7 +45,10 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
   auto ref  = [](auto e) -> v_t
   {
     auto d = eve::sinpi(e);
-    return d ? eve::cospi(e) / d : eve::nan(eve::as(e));
+      // No guard on d: at the pole sinpi is a zero and IEEE division answers the signed infinity
+      // that cot really takes there. Testing d as a boolean also treated -0 as absent and turned
+      // the pole into a NaN, which cotpi rightly disagreed with.
+      return eve::cospi(e) / d;
   };
   TTS_ULP_EQUAL(cotpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a0), tts::map(ref, a0), 2);
@@ -60,8 +63,8 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cotpi)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

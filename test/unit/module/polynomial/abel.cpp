@@ -31,9 +31,9 @@ TTS_CASE_TPL("Check return types of abel on wide", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of abel on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0),
+              tts::between(-1.0, 1.0),
                             tts::between(1.0, 10.0),
-                            tts::as_integer(tts::ramp(0))))
+                            tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, T const& a1, I const&)
 {
   using v_t =  eve::element_type_t<T>;

@@ -35,8 +35,8 @@ TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf1
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)
              )
   <typename T>(T const& a0, T const& a1)
 {

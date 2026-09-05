@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of sigmoid", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of exp on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0)))
+              tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -59,8 +59,8 @@ TTS_CASE_TPL("Check return types of sigmoid", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sigmoid)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -71,7 +71,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sigmoid)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of sigmoid on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10, 10), tts::randoms(-1, 1)))
+              tts::randoms(-10, 10), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

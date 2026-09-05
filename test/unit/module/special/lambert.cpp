@@ -34,10 +34,10 @@ TTS_CASE_TPL("Check return types of lambert", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of lambert on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-0.367879, 0.367879),
+              tts::randoms(-0.367879, 0.367879),
                             tts::randoms(-0.367879, 0.0),
                             tts::randoms(0, 10.0),
-                            tts::randoms(-0.367879, -0.367879 + 1.0e-6)))
+                            tts::randoms(-0.367879, -0.367879 + 1.0e-6))
 <typename T>(T a0, T a1, T a2, T a3)
 {
   using elt_t = eve::element_type_t<T>;
@@ -101,10 +101,10 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
 
 TTS_CASE_WITH("Check behavior of lambert on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-0.367879, 0.367879),
+              tts::randoms(-0.367879, 0.367879),
                             tts::randoms(-0.367879, 0.0),
                             tts::randoms(0, 10.0),
-                            tts::randoms(-0.367879, -0.367879 + 1.0e-6)))
+                            tts::randoms(-0.367879, -0.367879 + 1.0e-6))
 <typename T>(T a0, T a1, T a2, T a3)
 {
   using elt_t = eve::element_type_t<T>;

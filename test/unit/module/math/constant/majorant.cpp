@@ -49,8 +49,8 @@ TTS_CASE_TPL("Check behavior of majorant(wide)", eve::test::simd::all_types)
 
 TTS_CASE_WITH("Check behavior of majorant[mask] on :wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T, M m)
 {
   if constexpr (eve::floating_value<T>)

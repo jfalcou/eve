@@ -13,7 +13,7 @@ namespace
 constexpr auto perfect_native_shuffler =
     []<std::ptrdiff_t... I>(eve::pattern_t<I...> p, auto g, auto... xs)
 {
-  if constexpr( !eve::supports_simd ) { TTS_FAIL("should not be called: " + tts::as_string(p)); }
+  if constexpr( !eve::supports_simd ) { TTS_FAIL("should not be called: " + tts::as_text(p)); }
   else
   {
     auto shuffled = get<0>(eve::_::shuffle_emulated(p, g, kumi::tuple {xs...}));
@@ -29,7 +29,7 @@ constexpr auto perfect_shuffler = eve::_::make_shuffle_v2(perfect_native_shuffle
 constexpr auto never_native_shuffler = eve::_::make_shuffle_v2(
     []<std::ptrdiff_t... I>(eve::pattern_t<I...> p, auto g, auto... xs)
     {
-      TTS_FAIL("should not be called: " + tts::as_string(p));
+      TTS_FAIL("should not be called: " + tts::as_text(p));
       return perfect_native_shuffler(p, g, xs...);
     });
 

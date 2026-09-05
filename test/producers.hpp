@@ -42,7 +42,37 @@ TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, Ulps);                
 
 namespace eve
 {
-  template<typename T> using uniform_prng = tts::realistic_generator<T>;
+  //================================================================================================
+  // EVE gives no guarantee on denormals, so the random suite keeps its bounds inside
+  // [eps, 1/eps] in magnitude. Integral bounds pass through untouched.
+  //================================================================================================
+  template<typename T> struct uniform_prng : tts::realistic_generator<T>
+  {
+    uniform_prng(T mn, T mx) : tts::realistic_generator<T>(bounded(mn), bounded(mx)) {}
+
+    static constexpr T bounded(T v)
+    {
+      if constexpr(std::floating_point<T>)
+      {
+        constexpr T mag_min = std::numeric_limits<T>::epsilon();
+        constexpr T mag_max = T(1) / mag_min;
+
+        T m = v < 0 ? -v : v;
+        if(m > mag_max)                m = mag_max;
+        else if(m != 0 && m < mag_min) m = mag_min;
+
+        return v < 0 ? -m : m;
+      }
+      else return v;
+    }
+  };
+}
+
+namespace tts
+{
+  template<typename T>
+  struct display<eve::uniform_prng<T>> : display<tts::realistic_generator<T>>
+  {};
 }
 
 namespace tts
@@ -70,9 +100,9 @@ namespace tts
       return type(src);
     }
 
-    static void display(type const& v, std::ostream& os) noexcept
+    static void display(type const& v) noexcept
     {
-      os << v;
+      ::tts::output().write(::tts::as_text(v));
     }
   };
 
@@ -99,9 +129,9 @@ namespace tts
       return type(src);
     }
 
-    static void display(type const& v, std::ostream& os) noexcept
+    static void display(type const& v) noexcept
     {
-      os << v;
+      ::tts::output().write(::tts::as_text(v));
     }
   };
 }

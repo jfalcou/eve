@@ -44,14 +44,16 @@ TTS_CASE_TPL("Check return types of variance", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of variance(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::variance;
-    TTS_ULP_EQUAL(variance(a0, a1, a2),
-                  eve::welford_variance(a0, a1, a2), 1.5);
+  // welford_variance returns its own result type, so the two claims are made separately: that it
+  // converts back to T at all, then that the value it carries matches.
+  TTS_EXPECT((std::is_convertible_v<decltype(eve::welford_variance(a0, a1, a2)), T>));
+  TTS_ULP_EQUAL(variance(a0, a1, a2), T(eve::welford_variance(a0, a1, a2)), 1.5);
 };
 
 
@@ -60,9 +62,9 @@ TTS_CASE_WITH("Check behavior of variance(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::variance)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)
@@ -74,9 +76,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::variance)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of variance kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::variance;

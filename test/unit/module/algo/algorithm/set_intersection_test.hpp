@@ -112,8 +112,8 @@ set_intersection_test_values(eve::as<T>, Algo algo)
 
     if( *(fa - 1) != *(fb - 1) )
     {
-      std::cerr << "a: " << tts::as_string(a) << "\nb: " << tts::as_string(b)
-                << "\nc: " << tts::as_string(smaller) << std::endl;
+      std::cerr << "a: " << tts::as_text(a) << "\nb: " << tts::as_text(b)
+                << "\nc: " << tts::as_text(smaller) << std::endl;
       std::cerr << "fa: " << fa - a.begin() << " fb: " << fb - b.begin() << std::endl;
       std::terminate();
     }
@@ -129,12 +129,12 @@ set_intersection_test_values(eve::as<T>, Algo algo)
     expected.assign(test_case_gen.c.begin(), test_case_gen.c.end());
     auto [fa, fb, fc] = algo(a, b, c);
 
-    TTS_EQUAL(a.end() - fa, 0) << "a: " << tts::as_string(a) << "\nb: " << tts::as_string(b);
-    TTS_EQUAL(b.end() - fb, 0) << "a: " << tts::as_string(a) << "\nb: " << tts::as_string(b);
-    TTS_EQUAL(c.end() - fc, 1) << "a: " << tts::as_string(a) << "\nb: " << tts::as_string(b);
+    TTS_EQUAL(a.end() - fa, 0) << "a: " << tts::as_text(a) << "\nb: " << tts::as_text(b);
+    TTS_EQUAL(b.end() - fb, 0) << "a: " << tts::as_text(a) << "\nb: " << tts::as_text(b);
+    TTS_EQUAL(c.end() - fc, 1) << "a: " << tts::as_text(a) << "\nb: " << tts::as_text(b);
     c.erase(fc, c.end());
 
-    TTS_EQUAL(expected, c) << "a: " << tts::as_string(a) << "\nb: " << tts::as_string(b);
+    TTS_EQUAL(expected, c) << "a: " << tts::as_text(a) << "\nb: " << tts::as_text(b);
 
     smaller_c_test(1u);
     smaller_c_test(2u);

@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of nearest on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   using wi_t  = eve::as_integer_t<T>;
@@ -56,7 +56,12 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
     TTS_EQUAL(eve::nearest(a0, eve::as<signed>()), r);
 
     TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
-              uwi_t([&](auto i, auto) { return ui_t(std_nearbyint(std_abs(a0.get(i)))); }));
+              uwi_t([&](auto i, auto) {
+                    // Saturating, as the signed case above already does: converting an
+                    // out-of-range double to an unsigned is undefined, where eve::nearest saturates.
+                    return eve::convert[eve::saturated](std_nearbyint(std_abs(a0.get(i))),
+                                                        eve::as<ui_t>{});
+                  }));
   }
   else { TTS_EQUAL(eve::nearest(a0), a0); }
 };
@@ -66,8 +71,8 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::nearest[cx](eve::wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

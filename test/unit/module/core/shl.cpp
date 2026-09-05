@@ -37,13 +37,13 @@ TTS_CASE_TPL("Check return types of shl", eve::test::simd::unsigned_integers)
 //==================================================================================================
 // shl tests
 //==================================================================================================
-auto shift_max = []<typename T>(eve::as<T> const&)
+constexpr auto shift_max = []<typename T>(eve::as<T> const&)
 { return sizeof(eve::element_type_t<T>) * 8 - 1; };
 
 TTS_CASE_WITH("Check behavior of shl on integral types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(0u, tts::constant(shift_max))))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(0u, tts::constant(shift_max)))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::shl;
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of shl on integral types",
 
 TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename L>(T a0, L test)
 {
   using eve::shl;
@@ -63,8 +63,8 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
 
 TTS_CASE_WITH("Check behavior of shl with scalar shift on integral types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(0u, tts::constant(shift_max))))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(0u, tts::constant(shift_max)))
 <typename T, typename I>(T const& a0, I a1)
 {
   using eve::shl;
@@ -78,8 +78,8 @@ TTS_CASE_WITH("Check behavior of shl with scalar shift on integral types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::shl[cx](eve::wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

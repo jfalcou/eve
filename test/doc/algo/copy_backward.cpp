@@ -12,10 +12,10 @@ int main()
   eve::algo::copy_backward(from_vector, eve::algo::as_range(to_vector.end()-10, to_vector.end()) );
 
   std::cout << "from_vector     = "
-            << tts::as_string(from_vector)
+            << tts::as_text(from_vector)
             << "\n";
 
   std::cout << "from_vector     = "
-            << tts::as_string(to_vector)
+            << tts::as_text(to_vector)
             << "\n";
 }
