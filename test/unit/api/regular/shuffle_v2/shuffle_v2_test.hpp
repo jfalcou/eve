@@ -74,7 +74,7 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
   }
   else
   {
-    // v3 builds the message with tts::text{...} rather than streaming it, so compose first.
+    // TTS_FAIL takes a built string, so compose the shuffle report first.
     std::ostringstream msg;
     msg << "Failed to shuffle, G: " << g() << "\npattern: " << p;
     TTS_FAIL(msg.str().c_str());
@@ -102,7 +102,7 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
   }
   else
   {
-    // v3 builds the message with tts::text{...} rather than streaming it, so compose first.
+    // TTS_FAIL takes a built string, so compose the shuffle report first.
     std::ostringstream msg;
     msg << "Failed to shuffle, G: " << g() << "\npattern: " << p;
     TTS_FAIL(msg.str().c_str());
