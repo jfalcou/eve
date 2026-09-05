@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/arch/float16.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 
 #include <cstddef>
 #include <type_traits>
@@ -120,7 +120,7 @@ namespace eve::_
 
   template<typename W> EVE_FORCEINLINE constexpr category categorize() noexcept
   {
-    if constexpr( has_native_abi_v<W> )
+    if constexpr( native_abi<W> )
     {
       using type      = typename W::value_type;
       using storage_t = typename W::storage_type;

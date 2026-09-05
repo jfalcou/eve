@@ -25,7 +25,7 @@ namespace eve::_
     using t_t = wide<T, typename N::combined_type>;
     using s_t = typename t_t::storage_type;
 
-         if constexpr ( has_aggregated_abi_v<t_t>                 )  return s_t {l , h};
+         if constexpr ( aggregated_abi<t_t>                 )  return s_t {l , h};
     else if constexpr ( native_simd_for_abi<wide<T, N>, x86_256_> )  // 256 -> 512 on avx512
     {
       if constexpr( std::same_as<T, double> )

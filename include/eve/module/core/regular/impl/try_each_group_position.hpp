@@ -34,7 +34,7 @@ try_each_group_position_(EVE_SUPPORTS(cpu_), T x, eve::fixed<G> g) noexcept
     auto bits = try_each_group_position(x.bits(), g);
     return kumi::map([](auto y) { return bit_cast(y, as<T> {}); }, bits);
   }
-  else if constexpr( has_aggregated_abi_v<T> ) return try_each_group_position_aggregation(x, g);
+  else if constexpr( aggregated_abi<T> ) return try_each_group_position_aggregation(x, g);
   else
   {
     // Doubling the group size is likely to yield better shuffles

@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>

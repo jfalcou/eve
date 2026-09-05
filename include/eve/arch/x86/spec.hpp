@@ -28,7 +28,11 @@ namespace eve
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
 #  define EVE_CURRENT_ABI ::eve::x86_512_
-#  define EVE_CURRENT_API ::eve::avx512_
+#  if defined(EVE_INCOMPLETE_AVX512_SUPPORT)
+#    define EVE_CURRENT_API ::eve::avx2_
+#  else
+#    define EVE_CURRENT_API ::eve::avx512_
+#  endif
 #  define EVE_ABI_NAMESPACE avx512_abi_v0
 #elif defined(SPY_SIMD_IS_X86_AVX2)
 #  define EVE_CURRENT_ABI ::eve::x86_256_

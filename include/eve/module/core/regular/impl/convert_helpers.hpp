@@ -9,7 +9,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
@@ -76,7 +76,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_un
 {
   using out_t = as_wide_t<logical<Out>, cardinal_t<In>>;
 
-  if constexpr( has_aggregated_abi_v<In> )
+  if constexpr( aggregated_abi<In> )
   {
     // If input is aggregated, we can slice and combine without lose of performance
     return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};
@@ -102,7 +102,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexce
 {
   using out_t = as_wide_t<Out, cardinal_t<In>>;
 
-  if constexpr( has_aggregated_abi_v<In> && !has_emulated_abi_v<out_t> )
+  if constexpr( aggregated_abi<In> && !emulated_abi<out_t> )
   {
     // If input is aggregated, we can slice and combine without lose of performance
     return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};

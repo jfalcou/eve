@@ -31,7 +31,7 @@ namespace eve::_
     // Small indexes are converted to int32
     else if constexpr(sizeof(element_type_t<Idx>) < 4)  scatter[opts](v, ptr, convert(idx, as<std::int32_t>{}));
     // Do we need to aggregate ?
-    else if constexpr(has_aggregated_abi_v<wide<T,N>> || has_aggregated_abi_v<Idx>)
+    else if constexpr(aggregated_abi<wide<T,N>> || aggregated_abi<Idx>)
     {
       auto [lv,hv] = v.slice();
       auto [li,hi] = idx.slice();

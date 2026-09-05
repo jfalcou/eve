@@ -17,18 +17,14 @@ namespace eve
   namespace _
   {
     template<typename Wide, typename... ABI>
-    struct  is_native_for_abi
-          : std::bool_constant
-            < ( (std::is_same_v<typename Wide::abi_type, ABI> &&
-                 Wide::size() == expected_cardinal_v<element_type_t<Wide>, ABI> )
-              || ...
-              )>
-    {};
+    inline constexpr bool is_native_for_abi_v = ( (std::is_same_v<typename Wide::abi_type, ABI> &&
+                                                  Wide::size() == expected_cardinal_v<element_type_t<Wide>, ABI> )
+                                                || ...);
 
     template<typename Wide, typename... ABI>
-    struct  is_native_for_abi<logical<Wide>, ABI...> : is_native_for_abi<Wide, ABI...> {};
+    inline constexpr bool is_native_for_abi_v<logical<Wide>, ABI...> = is_native_for_abi_v<Wide, ABI...>;
   }
 
   template<typename Wide, typename... ABI>
-  concept native_simd_for_abi = _::is_native_for_abi<Wide, ABI...>::value;
+  concept native_simd_for_abi = _::is_native_for_abi_v<Wide, ABI...>;
 }
