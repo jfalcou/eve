@@ -354,7 +354,7 @@ namespace eve::test
     };
     using type_lot = tts::concatenate_t<typename lot_of<Ts>::type...>;
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
-    using type = tts::filter<rvv_pred, type_all>::type;
+    using type = tts::filter<rvv_pred, type_all>::types_list;
 #else
     using type = type_lot;
 #endif
