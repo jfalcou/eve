@@ -305,7 +305,7 @@ namespace eve::test
       static constexpr bool value = is_enabled();
     };
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
-    using type = tts::filter<rvv_pred, type_all>::type;
+    using type = tts::filter<rvv_pred, type_all>::types_list;
 #else
     using type                 = type_all;
 #endif
