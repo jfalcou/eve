@@ -401,11 +401,17 @@ namespace tts
   //
   // A generator has to be structural: the type carries the lambda, the object stores nothing.
   //================================================================================================
-  template<typename F> struct constant
+  template<typename F> struct constant_t
   {
-    constexpr constant(F) {}
+    constexpr constant_t(F) {}
     template<typename D> constexpr auto operator()(D d) const { return F{}(d); }
   };
+
+  //================================================================================================
+  // The suite spells this `constant(f)` inside a TTS_CASE_WITH generator list, a template argument
+  // list where a class name would read as a type-id.
+  //================================================================================================
+  template<typename F> constexpr auto constant(F f) { return constant_t<F> {f}; }
 
   //================================================================================================
   // An eve constant is a per-type recipe: evaluate it against T rather than casting it. The
