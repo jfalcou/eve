@@ -110,11 +110,11 @@ TTS_CASE("preprocess zip range, traits")
   alignas(sizeof(std::int8_t) * N)   std::array<std::int8_t,   N> c;
   alignas(sizeof(std::uint32_t) * N) std::array<std::uint32_t, N> i;
 
-  auto af_ul = []<typename T>(std::array<T, N> & rng) {
+  auto af_ul = []<typename T, std::size_t N>(std::array<T, N> & rng) {
     return eve::algo::as_range(eve::aligned_ptr<T, N>(rng.begin()), rng.end());
   };
 
-  auto af_al = []<typename T>(std::array<T, N> & rng) {
+  auto af_al = []<typename T, std::size_t N>(std::array<T, N> & rng) {
     return eve::algo::as_range(eve::aligned_ptr<T, N>(rng.begin()), eve::aligned_ptr<T, N>(rng.end()));
   };
 
