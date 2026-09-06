@@ -31,9 +31,19 @@ TTS_CASE_TPL("Check return types of pow1p", eve::test::simd::ieee_reals)
 //==================================================================================================
 //=== pow1p  tests
 //==================================================================================================
+//==================================================================================================
+// pow1p(x, y) is (x+1)^y, so with an exponent up to ten the base has to stay under the tenth root
+// of valmax for the result to be representable at all.
+//==================================================================================================
+constexpr auto tenth_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::pow(static_cast<double>(eve::valmax(eve::as<v_t>())), 0.1)));
+};
+
 TTS_CASE_WITH("Check behavior of pow1p on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(0, eve::valmax),
+              tts::randoms(0, tts::constant(tenth_root_of_valmax)),
                             tts::randoms(0.5, 10.0),
                             tts::randoms(-1.0, 1.0),
                             tts::randoms(-1.0, 1.0))
