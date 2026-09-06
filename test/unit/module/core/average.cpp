@@ -54,12 +54,34 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 {
   using eve::average;
   using v_t = eve::element_type_t<T>;
+  auto prec = tts::prec<T>();
   TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return (e+f)/2; }, a0, a1), 2);
+  if constexpr( eve::floating_value<T> )
+  {
+    TTS_RELATIVE_EQUAL(average(a0, a1, a2),
+                       tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
+                       prec);
+  }
+};
+
+//==================================================================================================
+// A sum of three cancels when the signs differ, and an ULP of a mean that has melted to nothing is
+// meaningless. The case above keeps the domain and measures a relative distance; this one keeps the
+// ULP claim on data that cannot cancel.
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of average(wide) without cancellation",
+              eve::test::simd::ieee_reals_wf16,
+              tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.))
+<typename T>(T const& a0, T const& a1, T const& a2)
+{
+  using eve::average;
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(average(a0, a1, a2),
                   tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  48);
+                  2);
   }
 };
 
