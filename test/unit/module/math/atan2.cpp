@@ -41,11 +41,15 @@ TTS_CASE_WITH("Check behavior of atan2 on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
+  // atan2 crosses zero, and an ULP of an angle that has melted to nothing is meaningless; the
+  // relative distance keeps its meaning there
+  auto prec = tts::prec<T>();
 
-  TTS_ULP_EQUAL(
-      eve::atan2(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a0, a1), 2);
-  TTS_ULP_EQUAL(
-      eve::atan2(a2, a3), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a2, a3), 2);
+
+  TTS_RELATIVE_EQUAL(
+      eve::atan2(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a0, a1), prec);
+  TTS_RELATIVE_EQUAL(
+      eve::atan2(a2, a3), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a2, a3), prec);
 };
 
 TTS_CASE_TPL("Check behavior of pedantic(atan2)", eve::test::simd::ieee_reals)
