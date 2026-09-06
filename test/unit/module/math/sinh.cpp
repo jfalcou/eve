@@ -78,11 +78,13 @@ TTS_CASE_WITH("Check behavior of sinh on wide",
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
-   auto prec = tts::prec<T>(0.05, 0.05);
+   // float16 goes through the fp32 emulation and its raw form drifts more near the overflow
+   // point: 150 seeds reach 0.076 there, against 0.05 for the wider types
+   auto prec = tts::prec<T>(0.12, 0.05, 0.05);
    TTS_RELATIVE_EQUAL(eve::sinh(a0), eve::sinh[raw](a0), prec);
    TTS_RELATIVE_EQUAL(eve::sinh(a1), eve::sinh[raw](a1), prec);
    using eve::fast;
-   auto prec1 = tts::prec<T>(0.00009, 0.001);
+   auto prec1 = tts::prec<T>(0.004, 0.00009, 0.001);
    TTS_RELATIVE_EQUAL(eve::sinh(a0), eve::sinh[fast](a0), prec1);
    TTS_RELATIVE_EQUAL(eve::sinh(a1), eve::sinh[fast](a1), prec1);
 
