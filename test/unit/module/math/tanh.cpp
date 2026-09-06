@@ -64,9 +64,21 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tanh)(eve::wide)",
 };
 
 
+//==================================================================================================
+// raw and fast reach exp2 through expm1, and exp2 computes in float when the element is double, so
+// the doubled argument tanh feeds it has to survive the float path.
+//==================================================================================================
+constexpr auto raw_maxi = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(eve::maxlog(eve::as<float>()) / 2));
+};
+
+constexpr auto raw_mini = []<typename T>(eve::as<T> const& tgt) { return -raw_maxi(tgt); };
+
 TTS_CASE_WITH("Check behavior of tanh on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(mini, maxi), tts::randoms(-1, 1))
+              tts::randoms(tts::constant(raw_mini), tts::constant(raw_maxi)), tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
