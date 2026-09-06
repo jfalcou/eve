@@ -43,10 +43,32 @@ TTS_CASE_WITH("Check behavior of dot on all types full range",
   using eve::dot;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c, auto d) -> v_t { return a*c+b*d; };
+  auto prec = tts::prec<T>();
+  TTS_RELATIVE_EQUAL(dot((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_RELATIVE_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_RELATIVE_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_ULP_EQUAL(dot(a0, a1), a0*a1, 0.5);
+};
+
+//==================================================================================================
+// a.c + b.d cancels when the signs differ, and an ULP of a result that has melted to nothing is
+// meaningless. The case above keeps the domain and measures a relative distance; this one keeps the
+// ULP claim on data that cannot cancel.
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of dot(wide) without cancellation",
+              eve::test::simd::ieee_reals,
+              tts::randoms(1, 100),
+                            tts::randoms(1, 100),
+                            tts::randoms(1, 100),
+                            tts::randoms(1, 100))
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::dot;
+  using v_t = eve::element_type_t<T>;
+  auto m    = [](auto a, auto b, auto c, auto d) -> v_t { return a*c+b*d; };
   TTS_ULP_EQUAL(dot((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), 2);
   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
-  TTS_ULP_EQUAL(dot(a0, a1), a0*a1, 0.5);
 };
 
 
