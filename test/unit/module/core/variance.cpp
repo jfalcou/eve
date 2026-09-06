@@ -9,6 +9,8 @@
 
 #include <eve/module/core.hpp>
 
+#include <cmath>
+
 #include <numeric>
 
 //==================================================================================================
@@ -74,11 +76,24 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::variance)(eve::wide)",
 };
 
 
+//==================================================================================================
+// The two ways of taking a variance only agree while the squares stay representable: past that,
+// widen answers infinity where kahan compensates infinity against itself and answers a NaN.
+//==================================================================================================
+constexpr auto square_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::sqrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_square_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -square_root_of_valmax(tgt); };
+
 TTS_CASE_WITH("Check behavior of variance kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::variance;
