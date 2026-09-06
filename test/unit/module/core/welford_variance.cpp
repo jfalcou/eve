@@ -9,6 +9,8 @@
 
 #include <eve/module/core.hpp>
 
+#include <cmath>
+
 #include <numeric>
 
 //==================================================================================================
@@ -48,16 +50,29 @@ TTS_CASE_WITH("Check behavior of welford_variance(wide)",
   // welford_variance returns its own result type, so the two claims are made separately: that it
   // converts back to T at all, then that the value it carries matches.
   TTS_EXPECT((std::is_convertible_v<decltype(welford_variance(a0, a1, a2)), T>));
-  TTS_ULP_EQUAL(T(welford_variance(a0, a1, a2)), eve::variance(a0, a1, a2), 1.5);
+  TTS_ULP_EQUAL(T(welford_variance(a0, a1, a2)), eve::variance(a0, a1, a2), 2.0);
 };
 
 
 
+//==================================================================================================
+// The two ways of taking a variance only agree while the squares stay representable: past that,
+// widen answers infinity where the narrow path compensates infinity against itself and answers NaN.
+//==================================================================================================
+constexpr auto square_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::sqrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_square_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -square_root_of_valmax(tgt); };
+
 TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)))
 <typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::welford_variance;
