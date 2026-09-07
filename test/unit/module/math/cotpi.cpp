@@ -32,12 +32,16 @@ constexpr auto mmed = [](auto const& tgt)
 constexpr auto med = [](auto const& tgt)
 { return eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 
+// Above maxflint every representable value is an integer, so every draw lands on a pole of the
+// cotangent. Below it they are the exception the draw almost never picks.
+constexpr auto mmaxflint = [](auto const& tgt) { return -eve::maxflint(tgt); };
+
 TTS_CASE_WITH("Check behavior of cotpi on wide",
               eve::test::simd::ieee_reals_wf16,
               tts::randoms(-0.25, 0.25),
                             tts::randoms(-0.5, 0.5),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax))
+                            tts::randoms(tts::constant(mmaxflint), eve::maxflint))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cotpi;
