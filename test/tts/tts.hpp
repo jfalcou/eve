@@ -2977,9 +2977,9 @@ namespace tts
         , step(st)
     {
     }
-    template<typename D> D operator()(tts::type<D>, auto idx, auto...) const
+    template<typename D> D operator()(tts::type<D>, auto idx, auto sz, auto...) const
     {
-      return ::tts::convert_as(start - idx * step, type<D> {});
+      return ::tts::convert_as(start + (sz - 1 - idx) * step, type<D> {});
     }
     template<typename D> D operator()(tts::type<D>) const
     {
