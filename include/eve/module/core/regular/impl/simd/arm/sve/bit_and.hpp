@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> bit_and_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
+   wide<T, N> bit_and_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     // no svand_x for floating point types
@@ -25,7 +25,7 @@ namespace eve::_
   }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> bit_and_(EVE_REQUIRES(sve_), C& cx, O const&, wide<T, N> a, wide<T, N> b) noexcept
+   wide<T, N> bit_and_(EVE_REQUIRES(sve_), C& cx, O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && !C::has_alternative)
   {
     // no svand_m for floating point types

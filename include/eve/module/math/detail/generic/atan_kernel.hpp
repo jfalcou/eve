@@ -19,7 +19,7 @@
 namespace eve::_
 {
    template<floating_value T, typename O>
-  EVE_FORCEINLINE auto
+   auto
   opt_atan_kernel(O const &, T const& a, T const& reca) noexcept
   {
     using elt_t =  element_type_t<T>;
@@ -47,7 +47,7 @@ namespace eve::_
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE auto
+   auto
   atan_kernel(T const& x, T const& recx) noexcept
   {
     const auto flag1 = x < ieee_constant<0x1.3504f333f9de6p+1, 0x1.3504f40p+1f>(eve::as<T>{}); // tan(3pi/8)

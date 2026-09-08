@@ -13,7 +13,7 @@
 namespace eve::_
 {
   template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(avx512_), O const& opts, T a, T b)
+  constexpr  auto two_add_(EVE_REQUIRES(avx512_), O const& opts, T a, T b)
   {
     if constexpr (O::contains(raw)) return two_add.behavior(cpu_{}, opts, a, b);
     else

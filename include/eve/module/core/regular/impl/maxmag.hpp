@@ -21,7 +21,7 @@
 namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+   constexpr common_value_t<T0, Ts...>
   maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... cs) noexcept
   {
     using r_t = common_value_t<T0, Ts...>;

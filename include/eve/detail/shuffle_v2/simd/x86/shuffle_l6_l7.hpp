@@ -11,7 +11,7 @@ namespace eve::_
 {
 
 template<typename P, typename T, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_x86_l6_l7_shift_shift_or(P, fixed<G>, T x)
 {
   constexpr auto l_h = idxm::rotate_as_two_shifts_and_or(P::most_repeated);
@@ -27,7 +27,7 @@ shuffle_x86_l6_l7_shift_shift_or(P, fixed<G>, T x)
 }
 
 template<typename P, typename T, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
@@ -47,7 +47,7 @@ shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l6_l7_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
 {

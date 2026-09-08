@@ -27,7 +27,7 @@ namespace eve
                                            upper_option, strict_option, mod_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const
+    EVE_ABI constexpr T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(oneminus_t, oneminus_);
@@ -104,7 +104,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     oneminus_(EVE_REQUIRES(emulated_), O const & o, T v) noexcept
       requires(_::fp16_should_apply<T>)
     {
@@ -113,7 +113,7 @@ namespace eve
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
     {
       using elt_t = element_type_t<T>;

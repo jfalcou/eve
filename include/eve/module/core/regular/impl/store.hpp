@@ -22,7 +22,7 @@
 namespace eve::_
 {
   template<relative_conditional_expr C, simd_value T, typename Dst>
-  EVE_FORCEINLINE void store_common(auto api, C const& cx, T value, Dst dst) noexcept
+   void store_common(auto api, C const& cx, T value, Dst dst) noexcept
   {
     if      constexpr (requires { store_impl(api, cx, value, dst); })
     {
@@ -72,7 +72,7 @@ namespace eve::_
   }
 
   template<callable_options O, simd_value T, typename Dst>
-  EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, T value, Dst dst) noexcept
+   void store_(EVE_REQUIRES(cpu_), O const& opts, T value, Dst dst) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
     auto cx = opts[condition_key];
@@ -126,7 +126,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, typename Dst>
-  EVE_FORCEINLINE void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
+   void store_(EVE_REQUIRES(cpu_), O const& opts, logical<wide<T, N>> value, Dst dst) noexcept
   {
     using mask_type_t = typename logical<T>::mask_type;
     auto cond = bit_cast_alternative(opts[condition_key], as<mask_type_t>{});

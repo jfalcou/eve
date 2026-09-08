@@ -22,7 +22,7 @@ namespace eve
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<T0, T1, Ts... >>
+    EVE_ABI upgrade_if_t<Options, common_value_t<T0, T1, Ts... >>
     constexpr operator()(T0 t0, T1 t1, Ts...ts)  const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
@@ -30,14 +30,14 @@ namespace eve
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
     { return EVE_DISPATCH_CALL(t); }
 
     template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)// && Options::contains(widen))
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(kumi::cat(t1, t2)); }
 
@@ -97,14 +97,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto dot_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto dot_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return dot[o.drop(widen)](upgrade(ts)...);
     }
 
     template<typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto dot_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
+    constexpr auto dot_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     requires(sizeof...(Ts) > 1  && sizeof...(Ts)%2 == 0)
     {
       if constexpr(sizeof...(Ts) == 2) return eve::mul[o](args...);

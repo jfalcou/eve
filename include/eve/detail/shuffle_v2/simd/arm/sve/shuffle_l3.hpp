@@ -11,7 +11,7 @@ namespace eve::_
 {
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t... I>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 sve_tbl(wide<T, N> x, pattern_t<I...>)
 {
   wide<T, N> table {I...};
@@ -19,7 +19,7 @@ EVE_FORCEINLINE wide<T, N>
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_svetbl(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto table_idxs =
@@ -29,7 +29,7 @@ shuffle_l3_svetbl(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 {
   return shuffle_l3_svetbl(p, g, x);

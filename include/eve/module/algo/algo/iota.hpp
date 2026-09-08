@@ -29,7 +29,7 @@ namespace eve::algo
   struct iota_ : TraitsSupport
   {
     template <relaxed_range Rng, typename T>
-    EVE_FORCEINLINE void operator()(Rng&& rng, T value) const
+    EVE_ABI void operator()(Rng&& rng, T value) const
     {
       algo::copy[TraitsSupport::get_traits()](views::iota(value), rng);
     }

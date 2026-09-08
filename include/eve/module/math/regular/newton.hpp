@@ -18,7 +18,7 @@ namespace eve
   {
     template<floating_value X, value... CsNs>
     requires(eve::same_lanes_or_scalar<X, CsNs...>)
-    EVE_FORCEINLINE constexpr common_value_t<X, CsNs...>
+    EVE_ABI constexpr common_value_t<X, CsNs...>
     operator()(X x, CsNs... csns) const noexcept
     {
       constexpr auto s = sizeof...(CsNs);
@@ -28,7 +28,7 @@ namespace eve
 
     template<floating_value X, value... Cs, value... Ns>
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::common_value_t<X, Cs...,  Ns...>
     operator()(X x, coefficients<kumi::tuple<Cs...>> const & t1, nodes<kumi::tuple<Ns...>> const & t2) const noexcept
     {
@@ -38,7 +38,7 @@ namespace eve
     }
 
     template<floating_value X, eve::_::range R1, eve::_::range R2>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::common_value_t<X, typename R1::value_type, typename R2::value_type>
     operator()(X x, R1 const& t1,  R2 const & t2) const noexcept
     {
@@ -121,7 +121,7 @@ namespace eve
   namespace _
   {
     template<typename X, typename ...Coefs, typename... Nodes, callable_options O >
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  coefficients<kumi::tuple<Coefs...>> const& cs
            , nodes<kumi::tuple<Nodes...>> const& ns)
     {
@@ -154,7 +154,7 @@ namespace eve
     }
 
     template<typename X, typename ...CsNs, callable_options O >
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     newton_(EVE_REQUIRES(cpu_), O const &o, X xx, CsNs... cns)
     {
       using r_t = common_value_t<X, CsNs...>;
@@ -171,7 +171,7 @@ namespace eve
     }
 
     template<typename X, typename RC,  typename RN, callable_options O >
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     newton_(EVE_REQUIRES(cpu_), O const &o, X xx,  RC const& rc, RN const & rn)
     {
       using r_t   = common_value_t<X, typename RC::value_type, typename RN::value_type>;

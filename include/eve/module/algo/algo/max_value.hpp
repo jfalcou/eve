@@ -20,7 +20,7 @@ namespace eve::algo
 template<typename TraitsSupport> struct max_value_ : TraitsSupport
 {
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE std::optional<eve::value_type_t<Rng>> operator()(Rng&& rng, Less less) const
+  EVE_ABI std::optional<eve::value_type_t<Rng>> operator()(Rng&& rng, Less less) const
   {
     if( rng.begin() == rng.end() ) return std::nullopt;
 
@@ -32,7 +32,7 @@ template<typename TraitsSupport> struct max_value_ : TraitsSupport
   }
 
   template<relaxed_range Rng>
-  EVE_FORCEINLINE std::optional<eve::value_type_t<Rng>> operator()(Rng&& rng) const
+  EVE_ABI std::optional<eve::value_type_t<Rng>> operator()(Rng&& rng) const
   {
     return operator()(EVE_FWD(rng), eve::is_less);
   }

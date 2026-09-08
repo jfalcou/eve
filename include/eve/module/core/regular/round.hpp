@@ -22,7 +22,7 @@ namespace eve
                                         to_nearest_option, toward_zero_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T x) const noexcept
+    EVE_ABI constexpr T operator()(T x) const noexcept
     { return EVE_DISPATCH_CALL(x); }
 
     EVE_CALLABLE_OBJECT(round_t, round_);
@@ -86,8 +86,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    round_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
+    constexpr auto round_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
     {
       if constexpr(integral_value<T>)
         return x;

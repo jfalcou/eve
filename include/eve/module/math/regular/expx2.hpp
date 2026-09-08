@@ -16,7 +16,7 @@ namespace eve
   struct expx2_t : elementwise_callable<expx2_t, Options, raw_option, pedantic_option, fast_option>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(expx2_t, expx2_);
   };
@@ -70,7 +70,7 @@ namespace eve
   namespace _
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr T expx2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+    constexpr T expx2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::expx2[o], a0);

@@ -20,12 +20,12 @@ namespace eve
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     _::fmx_common_promote_t<T, U, V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     EVE_CALLABLE_OBJECT(fms_t, fms_);

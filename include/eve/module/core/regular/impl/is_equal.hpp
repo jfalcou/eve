@@ -23,14 +23,14 @@
 namespace eve::_
 {
   template<value T, callable_options O>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<T> b) noexcept
+   constexpr as_logical_t<T> is_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<T> b) noexcept
   {
     if constexpr( scalar_value<T> ) return as_logical_t<T>(a == b);
     else                            return bit_cast( is_equal(a.bits(), b.bits()), as(a));
   }
 
   template<value T, callable_options O>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_equal_(EVE_REQUIRES(cpu_), O const & o, T const& a, T const& b) noexcept
+   constexpr as_logical_t<T> is_equal_(EVE_REQUIRES(cpu_), O const & o, T const& a, T const& b) noexcept
   {
     if constexpr( eve::product_type<element_type_t<T>> )
     {

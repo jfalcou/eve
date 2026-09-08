@@ -18,7 +18,7 @@ template<typename Options>
 struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>
 {
   template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE zipped<T,eve::as_integer_t<T>> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_ABI constexpr zipped<T,eve::as_integer_t<T>> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(ifrexp_t, ifrexp_);
 };

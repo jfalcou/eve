@@ -30,7 +30,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto floor_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+   constexpr auto floor_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
     requires(_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(almost)) return _::map(floor[o], ts...);
@@ -38,7 +38,7 @@ namespace eve::_
   }
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+   constexpr T
   floor_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
     if constexpr(integral_value<T>) return a0;
@@ -81,7 +81,7 @@ namespace eve::_
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
   {
     if constexpr(integral_value<T>) return convert(a0, as_element<as_integer_t<T,U>>{});

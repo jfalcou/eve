@@ -18,7 +18,7 @@ namespace eve::_
 // Helper for aggregate basic_shuffle
 //================================================================================================
 template<typename Wide, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 aggregate_shuffler(Wide const& v, Pattern p) noexcept
 {
   constexpr auto sz = Pattern::size();
@@ -32,7 +32,7 @@ aggregate_shuffler(Wide const& v, Pattern p) noexcept
 // Unary basic shuffle - logical
 //================================================================================================
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noexcept
 {
   constexpr auto sz = Pattern::size();
@@ -40,7 +40,7 @@ basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noex
 }
 
 template<typename T, typename N, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 {
   constexpr auto sz = pattern_t<I...>::size();
@@ -53,7 +53,7 @@ basic_shuffle_emulated(wide<T, N> const& v, pattern_t<I...>)
 // Emulation
 //================================================================================================
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> const& v, Pattern const&)
 {
   constexpr auto cd = N::value;

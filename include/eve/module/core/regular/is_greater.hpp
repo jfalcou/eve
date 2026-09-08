@@ -20,7 +20,7 @@ namespace eve
   struct is_greater_t : elementwise_callable<is_greater_t, Options, definitely_option>
   {
     template<arithmetic_value T, arithmetic_value U>
-    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+    EVE_ABI constexpr common_logical_t<T, U> operator()(T a, U b) const
       requires ( eve::same_lanes_or_scalar<T, U> && eve::greater_comparable<element_type_t<T>,element_type_t<U>> )
     {
       if constexpr (Options::contains(definitely))

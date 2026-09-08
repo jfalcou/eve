@@ -21,19 +21,19 @@ namespace eve
   struct as_value_t : callable<as_value_t, Options>
   {
     template<generator From, value T>
-    EVE_FORCEINLINE constexpr T operator()(From from, as<T> t) const noexcept
+    EVE_ABI constexpr T operator()(From from, as<T> t) const noexcept
     {
       return from(t);
     }
 
     template<arithmetic_value From, value T>
-    EVE_FORCEINLINE constexpr T operator()(From from, as<T>) const noexcept
+    EVE_ABI constexpr T operator()(From from, as<T>) const noexcept
     {
       return T{from};
     }
 
     template<relaxed_logical_value From, value T>
-    EVE_FORCEINLINE constexpr T operator()(From from, as<T>) const noexcept
+    EVE_ABI constexpr T operator()(From from, as<T>) const noexcept
     {
       return T{from};
     }

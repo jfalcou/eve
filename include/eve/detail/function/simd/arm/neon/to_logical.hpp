@@ -18,7 +18,7 @@ namespace eve::_
   // Wide to Logical
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> to_logical( wide<T,N> const& v ) noexcept
+   logical<wide<T, N>> to_logical( wide<T,N> const& v ) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     return v != 0;

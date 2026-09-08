@@ -34,11 +34,11 @@ struct top_bits<Logical>
 
   // constructors ---------------------------------
 
-  EVE_FORCEINLINE constexpr top_bits() = default;
+  EVE_ABI constexpr top_bits() = default;
 
-  EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+  EVE_ABI constexpr explicit top_bits(storage_type storage) : storage(storage) {}
 
-  EVE_FORCEINLINE constexpr explicit top_bits(logical_type p)
+  EVE_ABI constexpr explicit top_bits(logical_type p)
   requires(!std::same_as<storage_type, logical_type>)
       : storage {bit_cast(p, eve::as<storage_type> {})}
   {
@@ -47,12 +47,12 @@ struct top_bits<Logical>
 
   // -- constructor(ignore)
   template<relative_conditional_expr C>
-  EVE_FORCEINLINE constexpr explicit top_bits(C c) : storage {c.mask(eve::as<logical_type> {})}
+  EVE_ABI constexpr explicit top_bits(C c) : storage {c.mask(eve::as<logical_type> {})}
   {}
 
   // -- constructor: logical + ignore
 
-  EVE_FORCEINLINE explicit top_bits(logical_type p, relative_conditional_expr auto ignore)
+  EVE_ABI explicit top_bits(logical_type p, relative_conditional_expr auto ignore)
       : top_bits(p)
   {
     operator&=(top_bits(ignore));
@@ -60,7 +60,7 @@ struct top_bits<Logical>
 
   // -- slicing
 
-  EVE_FORCEINLINE
+  EVE_ABI
   kumi::tuple<top_bits<half_logical>, top_bits<half_logical>> slice() const
   requires(Logical::size() > 1)
   {
@@ -68,7 +68,7 @@ struct top_bits<Logical>
     return {top_bits<half_logical> {l}, top_bits<half_logical> {h}};
   }
 
-  template<std::size_t Slice> EVE_FORCEINLINE top_bits<half_logical> slice(slice_t<Slice>) const
+  template<std::size_t Slice> EVE_ABI top_bits<half_logical> slice(slice_t<Slice>) const
   {
     auto [l, h] = slice();
 
@@ -79,15 +79,15 @@ struct top_bits<Logical>
   // getters/setter ----------------------
   static constexpr std::ptrdiff_t size() { return static_size; }
 
-  EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x) { storage.set(i, x); }
-  EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const { return storage.get(i); }
+  EVE_ABI constexpr void set(std::ptrdiff_t i, bool x) { storage.set(i, x); }
+  EVE_ABI constexpr bool get(std::ptrdiff_t i) const { return storage.get(i); }
 
-  EVE_FORCEINLINE constexpr explicit operator bool()
+  EVE_ABI constexpr explicit operator bool()
   {
     return __riscv_vcpop(storage, static_size) != 0;
   }
 
-  EVE_FORCEINLINE constexpr auto as_int() const
+  EVE_ABI constexpr auto as_int() const
   requires(static_bits_size <= 64)
   {
     constexpr unsigned byte_size = std::max<std::ptrdiff_t>(1, static_bits_size / 8);
@@ -103,7 +103,7 @@ struct top_bits<Logical>
     }
   }
 
-  EVE_FORCEINLINE constexpr bool operator==(top_bits const& x) const
+  EVE_ABI constexpr bool operator==(top_bits const& x) const
   {
     // we find any place that have not equal elements.
     auto neq_res = top_bits(storage != x.storage);
@@ -111,32 +111,32 @@ struct top_bits<Logical>
     return !neq_res;
   }
 
-  EVE_FORCEINLINE top_bits& operator&=(top_bits x)
+  EVE_ABI top_bits& operator&=(top_bits x)
   {
     storage = storage && x.storage;
     return *this;
   }
 
-  EVE_FORCEINLINE top_bits& operator|=(top_bits x)
+  EVE_ABI top_bits& operator|=(top_bits x)
   {
     storage = storage || x.storage;
     return *this;
   }
 
-  EVE_FORCEINLINE top_bits& operator^=(top_bits x)
+  EVE_ABI top_bits& operator^=(top_bits x)
   {
     storage = storage != x.storage;
     return *this;
   }
 
-  EVE_FORCEINLINE constexpr top_bits operator~() const
+  EVE_ABI constexpr top_bits operator~() const
   {
     return top_bits {!storage} & top_bits {ignore_none_ {}};
   }
 
   // streaming ----------------------------------
 
-  EVE_FORCEINLINE friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
+  EVE_ABI friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
   {
     return o << x.storage << "\n";
   }

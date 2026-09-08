@@ -34,7 +34,7 @@ namespace eve::_
   // Load helper
   //================================================================================================
   template<typename Wide, typename Iterator>
-  EVE_FORCEINLINE auto piecewise_load(Iterator ptr, as<Wide>) noexcept
+   auto piecewise_load(Iterator ptr, as<Wide>) noexcept
   {
     auto impl = [&](auto... I)
     {
@@ -53,7 +53,7 @@ namespace eve::_
   }
 
   template<relative_conditional_expr C, typename Wide, typename Iterator>
-  EVE_FORCEINLINE auto piecewise_load_cx(C const& cx, Iterator ptr, as<Wide> tgt) noexcept
+   auto piecewise_load_cx(C const& cx, Iterator ptr, as<Wide> tgt) noexcept
   {
     if constexpr (C::is_complete)
     {
@@ -83,7 +83,7 @@ namespace eve::_
   }
 
   template<typename Wide, typename Pointer>
-  EVE_FORCEINLINE auto aggregate_load(Pointer ptr, as<Wide>) noexcept
+   auto aggregate_load(Pointer ptr, as<Wide>) noexcept
   {
     Wide that;
 
@@ -112,7 +112,7 @@ namespace eve::_
   //================================================================================================
 
   template<_::data_source DS, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
+   logical<wide<T, N>> load_impl(cpu_, DS src, as<logical<wide<T, N>>> tgt) noexcept
   {
     using w_src = wide_value_type_t<DS>;
 
@@ -127,7 +127,7 @@ namespace eve::_
   }
 
   template<relative_conditional_expr C, _::data_source DS, typename Wide>
-  EVE_FORCEINLINE Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
+   Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
   {
     using e_t = typename pointer_traits<Wide>::value_type;
     using c_t = cardinal_t<Wide>;
@@ -184,7 +184,7 @@ namespace eve::_
   }
 
   template<callable_options O, std::input_iterator It, typename Wide>
-  EVE_FORCEINLINE Wide load_iterator_(O const& opts, It src, as<Wide> tgt) noexcept
+   Wide load_iterator_(O const& opts, It src, as<Wide> tgt) noexcept
   {
     if constexpr (std::contiguous_iterator<It>)
     {
@@ -201,7 +201,7 @@ namespace eve::_
   }
 
   template<relative_conditional_expr C, _::data_source DS, typename Wide>
-  EVE_FORCEINLINE Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
+   Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
   {
     constexpr auto aggregated = has_aggregated_abi_v<Wide>;
     constexpr auto emulated = has_emulated_abi_v<Wide>;
@@ -268,7 +268,7 @@ namespace eve::_
   }
 
   template<callable_options O, _::data_source DS, typename Wide>
-  EVE_FORCEINLINE Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
+   Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];

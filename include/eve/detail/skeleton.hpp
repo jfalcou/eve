@@ -21,7 +21,7 @@
 namespace eve::_
 {
   // Extract ith element of a wide or propagate the value if non SIMD
-  template<typename T> EVE_FORCEINLINE
+  template<typename T> 
   constexpr decltype(auto) get_at(T &&t, std::size_t i) noexcept
   {
     if constexpr(simd_value<std::decay_t<T>>) return EVE_FWD(t).get(i);
@@ -63,7 +63,7 @@ namespace eve::_
   };
 
   template<typename Out, typename... Bs>
-  EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
+  auto rebuild( Bs const&... ps) noexcept
   {
     auto const inside = [&]<typename I>(I)
     {
@@ -84,14 +84,14 @@ namespace eve::_
   {
     // Not a lambda as we need force-inlining
     template<typename Func, typename Idx, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
+    auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
     {
       return EVE_FWD(fn)(eve::_::get_at(EVE_FWD(vs), i)...);
     }
   };
 
   template<typename Fn, typename... Ts>
-  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
+  typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
@@ -112,7 +112,7 @@ namespace eve::_
 
   // Apply the function `f` to every `ts` once sliced.
   template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto slice_apply(Func f, Ts... ts)
+  auto slice_apply(Func f, Ts... ts)
   {
     // We use this function to turn every parameters into either a pair of slices
     // or a pair of scalar so that the apply later down is more regular
@@ -157,7 +157,7 @@ namespace eve::_
   }
 
   template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
+  auto aggregate(Func f, Ts... ts)
   {
     if constexpr (has_same_replication<Ts...>())
     {

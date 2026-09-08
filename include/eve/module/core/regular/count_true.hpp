@@ -15,7 +15,7 @@ namespace eve
   struct count_true_t : conditional_callable<count_true_t, Options>
   {
     template<relaxed_logical_value L>
-    EVE_FORCEINLINE std::ptrdiff_t operator()(L v) const noexcept
+    EVE_ABI std::ptrdiff_t operator()(L v) const noexcept
     {
       static_assert(_::validate_mask_for<decltype(this->options()), L>(),
         "[eve::count_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -24,7 +24,7 @@ namespace eve
     }
 
     template<logical_simd_value L>
-    EVE_FORCEINLINE std::ptrdiff_t operator()(top_bits<L> v) const noexcept
+    EVE_ABI std::ptrdiff_t operator()(top_bits<L> v) const noexcept
     {
       return EVE_DISPATCH_CALL(v);
     }

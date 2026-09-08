@@ -19,14 +19,14 @@ namespace eve::_
   // Emulation Helpers
   //================================================================================================
   template<typename Pack, typename V0, typename... Vs>
-  EVE_FORCEINLINE auto make_emulated(V0 v0, Vs... vs) noexcept
+   auto make_emulated(V0 v0, Vs... vs) noexcept
   {
     using s_t = typename Pack::storage_type;
     using t_t = typename Pack::value_type;
     return s_t{static_cast<t_t>(v0), static_cast<t_t>(vs)...};
   }
 
-  template<typename Pack, typename V> EVE_FORCEINLINE auto make_emulated(V v) noexcept
+  template<typename Pack, typename V>  auto make_emulated(V v) noexcept
   {
     using s_t = typename Pack::storage_type;
     using t_t = typename Pack::value_type;
@@ -40,7 +40,7 @@ namespace eve::_
   // Aggregation Helpers
   //================================================================================================
   template<typename Pack, typename V0, typename... Vs>
-  EVE_FORCEINLINE Pack make_aggregated(V0 v0, Vs... vs) noexcept
+   Pack make_aggregated(V0 v0, Vs... vs) noexcept
   {
     using sub_t = typename Pack::template rescale<typename Pack::cardinal_type::split_type>;
 
@@ -53,7 +53,7 @@ namespace eve::_
     return Pack{ kumi::apply(build,ls), kumi::apply(build,hs) };
   }
 
-  template<typename Pack, typename V> EVE_FORCEINLINE Pack make_aggregated( V v) noexcept
+  template<typename Pack, typename V>  Pack make_aggregated( V v) noexcept
   {
     using sub_t = typename Pack::storage_type::value_type;
     Pack  that;
@@ -64,7 +64,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename Target, typename T0, typename... TS>
-  EVE_FORCEINLINE constexpr auto make_(EVE_REQUIRES(cpu_), O const&, as<Target>, T0 v, TS... vs) noexcept
+   constexpr auto make_(EVE_REQUIRES(cpu_), O const&, as<Target>, T0 v, TS... vs) noexcept
   {
     using type = typename Target::storage_type;
     using v_type = typename Target::value_type;

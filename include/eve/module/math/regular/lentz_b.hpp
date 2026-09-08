@@ -17,7 +17,7 @@ namespace eve
   struct lentz_b_t : strict_elementwise_callable<lentz_b_t, Options>
   {
     template<typename G, floating_scalar_value T>
-    constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept
+    EVE_ABI constexpr auto operator()(G g, T e, std::size_t m) const noexcept
       -> as_wide_as_t<T, decltype(get<0>(g()))>
         requires (eve::sized_product_type<decltype(g()), 2>)
     {
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<typename G, floating_scalar_value T>
-    constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept
+    EVE_ABI constexpr auto operator()(G g, T e, std::size_t m) const noexcept
       -> as_wide_as_t<T, decltype(g())>
         requires (!eve::product_type<decltype(g())>)
     {

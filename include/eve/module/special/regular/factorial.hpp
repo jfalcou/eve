@@ -16,12 +16,12 @@ namespace eve
   struct factorial_t : elementwise_callable<factorial_t, Options, pedantic_option>
   {
     template<eve::integral_value T>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(factorial_t, factorial_);
@@ -90,7 +90,7 @@ namespace eve
   {
 
     template<integral_value T, callable_options O>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     as_wide_as_t<double, T> factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       if constexpr(signed_integral_value<T>)
@@ -288,7 +288,7 @@ namespace eve
     }
 
     template<floating_value T, callable_options O>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;

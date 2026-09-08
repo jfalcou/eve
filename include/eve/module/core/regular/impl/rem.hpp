@@ -24,7 +24,7 @@
 namespace eve::_
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+   constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(integral_value<T>)
     {
@@ -64,7 +64,7 @@ namespace eve::_
   }
 
   template<conditional_expr C, typename T, callable_options O>
-  EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
+   T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
   requires(integral_value<T>)
   {
     auto g = if_else(cond, f, one);

@@ -12,7 +12,7 @@
 namespace eve::_
 {
 template<scalar_value T, typename N, std::ptrdiff_t Shift>
-EVE_FORCEINLINE auto
+ auto
 slide_left_(EVE_SUPPORTS(sve_), wide<T, N> v, index_t<Shift>) noexcept
 requires(Shift > 0 && Shift < N::value && sve_abi<abi_t<T, N>>)
 {
@@ -20,7 +20,7 @@ requires(Shift > 0 && Shift < N::value && sve_abi<abi_t<T, N>>)
 }
 
 template<scalar_value T, typename N, std::ptrdiff_t Shift>
-EVE_FORCEINLINE auto
+ auto
 slide_left_(EVE_SUPPORTS(sve_), logical<wide<T, N>> v, index_t<Shift> s) noexcept
 requires(Shift > 0 && Shift < N::value && sve_abi<abi_t<T, N>>)
 {

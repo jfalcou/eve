@@ -15,7 +15,7 @@ namespace eve::_
 {
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, fixed<G> g, logical<wide<T, N>> x)
 requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), g, p); }
 {
@@ -26,7 +26,7 @@ requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), 
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_),
                     pattern_t<I...>     p,
                     fixed<G>            g,
@@ -41,7 +41,7 @@ requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), 
 }
 
 template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, fixed<G> g, T x, T y)
 {
   // sse2 has no blend. Other should try blend/no blend options.

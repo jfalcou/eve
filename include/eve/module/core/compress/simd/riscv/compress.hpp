@@ -11,7 +11,7 @@ namespace eve::_
 {
 
 template<relative_conditional_expr C, typename T, typename N, typename U>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(rvv_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 requires rvv_abi<abi_t<T, N>>
 {

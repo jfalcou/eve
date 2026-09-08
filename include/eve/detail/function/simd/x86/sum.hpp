@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
+   auto sum_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(splat) || !match_option<condition_key, O, ignore_none_>) return sum.behavior(cpu_{}, opts, v);

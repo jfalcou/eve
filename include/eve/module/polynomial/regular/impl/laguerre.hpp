@@ -11,7 +11,7 @@
 
 namespace eve::_
 {
-  constexpr EVE_FORCEINLINE auto laguerre_successor(auto n, auto l, auto x, auto pl, auto plm1)
+  constexpr  auto laguerre_successor(auto n, auto l, auto x, auto pl, auto plm1)
   {
     auto np1 = inc(n);
     auto npl = n + l;
@@ -19,7 +19,7 @@ namespace eve::_
   }
 
   template<typename N>
-  constexpr EVE_FORCEINLINE auto laguerre_successor(N n, auto x, auto Ln, auto Lnm1)
+  constexpr  auto laguerre_successor(N n, auto x, auto Ln, auto Lnm1)
   {
     return laguerre_successor(n,N{0},x,Ln,Lnm1);
   }

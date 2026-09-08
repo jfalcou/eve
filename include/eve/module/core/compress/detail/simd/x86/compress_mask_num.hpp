@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template<eve::relative_conditional_expr C, typename T>
-  EVE_FORCEINLINE std::pair<int, int>
+  std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), C c, logical<wide<T, fixed<4>>> mask)
     requires (current_api < avx512) && (sizeof(T) <= 4)
   {
@@ -42,7 +42,7 @@ namespace eve::_
   }
 
   template<typename T>
-  EVE_FORCEINLINE std::pair<int, int>
+  std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<8>>> mask)
     requires (current_api < avx512)
   {
@@ -104,7 +104,7 @@ namespace eve::_
   }
 
   template<typename T>
-  EVE_FORCEINLINE auto
+  auto
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(sse2_), logical<wide<T, fixed<16>>> mask)
     requires (current_api < avx512) && x86_abi<abi_t<T, fixed<16>>> // For aggregated 16 elements
   // just do the base case.
