@@ -19,13 +19,10 @@ namespace eve
   struct hi_t : elementwise_callable<hi_t, Options>
   {
     template<typename T>
-    struct result
-    {
-      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
-    };
+    using result = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
 
     template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type
+    EVE_ABI constexpr result<T>
     operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(hi_t, hi_);
@@ -76,7 +73,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto hi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr auto hi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using elt_t = element_type_t<T>;
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction

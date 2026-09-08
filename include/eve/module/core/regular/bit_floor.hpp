@@ -26,7 +26,7 @@ namespace eve
   struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const
+    EVE_ABI constexpr T operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bit_floor_t, bit_floor_);
@@ -82,7 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     bit_floor_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       if constexpr( floating_value<T> )

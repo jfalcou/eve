@@ -42,7 +42,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
     }
 
     template <typename I>
-    EVE_FORCEINLINE bool step(I it, eve::relative_conditional_expr auto ignore, auto idx)
+    EVE_ABI bool step(I it, eve::relative_conditional_expr auto ignore, auto idx)
     {
       auto loaded = eve::load[ignore](it);
 
@@ -57,13 +57,13 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
     }
 
     template<typename I, std::size_t size>
-    EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+    EVE_ABI bool unrolled_step(std::array<I, size> arr)
     {
       eve::_::for_<0, 1, size>([&](auto idx) { step(arr[idx()], ignore_none, idx); });
       return false;
     }
 
-    EVE_FORCEINLINE auto finish()
+    EVE_ABI auto finish()
     {
       auto sum = array_reduce(sums, add_op);
       return eve::reduce(sum, add_op);
@@ -71,7 +71,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
   };
 
   template<eve::algo::relaxed_range Rng, typename MapOp, typename AddOp, typename Zero, typename U>
-  EVE_FORCEINLINE U
+  EVE_ABI U
   operator()(Rng&& rng, MapOp map_op, std::pair<AddOp, Zero> add_zero, U init) const
   {
     algo::traits consider_sum_type {consider_types<U>};
@@ -94,7 +94,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
   }
 
   template<eve::algo::relaxed_range Rng, typename MapOp, typename U>
-  EVE_FORCEINLINE U operator()(Rng&& rng, MapOp map_op, U init) const
+  EVE_ABI U operator()(Rng&& rng, MapOp map_op, U init) const
   {
     return operator()(EVE_FWD(rng), map_op, std::pair {eve::add, eve::zero}, init);
   }

@@ -26,8 +26,8 @@ namespace eve
 
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) != 0))
-      EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
-    constexpr operator()(Ts...ts)
+    EVE_ABI constexpr upgrade_if_t<Options, common_value_t<Ts...>>
+    operator()(Ts...ts)
       const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
@@ -35,8 +35,7 @@ namespace eve
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr
-    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
@@ -105,7 +104,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto manhattan_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto manhattan_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       if      constexpr (O::contains(widen))                       return manhattan[o.drop(widen)](upgrade(ts)...);
@@ -114,7 +113,7 @@ namespace eve
     }
 
     template<typename... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     manhattan_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
       using r_t = common_value_t<Ts...>;

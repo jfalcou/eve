@@ -38,7 +38,7 @@ namespace eve::_
 {
 
   template<typename T>
-  EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
+   constexpr auto pedantic_frexp(T a0) noexcept
   {
     using i_t = as_integer_t<T, signed>;
     if constexpr( simd_value<T> )
@@ -99,7 +99,7 @@ namespace eve::_
   }
 
   template<floating_value T, callable_options O>
-  EVE_FORCEINLINE constexpr auto ifrexp_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+   constexpr auto ifrexp_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(O::contains(pedantic))
     {

@@ -108,7 +108,7 @@ namespace eve
 //======================================================================================================================
 #define EVE_CALLABLE_OBJECT_FROM(NS,TYPE,NAME)                                                                         \
 template<typename... Args>                                                                                             \
-static EVE_FORCEINLINE constexpr auto deferred_call(auto arch, Args&&...args) noexcept                                 \
+EVE_ABI static constexpr auto deferred_call(auto arch, Args&&...args) noexcept                                 \
 -> decltype(NAME(NS::adl_helper, arch, EVE_FWD(args)...))                                                              \
 {                                                                                                                      \
   return NAME( NS::adl_helper, arch, EVE_FWD(args)...);                                                                \
@@ -156,7 +156,7 @@ using callable_tag_type     = TYPE                                              
 //======================================================================================================================
 #define EVE_CALLABLE_OBJECT(TYPE,NAME)                                                                                 \
 template<typename... Args>                                                                                             \
-static EVE_FORCEINLINE constexpr auto deferred_call(auto arch, Args&&...args) noexcept                                 \
+EVE_ABI static constexpr auto deferred_call(auto arch, Args&&...args) noexcept                                 \
 -> decltype(NAME(eve::_::adl_helper, arch, EVE_FWD(args)...))                                                     \
 {                                                                                                                      \
   return NAME(eve::_::adl_helper, arch, EVE_FWD(args)...);                                                        \
@@ -167,7 +167,7 @@ using callable_tag_type     = TYPE                                              
 namespace eve::_
 {
   template<typename Callable, typename... Args>
-  EVE_FORCEINLINE constexpr auto dispatch_call_impl(Callable const& c, Args&&... args)
+   constexpr auto dispatch_call_impl(Callable const& c, Args&&... args)
   {
     using r_t = decltype(c(EVE_FWD(args)...));
 

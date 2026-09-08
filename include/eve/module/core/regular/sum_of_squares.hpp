@@ -27,14 +27,13 @@ namespace eve
   {
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts... >>
-    constexpr operator()(Ts...ts)  const noexcept
+    EVE_ABI constexpr upgrade_if_t<Options, common_value_t<Ts... >>
+    operator()(Ts...ts)  const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr
-    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
@@ -95,7 +94,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto sum_of_squares_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto sum_of_squares_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       if      constexpr(O::contains(widen))                        return sum_of_squares[o.drop(widen)](upgrade(ts)...);
@@ -104,7 +103,7 @@ namespace eve
     }
 
     template<value... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     sum_of_squares_(EVE_REQUIRES(cpu_), O const & o ,Ts... args) noexcept
     requires(O::contains(widen))
     {
@@ -112,7 +111,7 @@ namespace eve
     }
 
     template<value T0, value... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     sum_of_squares_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts... args) noexcept
     requires(!O::contains(widen))
     {

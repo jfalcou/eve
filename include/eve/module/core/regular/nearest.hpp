@@ -17,15 +17,15 @@ namespace eve
   struct nearest_t : strict_elementwise_callable<nearest_t, Options>
   {
     template<eve::integral_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    EVE_ABI constexpr T operator()(T v) const  noexcept
     {  return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    EVE_ABI constexpr T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_value T, only_if<signed,unsigned>  U>
-    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
+    EVE_ABI constexpr as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
     { return EVE_DISPATCH_CALL(v, target); }
 
     EVE_CALLABLE_OBJECT(nearest_t, nearest_);

@@ -14,7 +14,7 @@
 namespace eve::_
 {
 template<value T>
-EVE_FORCEINLINE auto
+ auto
 rem2(T const& x) noexcept
 {
   T    xi  = nearest(x + x);

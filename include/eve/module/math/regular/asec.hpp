@@ -20,7 +20,7 @@ namespace eve
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(asec_t, asec_);
 };
@@ -94,7 +94,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+    constexpr T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
       // Rounding 1 / a to float16 before acos costs several ULP near 1: the whole chain runs in float.
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)

@@ -17,7 +17,7 @@ namespace eve
   struct veltkamp_t : callable<veltkamp_t, Options>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE kumi::tuple<T, T>
+    EVE_ABI constexpr kumi::tuple<T, T>
     operator()(T t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 

@@ -20,7 +20,7 @@ namespace eve::_
 
     // Single-value scatter
     template<typename T, typename O>
-    static EVE_FORCEINLINE void sc(auto base, auto idx, auto vn, auto vc, auto vv) noexcept
+    static  void sc(auto base, auto idx, auto vn, auto vc, auto vv) noexcept
     {
       // We only write if mask is set
       if constexpr(match_option<condition_key,O,ignore_none_>) write(vv.get(vn),base+idx.get(vn));
@@ -33,7 +33,7 @@ namespace eve::_
   };
 
   template<typename T, typename Idx, typename Ptr, callable_options O>
-  EVE_FORCEINLINE void scatter_(EVE_REQUIRES(cpu_), O const& o, T const& v, Ptr p, Idx const& idx)
+   void scatter_(EVE_REQUIRES(cpu_), O const& o, T const& v, Ptr p, Idx const& idx)
   {
     // Aggregate can be optimised if there is no mask
     // Mask would require slice on ignore_*** which we don't do atm

@@ -16,7 +16,7 @@ namespace eve
   struct swap_pairs_t : callable<swap_pairs_t, Options>
   {
     template<simd_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-    EVE_FORCEINLINE T operator()(T x, index_t<I0> i0, index_t<I1> i1) const noexcept
+    EVE_ABI T operator()(T x, index_t<I0> i0, index_t<I1> i1) const noexcept
     {
       return EVE_DISPATCH_CALL(x, i0, i1);
     }

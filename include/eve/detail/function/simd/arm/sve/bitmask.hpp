@@ -17,7 +17,7 @@ namespace eve::_
 // Logical to Bits
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 to_bits(sve_ const&, logical<wide<T, N>> p) noexcept requires sve_abi<abi_t<T, N>>
 {
   using type = typename logical<wide<T, N>>::bits_type;
@@ -33,7 +33,7 @@ to_bits(sve_ const&, logical<wide<T, N>> p) noexcept requires sve_abi<abi_t<T, N
 // Logical to Bits
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 to_mask(sve_ const&, logical<wide<T, N>> p) noexcept
 {
   return bit_cast(p.bits(), eve::as<wide<T, N>>{});

@@ -38,7 +38,7 @@ namespace eve
 
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE typename result<T, U>::type
+    EVE_ABI typename result<T, U>::type
     operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
@@ -50,7 +50,7 @@ namespace eve
   namespace _
   {
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE auto
+    auto
     interleave_shuffle_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
       if constexpr(scalar_value<T>)

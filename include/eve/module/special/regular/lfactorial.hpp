@@ -19,12 +19,12 @@ namespace eve
   struct lfactorial_t : elementwise_callable<lfactorial_t, Options, pedantic_option>
   {
     template<eve::integral_value T>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lfactorial_t, lfactorial_);
@@ -90,7 +90,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
+    EVE_ABI constexpr decltype(eve::factorial(T()))
       lfactorial_(EVE_REQUIRES(cpu_), O const& , T n) noexcept
     {
       if constexpr(O::contains(pedantic))

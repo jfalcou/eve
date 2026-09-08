@@ -18,14 +18,12 @@ namespace eve::_
     eve::logical<eve::wide<U, N>> mask;
 
     template <eve::product_type T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       return { kumi::map (*this, v) };
     }
 
     template <typename T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
       requires ( sizeof(T) < 4 )
     {
@@ -34,7 +32,6 @@ namespace eve::_
     }
 
     template <typename T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       return svcompact(convert(mask, as<logical<T>>{}), v);
@@ -53,7 +50,6 @@ namespace eve::_
   }
 
   template<relative_conditional_expr C, typename T, typename U, typename N>
-  EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(sve_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
   {
     if constexpr( C::is_complete && !C::is_inverted ) return compress_(EVE_RETARGET(cpu_), c, v, mask);

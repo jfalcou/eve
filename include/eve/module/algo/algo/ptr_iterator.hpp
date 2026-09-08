@@ -60,7 +60,7 @@ namespace eve::algo
     template <std::convertible_to<Ptr> UPtr>
     ptr_iterator(ptr_iterator<UPtr, Cardinal> const& x) : ptr(x.ptr) {}
 
-    EVE_FORCEINLINE auto unalign() const noexcept { return unaligned_me{eve::unalign(ptr)}; }
+    EVE_ABI auto unalign() const noexcept { return unaligned_me{eve::unalign(ptr)}; }
 
     auto previous_partially_aligned() const
     {
@@ -111,12 +111,12 @@ namespace eve::algo
     auto operator<=>(ptr_iterator<OtherPtr, Cardinal> const &x) const { return ptr <=> x.ptr; }
 
     template<callable_options O>
-    EVE_FORCEINLINE auto load(O const& opts, as<wv_type> tgt) const
+    EVE_ABI auto load(O const& opts, as<wv_type> tgt) const
     {
       return eve::load[opts](ptr, tgt);
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_, relative_conditional_expr auto c, wv_type v, ptr_iterator self)
+    EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_, relative_conditional_expr auto c, wv_type v, ptr_iterator self)
     {
       return kumi::make_tuple(c, v, self.ptr);
     }

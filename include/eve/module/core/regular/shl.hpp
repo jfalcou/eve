@@ -16,14 +16,14 @@ namespace eve
   struct shl_t : strict_elementwise_callable<shl_t, Options>
   {
     template<integral_value T, integral_value S>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
+    EVE_ABI constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
       requires(eve::same_lanes_or_scalar<T, S>)
     {
       return EVE_DISPATCH_CALL(t0, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
+    EVE_ABI constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S >= 0), "[eve::shl] Shift value is out of range.");
@@ -99,7 +99,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename T, typename U>
-    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
+    constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
       // S >> S case: perform the operation using the default operator
       if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a << s);
@@ -112,7 +112,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
+    constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
     {
       if constexpr (S == 0) return v;
       else                  return shl(v, static_cast<element_type_t<T>>(S));

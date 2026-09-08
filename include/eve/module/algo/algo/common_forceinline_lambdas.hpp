@@ -20,7 +20,7 @@ namespace eve::algo
   {
     Op op;
     explicit apply_to_zip_pair(Op o) : op(o) {}
-    EVE_FORCEINLINE auto operator()(auto x_y) const { return op(get<0>(x_y), get<1>(x_y)); }
+    EVE_ABI auto operator()(auto x_y) const { return op(get<0>(x_y), get<1>(x_y)); }
   };
 
   template <typename P>
@@ -28,7 +28,7 @@ namespace eve::algo
   {
     P p;
     explicit not_p(P pr) : p(pr) {}
-    EVE_FORCEINLINE auto operator()(auto ... x) const { return !p(x ...); }
+    EVE_ABI auto operator()(auto ... x) const { return !p(x ...); }
   };
 
   template <typename Op>
@@ -36,7 +36,7 @@ namespace eve::algo
   {
     Op op;
     explicit load_and_apply(Op o) : op(o) {}
-    EVE_FORCEINLINE auto operator()(auto it) const { return op(eve::load(it)); }
+    EVE_ABI auto operator()(auto it) const { return op(eve::load(it)); }
   };
 
   template <typename Delegate>
@@ -46,7 +46,7 @@ namespace eve::algo
 
     explicit call_single_step(Delegate* d) : delegate(d) {}
 
-    EVE_FORCEINLINE bool operator()(auto it) const
+    EVE_ABI bool operator()(auto it) const
     {
       return delegate->step(it, eve::ignore_none, eve::index<0>);
     }
@@ -55,13 +55,13 @@ namespace eve::algo
   struct unroll_by_calling_single_step
   {
     template<typename I, std::size_t N, typename Delegate, std::size_t... i>
-    EVE_FORCEINLINE bool impl(std::array<I, N> arr, Delegate& delegate, std::index_sequence<i...>) const
+    EVE_ABI bool impl(std::array<I, N> arr, Delegate& delegate, std::index_sequence<i...>) const
     {
       return (delegate.step(arr[i], ignore_none, eve::index<(std::ptrdiff_t)i>) || ...);
     }
 
     template<typename I, std::size_t N, typename Delegate>
-    EVE_FORCEINLINE bool operator()(std::array<I, N> arr, Delegate& delegate) const
+    EVE_ABI bool operator()(std::array<I, N> arr, Delegate& delegate) const
     {
       return impl(arr, delegate, std::make_index_sequence<N> {});
     }
@@ -72,7 +72,7 @@ namespace eve::algo
   {
     T v;
     explicit equal_to(T w) : v(w) {}
-    EVE_FORCEINLINE auto operator()(auto x) const { return x == v; }
+    EVE_ABI auto operator()(auto x) const { return x == v; }
   };
 
   template <typename Op, typename T>
@@ -81,7 +81,7 @@ namespace eve::algo
     Op op;
     T v;
     bind_first(Op o, T w) : op(o), v(w) {}
-    EVE_FORCEINLINE auto operator()(auto x) const { return op(v, x); }
+    EVE_ABI auto operator()(auto x) const { return op(v, x); }
   };
 
   template <typename Op, typename T>
@@ -91,23 +91,23 @@ namespace eve::algo
     T v;
 
     bind_second(Op o, T w) : op(o), v(w) {}
-    EVE_FORCEINLINE auto operator()(auto x) const { return op(x, v); }
+    EVE_ABI auto operator()(auto x) const { return op(x, v); }
   };
 
   struct do_nothing
   {
-    EVE_FORCEINLINE auto operator()(auto x) const { return x; }
+    EVE_ABI auto operator()(auto x) const { return x; }
   };
 
   struct inplace_load_store
   {
-    EVE_FORCEINLINE static auto load_it(auto i) { return i; }
-    EVE_FORCEINLINE static auto store_it(auto i) { return i; }
+    EVE_ABI static auto load_it(auto i) { return i; }
+    EVE_ABI static auto store_it(auto i) { return i; }
   };
 
   struct to_load_store
   {
-    EVE_FORCEINLINE static auto load_it(auto i) { return get<0>(i); }
-    EVE_FORCEINLINE static auto store_it(auto i) { return get<1>(i); }
+    EVE_ABI static auto load_it(auto i) { return get<0>(i); }
+    EVE_ABI static auto store_it(auto i) { return get<1>(i); }
   };
 }
