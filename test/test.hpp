@@ -248,7 +248,7 @@ namespace eve::test
                               , eve::fixed<1024>
                               >;
 
-  EVE_FORCEINLINE auto is_near(auto a,  auto b){
+  EVE_ABI auto is_near(auto a,  auto b){
     return eve::if_else( a < b
                        , (eve::next(a) == b) && (eve::prev(b) == a)
                        , a == b);
