@@ -23,9 +23,6 @@ namespace eve
     EVE_CALLABLE_OBJECT(frexp_t, frexp_);
   };
 
-  EVE_CALLABLE_OBJECT(frexp_t, frexp_);
-};
-
 //================================================================================================
 //! @addtogroup eve_core_internal
 //! @{
@@ -82,11 +79,13 @@ namespace eve
 //! @}
 //================================================================================================
 
-namespace _
-{
-template<typename T, callable_options O>
-EVE_ABI constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
-{
-  auto [m, e] = ifrexp[o](a0);
-  return eve::zip(m, convert(e,as_element<T>{}));
+  namespace _
+  {
+    template<typename T, callable_options O>
+    constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+    {
+      auto [m, e] = ifrexp[o](a0);
+      return eve::zip(m, convert(e,as_element<T>{}));
+    }
+  }
 }
