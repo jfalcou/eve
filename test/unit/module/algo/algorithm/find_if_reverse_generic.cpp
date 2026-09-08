@@ -16,7 +16,7 @@
 
 template<typename TraitsSupport> struct find_reverse_ : TraitsSupport
 {
-  template<typename Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+  template<typename Rng, typename P> EVE_ABI auto operator()(Rng&& rng, P p) const
   {
     return eve::algo::find_if(eve::views::reverse(rng), p).base - 1;
   }

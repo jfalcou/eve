@@ -13,7 +13,7 @@
 
 template<typename TraitsSupport> struct transfrom_reduce_2_reduce_ : TraitsSupport
 {
-  EVE_FORCEINLINE auto operator()(auto&& rng, auto init) const
+  EVE_ABI auto operator()(auto&& rng, auto init) const
   {
     return eve::algo::transform_reduce[TraitsSupport::get_traits()](
         EVE_FWD(rng), [](auto x) { return x; }, init);
@@ -25,7 +25,7 @@ inline constexpr auto transform_reduce_2_reduce = eve::algo::function_with_trait
 
 template<typename TraitsSupport> struct transfrom_reduce_2_reduce_fuse_ : TraitsSupport
 {
-  EVE_FORCEINLINE auto operator()(auto&& rng, auto init) const
+  EVE_ABI auto operator()(auto&& rng, auto init) const
   {
     return eve::algo::transform_reduce[TraitsSupport::get_traits()][eve::algo::fuse_operations](
         EVE_FWD(rng), []<typename Sum, typename N>(auto x, eve::wide<Sum, N> sum) {

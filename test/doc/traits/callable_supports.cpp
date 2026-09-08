@@ -12,7 +12,7 @@ namespace eve
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T>
-    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 
@@ -24,7 +24,7 @@ namespace eve
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T>
-    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(other_func_t, other_func_);
   };
 
