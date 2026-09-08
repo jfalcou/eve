@@ -2979,7 +2979,8 @@ namespace tts
     }
     template<typename D> D operator()(tts::type<D>, auto idx, auto sz, auto...) const
     {
-      return ::tts::convert_as(start + (sz - 1 - idx) * step, type<D> {});
+      auto const rev = static_cast<decltype(idx)>(sz) - 1 - idx;
+      return ::tts::convert_as(start + rev * step, type<D> {});
     }
     template<typename D> D operator()(tts::type<D>) const
     {
