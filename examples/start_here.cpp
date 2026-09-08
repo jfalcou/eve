@@ -38,7 +38,7 @@ using polar     = kumi::tuple<double, float>;
 
 struct
 {
-  EVE_FORCEINLINE auto operator()(eve::like<cartesian> auto c) const
+  EVE_ABI auto operator()(eve::like<cartesian> auto c) const
   {
     auto [x, y] = c;
     auto r      = eve::hypot(x, y);
@@ -50,7 +50,7 @@ struct
 
 struct
 {
-  EVE_FORCEINLINE auto operator()(eve::like<polar> auto p) const
+  EVE_ABI auto operator()(eve::like<polar> auto p) const
   {
     auto [r, angle_f] = p;
     auto angle_d = eve::convert(angle_f, eve::as<double>{});
