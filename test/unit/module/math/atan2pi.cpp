@@ -29,8 +29,10 @@ TTS_CASE_TPL("Check return types of atan2pi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // atan2pi  tests
 //==================================================================================================
-constexpr auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
-constexpr auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
+// eve promises nothing on denormals and a division may go through a reciprocal, so a draw is
+// usable only when both it and its reciprocal stay normal.
+constexpr auto mini = tts::constant([](auto tgt) { return eve::smallestposval(tgt); });
+constexpr auto maxi = tts::constant([](auto tgt) { return eve::rec(eve::smallestposval(tgt)); });
 
 TTS_CASE_WITH("Check behavior of atan2pi on wide",
               eve::test::simd::ieee_reals,
