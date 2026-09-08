@@ -48,17 +48,21 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t
   {
-    auto d = eve::sinpi(e);
-      // No guard on d: at the pole sinpi is a zero and IEEE division answers the signed infinity
-      // that cot really takes there. Testing d as a boolean also treated -0 as absent and turned
-      // the pole into a NaN, which cotpi rightly disagreed with.
-      return eve::cospi(e) / d;
+    // A pole reached from a non-zero integer has no side: the zero of sinpi carries no direction,
+    // so the value there is a NaN. Zero is the exception, its own sign says which way it is met.
+    if( !eve::is_eqz(e) && eve::is_flint(e) ) return eve::nan(eve::as<v_t>());
+    return eve::cospi(e) / eve::sinpi(e);
   };
   TTS_ULP_EQUAL(cotpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a1), tts::map(ref, a1), 2);
   TTS_ULP_EQUAL(cotpi(a2), tts::map(ref, a2), 2);
   TTS_ULP_EQUAL(cotpi(a3), tts::map(ref, a3), 2);
+
+  TTS_IEEE_EQUAL(cotpi(T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(cotpi(T(-3)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(cotpi(T(0)), eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(cotpi(T(-0.)), eve::minf(eve::as<T>()));
 };
 
 
