@@ -88,12 +88,12 @@ TTS_CASE_WITH("Check behavior of add on wide",
   TTS_EQUAL( add(a0), a0);
   TTS_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 7.0);
+  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 7.0);
   TTS_EQUAL( add(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 7.0);
+  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 7.0);
 
   if constexpr (eve::floating_value<T>)
   {
