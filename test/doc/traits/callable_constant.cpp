@@ -15,11 +15,11 @@ namespace eve
     //  * an eve::as instance to specify the output type
     //  * an optional eve::options containing potential decorators passed to the constant
     template<typename T>
-    static EVE_FORCEINLINE T value(eve::as<T> const&, auto) { return static_cast<T>(3.14159216); }
+    static EVE_ABI T value(eve::as<T> const&, auto) { return static_cast<T>(3.14159216); }
 
     // Supported function calls are still required
     template<eve::floating_value T>
-    EVE_FORCEINLINE T    operator()(as<T>    v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T    operator()(as<T>    v) const { return EVE_DISPATCH_CALL(v); }
 
     // Complete the callable interface.
     EVE_CALLABLE_OBJECT(some_pi_t, some_pi_);
