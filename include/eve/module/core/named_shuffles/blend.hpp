@@ -121,7 +121,7 @@ struct blend_t
         auto [p0, p1] = _::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
         auto l0       = level(as<half_t> {}, as<half_t> {}, g, p0);
         auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
-        return _::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {l0, l1, 4});
+        return _::idxm::add_shuffle_levels(l0, l1, 4);
       }
       if( current_api >= sse4_1 ) return g_size >= 4 ? 2 : 3;
 
