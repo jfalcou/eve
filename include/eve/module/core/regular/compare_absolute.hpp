@@ -18,14 +18,14 @@ namespace eve
   struct compare_absolute_t : strict_elementwise_callable<compare_absolute_t, Options, saturated_option>
   {
     template< value T, typename F>
-    constexpr EVE_FORCEINLINE logical<T>  operator()(T a, F f) const
+    EVE_ABI constexpr logical<T> operator()(T a, F f) const
     {
       return EVE_DISPATCH_CALL(a, f);
     }
 
     template<value T, value U, typename F>
     requires(eve::same_lanes_or_scalar<T, U>)
-      constexpr EVE_FORCEINLINE common_logical_t<T, U>  operator()(T a, U b, F f) const
+    EVE_ABI constexpr common_logical_t<T, U> operator()(T a, U b, F f) const
     {
       return EVE_DISPATCH_CALL(a, b, f);
     }
@@ -95,14 +95,14 @@ namespace eve
 namespace eve::_
 {
   template<value T, typename F, callable_options O>
-  EVE_FORCEINLINE constexpr logical<T>
+  constexpr logical<T>
   compare_absolute_(EVE_REQUIRES(cpu_), O const& o, T a, F f) noexcept
   {
     return f(eve::abs[o](a));
   }
 
   template<value T, value U, typename F, callable_options O>
-  EVE_FORCEINLINE constexpr common_logical_t<T,U>
+  constexpr common_logical_t<T,U>
   compare_absolute_(EVE_REQUIRES(cpu_), O const& o, T a, U b, F f) noexcept
   {
     return f(eve::abs[o](a), abs[o](b));

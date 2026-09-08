@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
+   wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
                                       O           const& opts,
                                       wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -50,7 +50,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(avx512_),
+   wide<T, N> nearest_(EVE_REQUIRES(avx512_),
                                       C          const &cx,
                                       O          const &opts,
                                       wide<T, N> const &v) noexcept

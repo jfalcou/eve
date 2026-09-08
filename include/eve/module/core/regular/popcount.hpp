@@ -18,7 +18,7 @@ namespace eve
   struct popcount_t : elementwise_callable<popcount_t, Options>
   {
     template<unsigned_value T>
-    EVE_FORCEINLINE constexpr T operator()(T t) const noexcept
+    EVE_ABI constexpr T operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
     }

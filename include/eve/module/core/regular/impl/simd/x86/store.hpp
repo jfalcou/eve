@@ -21,7 +21,7 @@ namespace eve::_
 template<relative_conditional_expr C, scalar_value T,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
+ void store_impl(sse2_, C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
   requires x86_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
   // store float16 as integer when AVX512FP16 is not available

@@ -13,7 +13,7 @@ namespace eve::_
 {
   // FIX-#965: most of this should be in reduce, except for 64 bits on arm-v7
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE T sum4(wide<T, eve::fixed<4>> v)
+  T sum4(wide<T, eve::fixed<4>> v)
   {
     if constexpr ( current_api >= asimd )
     {
@@ -67,7 +67,7 @@ namespace eve::_
 
   // FIX-#965: most of this should be in reduce, except for uint8_t
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE auto sum8(wide<T, eve::fixed<8>> v)
+  auto sum8(wide<T, eve::fixed<8>> v)
   {
          if constexpr ( current_api >= asimd && sizeof(T) == 1 ) return vaddlv_u8(v);
     else if constexpr ( current_api >= asimd && sizeof(T) == 2 ) return vaddvq_u16(v);
@@ -90,7 +90,7 @@ namespace eve::_
   }
 
   template<eve::relative_conditional_expr C, typename T>
-  EVE_FORCEINLINE std::pair<int, int>
+  std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {0, 0};
@@ -112,7 +112,7 @@ namespace eve::_
   }
 
   template<typename T>
-  EVE_FORCEINLINE std::pair<int, int>
+  std::pair<int, int>
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), logical<wide<T, fixed<8>>> mask)
   {
     // the sums we do won't fit into a char - needs to be converted to short

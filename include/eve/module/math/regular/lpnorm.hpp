@@ -23,12 +23,12 @@ namespace eve
   {
     template<value P, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) !=  0))
-      EVE_FORCEINLINE constexpr as_wide_as_t<upgrade_if_t<Options, common_value_t<Ts...>>, P>
+    EVE_ABI constexpr as_wide_as_t<upgrade_if_t<Options, common_value_t<Ts...>>, P>
     operator()(P p, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(p, ts...); }
 
     template<value P, eve::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     as_wide_as_t<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>, P>
     operator()(P p, Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(p, t); }
@@ -100,7 +100,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto lpnorm_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto lpnorm_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return lpnorm[o.drop(widen)](upgrade(ts)...);
@@ -172,7 +172,7 @@ namespace eve
     }
 
     template<typename P, eve::non_empty_product_type Tup, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     lpnorm_(EVE_REQUIRES(cpu_), O const & o, P p, Tup tup) noexcept
     {
       return kumi::apply( [&](auto... m) { return lpnorm[o](p, m...); }, tup);

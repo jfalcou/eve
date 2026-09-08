@@ -34,7 +34,7 @@ inline constexpr auto is_deinterleave_groups_shuffle = []()
 }();
 
 template<typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
 {
   using doubles = wide<double, fixed<N() * sizeof(T) / 8>>;
@@ -47,7 +47,7 @@ deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
 }
 
 template<typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fixed<G>)
 {
   using doubles = wide<double, typename N::split_type>;
@@ -61,7 +61,7 @@ deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fix
 }
 
 template<typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) requires(G <= N())
 {
   if constexpr( G >= N() / 2 ) return v;
@@ -79,7 +79,7 @@ deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, fixed<G>) require
 }
 
 template<typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 deinterleave_groups_shuffle_(EVE_SUPPORTS(cpu_),
                              wide<T, N> v0,
                              wide<T, N> v1,

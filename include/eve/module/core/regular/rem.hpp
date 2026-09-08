@@ -19,7 +19,7 @@ namespace eve
   {
     template<eve::value T0, value T1>
     requires(eve::same_lanes_or_scalar<T0, T1>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+    EVE_ABI constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }

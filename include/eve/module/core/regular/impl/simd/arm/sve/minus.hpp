@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<callable_options O, signed_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), O const& o, wide<T, N> v) noexcept
+   wide<T, N> minus_(EVE_REQUIRES(sve_), O const& o, wide<T, N> v) noexcept
   requires(sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     // saturated integer has no intrinsic and floating is better by default
@@ -23,7 +23,7 @@ namespace eve::_
   }
 
   template<callable_options O, conditional_expr C, signed_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), C const& mask, O const& o, wide<T, N> v) noexcept
+   wide<T, N> minus_(EVE_REQUIRES(sve_), C const& mask, O const& o, wide<T, N> v) noexcept
   requires (sve_abi<abi_t<T, N>> && !O::contains(mod))
   {
     auto const alt = alternative(mask, v, as(v));

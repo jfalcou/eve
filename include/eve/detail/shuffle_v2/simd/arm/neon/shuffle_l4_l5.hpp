@@ -16,7 +16,7 @@ namespace eve::_
 
 // For now didn't figure out how to generalize
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_neon_reverse(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( !idxm::is_reverse(P::idxs) )
@@ -34,7 +34,7 @@ shuffle_l4_l5_neon_reverse(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_neon_extract_dup(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
@@ -54,7 +54,7 @@ shuffle_l4_neon_extract_dup(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {

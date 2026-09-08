@@ -17,14 +17,14 @@ namespace eve
   struct trunc_t : strict_elementwise_callable<trunc_t, Options, almost_option, raw_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    EVE_ABI constexpr T operator()(T v) const  noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
       return EVE_DISPATCH_CALL(v);
     }
 
     template<eve::value T, only_if<signed,unsigned>  U>
-    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
+    EVE_ABI constexpr as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
       return EVE_DISPATCH_CALL(v, target);

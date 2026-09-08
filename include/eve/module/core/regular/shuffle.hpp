@@ -25,7 +25,7 @@ EVE_MAKE_CALLABLE(shuffle_, shuffle);
 namespace eve::_
 {
 template<simd_value T, std::ptrdiff_t... I>
-EVE_FORCEINLINE constexpr auto
+EVE_ABI constexpr auto
 shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
 {
   static_assert(pattern_t<I...> {}.validate(T::size()),
@@ -36,7 +36,7 @@ shuffle_(EVE_SUPPORTS(cpu_), T v, pattern_t<I...>) noexcept
 }
 
 template<simd_value T, typename F>
-EVE_FORCEINLINE constexpr auto
+EVE_ABI constexpr auto
 shuffle_(EVE_SUPPORTS(cpu_), T v, as_pattern<F> p) noexcept
 {
   return shuffle(v, fix_pattern<T::size()>(p));

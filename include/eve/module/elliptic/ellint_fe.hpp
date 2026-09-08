@@ -21,13 +21,13 @@ namespace eve
   struct ellint_fe_t : elementwise_callable<ellint_fe_t, Options, modular_option, eccentric_option, threshold_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     auto operator()(T a) const noexcept -> decltype(eve::zip(T(), T()))
     { return EVE_DISPATCH_CALL(a); }
 
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     auto operator()(T0 a, T1 b) const noexcept -> decltype(eve::zip(eve::common_value_t<T0, T1>(), eve::common_value_t<T0, T1>()))
     { return EVE_DISPATCH_CALL(a, b); }
 
@@ -100,7 +100,7 @@ namespace eve
   {
 
     template<floating_value T, callable_options O>
-    constexpr EVE_FORCEINLINE auto
+    constexpr auto
     ellint_fe_(EVE_REQUIRES(cpu_), O const& o, T x)
     {
       return eve::zip(ellint_1[o](x), ellint_2[o](x));

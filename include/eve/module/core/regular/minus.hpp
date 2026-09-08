@@ -25,7 +25,7 @@ namespace eve
   struct minus_t : elementwise_callable<minus_t, Options, saturated_option, mod_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const { return EVE_DISPATCH_CALL(a); }
+    EVE_ABI constexpr T operator()(T a) const { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(minus_t, minus_);
   };
@@ -94,7 +94,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
+    constexpr T minus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
     {
       if constexpr (O::contains(mod))
       {

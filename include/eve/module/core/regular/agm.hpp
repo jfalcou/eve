@@ -33,7 +33,7 @@ namespace eve
   {
     template<eve::floating_value T,  floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(agm_t, agm_);
@@ -93,7 +93,7 @@ namespace eve
   {
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     agm_(EVE_REQUIRES(cpu_), O const &, T a,  T b) noexcept
     {
       auto ex = exponent(average(a, b));

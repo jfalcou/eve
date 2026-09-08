@@ -15,7 +15,7 @@
 namespace eve::_
 {
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(sve_),
                wide<T, N> const& v,
                Pattern const& p) requires sve_abi<abi_t<T, N>>

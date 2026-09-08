@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
+   std::ptrdiff_t count_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T,N>> v) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     using C = rbr::result::fetch_t<condition_key, O>;

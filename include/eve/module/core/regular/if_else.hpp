@@ -62,7 +62,7 @@ namespace eve
 
     // IF_ELSE with a value as condition
     template<value C, value T, value U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    EVE_ABI constexpr typename result<C,T,U>::type
     operator()(C mask, T v0, U v1) const noexcept
     requires(eve::same_lanes_or_scalar<C,T,U>)
     {
@@ -70,7 +70,7 @@ namespace eve
     }
 
     template<value C, typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    EVE_ABI constexpr typename result<C,T,U>::type
     operator()(C mask, T v0, U v1) const noexcept
     requires(   (eve::same_lanes_or_scalar<C,T> && generator<U> && value<T>)
             ||  (eve::same_lanes_or_scalar<C,U> && generator<T> && value<U>)
@@ -81,7 +81,7 @@ namespace eve
 
     // IF_ELSE with a conditional_expr as condition
     template<conditional_expr C, value T, value U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    EVE_ABI constexpr typename result<C,T,U>::type
     operator()(C mask, T v0, U v1) const noexcept
     requires(eve::same_lanes_or_scalar<T,U>)
     {
@@ -89,7 +89,7 @@ namespace eve
     }
 
     template<conditional_expr C, typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    EVE_ABI constexpr typename result<C,T,U>::type
     operator()(C mask, T v0, U v1) const noexcept
     requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
     {
@@ -98,7 +98,7 @@ namespace eve
 
     // IF_ELSE with explicit bool
     template<value T, value U>
-    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
+    EVE_ABI constexpr typename result<bool,T,U>::type
     operator()(bool mask, T v0, U v1) const noexcept
     requires(eve::same_lanes_or_scalar<T,U>)
     {
@@ -106,14 +106,14 @@ namespace eve
     }
 
     template<typename T, typename U>
-    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
+    EVE_ABI constexpr typename result<bool,T,U>::type
     operator()(bool mask, T v0, U v1) const noexcept
     requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
     {
       return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
     }
 
-    EVE_FORCEINLINE constexpr bool operator()(bool mask, bool v0, bool v1) const noexcept
+    EVE_ABI constexpr bool operator()(bool mask, bool v0, bool v1) const noexcept
     {
       return mask ? v0 : v1;
     }

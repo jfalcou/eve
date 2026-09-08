@@ -20,7 +20,7 @@ namespace eve
   struct mantissa_t : elementwise_callable<mantissa_t, Options, raw_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(mantissa_t, mantissa_);
@@ -87,7 +87,7 @@ namespace eve
   namespace _
   {
     template<floating_value T, callable_options O>
-    constexpr T  mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    constexpr T mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr(O::contains(raw))
         return   bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));

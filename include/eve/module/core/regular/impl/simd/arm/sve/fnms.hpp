@@ -15,14 +15,14 @@ namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fnms_(EVE_REQUIRES(sve_), O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+   wide<T, N> fnms_(EVE_REQUIRES(sve_), O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     return fma[o](a, minus(b), minus(c));
   }
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fnms_(EVE_REQUIRES(sve_), C const& cx, O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+   wide<T, N> fnms_(EVE_REQUIRES(sve_), C const& cx, O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     return fma[o][cx](a, minus(b), minus(c));
   }

@@ -19,14 +19,14 @@
 namespace eve::_
 {
 template<typename T>
-EVE_FORCEINLINE constexpr T
+ constexpr T
 horn1(T) noexcept
 {
   return eve::one(eve::as<T>());
 }
 
 template<typename T, auto Coef>
-EVE_FORCEINLINE constexpr T
+ constexpr T
 horn1(const T& x) noexcept
 {
   using t_t = element_type_t<T>;
@@ -34,7 +34,7 @@ horn1(const T& x) noexcept
 }
 
 template<typename T, auto Coef0, auto Coef1, auto... Args>
-EVE_FORCEINLINE constexpr T
+ constexpr T
 horn1(const T& x) noexcept
 {
   using t_t = element_type_t<T>;

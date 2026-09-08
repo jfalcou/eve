@@ -20,7 +20,7 @@ template<typename Options>
 struct hurwitz_t : callable<hurwitz_t, Options, pedantic_option, raw_option, fast_option>
 {
   template<eve::scalar_value N, eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
+  EVE_ABI constexpr T operator()(N n, T v) const  { return EVE_DISPATCH_CALL(n, v); }
 
   EVE_CALLABLE_OBJECT(hurwitz_t, hurwitz_);
 };

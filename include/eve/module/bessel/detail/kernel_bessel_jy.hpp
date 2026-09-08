@@ -15,7 +15,7 @@
 namespace eve::_
 {
 template<floating_value T>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 bessel_jy(T n, T x) noexcept
 requires(scalar_value<T>)
 {
@@ -215,7 +215,7 @@ requires(scalar_value<T>)
 }
 
 template<floating_value T>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 bessel_jy(T nu, T x) noexcept
 requires(simd_value<T>)
 {

@@ -21,7 +21,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto trunc_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+   constexpr auto trunc_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
     requires(_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(almost)) return _::map(trunc[o], ts...);
@@ -29,7 +29,7 @@ namespace eve::_
   }
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+   constexpr T
   trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
   {
     if constexpr(integral_value<T>)
@@ -60,7 +60,7 @@ namespace eve::_
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   trunc_(EVE_REQUIRES(cpu_), O const& o, T const & a0, as<U> const& ) noexcept
   {
     if constexpr(integral_value<T>)
