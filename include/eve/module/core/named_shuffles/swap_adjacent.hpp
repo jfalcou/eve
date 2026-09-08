@@ -98,7 +98,7 @@ struct swap_adjacent_t
       std::ptrdiff_t half_l = level(eve::as<half_t> {}, g);
       // since we are adding, we need to deal with aggregation
       if( reg_size > 32 ) return half_l;
-      return _::idxm::add_shuffle_levels({half_l, half_l, 4});
+      return _::idxm::add_shuffle_levels(std::array<std::ptrdiff_t, 3> {half_l, half_l, 4});
     }
 
     if( current_api >= sse2 )

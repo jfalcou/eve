@@ -629,6 +629,7 @@ jobs:
         cfg:
         - { comp: clang20, arch: x86    , opts: "-std=c++26"  }
         - { comp: gcc15  , arch: x86    , opts: "-std=c++26"  }
+        - { comp: gcc    , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
