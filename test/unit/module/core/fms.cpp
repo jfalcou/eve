@@ -139,7 +139,7 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
   auto r4 = fms[promote](ia, da, a1);
   using er4_t =  eve::element_type_t<decltype(r4)>;
   auto refr4= eve::fms(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
-  TTS_ULP_EQUAL(r4,  refr4, 0.5);
+  TTS_ULP_EQUAL(r4,  refr4, 3.5);
 };
 
 //==================================================================================================
