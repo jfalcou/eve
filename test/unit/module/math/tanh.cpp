@@ -65,8 +65,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tanh)(eve::wide)",
 
 
 //==================================================================================================
-// raw and fast reach exp2 through expm1, and exp2 computes in float when the element is double, so
-// the doubled argument tanh feeds it has to survive the float path.
+// raw and fast reach exp2, which computes in float when the element is double: the domain is float's.
 //==================================================================================================
 constexpr auto raw_maxi = []<typename T>(eve::as<T> const&)
 {

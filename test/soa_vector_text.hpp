@@ -13,8 +13,7 @@
 namespace tts
 {
   //================================================================================================
-  // A soa_vector is a range whose iterator is a proxy, so the element-by-element rendering TTS
-  // falls back on does not compile. Read each element through the container instead.
+  // A soa_vector iterator is a proxy, so TTS's element-by-element rendering does not compile.
   //================================================================================================
   template<typename T> requires(eve::_::range<T> && eve::_::has_indexed_get<T>)
   struct display<T>

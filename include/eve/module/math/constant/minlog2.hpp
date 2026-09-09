@@ -21,7 +21,6 @@ namespace eve
     {
       if constexpr(std::same_as<T, eve::float16_t>)
       {
-        // float16's minexponent
         return T(-0x1.ap+4);
       }
       else if constexpr(std::same_as<T, float>)

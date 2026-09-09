@@ -32,8 +32,7 @@ constexpr auto mmed = [](auto const& tgt)
 constexpr auto med = [](auto const& tgt)
 { return eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 
-// Above maxflint every representable value is an integer, so every draw lands on a pole of the
-// cotangent. Below it they are the exception the draw almost never picks.
+// Above maxflint every representable value is an integer, so every draw lands on a pole.
 constexpr auto mmaxflint = [](auto const& tgt) { return -eve::maxflint(tgt); };
 
 TTS_CASE_WITH("Check behavior of cotpi on wide",
@@ -48,8 +47,7 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t
   {
-    // A pole reached from a non-zero integer has no side: the zero of sinpi carries no direction,
-    // so the value there is a NaN. Zero is the exception, its own sign says which way it is met.
+    // A pole at a non-zero integer has no side, so the value is a NaN. Zero's own sign gives it one.
     if( !eve::is_eqz(e) && eve::is_flint(e) ) return eve::nan(eve::as<v_t>());
     return eve::cospi(e) / eve::sinpi(e);
   };

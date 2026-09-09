@@ -71,8 +71,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs_gamma)(eve::wide)",
 
 
 //==================================================================================================
-// raw and fast reach log, which computes in float when the element is double, so the argument has
-// to survive the conversion. float and float16 keep their own maximum.
+// raw and fast reach log, which computes in float when the element is double: the domain is float's.
 //==================================================================================================
 constexpr auto float_domain_max = []<typename T>(eve::as<T> const& tgt)
 {

@@ -21,7 +21,6 @@ struct maxlog10_t : constant_callable<maxlog10_t, Options, lower_option, upper_o
   {
     if constexpr(std::same_as<T, eve::float16_t>)
     {
-      // 15 * log10(2)
       return T(0x1.20fd22p+2);
     }
     else if constexpr(std::same_as<T, float>)

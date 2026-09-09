@@ -50,8 +50,7 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
     TTS_EQUAL(tchebsum(a0, T(0)), T(0));
     TTS_EQUAL(tchebsum(a0, T(1)), T(0.5));
     TTS_EQUAL(tchebsum(a0, T(1), T(2)), T(0.5)+T(2)*a0);
-    // 0.5 + 2a + 3(2a^2-1) crosses zero, and an ULP of a sum that has melted to nothing is
-    // meaningless; the relative distance keeps its meaning there
+    // The sum crosses zero, where an ULP is meaningless: the relative distance keeps its meaning.
     auto prec = tts::prec<T>();
     TTS_RELATIVE_EQUAL(tchebsum(a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, prec);
 

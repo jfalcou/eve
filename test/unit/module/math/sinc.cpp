@@ -46,8 +46,7 @@ TTS_CASE_WITH("Check behavior of sinc on wide",
     auto x = static_cast<c_t>(e);
     return x ? static_cast<v_t>(std::sin(x) / x) : v_t(1);
   };
-  // sinc vanishes at every multiple of pi, and an ULP of a value that has melted to nothing is
-  // meaningless; the relative distance keeps its meaning there
+  // sinc vanishes at every multiple of pi, where an ULP is meaningless: the relative distance holds.
   auto prec = tts::prec<T>();
   TTS_RELATIVE_EQUAL(sinc(a0), tts::map(ref, a0), prec);
   TTS_RELATIVE_EQUAL(sinc(a1), tts::map(ref, a1), prec);
