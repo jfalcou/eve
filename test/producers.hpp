@@ -43,8 +43,7 @@ TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, Ulps);                
 namespace eve
 {
   //================================================================================================
-  // EVE gives no guarantee on denormals, so the random suite keeps its bounds inside
-  // [eps, 1/eps] in magnitude. Integral bounds pass through untouched.
+  // eve gives no guarantee on denormals: magnitudes stay inside [eps, 1/eps].
   //================================================================================================
   template<typename T> struct uniform_prng : tts::realistic_generator<T>
   {

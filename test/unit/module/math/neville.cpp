@@ -47,8 +47,7 @@ TTS_CASE_WITH("Check behavior of neville on all types full range",
   auto y1 = horner[eve::kahan](a1, 1.0, 2.0, 3.0);
   auto y2 = horner[eve::kahan](a2, 1.0, 2.0, 3.0);
 
-  // Interpolation through nodes that can collide is ill-posed: drawn from one shared interval the
-  // divided differences blew up to 2.2e5 ULP. Separated nodes bring it back to 160 over 400 seeds.
+  // Interpolation through colliding nodes is ill-posed, so the nodes are drawn separated.
   TTS_ULP_EQUAL(neville[eve::pedantic](x, a0, a1, a2, y0, y1, y2), eve::horner[eve::kahan](x, 1.0, 2.0, 3.0 ), 512.0);
 
 };

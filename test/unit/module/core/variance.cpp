@@ -52,8 +52,6 @@ TTS_CASE_WITH("Check behavior of variance(wide)",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::variance;
-  // welford_variance returns its own result type, so the two claims are made separately: that it
-  // converts back to T at all, then that the value it carries matches.
   TTS_EXPECT((std::is_convertible_v<decltype(eve::welford_variance(a0, a1, a2)), T>));
   TTS_ULP_EQUAL(variance(a0, a1, a2), T(eve::welford_variance(a0, a1, a2)), 2.0);
 };
@@ -77,8 +75,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::variance)(eve::wide)",
 
 
 //==================================================================================================
-// The two ways of taking a variance only agree while the squares stay representable: past that,
-// widen answers infinity where kahan compensates infinity against itself and answers a NaN.
+// The two paths agree only while the squares stay representable: past it, infinity against NaN.
 //==================================================================================================
 constexpr auto square_root_of_valmax = []<typename T>(eve::as<T> const&)
 {

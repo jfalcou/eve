@@ -16,13 +16,8 @@
 //== two_sqrt_approx tests
 //==================================================================================================
 
-// One Newton correction on sqrt leaves a relative residual of about u^2, u being float's unit
-// roundoff, which is eight double ULP in the unit TTS counts. A thousand two hundred seeds reach
-// exactly that, so twelve is the tightest bound with room for a rarer draw.
-//
-// NEON has no square root instruction below asimd, where eve builds one from a reciprocal estimate:
-// the correction starts further from the truth and the residual grows with the square of that
-// distance. The armv7 job measured 57, and its bound stays looser because nothing samples it here.
+// One Newton correction leaves a relative residual of about u^2, eight double ULP in TTS's unit.
+// armv7 NEON has no square root instruction: eve builds one from an estimate, and the residual grows.
 constexpr bool   sqrt_is_estimated  = (eve::current_api >= eve::neon) && !(eve::current_api >= eve::asimd);
 constexpr double two_sqrt_tolerance = sqrt_is_estimated ? 128.0 : 12.0;
 

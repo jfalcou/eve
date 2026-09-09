@@ -51,9 +51,7 @@ TTS_CASE_WITH("Check behavior of dot on all types full range",
 };
 
 //==================================================================================================
-// a.c + b.d cancels when the signs differ, and an ULP of a result that has melted to nothing is
-// meaningless. The case above keeps the domain and measures a relative distance; this one keeps the
-// ULP claim on data that cannot cancel.
+// Same-sign data cannot cancel, so an ULP claim holds here.
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of dot(wide) without cancellation",
               eve::test::simd::ieee_reals,

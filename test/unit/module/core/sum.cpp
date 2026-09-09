@@ -44,9 +44,8 @@ struct ManualSum
   }
 };
 
-// Same order as ManualSum, accumulated in double. For elements narrower than double this is the
-// correctly rounded sum, so a test using it measures eve's own reduction and not a second
-// approximate order.
+// Same order as ManualSum, accumulated in double: for narrower elements this is the correctly
+// rounded sum, so a test using it measures eve's own reduction alone.
 struct DoubleAccSum
 {
   template<typename T, typename C>
@@ -90,9 +89,8 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on wides (ieee754 reals)",
               tts::randoms(1, 9))
 <typename T>(T v)
 {
-  // The reference is correctly rounded below double, so only eve's tree reduction is left to
-  // cover, one half-ULP per level plus the final rounding. A double reference has no wider
-  // accumulator and keeps the (n - 1) roundings of its own sequential order.
+  // Below double the reference is correctly rounded, leaving eve's tree alone to cover, one
+  // half-ULP per level. A double reference has no wider accumulator and keeps its (n - 1) roundings.
   constexpr auto   n      = static_cast<std::size_t>(T::size());
   constexpr auto   levels = std::bit_width(n) - 1;
   constexpr double expected_ulp =

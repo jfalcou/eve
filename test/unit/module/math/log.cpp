@@ -78,8 +78,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::log)(eve::wide)",
 };
 
 //==================================================================================================
-// raw and fast compute in float when the element is double, so an input has to survive the
-// conversion to be worth comparing. float and float16 keep their own maximum.
+// raw and fast compute in float when the element is double, so the domain is float's.
 //==================================================================================================
 constexpr auto float_domain_max = []<typename T>(eve::as<T> const& tgt)
 {

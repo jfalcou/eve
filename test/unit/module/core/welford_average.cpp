@@ -57,8 +57,7 @@ TTS_CASE_WITH("Check behavior of welford_average(wide)",
   using eve::kahan;
   using eve::as;
   auto prec = tts::prec<T>();
-  // a sum cancels when the signs differ, and an ULP of a mean that has melted to nothing is
-  // meaningless; the relative distance keeps its meaning there
+  // The mean crosses zero, where an ULP is meaningless: the relative distance keeps its meaning.
   TTS_RELATIVE_EQUAL(welford_average(a0, a1).average, (a0+a1)/2, prec);
   TTS_RELATIVE_EQUAL(welford_average(a0, a1, a2).average, (a0+a1+a2)/3, prec);
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
@@ -72,8 +71,7 @@ TTS_CASE_WITH("Check behavior of welford_average(wide)",
 };
 
 //==================================================================================================
-// The case above keeps the domain and measures a relative distance; this one keeps an ULP claim on
-// data whose mean cannot cancel.
+// Same-sign data cannot cancel, so an ULP claim holds here.
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of welford_average(wide) without cancellation",
               eve::test::simd::ieee_reals,

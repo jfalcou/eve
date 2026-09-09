@@ -28,9 +28,8 @@ TTS_CASE_TPL("Check return types of cumtrapz", eve::test::simd::ieee_reals)
 //==================================================================================================
 
 //==================================================================================================
-// Two claims, because a trapezoidal sum can cancel. Same-sign data pins the algorithm down to the
-// rounding noise; the full range keeps the domain but measures a relative distance, whose floor at
-// one stops a result that has melted to nothing from magnifying a couple of ULP into dozens.
+// Two claims: same-sign data pins the algorithm to rounding noise, the full range measures a
+// relative distance, whose floor at one keeps a vanished result from magnifying a few ULP.
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cumtrapz on all types without cancellation",
               eve::test::simd::ieee_reals,

@@ -11,14 +11,7 @@
 #include <limits>
 
 //==================================================================================================
-// The rest of the suite exercises tts::precision by the side effect of seven hundred files using
-// TTS_ULP_EQUAL and friends: none of them checks what the hook returns, so a specialization that
-// stopped being selected would only show up as a distance that happens to stay under tolerance.
-// These cases pin the four members on the three shapes EVE adds, against values computed by hand.
-//
-// The negative case — that two different types are rejected — is deliberately absent. It is a
-// static_assert inside the function body, which no requires-expression can observe: writing it
-// would break this file rather than report a failure.
+// tts::precision measures distances on a wide, a logical and a float16: these pin its four members.
 //==================================================================================================
 
 namespace
@@ -33,14 +26,13 @@ TTS_CASE("tts::precision<eve::wide> reports the widest distance over the lanes")
 
   float const one  = 1.0f;
   float const next = std::nextafter(one, 2.0f);   // exactly one ULP above
-  // Not named far: MSVC still defines that as an empty macro from its memory model days.
+  // Not named far: MSVC defines it as an empty macro.
   float const third = std::nextafter(std::nextafter(next, 2.0f), 2.0f);
 
   w_t const a{one, one, one, one};
 
   TTS_EQUAL(p<w_t>::ulp(a, a), 0.);
 
-  // TTS counts a whole ULP as 0.5, and the lane distance is a maximum, not a sum.
   TTS_EQUAL(p<w_t>::ulp(a, w_t{next, one, one, one}), 0.5);
   TTS_EQUAL(p<w_t>::ulp(a, w_t{next, next, next, next}), 0.5);
   TTS_EQUAL(p<w_t>::ulp(a, w_t{one, one, one, third}), 1.5);
@@ -69,7 +61,6 @@ TTS_CASE("tts::precision<eve::wide>::ieee is the one member that accepts NaN")
   TTS_EXPECT_NOT(p<w_t>::ieee(n, w_t{1.0, 1.0}));
   TTS_EXPECT_NOT(p<w_t>::ieee(w_t{inf, 1.0}, w_t{-inf, 1.0}));
 
-  // ulp keeps the same convention: two NaNs are at distance zero, a NaN and a number are apart.
   TTS_EQUAL(p<w_t>::ulp(w_t{nan, 1.0}, w_t{nan, 1.0}), 0.);
   TTS_EXPECT(p<w_t>::ulp(n, w_t{1.0, 1.0}) == std::numeric_limits<double>::infinity());
 };
@@ -82,8 +73,6 @@ TTS_CASE("tts::precision<eve::wide> on integral lanes never leaves the lane type
   w_t const a{std::int8_t(-83), std::int8_t(0), std::int8_t(0), std::int8_t(0)};
   w_t const b{std::int8_t(-82), std::int8_t(0), std::int8_t(0), std::int8_t(0)};
 
-  // Half a unit apart, as for any integral type. A hook that promoted the lanes to a wider type
-  // before measuring would report something else entirely.
   TTS_EQUAL(p<w_t>::ulp(a, b), 0.5);
   TTS_EQUAL(p<w_t>::absolute(a, b), 1.);
 };
@@ -121,12 +110,9 @@ TTS_CASE("tts::precision<eve::float16_t> measures in half precision, not in floa
   TTS_EQUAL(p<f_t>::relative(one, one), 0.);
   TTS_EQUAL(p<f_t>::relative(f_t{1}, f_t{2}), 0.5);
 
-  // One ULP of float16 is about 9.8e-4. Measured as a float it would be some 8.4e+9 ULP, which is
-  // the whole reason this specialization exists.
   TTS_EXPECT(p<f_t>::absolute(one, next) < 1e-3);
   TTS_EXPECT(p<f_t>::absolute(one, next) > 0.);
 
-  // The fourth member: three_fma.cpp reaches it through TTS_IEEE_EQUAL on a scalar half.
   TTS_EXPECT(p<f_t>::ieee(one, one));
   TTS_EXPECT_NOT(p<f_t>::ieee(one, next));
 };

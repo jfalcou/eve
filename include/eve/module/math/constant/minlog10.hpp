@@ -21,7 +21,6 @@ struct minlog10_t : constant_callable<minlog10_t, Options, lower_option, upper_o
   {
     if constexpr(std::same_as<T, eve::float16_t>)
     {
-      // -14 * log10(2)
       return T(-0x1.f4e9f6p+2);
     }
     else if constexpr(std::same_as<T, float>)

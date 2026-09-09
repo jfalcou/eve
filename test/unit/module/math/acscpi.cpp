@@ -27,9 +27,7 @@ TTS_CASE_TPL("Check return types of acscpi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // acscpi  tests
 //==================================================================================================
-// acscpi is asin of a reciprocal, and NEON has no division instruction below asimd, where eve builds
-// one from a vrecpe estimate. The reciprocal then carries an error the arcsine passes on. Measured
-// worst, 1 where division is an instruction, 3 on the armv7 job.
+// acscpi is asin of a reciprocal, and armv7 NEON has no division: the estimate's error reaches asin.
 constexpr bool   rec_is_estimated = (eve::current_api >= eve::neon) && !(eve::current_api >= eve::asimd);
 constexpr double acscpi_tolerance   = rec_is_estimated ? 8.0 : 2.0;
 

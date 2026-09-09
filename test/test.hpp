@@ -22,8 +22,9 @@
 #include "soa_vector_text.hpp"
 
 //==================================================================================================
-// The suite leans on these everywhere. Kept in one place rather than sprinkled over seven
-// hundred test files.
+// The traits the suite leans on: comparison, precision, display, limits and produce, specialized
+// for eve's wide, logical and float16. A register compares and renders lane by lane, and _Float16
+// is not std::floating_point in C++20, so neither is served by the built-in path.
 //==================================================================================================
 #include <algorithm>
 #include <cmath>
@@ -40,13 +41,6 @@
 namespace tts
 {
   //================================================================================================
-  // A wide and a logical answer a comparison lane by lane, so equality is the whole register being
-  // equal rather than the register the operator hands back. Only the same-type pairs are given:
-  // comparing a wide against something else keeps the built-in path.
-  //
-  // Neither carries `less`. The free functions these replace defined none either, so ordering two
-  // registers has never compiled, and settling here what `a < b` means for a register would be
-  // deciding it in passing.
   //================================================================================================
   template<typename T, typename N>
   struct comparison<eve::wide<T, N>, eve::wide<T, N>>
@@ -69,9 +63,6 @@ namespace tts
   };
 
   //================================================================================================
-  // EVE measures distances its own way on the three shapes it adds. Specializing the trait rather
-  // than overloading a free function means a name that no longer matches is a compilation error
-  // instead of a silent fall back onto the built-in path.
   //================================================================================================
   template<typename T, typename N>
   struct precision<eve::wide<T, N>>
@@ -86,9 +77,6 @@ namespace tts
       return max_ulp;
     }
 
-    // Every lane goes through precision<T>::relative, including the floating ones, which used to
-    // call eve::reldist. The two now compute the same quotient, but going through the trait keeps
-    // one implementation of the convention rather than two that only happened to agree.
     static double relative(w_t const& l, w_t const& r)
     {
       double max_dr = 0;
@@ -100,9 +88,6 @@ namespace tts
       return max_dr;
     }
 
-    // Through precision<T> rather than eve::dist, for the same reason as relative: dist reports an
-    // unordered pair as allbits, and a NaN loses `(d > max_d)`, so a lane that could never match
-    // contributed nothing at all. The built-in path answers infinity instead.
     static double absolute(w_t const& l, w_t const& r)
     {
       double max_d = 0;
@@ -140,10 +125,6 @@ namespace tts
   };
 
   //================================================================================================
-  // float16_t defines all four members. relative and ieee take the built-in path in double rather
-  // than inheriting it: the built-in branches on std::is_floating_point_v, false for _Float16 in
-  // C++20, so an inherited member would refuse to compile. None of the three shapes inherits, for
-  // the same reason — no built-in member works on a type the standard traits do not recognize.
   //================================================================================================
   template<>
   struct precision<eve::float16_t>
@@ -154,8 +135,6 @@ namespace tts
     {
       return eve::convert(eve::ulpdist(l, r), eve::as<double>());
     }
-    // Through the built-in path in double, like relative: eve::dist answers allbits on an unordered
-    // pair, which the caller's maximum would drop instead of reporting.
     static double absolute(f_t const& l, f_t const& r)
     {
       return _::builtin_precision<double>::absolute( eve::convert(l, eve::as<double>())
@@ -163,9 +142,6 @@ namespace tts
                                                    );
     }
 
-    // A relative distance is a ratio, so it is worth more than half precision can hold: the two
-    // values are exact in double, and the quotient is taken there. Measured in half, a ratio of the
-    // size the tolerances use would be rounded as coarsely as the tolerance itself.
     static double relative(f_t const& l, f_t const& r)
     {
       return _::builtin_precision<double>::relative( eve::convert(l, eve::as<double>())
@@ -182,9 +158,6 @@ namespace tts
   };
 
   //================================================================================================
-  // Without these, TTS falls back on a byte dump and a failure on a wide<double> reads as sixteen
-  // hex pairs. Specializing the trait rather than overloading to_text means a shape TTS cannot
-  // render is a compilation error instead of that dump.
   //================================================================================================
   template<typename T, typename N> struct display<eve::wide<T, N>>
   {
@@ -200,8 +173,6 @@ namespace tts
     }
   };
 
-  // _Float16 is not std::floating_point in C++20, so TTS has no branch for it and falls back on the
-  // byte dump. Rendered through double, which holds every half exactly.
   template<> struct display<eve::float16_t>
   {
     static text render(eve::float16_t const& v) { return as_text(eve::convert(v, eve::as<double>())); }
@@ -226,7 +197,6 @@ namespace tts
   };
 
   //================================================================================================
-  // The suite also logs index constants and shuffle patterns; both stream to an ostream.
   //================================================================================================
   template<typename T, T V> struct display<std::integral_constant<T, V>>
   {
@@ -400,8 +370,6 @@ namespace tts
 
   //================================================================================================
   // Constant wrapper
-  //
-  // A generator has to be structural: the type carries the lambda, the object stores nothing.
   //================================================================================================
   template<typename F> struct constant_t
   {
@@ -410,15 +378,10 @@ namespace tts
   };
 
   //================================================================================================
-  // The suite spells this `constant(f)` inside a TTS_CASE_WITH generator list, a template argument
-  // list where a class name would read as a type-id.
   //================================================================================================
   template<typename F> constexpr auto constant(F f) { return constant_t<F> {f}; }
 
   //================================================================================================
-  // An eve constant is a per-type recipe: evaluate it against T rather than casting it. The
-  // constraint alone makes this the better match, so anything not callable with an eve::as keeps
-  // the plain cast.
   //================================================================================================
   template<typename T, typename V> requires( requires(V v) { v(eve::as<T>{}); } )
   struct conversion<T, V>
@@ -426,8 +389,6 @@ namespace tts
     static auto from(V const& v)
     {
       auto r = v(eve::as<T>{});
-      // Both bounds of a generator must land on T. A recipe answers in whatever type it finds
-      // natural, and `-128 : 0` is an int even when T is double.
       if constexpr(std::convertible_to<decltype(r), T>) return static_cast<T>(r);
       else                                              return r;
     }
@@ -465,8 +426,6 @@ namespace tts
   }
 
   //================================================================================================
-  // A wide has to name its element here, or its integer counterpart gets sized against
-  // sizeof(wide<T,N>) rather than sizeof(T).
   //================================================================================================
   template<typename T, typename N> struct base_type<eve::wide<T,N>>    { using type = T; };
   template<typename T, typename N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
@@ -476,8 +435,6 @@ namespace tts
   template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
 
   //================================================================================================
-  // std::numeric_limits knows nothing of eve::wide and static_asserts on it. Every member here
-  // comes from an eve constant, which answers for a register as readily as for a scalar.
   //================================================================================================
   template<typename T> requires(eve::floating_value<T>)
   struct limits_set<T>
@@ -508,8 +465,6 @@ namespace tts
   };
 
   //================================================================================================
-  // Customization point for argument building. A register is drawn as an array of its element type
-  // and loaded, so a generator only ever has to answer for a scalar.
   //================================================================================================
   template<typename T> requires(eve::simd_value<T>)
   struct generation<T>
@@ -527,13 +482,6 @@ namespace tts
   };
 
   //================================================================================================
-  // float16 has to be drawn against its own bounds. Falling through to float evaluates
-  // `valmin`/`valmax` against float, so the draw spans +/-3.4e38 and every narrowing to float16
-  // lands on infinity.
-  //
-  // The overload this replaces named randoms in its signature. The trait keys on the type being
-  // built, so the branch moves inside the member, and tts::is_randoms_v keeps it a question about
-  // the generator's type rather than about the members it happens to carry.
   //================================================================================================
   template<>
   struct generation<eve::float16_t>
@@ -561,9 +509,6 @@ namespace tts
   };
 
   //================================================================================================
-  // More specialized than the simd_value case above, and it has to be: the generic one would draw
-  // an array of float16 through the scalar path, which is right, then load it as a wide of the
-  // element type the array reports, which is where the two part company.
   //================================================================================================
   template<std::ptrdiff_t N>
   struct generation<eve::wide<eve::float16_t, eve::fixed<N>>>

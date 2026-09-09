@@ -43,8 +43,7 @@ TTS_CASE_WITH("Check behavior of atan2 on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
-  // atan2 crosses zero, and an ULP of an angle that has melted to nothing is meaningless; the
-  // relative distance keeps its meaning there
+  // atan2 crosses zero, where an ULP is meaningless: the relative distance keeps its meaning.
   auto prec = tts::prec<T>();
 
 
