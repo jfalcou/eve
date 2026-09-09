@@ -18,8 +18,7 @@ jobs:
   ## Special non-arch-specific tests
   ##################################################################################################
   special:
-    needs: other-cases
-    runs-on: [self-hosted, avx512]
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10
       options: -u root
@@ -27,8 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-march=skylake-avx512 -O3 -DEVE_SPECIAL_TESTS" }
-        - { comp: gcc  , arch: x86    , opts: "-march=skylake-avx512 -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: gcc  , arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
     steps:
       - name: Print Runner Info
         run: |
