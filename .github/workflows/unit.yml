@@ -18,6 +18,7 @@ jobs:
   ## Special non-arch-specific tests
   ##################################################################################################
   special:
+    needs: other-cases
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v10
@@ -567,7 +568,6 @@ jobs:
   ## Host 2 - Post-Skylake SIMD ISA
   ##################################################################################################
   avx512:
-    needs: special
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v10
