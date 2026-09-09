@@ -51,7 +51,7 @@ namespace eve
   //!
   //!    @code{.cpp}
   //!    template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  //!    using nofs_width_t = fixed<nofs_width_v<T>>;
+  //!    using nofs_width_t = lanes_t<nofs_width_v<T>>;
   //!
   //!    template <scalar_value T>
   //!    using nofs_wide = wide<T, nofs_width_t<T>>;
@@ -70,7 +70,7 @@ namespace eve
      ? expected_width_v<T, x86_256_> : expected_width_v<T, ABI>;
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  using nofs_width_t = fixed<nofs_width_v<T>>;
+  using nofs_width_t = lanes_t<nofs_width_v<T>>;
 
   template <scalar_value T>
   using nofs_wide = wide<T, nofs_width_v<T>>;

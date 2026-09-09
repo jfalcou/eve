@@ -31,7 +31,7 @@ namespace eve::algo::_
     template <typename T, typename U>
     EVE_ABI static auto align_to_cacheline(U* p) noexcept
     {
-      return eve::as_aligned(reinterpret_cast<T*>(p), fixed<eve::_::cache_line_width<T>>{});
+      return eve::as_aligned(reinterpret_cast<T*>(p), lanes_t<eve::_::cache_line_width<T>>{});
     }
 
     static void copy_all_aligned(std::byte const* src, std::byte* dst, std::size_t size)
@@ -181,7 +181,7 @@ namespace eve::algo::_
 
     template<typename T> EVE_ABI static auto as_aligned_pointer(T* ptr)
     {
-      return eve::as_aligned(ptr, eve::fixed<eve::_::cache_line_width<T>>{});
+      return eve::as_aligned(ptr, eve::lanes_t<eve::_::cache_line_width<T>>{});
     }
 
     template<typename T>

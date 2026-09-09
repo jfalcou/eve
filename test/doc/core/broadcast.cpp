@@ -11,7 +11,7 @@ int main()
   wide_it pi = {-1, 2,-3, 4,-5, 6,-7, 8};
 
   std::cout << eve::broadcast( 7.6 ) << "\n";
-  std::cout << eve::broadcast(7.6, eve::lane<8> ) << "\n";
+  std::cout << eve::broadcast(7.6, eve::lanes<8> ) << "\n";
   std::cout << "\n";
 
   std::cout << pf << "\n"
@@ -20,5 +20,5 @@ int main()
   std::cout << "\n";
 
   std::cout << pi << "\n"
-            << eve::broadcast(pi, eve::index<5>, eve::lane<4> ) << "\n";
+            << eve::broadcast(pi, eve::index<5>, eve::lanes<4> ) << "\n";
 }

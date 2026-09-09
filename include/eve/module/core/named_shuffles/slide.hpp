@@ -37,13 +37,13 @@ namespace eve
 //!    T slide_left(T x, eve::index<S>);  // (1)
 //!
 //!    template <simd_value T, std::ptrdiff_t G, std::ptrdiff_t S>
-//!    T slide_left(T x, eve::fixed<G>, eve::index<S>);  // (2)
+//!    T slide_left(T x, eve::lanes_t<G>, eve::index<S>);  // (2)
 //!
 //!    template <simd_value T, std::ptrdiff_t S>
 //!    T slide_left(T x, T y, eve::index<S>);  // (3)
 //!
 //!    template <simd_value T, std::ptrdiff_t G, std::ptrdiff_t S>
-//!    T slide_left(T x, T y, eve::fixed<G>, eve::index<S>);  // (4)
+//!    T slide_left(T x, T y, eve::lanes_t<G>, eve::index<S>);  // (4)
 //!    @endcode
 //!
 //! **Parameters**
@@ -68,14 +68,14 @@ struct slide_left_impl_t
 {
   // One agr
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<S>)
+  static constexpr auto pattern(eve::as<T>, eve::lanes_t<G>, eve::index_t<S>)
   {
     static_assert(G > 0 && 0 <= S && S <= T::size() / G);
     return eve::fix_pattern<T::size() / G>([](int i, int n) { return (i + S) < n ? i + S : na_; });
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::lanes_t<G> g, eve::index_t<S_> s)
   {
     using abi_t                             = typename T::abi_type;
     const std::size_t        reg_size       = sizeof(element_type_t<T>) * T::size();
@@ -92,7 +92,7 @@ struct slide_left_impl_t
       if constexpr( S > T::size() / 2 )
       {
         // just second is shifted
-        return level(eve::as<half_t> {}, eve::lane<1>, eve::index<S - T::size() / 2>);
+        return level(eve::as<half_t> {}, eve::lanes<1>, eve::index<S - T::size() / 2>);
       }
       else
       {
@@ -134,7 +134,7 @@ struct slide_left_impl_t
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
   static constexpr std::ptrdiff_t
-  level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
+  level(eve::as<T> tgt, eve::as<T>, eve::lanes_t<G> g, eve::index_t<S_> s)
   {
     using abi_t                       = typename T::abi_type;
     constexpr std::ptrdiff_t S        = S_ * G;

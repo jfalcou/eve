@@ -66,9 +66,9 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   std::array<eve::element_type_t<T>, 256> ref;
   std::array<eve::element_type_t<L>, 256> logical_ref;
 
-  auto test = [&]<typename D, std::ptrdiff_t A>(eve::fixed<A>, auto f, D d)
+  auto test = [&]<typename D, std::ptrdiff_t A>(eve::lanes_t<A>, auto f, D d)
   {
-    if (!eve::is_aligned(f, eve::fixed<A>{}))   return;
+    if (!eve::is_aligned(f, eve::lanes_t<A>{}))   return;
 
     if constexpr (A*sizeof(eve::element_type_t<D>) >= T::alignment())
     {
@@ -94,7 +94,7 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, &ref[i], data),...);
+      (test(eve::lanes<(1<<(N+2))>, &ref[i], data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 
@@ -102,7 +102,7 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, &logical_ref[i], logical_data),...);
+      (test(eve::lanes<(1<<(N+2))>, &logical_ref[i], logical_data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 };

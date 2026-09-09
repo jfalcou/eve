@@ -19,7 +19,7 @@ auto ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
-auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
+auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, lanes_t<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else
@@ -48,7 +48,7 @@ auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
-auto shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_ppc_vec_sel(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle;
   else
@@ -59,7 +59,7 @@ auto shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
-auto shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_ppc_vec_perm2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::has_zeroes ) return no_matching_shuffle;
   else
@@ -77,7 +77,7 @@ auto shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
-auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_ppc_vec_sel(p, g, x, y); matched_shuffle<decltype(r)> )

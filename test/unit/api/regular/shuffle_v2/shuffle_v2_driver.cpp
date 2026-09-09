@@ -78,7 +78,7 @@ TTS_CASE("shuffle_driver with lambdas")
   constexpr auto formula = [](int i, int size) { return size - i - 1; };
 
   shuffle(eve::wide<std::uint16_t> {}, formula);
-  shuffle(eve::wide<std::uint8_t> {}, eve::lane<2>, formula);
+  shuffle(eve::wide<std::uint8_t> {}, eve::lanes<2>, formula);
 
   if( !eve::supports_simd )
   {
@@ -140,7 +140,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
     std::ptrdiff_t numTimesCalled = 0;
     auto           hasShuffle     = just_shuffle_test(
         [&numTimesCalled]<std::ptrdiff_t... i, eve::plain_simd_value X>(eve::pattern_t<i...>,
-                                               eve::fixed<1>,
+                                               eve::lanes_t<1>,
                                                X x,
                                                std::same_as<X> auto...)
         {
@@ -162,20 +162,20 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
     TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(notFound), eve::logical<T>, P>));
     TTS_CONSTEXPR_EXPECT_NOT(
         (std::invocable<decltype(notFound), eve::logical<T>, eve::logical<T>, P2>));
-    TTS_CONSTEXPR_EXPECT((std::invocable<decltype(hasShuffle), eve::logical<T>, eve::fixed<1>, P>));
+    TTS_CONSTEXPR_EXPECT((std::invocable<decltype(hasShuffle), eve::logical<T>, eve::lanes_t<1>, P>));
     TTS_CONSTEXPR_EXPECT((
-        std::invocable<decltype(hasShuffle), eve::logical<T>, eve::logical<T>, eve::fixed<1>, P2>));
+        std::invocable<decltype(hasShuffle), eve::logical<T>, eve::logical<T>, eve::lanes_t<1>, P2>));
 
     // below to 8 identity logic kicks in
     if constexpr( T::size() >= 8 )
     {
       using half_T = eve::wide<eve::element_type_t<T>, T::size() / 2>;
       TTS_CONSTEXPR_EXPECT_NOT(
-          (std::invocable<decltype(notFound), eve::logical<T>, eve::fixed<2>, some_p_t<half_T>>));
+          (std::invocable<decltype(notFound), eve::logical<T>, eve::lanes_t<2>, some_p_t<half_T>>));
       TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(notFound),
                                                eve::logical<T>,
                                                eve::logical<T>,
-                                               eve::fixed<2>,
+                                               eve::lanes_t<2>,
                                                some_p2_t<half_T>>));
     }
   }
@@ -226,7 +226,7 @@ TTS_CASE_TPL("Check shuffle_driver, bundle", eve::test::simd::all_types)
   using ww_t = eve::wide<kumi::tuple<e_t, s_t>, T::size()>;
 
   auto shuffle = just_shuffle_test(
-      []<std::ptrdiff_t... i>(eve::pattern_t<i...>, eve::fixed<1>, auto x, auto...)
+      []<std::ptrdiff_t... i>(eve::pattern_t<i...>, eve::lanes_t<1>, auto x, auto...)
       {
         TTS_CONSTEXPR_EXPECT(eve::plain_simd_value<decltype(x)>);
         if constexpr( sizeof(e_t) == 2 ) return eve::_::no_matching_shuffle;
@@ -266,7 +266,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
 
   auto shuffle = just_shuffle_test(
       []<typename U, eve::width_type N, std::ptrdiff_t G>(
-          auto, eve::fixed<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
+          auto, eve::lanes_t<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
       {
         TTS_CONSTEXPR_EXPECT(std::unsigned_integral<U>);
         if constexpr( T::size() > G )
@@ -279,8 +279,8 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
       });
 
   constexpr int G = T::size() == 1 ? 1 : 2;
-  shuffle(T {}, eve::lane<G>, some_pattern<T, G>);
-  shuffle(T {}, T {}, eve::lane<G>, some_pattern2<T, G>);
+  shuffle(T {}, eve::lanes<G>, some_pattern<T, G>);
+  shuffle(T {}, T {}, eve::lanes<G>, some_pattern2<T, G>);
 };
 
 // Need a template somewhere for the if constexpr to work
@@ -304,7 +304,7 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
 
     // Special case - shuffle one constant
     {
-      auto [shuffled, l] = shuffle(x, eve::lane<2>, [](int, int) { return eve::na_; });
+      auto [shuffled, l] = shuffle(x, eve::lanes<2>, [](int, int) { return eve::na_; });
       TTS_EQUAL(l(), 0);
       TTS_EQUAL(shuffled, (eve::wide<T> {0.0, 0.0}));
     }
@@ -367,7 +367,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
       }
       if constexpr( T::size() >= 8 )
       {
-        auto [_, l] = shuffle(arithmetic_in, eve::lane<2>, formula);
+        auto [_, l] = shuffle(arithmetic_in, eve::lanes<2>, formula);
         TTS_EQUAL(l(), 2);
       }
 

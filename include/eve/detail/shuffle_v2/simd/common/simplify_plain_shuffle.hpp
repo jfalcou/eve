@@ -39,7 +39,7 @@ template<typename G, typename P, typename... Ts>
 simplified_pattern(kumi::tuple<Ts...>, G, P) -> simplified_pattern<G, P, Ts...>;
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
-auto simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts...> xs)
+auto simplify_plain_up_the_type(pattern_t<I...> p, eve::lanes_t<G> g, kumi::tuple<T, Ts...> xs)
 {
   // non wide logicals
   if constexpr( eve::logical_value<T> )
@@ -63,13 +63,13 @@ auto simplify_plain_up_the_type(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<
   {
     using e_t  = eve::element_type_t<T>;
     using up_t = eve::wide<_::make_integer_t<sizeof(e_t) * 2, unsigned>, T::size() / 2>;
-    return simplify_plain_up_the_type(p, eve::lane<G / 2>, bit_cast_tuple(xs, as<up_t> {}));
+    return simplify_plain_up_the_type(p, eve::lanes<G / 2>, bit_cast_tuple(xs, as<up_t> {}));
   }
   else { return simplified_pattern {xs, g, p}; }
 }
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
-auto simplify_plain_swap_input_wides(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts...> xs)
+auto simplify_plain_swap_input_wides(pattern_t<I...> p, eve::lanes_t<G> g, kumi::tuple<T, Ts...> xs)
 {
   constexpr std::array idxs {I...};
 
@@ -82,17 +82,17 @@ auto simplify_plain_swap_input_wides(pattern_t<I...> p, eve::fixed<G> g, kumi::t
 }
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
-auto simplify_plain_shuffle_upscale_pattern(pattern_t<I...>, eve::fixed<G> g, kumi::tuple<Ts...> xs)
+auto simplify_plain_shuffle_upscale_pattern(pattern_t<I...>, eve::lanes_t<G> g, kumi::tuple<Ts...> xs)
 {
   constexpr auto p  = pattern<I...>;
   constexpr auto up = upscale_pattern(p);
 
-  if constexpr( up != p ) return simplify_plain_shuffle_upscale_pattern(up, eve::lane<G * 2>, xs);
+  if constexpr( up != p ) return simplify_plain_shuffle_upscale_pattern(up, eve::lanes<G * 2>, xs);
   else return simplify_plain_swap_input_wides(p, g, xs);
 }
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
-auto simplify_plain_pad_fundamental(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts...> xs)
+auto simplify_plain_pad_fundamental(pattern_t<I...> p, eve::lanes_t<G> g, kumi::tuple<T, Ts...> xs)
 {
   constexpr std::ptrdiff_t f_n = fundamental_width_v<eve::element_type_t<T>>;
   if constexpr( f_n > T::size() || (f_n / G) > pattern_t<I...>::size() )
@@ -110,7 +110,7 @@ auto simplify_plain_pad_fundamental(pattern_t<I...> p, eve::fixed<G> g, kumi::tu
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 auto simplify_plain_shuffle_(EVE_SUPPORTS(cpu_),
                         pattern_t<I...>    p,
-                        eve::fixed<G>      g,
+                        eve::lanes_t<G>      g,
                         kumi::tuple<Ts...> xs)
 {
   return simplify_plain_pad_fundamental(p, g, xs);

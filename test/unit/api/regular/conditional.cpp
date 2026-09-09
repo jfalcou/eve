@@ -93,7 +93,7 @@ TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     using abi_t = typename type::abi_type;

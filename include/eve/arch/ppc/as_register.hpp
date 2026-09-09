@@ -25,7 +25,7 @@ namespace eve
   }
 
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::ppc_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::ppc_)
   {
     using _::wrap;
 
@@ -74,7 +74,7 @@ namespace eve
   }
 
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::ppc_)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N>, eve::ppc_)
   {
     using _::wrap;
 

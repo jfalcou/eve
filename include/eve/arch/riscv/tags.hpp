@@ -31,7 +31,7 @@ namespace eve
         vector_register_bit_size * sizeof(Type) / 8;
   
     template<typename Type>
-    static constexpr std::size_t fundamental_cardinal =
+    static constexpr std::size_t fundamental_width =
         fundamental_vector_size<Type> / sizeof(Type) / 8;
     // Work in terms of vector intrinsics types
     template<typename Type>
@@ -39,7 +39,7 @@ namespace eve
                                      >= fundamental_vector_size<typename Type::value_type> / 8);
   
     template<typename Type>
-    static constexpr std::size_t expected_cardinal =
+    static constexpr std::size_t expected_width =
         vector_register_bit_size / 8 / sizeof(Type) * max_lmul;
   };
   

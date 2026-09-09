@@ -37,15 +37,15 @@ namespace eve::_
   inline constexpr auto width_in_bits = sizeof(T) * N * 8;
 
   //================================================================================================
-  // Select Hardware ABI from Type x Cardinal combo
+  // Select Hardware ABI from Type x width combo
   // Emulated is the default : used wether we do not have a native register or if there is no simd
 
   // hardward_abi_of is made to be specialized for each and individual architecture
-  template<typename T, std::ptrdiff_t Cardinal>
+  template<typename T, std::ptrdiff_t width>
   inline constexpr emulated_ hardware_abi_of{};
 
   template<typename T>
-  using expected_abi_t = decltype(_::hardware_abi_of<T, eve::current_abi_type::template expected_cardinal<T>>);
+  using expected_abi_t = decltype(_::hardware_abi_of<T, eve::current_abi_type::template expected_width<T>>);
 
   //================================================================================================
   // Checks if a Type is supported on a given architecture or if we should emulate it
@@ -65,33 +65,33 @@ namespace eve::_
   // Checks if a Type has a base abi so that we can aggregate native registers
 
   // Specializable trait for architectures supporting native aggregation like riscv
-  template<typename T, std::ptrdiff_t Cardinal>
-  inline constexpr bool should_aggregate_v = (width_in_bits<T,Cardinal> > spy::simd_instruction_set.width );
+  template<typename T, std::ptrdiff_t width>
+  inline constexpr bool should_aggregate_v = (width_in_bits<T,width> > spy::simd_instruction_set.width );
 
-  template<typename T, std::ptrdiff_t Cardinal>
+  template<typename T, std::ptrdiff_t width>
   concept should_aggregate = !eve::product_type<T> && !should_emulate<T> &&
-  (Cardinal > eve::current_abi_type::template expected_cardinal<T>)
-   && should_aggregate_v<T,Cardinal>;
+  (width > eve::current_abi_type::template expected_width<T>)
+   && should_aggregate_v<T,width>;
 
   //================================================================================================
-  // Select Software ABI from Type x Cardinal combo depending on type properties
-  template<typename T, std::ptrdiff_t Cardinal>
-  inline constexpr auto software_abi_of = _::hardware_abi_of<T,Cardinal>;
+  // Select Software ABI from Type x width combo depending on type properties
+  template<typename T, std::ptrdiff_t width>
+  inline constexpr auto software_abi_of = _::hardware_abi_of<T,width>;
 
-  template<typename T, std::ptrdiff_t Cardinal>
-  inline constexpr auto software_abi_of<logical<T>,Cardinal> = software_abi_of<T, Cardinal>;
+  template<typename T, std::ptrdiff_t width>
+  inline constexpr auto software_abi_of<logical<T>,width> = software_abi_of<T, width>;
 
-  template<typename T, std::ptrdiff_t Cardinal>
+  template<typename T, std::ptrdiff_t width>
   requires ( eve::product_type<T> )
-  inline constexpr auto software_abi_of<T,Cardinal> = bundle_{};
+  inline constexpr auto software_abi_of<T,width> = bundle_{};
 
-  template<typename T, std::ptrdiff_t Cardinal>
+  template<typename T, std::ptrdiff_t width>
   requires( should_emulate<T> )
-  inline constexpr auto software_abi_of<T,Cardinal> = emulated_{};
+  inline constexpr auto software_abi_of<T,width> = emulated_{};
 
-  template<typename T, std::ptrdiff_t Cardinal>
-  requires( should_aggregate<T,Cardinal> )
-  inline constexpr auto software_abi_of<T,Cardinal> = aggregated_{};
+  template<typename T, std::ptrdiff_t width>
+  requires( should_aggregate<T,width> )
+  inline constexpr auto software_abi_of<T,width> = aggregated_{};
 }
 
 namespace eve
@@ -112,11 +112,11 @@ namespace eve
   //! @}
   //================================================================================================
 #if defined (EVE_DOXYGEN_INVOKED)
-  template<typename Type, typename Lanes>
+  template<typename Type, std::ptrdiff_t Lanes>
   using abi_t = /* Implementation defined */;
 #else
-  template<typename Type, typename Lanes>
+  template<typename Type, std::ptrdiff_t Lanes>
   requires( _::arithmetic_<Type> || eve::product_type<Type> || _::is_logical_<Type> )
-  using abi_t = std::remove_cvref_t<decltype(_::software_abi_of<translate_t<Type>, Lanes::value>)>;
+  using abi_t = std::remove_cvref_t<decltype(_::software_abi_of<translate_t<Type>, Lanes>)>;
 #endif
 }

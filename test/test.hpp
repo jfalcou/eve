@@ -223,13 +223,13 @@ namespace tts
 
 namespace eve::test
 {
-  // The cardinals of the test type lists, chosen by EVE_TEST_LOT in cmake.
+  // The widths of the test type lists, chosen by EVE_TEST_LOT in cmake.
   enum class lot
   {
-    all,      // every cardinal from 1 to twice the native one
-    family,   // the cardinals whose code path differs on this ABI, native included
-    native,   // the native cardinal alone
-    extra     // the family without the native cardinal
+    all,      // every width from 1 to twice the native one
+    family,   // the widths whose code path differs on this ABI, native included
+    native,   // the native width alone
+    extra     // the family without the native width
   };
 #if   defined(EVE_TEST_LOT_NATIVE)
   inline constexpr lot current_lot = lot::native;
@@ -298,7 +298,7 @@ namespace eve::test
     using type_all =
         tts::concatenate<to_wide_t<Ts, std::make_index_sequence<widths()[sizeof(Ts)]>>...>;
 
-    // A lot that leaves no cardinal for a type keeps the native one: TTS reports a case run on
+    // A lot that leaves no width for a type keeps the native one: TTS reports a case run on
     // an empty list as invalid.
     template<typename T> struct lot_of
     {
@@ -351,17 +351,17 @@ namespace eve::test
                           , std::integral_constant<int, 1024>
                           >;
 
-  using widths = tts::types< eve::fixed<   1>
-                              , eve::fixed<   2>
-                              , eve::fixed<   4>
-                              , eve::fixed<   8>
-                              , eve::fixed<  16>
-                              , eve::fixed<  32>
-                              , eve::fixed<  64>
-                              , eve::fixed< 128>
-                              , eve::fixed< 256>
-                              , eve::fixed< 512>
-                              , eve::fixed<1024>
+  using widths = tts::types< eve::lanes_t<   1>
+                              , eve::lanes_t<   2>
+                              , eve::lanes_t<   4>
+                              , eve::lanes_t<   8>
+                              , eve::lanes_t<  16>
+                              , eve::lanes_t<  32>
+                              , eve::lanes_t<  64>
+                              , eve::lanes_t< 128>
+                              , eve::lanes_t< 256>
+                              , eve::lanes_t< 512>
+                              , eve::lanes_t<1024>
                               >;
 
   EVE_ABI auto is_near(auto a,  auto b){
@@ -527,7 +527,7 @@ namespace tts
       auto data = produce(type<std::array<e_t,T::size()>>{}, g, args...);
 
       using v_t = typename decltype(data)::value_type;
-      eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::fixed<T::size()>{});
+      eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::lanes_t<T::size()>{});
 
       return poison(that);
     }
@@ -568,7 +568,7 @@ namespace tts
     static auto make(auto g, auto... args)
     {
       auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
-      return poison(eve::load(arr.data(), eve::fixed<N>{}));
+      return poison(eve::load(arr.data(), eve::lanes_t<N>{}));
     }
   };
 

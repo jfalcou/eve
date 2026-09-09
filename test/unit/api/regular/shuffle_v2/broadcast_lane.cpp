@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check broadcast lane, generic", eve::test::simd::all_types)
   shuffle_test::named_shuffle1_test<
       /*supports_G_eq_T_Size*/ true>(eve::as<T> {},
                                      eve::broadcast_lane,
-                                     []<std::ptrdiff_t G>(eve::fixed<G>)
+                                     []<std::ptrdiff_t G>(eve::lanes_t<G>)
                                      {
                                        auto idxs = test_indexes<T::size() / G>();
                                        auto lifted    = kumi::map(

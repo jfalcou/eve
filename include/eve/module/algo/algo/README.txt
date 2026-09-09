@@ -55,7 +55,7 @@ The basic concept for writing algorithms against.
 
 The minimum requirements are:
 * `eve::load` or `eve::store` are defined (returned types are not restricted).
-* `iterator_width<I>` is defined and returns `eve::fixed`.
+* `iterator_width<I>` is defined and returns `eve::lanes_t`.
 * `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_width_v<I>`
 * `I - I` - returns the distance between two iterators (in elements).
 * I is totally ordered

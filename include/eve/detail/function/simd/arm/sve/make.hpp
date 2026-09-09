@@ -63,7 +63,7 @@ requires sve_abi<abi_t<T, N>>
     else
     {
       std::array on_stack {v, static_cast<T>(vs)...};
-      return load(on_stack.data(), fixed<N> {});
+      return load(on_stack.data(), lanes_t<N> {});
     }
   }
 }
