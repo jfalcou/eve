@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_20specific_20terms_0',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'']]],
+  ['c_20specific_20terms_0',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
   ['callable_20function_20objects_20as_20main_20api_1',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
   ['calls_2',['Masked Calls',['../group__eve__core__compress_ga8e545371fd605df1555e4cd0b2f62374.html#autotoc_md17',1,'']]],
   ['cardinal_3',['Cardinal',['../glossary_semantic.html#autotoc_md64',1,'Cardinal'],['../design_rationale.html#rationale-simd',1,'SIMD registers as Type x Cardinal']]],

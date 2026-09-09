@@ -31,7 +31,7 @@ var searchData=
   ['divisible_5fby_5fcardinal_28',['divisible_by_cardinal',['../group__eve__algo__traits_ga01b72d95d26f28c2c8715af53bef8f53.html#ga01b72d95d26f28c2c8715af53bef8f53',1,'eve::algo']]],
   ['docker_29',['Running EVE docker',['../dev_environment.html#dev_docker_helper',1,'']]],
   ['docker_20setup_30',['Docker setup',['../dev_environment.html#dev_docker_setup',1,'']]],
-  ['documentation_31',['Building the Documentation',['../setup.html#autotoc_md80',1,'']]],
+  ['documentation_31',['Documentation',['../setup.html#autotoc_md80',1,'Building the Documentation'],['https://jfalcou.github.io/kumi/kumi_reference.html',1,'Reference Documentation']]],
   ['dot_32',['dot',['../group__eve__core__arithmetic_ga9629bc8a3ce2a95e45bd49e118605156.html#ga9629bc8a3ce2a95e45bd49e118605156',1,'eve']]],
   ['double_5ffactorial_33',['double_factorial',['../group__eve__special_gaedc2bffc2e3f263e52f980f82a74d5cb.html#gaedc2bffc2e3f263e52f980f82a74d5cb',1,'eve']]],
   ['downward_34',['downward',['../group__eve__core__decorators_ga8e43b606df3ea6bfb3d00a9951f3e5a2.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2',1,'eve']]],

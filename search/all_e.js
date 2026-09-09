@@ -1,7 +1,7 @@
 var searchData=
 [
   ['label_0',['label',['https://jfalcou.github.io/kumi/structkumi_1_1field.html#acd309440c1fca78c1a64750e7a5482df',1,'kumi::field::label()'],['https://jfalcou.github.io/kumi/structkumi_1_1field_3_01Id_00_01T_01_4.html#acd309440c1fca78c1a64750e7a5482df',1,'kumi::field&lt; Id, T &gt;::label()'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga1375bb29a75ab718bdb62b65ce5582b1',1,'kumi::label']]],
-  ['label_5fof_1',['label_of',['https://jfalcou.github.io/kumi/group__kumi__utility.html#gac6d2c508bb91644b47bcbf3b8a1e7827',1,'kumi::label_of() noexcept'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#gac6d2c508bb91644b47bcbf3b8a1e7827',1,'kumi::label_of() noexcept']]],
+  ['label_5fof_1',['label_of',['https://jfalcou.github.io/kumi/group__kumi__utility_gac6d2c508bb91644b47bcbf3b8a1e7827.html#gac6d2c508bb91644b47bcbf3b8a1e7827',1,'kumi::label_of() noexcept'],['https://jfalcou.github.io/kumi/group__kumi__utility_gac6d2c508bb91644b47bcbf3b8a1e7827.html#gac6d2c508bb91644b47bcbf3b8a1e7827',1,'kumi::label_of() noexcept']]],
   ['label_5ft_2',['label_t',['https://jfalcou.github.io/kumi/structkumi_1_1label__t.html',1,'kumi']]],
   ['labels_3',['labels',['https://jfalcou.github.io/kumi/structkumi_1_1tuple.html#afcfee8fbd3a138d70cff1edb3485e61e',1,'kumi::tuple::labels() noexcept'],['https://jfalcou.github.io/kumi/structkumi_1_1tuple.html#afcfee8fbd3a138d70cff1edb3485e61e',1,'kumi::tuple::labels() noexcept'],['https://jfalcou.github.io/kumi/structkumi_1_1record.html#a57fe20038a1592ea37e9a8954c013d80',1,'kumi::record::labels()']]],
   ['laguerre_4',['laguerre',['../group__eve__polynomial_ga79168b37417f76520ad0cf3e7cdef489.html#ga79168b37417f76520ad0cf3e7cdef489',1,'eve']]],
@@ -24,7 +24,7 @@ var searchData=
   ['literals_21',['literals',['https://jfalcou.github.io/kumi/namespaceliterals.html',1,'']]],
   ['lo_22',['lo',['../group__eve__core__bitops_ga61fa2a64540198462d0aed12e93967a1.html#ga61fa2a64540198462d0aed12e93967a1',1,'eve']]],
   ['load_23',['load',['../group__eve__simd_gac2eed14dbdfb4cf1b36d157e27825cba.html#gac2eed14dbdfb4cf1b36d157e27825cba',1,'eve']]],
-  ['locate_24',['locate',['https://jfalcou.github.io/kumi/group__kumi__queries.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate'],['https://jfalcou.github.io/kumi/group__kumi__queries.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate']]],
+  ['locate_24',['locate',['https://jfalcou.github.io/kumi/group__kumi__queries_ga39f807d6c2b8909a712d431acde4153e.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate'],['https://jfalcou.github.io/kumi/group__kumi__queries_ga39f807d6c2b8909a712d431acde4153e.html#ga39f807d6c2b8909a712d431acde4153e',1,'kumi::locate']]],
   ['log_25',['Log',['https://jfalcou.github.io/kumi/kumi_changelog.html',1,'Change Log'],['../changelog.html',1,'Change Log']]],
   ['log_26',['log',['../group__eve__math__log_ga9b4217fd31e1641227ea37686686d31d.html#ga9b4217fd31e1641227ea37686686d31d',1,'eve']]],
   ['log10_27',['log10',['../group__eve__math__log_gac249fe99bf31089a24fd212763e94c9e.html#gac249fe99bf31089a24fd212763e94c9e',1,'eve']]],

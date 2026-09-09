@@ -9,7 +9,7 @@ var searchData=
   ['dispatch_6',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
   ['docker_7',['Running EVE docker',['../dev_environment.html#dev_docker_helper',1,'']]],
   ['docker_20setup_8',['Docker setup',['../dev_environment.html#dev_docker_setup',1,'']]],
-  ['documentation_9',['Building the Documentation',['../setup.html#autotoc_md80',1,'']]],
+  ['documentation_9',['Documentation',['../setup.html#autotoc_md80',1,'Building the Documentation'],['https://jfalcou.github.io/kumi/kumi_reference.html',1,'Reference Documentation']]],
   ['dynamic_20dispatch_10',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
   ['dynamic_20function_20hub_11',['Writing the dynamic function hub',['../multiarch.html#autotoc_md114',1,'']]],
   ['dynamic_20kernels_12',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md115',1,'']]]

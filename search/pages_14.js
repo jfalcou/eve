@@ -23,7 +23,7 @@ var searchData=
   ['source_20',['Installation from Source',['../setup.html#autotoc_md78',1,'']]],
   ['source_21',['Retrieving the source',['../setup.html#autotoc_md73',1,'']]],
   ['spack_22',['SPACK',['../setup.html#autotoc_md76',1,'']]],
-  ['specific_20terms_23',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'']]],
+  ['specific_20terms_23',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
   ['start_24',['Installation &amp;amp; Quick Start',['../setup.html',1,'']]],
   ['static_20to_20dynamic_20dispatch_25',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
   ['storage_20and_20processing_26',['Storage and Processing',['../intro-04.html#autotoc_md108',1,'']]],
