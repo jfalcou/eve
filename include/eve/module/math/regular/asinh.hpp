@@ -126,7 +126,7 @@ namespace eve
           {
             z = eve::reverse_horner(x2, T(0x1.000000p+0f), T(-0x1.55535ap-3f), T(0x1.329362p-4f)
                                    , T(-0x1.5dcb02p-5f), T(0x1.49adccp-6f))* x;
-            if( nb >= cardinal_v<T> ) return bit_xor(z, bts);
+            if( nb >= width_v<T> ) return bit_xor(z, bts);
           }
           auto case_1 = [](T const& vx) { return vx; };                                       // great x
           auto case_2 = [](T const& vx) { return average(vx, hypot(one(eve::as<T>()), vx)); }; // lesser x

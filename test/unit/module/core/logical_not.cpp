@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of eve::logical_not(simd)",
   T m = tts::poison(T{ [](auto i, auto) { return i % 2 == 0; } });
   TTS_EQUAL(eve::logical_not[m](a0), eve::if_else(m, base, alt));
 
-  constexpr auto width = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
   if constexpr (width >= 2)
   {

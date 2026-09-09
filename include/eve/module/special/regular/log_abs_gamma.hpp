@@ -335,7 +335,7 @@ namespace eve
                     r0s = if_else(orig, mone(as<T>()), r0s);
                   }
                   p = if_else(kernelC, p, helpers::log_abs_gammaB(r0x));
-                  if( nnb >= cardinal_v<T> ) return fma(r0x, p, r0s * log(abs(r0z)));
+                  if( nnb >= width_v<T> ) return fma(r0x, p, r0s * log(abs(r0z)));
                 }
                 r0z  = if_else(xlt650, abs(r0z), xx);
                 T m  = log(r0z);
@@ -359,7 +359,7 @@ namespace eve
                 };
               // treat negative
               r = if_else(inf_result, inf(as<T>()), negative(q, r1));
-              if( nb >= cardinal_v<T> ) return r;
+              if( nb >= width_v<T> ) return r;
             }
             T r2 = if_else(ltza0, r, r1);
             return if_else(inf_result, inf(as<T>()), r2);

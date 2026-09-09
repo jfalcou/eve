@@ -120,8 +120,8 @@ namespace eve::algo::views
     template<typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      auto tr_with_cardinal = default_to(tr, traits {consider_types<T>});
-      auto processed        = preprocess_range(tr_with_cardinal, self.base);
+      auto tr_with_width = default_to(tr, traits {consider_types<T>});
+      auto processed        = preprocess_range(tr_with_width, self.base);
 
       auto ret_tr = drop_key(consider_types_key, processed.traits());
 
@@ -216,14 +216,14 @@ namespace eve::algo::views
       return convert(base.next_partially_aligned(), eve::as<T>{});
     }
 
-    static auto iterator_cardinal() requires iterator<I>
-    { return I::iterator_cardinal(); }
+    static auto iterator_width() requires iterator<I>
+    { return I::iterator_width(); }
 
-    template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_FORCEINLINE auto width_cast(_Width N) const
       requires iterator<I>
     {
-      return convert(base.cardinal_cast(N), eve::as<T>{});
+      return convert(base.width_cast(N), eve::as<T>{});
     }
 
     template<callable_options O>

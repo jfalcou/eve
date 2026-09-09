@@ -12,7 +12,7 @@
 
 #include <eve/deps/raberu.hpp>
 
-#include <eve/arch/cardinals.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/traits.hpp>
 
 #include <type_traits>
@@ -89,19 +89,19 @@ namespace eve::algo
   //============================================================================
   template<int N> inline constexpr auto unroll = (unroll_key = eve::index<N>);
 
-  struct force_cardinal_key_t : rbr::as_keyword<force_cardinal_key_t>
+  struct force_width_key_t : rbr::as_keyword<force_width_key_t>
   {
     template<typename Value> constexpr auto operator=(Value const&) const noexcept
     {
-      return rbr::option<force_cardinal_key_t,Value>{};
+      return rbr::option<force_width_key_t,Value>{};
     }
   };
-  inline constexpr force_cardinal_key_t force_cardinal_key;
+  inline constexpr force_width_key_t force_width_key;
 
   //=============================================================================
   //! @addtogroup eve_algo_traits
   //! @{
-  //!   @var force_cardinal
+  //!   @var force_width
   //!
   //!   @brief A trait that overrides all other width selection and just says
   //!   to use a certain one. The main use-case for this is ease of interaction with
@@ -113,7 +113,7 @@ namespace eve::algo
   //!   to change width.
   //! @}
   //=============================================================================
-  template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
+  template<int N> inline constexpr auto force_width = (force_width_key = eve::fixed<N>{});
 
   struct consider_types_key_t {};
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
@@ -197,12 +197,12 @@ namespace eve::algo
   //!=============================================================================
   inline constexpr auto common_type = common_with_types<>;
 
-  struct divisible_by_cardinal_tag {};
+  struct divisible_by_width_tag {};
 
   //=============================================================================
   //! @addtogroup eve_algo_traits
   //! @{
-  //!    @var divisible_by_cardinal
+  //!    @var divisible_by_width
   //!
   //!    @brief an trait to tell that the input data is strictly divisible by width.
   //!
@@ -221,7 +221,7 @@ namespace eve::algo
   //!    @see no_aligning
   //! @}
   //=============================================================================
-  inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
+  inline constexpr auto divisible_by_width = ::rbr::flag( divisible_by_width_tag{} );
 
   struct no_aligning_tag {};
 
@@ -467,10 +467,10 @@ namespace eve::algo
 
   namespace _ {
     template <typename Traits, typename RorI>
-    using default_cardinal_to_use_t = eve::fixed<
+    using default_width_to_use_t = eve::fixed<
       Traits::contains(allow_frequency_scaling) ?
-        expected_cardinal_v<get_types_to_consider_for<Traits, RorI>> :
-        nofs_cardinal_v    <get_types_to_consider_for<Traits, RorI>>
+        expected_width_v<get_types_to_consider_for<Traits, RorI>> :
+        nofs_width_v    <get_types_to_consider_for<Traits, RorI>>
     >;
   }
 
@@ -480,8 +480,8 @@ namespace eve::algo
   //! @tparam Traits, RangeOrIterator
   //================================================================================================
   template <typename Traits, typename RorI>
-  using iteration_cardinal_t =
-    rbr::result::fetch_t< (force_cardinal_key | _::default_cardinal_to_use_t<Traits, RorI>{})
+  using iteration_width_t =
+    rbr::result::fetch_t< (force_width_key | _::default_width_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
 

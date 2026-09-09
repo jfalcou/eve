@@ -52,7 +52,7 @@ TTS_CASE_WITH( "Check load to wides from unaligned pointer"
   TTS_EQUAL((eve::load(ptr        , eve::lane<T::size()>)), reference         );
   TTS_EQUAL((eve::load(const_ptr  , eve::lane<T::size()>)), reference         );
 
-  if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+  if constexpr(T::size() == eve::expected_width_v<v_t>)
   {
     TTS_EQUAL(eve::load(ptr)        , reference );
     TTS_EQUAL(eve::load(const_ptr)  , reference );

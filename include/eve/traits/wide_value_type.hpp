@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/iterator_cardinal.hpp>
+#include <eve/traits/iterator_width.hpp>
 #include <eve/traits/value_type.hpp>
 
 namespace eve
@@ -24,11 +24,11 @@ namespace eve
   //!                       `#include <eve/traits.hpp>`
   //!   @code{.cpp}
   //!   template<typename T>
-  //!   using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_cardinal_t<T>>
+  //!   using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_width_t<T>>
   //!   @endcode
   //! @}
   //================================================================================================
 
   template<typename T>
-  using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_cardinal_v<T>>;
+  using wide_value_type_t = as_wide_t<value_type_t<T>, iterator_width_v<T>>;
 }

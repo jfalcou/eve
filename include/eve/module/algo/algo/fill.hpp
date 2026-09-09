@@ -35,7 +35,7 @@ namespace eve::algo
                  std::declval<Rng>()));
       using I = decltype(std::declval<processed_range>().begin());
 
-      eve::wide<value_type_t<I>, iterator_cardinal_v<I>> wide_value;
+      eve::wide<value_type_t<I>, iterator_width_v<I>> wide_value;
 
       EVE_FORCEINLINE explicit fill_delegate(auto value) :
         wide_value(value_type_t<I>(value))

@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits/element_type.hpp>
 
 #define EVE_TYPE      ${target}

@@ -96,7 +96,7 @@ TTS_CASE("shuffle_driver propagates not found")
   }
 
   // Propagate sfinae
-  constexpr auto op = []<typename T, eve::cardinal_type N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
+  constexpr auto op = []<typename T, eve::width_type N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
   requires(sizeof(T) > 1)
   {
     if constexpr( sizeof(T) == 4 ) return eve::_::no_matching_shuffle;
@@ -265,7 +265,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
   }
 
   auto shuffle = just_shuffle_test(
-      []<typename U, eve::cardinal_type N, std::ptrdiff_t G>(
+      []<typename U, eve::width_type N, std::ptrdiff_t G>(
           auto, eve::fixed<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
       {
         TTS_CONSTEXPR_EXPECT(std::unsigned_integral<U>);

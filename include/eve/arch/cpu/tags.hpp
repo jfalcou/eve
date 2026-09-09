@@ -117,10 +117,10 @@ namespace eve
     template<typename> static constexpr bool is_full = true;
 
     template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+    static constexpr std::size_t expected_width = bytes / sizeof(Type);
 
     template<typename Type>
-    static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);
+    static constexpr std::size_t fundamental_width = bytes / sizeof(Type);
   };
 
   template<typename T>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cardinals.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/riscv/predef.hpp>
 #include <eve/detail/meta.hpp>
@@ -31,7 +31,7 @@ template<std::size_t vector_register_bit_size> struct rvv_abi_
       vector_register_bit_size * sizeof(Type) / 8;
 
   template<typename Type>
-  static constexpr std::size_t fundamental_cardinal =
+  static constexpr std::size_t fundamental_width =
       fundamental_vector_size<Type> / sizeof(Type) / 8;
   // Work in terms of vector intrinsics types
   template<typename Type>
@@ -39,7 +39,7 @@ template<std::size_t vector_register_bit_size> struct rvv_abi_
                                    >= fundamental_vector_size<typename Type::value_type> / 8);
 
   template<typename Type>
-  static constexpr std::size_t expected_cardinal =
+  static constexpr std::size_t expected_width =
       vector_register_bit_size / 8 / sizeof(Type) * max_lmul;
 };
 

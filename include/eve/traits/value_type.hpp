@@ -62,10 +62,10 @@ namespace _
   //================================================================================================
 
   template<typename T>
-  requires(!value<T> && !wide_cardinal<T>)
+  requires(!value<T> && !wide_width<T>)
   using value_type_t = typename decltype(_::value_type_impl<T>())::type;
 
   template<typename T>
-  requires(!value<T> && !wide_cardinal<T>)
+  requires(!value<T> && !wide_width<T>)
   using translated_value_type_t = translate_t<value_type_t<T>>;
 }

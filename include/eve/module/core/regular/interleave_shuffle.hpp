@@ -11,7 +11,7 @@
 #include <eve/detail/function/interleave.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 
 //TODO doc
 namespace eve

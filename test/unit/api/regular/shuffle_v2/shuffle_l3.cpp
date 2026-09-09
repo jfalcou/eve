@@ -31,9 +31,9 @@ run_any_api(eve::pattern_formula auto formula)
 
 template<typename T, std::ptrdiff_t G = 1>
 void
-run_any_api_expected_cardinal(auto pattern)
+run_any_api_expected_width(auto pattern)
 {
-  run_any_api<T, eve::expected_cardinal_v<T>, G>(pattern);
+  run_any_api<T, eve::expected_width_v<T>, G>(pattern);
 }
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>
@@ -101,7 +101,7 @@ TTS_CASE("and 0s")
     TTS_PASS("");
     return;
   }
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int /*size*/) -> std::ptrdiff_t
       {
         if( i == 3 ) return na_;
@@ -121,35 +121,35 @@ TTS_CASE("full table lookup with 0s")
     TTS_PASS("");
     return;
   }
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int size) -> std::ptrdiff_t
       {
         if( i == 2 ) return na_;
         if( i == size - 3 ) return we_;
         return (i * 3 + 5) % size;
       });
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int size) -> std::ptrdiff_t
       {
         if( i % 5 == 1 ) return na_;
         if( i % 7 == 2 ) return we_;
         return (i * 11 + 3) % size;
       });
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int size) -> std::ptrdiff_t
       {
         if( i == 3 ) return na_;
         if( i == 5 ) return we_;
         return ((i * 5) ^ 3) % size;
       });
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int size) -> std::ptrdiff_t
       {
         if( (i ^ 2) % 7 == 0 ) return na_;
         if( (i ^ 3) % 5 == 0 ) return we_;
         return (i * 23 + 11) % size;
       });
-  run_any_api_expected_cardinal<std::uint8_t>(
+  run_any_api_expected_width<std::uint8_t>(
       [](int i, int size) -> std::ptrdiff_t
       {
         if( i % 10 == 2 ) return na_;

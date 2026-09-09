@@ -18,9 +18,9 @@ namespace eve
   struct unfold_t : callable<unfold_t, Options, widen_option>
   {
     template<typename ...Ts>
-    struct cardinal_sum
+    struct width_sum
     {
-      static constexpr auto value = ((cardinal_v<Ts>) + ... + 0 );
+      static constexpr auto value = ((width_v<Ts>) + ... + 0 );
       using type = std::integral_constant<std::size_t,value>;
     };
 
@@ -29,12 +29,12 @@ namespace eve
 
     template<value... Ts>
     using result = kumi::result::fill_t<
-      cardinal_sum<Ts...>::value
+      width_sum<Ts...>::value
       , return_type<eve::common_value_t<Ts...>>>;
 
     template<product_type T>
     using tuple_result = kumi::result::fill_t<
-      kumi::apply_traits_t<cardinal_sum, T>::value
+      kumi::apply_traits_t<width_sum, T>::value
       , return_type<kumi::apply_traits_t<eve::common_value, T>>>;
 
     template<value T, value ...Ts>
@@ -113,7 +113,7 @@ namespace eve
       {
         if constexpr(eve::simd_value<T>)
         {
-          constexpr auto N = eve::cardinal_v<T>;
+          constexpr auto N = eve::width_v<T>;
           auto g = [x](auto i){ return x.get(i); };
           return kumi::generate<N>(g) ;
         }

@@ -62,7 +62,7 @@ The more common ones are:
 
   * `no_aliging` - stop aligning data accesses
   * `unroll<N>` - unroll N times (1 for no unrolling).
-  * `force_cardinal<N>` - force how many elements in per step to process, needed for writing code
+  * `force_width<N>` - force how many elements in per step to process, needed for writing code
     dealing with intrinsics.
 
 The values used by default are documented by algorithm.

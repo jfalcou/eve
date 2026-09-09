@@ -34,7 +34,7 @@ TTS_CASE("Implement get function for wide")
 TTS_CASE("Check make half wide<int>. Make sure about zeroes in the unused for less than native."
          "Note that we only guarantee zeroes in the hidden bytes for constructors")
 {
-  constexpr int                    size = eve::fundamental_cardinal_v<int> / 2;
+  constexpr int                    size = eve::fundamental_width_v<int> / 2;
   eve::wide<int, size> x {[](int i, int) { return i; }};
 
   for( int i = 0; i != size; ++i ) { TTS_EQUAL(i, x.get(i)); }
@@ -44,7 +44,7 @@ TTS_CASE_TPL("Make all wides", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t                      = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
+  constexpr std::ptrdiff_t min_n = eve::fundamental_width_v<e_t>;
 
   T x {[](int i, int) { return i; }};
 
@@ -87,7 +87,7 @@ TTS_CASE_TPL("Make all wides, splat", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t                      = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
+  constexpr std::ptrdiff_t min_n = eve::fundamental_width_v<e_t>;
 
   T x {(e_t)3};
 
@@ -134,7 +134,7 @@ TTS_CASE_TPL("Slice all wides", eve::test::simd::all_types)
 
 TTS_CASE("Make aggregated logical")
 {
-  constexpr auto N = eve::expected_cardinal_v<double> * 2;
+  constexpr auto N = eve::expected_width_v<double> * 2;
   eve::logical<eve::wide<double, N>> l {[](int i, int) { return i % 2 == 0; }};
 
   for( int i = 0; i != l.size(); ++i )
@@ -149,7 +149,7 @@ TTS_CASE_TPL("Make all logicals", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t                      = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
+  constexpr std::ptrdiff_t min_n = eve::fundamental_width_v<e_t>;
 
   eve::logical<T> x {[](int i, int) { return i % 2 == 0; }};
 
@@ -174,7 +174,7 @@ TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t                      = eve::element_type_t<T>;
-  constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
+  constexpr std::ptrdiff_t min_n = eve::fundamental_width_v<e_t>;
 
   eve::logical<T> x {true}, y {false};
 

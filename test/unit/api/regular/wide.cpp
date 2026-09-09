@@ -32,9 +32,9 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
 
   // Test smaller size wide for non-garbage
   using v_t = typename T::value_type;
-  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  if constexpr( T::size() < eve::fundamental_width_v<v_t> && !eve::has_emulated_abi_v<T> )
   {
-    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_width_v<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
 
     w_t  fsimd(simd.storage());
@@ -91,9 +91,9 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
 
   // Test smaller size wide for non-garbage
   using v_t = typename T::value_type;
-  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  if constexpr( T::size() < eve::fundamental_width_v<v_t> && !eve::has_emulated_abi_v<T> )
   {
-    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_width_v<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
 
     w_t  fsimd(T(42).storage());
@@ -207,7 +207,7 @@ TTS_CASE_TPL("Check eve::wide deduction guides", eve::test::scalar::all_types)
 {
   // Construct from a scalar
   eve::wide  w0( T{7} );
-  TTS_EQUAL(w0.size(), eve::expected_cardinal_v<T>);
+  TTS_EQUAL(w0.size(), eve::expected_width_v<T>);
   TTS_TYPE_IS(typename decltype(w0)::value_type, T);
   TTS_TYPE_IS(typename decltype(w0)::value_type, T);
 

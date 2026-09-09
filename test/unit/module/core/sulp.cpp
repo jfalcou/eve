@@ -29,7 +29,7 @@ TTS_CASE_WITH("Check behavior of eve::sulp(simd)",
 <typename T>(T const& )
 {
   using eve::as;
-  if constexpr( eve::floating_value<T>)// && (sizeof(eve::element_type_t<T>) == 8) && (eve::cardinal_v<T> == 1))
+  if constexpr( eve::floating_value<T>)// && (sizeof(eve::element_type_t<T>) == 8) && (eve::width_v<T> == 1))
   {
     if constexpr( eve::platform::supports_invalids )
     {

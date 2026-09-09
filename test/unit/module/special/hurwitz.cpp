@@ -21,7 +21,7 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
   using e_t = eve::element_type_t<T>;
 
   auto ulp = 2.0;
-  if constexpr(sizeof(e_t) == 8  && eve::cardinal_v<T> == 1)
+  if constexpr(sizeof(e_t) == 8  && eve::width_v<T> == 1)
   {
      if constexpr( eve::platform::supports_invalids )
      {

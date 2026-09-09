@@ -62,7 +62,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
       // TODO: this might not be ideal, see: #764
       std::optional<std::ptrdiff_t> match;
       std::size_t pos = find_branchless(tests, _::find_branchless_lambda {&match});
-      found           = unalign(arr[0]) + (pos * iterator_cardinal_v<I>)+*match;
+      found           = unalign(arr[0]) + (pos * iterator_width_v<I>)+*match;
 
       return true;
     }

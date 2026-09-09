@@ -12,7 +12,7 @@
 #include "nanobench.h"
 
 #include <eve/module/core/regular/load.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -83,7 +83,7 @@ namespace eve::bench
   template<typename T>  requires( eve::simd_value<T> )
   struct split<T>
   {
-    using type = as_wide_t<T,typename cardinal_t<T>::split_type>;
+    using type = as_wide_t<T,typename width_t<T>::split_type>;
   };
 
   template<typename... T> struct split<types<T...>>
@@ -91,11 +91,11 @@ namespace eve::bench
     using type = types< typename split<T>::type... >;
   };
 
-  template<typename T> struct max_cardinal : eve::cardinal<T> {};
+  template<typename T> struct max_width : eve::width<T> {};
 
   template<typename... T>
-  struct  max_cardinal<types<T...>>
-        : std::integral_constant<int, std::max({eve::cardinal_v<T>...})>
+  struct  max_width<types<T...>>
+        : std::integral_constant<int, std::max({eve::width_v<T>...})>
   {
   };
 
@@ -107,7 +107,7 @@ namespace eve::bench
       std::string desc = name + "(" + Type::print() +")";
       xp.run( Type{}, desc, f, gs...);
 
-      if constexpr( max_cardinal<Type>::value != 1 )
+      if constexpr( max_width<Type>::value != 1 )
       {
         run<typename split<Type>::type>(name, xp, f, gs... );
       }
@@ -140,17 +140,17 @@ namespace eve::bench
       using b_t   = decltype( std::declval<Fun>()(std::declval<Types>()...) );
       using out_t = std::conditional_t< std::is_same_v<b_t,bool>, int, b_t>;
 
-      constexpr auto card_out = eve::cardinal_v<out_t>;
-      constexpr auto card_in  = std::max( {card_out, eve::cardinal_v<Types>...} );
+      constexpr auto card_out = eve::width_v<out_t>;
+      constexpr auto card_in  = std::max( {card_out, eve::width_v<Types>...} );
       constexpr auto size     = optimal_size<eve::element_type_t<out_t>>;
 
       bench_.batch(size);
 
-      constexpr std::array<std::ptrdiff_t,sizeof...(Args)> cards  = { eve::cardinal_v<Types>... };
+      constexpr std::array<std::ptrdiff_t,sizeof...(Args)> cards  = { eve::width_v<Types>... };
 
       auto loader = []<typename Tgt>(auto* ptr, as<Tgt> const& )
       {
-        if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned(ptr, eve::cardinal_t<Tgt>{}) );
+        if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned(ptr, eve::width_t<Tgt>{}) );
         else                            return *ptr;
       };
 

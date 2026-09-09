@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check conditional load to wides from aligned pointer with altern
 <typename T>(T others)
 {
   using v_t     = eve::element_type_t<T>;
-  using fixed = eve::cardinal_t<T>;
+  using fixed = eve::width_t<T>;
 
   auto [data  ,idx  ] = page<v_t, fixed::value>();
 
@@ -79,7 +79,7 @@ TTS_CASE_WITH( "Check conditional load to wides from aligned pointer with altern
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](const_ptr, lanes)), others          );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
       TTS_AND_THEN("load is applied on aligned pointer for default width")
       {

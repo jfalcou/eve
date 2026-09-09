@@ -42,13 +42,13 @@ TTS_CASE_WITH( "Check store behavior with aligned pointers"
   alignas(algt) std::array<eve::element_type_t<T>, 3 * T::size()> target;
   alignas(algt) std::array<eve::element_type_t<L>, 3 * T::size()> logical_target;
 
-  eve::store(data, eve::as_aligned(&target[ 0            ], eve::cardinal_t<T>{}) );
-  eve::store(data, eve::as_aligned(&target[ T::size()    ], eve::cardinal_t<T>{}) );
-  eve::store(data, eve::as_aligned(&target[ 2 * T::size()], eve::cardinal_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ 0            ], eve::width_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ T::size()    ], eve::width_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ 2 * T::size()], eve::width_t<T>{}) );
 
-  eve::store(logical_data, eve::as_aligned(&logical_target[ 0            ], eve::cardinal_t<T>{}) );
-  eve::store(logical_data, eve::as_aligned(&logical_target[ T::size()    ], eve::cardinal_t<T>{}) );
-  eve::store(logical_data, eve::as_aligned(&logical_target[ 2 * T::size()], eve::cardinal_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 0            ], eve::width_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ T::size()    ], eve::width_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 2 * T::size()], eve::width_t<T>{}) );
 
   TTS_ALL_EQUAL(target        , ref         );
   TTS_ALL_EQUAL(logical_target, logical_ref );

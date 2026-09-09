@@ -55,15 +55,15 @@ TTS_CASE_WITH("Check behavior of laguerre on wide",
   }
   auto std_laguerrev = [&](auto i, auto) { return NAMESPACE::laguerre(i0.get(i), a0.get(i)); };
   TTS_RELATIVE_EQUAL(eve__laguerrev(i0, a0), T(std_laguerrev), 0.01);
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
     auto std_laguerre2 = [&](auto i, auto)
     { return NAMESPACE::laguerre(i0.get(i), a0.get(j)); };
     TTS_RELATIVE_EQUAL(eve__laguerrev(i0, a0.get(j)), T(std_laguerre2), 0.01);
   }
-  for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
+  for( unsigned int j = 0; j < eve::width_v<T>; ++j )
   {
-    for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
+    for( unsigned int n = 0; n < eve::width_v<T>; ++n )
     {
       TTS_RELATIVE_EQUAL(eve__laguerrev(i0.get(j), a0.get(n)),
                          v_t(NAMESPACE::laguerre(i0.get(j), a0.get(n))),
