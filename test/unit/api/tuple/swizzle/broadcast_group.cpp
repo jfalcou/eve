@@ -45,8 +45,8 @@ TTS_CASE_TPL( "Check behavior of broadcast swizzle", eve::test::scalar::all_type
                 return simd.get(p(i,c));
               };
 
-      TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
-                                      , eve::index<Index::value>, eve::lane<eve::wide<s_t>::size()>
+      TTS_EQUAL ( eve::broadcast_group( simd, eve::lanes<grp>
+                                      , eve::index<Index::value>, eve::lanes<eve::wide<s_t>::size()>
                                       )
                 , ref
                 );

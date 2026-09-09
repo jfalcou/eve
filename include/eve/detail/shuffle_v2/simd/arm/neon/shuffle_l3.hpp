@@ -19,7 +19,7 @@ namespace eve::_
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
+shuffle_l3_neon_vtbl1(P, lanes_t<G>, wide<T, N> x)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
   else
@@ -40,7 +40,7 @@ shuffle_l3_neon_vtbl1(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l3_neon_bit_select(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle_t {};
   else
@@ -52,7 +52,7 @@ shuffle_l3_neon_bit_select(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l3_neon_vtbl2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::reg_size == 16 && current_api < asimd ) return no_matching_shuffle;
   else
@@ -82,7 +82,7 @@ shuffle_l3_neon_vtbl2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l3_(EVE_SUPPORTS(neon128_), P p, lanes_t<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
@@ -95,7 +95,7 @@ requires(P::out_reg_size == P::reg_size)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l3_(EVE_SUPPORTS(neon128_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_neon_bit_select(p, g, x, y); matched_shuffle<decltype(r)> )

@@ -14,7 +14,7 @@ template<std::ptrdiff_t ToTry, typename P>
 constexpr bool
 shuffle_l_fallback_try_sse2_group_plus_u8(P)
 {
-  constexpr auto p0p1 = P::shuffle_NinN(eve::lane<ToTry>);
+  constexpr auto p0p1 = P::shuffle_NinN(eve::lanes<ToTry>);
 
   if constexpr( !p0p1 ) return false;
   else
@@ -34,7 +34,7 @@ shuffle_l_fallback_try_sse2_group_plus_u8(P)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
+shuffle_l_fallback_sse2_uN_u8(P, lanes_t<G> g, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
 
@@ -53,7 +53,7 @@ shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
     if constexpr( match == -1 ) return no;
     else
     {
-      constexpr auto p0p1 = *P::shuffle_NinN(eve::lane<match>);
+      constexpr auto p0p1 = *P::shuffle_NinN(eve::lanes<match>);
       constexpr auto p0   = get<0>(p0p1);
       constexpr auto p1   = get<1>(p0p1);
       auto [r0, l0]       = shuffle_v2_core(x, g, idxm::to_pattern<p0>());
@@ -67,7 +67,7 @@ shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
 // sse2 char shuffles
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l_fallback_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
          && (current_api < ssse3) && (P::g_size == 1)
 {
@@ -81,7 +81,7 @@ requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, lanes_t<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size) && (P::g_size <= 2)
          && (current_api == avx)
 {
@@ -110,7 +110,7 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size) && (P::g_size <= 2)
          && (current_api == avx)
 {

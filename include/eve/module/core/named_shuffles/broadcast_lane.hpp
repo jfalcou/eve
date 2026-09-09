@@ -33,7 +33,7 @@ namespace eve
 //!
 //!    @code
 //!    template <simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
-//!    T broadcast_lane(T x, eve::fixed<G>, eve::index_t<I>);  // (1)
+//!    T broadcast_lane(T x, eve::lanes_t<G>, eve::index_t<I>);  // (1)
 //!
 //!    template <simd_value T, std::ptrdiff_t I>
 //!    T broadcast_lane(T x, eve::index_t<I>);  // (2)
@@ -59,14 +59,14 @@ namespace eve
 struct broadcast_lane_t
 {
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<I>)
+  static constexpr auto pattern(eve::as<T>, eve::lanes_t<G>, eve::index_t<I>)
   {
     static_assert(I < T::size() / G);
     return eve::fix_pattern<T::size() / G>([](int, int) { return I; });
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<I> i)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::lanes_t<G> g, eve::index_t<I> i)
   {
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;

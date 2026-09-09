@@ -114,19 +114,19 @@ TTS_CASE("validate_pattern")
     bool actual = eve::_::idxm::validate_pattern(g, p, eve::as<T> {}, eve::as<T> {});
     TTS_EQUAL(expected, actual) << "p: " << p << " g: " << g;
   };
-  test(eve::lane<1>, eve::pattern<0, 1, 2, 3>, true);
-  test(eve::lane<1>, eve::pattern<0, 1, 2, 4>, false);
+  test(eve::lanes<1>, eve::pattern<0, 1, 2, 3>, true);
+  test(eve::lanes<1>, eve::pattern<0, 1, 2, 4>, false);
 
-  test(eve::lane<1>, eve::pattern<0, 1, 2, eve::we_>, true);
-  test(eve::lane<1>, eve::pattern<0, 1, 2, eve::na_>, true);
-  test(eve::lane<2>, eve::pattern<0, 1, 2, 3>, false);
-  test(eve::lane<1>, eve::pattern<0, 1, 2, -5>, false);
+  test(eve::lanes<1>, eve::pattern<0, 1, 2, eve::we_>, true);
+  test(eve::lanes<1>, eve::pattern<0, 1, 2, eve::na_>, true);
+  test(eve::lanes<2>, eve::pattern<0, 1, 2, 3>, false);
+  test(eve::lanes<1>, eve::pattern<0, 1, 2, -5>, false);
 };
 
 TTS_CASE("fix_indexes_to_fundamental")
 {
   auto test =
-      []<std::ptrdiff_t Fundamental, std::size_t N1, std::size_t N2>(eve::fixed<Fundamental>,
+      []<std::ptrdiff_t Fundamental, std::size_t N1, std::size_t N2>(eve::lanes_t<Fundamental>,
                                                                      std::array<int, N1> _p,
                                                                      std::ptrdiff_t      width,
                                                                      std::array<int, N2> _expected)
@@ -138,15 +138,15 @@ TTS_CASE("fix_indexes_to_fundamental")
     TTS_EQUAL(expected, actual) << tts::as_string(p) << ", " << width;
   };
 
-  test(eve::lane<4>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3});
-  test(eve::lane<8>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3, we_, we_, we_, we_});
+  test(eve::lanes<4>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3});
+  test(eve::lanes<8>, std::array {0, 1, 2, 3}, 4, std::array {0, 1, 2, 3, we_, we_, we_, we_});
   // 2 wides
-  test(eve::lane<4>, std::array {0, 2}, 2, std::array {0, 4, we_, we_});
-  test(eve::lane<4>, std::array {3, 1}, 2, std::array {5, 1, we_, we_});
+  test(eve::lanes<4>, std::array {0, 2}, 2, std::array {0, 4, we_, we_});
+  test(eve::lanes<4>, std::array {3, 1}, 2, std::array {5, 1, we_, we_});
   // 3 wides
   // 0, 1, 2, 3, 4, 5 =>
   // 0, 1, -, -, 4, 5, -, -, 8, 9, -, -
-  test(eve::lane<4>, std::array {2, 5}, 2, std::array {4, 9, we_, we_});
+  test(eve::lanes<4>, std::array {2, 5}, 2, std::array {4, 9, we_, we_});
 };
 
 TTS_CASE("shuffle_within_halves")
@@ -276,25 +276,25 @@ TTS_CASE("most_repeated_pattern")
 TTS_CASE("reduce_repeated_pattern_until")
 {
   auto test = []<std::ptrdiff_t Tgt, std::ptrdiff_t... I>(
-                  eve::pattern_t<I...> p, eve::fixed<Tgt>, auto _expected)
+                  eve::pattern_t<I...> p, eve::lanes_t<Tgt>, auto _expected)
   {
     auto actual   = eve::_::idxm::reduce_repeated_pattern_until<(std::size_t)Tgt, I...>;
     auto expected = to_idxs(_expected);
     TTS_EQUAL(expected, actual) << p;
   };
 
-  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<2>, std::array {1, 0});
-  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<4>, std::array {1, 0, 3, 2});
-  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<8>, std::array {1, 0, 3, 2, 5, 4, 7, 6});
+  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<2>, std::array {1, 0});
+  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<4>, std::array {1, 0, 3, 2});
+  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<8>, std::array {1, 0, 3, 2, 5, 4, 7, 6});
 
-  test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lane<2>, std::array {1, 0, 2, 3});
-  test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lane<4>, std::array {1, 0, 2, 3});
+  test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lanes<2>, std::array {1, 0, 2, 3});
+  test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lanes<4>, std::array {1, 0, 2, 3});
 };
 
 TTS_CASE("repeated_pattern_of_size")
 {
   auto yes_test = []<std::ptrdiff_t Tgt, std::ptrdiff_t... I>(
-                      eve::pattern_t<I...> p, eve::fixed<Tgt>, auto _expected)
+                      eve::pattern_t<I...> p, eve::lanes_t<Tgt>, auto _expected)
   {
     auto actual   = eve::_::idxm::repeated_pattern_of_size<(std::size_t)Tgt, I...>;
     auto expected = to_idxs(_expected);
@@ -304,24 +304,24 @@ TTS_CASE("repeated_pattern_of_size")
   };
 
   auto no_test =
-      []<std::ptrdiff_t Tgt, std::ptrdiff_t... I>(eve::pattern_t<I...> p, eve::fixed<Tgt>)
+      []<std::ptrdiff_t Tgt, std::ptrdiff_t... I>(eve::pattern_t<I...> p, eve::lanes_t<Tgt>)
   {
     auto actual = eve::_::idxm::repeated_pattern_of_size<(std::size_t)Tgt, I...>;
     TTS_EXPECT_NOT(actual) << p << " actual: " << tts::as_string(actual);
   };
 
-  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<2>, std::array {1, 0});
-  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<4>, std::array {1, 0, 3, 2});
-  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lane<8>, std::array {1, 0, 3, 2, 5, 4, 7, 6});
-  yes_test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lane<4>, std::array {1, 0, 2, 3});
-  yes_test(eve::pattern<3, 0, 2, we_, we_, we_, we_, we_>, eve::lane<4>, std::array {3, 0, 2, we_});
+  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<2>, std::array {1, 0});
+  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<4>, std::array {1, 0, 3, 2});
+  yes_test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, eve::lanes<8>, std::array {1, 0, 3, 2, 5, 4, 7, 6});
+  yes_test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lanes<4>, std::array {1, 0, 2, 3});
+  yes_test(eve::pattern<3, 0, 2, we_, we_, we_, we_, we_>, eve::lanes<4>, std::array {3, 0, 2, we_});
 
-  no_test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lane<2>);
+  no_test(eve::pattern<1, 0, 2, 3, 5, 4, 6, 7>, eve::lanes<2>);
 };
 
 TTS_CASE("repeat")
 {
-  auto test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _expected)
+  auto test = []<std::ptrdiff_t G>(auto _in, eve::lanes_t<G>, auto _expected)
   {
     auto in       = to_idxs(_in);
     auto actual   = eve::_::idxm::repeat<(std::size_t)G>(in);
@@ -329,8 +329,8 @@ TTS_CASE("repeat")
     TTS_EQUAL(expected, actual) << tts::as_string(in);
   };
 
-  test(std::array {0, 1}, eve::lane<1>, std::array {0, 1});
-  test(std::array {0, 1}, eve::lane<2>, std::array {0, 1, 2, 3});
+  test(std::array {0, 1}, eve::lanes<1>, std::array {0, 1});
+  test(std::array {0, 1}, eve::lanes<2>, std::array {0, 1, 2, 3});
 };
 
 TTS_CASE("is_identity")
@@ -803,7 +803,7 @@ TTS_CASE("extract_blends")
 
 TTS_CASE("expand_group")
 {
-  auto test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _expected)
+  auto test = []<std::ptrdiff_t G>(auto _in, eve::lanes_t<G>, auto _expected)
   {
     auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
@@ -811,10 +811,10 @@ TTS_CASE("expand_group")
     TTS_EQUAL(expected, actual) << "G: " << G;
   };
 
-  test(std::array {0, 1}, eve::lane<1>, std::array {0, 1});
-  test(std::array {0, na_}, eve::lane<2>, std::array {0, 1, na_, na_});
-  test(std::array {1, 0}, eve::lane<2>, std::array {2, 3, 0, 1});
-  test(std::array {0, 1}, eve::lane<4>, std::array {0, 1, 2, 3, 4, 5, 6, 7});
+  test(std::array {0, 1}, eve::lanes<1>, std::array {0, 1});
+  test(std::array {0, na_}, eve::lanes<2>, std::array {0, 1, na_, na_});
+  test(std::array {1, 0}, eve::lanes<2>, std::array {2, 3, 0, 1});
+  test(std::array {0, 1}, eve::lanes<4>, std::array {0, 1, 2, 3, 4, 5, 6, 7});
 };
 
 TTS_CASE("trim_trailing_we")
@@ -973,7 +973,7 @@ TTS_CASE("is_lane_broadcast")
 TTS_CASE("split_to_groups")
 {
   auto test = []<std::ptrdiff_t G, std::size_t N>(
-                  auto _in, eve::fixed<G>, std::array<int, N> _e0, auto... _expected)
+                  auto _in, eve::lanes_t<G>, std::array<int, N> _e0, auto... _expected)
   {
     auto in = to_idxs(_in);
 
@@ -984,8 +984,8 @@ TTS_CASE("split_to_groups")
     TTS_EQUAL(expected, actual);
   };
 
-  test(std::array {0, 1, 2, 3}, eve::lane<2>, std::array {0, 1}, std::array {2, 3});
-  test(std::array {0, 1, 2, 3}, eve::lane<4>, std::array {0, 1, 2, 3});
+  test(std::array {0, 1, 2, 3}, eve::lanes<2>, std::array {0, 1}, std::array {2, 3});
+  test(std::array {0, 1, 2, 3}, eve::lanes<4>, std::array {0, 1, 2, 3});
 };
 
 TTS_CASE("add shuffle levels")
@@ -1002,7 +1002,7 @@ TTS_CASE("add shuffle levels")
 
 TTS_CASE("group_within_group")
 {
-  auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _s0, auto _s1)
+  auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::lanes_t<G>, auto _s0, auto _s1)
   {
     auto in = to_idxs(_in);
     auto s0 = to_idxs(_s0);
@@ -1014,7 +1014,7 @@ TTS_CASE("group_within_group")
     TTS_EQUAL(actual_s1, s1);
   };
 
-  auto no_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>)
+  auto no_test = []<std::ptrdiff_t G>(auto _in, eve::lanes_t<G>)
   {
     auto in     = to_idxs(_in);
     auto actual = eve::_::idxm::group_within_group<G>(in);
@@ -1023,48 +1023,48 @@ TTS_CASE("group_within_group")
   };
 
   // in group then group
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {0, 1, 3, 2}, std::array {2, 3, 0, 1});
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {0, 1, 2, 3}, std::array {3, 2, 0, 1});
+  yes_test(std::array {3, 2, 0, 1}, eve::lanes<2>, std::array {0, 1, 3, 2}, std::array {2, 3, 0, 1});
+  yes_test(std::array {3, 2, 0, 1}, eve::lanes<4>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
+  yes_test(std::array {3, 2, 0, 1}, eve::lanes<1>, std::array {0, 1, 2, 3}, std::array {3, 2, 0, 1});
   yes_test(
-      std::array {3, 2, na_, 1}, eve::lane<2>, std::array {na_, 1, 3, 2}, std::array {2, 3, 0, 1});
+      std::array {3, 2, na_, 1}, eve::lanes<2>, std::array {na_, 1, 3, 2}, std::array {2, 3, 0, 1});
   yes_test(std::array {3, 2, na_, na_},
-           eve::lane<2>,
+           eve::lanes<2>,
            std::array {we_, we_, 3, 2},
            std::array {2, 3, na_, na_});
   yes_test(std::array {3, 2, we_, we_},
-           eve::lane<2>,
+           eve::lanes<2>,
            std::array {we_, we_, 3, 2},
            std::array {2, 3, we_, we_});
   yes_test(
-      std::array {3, 2, 3, 2}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, 2, 3});
+      std::array {3, 2, 3, 2}, eve::lanes<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, 2, 3});
   yes_test(std::array {3, 2, 6, 7, 6, 7, 0, 1},
-           eve::lane<2>,
+           eve::lanes<2>,
            std::array {0, 1, 3, 2, we_, we_, 6, 7},
            std::array {2, 3, 6, 7, 6, 7, 0, 1});
   yes_test(std::array {7, na_, na_, na_, na_, na_, na_, na_},
-           eve::lane<4>,
+           eve::lanes<4>,
            std::array {we_, we_, we_, we_, 7, na_, na_, na_},
            std::array {4, 5, 6, 7, na_, na_, na_, na_});
   yes_test(std::array {1, 1, 2, 3, 4, 5, 6, 7, 8},
-           eve::lane<1>,
+           eve::lanes<1>,
            std::array {-2, 1, 2, 3, 4, 5, 6, 7, 8},
            std::array {1, 1, 2, 3, 4, 5, 6, 7, 8});
 
   // group then in group
-  yes_test(std::array {3, 2, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, 0, 2, 3});
+  yes_test(std::array {3, 2, 2, 3}, eve::lanes<2>, std::array {2, 3, 2, 3}, std::array {1, 0, 2, 3});
   yes_test(
-      std::array {3, we_, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, 2, 3});
+      std::array {3, we_, 2, 3}, eve::lanes<2>, std::array {2, 3, 2, 3}, std::array {1, we_, 2, 3});
   yes_test(std::array {3, we_, na_, 3},
-           eve::lane<2>,
+           eve::lanes<2>,
            std::array {2, 3, 2, 3},
            std::array {1, we_, na_, 3});
   yes_test(std::array {6, na_, na_, na_, 7, na_, na_, na_},
-           eve::lane<4>,
+           eve::lanes<4>,
            std::array {4, 5, 6, 7, 4, 5, 6, 7},
            std::array {2, na_, na_, na_, 7, na_, na_, na_});
 
-  no_test(std::array {3, 0, 0, 1}, eve::lane<2>);
+  no_test(std::array {3, 0, 0, 1}, eve::lanes<2>);
 };
 
 }

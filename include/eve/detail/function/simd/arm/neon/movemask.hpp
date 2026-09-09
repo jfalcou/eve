@@ -52,32 +52,32 @@ namespace eve::_
     using u32_2 = typename w_t::template rebind<std::uint32_t, 2>;
     using u64_1 = typename w_t::template rebind<std::uint64_t, 1>;
 
-         if constexpr ( N == 1 ) return std::pair{ (std::uint8_t) v.bits().get(0), eve::lane<8> };
+         if constexpr ( N == 1 ) return std::pair{ (std::uint8_t) v.bits().get(0), eve::lanes<8> };
     else if constexpr ( sizeof(T) == 1 && N == 2 )
     {
       auto words = eve::bit_cast(v, eve::as<u16_4>{});
-      return std::pair{ vget_lane_u16(words, 0), eve::lane<8> };
+      return std::pair{ vget_lane_u16(words, 0), eve::lanes<8> };
     }
     else if constexpr ( sizeof(T) * N == 4)
     {
       auto dwords = eve::bit_cast(v, eve::as<u32_2>{});
-      return std::pair{ vget_lane_u32(dwords, 0), eve::lane<sizeof(T) * 8> };
+      return std::pair{ vget_lane_u32(dwords, 0), eve::lanes<sizeof(T) * 8> };
     }
     else if constexpr ( eve::current_api >= eve::asimd )
     {
       auto qword  = eve::bit_cast(v, eve::as<u64_1>{});
-      return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 8> };
+      return std::pair { vget_lane_u64(qword, 0), eve::lanes<sizeof(T) * 8> };
     }
     else if constexpr ( sizeof(T) >= 2 )
     {
-      return std::pair{ every_2nd_byte_arm64(v.bits()), eve::lane<sizeof(T) * 4> };
+      return std::pair{ every_2nd_byte_arm64(v.bits()), eve::lanes<sizeof(T) * 4> };
     }
     else   // chars
     {
       auto words = eve::bit_cast(v, eve::as<u16_4>{});
       words = vshr_n_u16(words, 4);
 
-      return std::pair{ every_2nd_byte_arm64(words), eve::lane<sizeof(T) * 4> };
+      return std::pair{ every_2nd_byte_arm64(words), eve::lanes<sizeof(T) * 4> };
     }
   }
 
@@ -96,11 +96,11 @@ namespace eve::_
       using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
       auto halved = eve::convert(v, eve::as<eve::logical<half_e_t>>{});
       auto qword  = eve::bit_cast(halved, eve::as<u64_1>{});
-      return std::pair { vget_lane_u64(qword, 0), eve::lane<sizeof(T) * 4> };
+      return std::pair { vget_lane_u64(qword, 0), eve::lanes<sizeof(T) * 4> };
     }
     else if constexpr ( sizeof(T) >= 4 )
     {
-      return std::pair{ every_4th_byte_arm128(v.bits()), eve::lane<sizeof(T) * 2> };
+      return std::pair{ every_4th_byte_arm128(v.bits()), eve::lanes<sizeof(T) * 2> };
     }
     else if constexpr ( sizeof(T) == 2 )
     {
@@ -108,7 +108,7 @@ namespace eve::_
       auto dwords = eve::bit_cast(v, eve::as<u32_4>{});
       dwords = vshrq_n_u32(dwords, 12);
 
-      return std::pair{ every_4th_byte_arm128(dwords), eve::lane<sizeof(T) * 2> };
+      return std::pair{ every_4th_byte_arm128(dwords), eve::lanes<sizeof(T) * 2> };
     }
     else  // bytes
     {
@@ -122,7 +122,7 @@ namespace eve::_
       u8_8  bytes_8  = vmovn_u16(words_16);
       u64_1 qword = eve::bit_cast(bytes_8, eve::as<u64_1>{});
 
-      return std::pair{ vget_lane_u64(qword, 0), eve::lane<4> };
+      return std::pair{ vget_lane_u64(qword, 0), eve::lanes<4> };
     }
   }
 }

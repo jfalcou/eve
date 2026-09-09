@@ -235,17 +235,17 @@ namespace eve::test
                           , std::integral_constant<int, 1024>
                           >;
 
-  using widths = tts::types< eve::fixed<   1>
-                              , eve::fixed<   2>
-                              , eve::fixed<   4>
-                              , eve::fixed<   8>
-                              , eve::fixed<  16>
-                              , eve::fixed<  32>
-                              , eve::fixed<  64>
-                              , eve::fixed< 128>
-                              , eve::fixed< 256>
-                              , eve::fixed< 512>
-                              , eve::fixed<1024>
+  using widths = tts::types< eve::lanes_t<   1>
+                              , eve::lanes_t<   2>
+                              , eve::lanes_t<   4>
+                              , eve::lanes_t<   8>
+                              , eve::lanes_t<  16>
+                              , eve::lanes_t<  32>
+                              , eve::lanes_t<  64>
+                              , eve::lanes_t< 128>
+                              , eve::lanes_t< 256>
+                              , eve::lanes_t< 512>
+                              , eve::lanes_t<1024>
                               >;
 
   EVE_FORCEINLINE auto is_near(auto a,  auto b){
@@ -369,7 +369,7 @@ namespace tts
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
 
     using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::fixed<T::size()>{});
+    eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::lanes_t<T::size()>{});
 
     return poison(that);
   }
@@ -391,7 +391,7 @@ namespace tts
   auto produce(type<eve::wide<eve::float16_t, N>> const&, auto g, auto& rng, auto... args)
   {
     auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
-    return poison(eve::load(arr.data(), eve::fixed<N>{}));
+    return poison(eve::load(arr.data(), eve::lanes_t<N>{}));
   }
 
   template<typename Mx, typename Mn>

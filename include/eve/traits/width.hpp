@@ -12,7 +12,7 @@
 
 namespace eve
 {
-  template<std::ptrdiff_t Width> struct fixed;
+  template<std::ptrdiff_t Width> struct lanes_t;
 
   //================================================================================================
   //! @addtogroup eve_traits
@@ -50,13 +50,13 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename Type>
-  struct width : fixed<1>
+  struct width : lanes_t<1>
   {};
 
   template<typename Type, std::ptrdiff_t Width>
-  struct width<wide<Type, Width>> : fixed<Width>
+  struct width<wide<Type, Width>> : lanes_t<Width>
   {
-    using type = fixed<Width>;
+    using type = lanes_t<Width>;
   };
 
   template<typename Type>

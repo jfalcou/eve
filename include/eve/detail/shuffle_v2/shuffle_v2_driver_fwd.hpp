@@ -49,7 +49,7 @@ template<typename NativeSelector> struct shuffle_v2_driver
   NativeSelector selector;
 
   template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T, typename... Ts>
-  EVE_FORCEINLINE auto operator()(pattern_t<I...> p, eve::fixed<G> g, T x, Ts... xs) const noexcept
+  EVE_FORCEINLINE auto operator()(pattern_t<I...> p, eve::lanes_t<G> g, T x, Ts... xs) const noexcept
   {
     if constexpr( G <= 0 ) return not_positive_group_size<G> {};
     else if constexpr( !(std::same_as<T, Ts> && ...) )
@@ -57,15 +57,15 @@ template<typename NativeSelector> struct shuffle_v2_driver
       return cant_shuffle_different_types<T, Ts...> {};
     }
     else if constexpr( !_::idxm::validate_pattern(
-                           eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...) )
+                           eve::lanes<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...) )
     {
-      return pattern_failed_validation<pattern_t<I...>, fixed<G>, T, Ts...> {};
+      return pattern_failed_validation<pattern_t<I...>, lanes_t<G>, T, Ts...> {};
     }
     else { return shuffle_v2_driver_impl(selector, p, g, kumi::reverse(kumi::tuple {x, xs...})); }
   }
 
   template<pattern_formula Gen, std::ptrdiff_t G, simd_value T, typename... Ts>
-  EVE_FORCEINLINE auto operator()(Gen, eve::fixed<G> g, T x, Ts... xs) const noexcept
+  EVE_FORCEINLINE auto operator()(Gen, eve::lanes_t<G> g, T x, Ts... xs) const noexcept
       -> decltype(operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...))
   {
     return operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...);
@@ -73,16 +73,16 @@ template<typename NativeSelector> struct shuffle_v2_driver
 
   template<std::ptrdiff_t... I>
   EVE_FORCEINLINE auto operator()(pattern_t<I...> p, simd_value auto x, auto... xs) const noexcept
-      -> decltype(operator()(p, eve::lane<1>, x, xs...))
+      -> decltype(operator()(p, eve::lanes<1>, x, xs...))
   {
-    return operator()(p, eve::lane<1>, x, xs...);
+    return operator()(p, eve::lanes<1>, x, xs...);
   }
 
   EVE_FORCEINLINE auto
   operator()(pattern_formula auto gen, simd_value auto x, auto... xs) const noexcept
-      -> decltype(operator()(gen, eve::lane<1>, x, xs...))
+      -> decltype(operator()(gen, eve::lanes<1>, x, xs...))
   {
-    return operator()(gen, eve::lane<1>, x, xs...);
+    return operator()(gen, eve::lanes<1>, x, xs...);
   }
 };
 

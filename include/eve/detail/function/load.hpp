@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<_::data_source Ptr, width_type N>
-    EVE_FORCEINLINE as_wide_t<value_type_t<Ptr>, N> operator()(Ptr ptr, fixed<N>) const noexcept
+    EVE_FORCEINLINE as_wide_t<value_type_t<Ptr>, N> operator()(Ptr ptr, lanes_t<N>) const noexcept
     {
       return EVE_DISPATCH_CALL(ptr, as<as_wide_t<value_type_t<Ptr>, N>>{});
     }

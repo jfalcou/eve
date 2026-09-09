@@ -20,13 +20,13 @@ constexpr auto try_each_group_rotate_halfs_pattern = [](int i, int size)
 
 template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-try_each_group_position_(EVE_SUPPORTS(avx2_), wide<T, N> x, eve::fixed<G>) noexcept
+try_each_group_position_(EVE_SUPPORTS(avx2_), wide<T, N> x, eve::lanes_t<G>) noexcept
 requires std::same_as<abi_t<T, N>, x86_256_> && (G < N / 2)
 {
-  auto x_1 = shuffle_l<2>(x, lane<G>, try_each_group_rotate_halfs_pattern);
+  auto x_1 = shuffle_l<2>(x, lanes<G>, try_each_group_rotate_halfs_pattern);
 
-  return kumi::cat(try_each_group_position(x, eve::lane<G * 2>),
-                   try_each_group_position(x_1, eve::lane<G * 2>));
+  return kumi::cat(try_each_group_position(x, eve::lanes<G * 2>),
+                   try_each_group_position(x_1, eve::lanes<G * 2>));
 }
 
 }

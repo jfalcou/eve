@@ -22,7 +22,7 @@ namespace eve
 
     template<scalar_value T, std::ptrdiff_t N>
     constexpr EVE_FORCEINLINE as_wide_t<T, N>
-    operator()(T v, fixed<N> n) const noexcept { return EVE_DISPATCH_CALL(v, n); }
+    operator()(T v, lanes_t<N> n) const noexcept { return EVE_DISPATCH_CALL(v, n); }
 
     // TODO: Remove this as it is a duplicata of broadcast_lane
     template<simd_value T, std::ptrdiff_t I>
@@ -31,7 +31,7 @@ namespace eve
 
     template<simd_value T, std::ptrdiff_t I, std::ptrdiff_t N>
     constexpr EVE_FORCEINLINE as_wide_t<T, N>
-    operator()(T v, index_t<I> idx, fixed<N> n) const noexcept { return EVE_DISPATCH_CALL(v, idx, n); }
+    operator()(T v, index_t<I> idx, lanes_t<N> n) const noexcept { return EVE_DISPATCH_CALL(v, idx, n); }
 
     EVE_CALLABLE_OBJECT(broadcast_t, broadcast_);
   };
@@ -54,10 +54,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template<eve::scalar_value T> eve::as_wide_t<T> broadcast(T v) noexcept;                            // 1
-//!     template<eve::scalar_value T, std::ptrdiff_t N> as_wide_t<T> broadcast(T v, fixed<N> sz) noexcept;  // 2
+//!     template<eve::scalar_value T, std::ptrdiff_t N> as_wide_t<T> broadcast(T v, lanes_t<N> sz) noexcept;  // 2
 //!     template<eve::simd_value T, std::size_t I> T broadcast(T v, index_t<I> i) noexcept;                 // 3
 //!     template<eve::simd_value T, std::size_t I, std::ptrdiff_t N>
-//!     eve::as_wide_t<T,N> broadcast(T v, index_t<I> i, fixed<N> sz) noexcept;                      // 4
+//!     eve::as_wide_t<T,N> broadcast(T v, index_t<I> i, lanes_t<N> sz) noexcept;                      // 4
 //!   }
 //!   @endcode
 //!

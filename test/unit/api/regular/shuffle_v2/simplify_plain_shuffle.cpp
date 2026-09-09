@@ -37,7 +37,7 @@ simplify_test(P0Gen, P1Gen)
   constexpr auto p0 = eve::fix_pattern<T0::size() / G0>(P0Gen {});
   constexpr auto p1 = pad_pattern_with_we<T1, G1>(P1Gen {});
   {
-    auto [x_, g_, p_] = eve::_::simplify_plain_shuffle(p0, eve::lane<G0>, kumi::tuple<T0> {});
+    auto [x_, g_, p_] = eve::_::simplify_plain_shuffle(p0, eve::lanes<G0>, kumi::tuple<T0> {});
 
     TTS_TYPE_IS(decltype(x_), kumi::tuple<T1>);
     TTS_CONSTEXPR_EQUAL(decltype(g_)::value, G1);
@@ -58,7 +58,7 @@ simplify2_test(P0Gen, P1Gen)
   constexpr auto p1 = pad_pattern_with_we<T1, G1>(P1Gen {});
   {
     auto [x_, g_, p_] =
-        eve::_::simplify_plain_shuffle(p0, eve::lane<G0>, kumi::tuple<T0, T0> {});
+        eve::_::simplify_plain_shuffle(p0, eve::lanes<G0>, kumi::tuple<T0, T0> {});
 
     TTS_TYPE_IS(decltype(x_), (kumi::tuple<T1, T1>));
     TTS_CONSTEXPR_EQUAL(decltype(g_)::value, G1);
@@ -175,10 +175,10 @@ TTS_CASE("Check simplification, pad to fundamental")
   }
   else
   {
-    // simplify_test_pad_to_fundamental<std::uint8_t, eve::fixed<1>>();
-    simplify_test_pad_to_fundamental<std::uint8_t, eve::fixed<2>>();
-    simplify_test_pad_to_fundamental<std::uint16_t, eve::fixed<2>>();
-    simplify_test_pad_to_fundamental<std::uint32_t, eve::fixed<2>>();
+    // simplify_test_pad_to_fundamental<std::uint8_t, eve::lanes_t<1>>();
+    simplify_test_pad_to_fundamental<std::uint8_t, eve::lanes_t<2>>();
+    simplify_test_pad_to_fundamental<std::uint16_t, eve::lanes_t<2>>();
+    simplify_test_pad_to_fundamental<std::uint32_t, eve::lanes_t<2>>();
   }
 };
 
@@ -217,7 +217,7 @@ TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
     using u64xN = eve::wide<std::uint64_t, eve::fundamental_width_v<std::uint64_t>>;
 
     auto [x, g, p] =
-        eve::_::simplify_plain_shuffle(eve::pattern<0>, eve::lane<1>, kumi::tuple<u8xN> {});
+        eve::_::simplify_plain_shuffle(eve::pattern<0>, eve::lanes<1>, kumi::tuple<u8xN> {});
     TTS_TYPE_IS(decltype(x), kumi::tuple<u64xN>);
     TTS_EQUAL(g(), u64xN::size());
     TTS_EQUAL(p, eve::pattern<0>);
@@ -265,7 +265,7 @@ TTS_CASE("Check simplification, 2 register")
       constexpr auto p0 = eve::pattern<eve::we_, 5, 1, 2>;
       constexpr auto p1 = eve::pattern<eve::we_, 1, 5, 6>;
       auto [x_, g_, p_] =
-          eve::_::simplify_plain_shuffle(p0, eve::lane<2>, kumi::tuple<T, T> {});
+          eve::_::simplify_plain_shuffle(p0, eve::lanes<2>, kumi::tuple<T, T> {});
 
       TTS_TYPE_IS(decltype(x_), (kumi::tuple<T, T>));
       TTS_EQUAL(p_, p1);

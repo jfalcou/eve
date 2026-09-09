@@ -25,7 +25,7 @@ namespace eve
 //!    The different name comes from for 2 wides - this returns a tuple of 2 wides and a shuffle
 //!    returns an aggregate
 //!
-//!    First parameter is fixed<N> group_size - how many elements we consider one element
+//!    First parameter is lanes_t<N> group_size - how many elements we consider one element
 //!    After that you pass n simd values.
 //!    Together those n simd values have interleaved values.
 //!    We return a tuple of wides, where all values are separated between individual wides.

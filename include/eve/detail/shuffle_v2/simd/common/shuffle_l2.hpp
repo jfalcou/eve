@@ -28,20 +28,20 @@ up_element_size(wide<T, N> x)
 
 template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t To>
 EVE_FORCEINLINE auto
-up_element_size_to(wide<T, N> x, eve::fixed<To>)
+up_element_size_to(wide<T, N> x, eve::lanes_t<To>)
 {
   if constexpr( sizeof(T) == To ) return x;
-  else return up_element_size_to(up_element_size(x), eve::lane<To>);
+  else return up_element_size_to(up_element_size(x), eve::lanes<To>);
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
+shuffle_l2_element_bit_shift(P, lanes_t<G>, wide<T, N> x)
 {
   if constexpr( P::g_size * P::most_repeated.size() > 8 ) return no_matching_shuffle;
   else
   {
-    constexpr auto size_to_shift = eve::lane<P::most_repeated.size() * sizeof(T)>;
+    constexpr auto size_to_shift = eve::lanes<P::most_repeated.size() * sizeof(T)>;
 
     // sizeof(T) < 8 because otherwise that's identity
     // G == 1, because otherwise it'd be simplified

@@ -51,7 +51,7 @@ inline constexpr auto is_broadcast_group = []()
   constexpr auto                                      result = _::find_broadcast_group<Sz>(p);
 
   if constexpr( result.group != -1 )
-    return std::optional {std::pair {lane<result.group>, index<result.index>}};
+    return std::optional {std::pair {lanes<result.group>, index<result.index>}};
   else return std::optional<int> {};
 }();
 
@@ -60,9 +60,9 @@ requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0
          && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           Wide           w,
-                          fixed<Group>   g,
+                          lanes_t<Group>   g,
                           index_t<Index> i,
-                          fixed<Width>    sz)
+                          lanes_t<Width>    sz)
 {
   using that_t        = as_wide_t<Wide, Width>;
   using v_t           = element_type_t<Wide>;
@@ -81,12 +81,12 @@ requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0
     {
       using outer_type = _::make_integer_t<sizeof(v_t) * Group>;
       using w_t        = as_wide_t<outer_type, card / Group>;
-      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Width / Group>), as<that_t>());
+      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lanes<Width / Group>), as<that_t>());
     }
     // If the output Greater than the Group size, we slice by half
     else if constexpr( Width > Group )
     {
-      auto const r = broadcast_group(w, g, i, lane<Width / 2>);
+      auto const r = broadcast_group(w, g, i, lanes<Width / 2>);
       return eve::combine(r, r);
     }
     else
@@ -111,9 +111,9 @@ requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0
          && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           logical<Wide>  w,
-                          fixed<Group>   g,
+                          lanes_t<Group>   g,
                           index_t<Index> i,
-                          fixed<Width>    sz)
+                          lanes_t<Width>    sz)
 {
   using abi_t = typename logical<Wide>::abi_type;
   if constexpr( !abi_t::is_wide_logical )
@@ -133,7 +133,7 @@ requires((Group > 0) && (Group <= std::min(width_v<Wide>, Width)) && (Index >= 0
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index>
 requires((Group > 0) && (Group <= width_v<Wide>)&&(Index >= 0)
          && (Index < width_v<Wide> / Group)) EVE_FORCEINLINE
-    auto broadcast_group_(EVE_SUPPORTS(cpu_), Wide w, fixed<Group> g, index_t<Index> i)
+    auto broadcast_group_(EVE_SUPPORTS(cpu_), Wide w, lanes_t<Group> g, index_t<Index> i)
 {
   return broadcast_group(w, g, i, width_t<Wide> {});
 }

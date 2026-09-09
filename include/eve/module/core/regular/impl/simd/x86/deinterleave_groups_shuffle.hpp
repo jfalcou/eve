@@ -14,7 +14,7 @@ namespace eve::_
 {
 template<typename T, width_type N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>
-    deinterleave_groups_shuffle_(EVE_SUPPORTS(sse2_), wide<T, N> v, fixed<G>) requires(N / G > 2)
+    deinterleave_groups_shuffle_(EVE_SUPPORTS(sse2_), wide<T, N> v, lanes_t<G>) requires(N / G > 2)
     && x86_abi<abi_t<T, N>>
 {
   constexpr auto g_sz = sizeof(T) * G;
@@ -33,10 +33,10 @@ template<typename T, width_type N, std::ptrdiff_t G>
     {
       // only double shuffle is available
       if constexpr( !std::same_as<double, T> )
-        return deinterleave_groups_shuffle_as_doubles(v, lane<G>);
+        return deinterleave_groups_shuffle_as_doubles(v, lanes<G>);
       else
       {
-        auto swapped = swap_adjacent(v, lane<G * 2>);
+        auto swapped = swap_adjacent(v, lanes<G * 2>);
 
         auto lo = _mm256_unpacklo_pd(v, swapped);
         auto hi = _mm256_unpackhi_pd(swapped, v);
@@ -49,7 +49,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
       auto duplicate = _mm_shufflelo_epi16(v, _MM_SHUFFLE(3, 2, 1, 1));
       return _mm_unpacklo_epi8(v, duplicate);
     }
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lanes<G>);
   }
   else if constexpr( n == 8 )
   {
@@ -61,7 +61,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
       auto floats = eve::bit_cast(v, eve::as<wide<float, n>> {});
       floats      = _mm256_permute_ps(floats, _MM_SHUFFLE(3, 1, 2, 0));
       v           = eve::bit_cast(floats, as(v));
-      return deinterleave_groups_shuffle(v, lane<N / 4>);
+      return deinterleave_groups_shuffle(v, lanes<N / 4>);
     }
     // pshuvb is crazy cheap, let's use the register when >= ssse3
     // otherwise - same idea as with floats
@@ -76,10 +76,10 @@ template<typename T, width_type N, std::ptrdiff_t G>
     else if constexpr( g_sz == 1 && current_api < ssse3 )
     {
       auto shorts = eve::convert(v, eve::as<std::uint16_t> {});
-      shorts      = deinterleave_groups_shuffle(shorts, lane<G>);
+      shorts      = deinterleave_groups_shuffle(shorts, lanes<G>);
       return eve::convert(shorts, as<T> {});
     }
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lanes<G>);
   }
   else if constexpr( n == 16 )
   {
@@ -91,23 +91,23 @@ template<typename T, width_type N, std::ptrdiff_t G>
       auto half_pattern =
           as_indexes<wide<std::uint8_t, n>>(deinterleave_groups_shuffle_pattern<g_sz, 16>);
       v = _mm256_shuffle_epi8(v, eve::combine(half_pattern, half_pattern));
-      return deinterleave_groups_shuffle(v, lane<N / 4>);
+      return deinterleave_groups_shuffle(v, lanes<N / 4>);
     }
     // avx - slice and deinterleave
     else if constexpr( g_sz == 2 )
     {
       auto [lo, hi] = v.slice();
-      lo            = deinterleave_groups_shuffle(lo, lane<G>);
-      hi            = deinterleave_groups_shuffle(hi, lane<G>);
-      return deinterleave_groups_shuffle(lo, hi, lane<N / 4>);
+      lo            = deinterleave_groups_shuffle(lo, lanes<G>);
+      hi            = deinterleave_groups_shuffle(hi, lanes<G>);
+      return deinterleave_groups_shuffle(lo, hi, lanes<N / 4>);
     }
     // pshuvb
-    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lanes<G>);
   }
   else if constexpr( g_sz == 2 && current_api == avx512 )
   {
     // has a permute
-    return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lanes<G>);
   }
   else if constexpr( (n == 32 || n == 64) && g_sz == 1 )
   {
@@ -115,10 +115,10 @@ template<typename T, width_type N, std::ptrdiff_t G>
     {
       auto [lo, hi] = v.slice();
 
-      lo = deinterleave_groups_shuffle(lo, lane<G>);
-      hi = deinterleave_groups_shuffle(hi, lane<G>);
+      lo = deinterleave_groups_shuffle(lo, lanes<G>);
+      hi = deinterleave_groups_shuffle(hi, lanes<G>);
 
-      return deinterleave_groups_shuffle(lo, hi, lane<N / 4>);
+      return deinterleave_groups_shuffle(lo, hi, lanes<N / 4>);
     }
     else
     {
@@ -130,7 +130,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
       if constexpr( n == 32 ) v = _mm256_shuffle_epi8(v, pattern_twice);
       else v = _mm512_shuffle_epi8(v, eve::combine(pattern_twice, pattern_twice));
 
-      return deinterleave_groups_shuffle(v, lane<8>);
+      return deinterleave_groups_shuffle(v, lanes<8>);
     }
   }
 }
@@ -140,7 +140,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
                     deinterleave_groups_shuffle_(EVE_SUPPORTS(sse2_),
                                                  wide<T, N> v0,
                                                  wide<T, N> v1,
-                                                 fixed<G>) requires(G < N)
+                                                 lanes_t<G>) requires(G < N)
     && x86_abi<abi_t<T, N>>
 {
   constexpr auto g_sz = sizeof(T) * G;
@@ -158,7 +158,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
     else if constexpr( g_sz == 4 && std::same_as<float, T> ) return _mm_unpacklo_ps(v0, v1);
     else if constexpr( g_sz == 4 ) return _mm_unpacklo_epi32(v0, v1);
     else if constexpr( g_sz == 8 && std::same_as<float, T> )
-      return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);
+      return deinterleave_groups_shuffle_as_doubles(v0, v1, lanes<G>);
     else if constexpr( g_sz == 8 && std::same_as<double, T> )
       return {w_t {_mm_unpacklo_pd(v0, v1)}, w_t {_mm_unpackhi_pd(v0, v1)}};
     else if constexpr( g_sz == 8 )
@@ -245,7 +245,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
               w_t {_mm512_permutex2var_epi32(v0, hi_idx, v1)}};
     // From this point better use doubles shuffle floats to avoid duplicating constants
     else if constexpr( std::same_as<float, T> )
-      return deinterleave_groups_shuffle_as_doubles(v0, v1, lane<G>);
+      return deinterleave_groups_shuffle_as_doubles(v0, v1, lanes<G>);
     else if constexpr( g_sz * n == 16 && g_sz == 8 && std::same_as<double, T> )
       return {w_t {_mm_permutex2var_pd(v0, lo_idx, v1)}, w_t {_mm_permutex2var_pd(v0, hi_idx, v1)}};
     else if constexpr( g_sz * n == 32 && g_sz == 8 && std::same_as<double, T> )
@@ -265,6 +265,6 @@ template<typename T, width_type N, std::ptrdiff_t G>
               w_t {_mm512_permutex2var_epi64(v0, hi_idx, v1)}};
   }
   // Will aggregate for less than native or deinterleave each and then come back here
-  else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lane<G>);
+  else return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v0, v1, eve::lanes<G>);
 }
 }

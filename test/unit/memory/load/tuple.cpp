@@ -58,9 +58,9 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
   w_t constructed(src);
   TTS_EQUAL(constructed                                , reference   );
   TTS_EQUAL(eve::load(src)                             , reference   );
-  TTS_EQUAL(eve::load(src, eve::lane<8>)               , reference8  );
+  TTS_EQUAL(eve::load(src, eve::lanes<8>)               , reference8  );
   TTS_EQUAL(eve::load[eve::unsafe](src)                , reference   );
-  TTS_EQUAL(eve::load[eve::unsafe](src, eve::lane<8>)  , reference8  );
+  TTS_EQUAL(eve::load[eve::unsafe](src, eve::lanes<8>)  , reference8  );
 
   auto loaded = eve::load[il](src);
   kumi::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);

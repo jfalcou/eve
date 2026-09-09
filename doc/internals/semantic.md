@@ -10,7 +10,7 @@ behaviors **EVE** types and functions can exhibit.
 For any [value type](@ref eve::value), the **width** is the number of elements it contains.
 This information is retrieved via the eve::width type trait.
 
-For any [SIMD type](@ref eve::simd_value) `T`, `eve::width<T>::type` evaluates to `eve::fixed<N>`, where `N` is the number of lanes of the underlying SIMD register.
+For any [SIMD type](@ref eve::simd_value) `T`, `eve::width<T>::type` evaluates to `eve::lanes_t<N>`, where `N` is the number of lanes of the underlying SIMD register.
 
 Two types are said to be **width compatible** if they have the same width or at least one of them
 is a [scalar type](@ref eve::scalar_value).

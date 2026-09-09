@@ -66,7 +66,7 @@ constexpr eve::pattern_t bgra_to_rgb_pattern_v = eve::fix_pattern<Size>(
 struct
 {
   template<eve::width_type N>
-  EVE_FORCEINLINE void operator()(std::uint8_t const *&f, std::uint8_t *&o, eve::fixed<N> n) const
+  EVE_FORCEINLINE void operator()(std::uint8_t const *&f, std::uint8_t *&o, eve::lanes_t<N> n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load(f, n);
     eve::wide<std::uint8_t, N> shuffled = eve::shuffle(loaded,bgra_to_rgb_pattern_v<n()>);
@@ -84,7 +84,7 @@ struct
   EVE_FORCEINLINE void operator()(eve::relative_conditional_expr auto ignore,
                                   std::uint8_t const                *&f,
                                   std::uint8_t                      *&o,
-                                  eve::fixed<N>                       n) const
+                                  eve::lanes_t<N>                       n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load[ignore](f, n);
     eve::wide<std::uint8_t, N> shuffled = eve::shuffle(loaded,bgra_to_rgb_pattern_v<n()>);
@@ -104,15 +104,15 @@ std::uint8_t* convert_bgra_to_rgb(std::span<std::uint8_t const> in, std::uint8_t
   EVE_ASSERT((in.size() % 4) == 0, "bgra uses 4 bytes per element");
 
   // Due to not having perfect shuffles, we are going to tweak how many elements we use.
-  eve::fixed n = []
+  eve::lanes_t n = []
   {
     // On avx/avx2 there is no good 32 byte shuffle.
     // So we are going to use 16 byte registers.
-    if constexpr( eve::current_api == eve::avx || eve::current_api == eve::avx2 ) return eve::lane<16>;
+    if constexpr( eve::current_api == eve::avx || eve::current_api == eve::avx2 ) return eve::lanes<16>;
     // On sse2 the byte shuffles are very poor, so we are going to use 8 bytes at a time.
     // This can be done better with some effort
-    else if constexpr( eve::current_api == eve::sse2 ) return eve::lane<8>;
-    else                                               return eve::lane<eve::expected_width_v<std::uint8_t>>;
+    else if constexpr( eve::current_api == eve::sse2 ) return eve::lanes<8>;
+    else                                               return eve::lanes<eve::expected_width_v<std::uint8_t>>;
   }();
 
   // Algorithm works like this:

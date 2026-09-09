@@ -24,12 +24,12 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
 {
   using v_t = eve::element_type_t<typename T::mask_type>;
   using e_t = eve::element_type_t<T>;
-  using fixed = eve::width_t<T>;
+  using lanes_t = eve::width_t<T>;
 
-  auto [ldata ,lidx ] = logical_page<v_t, fixed::value>();
+  auto [ldata ,lidx ] = logical_page<v_t, lanes_t::value>();
 
-  auto l_ptr        = eve::as_aligned(&ldata[lidx], fixed{});
-  auto l_const_ptr  = eve::as_aligned((e_t const*)(&ldata[lidx]), fixed{});
+  auto l_ptr        = eve::as_aligned(&ldata[lidx], lanes_t{});
+  auto l_const_ptr  = eve::as_aligned((e_t const*)(&ldata[lidx]), lanes_t{});
 
   TTS_WHEN("For some given relative masks")
   {
@@ -54,7 +54,7 @@ TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
     T l_ignore_ext_ref    = eve::replace_ignored(l_full_ref,ie,others);
 
     // lanes value
-    auto lanes = eve::lane<T::size()>;
+    auto lanes = eve::lanes<T::size()>;
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific width")
     {

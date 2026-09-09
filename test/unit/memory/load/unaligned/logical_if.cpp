@@ -57,7 +57,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
     eve::logical<T> l_ignore_ext_ref    = l_full_ref && mie;
 
     // lanes value
-    auto lanes = eve::lane<T::size()>;
+    auto lanes = eve::lanes<T::size()>;
 
     using eve::false_;
 

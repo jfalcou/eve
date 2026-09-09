@@ -381,9 +381,9 @@ namespace eve
   //================================================================================================
   template<typename Type, width_type Lanes>
 #if !defined(EVE_DOXYGEN_INVOKED)
-  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, fixed<Lanes>) noexcept
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, lanes_t<Lanes>) noexcept
 #else
-  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, fixed<Lanes> n) noexcept
+  aligned_ptr<Type, Lanes> as_aligned(Type* ptr, lanes_t<Lanes> n) noexcept
 #endif
   {
     return aligned_ptr<Type, Lanes>{ptr};
@@ -406,7 +406,7 @@ namespace eve
 
   //! @overload
   template<typename Type, width_type Lanes>
-  aligned_ptr<Type const, Lanes> as_aligned(Type const *ptr, fixed<Lanes>) noexcept
+  aligned_ptr<Type const, Lanes> as_aligned(Type const *ptr, lanes_t<Lanes>) noexcept
   {
     return aligned_ptr<Type const, Lanes>{ptr};
   }
@@ -431,9 +431,9 @@ namespace eve
   //================================================================================================
   template <typename T, width_type Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, fixed<Lanes>) noexcept
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, lanes_t<Lanes>) noexcept
   #else
-  EVE_FORCEINLINE auto previous_aligned_address(T* p, fixed<Lanes> width) noexcept
+  EVE_FORCEINLINE auto previous_aligned_address(T* p, lanes_t<Lanes> width) noexcept
   #endif
   {
     return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::under{Lanes * sizeof(T)}) };
@@ -452,7 +452,7 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
   {
-    return previous_aligned_address(p, fixed<eve::expected_width_v<std::remove_cvref_t<T>>>{});
+    return previous_aligned_address(p, lanes_t<eve::expected_width_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================
@@ -468,9 +468,9 @@ namespace eve
   //================================================================================================
   template <typename T, width_type Lanes>
   #if !defined(EVE_DOXYGEN_INVOKED)
-  EVE_FORCEINLINE auto next_aligned_address(T* p, fixed<Lanes>) noexcept
+  EVE_FORCEINLINE auto next_aligned_address(T* p, lanes_t<Lanes>) noexcept
   #else
-  EVE_FORCEINLINE auto next_aligned_address(T* p, fixed<Lanes> width) noexcept
+  EVE_FORCEINLINE auto next_aligned_address(T* p, lanes_t<Lanes> width) noexcept
   #endif
   {
     return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::over{Lanes * sizeof(T)}) };
@@ -489,7 +489,7 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
   {
-    return next_aligned_address(p, fixed<eve::expected_width_v<std::remove_cvref_t<T>>>{});
+    return next_aligned_address(p, lanes_t<eve::expected_width_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================

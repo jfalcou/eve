@@ -17,7 +17,7 @@ void
 for_each_group_size(auto op)
 {
   constexpr auto ssz = std::bit_width(std::size_t(T::size()));
-  [&]<std::size_t... I>(std::index_sequence<I...>) { (op(eve::lane<1 << I>), ...); }
+  [&]<std::size_t... I>(std::index_sequence<I...>) { (op(eve::lanes<1 << I>), ...); }
   (std::make_index_sequence<ssz> {});
 };
 
@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check behavior of try_each_group_position simplest", eve::test::sc
 
   T2 x = {0, 1};
   kumi::tuple<T2, T2> expected{ T2{0, 1}, T2{1, 0} };
-  kumi::tuple<T2, T2> actual = eve::try_each_group_position(x, eve::lane<1>);
+  kumi::tuple<T2, T2> actual = eve::try_each_group_position(x, eve::lanes<1>);
 
   TTS_EQUAL(get<0>(expected), get<0>(actual));
   TTS_EQUAL(get<1>(expected), get<1>(actual));
@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check behavior of try_each_group_position", eve::test::simd::all_t
 <typename T>(tts::type<T>)
 {
   for_each_group_size<T>(
-      [&]<std::ptrdiff_t G>(eve::fixed<G> g)
+      [&]<std::ptrdiff_t G>(eve::lanes_t<G> g)
       {
         T x {[](int i, int) { return i / G; }};
 
@@ -70,7 +70,7 @@ TTS_CASE_TPL("Check behavior of try_each_group_position_logical", eve::test::sim
 <typename T>(tts::type<T>)
 {
   for_each_group_size<T>(
-      [&]<std::ptrdiff_t G>(eve::fixed<G> g)
+      [&]<std::ptrdiff_t G>(eve::lanes_t<G> g)
       {
         T x = [](int i, int) { return i / G; };
 

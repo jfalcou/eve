@@ -111,7 +111,7 @@ namespace eve
     using storage_type = typename storage_base::storage_type;
 
     //! Type describing the size of the current wide
-    // using width_type = fixed<Width>;
+    // using width_type = lanes_t<Width>;
 
     //! Opt-in for like concept
     using is_like = value_type;
@@ -158,14 +158,14 @@ namespace eve
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<simd_compatible_ptr<wide> Ptr>
-    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, fixed<Width>{}))
+    EVE_FORCEINLINE explicit wide(Ptr ptr) noexcept : storage_base(load(ptr, lanes_t<Width>{}))
     {}
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<_::data_source... Ptr>
     requires(eve::product_type<Type>)
     EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
-      : storage_base(load(ptr, fixed<Width>{}))
+      : storage_base(load(ptr, lanes_t<Width>{}))
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes

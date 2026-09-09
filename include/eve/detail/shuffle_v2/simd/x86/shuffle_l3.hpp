@@ -22,7 +22,7 @@ x86_pshuvb(pattern_t<I...>, wide<std::uint8_t, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
+shuffle_l3_x86_pshuvb(P, lanes_t<G>, wide<T, N> x)
 {
   if constexpr( current_api < ssse3 ) return no_matching_shuffle;
   else if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
@@ -40,7 +40,7 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
+shuffle_l3_x86_permutex(P, lanes_t<G>, wide<T, N> x)
 {
   if constexpr( current_api < avx2 || P::reg_size < 32 ) return no_matching_shuffle;
   else if constexpr( P::has_zeroes ) return no_matching_shuffle;
@@ -70,7 +70,7 @@ shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l3_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
@@ -87,7 +87,7 @@ requires(P::out_reg_size == P::reg_size)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l3_x86_blendv(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   // avx512 should not be considered here at all
   if constexpr( current_api >= avx512 ) return no_matching_shuffle;
@@ -106,7 +106,7 @@ shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l3_x86_permutex2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( current_api < avx512 || P::g_size == 1 ) return no_matching_shuffle;
   else
@@ -136,7 +136,7 @@ shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l3_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_x86_blendv(p, g, x, y); matched_shuffle<decltype(r)> ) return r;

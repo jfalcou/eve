@@ -40,7 +40,7 @@ namespace eve
   }
 
   template<typename T, width_type N, rvv_abi ABI>
-  consteval auto find_register_type(as<T>, fixed<N>, ABI)
+  consteval auto find_register_type(as<T>, lanes_t<N>, ABI)
   {
     using _::wrap;
 
@@ -183,7 +183,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // logical cases
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N>, rvv_abi auto)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N>, rvv_abi auto)
   {
     using _::wrap;
 

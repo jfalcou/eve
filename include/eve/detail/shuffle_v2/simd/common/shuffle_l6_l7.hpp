@@ -16,7 +16,7 @@ namespace eve::_
 
 template<typename P, logical_simd_value T, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l6_l7_blend_nonwide_logicals(P, fixed<G>, T x, T y)
+shuffle_l6_l7_blend_nonwide_logicals(P, lanes_t<G>, T x, T y)
 {
   if constexpr( !idxm::is_blend(P::idxs, T::size() / G) )
   {
@@ -32,7 +32,7 @@ shuffle_l6_l7_blend_nonwide_logicals(P, fixed<G>, T x, T y)
 // common non wide logical thinking
 template<typename P, logical_simd_value T, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l6_l7_(EVE_SUPPORTS(cpu_), P p, fixed<G> g, T x, T y)
+shuffle_l6_l7_(EVE_SUPPORTS(cpu_), P p, lanes_t<G> g, T x, T y)
 {
   if constexpr( auto r = shuffle_l6_l7_blend_nonwide_logicals(p, g, x, y);
                 matched_shuffle<decltype(get<0>(r))> )

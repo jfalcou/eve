@@ -17,7 +17,7 @@ namespace eve::_
   // https://stackoverflow.com/questions/33938584/on-powerpc-is-there-any-equivalent-of-intels-movemask-intrinsics
   template<arithmetic_scalar_value T, width_type N>
   EVE_FORCEINLINE
-  std::pair<std::uint64_t,fixed<1>> movemask(logical<wide<T, N>> const &v) noexcept requires ppc_abi<abi_t<T, N>>
+  std::pair<std::uint64_t,lanes_t<1>> movemask(logical<wide<T, N>> const &v) noexcept requires ppc_abi<abi_t<T, N>>
   {
     using vu8 = typename wide<T,N>::template rebind<std::uint8_t>;
     vu8 mask([](auto i, auto c)
@@ -28,6 +28,6 @@ namespace eve::_
     });
 
     auto result = vec_vbpermq(bit_cast(v.bits(),as(mask)).storage(), mask.storage());
-    return {result[0], eve::lane<1>};
+    return {result[0], eve::lanes<1>};
   }
 }
