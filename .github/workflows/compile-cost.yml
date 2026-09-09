@@ -28,6 +28,9 @@ on:
   push:
     branches:
       - main
+  ## Re-runnable by hand, on any branch: a measurement is worth taking again after a machine or an
+  ## image has moved, with nothing to push for it.
+  workflow_dispatch:
 
 concurrency:
   group: compile-cost-${{ github.ref }}
@@ -79,7 +82,7 @@ jobs:
       ##############################################################################################
       - name: Find the reference run
         id: reference
-        if: github.event_name == 'pull_request'
+        if: github.event_name != 'push'
         uses: actions/github-script@v7
         with:
           result-encoding: string
@@ -110,7 +113,7 @@ jobs:
             baseline="--baseline reference/compile-cost.csv"
           else
             baseline=""
-            if [ "${{ github.event_name }}" = "pull_request" ]; then
+            if [ "${{ github.event_name }}" != "push" ]; then
               echo "> No reference from main was found, so this run has no delta." >> "$GITHUB_STEP_SUMMARY"
             fi
           fi
