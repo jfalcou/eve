@@ -75,9 +75,7 @@ TTS_CASE_WITH("Check behavior of trapz widen on wide",
 };
 
 //==================================================================================================
-// A trapezoidal sum cancels when the signs differ, and an ULP of a result that has melted to
-// nothing is meaningless. The two cases above keep the domain and measure a relative distance; this
-// one keeps the ULP claim on data that cannot cancel.
+// Same-sign data cannot cancel, so an ULP claim holds here.
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of trapz without cancellation",
               eve::test::simd::ieee_reals,

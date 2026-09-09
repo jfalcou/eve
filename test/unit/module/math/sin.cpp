@@ -84,8 +84,6 @@ TTS_CASE_WITH("Check behavior of sin on wide",
               tts::randoms(-1, 1))
 <typename T>(T const& a0, T const& a1)
 {
-  // quarter_circle computes raw and leaves any intermediate NaN alone, so both arguments stay in
-  // the [-pi/4, pi/4] it documents rather than in [-1.5, 1.5] and [-pi/2, pi/2].
   auto pa1 = a1*eve::pio_4(eve::as(a1));
    using eve::raw;
    using eve::quarter_circle;

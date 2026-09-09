@@ -213,8 +213,7 @@ TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
 };
 
 //==================================================================================================
-// The two ways of multiplying three values only agree while their product is representable: past
-// that, widen answers infinity where kahan compensates infinity against itself and answers a NaN.
+// widen and kahan agree only while the product is representable: past it, infinity against NaN.
 //==================================================================================================
 constexpr auto cubic_root_of_valmax = []<typename T>(eve::as<T> const&)
 {

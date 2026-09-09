@@ -75,21 +75,18 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
     auto std_wm1 = [](auto v) -> v_t
     { return eve::is_positive(v) ? boost::math::lambert_w0(v) : boost::math::lambert_wm1(v); };
     {
-      // W0(x) is x at first order, so the draw reaches values where eve answers a plain zero and
-      // the reference a denormal: an ULP of that gap is meaningless, an absolute distance is not.
+      // W0(x) is x at first order, so eve answers zero where the reference gives a denormal.
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a0);
       TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a0), tol);
-      // both branches meet at -1/e, where W behaves like a square root and a hair of x moves W a
-      // lot: 100 seeds reach 0.066 there against boost, so the claim is loose on purpose
+      // The branches meet at -1/e, where W behaves like a square root: the claim is loose there.
       TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a0), 0.1);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a1);
       TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a1), tol);
-      // both branches meet at -1/e, where W behaves like a square root and a hair of x moves W a
-      // lot: 100 seeds reach 0.066 there against boost, so the claim is loose on purpose
+      // The branches meet at -1/e, where W behaves like a square root: the claim is loose there.
       TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a1), 0.1);
     }
     {
@@ -150,21 +147,18 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
     auto std_wm1 = [](auto v) -> v_t
     { return eve::is_positive(v) ? boost::math::lambert_w0(v) : boost::math::lambert_wm1(v); };
     {
-      // W0(x) is x at first order, so the draw reaches values where eve answers a plain zero and
-      // the reference a denormal: an ULP of that gap is meaningless, an absolute distance is not.
+      // W0(x) is x at first order, so eve answers zero where the reference gives a denormal.
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a0);
       TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a0), tol);
-      // both branches meet at -1/e, where W behaves like a square root and a hair of x moves W a
-      // lot: 100 seeds reach 0.066 there against boost, so the claim is loose on purpose
+      // The branches meet at -1/e, where W behaves like a square root: the claim is loose there.
       TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a0), 0.1);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a1);
       TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a1), tol);
-      // both branches meet at -1/e, where W behaves like a square root and a hair of x moves W a
-      // lot: 100 seeds reach 0.066 there against boost, so the claim is loose on purpose
+      // The branches meet at -1/e, where W behaves like a square root: the claim is loose there.
       TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a1), 0.1);
     }
     {

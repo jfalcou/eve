@@ -8,10 +8,8 @@
 #include "test.hpp"
 
 //==================================================================================================
-// EVE overloads tts::produce for its own dataset, and for float16 it converts the bounds against the
-// half format before drawing. Nothing checked that the values that come back honour the bounds that
-// were asked for: a test drawing in [0.01, 1] and receiving 1e-5 reads as a precision failure of the
-// function under test, which is where asech.cpp sent us looking.
+// eve converts a generator's bounds to the target type before drawing: these pin that the values
+// coming back stay inside them.
 //==================================================================================================
 
 TTS_CASE_WITH("randoms stays inside a narrow positive range",
@@ -52,8 +50,7 @@ TTS_CASE_WITH("randoms stays inside its bounds on signed integral lanes",
   TTS_LESS_EQUAL(eve::maximum(a0), v_t(100));
 };
 
-// Separate from the signed case: TTS asserts that an unsigned generator is never given a negative
-// lower bound, so the two cannot share a range.
+// TTS asserts an unsigned generator never gets a negative lower bound.
 TTS_CASE_WITH("randoms stays inside its bounds on unsigned integral lanes",
               eve::test::simd::unsigned_integers,
               tts::randoms(1, 100))
@@ -83,9 +80,6 @@ TTS_CASE("tts::generation<eve::wide> fills every lane, not just the first")
 };
 
 //==================================================================================================
-// The reason the float16 specializations exist. Drawing between valmin and valmax through the
-// built-in path evaluates the two bounds against float, so the draw spans +/-3.4e38 and every
-// narrowing to half lands on an infinity. A finite value is the whole assertion.
 //==================================================================================================
 TTS_CASE("tts::generation<eve::float16_t> draws against float16's own bounds")
 {
@@ -106,8 +100,6 @@ TTS_CASE("tts::generation of a float16 register keeps every lane finite")
 };
 
 //==================================================================================================
-// tts::produce is what TTS_CASE_WITH reaches, and the trait is what it must reach in turn. Going
-// through the dispatcher rather than the members is the half a direct call cannot see.
 //==================================================================================================
 TTS_CASE("tts::produce routes the EVE shapes through the trait")
 {
@@ -121,13 +113,6 @@ TTS_CASE("tts::produce routes the EVE shapes through the trait")
 };
 
 //==================================================================================================
-// tts::conversion is what every generator bound goes through. A bound is written once, in the case,
-// and has to answer for each type the case is run on, so a plain value is cast while a constant is
-// a recipe that has to be evaluated against the type instead.
-//
-// Getting this wrong is silent in the worst way: `eve::valmax` read as a value rather than as a
-// recipe would still convert, to whatever the recipe object happens to cast to, and the draw would
-// simply span the wrong range.
 //==================================================================================================
 TTS_CASE("tts::conversion casts a plain value")
 {

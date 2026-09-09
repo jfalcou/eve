@@ -65,9 +65,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 };
 
 //==================================================================================================
-// A sum of three cancels when the signs differ, and an ULP of a mean that has melted to nothing is
-// meaningless. The case above keeps the domain and measures a relative distance; this one keeps the
-// ULP claim on data that cannot cancel.
+// Same-sign data cannot cancel, so an ULP claim holds here.
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide) without cancellation",
               eve::test::simd::ieee_reals_wf16,

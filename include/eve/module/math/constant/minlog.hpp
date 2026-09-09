@@ -21,7 +21,6 @@ namespace eve
     {
       if constexpr(std::same_as<T, eve::float16_t>)
       {
-        // -14 * log(2), the smallest normal exponent
         return T(-0x1.205967p+4);
       }
       else if constexpr(std::same_as<T, float>)
