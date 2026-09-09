@@ -48,7 +48,7 @@ namespace eve::algo
       auto rl = views::reverse(l);
 
       std::ptrdiff_t const n        = l - f;
-      std::ptrdiff_t const width = iterator_cardinal_v<decltype(f)>;
+      std::ptrdiff_t const width = iterator_width_v<decltype(f)>;
 
       std::ptrdiff_t two_register_steps = n / (2 * width);
       std::ptrdiff_t left = n - width * 2 * two_register_steps;
@@ -68,7 +68,7 @@ namespace eve::algo
 
       auto m = f + two_register_steps * width;
 
-      swap_ranges[processed.traits()][divisible_by_cardinal](as_range(f, m), rl);
+      swap_ranges[processed.traits()][divisible_by_width](as_range(f, m), rl);
     }
   };
 

@@ -157,7 +157,7 @@ void reduction_test_case(Callable callable, T v, Runner runner)
 
   if constexpr (eve::simd_value<T>)
   {
-    constexpr auto width = eve::cardinal_v<T>;
+    constexpr auto width = eve::width_v<T>;
 
     using LT = eve::as_logical_t<T>;
     LT m = tts::poison(LT{ [](auto i, auto) { return i % 2 == 0; } });
@@ -185,7 +185,7 @@ void logical_reduction_test_case(Callable callable, T v)
 template<typename TruthFn, typename Callable, typename T, bool SupportsTopBits>
 void logical_reduction_simd_test_cases_inner(Callable callable, eve::as<T> typ)
 {
-  constexpr auto width = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
   constexpr auto runner = logical_runner<TruthFn, SupportsTopBits>;
 
   reduction_test_case<TruthFn>(callable, eve::true_(typ), runner);

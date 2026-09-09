@@ -36,7 +36,7 @@ TTS_CASE("eve::views::convert, preprocess test")
   using From      = float;
   using To        = int;
   using SmallerTo = short;
-  constexpr auto N = eve::nofs_cardinal_v<To>;
+  constexpr auto N = eve::nofs_width_v<To>;
 
   auto common_test = []<typename R, typename T,
                         typename ExpectedRawF,

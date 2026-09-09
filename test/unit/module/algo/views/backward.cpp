@@ -68,8 +68,8 @@ TTS_CASE("eve::views::backward, preprocess_range")
 {
   using ap = eve::nofs_aligned_ptr<int>;
   using up = int*;
-  using a_it = eve::algo::ptr_iterator<ap, eve::nofs_cardinal_v<int>>;
-  using u_it = eve::algo::ptr_iterator<up, eve::nofs_cardinal_v<int>>;
+  using a_it = eve::algo::ptr_iterator<ap, eve::nofs_width_v<int>>;
+  using u_it = eve::algo::ptr_iterator<up, eve::nofs_width_v<int>>;
 
   {
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::backward(eve::algo::as_range(ap{}, up{})));
@@ -90,7 +90,7 @@ TTS_CASE("eve::views::backward, preprocess_range")
 
 TTS_CASE("eve::views::reverse, basic_load_store")
 {
-  std::array<int, eve::nofs_cardinal_v<int>> a;
+  std::array<int, eve::nofs_width_v<int>> a;
   a.fill(0);
 
   eve::nofs_wide<int> iota  = [](int i, int) { return i; };

@@ -4,7 +4,7 @@
 
 int main()
 {
-  constexpr auto S = eve::cardinal_v<eve::wide<float>>;
+  constexpr auto S = eve::width_v<eve::wide<float>>;
   auto fill = [](auto i,  auto){return i;};
   auto fill2 = [&](auto i,  auto){return (i+S);};
   auto fill3 = [&](auto i,  auto){return (i+2*S);};

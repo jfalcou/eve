@@ -13,7 +13,7 @@ struct data_block : eve::struct_support<data_block, float, std::int16_t,double>
 int main()
 {
 
-  constexpr auto card = eve::cardinal_v<eve::wide<double>>;
+  constexpr auto card = eve::width_v<eve::wide<double>>;
   eve::wide<double> wd = [](auto i) { return 1.25 * (i+1); };
 
   eve::wide<float       , card> wf = [](auto i) { return 1.f/(1+i); };

@@ -39,8 +39,8 @@ TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 TTS_CASE_TPL( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  constexpr auto c_v = eve::cardinal_v<eve::wide<udt::grid2d>>;
-  constexpr auto d_v = eve::cardinal_v<eve::wide<udt::label_position>>;
+  constexpr auto c_v = eve::width_v<eve::wide<udt::grid2d>>;
+  constexpr auto d_v = eve::width_v<eve::wide<udt::label_position>>;
 
   TTS_EQUAL ( sizeof(eve::wide<udt::grid2d>)
             , sizeof(kumi::tuple<eve::wide<int,c_v>,eve::wide<int,c_v>>)

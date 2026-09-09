@@ -135,7 +135,7 @@ template<bool align, int unroll> struct run_test_impl
           }
           else if constexpr( align && divisible )
           {
-            return eve::algo::traits {eve::algo::divisible_by_cardinal, eve::algo::unroll<unroll>};
+            return eve::algo::traits {eve::algo::divisible_by_width, eve::algo::unroll<unroll>};
           }
           else if constexpr( !align && !divisible )
           {
@@ -144,7 +144,7 @@ template<bool align, int unroll> struct run_test_impl
           else if constexpr( !align && divisible )
           {
             return eve::algo::traits {eve::algo::no_aligning,
-                                      eve::algo::divisible_by_cardinal,
+                                      eve::algo::divisible_by_width,
                                       eve::algo::unroll<unroll>};
           }
         }(),

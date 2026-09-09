@@ -18,7 +18,7 @@ TTS_CASE_WITH("Check behavior of swap_pairs(simd) on all types",
 <typename T>(T const& a0)
 {
   using eve::swap_pairs;
-  constexpr size_t S =  eve::cardinal_v<T> - 1;
+  constexpr size_t S =  eve::width_v<T> - 1;
   constexpr auto _0 = eve::index_t<0>();
   constexpr auto _S = eve::index_t<S>();
   constexpr auto _H = eve::index_t<S/2>();

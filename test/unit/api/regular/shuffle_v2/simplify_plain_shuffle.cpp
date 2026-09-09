@@ -11,7 +11,7 @@ template<typename T, std::ptrdiff_t G, typename PGen>
 constexpr auto
 pad_pattern_with_we(PGen)
 {
-  constexpr std::ptrdiff_t f_n = eve::fundamental_cardinal_v<eve::element_type_t<T>>;
+  constexpr std::ptrdiff_t f_n = eve::fundamental_width_v<eve::element_type_t<T>>;
 
   if constexpr( T::size() >= f_n ) { return eve::fix_pattern<T::size() / G>(PGen {}); }
   else
@@ -130,13 +130,13 @@ simplify_test_pad_to_fundamental()
     if( i < N::value ) return N::value - i - 1;
     else return eve::we_;
   };
-  simplify_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0, p1);
+  simplify_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_width_v<T>>, 1>(p0, p1);
 
   if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
     simplify_test<eve::logical<eve::wide<T, N::value>>,
                   1,
-                  eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
+                  eve::logical<eve::wide<T, eve::fundamental_width_v<T>>>,
                   1>(p0, p1);
   }
 
@@ -155,13 +155,13 @@ simplify_test_pad_to_fundamental()
     else return i + size;
   };
 
-  simplify2_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0x2, p1x2);
+  simplify2_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_width_v<T>>, 1>(p0x2, p1x2);
 
   if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
     simplify2_test<eve::logical<eve::wide<T, N::value>>,
                    1,
-                   eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
+                   eve::logical<eve::wide<T, eve::fundamental_width_v<T>>>,
                    1>(p0x2, p1x2);
   }
 }
@@ -213,8 +213,8 @@ TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
   }
   else
   {
-    using u8xN  = eve::wide<std::uint8_t, eve::fundamental_cardinal_v<std::uint8_t>>;
-    using u64xN = eve::wide<std::uint64_t, eve::fundamental_cardinal_v<std::uint64_t>>;
+    using u8xN  = eve::wide<std::uint8_t, eve::fundamental_width_v<std::uint8_t>>;
+    using u64xN = eve::wide<std::uint64_t, eve::fundamental_width_v<std::uint64_t>>;
 
     auto [x, g, p] =
         eve::_::simplify_plain_shuffle(eve::pattern<0>, eve::lane<1>, kumi::tuple<u8xN> {});

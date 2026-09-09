@@ -284,7 +284,7 @@ void bit_test_simd(F fn, TruthFn truthFn, T a, T b, T c)
   bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(24));
   bit_test_simd_inner_cx(fn, a, b, c, if_(m).else_(T{ 30 }));
 
-  constexpr auto width = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
   if constexpr (width >= 2)
   {

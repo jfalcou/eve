@@ -20,7 +20,6 @@ namespace eve
     inline constexpr bool is_native_for_abi_v = ( (std::is_same_v<typename Wide::abi_type, ABI> &&
                                                   Wide::size() == expected_cardinal_v<element_type_t<Wide>, ABI> )
                                                 || ...);
-
     template<typename Wide, typename... ABI>
     inline constexpr bool is_native_for_abi_v<logical<Wide>, ABI...> = is_native_for_abi_v<Wide, ABI...>;
   }

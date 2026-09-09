@@ -6,11 +6,11 @@ behaviors **EVE** types and functions can exhibit.
 
 # Property of EVE types
 
-## Cardinal
+## Width
 For any [value type](@ref eve::value), the **width** is the number of elements it contains.
 This information is retrieved via the eve::width type trait.
 
-For any [SIMD type](@ref eve::simd_value) `T`, `eve::cardinal<T>::type` evaluates to `eve::fixed<N>`, where `N` is the number of lanes of the underlying SIMD register.
+For any [SIMD type](@ref eve::simd_value) `T`, `eve::width<T>::type` evaluates to `eve::fixed<N>`, where `N` is the number of lanes of the underlying SIMD register.
 
 Two types are said to be **width compatible** if they have the same width or at least one of them
 is a [scalar type](@ref eve::scalar_value).
@@ -70,7 +70,7 @@ For any [SIMD value](@ref eve::simd_value) `x` of type `T`, a Callable Object `f
 `R r = f(x)` is semantically equivalent to:
 
 @code{.cpp}
-R r = f(get(x,0),  ..., get(x,cardinal_v<T>-1));
+R r = f(get(x,0),  ..., get(x,width_v<T>-1));
 @endcode
 
 Most reduction operations are not defined on [scalar values](@ref eve::scalar_value) unless their

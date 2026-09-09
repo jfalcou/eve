@@ -247,7 +247,7 @@ namespace eve
           {
             // treat negative large with reflection
             r = large_negative(q);
-            if( nb >= cardinal_v<T> ) return if_else(nan_result, eve::allbits, r);
+            if( nb >= width_v<T> ) return if_else(nan_result, eve::allbits, r);
           }
           auto r1 = other(a0, test);
           auto r2 = if_else(test, r, r1);

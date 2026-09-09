@@ -183,14 +183,14 @@ namespace eve::algo::views
       return backward(base.previous_partially_aligned());
     }
 
-    static auto iterator_cardinal() requires iterator<I>
-    { return I::iterator_cardinal(); }
+    static auto iterator_width() requires iterator<I>
+    { return I::iterator_width(); }
 
-    template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_FORCEINLINE auto width_cast(_Width N) const
       requires iterator<I>
     {
-      return backward(base.cardinal_cast(N));
+      return backward(base.width_cast(N));
     }
 
     template<callable_options O>
@@ -198,7 +198,7 @@ namespace eve::algo::views
       requires iterator<I>
     {
       auto new_c = eve::reverse_conditional(opts[condition_key], tgt);
-      return eve::load[opts][new_c](base - iterator_cardinal_v<I>, tgt);
+      return eve::load[opts][new_c](base - iterator_width_v<I>, tgt);
     }
 
     template<callable_options O>
@@ -209,11 +209,11 @@ namespace eve::algo::views
 
       if constexpr (std::same_as<decltype(c), ignore_none_>)
       {
-        eve::store(v, base - iterator_cardinal_v<I>);
+        eve::store(v, base - iterator_width_v<I>);
       }
       else
       {
-        eve::store[eve::reverse_conditional(c, eve::as(v))](v, base - iterator_cardinal_v<I>);
+        eve::store[eve::reverse_conditional(c, eve::as(v))](v, base - iterator_width_v<I>);
       }
     }
   };

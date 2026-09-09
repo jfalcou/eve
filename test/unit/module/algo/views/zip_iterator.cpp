@@ -104,8 +104,8 @@ TTS_CASE("zip_iterator, sanity check, types test")
   TTS_TYPE_IS(eve::algo::partially_aligned_t<zip_u_a>, zip_u_a);
   TTS_TYPE_IS(eve::algo::partially_aligned_t<zip_u_u>, zip_a_u);
 
-  // Cardinal cast
-  TTS_TYPE_IS(decltype(zip_a_u{}.cardinal_cast(eve::lane<4>)), zip_a_u_4);
+  // Width cast
+  TTS_TYPE_IS(decltype(zip_a_u{}.width_cast(eve::lane<4>)), zip_a_u_4);
 
   // Equality
   TTS_TYPE_IS(decltype(zip_a_u{} == zip_a_u{}), bool);
@@ -150,7 +150,7 @@ TTS_CASE("zip_iterator, main iterator")
   using unaligned_short = eve::algo::ptr_iterator<us, 8>;
   using aligned_short   = eve::algo::ptr_iterator<as, 8>;
 
-  using iota            = decltype(eve::views::iota(0).cardinal_cast(eve::lane<8>));
+  using iota            = decltype(eve::views::iota(0).width_cast(eve::lane<8>));
 
   using zip_a_a = eve::views::zip_iterator<aligned_float,   aligned_short>;
   TTS_CONSTEXPR_EQUAL(zip_a_a::main_iterator_idx, 0u);

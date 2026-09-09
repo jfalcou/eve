@@ -76,7 +76,7 @@ TTS_CASE_WITH( "Check load to logical from unaligned pointer with alternatives"
       TTS_EQUAL((eve::load[eve::ignore_all.else_(others)](l_const_ptr, lanes)), others            );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
       TTS_AND_THEN("load is applied on aligned pointer for default width")
       {
