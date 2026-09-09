@@ -11,6 +11,7 @@
 #include <eve/as.hpp>
 #include <eve/as_element.hpp>
 #include <eve/conditional.hpp>
+#include <eve/concept/generator.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -23,7 +24,13 @@ namespace eve::_
   template<conditional_expr C, typename Target, typename Arg>
   EVE_FORCEINLINE Target alternative(C const& c, Arg a0, as<Target> const&)
   {
-    if constexpr( C::has_alternative ) return Target{ convert(c.alternative, as_element<Target>{}) };
+    if constexpr( C::has_alternative )
+    {
+      if constexpr( generator<typename C::alternative_type> )
+        return Target{ c.alternative(as_element<Target>{}) };
+      else
+        return Target{ convert(c.alternative, as_element<Target>{}) };
+    }
     else
     {
       if      constexpr(logical_value<Target>)    return false_(as<Target>());

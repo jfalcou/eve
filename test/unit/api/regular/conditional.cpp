@@ -489,3 +489,15 @@ TTS_CASE("conditional/drop_alternative")
   TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3)), eve::keep_first(3));
   TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3).else_(1)), eve::keep_first(3));
 };
+
+TTS_CASE("conditional/else-generator")
+{
+  using type = eve::wide<int, eve::fixed<4>>;
+
+  eve::logical<type> mask = [](auto i, auto) { return i % 2 == 0; };
+  type lhs = [](auto i, auto) { return 1 + i; };
+  type rhs = [](auto i, auto) { return 10 + i; };
+  type ref = [&](auto i, auto) { return mask.get(i) ? lhs.get(i) + rhs.get(i) : 0; };
+
+  TTS_EQUAL(eve::add[eve::if_(mask).else_(eve::zero)](lhs, rhs), ref);
+};
