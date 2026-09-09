@@ -1281,9 +1281,9 @@ add_shuffle_levels(std::span<const std::ptrdiff_t> ls)
 }
 
 constexpr auto
-add_shuffle_levels(std::ptrdiff_t a, std::ptrdiff_t b, std::ptrdiff_t c)
+add_shuffle_levels(std::integral auto a, std::integral auto... as)
 {
-  return add_shuffle_levels(std::array {a, b, c});
+  return add_shuffle_levels(std::array {static_cast<std::ptrdiff_t>(a), static_cast<std::ptrdiff_t>(as)...});
 }
 
 template<std::ptrdiff_t... ls>
