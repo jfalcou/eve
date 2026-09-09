@@ -493,7 +493,8 @@ jobs:
   ## Host 1 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
   x86-gcc:
-    needs: other-arch
+    ## Chaining this behind other-arch lowers no load: two agents run two legs either way.
+    needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
