@@ -9,7 +9,7 @@
 
 #include <eve/detail/category.hpp>
 
-template<typename T, typename Cardinals> struct natives_impl;
+template<typename T, typename Widths> struct natives_impl;
 
 template<typename T, std::size_t... N> struct natives_impl<T, std::index_sequence<N...>>
 {
@@ -20,7 +20,7 @@ template<typename T>
 struct natives
     : natives_impl<
           T,
-          std::make_index_sequence<std::bit_width(std::size_t(eve::fundamental_cardinal_v<T>))>>
+          std::make_index_sequence<std::bit_width(std::size_t(eve::fundamental_width_v<T>))>>
 {};
 
 TTS_CASE_TPL("Test category matching for double", natives<double>)
@@ -30,7 +30,7 @@ TTS_CASE_TPL("Test category matching for double", natives<double>)
   {
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
-    constexpr auto lanes = static_cast<eve::_::category>(eve::fundamental_cardinal_v<double>);
+    constexpr auto lanes = static_cast<eve::_::category>(eve::fundamental_width_v<double>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), float_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -50,7 +50,7 @@ TTS_CASE_TPL("Test category matching for std::int64", natives<std::int64_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::int64_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::int64_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -71,7 +71,7 @@ TTS_CASE_TPL("Test category matching for std::uint64", natives<std::uint64_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::uint64_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::uint64_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), unsigned_));
@@ -91,7 +91,7 @@ TTS_CASE_TPL("Test category matching for float", natives<float>)
   {
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
-    constexpr auto lanes = static_cast<eve::_::category>(eve::fundamental_cardinal_v<float>);
+    constexpr auto lanes = static_cast<eve::_::category>(eve::fundamental_width_v<float>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), float_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -111,7 +111,7 @@ TTS_CASE_TPL("Test category matching for std::int32", natives<std::int32_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::int32_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::int32_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -132,7 +132,7 @@ TTS_CASE_TPL("Test category matching for std::uint32", natives<std::uint32_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::uint32_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::uint32_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), unsigned_));
@@ -153,7 +153,7 @@ TTS_CASE_TPL("Test category matching for std::int16", natives<std::int16_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::int16_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::int16_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -174,7 +174,7 @@ TTS_CASE_TPL("Test category matching for std::uint16", natives<std::uint16_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::uint16_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::uint16_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), unsigned_));
@@ -195,7 +195,7 @@ TTS_CASE_TPL("Test category matching for std::int8", natives<std::int8_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::int8_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::int8_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), signed_));
@@ -216,7 +216,7 @@ TTS_CASE_TPL("Test category matching for std::uint8", natives<std::uint8_t>)
     // All types below fundamental width categorize with the same # of lanes
     using enum eve::_::category;
     constexpr auto lanes =
-        static_cast<eve::_::category>(eve::fundamental_cardinal_v<std::uint8_t>);
+        static_cast<eve::_::category>(eve::fundamental_width_v<std::uint8_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), integer_));
     TTS_CONSTEXPR_EXPECT(match(eve::_::categorize<T>(), unsigned_));

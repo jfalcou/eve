@@ -18,7 +18,7 @@ auto ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
   return vec_perm(x.storage(), y.storage(), table.storage());
 }
 
-template<typename P, arithmetic_scalar_value T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
@@ -47,7 +47,7 @@ auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 auto shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle;
@@ -58,7 +58,7 @@ auto shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 auto shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::has_zeroes ) return no_matching_shuffle;
@@ -76,7 +76,7 @@ auto shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {

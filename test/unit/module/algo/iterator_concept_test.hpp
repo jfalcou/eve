@@ -38,8 +38,8 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed width = eve::iterator_cardinal_t<I>{};
-    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, decltype(width));
+    eve::fixed width = eve::iterator_width_t<I>{};
+    TTS_TYPE_IS(eve::iterator_width_t<I>, decltype(width));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
@@ -99,8 +99,8 @@ namespace algo_test
     auto f = eve::unalign(f_);
     if (f == f.previous_partially_aligned()) f += 1;
 
-    if (eve::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
-      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_cardinal_v<I>);
+    if (eve::iterator_width_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
+      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_width_v<I>);
     }
 
     f = f.previous_partially_aligned();
@@ -108,9 +108,9 @@ namespace algo_test
   }
 
   template <typename I>
-  void cardinal_cast_test(I f)
+  void width_cast_test(I f)
   {
-    auto res = f.cardinal_cast(eve::lane<1>);
+    auto res = f.width_cast(eve::lane<1>);
     TTS_TYPE_IS(typename decltype(res)::width, eve::fixed<1>);
   }
 

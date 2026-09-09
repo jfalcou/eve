@@ -85,7 +85,7 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
       TTS_EQUAL((eve::load[eve::ignore_all](l_const_ptr, lanes) && mia) , false_(eve::as<T>()) );
     }
 
-    if constexpr(T::size() == eve::expected_cardinal_v<v_t>)
+    if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
       TTS_AND_THEN("load is applied on unaligned pointer for default width")
       {

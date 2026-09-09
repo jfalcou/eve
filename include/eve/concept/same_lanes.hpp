@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/deps/kumi.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/concept/vectorized.hpp>
 
 namespace eve
@@ -20,8 +20,8 @@ namespace eve
     {
       // Find largest lanes as a reference
       int cards[] = {
-        simd_value<T0> ? static_cast<int>(cardinal_v<T0>) : 0,
-        (simd_value<Ts> ? static_cast<int>(cardinal_v<Ts>) : 0)...
+        simd_value<T0> ? static_cast<int>(width_v<T0>) : 0,
+        (simd_value<Ts> ? static_cast<int>(width_v<Ts>) : 0)...
       };
 
       auto max_card = cards[0];
@@ -94,5 +94,5 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename T0, typename... Ts>
-  concept same_lanes = (simd_value<T0> && ... && simd_value<Ts>) && ((cardinal_v<T0> == cardinal_v<Ts>) && ... && true);
+  concept same_lanes = (simd_value<T0> && ... && simd_value<Ts>) && ((width_v<T0> == width_v<Ts>) && ... && true);
 }

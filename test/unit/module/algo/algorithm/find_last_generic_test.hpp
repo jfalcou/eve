@@ -72,12 +72,12 @@ find_generic_backward_test(eve::as<T> as_t, Algo alg, Check check)
   find_generic_backward_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>> {}, alg, check);
 
   find_generic_backward_test_page_ends(
-      as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<1>], check);
+      as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<1>], check);
   find_generic_backward_test_page_ends(
-      as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<2>], check);
+      as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<2>], check);
   find_generic_backward_test_page_ends(
-      as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<3>], check);
+      as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<3>], check);
   find_generic_backward_test_page_ends(
-      as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<4>], check);
+      as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<4>], check);
 }
 }

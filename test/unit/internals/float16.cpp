@@ -80,7 +80,7 @@
       }
     };
 
-    constexpr uint32_t max_c = eve::expected_cardinal_v<float> * 2;
+    constexpr uint32_t max_c = eve::expected_width_v<float> * 2;
     constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
     [&]<std::size_t... I>(std::index_sequence<I...>) {
@@ -128,7 +128,7 @@ TTS_CASE("emulated float16 conversion - f32 roundtrip (simd)")
     }
   };
 
-  constexpr uint32_t max_c = eve::expected_cardinal_v<eve::float16_t> * 2;
+  constexpr uint32_t max_c = eve::expected_width_v<eve::float16_t> * 2;
   constexpr std::size_t seq_size = std::countr_zero(max_c) + 1;
 
   [&]<std::size_t... I>(std::index_sequence<I...>) {

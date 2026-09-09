@@ -18,8 +18,8 @@ namespace eve::_
   {
     using v_t   = element_type_t<W>;
 
-    constexpr auto c  = cardinal_v<W>;
-    constexpr auto ec = expected_cardinal_v<v_t, typename W::abi_type>;
+    constexpr auto c  = width_v<W>;
+    constexpr auto ec = expected_width_v<v_t, typename W::abi_type>;
 
     if constexpr(c < ec)
     {
@@ -40,8 +40,8 @@ namespace eve::_
  template<typename W> auto slide_garbage(W v) noexcept
   {
     using v_t   = element_type_t<W>;
-    constexpr auto c  = cardinal_v<W>;
-    constexpr auto ec = expected_cardinal_v<v_t, typename W::abi_type>;
+    constexpr auto c  = width_v<W>;
+    constexpr auto ec = expected_width_v<v_t, typename W::abi_type>;
 
     if constexpr(c < ec)
     {

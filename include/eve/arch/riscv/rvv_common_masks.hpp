@@ -11,7 +11,7 @@
 
 namespace eve::_
 {
-template<arithmetic_scalar_value T, cardinal_type N>
+template<arithmetic_scalar_value T, width_type N>
 logical<wide<T, N>>
                 rvv_true()
 {

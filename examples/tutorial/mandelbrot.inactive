@@ -86,7 +86,7 @@ struct mandelbrot
       cwide_t z0{T(i) / T(size) * x_range + x_min};
       wide_t fac{y_range / T(size)};
       wide_t y_min_t{y_min};
-      for (int j = 0; j < size; j += eve::cardinal_v<wide_t>) {
+      for (int j = 0; j < size; j += eve::width_v<wide_t>) {
         int iteration = 0;
         eve::imag(z0) = eve::fma(step + j, fac, y_min_t);
 

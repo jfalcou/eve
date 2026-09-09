@@ -36,6 +36,6 @@ TTS_CASE_TPL("Check remove test", algo_test::selected_types)
   else
   {
     remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::unroll<3>]);
-    remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::force_cardinal<T::size()>]);
+    remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::force_width<T::size()>]);
   }
 };

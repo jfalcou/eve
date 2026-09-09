@@ -232,7 +232,7 @@ namespace eve::algo::views
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
-      template <callable_options O, cardinal_type N>
+      template <callable_options O, width_type N>
        auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
@@ -250,7 +250,7 @@ namespace eve::algo::views
         }
       }
 
-      template <relative_conditional_expr C, cardinal_type N>
+      template <relative_conditional_expr C, width_type N>
        friend auto tagged_dispatch( eve::tag::store_equivalent_,
                                                    C c,
                                                    wide<value_type, N> v,
@@ -301,7 +301,7 @@ namespace eve::algo::views
   {
     using base = _::zip_iterator_common<I, Is...>;
 
-    static_assert((std::same_as<iterator_cardinal_t<I>, iterator_cardinal_t<Is>> && ...));
+    static_assert((std::same_as<iterator_width_t<I>, iterator_width_t<Is>> && ...));
 
     using base::base;
 
@@ -355,18 +355,18 @@ namespace eve::algo::views
       }
     }
 
-    static iterator_cardinal_t<I> iterator_cardinal() { return{}; }
+    static iterator_width_t<I> iterator_width() { return{}; }
 
-    template <typename _Cardinal>
-    EVE_ABI auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_ABI auto width_cast(_Width N) const
     {
-      return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
-        kumi::map([&](auto x) { return x.cardinal_cast(N); }, *this)
+      return zip_iterator<decltype(I{}.width_cast(N)), decltype(Is{}.width_cast(N))...> {
+        kumi::map([&](auto x) { return x.width_cast(N); }, *this)
       };
     }
 
     // zip_iterator is still incomplete here, so the type comes from the base, which is complete.
-    using wide_value_type = as_wide_t<typename base::value_type, iterator_cardinal_v<I>>;
+    using wide_value_type = as_wide_t<typename base::value_type, iterator_width_v<I>>;
 
     template<callable_options O>
     EVE_ABI auto load(O const& opts, as<wide_value_type>) const

@@ -124,7 +124,7 @@ TTS_CASE_WITH(
   equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_all);
   equal_masked_test_cases(a0, a1, l0, l1, eve::keep_first(0));
 
-  constexpr auto width = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
   if constexpr (width >= 2)
   {
     equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(1, 1));

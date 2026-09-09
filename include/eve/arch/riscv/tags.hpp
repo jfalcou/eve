@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cardinals.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/riscv/predef.hpp>
 #include <eve/detail/meta.hpp>

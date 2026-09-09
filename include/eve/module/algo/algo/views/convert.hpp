@@ -120,8 +120,8 @@ namespace eve::algo::views
     template<typename Traits>
     EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
-      auto tr_with_cardinal = default_to(tr, traits {consider_types<T>});
-      auto processed        = preprocess_range(tr_with_cardinal, self.base);
+      auto tr_with_width = default_to(tr, traits {consider_types<T>});
+      auto processed        = preprocess_range(tr_with_width, self.base);
 
       auto ret_tr = drop_key(consider_types_key, processed.traits());
 
@@ -216,20 +216,20 @@ namespace eve::algo::views
       return convert(base.next_partially_aligned(), eve::as<T>{});
     }
 
-    static auto iterator_cardinal() requires iterator<I>
-    { return I::iterator_cardinal(); }
+    static auto iterator_width() requires iterator<I>
+    { return I::iterator_width(); }
 
-    template <typename _Cardinal>
-    EVE_ABI auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_ABI auto width_cast(_Width N) const
       requires iterator<I>
     {
-      return convert(base.cardinal_cast(N), eve::as<T>{});
+      return convert(base.width_cast(N), eve::as<T>{});
     }
 
     // converting_iterator is still incomplete here, so the type is spelled from T and I.
     template<callable_options O>
     requires iterator<I>
-    EVE_ABI auto load(O const& opts, as<as_wide_t<T, iterator_cardinal_v<I>>>) const
+    EVE_ABI auto load(O const& opts, as<as_wide_t<T, iterator_width_v<I>>>) const
     {
       auto new_c = map_alternative(
         opts[condition_key],
@@ -242,7 +242,7 @@ namespace eve::algo::views
     // V is deduced so that this signature names no trait of the class being defined. The constraint
     // pins it to the one type the friend takes.
     template<typename V>
-      requires ( iterator<I> && std::same_as<V, as_wide_t<T, iterator_cardinal_v<I>>> )
+      requires ( iterator<I> && std::same_as<V, as_wide_t<T, iterator_width_v<I>>> )
     EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
                                                 V v,

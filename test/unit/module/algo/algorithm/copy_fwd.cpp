@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check that we can copy to an address before beginning (copy/copy_b
 
       std::vector<eve::element_type_t<T>> expected(from, from + r_size);
 
-      eve::algo::copy[eve::algo::force_cardinal<T::size()>](r, page.begin() + i);
+      eve::algo::copy[eve::algo::force_width<T::size()>](r, page.begin() + i);
 
       std::vector<eve::element_type_t<T>> actual(page.begin() + i, page.begin() + i + r_size);
 

@@ -51,14 +51,14 @@ template<typename I> struct test_delegate
   bool step_1(I f)
   {
     auto ptr = eve::unalign(f.ptr);
-    fill(ptr, eve::iterator_cardinal_v<I>, 'a');
+    fill(ptr, eve::iterator_width_v<I>, 'a');
     return (f - base) == stop_at;
   }
 
   bool step_2(I f)
   {
     auto ptr = eve::unalign(f.ptr);
-    fill(ptr, eve::iterator_cardinal_v<I>, 'b');
+    fill(ptr, eve::iterator_width_v<I>, 'b');
     return (f - base) == stop_at;
   }
 };
@@ -141,7 +141,7 @@ TTS_CASE("eve.algo two_stage_iteration, no aligning, divisble, tails")
 {
   auto run = [](int offset, int length, std::vector<int> left = {0})
   {
-    return run_test(eve::algo::traits {eve::algo::no_aligning, eve::algo::divisible_by_cardinal},
+    return run_test(eve::algo::traits {eve::algo::no_aligning, eve::algo::divisible_by_width},
                     offset,
                     length,
                     std::move(left));

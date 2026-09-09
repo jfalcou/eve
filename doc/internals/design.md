@@ -1,7 +1,7 @@
 Design Decisions {#design_rationale}
 ================
 
-@section rationale-simd SIMD registers as Type x Cardinal
+@section rationale-simd SIMD registers as Type x Width
 
 There is multiple way to abstract away SIMD registers. The choice made by **EVE** is to provide
 a type interface based on the underlying **type** and **width** (or number of lanes).

@@ -10,7 +10,7 @@
 namespace eve::_
 {
 
-template<typename P, typename T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, typename T, width_type N, std::ptrdiff_t G>
 auto shuffle_l2_ppc_vec_splat(P, eve::fixed<G>, eve::wide<T, N> x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
@@ -23,7 +23,7 @@ auto shuffle_l2_ppc_vec_splat(P, eve::fixed<G>, eve::wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, cardinal_type N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 auto shuffle_l2_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )

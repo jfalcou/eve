@@ -12,7 +12,7 @@
 //==================================================================================================
 // EVE Specific testing overloads
 //==================================================================================================
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>
@@ -42,7 +42,7 @@ namespace tts
 {
   //================================================================================================
   //================================================================================================
-  template<typename T, eve::cardinal_type N>
+  template<typename T, eve::width_type N>
   struct comparison<eve::wide<T, N>, eve::wide<T, N>>
   {
     using w_t = eve::wide<T, N>;
@@ -73,7 +73,7 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, eve::cardinal_type N>
+  template<typename T, eve::width_type N>
   struct precision<eve::wide<T, N>>
   {
     using w_t = eve::wide<T, N>;
@@ -162,7 +162,7 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, eve::cardinal_type N> struct display<eve::wide<T, N>>
+  template<typename T, eve::width_type N> struct display<eve::wide<T, N>>
   {
     static text render(eve::wide<T, N> const& v)
     {
@@ -249,8 +249,8 @@ namespace eve::test
   template<typename W> struct in_lot
   {
     using e_t = element_type_t<W>;
-    static constexpr std::ptrdiff_t n      = cardinal_v<W>;
-    static constexpr std::ptrdiff_t native = expected_cardinal_v<e_t>;
+    static constexpr std::ptrdiff_t n      = width_v<W>;
+    static constexpr std::ptrdiff_t native = expected_width_v<e_t>;
     // Under AVX2 a 128-bit wide takes the SSE paths, except float16 through F16C. Under AVX512
     // every width down to 128 bits has its own k-masks and VL forms.
     static constexpr bool narrower = (current_api >= avx512) ? (2 * n == native || 4 * n == native)
@@ -314,14 +314,14 @@ namespace eve::test
         constexpr auto bit_size = 512;
         if( sizeof(Type) <= bit_size / 8 ) return true;
         using scalar_t                   = typename Type::value_type;
-        constexpr auto width          = eve::cardinal_v<Type>;
-        constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+        constexpr auto width          = eve::width_v<Type>;
+        constexpr auto expected_width = eve::expected_width_v<scalar_t>;
         // and double, int64, uint64
         if( sizeof(scalar_t) != 8 ) return false;
         // for expected width (lmul==8)
-        if( expected_cardinal == width ) return true;
+        if( expected_width == width ) return true;
         // for combined type
-        if( 2 * expected_cardinal == width ) return true;
+        if( 2 * expected_width == width ) return true;
         return false;
       }
 
@@ -455,10 +455,10 @@ namespace tts
 
     // Add garbage at the end of sub-native registers
     // For emulated type, there is no such gap so we don't do anything
-    if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::emulated_abi<W> )
+    if constexpr( (W::size() < eve::fundamental_width_v<v_t>) && !eve::emulated_abi<W> )
     {
       using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
-      using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
+      using ftype = eve::as_wide_t<v_t, eve::fundamental_width_v<v_t>>;
 
       ftype these(data.storage());
 
@@ -479,8 +479,8 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, eve::cardinal_type N> struct base_type<eve::wide<T,N>>    { using type = T; };
-  template<typename T, eve::cardinal_type N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
+  template<typename T, eve::width_type N> struct base_type<eve::wide<T,N>>    { using type = T; };
+  template<typename T, eve::width_type N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
   template<typename T>             struct boolean_type<eve::logical<T>> { using type = eve::logical<T>; };
   template<typename T> requires(std::is_arithmetic_v<T> && !std::is_same_v<T,bool>)
   struct boolean_type<T> { using type = eve::logical<T>; };
@@ -562,7 +562,7 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<eve::cardinal_type N>
+  template<eve::width_type N>
   struct generation<eve::wide<eve::float16_t, N>>
   {
     static auto make(auto g, auto... args)
@@ -574,11 +574,11 @@ namespace tts
 
 
   template<typename Fn, typename Wm, typename... Args>
-  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_v<Wm>>
+  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::width_v<Wm>>
   {
-    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_v<Wm>>;
+    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::width_v<Wm>>;
     auto call_f = [&](auto idx) { return f(eve::_::get_at(wm, idx), eve::_::get_at(args, idx)...); };
-    return eve::_::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
+    return eve::_::apply<eve::width_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
   }
 
   template<typename L1> struct rewrap;

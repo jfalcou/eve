@@ -15,7 +15,7 @@
 
 namespace eve::_
 {
-template<typename T, cardinal_type N>
+template<typename T, width_type N>
  auto
 to_logical(wide<T, N> const& v) noexcept
 requires rvv_abi<abi_t<T, N>>

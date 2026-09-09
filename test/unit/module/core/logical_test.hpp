@@ -203,7 +203,7 @@ void logical_test_simd(F ff, FS fs, M l0, M l1, T a0)
   M m = tts::poison(M{ [](auto i, auto) { return i % 2 == 0; } });
   logical_test_simd_inner_cx(ff, l0, l1, a0, m);
 
-  constexpr auto width = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
   if constexpr (width >= 2)
   {

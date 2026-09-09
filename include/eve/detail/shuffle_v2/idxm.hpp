@@ -573,11 +573,11 @@ slice_pattern(pattern_t<I...>)
   }
 }
 
-template<std::ptrdiff_t Cardinal, std::ptrdiff_t... I>
+template<std::ptrdiff_t Width, std::ptrdiff_t... I>
 constexpr auto
 drop_unused_wides(eve::pattern_t<I...>)
 {
-  constexpr std::size_t kSizeNeeded = std::max(std::ptrdiff_t {1}, std::max({I...}) / Cardinal + 1);
+  constexpr std::size_t kSizeNeeded = std::max(std::ptrdiff_t {1}, std::max({I...}) / Width + 1);
 
   constexpr auto used_buffer_size = [&]
   {
@@ -585,7 +585,7 @@ drop_unused_wides(eve::pattern_t<I...>)
     for( auto i : {I...} )
     {
       if( i < 0 ) continue;
-      register_used[i / Cardinal] = 1;
+      register_used[i / Width] = 1;
     }
     std::array<int, kSizeNeeded> r   = {};
     int                         *out = r.data();
@@ -613,7 +613,7 @@ drop_unused_wides(eve::pattern_t<I...>)
 
     for( int new_wide_idx = 0; int wide_idx : used_wide_indexes )
     {
-      reduce_offset_by[(std::size_t)wide_idx] = (wide_idx - new_wide_idx) * Cardinal;
+      reduce_offset_by[(std::size_t)wide_idx] = (wide_idx - new_wide_idx) * Width;
       ++new_wide_idx;
     }
 
@@ -622,7 +622,7 @@ drop_unused_wides(eve::pattern_t<I...>)
     for( auto& i : res )
     {
       if( i < 0 ) continue;
-      int wide_idx = i / Cardinal;
+      int wide_idx = i / Width;
       i -= reduce_offset_by[(std::size_t)wide_idx];
     }
 

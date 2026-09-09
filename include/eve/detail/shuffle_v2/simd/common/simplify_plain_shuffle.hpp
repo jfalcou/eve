@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
@@ -94,7 +94,7 @@ auto simplify_plain_shuffle_upscale_pattern(pattern_t<I...>, eve::fixed<G> g, ku
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
 auto simplify_plain_pad_fundamental(pattern_t<I...> p, eve::fixed<G> g, kumi::tuple<T, Ts...> xs)
 {
-  constexpr std::ptrdiff_t f_n = fundamental_cardinal_v<eve::element_type_t<T>>;
+  constexpr std::ptrdiff_t f_n = fundamental_width_v<eve::element_type_t<T>>;
   if constexpr( f_n > T::size() || (f_n / G) > pattern_t<I...>::size() )
   {
     constexpr auto p2_arr =

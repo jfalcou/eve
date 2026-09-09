@@ -81,7 +81,7 @@ void
 transform_copy_if_generic_test(eve::as<T> as_t, Algo alg, Op op)
 {
   transform_copy_if_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>> {}, alg, op);
-  transform_copy_if_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>], op);
+  transform_copy_if_test_page_ends(as_t, alg[eve::algo::force_width<T::size()>], op);
 }
 
 }
