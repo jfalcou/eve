@@ -416,21 +416,25 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
+      ## Ninja needs the MSVC environment already loaded, where the Visual Studio generator found it
+      ## on its own.
+      - name: Load the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
         run: |
-          cmake -G "Visual Studio 17 2022" -A x64 -B build ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+          cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
 
       - name: Compiling ${{ matrix.chunk.name }}
         run: |
           cd build
           for target in ${{ matrix.chunk.targets }}; do
-            cmake --build . --target $target --config ${{ matrix.cfg.mode }} --parallel 4
+            cmake --build . --target $target --parallel 4
           done
 
       - name: Running ${{ matrix.chunk.name }}
         run: |
           cd build
-          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R "${{ matrix.chunk.tests }}" --parallel 4
+          ctest --output-on-failure -R "${{ matrix.chunk.tests }}" --parallel 4
   ##################################################################################################
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
