@@ -26,8 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
-        - { comp: gcc  , arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: clang, arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
+        - { comp: gcc  , arch: x86    , opts: "-mavx2 -O3 -DEVE_SPECIAL_TESTS" }
     steps:
       - name: Print Runner Info
         run: |
