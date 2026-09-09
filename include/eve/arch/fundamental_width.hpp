@@ -63,9 +63,9 @@ namespace eve
   //================================================================================================
   template<typename Type, regular_abi ABI = eve::current_abi_type>
   struct fundamental_width
-      : fixed<ABI::template fundamental_width<Type>>
+      : lanes_t<ABI::template fundamental_width<Type>>
   {
-    using type = fixed<ABI::template fundamental_width<Type>>;
+    using type = lanes_t<ABI::template fundamental_width<Type>>;
   };
 
   template<typename Type, regular_abi ABI = eve::current_abi_type>
@@ -89,9 +89,9 @@ namespace eve
   }
 
   template<eve::product_type T, regular_abi ABI>
-  struct fundamental_width<T,ABI> : fixed<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
+  struct fundamental_width<T,ABI> : lanes_t<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>
   {
-    using type = fixed<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
+    using type = lanes_t<_::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
   };
 
   template<typename Type, typename ABI = eve::current_abi_type>

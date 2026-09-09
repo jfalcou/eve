@@ -30,7 +30,7 @@ namespace eve
   //!  @tparam T Type to process
   //!
   //!  @brief A meta-function that returns a width for a relaxed iterator/range.
-  //!         If T defines a nested static function `iterator_width()` (which should return eve::fixed)
+  //!         If T defines a nested static function `iterator_width()` (which should return eve::lanes_t)
   //!         - returns it's return type.
   //!         Otherwise returns `expected_width_t<value_type_t<T>>`.
   //!

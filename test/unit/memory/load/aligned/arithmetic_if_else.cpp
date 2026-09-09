@@ -23,12 +23,12 @@ TTS_CASE_WITH( "Check conditional load to wides from aligned pointer with altern
 <typename T>(T others)
 {
   using v_t     = eve::element_type_t<T>;
-  using fixed = eve::width_t<T>;
+  using lanes_t = eve::width_t<T>;
 
-  auto [data  ,idx  ] = page<v_t, fixed::value>();
+  auto [data  ,idx  ] = page<v_t, lanes_t::value>();
 
-  auto ptr          = eve::as_aligned(&data[idx], fixed{});
-  auto const_ptr    = eve::as_aligned((v_t const*)(ptr), fixed{});
+  auto ptr          = eve::as_aligned(&data[idx], lanes_t{});
+  auto const_ptr    = eve::as_aligned((v_t const*)(ptr), lanes_t{});
 
   TTS_WHEN("For some given relative masks")
   {
@@ -53,7 +53,7 @@ TTS_CASE_WITH( "Check conditional load to wides from aligned pointer with altern
     T ignore_ext_ref    = eve::replace_ignored(full_ref,ie,others);
 
     // lanes value
-    auto lanes = eve::lane<T::size()>;
+    auto lanes = eve::lanes<T::size()>;
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific width")
     {

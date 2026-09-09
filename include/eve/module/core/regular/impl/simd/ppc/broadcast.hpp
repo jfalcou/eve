@@ -21,7 +21,7 @@ namespace eve::_
 
   template<callable_options O, simd_value W, typename Index, width_type N>
   EVE_FORCEINLINE auto
-  broadcast_(EVE_SUPPORTS(vmx_), O const&, W v, Index, fixed<N>) noexcept requires ppc_abi<typename W::abi_type>
+  broadcast_(EVE_SUPPORTS(vmx_), O const&, W v, Index, lanes_t<N>) noexcept requires ppc_abi<typename W::abi_type>
   {
     return as_wide_t<W, N>{vec_splat(v.storage(), Index::value)};
   }

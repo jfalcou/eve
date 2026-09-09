@@ -38,7 +38,7 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed width = eve::iterator_width_t<I>{};
+    eve::lanes_t width = eve::iterator_width_t<I>{};
     TTS_TYPE_IS(eve::iterator_width_t<I>, decltype(width));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
@@ -110,8 +110,8 @@ namespace algo_test
   template <typename I>
   void width_cast_test(I f)
   {
-    auto res = f.width_cast(eve::lane<1>);
-    TTS_TYPE_IS(typename decltype(res)::width, eve::fixed<1>);
+    auto res = f.width_cast(eve::lanes<1>);
+    TTS_TYPE_IS(typename decltype(res)::width, eve::lanes_t<1>);
   }
 
   void is_relaxed_test(eve::algo::relaxed_iterator auto, eve::algo::relaxed_iterator auto) {}

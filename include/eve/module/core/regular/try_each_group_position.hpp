@@ -36,7 +36,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * `x` : [argument](@ref eve::simd_value).
-  //!     * `fixed<N>` : number of elements in group
+  //!     * `lanes_t<N>` : number of elements in group
   //!
   //!    **Return value**
   //!

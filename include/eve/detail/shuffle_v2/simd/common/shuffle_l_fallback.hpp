@@ -16,7 +16,7 @@ namespace eve::_
 
 template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, fixed<G> g, logical<wide<T, N>> x)
+shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, lanes_t<G> g, logical<wide<T, N>> x)
 requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), g, p); }
 {
   auto [shuffled, l] = shuffle_v2_core(x.bits(), g, p);
@@ -29,7 +29,7 @@ template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t G, std::ptrdiff
 EVE_FORCEINLINE auto
 shuffle_l_fallback_(EVE_SUPPORTS(cpu_),
                     pattern_t<I...>     p,
-                    fixed<G>            g,
+                    lanes_t<G>            g,
                     logical<wide<T, N>> x,
                     logical<wide<T, N>> y)
 requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), y.bits(), g, p); }
@@ -42,7 +42,7 @@ requires(!abi_t<T, N>::is_wide_logical) && requires { shuffle_v2_core(x.bits(), 
 
 template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, fixed<G> g, T x, T y)
+shuffle_l_fallback_(EVE_SUPPORTS(cpu_), pattern_t<I...> p, lanes_t<G> g, T x, T y)
 {
   // sse2 has no blend. Other should try blend/no blend options.
   if constexpr( eve::current_api < eve::sse4_1 ) { return shuffle_2_using_or(p, g, x, y); }

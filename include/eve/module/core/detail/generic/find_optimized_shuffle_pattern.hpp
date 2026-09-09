@@ -70,7 +70,7 @@ struct zero_swizzle
   friend auto& operator<<(std::basic_ostream<C, Ct>& os, zero_swizzle) { return os << "zero_swizzle"; }
 
   template<typename Wide, std::ptrdiff_t Width>
-  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, fixed<Width>) const
+  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, lanes_t<Width>) const
   {
     using w_t = as_wide_t<Wide, Width>;
     if constexpr( is_bundle_v<typename Wide::abi_type> )
@@ -125,7 +125,7 @@ inline constexpr auto is_swag = []()
 
   // Find the fitting one
   constexpr auto idx = _::find_index(pattern<I...>, x);
-  return fixed<sz / (1 << (idx + 1))> {};
+  return lanes_t<sz / (1 << (idx + 1))> {};
 }();
 
 template<int N, int... I>
@@ -148,7 +148,7 @@ template<std::ptrdiff_t InWidth, std::ptrdiff_t I0, std::ptrdiff_t... I>
 consteval auto
 find_optimized_shuffle_pattern()
 {
-  [[maybe_unused]] constexpr auto sz = fixed<1 + sizeof...(I)> {};
+  [[maybe_unused]] constexpr auto sz = lanes_t<1 + sizeof...(I)> {};
   [[maybe_unused]] constexpr auto p  = pattern_t<I0, I...> {};
 
   if constexpr( is_zero<I0, I...> ) return bound {zero_swizzle {}, sz};

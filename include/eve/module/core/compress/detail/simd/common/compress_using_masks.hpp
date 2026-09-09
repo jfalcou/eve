@@ -139,7 +139,7 @@ namespace eve::_
       {
         u_t const* pattern_p = pattern_4_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
-        auto       bytes_ap  = eve::as_aligned(bytes_p, fixed<bytes::size()>{});
+        auto       bytes_ap  = eve::as_aligned(bytes_p, lanes_t<bytes::size()>{});
         bytes pattern{bytes_ap};
 
         bytes bytes_v = bit_cast(v, eve::as<bytes>{});
@@ -152,7 +152,7 @@ namespace eve::_
       {
         u_t const* pattern_p = pattern_8_elements_bytes_v<u_t>[num].data();
         auto     * bytes_p   = (std::uint8_t const*) (pattern_p);
-        auto       bytes_ap  = eve::as_aligned(bytes_p, fixed<bytes::size()>{});
+        auto       bytes_ap  = eve::as_aligned(bytes_p, lanes_t<bytes::size()>{});
         bytes pattern{bytes_ap};
 
         // Shuffle

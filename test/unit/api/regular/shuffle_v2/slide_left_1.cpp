@@ -45,7 +45,7 @@ TTS_CASE("Explicit") {
 #  if 0
   TTS_EQUAL(y, w_i({2, 0}));
 
-  TTS_EQUAL(eve::slide_left2.level(eve::as<w_i>{}, eve::fixed<1>{}, eve::index<1>), 2);
+  TTS_EQUAL(eve::slide_left2.level(eve::as<w_i>{}, eve::lanes_t<1>{}, eve::index<1>), 2);
   (void)y;
 
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<7, na_, na_, na_, na_, na_, na_, na_>);
@@ -71,7 +71,7 @@ TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
     shuffle_test::named_shuffle1_test<
         /*supports_G_eq_T_Size*/ true>(eve::as<T> {},
                                        eve::slide_left2,
-                                       []<std::ptrdiff_t G>(eve::fixed<G>)
+                                       []<std::ptrdiff_t G>(eve::lanes_t<G>)
                                        {
                                          auto idxs   = test_indexes<T, G>();
                                          auto lifted = kumi::map(

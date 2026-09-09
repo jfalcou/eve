@@ -50,7 +50,7 @@ TTS_CASE_WITH( "Check load to logical from unaligned pointer with alternatives"
     T l_ignore_ext_ref    = eve::replace_ignored(l_full_ref,ie,others);
 
     // lanes value
-    auto lanes = eve::lane<T::size()>;
+    auto lanes = eve::lanes<T::size()>;
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific width")
     {

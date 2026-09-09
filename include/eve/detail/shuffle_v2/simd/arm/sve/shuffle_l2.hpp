@@ -14,7 +14,7 @@ namespace eve::_
 
 template<typename P, typename T, width_type N, std::ptrdiff_t G>
 auto
-shuffle_l2_svdup(P, eve::fixed<G>, eve::wide<T, N> x)
+shuffle_l2_svdup(P, eve::lanes_t<G>, eve::wide<T, N> x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
 
@@ -31,7 +31,7 @@ shuffle_l2_svdup(P, eve::fixed<G>, eve::wide<T, N> x)
 
 template<typename P, simd_value T, std::ptrdiff_t G>
 auto
-shuffle_l2_svrev(P, eve::fixed<G>, T x)
+shuffle_l2_svrev(P, eve::lanes_t<G>, T x)
 {
   if constexpr( P::g_size > 8 || !idxm::is_reverse(P::idxs) ) return no_matching_shuffle;
   else if constexpr( arithmetic_simd_value<T> ) return T {svrev(x)};
@@ -46,14 +46,14 @@ shuffle_l2_svrev(P, eve::fixed<G>, T x)
 
 template<typename P, typename T, width_type N, std::ptrdiff_t G>
 auto
-shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
+shuffle_l2_svrevbhw(P, eve::lanes_t<G>, eve::wide<T, N> _x)
 {
   constexpr std::ptrdiff_t reverse_size = P::most_repeated.size() * P::g_size;
   if constexpr( reverse_size > 8 ) return no_matching_shuffle;
   else if constexpr( !idxm::is_reverse(P::most_repeated) ) return no_matching_shuffle;
   else
   {
-    auto x  = up_element_size_to(_x, eve::lane<reverse_size>);
+    auto x  = up_element_size_to(_x, eve::lanes<reverse_size>);
     using U = decltype(x);
 
     auto m = sve_true<T>();
@@ -66,7 +66,7 @@ shuffle_l2_svrevbhw(P, eve::fixed<G>, eve::wide<T, N> _x)
 
 template<typename P, typename T, width_type N, std::ptrdiff_t G>
 auto
-shuffle_l2_svext_self(P, eve::fixed<G>, eve::wide<T, N> x)
+shuffle_l2_svext_self(P, eve::lanes_t<G>, eve::wide<T, N> x)
 {
   constexpr auto point = idxm::is_rotate(P::idxs);
   if constexpr( !point ) return no_matching_shuffle;
@@ -80,7 +80,7 @@ shuffle_l2_svext_self(P, eve::fixed<G>, eve::wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
   {
@@ -98,7 +98,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
+shuffle_l2_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, logical<wide<T, N>> x)
 {
   if constexpr( auto r = shuffle_l2_svrev(p, g, x); matched_shuffle<decltype(r)> ) { return r; }
   else return no_matching_shuffle;
@@ -106,7 +106,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l2_sve_blend(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   // NOTE: no zeroing blend on sve
   if constexpr( !idxm::is_blend(P::idxs, N / G) ) return no_matching_shuffle;
@@ -119,7 +119,7 @@ shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l2_sve_ext_2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto starts_from = idxm::is_in_order(P::idxs);
   if constexpr( !starts_from ) return no_matching_shuffle_t {};
@@ -133,7 +133,7 @@ shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_sve_blend(p, g, x, y); matched_shuffle<decltype(r)> )

@@ -24,7 +24,7 @@ EVE_FORCEINLINE T rotate_(EVE_SUPPORTS(cpu_), T x, index_t<M>)
   requires (M <= T::size())
 {
        if constexpr ( M == T::size() || M == 0 ) return x;
-  else if constexpr ( M == T::size() / 2       ) return swap_adjacent(x, eve::lane<T::size() / 2>);
+  else if constexpr ( M == T::size() / 2       ) return swap_adjacent(x, eve::lanes<T::size() / 2>);
   else if constexpr ( is_bundle_v<typename T::abi_type> )
   {
     return T(kumi::map(rotate_lambda<M>{}, x));

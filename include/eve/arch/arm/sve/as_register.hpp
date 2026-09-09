@@ -21,7 +21,7 @@ namespace eve
 namespace eve
 {
   template<typename T, width_type N, sve_abi ABI>
-  consteval auto find_register_type(as<T>, fixed<N>, ABI)
+  consteval auto find_register_type(as<T>, lanes_t<N>, ABI)
   {
     constexpr auto width = sizeof(T) * N * 8;
 
@@ -94,7 +94,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // logical cases
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N>, sve_abi auto)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N>, sve_abi auto)
   {
     constexpr size_t width = sizeof(T) * N * 8;
 

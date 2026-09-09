@@ -163,7 +163,7 @@ TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected
 {
   using e_t = eve::element_type_t<T>;
   constexpr auto N = T::size();
-  using expected_N = eve::fixed<eve::nofs_width_v<e_t>>;
+  using expected_N = eve::lanes_t<eve::nofs_width_v<e_t>>;
 
   alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
@@ -290,7 +290,7 @@ TTS_CASE_TPL("width/type manipulation", algo_test::selected_types)
   }
 
   {
-    using width_n = eve::fixed<eve::_::cache_line_width<e_t>>;
+    using width_n = eve::lanes_t<eve::_::cache_line_width<e_t>>;
     auto processed = eve::algo::preprocess_range(
     eve::algo::traits(eve::algo::force_width<width_n{}()>), v);
 

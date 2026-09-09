@@ -12,7 +12,7 @@
 TTS_CASE("Check validation of the scalar_value concept" )
 {
   using eve::logical;
-  using eve::fixed;
+  using eve::lanes_t;
   using eve::wide;
 
   TTS_EXPECT( eve::scalar_value<char>  );
@@ -34,7 +34,7 @@ TTS_CASE("Check validation of the scalar_value concept" )
 TTS_CASE("Check validation of the simd_value" )
 {
   using eve::logical;
-  using eve::fixed;
+  using eve::lanes_t;
   using eve::wide;
 
   TTS_EXPECT_NOT( eve::simd_value<char>  );

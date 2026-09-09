@@ -63,7 +63,7 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
     else
     {
       std::array on_stack {v, static_cast<T>(vs)...};
-      return load(on_stack.data(), fixed<N> {});
+      return load(on_stack.data(), lanes_t<N> {});
     }
   }
 }

@@ -22,7 +22,7 @@ struct has_iterator_width
 {
   using value_type = int;
 
-  static constexpr eve::fixed<2> iterator_width() { return {}; }
+  static constexpr eve::lanes_t<2> iterator_width() { return {}; }
 };
 
 TTS_CASE( "Check for iterator_width")
@@ -36,5 +36,5 @@ TTS_CASE( "Check for iterator_width")
   TTS_TYPE_IS(eve::iterator_width_t<twice_aligned>,              eve::expected_width_t<int>);
   TTS_TYPE_IS(eve::iterator_width_t<std::vector<int>::iterator>, eve::expected_width_t<int>);
   TTS_TYPE_IS(eve::iterator_width_t<no_iterator_width>,       eve::expected_width_t<int>);
-  TTS_TYPE_IS(eve::iterator_width_t<has_iterator_width>,      eve::fixed<2>);
+  TTS_TYPE_IS(eve::iterator_width_t<has_iterator_width>,      eve::lanes_t<2>);
 };

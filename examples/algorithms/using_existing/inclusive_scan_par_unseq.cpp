@@ -133,7 +133,7 @@ subranges_split_t subranges_split(uptr_range r,
   std::ptrdiff_t chunk_size = std::max((l - f) / subrange_count, rough_min_size);
   chunk_size += cache_line_n - chunk_size % cache_line_n;
 
-  aptr f1 = eve::previous_aligned_address(f + chunk_size, eve::fixed<cache_line_n>{});
+  aptr f1 = eve::previous_aligned_address(f + chunk_size, eve::lanes_t<cache_line_n>{});
   res.first = {f, f1.get()};
 
   while (l - f1 > chunk_size) {

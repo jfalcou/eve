@@ -93,27 +93,27 @@ TTS_CASE("eve.algo.traits, type and width")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<eve::nofs_width_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::nofs_width_v<int>>);
     eve::algo::traits tr1{eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<eve::expected_width_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::lanes_t<eve::expected_width_v<int>>);
   }
   {
     eve::algo::traits tr{eve::algo::force_width<2>};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<2>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<2>);
     eve::algo::traits tr1{eve::algo::force_width<2>, eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<2>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::lanes_t<2>);
   }
   {
     eve::algo::traits tr{eve::algo::consider_types<double>};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::fixed<eve::nofs_width_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::nofs_width_v<double>>);
     eve::algo::traits tr1{eve::algo::consider_types<double>, eve::algo::allow_frequency_scaling};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::fixed<eve::expected_width_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::lanes_t<eve::expected_width_v<double>>);
   }
   {
     eve::algo::traits tr;
     eve::algo::traits big_step{eve::algo::force_width<64>};
     eve::algo::traits tr2 = eve::algo::default_to(tr, big_step);
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr2), std::int8_t*>), eve::fixed<64>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr2), std::int8_t*>), eve::lanes_t<64>);
   }
 };
 

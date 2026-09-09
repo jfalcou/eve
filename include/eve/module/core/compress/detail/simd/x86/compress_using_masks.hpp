@@ -75,14 +75,14 @@ namespace eve::_
     {
       u_t const* pattern_p = pattern_4_elements_dwords_v<u_t>[num].data();
 
-      wide<u_t, N> pattern { eve::as_aligned(pattern_p, fixed<N>{}) };
+      wide<u_t, N> pattern { eve::as_aligned(pattern_p, lanes_t<N>{}) };
       return permvar8(v, pattern);
     }
     else if constexpr ( N == 8 )
     {
       u_t const* pattern_p = pattern_8_elements_dwords_v<u_t>[num].data();
 
-      wide<u_t, N> pattern {eve::as_aligned(pattern_p, fixed<N>{})};
+      wide<u_t, N> pattern {eve::as_aligned(pattern_p, lanes_t<N>{})};
       return permvar8(v, pattern);
     }
   }
@@ -132,8 +132,8 @@ namespace eve::_
         using u_t = eve::as_integer_t<T, unsigned>;
         using pattern8 = wide<u_t, 8>;
 
-        auto lo_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[lo_idx].data(), eve::lane<8>);
-        auto hi_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[hi_idx].data(), eve::lane<8>);
+        auto lo_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[lo_idx].data(), eve::lanes<8>);
+        auto hi_shuffle_ptr = eve::as_aligned(pattern_8_elements_bytes_v<u_t>[hi_idx].data(), eve::lanes<8>);
 
         pattern8 lo_shuffle{lo_shuffle_ptr};
         pattern8 hi_shuffle{hi_shuffle_ptr};

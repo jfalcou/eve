@@ -19,13 +19,13 @@
 namespace eve
 {
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::emulated_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::emulated_)
   {
     return std::array<T, N>{};
   }
 
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::emulated_)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N>, eve::emulated_)
   {
     return std::array<logical<T>, N>{};
   }
@@ -44,7 +44,7 @@ namespace eve
   }
 
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::bundle_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::bundle_)
     requires (eve::product_type<T>)
   {
     return kumi::as_tuple_t<T, _::apply_as_wide<N>::template type>{};
@@ -122,13 +122,13 @@ namespace eve
   }
 
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::aggregated_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::aggregated_)
   {
     return _::blob<T, N>{};
   }
 
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N>, eve::aggregated_)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N>, eve::aggregated_)
   {
     return _::blob<logical<T>, N>{};
   }

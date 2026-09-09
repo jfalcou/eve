@@ -47,5 +47,5 @@ namespace eve
   //! @}
   //================================================================================================
   template <typename... Ts>
-  using max_lanes_t = fixed<max_lanes_v<Ts...>>;
+  using max_lanes_t = lanes_t<max_lanes_v<Ts...>>;
 }

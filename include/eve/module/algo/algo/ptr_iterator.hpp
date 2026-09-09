@@ -67,7 +67,7 @@ namespace eve::algo
       if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::previous_aligned_address(ptr, fixed<Width>{});
+        auto a_ptr = eve::previous_aligned_address(ptr, lanes_t<Width>{});
         return ptr_iterator<decltype(a_ptr), Width>{a_ptr};
       }
     }
@@ -77,15 +77,15 @@ namespace eve::algo
       if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::next_aligned_address(ptr, fixed<Width>{});
+        auto a_ptr = eve::next_aligned_address(ptr, lanes_t<Width>{});
         return ptr_iterator<decltype(a_ptr), Width>{a_ptr};
       }
     }
 
-    static fixed<Width> iterator_width() { return {}; }
+    static lanes_t<Width> iterator_width() { return {}; }
 
     template <width_type _Width>
-    auto width_cast(fixed<_Width> c) const
+    auto width_cast(lanes_t<_Width> c) const
     {
            if constexpr (!eve::_::is_aligned_ptr_v<Ptr> ) return ptr_iterator<Ptr, _Width>(ptr);
       else if constexpr (_Width > Width                   ) return unalign().width_cast(c);

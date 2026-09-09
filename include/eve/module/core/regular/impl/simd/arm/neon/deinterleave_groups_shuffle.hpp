@@ -15,7 +15,7 @@ namespace eve::_
 {
 template<typename T, width_type N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>
-    deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, fixed<G>) requires(N / G
+    deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_), wide<T, N> v, lanes_t<G>) requires(N / G
                                                                                           > 2)
     && arm_abi<abi_t<T, N>>
 {
@@ -33,18 +33,18 @@ template<typename T, width_type N, std::ptrdiff_t G>
   if constexpr( sizeof(T) * N == 16 && current_api < asimd )
   {
     auto [l, h] = v.slice();
-    return deinterleave_groups_shuffle(l, h, lane<G>);
+    return deinterleave_groups_shuffle(l, h, lanes<G>);
   }
   // Just always do a table lookup for arm-v7 and 4 chars
   else if constexpr( current_api < asimd || (sizeof(T) == 1 && N == 4) )
   {
-    return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lane<G>);
+    return deinterleave_groups_shuffle_(EVE_RETARGET(cpu_), v, eve::lanes<G>);
   }
   else if constexpr( G > 1 )
   {
     using up_t    = upgrade_t<T>;
     auto const up = bit_cast(v, as<wide<up_t, N / 2>>());
-    return bit_cast(deinterleave_groups_shuffle(up, fixed<G / 2> {}), as(v));
+    return bit_cast(deinterleave_groups_shuffle(up, lanes_t<G / 2> {}), as(v));
   }
   else
   {
@@ -73,7 +73,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
                     deinterleave_groups_shuffle_(EVE_SUPPORTS(neon128_),
                                                  wide<T, N> v0,
                                                  wide<T, N> v1,
-                                                 fixed<G>) requires(G < N)
+                                                 lanes_t<G>) requires(G < N)
     && arm_abi<abi_t<T, N>>
 {
   using w_t = wide<T, N>;
@@ -97,7 +97,7 @@ template<typename T, width_type N, std::ptrdiff_t G>
     using up_t     = upgrade_t<T>;
     auto const up0 = bit_cast(v0, as<wide<up_t, N / 2>>());
     auto const up1 = bit_cast(v1, as<wide<up_t, N / 2>>());
-    return bit_cast(deinterleave_groups_shuffle(up0, up1, fixed<G / 2> {}), as<r_t> {});
+    return bit_cast(deinterleave_groups_shuffle(up0, up1, lanes_t<G / 2> {}), as<r_t> {});
   }
   // ===================================================================================================
   // The equivalent family of intrinsics on arm is uzp.

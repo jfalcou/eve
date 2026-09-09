@@ -265,7 +265,7 @@ TTS_CASE_TPL("Translatable wide - load", eve::test::simd::all_types)
       scratch[i] = static_cast<E>(i);
     }
 
-    eve::wide<E, W::size()> wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+    eve::wide<E, W::size()> wt = eve::load(scratch.data(), eve::lanes_t<W::size()>{});
     for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), static_cast<E>(i));
@@ -284,13 +284,13 @@ TTS_CASE_TPL("Translatable wide - load", eve::test::simd::all_types)
     scratch[i] = trans_t { static_cast<T>(i) };
   }
 
-  eve::wide<trans_t, W::size()> wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+  eve::wide<trans_t, W::size()> wt = eve::load(scratch.data(), eve::lanes_t<W::size()>{});
   for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i) });
   }
 
-  wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+  wt = eve::load(scratch.data(), eve::lanes_t<W::size()>{});
   for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i) });

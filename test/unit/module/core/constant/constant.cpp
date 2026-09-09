@@ -8,7 +8,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-using eve::fixed;
+using eve::lanes_t;
 
 enum class some_enum : std::int16_t {};
 
@@ -35,13 +35,13 @@ TTS_CASE("Constant generation for scalar")
 
 
 TTS_CASE_TPL("Constant generation for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+             lanes_t<1>,
+             lanes_t<2>,
+             lanes_t<4>,
+             lanes_t<8>,
+             lanes_t<16>,
+             lanes_t<32>,
+             lanes_t<64>)
 <typename T>(::tts::type<T>)
 {
   constexpr auto N = T::value;

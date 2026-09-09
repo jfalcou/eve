@@ -13,7 +13,7 @@ namespace
 // This is enough
 template<std::ptrdiff_t N>
 constexpr auto
-all_blend_patterns_to_test_for(eve::fixed<N>)
+all_blend_patterns_to_test_for(eve::lanes_t<N>)
 {
   return kumi::tuple {
       eve::fix_pattern<N>([](int i, int) { return i % 2; }),
@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check blend, generic", eve::test::simd::all_types)
       /*supports_G_eq_T_Size*/ true>(
       eve::as<T> {},
       eve::blend,
-      []<std::ptrdiff_t G>(eve::fixed<G>)
+      []<std::ptrdiff_t G>(eve::lanes_t<G>)
       {
-        auto to_test_for = all_blend_patterns_to_test_for(eve::lane<T::size() / G>);
+        auto to_test_for = all_blend_patterns_to_test_for(eve::lanes<T::size() / G>);
         auto lifted      = kumi::map([](auto x) { return kumi::make_tuple(x); }, to_test_for);
         return lifted;
       });

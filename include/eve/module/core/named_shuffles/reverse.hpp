@@ -30,7 +30,7 @@ namespace eve
 //!
 //!    @code
 //!    template <simd_value T, std::ptrdiff_t G>
-//!    T reverse(T x, eve::fixed<G>);  // (1)
+//!    T reverse(T x, eve::lanes_t<G>);  // (1)
 //!
 //!    template <simd_value T>
 //!    T reverse(T x);  // (2)
@@ -55,13 +55,13 @@ namespace eve
 //================================================================================================
 struct reverse_t
 {
-  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::lanes_t<G>)
   {
     return eve::fix_pattern<T::size() / G>([](int i, int size) { return size - i - 1; });
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::lanes_t<G> g)
   {
     if constexpr( eve::has_aggregated_abi_v<T> )
     {

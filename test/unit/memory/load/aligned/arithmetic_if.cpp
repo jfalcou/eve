@@ -20,12 +20,12 @@ TTS_CASE_TPL( "Check conditional load to wides from aligned pointer", eve::test:
 <typename T>(tts::type<T>)
 {
   using v_t     = eve::element_type_t<T>;
-  using fixed = eve::width_t<T>;
+  using lanes_t = eve::width_t<T>;
 
-  auto [data  ,idx  ] = page<v_t, fixed::value>();
+  auto [data  ,idx  ] = page<v_t, lanes_t::value>();
 
-  auto ptr          = eve::as_aligned(&data[idx], fixed{});
-  auto const_ptr    = eve::as_aligned((v_t const*)(ptr), fixed{});
+  auto ptr          = eve::as_aligned(&data[idx], lanes_t{});
+  auto const_ptr    = eve::as_aligned((v_t const*)(ptr), lanes_t{});
 
   TTS_WHEN("For some given relative masks")
   {
@@ -59,7 +59,7 @@ TTS_CASE_TPL( "Check conditional load to wides from aligned pointer", eve::test:
     T ignore_ext_ref    = full_ref & mie.mask();
 
     // lanes value
-    auto lanes = eve::lane<T::size()>;
+    auto lanes = eve::lanes<T::size()>;
 
     TTS_AND_THEN("load is applied on aligned pointer for a specific width")
     {
@@ -142,7 +142,7 @@ TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test
 
   [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
   {
-    auto test = [&]<std::ptrdiff_t A>(eve::fixed<A> n)
+    auto test = [&]<std::ptrdiff_t A>(eve::lanes_t<A> n)
     {
       auto ptr = eve::previous_aligned_address(&x, n);
       auto loaded = eve::load[eve::unsafe](ptr, n);
@@ -156,6 +156,6 @@ TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test
       }
     };
 
-    (test(eve::lane<(1<<N)>),...);
+    (test(eve::lanes<(1<<N)>),...);
   }( std::make_integer_sequence<std::ptrdiff_t,7>{});
 };

@@ -51,7 +51,7 @@ namespace eve::_
 
     static constexpr std::ptrdiff_t card_v = std::max({card<std::decay_t<Ts>>()...});
     using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
-    using fixed_t                       = fixed<card_v>;
+    using fixed_t                       = lanes_t<card_v>;
 
     template<typename S> struct widen : as_wide<S, card_v> {};
 

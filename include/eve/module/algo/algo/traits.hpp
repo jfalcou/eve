@@ -113,7 +113,7 @@ namespace eve::algo
   //!   to change width.
   //! @}
   //=============================================================================
-  template<int N> inline constexpr auto force_width = (force_width_key = eve::fixed<N>{});
+  template<int N> inline constexpr auto force_width = (force_width_key = eve::lanes_t<N>{});
 
   struct consider_types_key_t {};
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
@@ -467,7 +467,7 @@ namespace eve::algo
 
   namespace _ {
     template <typename Traits, typename RorI>
-    using default_width_to_use_t = eve::fixed<
+    using default_width_to_use_t = eve::lanes_t<
       Traits::contains(allow_frequency_scaling) ?
         expected_width_v<get_types_to_consider_for<Traits, RorI>> :
         nofs_width_v    <get_types_to_consider_for<Traits, RorI>>

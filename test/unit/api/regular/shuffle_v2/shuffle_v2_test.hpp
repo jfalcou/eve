@@ -16,7 +16,7 @@ namespace idxm = eve::_::idxm;
 
 template<typename T, typename U, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
-verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
+verify(T x, eve::lanes_t<G>, eve::pattern_t<I...> p, U shuffled)
 {
   using e_t = eve::element_type_t<T>;
   std::array<e_t, (std::size_t)T::size()> x_a;
@@ -111,7 +111,7 @@ run(auto expected_level, eve::pattern_t<I...> p = {})
     input = Wide{[](int i, int) { return i + 1; }};
   }
 
-  run_one_case(expected_level(std::array {I...}), input, eve::lane<G>, p);
+  run_one_case(expected_level(std::array {I...}), input, eve::lanes<G>, p);
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
@@ -131,7 +131,7 @@ run2(auto expected_level, eve::pattern_t<I...> p = {})
   auto xy = input.slice();
   auto x  = get<0>(xy);
   auto y  = get<1>(xy);
-  run2_one_case(expected_level(std::array {I...}), x, y, eve::lane<G>, p);
+  run2_one_case(expected_level(std::array {I...}), x, y, eve::lanes<G>, p);
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
@@ -191,7 +191,7 @@ for_each_group_size(eve::as<T>, auto op)
 {
   constexpr auto ssz = std::bit_width(std::size_t(T::size()));
   [&]<std::size_t... I>(std::index_sequence<I...>)
-  { (op(eve::lane<1 << (int)I>), ...); }(std::make_index_sequence<ssz> {});
+  { (op(eve::lanes<1 << (int)I>), ...); }(std::make_index_sequence<ssz> {});
 }
 
 template<typename T>
@@ -225,7 +225,7 @@ named_shuffle1_test_one_input(T input, NamedShuffle named_shuffle, auto... extra
   auto tgt = eve::as<T> {};
   for_each_group_with_params(tgt,
                              extra_args_gen...,
-                             [&]<std::ptrdiff_t G>(eve::fixed<G> g, auto... extra)
+                             [&]<std::ptrdiff_t G>(eve::lanes_t<G> g, auto... extra)
                              {
                                if constexpr( G != T::size() || supports_G_eq_T_Size )
                                {
@@ -244,7 +244,7 @@ named_shuffle2_test_one_input(T x, T y, NamedShuffle named_shuffle, auto extra_p
   auto tgt = eve::as<T> {};
   for_each_group_with_params(tgt,
                              extra_param_gen,
-                             [&]<std::ptrdiff_t G>(eve::fixed<G> g, auto... extra)
+                             [&]<std::ptrdiff_t G>(eve::lanes_t<G> g, auto... extra)
                              {
                                if constexpr( G != T::size() || supports_G_eq_T_Size )
                                {
@@ -309,7 +309,7 @@ debug_call_shuffle_l_directly()
   using w_t = eve::as_wide_t<T, N>;
 
   auto p = eve::_::expanded_pattern<w_t, G, I...>;
-  auto g = eve::lane<G>;
+  auto g = eve::lanes<G>;
 
   w_t x {[](int i, int) { return i + 1; }};
 

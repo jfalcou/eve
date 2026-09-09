@@ -23,7 +23,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // NEON 64
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::arm_64_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::arm_64_)
   {
     if constexpr (std::same_as<T, eve::float16_t> && (N <= 4))
     {
@@ -64,7 +64,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // NEON 128
   template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, fixed<N>, eve::arm_128_)
+  consteval auto find_register_type(as<T>, lanes_t<N>, eve::arm_128_)
   {
     if constexpr (std::same_as<T, eve::float16_t>)
     {
@@ -105,7 +105,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // logical cases
   template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, fixed<N> n, arm_abi auto abi)
+  consteval auto find_logical_register_type(as<T>, lanes_t<N> n, arm_abi auto abi)
   {
     return find_register_type(as<as_integer_t<T, unsigned>>{}, n, abi);
   }

@@ -17,7 +17,7 @@ namespace eve::_
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
     requires ( !abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
   {
-    return std::pair{v.storage(), eve::lane<1>};
+    return std::pair{v.storage(), eve::lanes<1>};
   }
 
   template<typename T, width_type N>
@@ -53,7 +53,7 @@ namespace eve::_
       }
     }();
 
-    return std::pair{raw,  eve::lane<sizeof(T) == 2 ? 2: 1>};
+    return std::pair{raw,  eve::lanes<sizeof(T) == 2 ? 2: 1>};
   }
 
 }

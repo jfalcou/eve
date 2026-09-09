@@ -114,11 +114,11 @@ TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 TTS_CASE("aligned_ptr factory functions - Specific alignment")
 {
   alignas(8) std::array<std::byte, 64> values;
-  TTS_EQUAL(eve::as_aligned(&values[0], eve::lane<8>).get(), &values[0]);
-  TTS_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)      , &values[0]);
-  TTS_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)      , eve::as_aligned(&values[0], eve::lane<8>));
-  TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)  , &values[3]);
-  TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lane<8>)  , eve::as_aligned(&values[8], eve::lane<8>));
+  TTS_EQUAL(eve::as_aligned(&values[0], eve::lanes<8>).get(), &values[0]);
+  TTS_EQUAL(eve::as_aligned(&values[0], eve::lanes<8>)      , &values[0]);
+  TTS_EQUAL(eve::as_aligned(&values[0], eve::lanes<8>)      , eve::as_aligned(&values[0], eve::lanes<8>));
+  TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lanes<8>)  , &values[3]);
+  TTS_NOT_EQUAL(eve::as_aligned(&values[0], eve::lanes<8>)  , eve::as_aligned(&values[8], eve::lanes<8>));
 };
 
 TTS_CASE("aligned_ptr ordering")
@@ -261,7 +261,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 TTS_CASE("previous/next aligned address")
 {
   using eve::aligned_ptr;
-  using lanes = eve::fixed<16>;
+  using lanes = eve::lanes_t<16>;
   alignas(16 * 2) std::array<short, 16 * 4> data;
 
   for( int i = 0; i != static_cast<int>(data.size()); ++i)

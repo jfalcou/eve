@@ -19,7 +19,7 @@ namespace eve::_
 template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto shuffle_v2_driver_restart(NativeSelector     selector,
                                                pattern_t<I...>    p,
-                                               fixed<G>           g,
+                                               lanes_t<G>           g,
                                                kumi::tuple<Ts...> xs);
 
 // emulated shuffle ------------------------------------
@@ -61,7 +61,7 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto
-shuffle_emulated(pattern_t<I...>, fixed<G>, kumi::tuple<Ts...> xs)
+shuffle_emulated(pattern_t<I...>, lanes_t<G>, kumi::tuple<Ts...> xs)
 {
   constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G>(std::array<std::ptrdiff_t,sizeof...(I)>{I...})>();
   return shuffle_emulated_no_group(p2, xs);
@@ -102,7 +102,7 @@ struct shuffle_v2_driver_call_native
            std::size_t... i>
   EVE_FORCEINLINE auto impl(NativeSelector     selector,
                             pattern_t<I...>    p,
-                            fixed<G>           g,
+                            lanes_t<G>           g,
                             kumi::tuple<Ts...> xs,
                             std::index_sequence<i...>)
   {
@@ -115,7 +115,7 @@ struct shuffle_v2_driver_call_native
 
   template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
   EVE_FORCEINLINE auto
-  operator()(NativeSelector selector, pattern_t<I...> p, fixed<G> g, kumi::tuple<Ts...> xs)
+  operator()(NativeSelector selector, pattern_t<I...> p, lanes_t<G> g, kumi::tuple<Ts...> xs)
   {
     return impl(selector, p, g, xs, std::index_sequence_for<Ts...> {});
   }
@@ -133,7 +133,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_free_masking(NativeSelector        selector,
                         pattern_t<I...>       p,
-                        fixed<G>              g,
+                        lanes_t<G>              g,
                         kumi::tuple<T, Ts...> xs)
 {
   constexpr bool free_masking =
@@ -175,7 +175,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_try_common_l0_l1(NativeSelector        selector,
                             pattern_t<I...>       p,
-                            fixed<G>              g,
+                            lanes_t<G>              g,
                             kumi::tuple<T, Ts...> xs)
 {
   constexpr std::array idxs {I...};
@@ -201,7 +201,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_simplify_pattern(NativeSelector        selector,
                             pattern_t<I...>       p,
-                            fixed<G>              g,
+                            lanes_t<G>              g,
                             kumi::tuple<T, Ts...> xs)
 {
   auto xgp = simplify_plain_shuffle(p, g, xs);
@@ -224,7 +224,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_driver_another_emulation_check(NativeSelector        selector,
                                           pattern_t<I...>       p,
-                                          fixed<G>              g,
+                                          lanes_t<G>              g,
                                           kumi::tuple<T, Ts...> xs)
 {
   if constexpr( eve::has_emulated_abi_v<T> )
@@ -241,7 +241,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_driver_wide_logicals(NativeSelector        selector,
                                 pattern_t<I...>       p,
-                                fixed<G>              g,
+                                lanes_t<G>              g,
                                 kumi::tuple<T, Ts...> xs)
 {
   using abi_type = typename T::abi_type;
@@ -268,7 +268,7 @@ template<typename NativeSelector, std::ptrdiff_t G, typename T, typename... Ts>
 struct shuffle_v2_driver_drop_unsued
 {
   NativeSelector        selector;
-  fixed<G>              g;
+  lanes_t<G>              g;
   kumi::tuple<T, Ts...> xs;
 
   template<std::ptrdiff_t... I> EVE_FORCEINLINE auto operator()(pattern_t<I...> p) const
@@ -287,7 +287,7 @@ struct shuffle_v2_driver_drop_unsued
 };
 
 template<typename NativeSelector, std::ptrdiff_t G, typename... Ts>
-shuffle_v2_driver_drop_unsued(NativeSelector, eve::fixed<G>, kumi::tuple<Ts...>)
+shuffle_v2_driver_drop_unsued(NativeSelector, eve::lanes_t<G>, kumi::tuple<Ts...>)
     -> shuffle_v2_driver_drop_unsued<NativeSelector, G, Ts...>;
 
 // shuffle_v2_driver_multiple_registers ------------------------------
@@ -297,7 +297,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_driver_multiple_registers(NativeSelector selector,
                                      pattern_t<I...>,
-                                     fixed<G>              g,
+                                     lanes_t<G>              g,
                                      kumi::tuple<T, Ts...> xs)
 {
   constexpr auto sub_patterns = []
@@ -322,7 +322,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_overly_large_groups(NativeSelector        selector,
                                pattern_t<I...>       p,
-                               fixed<G>              g,
+                               lanes_t<G>              g,
                                kumi::tuple<T, Ts...> xs)
 {
   if constexpr( G < T::size() ) return shuffle_v2_driver_multiple_registers(selector, p, g, xs);
@@ -330,7 +330,7 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
   {
     constexpr auto p2 = idxm::to_pattern<idxm::expand_group<G / T::size()>
                         (std::array<std::ptrdiff_t,sizeof...(I)>{I...})>();
-    return shuffle_v2_overly_large_groups(selector, p2, eve::lane<T::size()>, xs);
+    return shuffle_v2_overly_large_groups(selector, p2, eve::lanes<T::size()>, xs);
   }
   else if constexpr( G == T::size() )
   {
@@ -372,7 +372,7 @@ struct shuffle_v2_driver_aggregation
            typename T,
            typename... Ts>
   EVE_FORCEINLINE auto
-  operator()(NativeSelector selector, pattern_t<I...> p, fixed<G> g, kumi::tuple<T, Ts...> xs) const
+  operator()(NativeSelector selector, pattern_t<I...> p, lanes_t<G> g, kumi::tuple<T, Ts...> xs) const
   {
     if constexpr( !has_aggregated_abi_v<T> )
     {
@@ -454,7 +454,7 @@ struct shuffle_v2_driver_bundle
            typename T,
            typename... Ts>
   EVE_FORCEINLINE auto
-  operator()(NativeSelector selector, pattern_t<I...> p, fixed<G> g, kumi::tuple<T, Ts...> xs) const
+  operator()(NativeSelector selector, pattern_t<I...> p, lanes_t<G> g, kumi::tuple<T, Ts...> xs) const
   {
     if constexpr( !product_simd_value<T> )
     {
@@ -483,7 +483,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_driver_start(NativeSelector        selector,
                         pattern_t<I...>       p,
-                        fixed<G>              g,
+                        lanes_t<G>              g,
                         kumi::tuple<T, Ts...> xs)
 {
   if constexpr( !eve::supports_simd ) return shuffle_emulated(p, g, xs);
@@ -495,7 +495,7 @@ template<typename NativeSelector, std::ptrdiff_t G, std::ptrdiff_t... I, typenam
 EVE_FORCEINLINE auto
 shuffle_v2_driver_restart(NativeSelector     selector,
                           pattern_t<I...>    p,
-                          fixed<G>           g,
+                          lanes_t<G>           g,
                           kumi::tuple<Ts...> xs)
 {
   return shuffle_v2_driver_start(selector, p, g, xs);
@@ -520,7 +520,7 @@ EVE_FORCEINLINE auto
 shuffle_v2_driver_impl_(EVE_SUPPORTS(cpu_),
                         NativeSelector        selector,
                         pattern_t<I...>       p,
-                        fixed<G>              g,
+                        lanes_t<G>              g,
                         kumi::tuple<T, Ts...> xs)
 {
   auto r             = shuffle_v2_driver_start(selector, p, g, xs);

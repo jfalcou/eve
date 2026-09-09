@@ -61,5 +61,5 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename Type, regular_abi ABI = eve::current_abi_type>
-  using expected_width_t = fixed<expected_width_v<Type,ABI>>;
+  using expected_width_t = lanes_t<expected_width_v<Type,ABI>>;
 }

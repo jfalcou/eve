@@ -71,16 +71,16 @@ void stack_buffer_load_store_test(T x)
   eve::store(x, buf3.ptr());
   eve::store(x, buf4.ptr());
 
-  TTS_EQUAL(x, eve::load(buf1.ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(buf2.ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(buf3.ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(buf4.ptr(), eve::lane<T::size()>));
+  TTS_EQUAL(x, eve::load(buf1.ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(buf2.ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(buf3.ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(buf4.ptr(), eve::lanes<T::size()>));
 
 
-  TTS_EQUAL(x, eve::load(std::as_const(buf1).ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(std::as_const(buf2).ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(std::as_const(buf3).ptr(), eve::lane<T::size()>));
-  TTS_EQUAL(x, eve::load(std::as_const(buf4).ptr(), eve::lane<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf1).ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf2).ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf3).ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf4).ptr(), eve::lanes<T::size()>));
 }
 
 TTS_CASE_TPL("stack_buffer load/store",  eve::test::simd::all_types)

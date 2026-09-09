@@ -12,7 +12,7 @@ namespace eve::_
 
 template<typename P, typename T, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_x86_l6_l7_shift_shift_or(P, fixed<G>, T x)
+shuffle_x86_l6_l7_shift_shift_or(P, lanes_t<G>, T x)
 {
   constexpr auto l_h = idxm::rotate_as_two_shifts_and_or(P::most_repeated);
 
@@ -28,7 +28,7 @@ shuffle_x86_l6_l7_shift_shift_or(P, fixed<G>, T x)
 
 template<typename P, typename T, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
+shuffle_x86_l6_l7_u32_then_u16(P, lanes_t<G>, T x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
 
@@ -40,15 +40,15 @@ shuffle_x86_l6_l7_u32_then_u16(P, fixed<G>, T x)
   {
     constexpr auto p0 = get<0>(*P::shuffle_4in4);
     constexpr auto p1 = get<1>(*P::shuffle_4in4);
-    auto [r0, l0]     = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
-    auto [r1, l1]     = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
+    auto [r0, l0]     = shuffle_v2_core(x, eve::lanes<G>, idxm::to_pattern<p0>());
+    auto [r1, l1]     = shuffle_v2_core(r0, eve::lanes<G>, idxm::to_pattern<p1>());
     return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l6_l7_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l6_l7_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_x86_l6_l7_shift_shift_or(p, g, x);

@@ -27,8 +27,8 @@ namespace eve::_
       std::uint64_t elem = v.get(i) ? 1 : 0;
       res |= elem << i;
     }
-    if constexpr (N <= 32)  return std::pair{static_cast<std::uint32_t>(res), eve::lane<1>};
-    else                    return std::pair{res, eve::lane<1>};
+    if constexpr (N <= 32)  return std::pair{static_cast<std::uint32_t>(res), eve::lanes<1>};
+    else                    return std::pair{res, eve::lanes<1>};
   }
 
 }
