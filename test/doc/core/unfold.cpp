@@ -6,8 +6,8 @@ int main()
 {
   constexpr auto S = eve::cardinal_v<eve::wide<float>>;
   auto fill = [](auto i,  auto){return i;};
-  auto fill2 = [](auto i,  auto){return (i+S);};
-  auto fill3 = [](auto i,  auto){return (i+2*S);};
+  auto fill2 = [&](auto i,  auto){return (i+S);};
+  auto fill3 = [&](auto i,  auto){return (i+2*S);};
   eve::wide<float> wf(fill);
   eve::wide<float> wf2(fill2);
   eve::wide<float> wf3(fill3);

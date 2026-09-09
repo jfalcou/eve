@@ -18,10 +18,10 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 TTS_CASE_TPL( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using c_t = eve::cardinal_t<eve::wide<tuple_t<T>>>;
+  constexpr auto c = eve::cardinal_v<eve::wide<tuple_t<T>>>;
 
   TTS_EQUAL ( sizeof(eve::wide<kumi::tuple<std::int8_t,T,double>>)
-            , sizeof(kumi::tuple<eve::wide<std::int8_t,c_t>,eve::wide<T,c_t>,eve::wide<double,c_t>>)
+            , sizeof(kumi::tuple<eve::wide<std::int8_t, c>,eve::wide<T, c>,eve::wide<double, c>>)
             , REQUIRED
             );
 
@@ -35,7 +35,6 @@ TTS_CASE_TPL( "Check eve::wide<tuple> structured binding behavior", eve::test::s
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
-  using c_t = eve::cardinal_t<w_t>;
 
   auto const filler = [](int i, int)  { return s_t{ static_cast<std::int8_t>('a'+i)
                                                   , static_cast<T>(i + 1)
@@ -50,15 +49,15 @@ TTS_CASE_TPL( "Check eve::wide<tuple> structured binding behavior", eve::test::s
   auto m2 = s2;
 
   TTS_EQUAL (m0
-            , (eve::wide<std::int8_t,c_t>{ [](int i, int) { return static_cast<std::int8_t>('a'+i); } })
+            , (eve::wide<std::int8_t, w_t::size()>{ [](int i, int) { return static_cast<std::int8_t>('a'+i); } })
             );
 
   TTS_EQUAL (m1
-            , (eve::wide<T,c_t>          { [](int i, int) { return static_cast<T>(i+1); } })
+            , (eve::wide<T,w_t::size()>          { [](int i, int) { return static_cast<T>(i+1); } })
             );
 
   TTS_EQUAL (m2
-            , (eve::wide<double,c_t>     { [](int i, int) { return 1.5*(1+i);             } })
+            , (eve::wide<double,w_t::size()>     { [](int i, int) { return 1.5*(1+i);             } })
             );
 };
 
@@ -148,7 +147,6 @@ TTS_CASE_TPL( "Check eve::wide get<Idx...>", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   using w_t = eve::wide<tuple_t<T>>;
-  using c_t = eve::cardinal_t<w_t>;
 
   auto gen_d  = [](auto i, auto) { return 1./(1+i); };
   auto gen_t  = [](auto i, auto) { return T(i); };
@@ -156,10 +154,10 @@ TTS_CASE_TPL( "Check eve::wide get<Idx...>", eve::test::scalar::all_types)
 
   w_t w(gen_i8,gen_t,gen_d);
 
-  eve::wide<kumi::tuple<T,double>, c_t>             half(gen_t,gen_d);
-  eve::wide<kumi::tuple<double,T,std::int8_t>, c_t> revert( gen_d, gen_t,gen_i8);
+  eve::wide<kumi::tuple<T,double>, w_t::size()>             half(gen_t,gen_d);
+  eve::wide<kumi::tuple<double,T,std::int8_t>, w_t::size()> revert( gen_d, gen_t,gen_i8);
 
-  eve::wide<kumi::tuple<std::int8_t,T,double,T,std::int8_t>, eve::cardinal_t<w_t>>
+  eve::wide<kumi::tuple<std::int8_t,T,double,T,std::int8_t>, w_t::size()>
   mirror(gen_i8,gen_t,gen_d,gen_t,gen_i8);
 
   TTS_EQUAL ( half  , (eve::get<1,2>(w)) );
@@ -177,8 +175,7 @@ TTS_CASE_TPL( "Check eve::wide::slice behavior", eve::test::scalar::all_types)
 
   if constexpr( w_t::size() > 1 )
   {
-    using split_t = typename eve::cardinal_t<w_t>::split_type;
-    using ref_t   = typename w_t::template rescale<split_t>;
+    using ref_t   = typename w_t::template rescale<w_t::size() / 2>;
 
     w_t d = [&](auto i, auto) { return tuple_t<T> { static_cast<std::int8_t>('a'+i)
                                                   , static_cast<T>(i + 1)
@@ -209,8 +206,7 @@ TTS_CASE_TPL( "Check eve::wide::combine behavior", eve::test::scalar::all_types)
 
   if constexpr(w_t::size() < 64)
   {
-    using comb_t  = typename eve::cardinal_t<w_t>::combined_type;
-    using ref_t   = typename w_t::template rescale<comb_t>;
+    using ref_t   = typename w_t::template rescale<w_t::size() * 2>;
 
     w_t d = [&](auto i, auto) { return tuple_t<T> { static_cast<std::int8_t>('a'+i)
                                                   , static_cast<T>(i + 1)

@@ -56,7 +56,7 @@ TTS_CASE_TPL("tts::limits carries the two bounds for an integral register",
 //==================================================================================================
 TTS_CASE("tts::limits agrees between a scalar and its register")
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
+  using w_t = eve::wide<float, 4>;
 
   auto const s = tts::limits(tts::type<float>{});
   auto const v = tts::limits(tts::type<w_t>{});

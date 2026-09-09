@@ -13,17 +13,17 @@
 
 TTS_CASE("tts::display<eve::wide> lists the lanes in order")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   TTS_EQUAL(tts::as_text(w_t{1, 2, 3, 4}), "(1, 2, 3, 4)");
   TTS_EQUAL(tts::as_text(w_t{4, 3, 2, 1}), "(4, 3, 2, 1)");
 
-  TTS_EQUAL(tts::as_text(eve::wide<float, eve::fixed<2>>{0.5f, -1.5f}), "(0.5, -1.5)");
+  TTS_EQUAL(tts::as_text(eve::wide<float, 2>{0.5f, -1.5f}), "(0.5, -1.5)");
 };
 
 TTS_CASE("tts::display<eve::logical> spells the two values out")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   TTS_EQUAL(tts::as_text(eve::logical<float>{true}),  "true");
   TTS_EQUAL(tts::as_text(eve::logical<float>{false}), "false");
@@ -49,7 +49,7 @@ TTS_CASE("tts::display renders a constant as the value it holds")
 //==================================================================================================
 TTS_CASE("tts::as_text routes the EVE shapes through the trait")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   w_t const v {1, 2, 3, 4};
 

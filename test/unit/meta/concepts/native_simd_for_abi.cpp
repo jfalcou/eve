@@ -10,8 +10,8 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 
-template<typename T> using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
-template<typename T> using tiny_wide  = eve::wide<T,eve::fixed<1>>;
+template<typename T> using extra_wide = eve::wide<T, 2 * eve::expected_cardinal_v<T>>;
+template<typename T> using tiny_wide  = eve::wide<T, 1>;
 
 #if !defined(EVE_NO_SIMD)
 #if defined(SPY_SIMD_IS_X86)

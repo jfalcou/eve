@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-  template<typename T, typename N>
+  template<typename T, cardinal_type N>
    auto to_logical(wide<T, N> const& v) noexcept
     requires sve_abi<abi_t<T, N>>
   {

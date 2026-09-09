@@ -71,7 +71,7 @@ TTS_CASE_WITH("logicals draws both values and nothing else",
 
 TTS_CASE("tts::generation<eve::wide> fills every lane, not just the first")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   auto v = tts::generation<w_t>::make(tts::value(3));
 
@@ -91,7 +91,7 @@ TTS_CASE("tts::generation<eve::float16_t> draws against float16's own bounds")
 
 TTS_CASE("tts::generation of a float16 register keeps every lane finite")
 {
-  using w_t = eve::wide<eve::float16_t, eve::fixed<4>>;
+  using w_t = eve::wide<eve::float16_t, 4>;
 
   auto v = tts::generation<w_t>::make(tts::randoms(eve::valmin, eve::valmax));
 
@@ -103,7 +103,7 @@ TTS_CASE("tts::generation of a float16 register keeps every lane finite")
 //==================================================================================================
 TTS_CASE("tts::produce routes the EVE shapes through the trait")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   TTS_EQUAL( tts::produce(tts::type<w_t>{}, tts::value(7))
            , tts::generation<w_t>::make(tts::value(7))
@@ -133,7 +133,7 @@ TTS_CASE("tts::conversion evaluates a constant against the type asked for")
 
 TTS_CASE("tts::conversion evaluates a constant against a register too")
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
+  using w_t = eve::wide<float, 4>;
 
   auto v = tts::convert_as(eve::valmax, tts::type<w_t>{});
 

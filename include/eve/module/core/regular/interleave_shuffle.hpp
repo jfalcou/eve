@@ -60,7 +60,7 @@ namespace eve
       else
       {
         auto [l, h] = interleave(a, b);
-        return as_wide_t<element_type_t<T>, typename cardinal_t<T>::combined_type> {l, h};
+        return as_wide_t<element_type_t<T>, T::size() * 2> {l, h};
       }
     }
   }

@@ -229,7 +229,7 @@ namespace eve::algo::views
     // converting_iterator is still incomplete here, so the type is spelled from T and I.
     template<callable_options O>
     requires iterator<I>
-    EVE_ABI auto load(O const& opts, as<as_wide_t<T, iterator_cardinal_t<I>>>) const
+    EVE_ABI auto load(O const& opts, as<as_wide_t<T, iterator_cardinal_v<I>>>) const
     {
       auto new_c = map_alternative(
         opts[condition_key],
@@ -242,7 +242,7 @@ namespace eve::algo::views
     // V is deduced so that this signature names no trait of the class being defined. The constraint
     // pins it to the one type the friend takes.
     template<typename V>
-      requires ( iterator<I> && std::same_as<V, as_wide_t<T, iterator_cardinal_t<I>>> )
+      requires ( iterator<I> && std::same_as<V, as_wide_t<T, iterator_cardinal_v<I>>> )
     EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
                                                 V v,

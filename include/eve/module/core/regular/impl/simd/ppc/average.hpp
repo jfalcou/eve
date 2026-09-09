@@ -14,7 +14,7 @@
 
 namespace eve::_
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
+  template<arithmetic_scalar_value T, cardinal_type N, callable_options O>
    wide<T, N> average_(EVE_REQUIRES(vmx_),
                                       O          const &opts,
                                       wide<T, N> const &v0,

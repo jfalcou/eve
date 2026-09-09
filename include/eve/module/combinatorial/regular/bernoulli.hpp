@@ -59,7 +59,7 @@ namespace eve
 //!
 //!    **Return value**
 //!       The result's element type is `double` to avoid overflow as possible and
-//!       its cardinal is the same as `n`.
+//!       its width is the same as `n`.
 //!
 //!       1. The value of the nth Bernoulli number is returned.
 //!       2. [The operation is performed conditionally](@ref conditional).

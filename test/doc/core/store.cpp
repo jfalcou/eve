@@ -7,8 +7,8 @@ int main()
   int iarr[4];
   eve::logical<float> larr[4];
 
-  eve::wide<float, eve::fixed<4>> w = {3, 2, 1, 0};
-  eve::logical<eve::wide<float, eve::fixed<4>>> lw = {true, false, true, false};
+  eve::wide<float, 4> w = {3, 2, 1, 0};
+  eve::logical<eve::wide<float, 4>> lw = {true, false, true, false};
 
   eve::store(w, arr);
   eve::store(lw, larr);

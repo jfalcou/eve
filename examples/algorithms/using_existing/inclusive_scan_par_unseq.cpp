@@ -43,7 +43,7 @@ using T = float;
 // We are going to use alignment of at least 64 bytes so that
 // threads don't touch each other's cache lines.
 
-using cache_line_n = eve::fixed<64 / sizeof(T)>;
+constexpr auto cache_line_n = 64 / sizeof(T);
 using aptr         = eve::aligned_ptr<T, cache_line_n>;
 
 using uptr_range   = eve::algo::as_range<T*, T*>;
@@ -131,9 +131,9 @@ subranges_split_t subranges_split(uptr_range r,
   // either based on subrange count or rough min size but always divisible by cacheline
   // We round up.
   std::ptrdiff_t chunk_size = std::max((l - f) / subrange_count, rough_min_size);
-  chunk_size += cache_line_n{}() - chunk_size % cache_line_n{}();
+  chunk_size += cache_line_n - chunk_size % cache_line_n;
 
-  aptr f1 = eve::previous_aligned_address(f + chunk_size, cache_line_n{});
+  aptr f1 = eve::previous_aligned_address(f + chunk_size, eve::fixed<cache_line_n>{});
   res.first = {f, f1.get()};
 
   while (l - f1 > chunk_size) {

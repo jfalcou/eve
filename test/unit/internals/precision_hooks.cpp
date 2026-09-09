@@ -22,7 +22,7 @@ namespace
 //==================================================================================================
 TTS_CASE("tts::precision<eve::wide> reports the widest distance over the lanes")
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
+  using w_t = eve::wide<float, 4>;
 
   float const one  = 1.0f;
   float const next = std::nextafter(one, 2.0f);   // exactly one ULP above
@@ -48,7 +48,7 @@ TTS_CASE("tts::precision<eve::wide> reports the widest distance over the lanes")
 //==================================================================================================
 TTS_CASE("tts::precision<eve::wide>::ieee is the one member that accepts NaN")
 {
-  using w_t = eve::wide<double, eve::fixed<2>>;
+  using w_t = eve::wide<double, 2>;
 
   auto const nan = std::numeric_limits<double>::quiet_NaN();
   auto const inf = std::numeric_limits<double>::infinity();
@@ -68,7 +68,7 @@ TTS_CASE("tts::precision<eve::wide>::ieee is the one member that accepts NaN")
 //==================================================================================================
 TTS_CASE("tts::precision<eve::wide> on integral lanes never leaves the lane type")
 {
-  using w_t = eve::wide<std::int8_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int8_t, 4>;
 
   w_t const a{std::int8_t(-83), std::int8_t(0), std::int8_t(0), std::int8_t(0)};
   w_t const b{std::int8_t(-82), std::int8_t(0), std::int8_t(0), std::int8_t(0)};

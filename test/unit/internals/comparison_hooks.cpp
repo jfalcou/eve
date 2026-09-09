@@ -23,7 +23,7 @@ namespace
 //==================================================================================================
 TTS_CASE("tts::comparison<eve::wide> is every lane agreeing, not the first")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
 
   w_t const a {1, 2, 3, 4};
 
@@ -39,7 +39,7 @@ TTS_CASE("tts::comparison<eve::wide> is every lane agreeing, not the first")
 //==================================================================================================
 TTS_CASE("tts::comparison<eve::wide> answers no on a NaN lane")
 {
-  using w_t = eve::wide<double, eve::fixed<2>>;
+  using w_t = eve::wide<double, 2>;
 
   auto const nan = std::numeric_limits<double>::quiet_NaN();
 
@@ -64,7 +64,7 @@ TTS_CASE_TPL("tts::comparison<eve::logical> holds for a scalar logical", eve::te
 //==================================================================================================
 TTS_CASE("tts::comparison<eve::logical<wide>> takes the same lane by lane reading")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
   using l_t = eve::logical<w_t>;
 
   l_t const t {true, true, true, true};
@@ -78,7 +78,7 @@ TTS_CASE("tts::comparison<eve::logical<wide>> takes the same lane by lane readin
 //==================================================================================================
 TTS_CASE("tts::_::eq routes the EVE shapes through the trait")
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
+  using w_t = eve::wide<float, 4>;
   using l_t = eve::logical<w_t>;
 
   TTS_EXPECT    (tts::_::eq(w_t{1.0f, 2.0f, 3.0f, 4.0f}, w_t{1.0f, 2.0f, 3.0f, 4.0f}));
@@ -129,7 +129,7 @@ TTS_CASE_TPL("TTS_BIT_EQUAL reaches the trait on a scalar logical", eve::test::s
 //==================================================================================================
 TTS_CASE("TTS_BIT_EQUAL reaches the trait on a logical wide")
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, 4>;
   using l_t = eve::logical<w_t>;
 
   l_t const t {true, true, true, true};
@@ -141,8 +141,8 @@ TTS_CASE("TTS_BIT_EQUAL reaches the trait on a logical wide")
 //==================================================================================================
 TTS_CASE("TTS_BIT_EQUAL leaves out what a partial logical does not carry")
 {
-  using l4_t = eve::logical<eve::wide<std::int32_t, eve::fixed<4>>>;
-  using l2_t = eve::logical<eve::wide<std::int32_t, eve::fixed<2>>>;
+  using l4_t = eve::logical<eve::wide<std::int32_t, 4>>;
+  using l2_t = eve::logical<eve::wide<std::int32_t, 2>>;
 
   // The lower half keeps the upper lanes in the register, ff*16, where the same two lanes built
   // on their own give ff*8 then 00*8.

@@ -23,7 +23,7 @@ TTS_CASE_TPL("Check shuffle_v2, all call apis", eve::test::simd::all_types)
 TTS_CASE("Check shuffle_v2, basic aggregation")
 {
   using T  = eve::wide<std::uint64_t>;
-  using T2 = eve::wide<std::uint64_t, eve::fixed<eve::expected_cardinal_v<std::uint64_t> * 2>>;
+  using T2 = eve::wide<std::uint64_t, eve::expected_cardinal_v<std::uint64_t> * 2>;
 
   T  lo {[](int i, int) { return i; }};
   T  hi {[](int i, int size) { return i + size; }};

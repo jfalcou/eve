@@ -23,7 +23,7 @@ namespace eve::_
     auto const values = kumi::make_tuple(v0,vs...);
     constexpr auto nb   = 1 + sizeof...(Ts);
 
-    using ABI = abi_t<element_type_t<T>, eve::fixed<T::size()>>;
+    using ABI = abi_t<element_type_t<T>, T::size()>;
     constexpr bool is_bit_logical = logical_simd_value<T> && !ABI::is_wide_logical;
 
     if constexpr (T::size() == 1) return values;
@@ -38,7 +38,7 @@ namespace eve::_
       auto [cd0, cd1] = interleave(c, d);
 
       using up_e_t = upgrade_t<eve::element_type_t<T>>;
-      using up_t   = wide<up_e_t, eve::fixed<T::size() / 2>>;
+      using up_t   = wide<up_e_t, T::size() / 2>;
 
       auto [abcd00, abcd01] = interleave(bit_cast(ab0, as<up_t>()), bit_cast(cd0, as<up_t>()));
       auto [abcd10, abcd11] = interleave(bit_cast(ab1, as<up_t>()), bit_cast(cd1, as<up_t>()));
