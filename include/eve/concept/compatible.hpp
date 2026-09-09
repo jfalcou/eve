@@ -25,7 +25,7 @@ namespace eve
 
   template<typename T, typename U>
   concept size_compatible_to = scalar_value<T>
-                            || std::same_as<cardinal_t<T>, cardinal_t<U>>;
+                            || (cardinal_v<T> == cardinal_v<U>);
 
   template<typename T, typename U>
   concept size_compatible_values = size_compatible_to<T, U>

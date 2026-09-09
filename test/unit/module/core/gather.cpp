@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", eve::test::simd:
 
   for( std::size_t i = 0; i < T::size(); ++i ) data[i] = v_t(1) + i;
 
-  eve::wide<std::int32_t, eve::fixed<T::size()>> maps([](auto i, auto c)
+  eve::wide<std::int32_t, T::size()> maps([](auto i, auto c)
                                                       { return i % 3 ? i : c - i - 1; });
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 
@@ -64,7 +64,7 @@ TTS_CASE_TPL("Check eve::gather behavior with 64 bits indexes", eve::test::simd:
 
   for( std::size_t i = 0; i < T::size(); ++i ) data[i] = v_t(1) + i;
 
-  eve::wide<std::int64_t, eve::fixed<T::size()>> maps([](auto i, auto c)
+  eve::wide<std::int64_t, T::size()> maps([](auto i, auto c)
                                                       { return i % 3 ? i : c - i - 1; });
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 
@@ -99,7 +99,7 @@ TTS_CASE_TPL("Check unaligned eve::gather behavior with 32 bits indexes",
   v_t data[T::size()];
   for( std::size_t i = 0; i < T::size(); ++i ) data[i] = v_t(1) + i;
 
-  eve::wide<std::int32_t, eve::fixed<T::size()>> maps([](auto i, auto c)
+  eve::wide<std::int32_t, T::size()> maps([](auto i, auto c)
                                                       { return i % 3 ? i : c - i - 1; });
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 
@@ -133,7 +133,7 @@ TTS_CASE_TPL("Check unaligned eve::gather behavior with 64 bits indexes",
   v_t data[T::size()];
   for( std::size_t i = 0; i < T::size(); ++i ) data[i] = v_t(1) + i;
 
-  eve::wide<std::int64_t, eve::fixed<T::size()>> maps([](auto i, auto c)
+  eve::wide<std::int64_t, T::size()> maps([](auto i, auto c)
                                                       { return i % 3 ? i : c - i - 1; });
   T ref([&](auto i, auto) { return data[maps.get(i)]; });
 

@@ -57,14 +57,14 @@ TTS_CASE_TPL("Check behavior of hurwitz on wide", eve::test::simd::ieee_reals)
      TTS_ULP_EQUAL(hurwitz(e_t(-3), T(0.125)), T(0.005342610677085968)  , 1000*ulp);
 
      {
-       eve::wide<double, eve::fixed<4>> z{0.125, 15, -2.45, 1.0};
-       eve::wide<double, eve::fixed<4>> res{512.8766690590678412978, 0.0023753013582757773733, 17.761703009137815, 1.2020569031595942853997};
+       eve::wide<double, 4> z{0.125, 15, -2.45, 1.0};
+       eve::wide<double, 4> res{512.8766690590678412978, 0.0023753013582757773733, 17.761703009137815, 1.2020569031595942853997};
        TTS_ULP_EQUAL(hurwitz(e_t(3), z), res    , ulp);
      }
 
      {
-       eve::wide<double, eve::fixed<4>> z{eve::nan(eve::as(0.0)), 15, -2.45, eve::inf(eve::as(0.0))};
-       eve::wide<double, eve::fixed<4>> res{eve::nan(eve::as(0.0)), 0.0023753013582757773733, 17.761703009137815, 0.0};
+       eve::wide<double, 4> z{eve::nan(eve::as(0.0)), 15, -2.45, eve::inf(eve::as(0.0))};
+       eve::wide<double, 4> res{eve::nan(eve::as(0.0)), 0.0023753013582757773733, 17.761703009137815, 0.0};
        TTS_ULP_EQUAL(hurwitz(e_t(3), z), res    , ulp);
      }
   }

@@ -136,7 +136,7 @@ namespace eve
       else if constexpr(integral_simd_value<I> && scalar_value<T>)
       {
         using elt_t = element_type_t<T>;
-        using w_t   = wide<elt_t, cardinal_t<I>>;
+        using w_t   = wide<elt_t, cardinal_v<I>>;
         using i_t   = as_integer_t<elt_t>;
         return exp_int[o](convert(in, as<i_t>()), w_t(x));
       }

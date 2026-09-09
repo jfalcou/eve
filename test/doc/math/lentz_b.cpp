@@ -29,7 +29,7 @@ T mytan(T a)
 
 int main()
 {
-  using w_t = eve::wide<double, eve::fixed<4>>;
+  using w_t = eve::wide<double, 4>;
   const_fraction<w_t> func;
   eve::wide zz{1.0, 2.0, 3.0, 4.0};
   std::cout << "ref constant fracs " << (zz+eve::sqrt(eve::sqr(zz)+4))/2 << std::endl;

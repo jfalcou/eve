@@ -16,10 +16,10 @@ namespace eve
   //================================================================================================
   // ABI tags for all ARM bits SIMD registers
   //================================================================================================
-  template<std::size_t Size> struct arm_abi_
+  template<std::size_t Cardinal> struct arm_abi_
   {
-    static constexpr std::size_t bits             = Size;
-    static constexpr std::size_t bytes            = Size/8;
+    static constexpr std::size_t bits             = Cardinal;
+    static constexpr std::size_t bytes            = Cardinal/8;
     static constexpr bool        is_wide_logical  = true;
 
     template<typename Type>

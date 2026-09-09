@@ -58,7 +58,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
     {
       auto loaded = eve::load(f);
       auto m      = p(loaded);
-      // ol - of < cardinal
+      // ol - of < width
       of = compress_copy()[eve::ignore_none][eve::keep_first(ol - of)](f, loaded, m, of);
       return of == ol;
     }

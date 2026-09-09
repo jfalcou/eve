@@ -29,7 +29,7 @@ namespace eve
   //!
   //!  @tparam T Type to process
   //!
-  //!  @brief A meta-function that returns a cardinal for a relaxed iterator/range.
+  //!  @brief A meta-function that returns a width for a relaxed iterator/range.
   //!         If T defines a nested static function `iterator_cardinal()` (which should return eve::fixed)
   //!         - returns it's return type.
   //!         Otherwise returns `expected_cardinal_t<value_type_t<T>>`.
@@ -49,5 +49,5 @@ namespace eve
   using iterator_cardinal_t = decltype(_::iterator_cardinal_impl<T>());
 
   template <typename T>
-  constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<T>::value;
+  constexpr cardinal_type iterator_cardinal_v = iterator_cardinal_t<T>::value;
 }

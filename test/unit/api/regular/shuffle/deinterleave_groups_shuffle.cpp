@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
     b_ = T{0xB0};
   }
 
-  eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>
+  eve::wide<eve::element_type_t<T>, T::size() * 2>
    expected { [](int i, int size) {
     if (i < size / 2 || size == 1) return 0xA0 | (i & 7);
     i -= size / 2;
@@ -50,7 +50,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
 TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
+  using res_t = eve::wide<eve::element_type_t<T>, T::size() * 2>;
 
   res_t expected { [](int i, int) { return i;  }};
 
@@ -67,7 +67,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shu
 TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
+  using res_t = eve::wide<eve::element_type_t<T>, T::size() * 2>;
 
   res_t expected { [](int i, int size) {
     if (i < size / 2) return 0xA0 | (i & 0xf);

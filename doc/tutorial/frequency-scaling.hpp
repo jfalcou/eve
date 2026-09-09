@@ -30,7 +30,7 @@ options.
 
 @note Other than on avx512 on intel we always use the maximum width of the register,
 since we expect the compiler to do it anyways and it is usually accepted.
-If you want to set a specific cardinal for an algorithm, you can always use
+If you want to set a specific width for an algorithm, you can always use
 `eve::algo::force_cardinal`.
 
 @snippet tutorial/frequency_scaling.cpp  frequency_scaling_code

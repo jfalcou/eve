@@ -28,7 +28,7 @@ namespace eve::_
     else if constexpr (simd_value<U>)
     {
       // T scalar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
-      return bit_and(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
+      return bit_and(bit_cast(b, as<wide<T, U::size()>>{}), a);
     }
     else
     {
@@ -47,7 +47,7 @@ namespace eve::_
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
 
-    if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= eve::expected_cardinal_v<r_t>))
+    if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= expected_cardinal_v<element_type_t<r_t>>))
     {
       auto head = eve::as_wides(eve::allbits(as<r_t>{}),
                                 bit_cast(a0, as<r_t>{}),

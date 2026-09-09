@@ -13,9 +13,8 @@ TTS_CASE_WITH("Check compress wide diff logicals",
               tts::generate(tts::ramp(1)))
 <typename T> (T data)
 {
-  using N = eve::fixed<T::size()>;
-  smaller_test_for<eve::logical<eve::wide<std::uint8_t,  N>>>(data);
-  smaller_test_for<eve::logical<eve::wide<std::uint16_t, N>>>(data);
-  smaller_test_for<eve::logical<eve::wide<std::uint32_t, N>>>(data);
-  smaller_test_for<eve::logical<eve::wide<std::uint64_t, N>>>(data);
+  smaller_test_for<eve::logical<eve::wide<std::uint8_t,  T::size()>>>(data);
+  smaller_test_for<eve::logical<eve::wide<std::uint16_t, T::size()>>>(data);
+  smaller_test_for<eve::logical<eve::wide<std::uint32_t, T::size()>>>(data);
+  smaller_test_for<eve::logical<eve::wide<std::uint64_t, T::size()>>>(data);
 };

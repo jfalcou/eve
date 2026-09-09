@@ -74,7 +74,7 @@ namespace eve
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is
 //!       an [unsigned_value](@ref eve::simd_value).
 //!
-//!     * The types must share the same cardinal or be scalar and if \f$N\f$
+//!     * The types must share the same width or be scalar and if \f$N\f$
 //!       is the size in bits  of the element type of `T`,
 //!       all elements of n must belong to the
 //!       interval: \f$[0, N[\f$ or the result is undefined.

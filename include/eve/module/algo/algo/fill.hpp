@@ -34,9 +34,8 @@ namespace eve::algo
         decltype(preprocess_range(std::declval<TraitsSupport>().get_traits(),
                  std::declval<Rng>()));
       using I = decltype(std::declval<processed_range>().begin());
-      using N = iterator_cardinal_t<I>;
 
-      eve::wide<value_type_t<I>, N> wide_value;
+      eve::wide<value_type_t<I>, iterator_cardinal_v<I>> wide_value;
 
       EVE_FORCEINLINE explicit fill_delegate(auto value) :
         wide_value(value_type_t<I>(value))

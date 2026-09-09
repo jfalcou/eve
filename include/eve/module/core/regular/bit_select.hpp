@@ -60,7 +60,7 @@ namespace eve
 //!             bit of `m` is set and the bits of  `y` for which the corresponding bit of `m` is unset.
 //!
 //!           * If `x` or `y` is an [simd value](@ref eve::simd_value), the type of the result has the
-//!             element type of the common type of `x` and `y` and the maximum of the cardinals of `m`
+//!             element type of the common type of `x` and `y` and the maximum of the widths of `m`
 //!             and this type, otherwise it is the type of `x`.
 //!
 //!  @groupheader{Example}

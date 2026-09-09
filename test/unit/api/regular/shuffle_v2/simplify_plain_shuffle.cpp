@@ -94,11 +94,11 @@ TTS_CASE("Check simplification, types")
   simplify_test<eve::wide<std::int16_t>, 1, eve::wide<std::uint16_t>, 1>();
   simplify_test<eve::wide<std::uint16_t>, 1, eve::wide<std::uint16_t>, 1>();
 
-  simplify_test<eve::wide<float, eve::fixed<16>>, 1, eve::wide<std::uint32_t, eve::fixed<16>>, 1>();
-  simplify_test<eve::wide<float, eve::fixed<16>>, 2, eve::wide<std::uint64_t, eve::fixed<8>>, 1>();
-  simplify_test<eve::wide<double, eve::fixed<8>>, 2, eve::wide<std::uint64_t, eve::fixed<8>>, 2>();
+  simplify_test<eve::wide<float, 16>, 1, eve::wide<std::uint32_t, 16>, 1>();
+  simplify_test<eve::wide<float, 16>, 2, eve::wide<std::uint64_t, 8>, 1>();
+  simplify_test<eve::wide<double, 8>, 2, eve::wide<std::uint64_t, 8>, 2>();
 
-  if constexpr( !eve::abi_t<std::int8_t, eve::fixed<1>>::is_wide_logical )
+  if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
     simplify_test<eve::logical<eve::wide<std::uint8_t>>,
                   2,
@@ -113,9 +113,9 @@ TTS_CASE("Check simplification, types")
                   eve::logical<eve::wide<std::uint16_t>>,
                   4>();
 
-    simplify_test<eve::logical<eve::wide<float, eve::fixed<16>>>,
+    simplify_test<eve::logical<eve::wide<float, 16>>,
                   2,
-                  eve::logical<eve::wide<std::uint32_t, eve::fixed<16>>>,
+                  eve::logical<eve::wide<std::uint32_t, 16>>,
                   2>();
   }
 };
@@ -130,13 +130,13 @@ simplify_test_pad_to_fundamental()
     if( i < N::value ) return N::value - i - 1;
     else return eve::we_;
   };
-  simplify_test<eve::wide<T, N>, 1, eve::wide<T, eve::fundamental_cardinal_t<T>>, 1>(p0, p1);
+  simplify_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0, p1);
 
-  if constexpr( !eve::abi_t<std::int8_t, eve::fixed<1>>::is_wide_logical )
+  if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
-    simplify_test<eve::logical<eve::wide<T, N>>,
+    simplify_test<eve::logical<eve::wide<T, N::value>>,
                   1,
-                  eve::logical<eve::wide<T, eve::fundamental_cardinal_t<T>>>,
+                  eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
                   1>(p0, p1);
   }
 
@@ -155,13 +155,13 @@ simplify_test_pad_to_fundamental()
     else return i + size;
   };
 
-  simplify2_test<eve::wide<T, N>, 1, eve::wide<T, eve::fundamental_cardinal_t<T>>, 1>(p0x2, p1x2);
+  simplify2_test<eve::wide<T, N::value>, 1, eve::wide<T, eve::fundamental_cardinal_v<T>>, 1>(p0x2, p1x2);
 
-  if constexpr( !eve::abi_t<std::int8_t, eve::fixed<1>>::is_wide_logical )
+  if constexpr( !eve::abi_t<std::int8_t, 1>::is_wide_logical )
   {
-    simplify2_test<eve::logical<eve::wide<T, N>>,
+    simplify2_test<eve::logical<eve::wide<T, N::value>>,
                    1,
-                   eve::logical<eve::wide<T, eve::fundamental_cardinal_t<T>>>,
+                   eve::logical<eve::wide<T, eve::fundamental_cardinal_v<T>>>,
                    1>(p0x2, p1x2);
   }
 }
@@ -213,8 +213,8 @@ TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
   }
   else
   {
-    using u8xN  = eve::wide<std::uint8_t, eve::fundamental_cardinal_t<std::uint8_t>>;
-    using u64xN = eve::wide<std::uint64_t, eve::fundamental_cardinal_t<std::uint64_t>>;
+    using u8xN  = eve::wide<std::uint8_t, eve::fundamental_cardinal_v<std::uint8_t>>;
+    using u64xN = eve::wide<std::uint64_t, eve::fundamental_cardinal_v<std::uint64_t>>;
 
     auto [x, g, p] =
         eve::_::simplify_plain_shuffle(eve::pattern<0>, eve::lane<1>, kumi::tuple<u8xN> {});
@@ -257,7 +257,7 @@ TTS_CASE("Check simplification, 2 register")
   }
   else
   {
-    using T = eve::wide<std::uint64_t, eve::fixed<8>>;
+    using T = eve::wide<std::uint64_t, 8>;
 
     // pick lexicographical min
     {

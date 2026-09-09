@@ -24,7 +24,7 @@ namespace eve::_
       nu = eve::abs(nu);  //DLMF 10.27.1 I-n(z) = In(z),
       if constexpr( simd_value<I> && scalar_value<T> )
       {
-        using c_t = wide<T, cardinal_t<I>>;
+        using c_t = wide<T, cardinal_v<I>>;
         return cb_i(convert(nu, as(x)), c_t(x));
       }
       else if constexpr( simd_value<I> && simd_value<T> )
@@ -42,7 +42,7 @@ namespace eve::_
     {
       if constexpr( simd_value<I> && scalar_value<T> )
       {
-        using c_t = wide<T, cardinal_t<I>>;
+        using c_t = wide<T, cardinal_v<I>>;
         return cb_i(nu, c_t(x));
       }
       else if constexpr( scalar_value<I> && simd_value<T> )

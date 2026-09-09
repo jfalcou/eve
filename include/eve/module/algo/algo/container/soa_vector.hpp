@@ -44,7 +44,7 @@ namespace eve::algo
   //! @}
   //================================================================================================
   template< eve::product_type Type
-          , eve::simd_allocator Allocator = eve::aligned_allocator<unsigned char, eve::fixed<64>>
+          , eve::simd_allocator Allocator = eve::aligned_allocator<unsigned char, 64>
           >
   struct soa_vector
   {

@@ -26,7 +26,7 @@ TTS_CASE("soa_ptr types")
 TTS_CASE("soa_ptr, constructors")
 {
   using u_p  = int*;
-  using a_p  = eve::aligned_ptr<short, eve::fixed<4>>;
+  using a_p  = eve::aligned_ptr<short, 4>;
   using s_p  = eve::soa_ptr<u_p, a_p>;
   using ss_p = eve::soa_ptr<a_p, s_p>;
 
@@ -67,8 +67,8 @@ TTS_CASE("soa_ptr, conversions")
 {
   using u_p  = int*;
   using uc_p = int const*;
-  using a_p = eve::aligned_ptr<short,        eve::fixed<4>>;
-  using ac_p = eve::aligned_ptr<short const, eve::fixed<4>>;
+  using a_p = eve::aligned_ptr<short,        4>;
+  using ac_p = eve::aligned_ptr<short const, 4>;
   using s_p  = eve::soa_ptr<u_p,  a_p>;
   using sc_p = eve::soa_ptr<uc_p, ac_p>;
 

@@ -90,8 +90,8 @@ namespace _
         , l(s)
     {
       EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
-                 " len of the range is no divisible by cardinal "
-                     << "when `divisible by cardinal is passed`: " << "l - f: " << (l - f)
+                 " len of the range is no divisible by width "
+                     << "when `divisible by width is passed`: " << "l - f: " << (l - f)
                      << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
     }
 

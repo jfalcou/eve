@@ -14,19 +14,17 @@
 
 namespace eve::_
 {
-  template<typename Pack, eve::invocable<typename Pack::size_type, typename Pack::size_type> Generator>
+  template<typename Pack, eve::invocable<cardinal_type, cardinal_type> Generator>
   EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
-    using size_type = typename Pack::size_type;
-
     // MSVC emits a spurious error trying to interpret the Pack construction as an
     // initializer_list when it should not. We then manually split the two cases.
     if constexpr(cardinal_v<Pack> > 1)
     {
-      return  [&g]<size_type... N>(std::integer_sequence<size_type,N...>)
+      return  [&g]<cardinal_type... N>(std::integer_sequence<cardinal_type,N...>)
               {
                 return Pack( g(N,cardinal_v<Pack>)... );
-              }( std::make_integer_sequence<size_type, cardinal_v<Pack>>{});
+              }( std::make_integer_sequence<cardinal_type, cardinal_v<Pack>>{});
     }
     else
     {
@@ -35,19 +33,17 @@ namespace eve::_
     }
   }
 
-  template<typename Pack, eve::invocable<typename Pack::size_type> Generator>
+  template<typename Pack, eve::invocable<cardinal_type> Generator>
   EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
-    using size_type = typename Pack::size_type;
-
     // MSVC emits a spurious error trying to interpret the Pack construction as an
     // initializer_list when it should not. We then manually split the two cases.
     if constexpr(cardinal_v<Pack> > 1)
     {
-      return  [&g]<size_type... N>(std::integer_sequence<size_type,N...>)
+      return  [&g]<cardinal_type... N>(std::integer_sequence<cardinal_type,N...>)
               {
                 return Pack( g(N)... );
-              }( std::make_integer_sequence<size_type, cardinal_v<Pack>>{});
+              }( std::make_integer_sequence<cardinal_type, cardinal_v<Pack>>{});
     }
     else
     {

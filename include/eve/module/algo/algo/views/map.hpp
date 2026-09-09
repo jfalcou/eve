@@ -51,7 +51,7 @@ namespace eve::algo::views
   //!  @struct map_load_op
   //!  @brief requirement for the operation applied on read/load in map.
   //!         should work on both scalar and wide for the underlying iterator
-  //!         for any cardinal.
+  //!         for any width.
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/views/map.hpp>`
   //!
@@ -71,7 +71,7 @@ namespace eve::algo::views
   //!  @struct map_store_op
   //!  @brief requirement for the operation applied on store in map.
   //!         should work on both scalar and wide for the underlying iterator
-  //!         for any cardinal.
+  //!         for any width.
   //!
   //!         accepts the `as<value_type_t<Base>>` for convenience
   //!         (so that it can be defined without knowing the underlying type).
@@ -221,7 +221,7 @@ namespace eve::algo::views
     using types_to_consider = typename _::map_types_to_consider<LoadOp, I>;
 
     // need to define this to workaround a clang bug.
-    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_t<I>>;
+    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_v<I>>;
 
     using unaligned_me = map_iterator<unaligned_t<I>, LoadOp, StoreOp>;
 

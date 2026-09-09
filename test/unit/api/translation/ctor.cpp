@@ -103,34 +103,33 @@ TTS_CASE_TPL("Translatable wide ctor - from pointer", eve::test::simd::all_types
 <typename W>(tts::type<W>)
 {
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = BaseStruct<T>;
 
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
 
-    std::array<E, N::value> scratch;
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    std::array<E, W::size()> scratch;
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       scratch[i] = static_cast<E>(i);
     }
 
-    eve::wide<E, N> wt(&scratch[0]);
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    eve::wide<E, W::size()> wt(&scratch[0]);
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), scratch[i]);
     }
   }
 
-  std::array<trans_t, N::value> scratch;
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  std::array<trans_t, W::size()> scratch;
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     scratch[i] = trans_t { static_cast<T>(i) };
   }
 
-  eve::wide<trans_t, N> wt(&scratch[0]);
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  eve::wide<trans_t, W::size()> wt(&scratch[0]);
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), scratch[i]);
   }
@@ -214,7 +213,6 @@ TTS_CASE_TPL("Translatable wide ctor - from range", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = BaseStruct<T>;
 
   W wr = [](auto i, auto) { return static_cast<T>(i * 2); };
@@ -224,28 +222,28 @@ TTS_CASE_TPL("Translatable wide ctor - from range", eve::test::simd::all_types)
     enum class E: T { };
 
     std::list<E> source;
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       source.push_back(E{ static_cast<T>(i * 2) });
     }
 
-    eve::wide<E, N> wt(source);
+    eve::wide<E, W::size()> wt(source);
     TTS_EQUAL(eve::translate(wt), wr);
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), E { static_cast<T>(i * 2) });
     }
   }
 
   std::list<trans_t> source;
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     source.push_back(trans_t { static_cast<T>(i * 2) });
   }
 
-  eve::wide<trans_t, N> wt(source);
+  eve::wide<trans_t, W::size()> wt(source);
   TTS_EQUAL(eve::translate(wt), wr);
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i * 2) });
   }
@@ -255,46 +253,45 @@ TTS_CASE_TPL("Translatable wide - load", eve::test::simd::all_types)
 <typename W>(tts::type<W>)
 {
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = BaseStruct<T>;
 
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
 
-    std::array<E, N::value> scratch;
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    std::array<E, W::size()> scratch;
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       scratch[i] = static_cast<E>(i);
     }
 
-    eve::wide<E, N> wt = eve::load(scratch.data(), N{});
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    eve::wide<E, W::size()> wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), static_cast<E>(i));
     }
 
     wt = eve::load(scratch.data(), eve::as(wt));
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), static_cast<E>(i));
     }
   }
 
-  std::array<trans_t, N::value> scratch;
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  std::array<trans_t, W::size()> scratch;
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     scratch[i] = trans_t { static_cast<T>(i) };
   }
 
-  eve::wide<trans_t, N> wt = eve::load(scratch.data(), N{});
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  eve::wide<trans_t, W::size()> wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i) });
   }
 
-  wt = eve::load(scratch.data(), eve::as(wt));
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  wt = eve::load(scratch.data(), eve::fixed<W::size()>{});
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t { static_cast<T>(i) });
   }
@@ -367,34 +364,33 @@ TTS_CASE_TPL("Translatable logical wide ctor - from pointer", eve::test::simd::a
 {
   using LW = eve::logical<W>;
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = eve::logical<BaseStruct<T>>;
 
   if constexpr (std::integral<T>)
   {
     enum class E: T { };
 
-    std::array<eve::logical<E>, N::value> scratch;
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    std::array<eve::logical<E>, W::size()> scratch;
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       scratch[i] = eve::logical<E>{ (i % 2) == 0 };
     }
 
     eve::as_wide_as_t<eve::logical<E>, LW> wt(&scratch[0]);
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), scratch[i]);
     }
   }
 
-  std::array<trans_t, N::value> scratch;
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  std::array<trans_t, W::size()> scratch;
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     scratch[i] = trans_t { (i % 2) == 0 };
   }
 
   eve::as_wide_as_t<trans_t, LW> wt(&scratch[0]);
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), scratch[i]);
   }
@@ -504,7 +500,6 @@ TTS_CASE_TPL("Translatable logical wide ctor - enumerating mixed types", eve::te
 {
   using LW = eve::logical<W>;
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = eve::logical<BaseStruct<T>>;
 
   LW wr = [](auto i, auto) { return (i % 3) == 0; };
@@ -513,7 +508,7 @@ TTS_CASE_TPL("Translatable logical wide ctor - enumerating mixed types", eve::te
   {
     enum class E: T { };
 
-    auto mixed = kumi::generate<N::value>([]<typename I>(I)
+    auto mixed = kumi::generate<W::size()>([]<typename I>(I)
       {
         if constexpr(I::value % 2) return eve::logical<E>{ (I::value % 3) == 0 };
         else                       return (I::value % 3) == 0;
@@ -531,7 +526,7 @@ TTS_CASE_TPL("Translatable logical wide ctor - enumerating mixed types", eve::te
     }
   }
 
-  auto mixed_trans = kumi::generate<N::value>([]<typename I>(I)
+  auto mixed_trans = kumi::generate<W::size()>([]<typename I>(I)
     {
       if constexpr(I::value % 2) return trans_t{ (I::value % 3) == 0 };
       else                       return (I::value % 3) == 0;
@@ -554,7 +549,6 @@ TTS_CASE_TPL("Translatable logical wide ctor - from range", eve::test::simd::all
 {
   using LW = eve::logical<W>;
   using T = eve::element_type_t<W>;
-  using N = typename W::cardinal_type;
   using trans_t = eve::logical<BaseStruct<T>>;
 
   LW wr = [](auto i, auto) { return (i % 2) == 0; };
@@ -564,28 +558,28 @@ TTS_CASE_TPL("Translatable logical wide ctor - from range", eve::test::simd::all
     enum class E: T { };
 
     std::list<eve::logical<E>> source;
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       source.push_back(eve::logical<E>{ (i % 2) == 0 });
     }
 
     eve::as_wide_as_t<eve::logical<E>, LW> wt(source);
     TTS_EQUAL(eve::translate(wt), wr);
-    for (std::ptrdiff_t i = 0; i < N::value; ++i)
+    for (std::ptrdiff_t i = 0; i < W::size(); ++i)
     {
       TTS_EQUAL(wt.get(i), eve::logical<E>{ (i % 2) == 0 });
     }
   }
 
   std::list<trans_t> source;
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     source.push_back(trans_t{ (i % 2) == 0 });
   }
 
   eve::as_wide_as_t<trans_t, LW> wt(source);
   TTS_EQUAL(eve::translate(wt), wr);
-  for (std::ptrdiff_t i = 0; i < N::value; ++i)
+  for (std::ptrdiff_t i = 0; i < W::size(); ++i)
   {
     TTS_EQUAL(wt.get(i), trans_t{ (i % 2) == 0 });
   }
