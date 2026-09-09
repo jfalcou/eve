@@ -35,7 +35,7 @@ TTS_CASE("Check make half wide<int>. Make sure about zeroes in the unused for le
          "Note that we only guarantee zeroes in the hidden bytes for constructors")
 {
   constexpr int                    size = eve::fundamental_cardinal_v<int> / 2;
-  eve::wide<int, eve::fixed<size>> x {[](int i, int) { return i; }};
+  eve::wide<int, size> x {[](int i, int) { return i; }};
 
   for( int i = 0; i != size; ++i ) { TTS_EQUAL(i, x.get(i)); }
 };
@@ -52,7 +52,7 @@ TTS_CASE_TPL("Make all wides", eve::test::simd::all_types)
 
   if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
   {
-    auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, eve::fixed<min_n>>> {});
+    auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, min_n>> {});
     for( int i = 0; i != full_wide.size(); ++i )
     {
       e_t expected = i < T::size() ? i : 0;
@@ -95,7 +95,7 @@ TTS_CASE_TPL("Make all wides, splat", eve::test::simd::all_types)
 
   if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
   {
-    auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, eve::fixed<min_n>>> {});
+    auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, min_n>> {});
     for( int i = 0; i != full_wide.size(); ++i )
     {
       e_t expected = i < T::size() ? 3 : 0;
@@ -134,7 +134,7 @@ TTS_CASE_TPL("Slice all wides", eve::test::simd::all_types)
 
 TTS_CASE("Make aggregated logical")
 {
-  using N = eve::fixed<eve::expected_cardinal_v<double> * 2>;
+  constexpr auto N = eve::expected_cardinal_v<double> * 2;
   eve::logical<eve::wide<double, N>> l {[](int i, int) { return i % 2 == 0; }};
 
   for( int i = 0; i != l.size(); ++i )
@@ -161,7 +161,7 @@ TTS_CASE_TPL("Make all logicals", eve::test::simd::all_types)
 
   if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
   {
-    auto full = eve::bit_cast(x, eve::as<eve::logical<eve::wide<e_t, eve::fixed<min_n>>>> {});
+    auto full = eve::bit_cast(x, eve::as<eve::logical<eve::wide<e_t, min_n>>>{});
     for( int i = 0; i != full.size(); ++i )
     {
       bool test = (i < T::size()) ? i % 2 == 0 : false;
@@ -186,7 +186,7 @@ TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
 
   if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
   {
-    using full_t = eve::logical<eve::wide<e_t, eve::fixed<min_n>>>;
+    using full_t = eve::logical<eve::wide<e_t, min_n>>;
     auto full_x = eve::bit_cast(x, eve::as<full_t>{});
     auto full_y = eve::bit_cast(y, eve::as<full_t>{});
     for( int i = 0; i != full_x.size(); ++i )

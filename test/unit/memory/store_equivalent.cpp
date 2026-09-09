@@ -12,7 +12,7 @@
 #include <eve/memory/stack_buffer.hpp>
 
 using u32s = eve::wide<std::uint32_t>;
-using u8s  = eve::wide<std::uint8_t, eve::fixed<u32s::size()>>;
+using u8s  = eve::wide<std::uint8_t, u32s::size()>;
 
 struct my_ptr
 {

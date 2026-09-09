@@ -13,23 +13,23 @@
 namespace eve::experimental
 {
   template<typename T>
-  using simd = eve::wide<T, eve::fixed<16/sizeof(T)>>;
+  using simd = eve::wide<T, 16 / sizeof(T)>;
 
   template<typename T, int N >
-  using fixed_size_simd = eve::wide<T, eve::fixed<N>>;
+  using fixed_size_simd = eve::wide<T, N>;
 
   template<typename T>
   using native_simd = typename _::conditional_t
                       < (std::integral<T> && current_api == avx )
-                      , eve::wide<T, eve::fixed<16/sizeof(T)>>
-                      , eve::wide<T, eve::fixed<eve::wide<T>::abi_type::bytes/sizeof(T)>>
+                      , eve::wide<T, 16 / sizeof(T)>
+                      , eve::wide<T, eve::wide<T>::abi_type::bytes / sizeof(T)>
                       >;
 
   template<typename T>
-  using simd_mask = eve::logical<eve::wide<T, eve::fixed<16/sizeof(T)>>>;
+  using simd_mask = eve::logical<eve::wide<T, 16 / sizeof(T)>>;
 
   template<typename T, int N >
-  using fixed_size_simd_mask = eve::logical<eve::wide<T, eve::fixed<N>>>;
+  using fixed_size_simd_mask = eve::logical<eve::wide<T, N>>;
 
   template<typename T>
   using native_simd_mask = eve::logical<native_simd<T>>;

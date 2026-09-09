@@ -47,8 +47,8 @@ using `preprocess_range`.
 *TODO*
 
 Main models:
-* `algined_ptr` with attached cardinal
-* pointer with attached cardinal
+* `algined_ptr` with attached width
+* pointer with attached width
 * zip of `aligned_ptr` and pointer
 
 The basic concept for writing algorithms against.
@@ -159,11 +159,11 @@ For zip makes all the individual components convert to a common_type
 (common_with_types allows to add to the list).
 
 divisible_by_cardinal
-you know for a fact that the range is divisible by cardinal
+you know for a fact that the range is divisible by width
 
 force_cardinal
-ignore default cardinal deduction and try to force smth.
-Currently might fail compilation if you try to increase the cardinal, for example if you fail the alignment requirement.
+ignore default width deduction and try to force smth.
+Currently might fail compilation if you try to increase the width, for example if you fail the alignment requirement.
 
 no_aligning
 By default we will try to find previous aligned address if  the iterators allow.
@@ -214,13 +214,13 @@ convert is a helper function to get a converting iterator.
 
 `zip_iterator`
 
-A tuple of iterators with the same cardinal.
+A tuple of iterators with the same width.
 
 ### ptr_iterator
 
 * `ptr_iterator`
 
-A pointer + cardinal with the `iterator` interface.
+A pointer + width with the `iterator` interface.
 
 
 ### preprocess_range

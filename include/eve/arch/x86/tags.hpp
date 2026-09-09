@@ -17,10 +17,10 @@ namespace eve
   //================================================================================================
   // ABI tags for all X86 bits SIMD registers
   //================================================================================================
-  template<std::size_t Size, bool Logical> struct x86_abi_
+  template<std::size_t Cardinal, bool Logical> struct x86_abi_
   {
-    static constexpr std::size_t  bits             = Size;
-    static constexpr std::size_t  bytes            = Size/8;
+    static constexpr std::size_t  bits             = Cardinal;
+    static constexpr std::size_t  bytes            = Cardinal/8;
     static constexpr bool         is_wide_logical  = Logical;
 
     template<typename Type>

@@ -36,7 +36,7 @@ TTS_CASE("eve::views::convert, preprocess test")
   using From      = float;
   using To        = int;
   using SmallerTo = short;
-  using N         = eve::nofs_cardinal_t<To>;
+  constexpr auto N = eve::nofs_cardinal_v<To>;
 
   auto common_test = []<typename R, typename T,
                         typename ExpectedRawF,
@@ -116,7 +116,7 @@ TTS_CASE("views.convert to/from")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, eve::fixed<4>>, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, 4>, 4>;
     ap_it                                         chars{};
     eve::views::converting_iterator<ap_it, int>   ints   = eve::views::convert(chars,  eve::as<int>{});
     eve::views::converting_iterator<ap_it, short> shorts = eve::views::convert(ints,   eve::as<short>{});

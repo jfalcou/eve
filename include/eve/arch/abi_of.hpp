@@ -17,7 +17,7 @@ namespace eve
 
   //================================================================================================
   // Select ABI from Type x Cardinal combo
-  template<typename Type, int Cardinal> struct abi_of
+  template<typename Type, cardinal_type Cardinal> struct abi_of
   {
     static constexpr auto find()
     {
@@ -90,11 +90,11 @@ namespace eve
 
   //================================================================================================
   // ABI for logical<T>
-  template<typename Type, int Cardinal>
+  template<typename Type, cardinal_type Cardinal>
   struct abi_of<logical<Type>, Cardinal> : abi_of<Type, Cardinal> {};
 
   //================================================================================================
   // Typename shortcut
-  template<typename Type, int Cardinal>
+  template<typename Type, cardinal_type Cardinal>
   using abi_of_t = typename abi_of<Type, Cardinal>::type;
 }

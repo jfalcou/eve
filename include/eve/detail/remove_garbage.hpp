@@ -17,19 +17,20 @@ namespace eve::_
   template<typename W> auto remove_garbage(W v) noexcept
   {
     using v_t   = element_type_t<W>;
-    using c_t   = cardinal_t<W>;
-    using ec_t  = expected_cardinal_t<v_t, typename W::abi_type>;
 
-    if constexpr(c_t::value < ec_t::value)
+    constexpr auto c  = cardinal_v<W>;
+    constexpr auto ec = expected_cardinal_v<v_t, typename W::abi_type>;
+
+    if constexpr(c < ec)
     {
-      auto const exact_mask = keep_first(c_t::value).mask(as<as_wide_t<v_t,ec_t>>{});
+      auto const exact_mask = keep_first(c).mask(as<as_wide_t<v_t, ec>>{});
       if constexpr(is_logical_v<W>)
       {
-        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) && exact_mask, as(v));
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t, ec>>()) && exact_mask, as(v));
       }
       else
       {
-        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) & exact_mask.mask(), as(v));
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t, ec>>()) & exact_mask.mask(), as(v));
       }
     }
 
@@ -39,13 +40,13 @@ namespace eve::_
  template<typename W> auto slide_garbage(W v) noexcept
   {
     using v_t   = element_type_t<W>;
-    using c_t   = cardinal_t<W>;
-    using ec_t  = expected_cardinal_t<v_t, typename W::abi_type>;
+    constexpr auto c  = cardinal_v<W>;
+    constexpr auto ec = expected_cardinal_v<v_t, typename W::abi_type>;
 
-    if constexpr(c_t::value < ec_t::value)
+    if constexpr(c < ec)
     {
-      v = bit_cast( slide_right ( bit_cast(v,as<wide<v_t,ec_t>>())
-                                , index<ec_t::value - c_t::value>
+      v = bit_cast( slide_right ( bit_cast(v,as<wide<v_t, ec>>())
+                                , index<ec - c>
                                 )
                   , as(v)
                   );

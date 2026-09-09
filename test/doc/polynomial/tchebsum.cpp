@@ -49,7 +49,7 @@ int main()
   std::cout <<  eve::tchebsum[eve::decreasing](2.0, 4.0, 3.0, 2.0, 1.0)<< std::endl;
   std::cout <<  eve::tchebsum(2.0, 1.0, 2.0, 3.0, 4.0)<< std::endl;
 
-  eve::wide<double, eve::fixed<4>> xx{-2.0, -0.44, 0.44, 2.0};
+  eve::wide<double, 4> xx{-2.0, -0.44, 0.44, 2.0};
   std::cout <<  eve::tchebsum[eve::increasing](xx, c)<< std::endl;
   std::cout <<  eve::tchebsum[eve::decreasing](xx, d)<< std::endl;
   std::cout <<  eve::tchebsum(xx, 1.0, 2.0, 3.0, 4.0)<< std::endl;

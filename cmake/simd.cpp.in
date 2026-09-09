@@ -10,7 +10,7 @@
 #include <eve/traits/element_type.hpp>
 
 template<typename T>
-using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
+using extra_wide = eve::wide<T, 2 * eve::expected_cardinal_v<T>>;
 
 template<typename T>
 inline constexpr auto small_size  = (eve::expected_cardinal_v<T>/2 !=0 )
@@ -21,13 +21,13 @@ inline constexpr auto smaller_size  = (eve::expected_cardinal_v<T>/4 !=0 )
                                     ? eve::expected_cardinal_v<T>/4 : 1;
 
 template<typename T>
-using small_wide = eve::wide<T,eve::fixed<small_size<T>>>;
+using small_wide = eve::wide<T, small_size<T>>;
 
 template<typename T>
-using smaller_wide = eve::wide<T,eve::fixed<smaller_size<T>>>;
+using smaller_wide = eve::wide<T, smaller_size<T>>;
 
 template<typename T>
-using tiny_wide = eve::wide<T,eve::fixed<1>>;
+using tiny_wide = eve::wide<T, 1>;
 
 #define EVE_SIMD_TESTS
 #define EVE_TYPE      ${target}

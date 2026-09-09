@@ -1,9 +1,8 @@
 #include <eve/module/core.hpp>
 #include <tts/tts.hpp>
 
-using n = eve::fixed<4>;
-using w_t = eve::wide<int, n>;
-using l_t = eve::logical<eve::wide<std::uint8_t, n>>; // Note the type mismatch
+using w_t = eve::wide<int, 4>;
+using l_t = eve::logical<eve::wide<std::uint8_t, 4>>; // Note the type mismatch
 
 int main()
 {

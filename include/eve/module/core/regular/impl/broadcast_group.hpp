@@ -55,16 +55,16 @@ inline constexpr auto is_broadcast_group = []()
   else return std::optional<int> {};
 }();
 
-template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
-requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
+template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Cardinal>
+requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Cardinal)) && (Index >= 0)
          && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           Wide           w,
                           fixed<Group>   g,
                           index_t<Index> i,
-                          fixed<Size>    sz)
+                          fixed<Cardinal>    sz)
 {
-  using that_t        = as_wide_t<Wide, fixed<Size>>;
+  using that_t        = as_wide_t<Wide, Cardinal>;
   using v_t           = element_type_t<Wide>;
   constexpr auto card = cardinal_v<Wide>;
 
@@ -74,24 +74,24 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   }
   else
   {
-    // If the output size is equal to the group size and the cardinal, we just return the input
-    if constexpr( Size == Group && Size == card ) { return w; }
+    // If the output size is equal to the group size and the width, we just return the input
+    if constexpr( Cardinal == Group && Cardinal == card ) { return w; }
     // If the input wide is not aggregated and we don't bcast more than 64 bits
     else if constexpr( sizeof(v_t) * Group <= 8 )
     {
       using outer_type = _::make_integer_t<sizeof(v_t) * Group>;
-      using w_t        = as_wide_t<outer_type, fixed<card / Group>>;
-      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Size / Group>), as<that_t>());
+      using w_t        = as_wide_t<outer_type, card / Group>;
+      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Cardinal / Group>), as<that_t>());
     }
     // If the output Greater than the Group size, we slice by half
-    else if constexpr( Size > Group )
+    else if constexpr( Cardinal > Group )
     {
-      auto const r = broadcast_group(w, g, i, lane<Size / 2>);
+      auto const r = broadcast_group(w, g, i, lane<Cardinal / 2>);
       return eve::combine(r, r);
     }
     else
     {
-      // If the beginning of the indexed group is beyond half the cardinal
+      // If the beginning of the indexed group is beyond half the width
       if constexpr( Index * Group >= card / 2 )
       {
         // We recompute the index and broadcast something from the upper slice of w
@@ -106,14 +106,14 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   }
 }
 
-template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Size>
-requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >= 0)
+template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Cardinal>
+requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Cardinal)) && (Index >= 0)
          && (Index < cardinal_v<Wide> / Group)) EVE_FORCEINLINE
     auto broadcast_group_(EVE_SUPPORTS(cpu_),
                           logical<Wide>  w,
                           fixed<Group>   g,
                           index_t<Index> i,
-                          fixed<Size>    sz)
+                          fixed<Cardinal>    sz)
 {
   using abi_t = typename logical<Wide>::abi_type;
   if constexpr( !abi_t::is_wide_logical )

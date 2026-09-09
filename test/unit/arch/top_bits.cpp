@@ -48,7 +48,7 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   else if constexpr (eve::current_api >= eve::avx512   )
   {
     constexpr std::ptrdiff_t min_size = sizeof(v_t) == 1 ? 16 : 8;
-    using min_logical = eve::logical<eve::wide<v_t, eve::fixed<min_size>>>;
+    using min_logical = eve::logical<eve::wide<v_t, min_size>>;
 
     if constexpr (T::size() < min_size) TTS_TYPE_IS(tb_storage, min_logical);
     else                                TTS_TYPE_IS(tb_storage, logical);

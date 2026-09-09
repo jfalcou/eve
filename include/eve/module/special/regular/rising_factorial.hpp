@@ -100,7 +100,7 @@ namespace eve
         if constexpr( integral_simd_value<I> )
         {
           using elt_t = element_type_t<T>;
-          using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
+          using r_t   = as_wide_t<elt_t, cardinal_v<I>>;
           auto aa     = convert(a, as(elt_t()));
           return rising_factorial[o](aa, r_t(x));
         }

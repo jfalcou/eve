@@ -37,7 +37,7 @@ struct compress_copy_core
   template<typename Settings, typename I, logical_simd_value L, typename O>
   EVE_FORCEINLINE auto operator()(Settings                                              settings,
                                   I                                                     f,
-                                  as_wide_t<value_type_t<I>, typename L::cardinal_type> preloaded,
+                                  as_wide_t<value_type_t<I>, L::size()> preloaded,
                                   L                                                     m,
                                   O o) const -> unaligned_t<O>
   {

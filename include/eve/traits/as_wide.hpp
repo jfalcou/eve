@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  template<typename Type, typename Size = expected_cardinal_t<Type>>
+  template<typename Type, cardinal_type Cardinal = expected_cardinal_v<Type>>
   struct as_wide
   {
     // This case should never be picked up but clang++ insists on trying to
@@ -23,33 +23,33 @@ namespace eve
     using type = void;
   };
 
-  template<typename Type, typename Size>
+  template<typename Type, cardinal_type Cardinal>
   requires (arithmetic_scalar_value<Type>)
-  struct as_wide<Type,Size>
+  struct as_wide<Type,Cardinal>
   {
-    using type = eve::wide<Type,Size>;
+    using type = eve::wide<Type,Cardinal>;
   };
 
-  template<typename T, typename Size>
-  struct as_wide<eve::logical<T>,Size>
+  template<typename T, cardinal_type Cardinal>
+  struct as_wide<eve::logical<T>,Cardinal>
   {
-    using type = eve::logical< typename as_wide<T,Size>::type >;
+    using type = eve::logical< typename as_wide<T,Cardinal>::type >;
   };
 
-  template<typename Type, typename N, typename Size>
-  struct as_wide<eve::wide<Type,N>,Size>
+  template<typename Type, cardinal_type N, cardinal_type Cardinal>
+  struct as_wide<eve::wide<Type,N>,Cardinal>
   {
-    using type = eve::wide<Type,Size>;
+    using type = eve::wide<Type,Cardinal>;
   };
 
-  template<typename Type, typename N, typename Size>
-  struct as_wide<eve::logical<eve::wide<Type,N>>,Size>
+  template<typename Type, cardinal_type N, cardinal_type Cardinal>
+  struct as_wide<eve::logical<eve::wide<Type,N>>,Cardinal>
   {
-    using type = eve::logical<eve::wide<Type,Size>>;
+    using type = eve::logical<eve::wide<Type,Cardinal>>;
   };
 
-  template<typename Type, typename Size = expected_cardinal_t<Type> >
-  using as_wide_t = typename as_wide<Type, Size>::type;
+  template<typename Type, cardinal_type Cardinal = expected_cardinal_v<Type> >
+  using as_wide_t = typename as_wide<Type, Cardinal>::type;
 
   template<typename T, typename U>
   struct  as_wide_as;
@@ -57,7 +57,7 @@ namespace eve
 
   template<scalar_value T, simd_value U>
   struct as_wide_as<T, U> {
-    using type = as_wide_t<T,cardinal_t<U>>;
+    using type = as_wide_t<T,cardinal_v<U>>;
   };
 
   template<value T, typename U>

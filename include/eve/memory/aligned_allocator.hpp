@@ -39,7 +39,7 @@ namespace eve
   //!               current SIMD ABI requirements.
   //================================================================================================
   template< typename T
-          , typename Lanes = expected_cardinal_t<T>
+          , std::ptrdiff_t Lanes = expected_cardinal_v<T>
           >
   struct aligned_allocator
   {
@@ -47,7 +47,7 @@ namespace eve
     using value_type = T;
 
     //! Return the value of the alignment constraint
-    static constexpr auto alignment() noexcept { return Lanes::value * sizeof(T); }
+    static constexpr auto alignment() noexcept { return Lanes * sizeof(T); }
 
     //! Convert an aligned_allocator type to another
     template<typename U> struct rebind
@@ -109,19 +109,19 @@ namespace eve
   //! @relates eve::aligned_allocator
   //! @brief Compares aligned_allocators for equality of types and alignment constraints.
   //================================================================================================
-  template<typename T, typename U, typename A, typename B>
+  template<typename T, typename U, std::ptrdiff_t A, std::ptrdiff_t B>
   bool operator==(aligned_allocator<T, A> const &, aligned_allocator<U, B> const &) noexcept
   {
-    return std::is_same_v<A, B> && std::is_same_v<T, U>;
+    return (A == B) && std::is_same_v<T, U>;
   }
 
   //================================================================================================
   //! @relates eve::aligned_allocator
   //! @brief Compares aligned_allocators for inequality of types or alignment constraints.
   //================================================================================================
-  template<typename T, typename U, typename A, typename B>
+  template<typename T, typename U, std::ptrdiff_t A, std::ptrdiff_t B>
   bool operator!=(aligned_allocator<T, A> const &, aligned_allocator<U, B> const &) noexcept
   {
-    return !std::is_same_v<A, B> || !std::is_same_v<T, U>;
+    return (A != B) || !std::is_same_v<T, U>;
   }
 }

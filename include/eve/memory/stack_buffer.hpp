@@ -29,8 +29,8 @@ namespace eve
   template <simd_value T>
   struct alignas( sizeof(element_type_t<T>) * T::size() ) stack_buffer
   {
-    auto ptr()       { return eve::as_aligned(buff.data(), lane<T::size()>); }
-    auto ptr() const { return eve::as_aligned(buff.data(), lane<T::size()>); }
+    auto ptr()       { return eve::as_aligned(buff.data(), fixed<T::size()>{}); }
+    auto ptr() const { return eve::as_aligned(buff.data(), fixed<T::size()>{}); }
 
     private:
       std::array<element_type_t<T>, T::size()> buff;

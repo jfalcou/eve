@@ -22,11 +22,11 @@ namespace eve
   //! @addtogroup eve_arch
   //! @{
   //!   @struct fundamental_cardinal
-  //!   @brief Computes the fundamental cardinal of a given type
+  //!   @brief Computes the fundamental width of a given type
   //!
   //!   **Required header:** `#include <eve/arch/fundamental_cardinal.hpp>`
   //!
-  //!   eve::fundamental_cardinal computes the cardinal of the smallest register able to store
+  //!   eve::fundamental_cardinal computes the width of the smallest register able to store
   //!   values of type `Type` for a given SIMD `ABI` with no uninitialized lanes.
   //!
   //!   @tparam Type  Type of value to assess
@@ -36,7 +36,7 @@ namespace eve
   //!
   //!   |Name   | Definition                               |
   //!   |:------|:-----------------------------------------|
-  //!   |`type` | The type of cardinal computed for `Type` |
+  //!   |`type` | The type of width computed for `Type` |
   //!
   //!    <br/>
   //!    #### Helper types
@@ -72,7 +72,7 @@ namespace eve
   using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
 
   template<typename Type, regular_abi ABI = eve::current_abi_type>
-  constexpr inline auto fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
+  constexpr inline cardinal_type fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
 
   //================================================================================================
   // product_type special case
@@ -84,7 +84,7 @@ namespace eve
     template<typename... T, regular_abi ABI>
     struct min_fundamental<kumi::tuple<T...>,ABI>
     {
-      static constexpr std::ptrdiff_t value = std::min({fundamental_cardinal<T,ABI>::value...});
+      static constexpr cardinal_type value = std::min({fundamental_cardinal<T,ABI>::value...});
     };
   }
 

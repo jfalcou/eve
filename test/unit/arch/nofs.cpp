@@ -9,7 +9,7 @@
 
 #include <eve/wide.hpp>
 
-TTS_CASE("Check for nofs cardinal")
+TTS_CASE("Check for nofs width")
 {
 #ifndef EVE_AVX512_DEFAULT_64_BYTES
   TTS_EQUAL((eve::nofs_cardinal_v<double, eve::x86_512_>),

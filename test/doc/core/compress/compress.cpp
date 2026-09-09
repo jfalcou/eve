@@ -24,7 +24,7 @@ void show_return_type(T)
     };
     // clang-format on
 
-    using i8x8 = eve::wide<std::int8_t, eve::fixed<8>>;
+    using i8x8 = eve::wide<std::int8_t, 8>;
 
     using chunk = kumi::tuple<i8x8, int>;  // int should be ptrdiff_t - this is a bug
 

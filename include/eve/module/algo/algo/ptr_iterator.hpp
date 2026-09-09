@@ -22,25 +22,25 @@ namespace eve::algo
   //!
   //!   This should not be created directly but rather constructed from preprocess_range.
   //!
-  //!   When ptr is aligned, the alignment should match the cardinal.
+  //!   When ptr is aligned, the alignment should match the width.
   //!
   //!    **Required header:** `#include <eve/module/algo/algo/ptr_iterator.hpp>`
   //! @}
   //================================================================================================
-  template <typename Ptr, typename Cardinal>
+  template <typename Ptr, cardinal_type Cardinal>
   struct ptr_iterator;
 
   namespace _
   {
-    template <typename Ptr, typename Cardinal>
+    template <typename Ptr, cardinal_type Cardinal>
     constexpr bool check_aligned_ptr_validity()
     {
-      if constexpr (!eve::_::instance_of<Ptr, aligned_ptr>) return true;
-      else return sizeof(value_type_t<Ptr>) * Cardinal{}() == Ptr::alignment();
+      if constexpr (!eve::_::is_aligned_ptr_v<Ptr>) return true;
+      else return sizeof(value_type_t<Ptr>) * Cardinal == Ptr::alignment();
     }
   }
 
-  template <typename Ptr, typename Cardinal>
+  template <typename Ptr, cardinal_type Cardinal>
   struct ptr_iterator : operations_with_distance
   {
     static_assert(_::check_aligned_ptr_validity<Ptr, Cardinal>());
@@ -64,31 +64,31 @@ namespace eve::algo
 
     auto previous_partially_aligned() const
     {
-      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::previous_aligned_address(ptr, Cardinal{});
+        auto a_ptr = eve::previous_aligned_address(ptr, fixed<Cardinal>{});
         return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
       }
     }
 
     auto next_partially_aligned() const
     {
-      if constexpr (eve::_::instance_of<Ptr, aligned_ptr> ) return *this;
+      if constexpr (eve::_::is_aligned_ptr_v<Ptr> ) return *this;
       else
       {
-        auto a_ptr = eve::next_aligned_address(ptr, Cardinal{});
+        auto a_ptr = eve::next_aligned_address(ptr, fixed<Cardinal>{});
         return ptr_iterator<decltype(a_ptr), Cardinal>{a_ptr};
       }
     }
 
-    static Cardinal iterator_cardinal() { return {}; }
+    static fixed<Cardinal> iterator_cardinal() { return {}; }
 
-    template <typename _Cardinal>
-    auto cardinal_cast(_Cardinal c) const
+    template <cardinal_type _Cardinal>
+    auto cardinal_cast(fixed<_Cardinal> c) const
     {
-           if constexpr (!eve::_::instance_of<Ptr, aligned_ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
-      else if constexpr (_Cardinal{}() > Cardinal{}()           ) return unalign().cardinal_cast(c);
+           if constexpr (!eve::_::is_aligned_ptr_v<Ptr> ) return ptr_iterator<Ptr, _Cardinal>(ptr);
+      else if constexpr (_Cardinal > Cardinal                   ) return unalign().cardinal_cast(c);
       else
       {
         using other_ptr = aligned_ptr<cv_value_type, _Cardinal>;

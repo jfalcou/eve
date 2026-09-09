@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of zeroes swizzle"
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
               constexpr std::size_t sz = 1ULL << N;
-              using type = eve::as_wide_t<S,eve::fixed<sz>>;
+              using type = eve::as_wide_t<S, sz>;
               type ref(typename type::value_type(0));
 
               TTS_EQUAL(eve::shuffle(simd,n_zeros<sz>), ref);

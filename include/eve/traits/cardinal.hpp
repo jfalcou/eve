@@ -17,12 +17,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!   @struct cardinal
-  //!   @brief Computes the cardinal of a given type
+  //!   @struct width
+  //!   @brief Computes the width of a given type
   //!
   //!   **Required header:** `#include <eve/traits/cardinal.hpp>`
   //!
-  //!   For a given type `T`, computes the type of its cardinal.
+  //!   For a given type `T`, computes the type of its width.
   //!
   //!   @tparam T Type to process
   //!
@@ -30,7 +30,7 @@ namespace eve
   //!
   //!   |Name   | Definition               |
   //!   |:------|:-------------------------|
-  //!   |`type` | The cardinal type of `T` |
+  //!   |`type` | The width type of `T` |
   //!
   //!    <br/>
   //!
@@ -53,10 +53,10 @@ namespace eve
   struct cardinal : fixed<1>
   {};
 
-  template<typename Type, typename Size>
-  struct cardinal<wide<Type, Size>> : Size
+  template<typename Type, std::ptrdiff_t Cardinal>
+  struct cardinal<wide<Type, Cardinal>> : fixed<Cardinal>
   {
-     using type = Size;
+    using type = fixed<Cardinal>;
   };
 
   template<typename Type>
@@ -68,5 +68,5 @@ namespace eve
   using cardinal_t = typename cardinal<std::remove_cvref_t<Type>>::type;
 
   template<typename Type>
-  inline constexpr auto cardinal_v = cardinal<std::remove_cvref_t<Type>>::value;
+  inline constexpr cardinal_type cardinal_v = cardinal<std::remove_cvref_t<Type>>::value;
 }

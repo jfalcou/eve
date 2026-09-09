@@ -46,13 +46,13 @@ namespace eve::_
   EVE_FORCEINLINE auto as_indexes(Pattern const&)
   {
     using i_t = as_integer_t<Wide>;
-    using c_t = cardinal_t<Wide>;
+    constexpr auto c = cardinal_v<Wide>;
 
     return  []<std::size_t... I>(std::index_sequence<I...>)
     {
       Pattern q;
-      return i_t{q(I,c_t::value)...};
-    }(std::make_index_sequence<c_t::value>{});
+      return i_t{q(I, c)...};
+    }(std::make_index_sequence<c>{});
   }
 
   //----------------------------------------------------------------------------------------------

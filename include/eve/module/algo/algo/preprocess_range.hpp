@@ -22,7 +22,7 @@ namespace eve::algo
 {
   namespace _
   {
-    template <typename T, typename A>
+    template <typename T, cardinal_type A>
     EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
     {
       return ptr_iterator<eve::aligned_ptr<T, A>, A>{ptr};
@@ -31,7 +31,7 @@ namespace eve::algo
     template <typename T>
     EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
     {
-      using N          = eve::fixed<eve::nofs_cardinal_v<std::remove_const_t<T>>>;
+      constexpr auto N = eve::nofs_cardinal_v<std::remove_const_t<T>>;
       return ptr_iterator<T*, N>{ptr};
     }
 
@@ -55,8 +55,8 @@ namespace eve::algo
     requires _::pointer_iterator_sentinel<I_, S_>
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
-    // We have to force cardinal here, because iterators
-    // with different cardinals don't form a valid range.
+    // We have to force width here, because iterators
+    // with different widths don't form a valid range.
     auto f = _::fix_up_cardinal(traits_, _::ptr_to_iterator(f_));
     auto l = _::fix_up_cardinal(traits_, _::ptr_to_iterator(l_));
 

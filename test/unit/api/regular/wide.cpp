@@ -34,7 +34,7 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
   using v_t = typename T::value_type;
   if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
   {
-    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
 
     w_t  fsimd(simd.storage());
@@ -93,7 +93,7 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
   using v_t = typename T::value_type;
   if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
   {
-    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+    using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_v<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
 
     w_t  fsimd(T(42).storage());
@@ -147,8 +147,7 @@ TTS_CASE_WITH( "Check eve::wide::slice behavior"
   if constexpr( T::size() > 1 )
   {
     {
-      using split_t = typename eve::cardinal_t<T>::split_type;
-      using ref_t   = typename T::template rescale<split_t>;
+      using ref_t   = typename T::template rescale<T::size() / 2>;
 
       auto [ low, high ] = d.slice();
 
@@ -158,8 +157,7 @@ TTS_CASE_WITH( "Check eve::wide::slice behavior"
       TTS_EQUAL(d.slice(eve::upper_) , ref_t([&](auto i, auto c) { return d.get(i + c); } ) );
     }
     {
-      using split_t = typename eve::cardinal_t<T>::split_type;
-      using ref_t   = typename L::template rescale<split_t>;
+      using ref_t   = typename L::template rescale<T::size() / 2>;
 
       auto [ low, high ] = ld.slice();
 
@@ -186,9 +184,8 @@ TTS_CASE_WITH( "Check eve::wide::combine behavior"
 {
   if constexpr(T::size() < 64)
   {
-    using comb_t  = typename eve::cardinal_t<T>::combined_type;
-    using ref_t   = typename T::template rescale<comb_t>;
-    using lref_t  = typename L::template rescale<comb_t>;
+    using ref_t   = typename T::template rescale<T::size() * 2>;
+    using lref_t  = typename L::template rescale<T::size() * 2>;
 
     TTS_EQUAL( (ref_t{d,d})       , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
     TTS_EQUAL( eve::combine(d,d)  , ref_t ( [=](auto i, auto c) { return  d.get(i % (c/2)); } ) );
@@ -300,17 +297,16 @@ TTS_CASE_TPL("Check eve::wide split_type/combined_type", eve::test::simd::all_ty
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  using c_t = eve::cardinal_t<T>;
 
-  if constexpr (c_t::value == 1)
+  if constexpr (T::size() == 1)
   {
     auto x = T{};
     TTS_EXPECT_NOT_COMPILES(x, { test_split(x); });
   }
   else
   {
-    TTS_EXPR_IS((typename T::split_type){}, (eve::wide<v_t, typename c_t::split_type>));
+    TTS_EXPR_IS((typename T::split_type){}, (eve::wide<v_t, T::size() / 2>));
   }
 
-  TTS_EXPR_IS((typename T::combined_type){}, (eve::wide<v_t, typename c_t::combined_type>));
+  TTS_EXPR_IS((typename T::combined_type){}, (eve::wide<v_t, T::size() * 2>));
 };

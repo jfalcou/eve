@@ -43,7 +43,7 @@ namespace eve
   //!
   //!  @tparam Ts Types to process
   //!
-  //!  @brief The cardinal type of the maximum lane count of given wide or scalar types.
+  //!  @brief The width type of the maximum lane count of given wide or scalar types.
   //! @}
   //================================================================================================
   template <typename... Ts>

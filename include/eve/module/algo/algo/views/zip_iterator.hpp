@@ -29,7 +29,7 @@ namespace eve::algo::views
   //! @{
   //!    @struct zip_iterator
   //!    @brief  A `relaxed_iterator` on top of multiple `relaxed_iterator`.
-  //!            If all of the components are `iterator` they have to have the same cardinal
+  //!            If all of the components are `iterator` they have to have the same width
   //!            and the `zip_iterator` will model `iterator`.
   //!            Should probably never be created directly, use `zip`.
   //!
@@ -232,7 +232,7 @@ namespace eve::algo::views
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
-      template <callable_options O, typename N>
+      template <callable_options O, cardinal_type N>
       EVE_FORCEINLINE auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
@@ -250,7 +250,7 @@ namespace eve::algo::views
         }
       }
 
-      template <relative_conditional_expr C, typename N>
+      template <relative_conditional_expr C, cardinal_type N>
       EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::store_equivalent_,
                                                    C c,
                                                    wide<value_type, N> v,

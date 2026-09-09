@@ -103,14 +103,14 @@ namespace eve::algo
   //! @{
   //!   @var force_cardinal
   //!
-  //!   @brief A trait that overrides all other cardinal selection and just says
+  //!   @brief A trait that overrides all other width selection and just says
   //!   to use a certain one. The main use-case for this is ease of interaction with
   //!   native register code.
   //!
   //!   @snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
   //!
   //!   @see consider_types if maybe using some extra type is the reason you want
-  //!   to change cardinal.
+  //!   to change width.
   //! @}
   //=============================================================================
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
@@ -124,7 +124,7 @@ namespace eve::algo
   //!   @var consider_types
   //!
   //!   @brief A trait that tells the algorithm to take an extra type into account when
-  //!   selecting a cardinal. This is, for example, used by `reduce` algorithm
+  //!   selecting a width. This is, for example, used by `reduce` algorithm
   //!   to consider the sum type.
   //!
   //!   @see also algo::views::convert if that's maybe what you need.
@@ -204,7 +204,7 @@ namespace eve::algo
   //! @{
   //!    @var divisible_by_cardinal
   //!
-  //!    @brief an trait to tell that the input data is strictly divisible by cardinal.
+  //!    @brief an trait to tell that the input data is strictly divisible by width.
   //!
   //!    Aligning takes precedent over this: if the data accesses are going to be aligned,
   //!    the tail handling comes back. You can pass `eve::algo::no_aligning`.
@@ -212,7 +212,7 @@ namespace eve::algo
   //!    In other words only does anything if the pointer is aligned_ptr or `no_aligning` is passed.
   //!
   //!    @note this trait is deduced automatically if both begin and end of the range are
-  //!    aligned_ptr with alignment >= cardinal. If you are using this, consider aligning
+  //!    aligned_ptr with alignment >= width. If you are using this, consider aligning
   //!    your data too.
   //!
   //!    @see inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries
@@ -476,7 +476,7 @@ namespace eve::algo
 
   //================================================================================================
   //! @addtogroup eve_algo_traits
-  //! @brief returns cardinal which should be used.
+  //! @brief returns width which should be used.
   //! @tparam Traits, RangeOrIterator
   //================================================================================================
   template <typename Traits, typename RorI>

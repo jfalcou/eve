@@ -16,8 +16,8 @@ using n_t = kumi::tuple<int,kumi::tuple<float,std::int8_t>,double>;
 TTS_CASE("Check types")
 {
   using T        = udt::grid2d;
-  using ap       = eve::aligned_ptr<int,       eve::fixed<64 / sizeof(int)>>;
-  using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
+  using ap       = eve::aligned_ptr<int,       64 / sizeof(int)>;
+  using const_ap = eve::aligned_ptr<int const, 64 / sizeof(int)>;
 
   using v = eve::algo::soa_vector<udt::grid2d>;
 

@@ -89,7 +89,7 @@ TTS_CASE("eve.algo.traits consider types")
   }
 };
 
-TTS_CASE("eve.algo.traits, type and cardinal")
+TTS_CASE("eve.algo.traits, type and width")
 {
   {
     eve::algo::traits tr;

@@ -23,9 +23,9 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
   {
     using index_t  = get_index_type_t<traits_type, I>;
     using wide_v   = eve::wide_value_type_t<I>;
-    using wide_i   = eve::wide<index_t, eve::iterator_cardinal_t<I>>;
+    using wide_i   = eve::wide<index_t, eve::iterator_cardinal_v<I>>;
     using v_i      = kumi::tuple<value_type_t<I>, index_t>;
-    using wide_v_i = eve::wide<v_i, eve::iterator_cardinal_t<I>>;
+    using wide_v_i = eve::wide<v_i, eve::iterator_cardinal_v<I>>;
 
     // For now just have one loop_index.
     // In preliminary experiments compiler unrolled it OK, can be improved later.
@@ -65,7 +65,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
 
       best[idx()] = combine(best[idx()], cur);
 
-      loop_index += loop_index.size();
+      loop_index += static_cast<index_t>(loop_index.size());
       return false;
     }
 

@@ -222,7 +222,7 @@ TTS_CASE("scalar works")
 TTS_CASE("printing")
 {
   std::stringstream s;
-  eve::wide<cmplx, eve::fixed<4>> x{
+  eve::wide<cmplx, 4> x{
     [](int i, int) { return cmplx{(float)i, -(float)i}; }
   };
   s << x;

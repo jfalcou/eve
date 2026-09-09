@@ -41,7 +41,7 @@ TTS_CASE_TPL( "Check behavior of interleave on arithmetic data"
 
       // Load the data & references then interleave
       using rep_t   = std::make_index_sequence<Replication>;
-      using card_t  = typename T::cardinal_type;
+      using card_t = eve::fixed<T::size()>;
 
       auto inputs       = loader(data, card_t{}, rep_t{});
       auto reference    = loader(ref , card_t{}, rep_t{});
@@ -84,7 +84,7 @@ TTS_CASE_TPL( "Check behavior of interleave on logical data"
 
       // Load the data & references then interleave
       using rep_t   = std::make_index_sequence<Replication>;
-      using card_t  = typename l_t::cardinal_type;
+      using card_t = eve::fixed<l_t::size()>;
 
       auto inputs       = loader(data, card_t{}, rep_t{});
       auto reference    = loader(ref , card_t{}, rep_t{});
