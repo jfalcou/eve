@@ -76,6 +76,30 @@ jobs:
         run:  |
           cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
 
+  ##################################################################################################
+  ## The documentation examples on Windows
+  ##################################################################################################
+  windows:
+    runs-on: [windows-2022]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      ## Ninja needs the MSVC environment already loaded.
+      - name: Load the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Prepare EVE with MSVC
+        run:  |
+          cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE"
+      - name: Compile Documentation Tests
+        run:  |
+          cd build && cmake --build . --target doc.exe --parallel 4
+      - name: Run Documentation Tests
+        run:  |
+          cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
+
   #################################################################################################
   # DOXYGEN WARNINGS
   #
