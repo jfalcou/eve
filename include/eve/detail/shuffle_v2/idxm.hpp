@@ -1280,14 +1280,14 @@ add_shuffle_levels(std::span<const std::ptrdiff_t> ls)
   return base + use_masks;
 }
 
-// In C++26 the {} can be used with spans, so it's not needed anymore
-#if __cplusplus <= 202302L
 constexpr auto
-add_shuffle_levels(std::array<std::ptrdiff_t, 3> ls)
+add_shuffle_levels(std::integral auto a, std::integral auto... as)
 {
-  return add_shuffle_levels(std::span(ls));
+  return add_shuffle_levels ( std::array{ static_cast<std::ptrdiff_t>(a)
+                                        , static_cast<std::ptrdiff_t>(as)...
+                                        }
+                            );
 }
-#endif
 
 template<std::ptrdiff_t... ls>
 constexpr auto
