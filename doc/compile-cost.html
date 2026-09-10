@@ -344,6 +344,9 @@ footer a { color: var(--primary-color); }
 
 // ---- reading -----------------------------------------------------------------------------------
 // clang writes, with no header: "program","output",total_us,user_us,peak_rss_kb
+// The first field names the tool, so a compilation and a link are told apart by it. They are two
+// populations: an object file and an executable answer different questions.
+var COMPILERS = { clang: 1, "clang++": 1, "clang-cl": 1 };
 
 // The source a CMake object path came from. Objects live in
 // <build>/test/unit/CMakeFiles/<target>.dir/<path>.o, so everything before the .dir/ is build
@@ -374,7 +377,7 @@ function splitRow(line) {
 }
 
 function parse(text) {
-  var rows = [], seen = Object.create(null);
+  var rows = [], links = [], seen = Object.create(null), seenLink = Object.create(null);
   var lines = text.split(/\r?\n/);
   for (var i = 0; i < lines.length; i++) {
     if (!lines[i]) continue;
@@ -382,10 +385,17 @@ function parse(text) {
     if (f.length !== 5) continue;
     var rss = parseInt(f[4], 10), cpu = parseInt(f[3], 10);
     if (!isFinite(rss) || !isFinite(cpu)) continue;
-    var unit = unitOf(f[1]);
-    seen[unit] = { unit: unit, module: moduleOf(unit), rss: rss, cpu: cpu };
+    if (COMPILERS[f[0]]) {
+      var unit = unitOf(f[1]);
+      seen[unit] = { unit: unit, module: moduleOf(unit), rss: rss, cpu: cpu };
+    } else {
+      var target = f[1].slice(f[1].lastIndexOf("/") + 1);
+      seenLink[target] = { unit: target, rss: rss, cpu: cpu };
+    }
   }
   for (var k in seen) rows.push(seen[k]);
+  for (var l in seenLink) links.push(seenLink[l]);
+  rows.links = links;
   return rows;
 }
 
@@ -497,6 +507,14 @@ function renderFacts() {
   out.push("<span class=\"mono\">" + esc(top.module) + "</span> carries " + duration(top.cpu) +
            " of that CPU on its own, " + (100 * top.cpu / totalCpu).toFixed(0) +
            " % of the build, over " + top.units.length + " units.");
+
+  var links = rows.links || [];
+  if (links.length) {
+    var linkCpu = links.reduce(function (a, r) { return a + r.cpu; }, 0);
+    var worstLink = links.reduce(function (a, r) { return r.rss > a.rss ? r : a; }, links[0]);
+    out.push(links.length + " links, " + duration(linkCpu) + " of CPU, the heaviest <span class=\"mono\">" +
+             esc(worstLink.unit) + "</span> at " + size(worstLink.rss) + ".");
+  }
 
   if (state.base) {
     var grew = rows.filter(function (r) {
