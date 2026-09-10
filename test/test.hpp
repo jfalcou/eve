@@ -48,6 +48,14 @@ namespace tts
     using w_t = eve::wide<T, N>;
 
     static bool equal(w_t const& l, w_t const& r) { return eve::all(l == r); }
+
+    // A partial wide sits in a full register, so the default memcmp would read lanes no operation
+    // ever writes.
+    static bool bit_equal(w_t const& l, w_t const& r)
+    {
+      using u_t = eve::as_uinteger_t<w_t>;
+      return eve::all(eve::bit_cast(l, eve::as<u_t> {}) == eve::bit_cast(r, eve::as<u_t> {}));
+    }
   };
 
   template<typename T>
