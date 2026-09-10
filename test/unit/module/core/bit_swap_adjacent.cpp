@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check return types of bit_swap_adjacent", eve::test::simd::unsigne
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_swap_adjacent(simd) on unsigned types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
   <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;

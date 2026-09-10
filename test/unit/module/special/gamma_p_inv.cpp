@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of gamma_p_inv", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of gamma_p_inv on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.1, 1.0), tts::randoms(0.1, 100.0)))
+              tts::randoms(0.1, 1.0), tts::randoms(0.1, 100.0))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -69,9 +69,9 @@ TTS_CASE_WITH("Check behavior of gamma_p_inv on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::gamma_p_inv)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.1, 1.0),
+              tts::randoms(0.1, 1.0),
                             tts::randoms(0.1, 100.0),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

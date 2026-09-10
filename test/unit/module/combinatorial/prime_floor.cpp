@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of eve::prime_floor", eve::test::simd::unsigned
 //==================================================================================================
 TTS_CASE_WITH("Check corner-cases behavior of eve::prime_floor on wide",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(0, 100))
+              tts::randoms(0, 100)
 
 )
 <typename T>(T)

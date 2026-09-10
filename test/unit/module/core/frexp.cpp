@@ -54,7 +54,7 @@ TTS_CASE_TPL("Check return types of eve::frexp(simd)", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   auto [x, n] = eve::frexp(a0);

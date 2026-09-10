@@ -9,7 +9,7 @@ int main()
   std::vector<int> v{12, 0, 5, -9, 3, 0, 5};
 
   std::cout << " -> v                                                        = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   auto pos   = eve::algo::find_if(v, eve::is_eqz);

@@ -17,137 +17,201 @@
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>
 
-namespace eve
-{
-  template<typename T, typename N>
-  inline bool compare_equal(wide<T, N> const &l, wide<T, N> const &r)
-  {
-    return eve::all(l == r);
-  }
-
-  template<typename T>
-  inline bool compare_equal(logical<T> const &l, logical<T> const &r)
-  {
-    if constexpr(eve::simd_value<T>)  return eve::all(l == r);
-    else                              return l == r;
-  }
-}
-
-namespace tts
-{
-  template<typename T, typename U>
-  double ulp_distance(T const &l, U const &r);
-
-  template<typename T, typename U>
-  double relative_distance(T const &l, U const &r);
-
-  template<typename T, typename U>
-  double absolute_distance(T const &l, U const &r);
-
-  template<>
-  inline double ulp_distance(eve::float16_t const &l, eve::float16_t const &r)
-  {
-    return eve::convert(eve::ulpdist(l, r), eve::as<double> ());
-  }
-
-  template<typename T, typename N>
-  inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_ulp = 0;
-    for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, ulp_distance(T(l.get(i)), T(r.get(i))));
-
-    return max_ulp;
-  }
-
-  template<typename T>
-  inline double ulp_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : std::numeric_limits<double>::infinity();
-  }
-
-  template<typename T, typename N>
-  inline bool is_ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
-  {
-    for(auto i = 0; i < a.size(); ++i)
-    {
-      if( (a.get(i) != b.get(i)) && !(eve::is_nan(a.get(i)) && eve::is_nan(b.get(i))))
-        return false;
-    }
-    return true;
-  }
-
-  template<typename T>
-  inline bool is_ieee_equal(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r);
-  }
-
-  template<typename T, typename N>
-  inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_dr = 0;
-    for(auto i = 0; i < l.size(); ++i)
-    {
-      if constexpr(eve::integral_value<T>)
-      {
-        auto dr =  static_cast<double>(relative_distance(T(l.get(i)), T(r.get(i))));
-        max_dr = (dr > max_dr) ? dr : max_dr;
-      }
-      else
-      {
-        auto dr = static_cast<double>(eve::reldist(T(l.get(i)), T(r.get(i))));
-        max_dr = (dr > max_dr) ? dr : max_dr;
-      }
-    }
-    return max_dr;
-  }
-
-  template<typename T>
-  inline double relative_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : 1;
-  }
-
-  template<typename T, typename N>
-  inline double absolute_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
-  {
-    double max_d = 0;
-    for(auto i = 0; i < l.size(); ++i)
-    {
-      auto d = static_cast<double>(eve::dist(T(l.get(i)), T(r.get(i))));
-      max_d = (d > max_d) ? d : max_d;
-    }
-    return max_d;
-  }
-
-  template<typename T>
-  inline double absolute_distance(eve::logical<T> const &l, eve::logical<T>const &r)
-  {
-    return eve::compare_equal(l,r) ? 0. : 1;
-  }
-
-  template<>
-  inline double absolute_distance(eve::float16_t const &l, eve::float16_t const &r)
-  {
-    return static_cast<double>(eve::dist(l, r));
-  }
-}
-
-namespace tts
-{
-
-  template<typename T, typename V> auto as_value(V const&);
-
-  template<typename T, typename V>
-  auto as_value(V const& v)
-  requires( requires { v(eve::as<T>{}); } )
-  {
-    return v(eve::as<T>{});
-  }
-}
-
 #include <tts/tts.hpp>
+
+#include "soa_vector_text.hpp"
+
+//==================================================================================================
+// The traits the suite leans on: comparison, precision, display, limits and produce, specialized
+// for eve's wide, logical and float16. A register compares and renders lane by lane, and _Float16
+// is not std::floating_point in C++20, so neither is served by the built-in path.
+//==================================================================================================
+#include <algorithm>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <optional>
+#include <random>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <vector>
+
+namespace tts
+{
+  //================================================================================================
+  //================================================================================================
+  template<typename T, typename N>
+  struct comparison<eve::wide<T, N>, eve::wide<T, N>>
+  {
+    using w_t = eve::wide<T, N>;
+
+    static bool equal(w_t const& l, w_t const& r) { return eve::all(l == r); }
+  };
+
+  template<typename T>
+  struct comparison<eve::logical<T>, eve::logical<T>>
+  {
+    using l_t = eve::logical<T>;
+
+    static bool equal(l_t const& l, l_t const& r)
+    {
+      if constexpr(eve::simd_value<T>)  return eve::all(l == r);
+      else                              return l == r;
+    }
+  };
+
+  //================================================================================================
+  //================================================================================================
+  template<typename T, typename N>
+  struct precision<eve::wide<T, N>>
+  {
+    using w_t = eve::wide<T, N>;
+
+    static double ulp(w_t const& l, w_t const& r)
+    {
+      double max_ulp = 0;
+      for(auto i = 0; i < l.size(); ++i)
+        max_ulp = std::max(max_ulp, precision<T>::ulp(T(l.get(i)), T(r.get(i))));
+      return max_ulp;
+    }
+
+    static double relative(w_t const& l, w_t const& r)
+    {
+      double max_dr = 0;
+      for(auto i = 0; i < l.size(); ++i)
+      {
+        auto dr = precision<T>::relative(T(l.get(i)), T(r.get(i)));
+        max_dr = (dr > max_dr) ? dr : max_dr;
+      }
+      return max_dr;
+    }
+
+    static double absolute(w_t const& l, w_t const& r)
+    {
+      double max_d = 0;
+      for(auto i = 0; i < l.size(); ++i)
+      {
+        auto d = precision<T>::absolute(T(l.get(i)), T(r.get(i)));
+        max_d = (d > max_d) ? d : max_d;
+      }
+      return max_d;
+    }
+
+    static bool ieee(w_t const& a, w_t const& b)
+    {
+      for(auto i = 0; i < a.size(); ++i)
+        if((a.get(i) != b.get(i)) && !(eve::is_nan(a.get(i)) && eve::is_nan(b.get(i))))
+          return false;
+      return true;
+    }
+  };
+
+  template<typename T>
+  struct precision<eve::logical<T>>
+  {
+    using l_t = eve::logical<T>;
+
+    static bool same(l_t const& l, l_t const& r) { return comparison<l_t>::equal(l, r); }
+
+    static double ulp(l_t const& l, l_t const& r)
+    {
+      return same(l, r) ? 0. : std::numeric_limits<double>::infinity();
+    }
+    static double relative(l_t const& l, l_t const& r) { return same(l, r) ? 0. : 1.; }
+    static double absolute(l_t const& l, l_t const& r) { return same(l, r) ? 0. : 1.; }
+    static bool   ieee    (l_t const& l, l_t const& r) { return same(l, r); }
+  };
+
+  //================================================================================================
+  //================================================================================================
+  template<>
+  struct precision<eve::float16_t>
+  {
+    using f_t = eve::float16_t;
+
+    static double ulp(f_t const& l, f_t const& r)
+    {
+      return eve::convert(eve::ulpdist(l, r), eve::as<double>());
+    }
+    static double absolute(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::absolute( eve::convert(l, eve::as<double>())
+                                                   , eve::convert(r, eve::as<double>())
+                                                   );
+    }
+
+    static double relative(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::relative( eve::convert(l, eve::as<double>())
+                                                   , eve::convert(r, eve::as<double>())
+                                                   );
+    }
+
+    static bool ieee(f_t const& l, f_t const& r)
+    {
+      return _::builtin_precision<double>::ieee( eve::convert(l, eve::as<double>())
+                                               , eve::convert(r, eve::as<double>())
+                                               );
+    }
+  };
+
+  //================================================================================================
+  //================================================================================================
+  template<typename T, typename N> struct display<eve::wide<T, N>>
+  {
+    static text render(eve::wide<T, N> const& v)
+    {
+      text that("(");
+      for(std::ptrdiff_t i = 0; i < v.size(); ++i)
+      {
+        if(i) that += ", ";
+        that += as_text(T(v.get(i)));
+      }
+      return that + ")";
+    }
+  };
+
+  template<> struct display<eve::float16_t>
+  {
+    static text render(eve::float16_t const& v) { return as_text(eve::convert(v, eve::as<double>())); }
+  };
+
+  template<typename T> struct display<eve::logical<T>>
+  {
+    static text render(eve::logical<T> const& v)
+    {
+      if constexpr(eve::simd_value<T>)
+      {
+        text that("(");
+        for(std::ptrdiff_t i = 0; i < v.size(); ++i)
+        {
+          if(i) that += ", ";
+          that += v.get(i) ? "true" : "false";
+        }
+        return that + ")";
+      }
+      else return text(v.value() ? "true" : "false");
+    }
+  };
+
+  //================================================================================================
+  //================================================================================================
+  template<typename T, T V> struct display<std::integral_constant<T, V>>
+  {
+    static text render(std::integral_constant<T, V> const&) { return as_text(T(V)); }
+  };
+
+  template<std::ptrdiff_t... I> struct display<eve::pattern_t<I...>>
+  {
+    static text render(eve::pattern_t<I...> const& p)
+    {
+      std::ostringstream os; os << p; return text(os.str().c_str());
+    }
+  };
+}
+
 
 //==================================================================================================
 // EVE Specific types
@@ -189,7 +253,7 @@ namespace eve::test
     };
 
     using type_all =
-        tts::concatenate_t<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
+        tts::concatenate<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
 
     template<typename Type> struct rvv_pred
     {
@@ -213,7 +277,7 @@ namespace eve::test
       static constexpr bool value = is_enabled();
     };
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
-    using type = tts::filter<rvv_pred, type_all>::type;
+    using type = tts::filter<rvv_pred, type_all>::types_list;
 #else
     using type                 = type_all;
 #endif
@@ -258,25 +322,25 @@ namespace eve::test
 namespace eve::test::scalar
 {
   using ieee_reals        = ::tts::real_types;
-  using ieee_reals_wf16   = ::tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>;
+  using ieee_reals_wf16   = ::tts::concatenate<::tts::real_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using signed_types      = ::tts::signed_types;
-  using signed_types_wf16 = ::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>;
+  using signed_types_wf16 = ::tts::concatenate<::tts::signed_types, ::tts::types<eve::float16_t>>;
   using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
-  using integers_wf16     = ::tts::concatenate_t<::tts::integral_types, ::tts::types<eve::float16_t>>;
+  using integers_wf16     = ::tts::concatenate<::tts::integral_types, ::tts::types<eve::float16_t>>;
   using all_types         = ::tts::arithmetic_types;
-  using all_types_wf16    = ::tts::concatenate_t<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
+  using all_types_wf16    = ::tts::concatenate<::tts::arithmetic_types, ::tts::types<eve::float16_t>>;
 }
 
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
-  using ieee_reals_wf16   = eve::test::wides<tts::concatenate_t<::tts::real_types, ::tts::types<eve::float16_t>>>::type;
+  using ieee_reals_wf16   = eve::test::wides<tts::concatenate<::tts::real_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using signed_types      = eve::test::wides<::tts::signed_types>::type;
-  using signed_types_wf16 = eve::test::wides<::tts::concatenate_t<::tts::signed_types, ::tts::types<eve::float16_t>>>::type;
+  using signed_types_wf16 = eve::test::wides<::tts::concatenate<::tts::signed_types, ::tts::types<eve::float16_t>>>::type;
   using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
@@ -288,16 +352,6 @@ namespace eve::test::simd
 //==================================================================================================
 // EVE Data generators
 //==================================================================================================
-
-
-namespace eve::_
-{
-  template<typename T, typename V> auto as_value(callable_object<V> const& v)
-  {
-    return v(eve::as<T>{});
-  }
-}
-
 
 
 namespace tts
@@ -317,16 +371,28 @@ namespace tts
   //================================================================================================
   // Constant wrapper
   //================================================================================================
-  template<typename F> struct constant : F
+  template<typename F> struct constant_t
   {
-    constant(F f) : F(f) {}
-    using F::operator();
+    constexpr constant_t(F) {}
+    template<typename D> constexpr auto operator()(D d) const { return F{}(d); }
   };
 
-  template<typename T, typename V> auto as_value(constant<V> const& v)
+  //================================================================================================
+  //================================================================================================
+  template<typename F> constexpr auto constant(F f) { return constant_t<F> {f}; }
+
+  //================================================================================================
+  //================================================================================================
+  template<typename T, typename V> requires( requires(V v) { v(eve::as<T>{}); } )
+  struct conversion<T, V>
   {
-    return v(eve::as<T>{});
-  }
+    static auto from(V const& v)
+    {
+      auto r = v(eve::as<T>{});
+      if constexpr(std::convertible_to<decltype(r), T>) return static_cast<T>(r);
+      else                                              return r;
+    }
+  };
 
   //================================================================================================
   // Poison wide data when using sub-sized types
@@ -360,157 +426,100 @@ namespace tts
   }
 
   //================================================================================================
-  // Customization point for argument building
   //================================================================================================
-  template<eve::simd_value T>
-  auto produce(type<T> const&, auto g, auto& rng, auto... args)
-  {
-    using e_t = eve::element_type_t<T>;
-    auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
-
-    using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
-
-    return poison(that);
-  }
-
-  auto produce(type<eve::float16_t> const&, auto g, auto& rng, auto... args)
-  {
-    auto data = produce(type<float>{}, g, rng, args...);
-    if constexpr (eve::logical_value<decltype(data)>)
-    {
-      return static_cast<eve::logical<eve::float16_t>>(data);
-    }
-    else
-    {
-      return static_cast<eve::float16_t>(data);
-    }
-  }
-
-  template<std::ptrdiff_t N>
-  auto produce(type<eve::wide<eve::float16_t, eve::fixed<N>>> const&, auto g, auto& rng, auto... args)
-  {
-    auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, rng, args...);
-    return poison(eve::load(arr.data(), eve::fixed<N>{}));
-  }
-
-  template<typename Mx, typename Mn>
-  auto produce(type<eve::float16_t> const&, randoms<Mx, Mn> g, auto& rng, auto...)
-  {
-    tts::realistic_distribution<float> dist(
-      static_cast<float>(as_value<eve::float16_t>(g.mini)),
-      static_cast<float>(as_value<eve::float16_t>(g.maxi))
-    );
-    return static_cast<eve::float16_t>(dist(rng));
-  }
+  template<typename T, typename N> struct base_type<eve::wide<T,N>>    { using type = T; };
+  template<typename T, typename N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
+  template<typename T>             struct boolean_type<eve::logical<T>> { using type = eve::logical<T>; };
+  template<typename T> requires(std::is_arithmetic_v<T> && !std::is_same_v<T,bool>)
+  struct boolean_type<T> { using type = eve::logical<T>; };
+  template<typename T>             struct base_type<eve::logical<T>>   { using type = base_type_t<T>; };
 
   //================================================================================================
-  // logical ramp - generate (v+1) % k == 0, (v+2) % k ==  0, ... (v+N) % k == 0
   //================================================================================================
-  template<typename T, typename U = T> struct logicals
+  template<typename T> requires(eve::floating_value<T>)
+  struct limits_set<T>
   {
-    logicals(T v, U k) : start(v), range(k)  {}
+    using type = T;
 
-    template<typename D> auto operator()(tts::type<D>, auto&) const
-    {
-      using type = eve::as_logical_t<D>;
-      return as_value<type>(false);
-    }
+    type nan            = eve::nan           (eve::as<type>{});
+    type inf            = eve::inf           (eve::as<type>{});
+    type minf           = eve::minf          (eve::as<type>{});
+    type mzero          = eve::mzero         (eve::as<type>{});
+    type zero           = eve::zero          (eve::as<type>{});
+    type maxflint       = eve::maxflint      (eve::as<type>{});
+    type valmax         = eve::valmax        (eve::as<type>{});
+    type valmin         = eve::valmin        (eve::as<type>{});
+    type mindenormal    = eve::mindenormal   (eve::as<type>{});
+    type smallestposval = eve::smallestposval(eve::as<type>{});
+    type mone           = eve::mone          (eve::as<type>{});
+    type one            = eve::one           (eve::as<type>{});
+  };
 
-    template<typename D> auto operator()(tts::type<D>, auto&, auto idx, auto...) const
-    {
-      using type = eve::as_logical_t<D>;
-      return as_value<type>(((start+idx)%range) == 0);
-    }
+  template<typename T> requires(eve::value<T> && !eve::floating_value<T>)
+  struct limits_set<T>
+  {
+    using type = T;
 
-    T start;
-    U range;
+    type valmax = eve::valmax(eve::as<type>{});
+    type valmin = eve::valmin(eve::as<type>{});
   };
 
   //================================================================================================
-  // generate random bits
   //================================================================================================
-  struct random_bits
+  template<typename T> requires(eve::simd_value<T>)
+  struct generation<T>
   {
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
+    static auto make(auto g, auto... args)
     {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      tts::realistic_distribution<i_t> dist(0,8*sizeof(i_t)-1);
-      return dist(rng);
+      using e_t = eve::element_type_t<T>;
+      auto data = produce(type<std::array<e_t,T::size()>>{}, g, args...);
+
+      using v_t = typename decltype(data)::value_type;
+      eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
+
+      return poison(that);
     }
   };
 
   //================================================================================================
-  // Convert generated data to integral values
   //================================================================================================
-  template<typename G>
-  struct as_integer
+  template<>
+  struct generation<eve::float16_t>
   {
-    as_integer(G g) : generator_(g) {}
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
+    static auto make(auto g, auto... args)
     {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      return generator_(tts::type<i_t>{},rng, args...);
-    }
-
-    G generator_;
-  };
-
-  template<typename G>
-  struct as_signed_integer
-  {
-    as_signed_integer(G g) : generator_(g) {}
-    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
-    {
-      using i_t = eve::as_integer_t<eve::element_type_t<D>, signed>;
-      return generator_(tts::type<i_t>{},rng, args...);
-    }
-
-    G generator_;
-  };
-
-  //================================================================================================
-  // IEEE Special Constant value
-  //================================================================================================
-  template<typename T>
-  inline auto limits(tts::type<T>)
-  {
-    return []()
-    {
-      if constexpr(eve::floating_value<T>)
+      if constexpr( tts::is_randoms_v<decltype(g)> )
       {
-        struct values
-        {
-          using type  = T;
-          type nan         = eve::nan     (eve::as<type>{});
-          type inf         = eve::inf     (eve::as<type>{});
-          type minf        = eve::minf    (eve::as<type>{});
-          type mzero       = eve::mzero   (eve::as<type>{});
-          type zero        = eve::zero   (eve::as<type>{});
-          type maxflint    = eve::maxflint(eve::as<type>{});
-          type valmax      = eve::valmax(eve::as<type>{});
-          type valmin      = eve::valmin(eve::as<type>{});
-          type mindenormal = eve::mindenormal(eve::as<type>{});
-          type smallestposval = eve::smallestposval(eve::as<type>{});
-          type mone       = eve::mone   (eve::as<type>{});
-          type one        = eve::one   (eve::as<type>{});
-        };
-
-        return values{};
+        return static_cast<eve::float16_t>
+        ( tts::random_value<float>
+          ( static_cast<float>(convert_as(g.mini, type<eve::float16_t>{}))
+          , static_cast<float>(convert_as(g.maxi, type<eve::float16_t>{}))
+          )
+        );
       }
       else
       {
-        struct values
-        {
-          using type  = T;
-          type valmax    = eve::valmax(eve::as<type>{});
-          type valmin    = eve::valmin(eve::as<type>{});
-        };
-
-        return values{};
+        auto data = produce(type<float>{}, g, args...);
+        if constexpr(eve::logical_value<decltype(data)>)
+          return static_cast<eve::logical<eve::float16_t>>(data);
+        else
+          return static_cast<eve::float16_t>(data);
       }
-    }();
-  }
+    }
+  };
+
+  //================================================================================================
+  //================================================================================================
+  template<std::ptrdiff_t N>
+  struct generation<eve::wide<eve::float16_t, eve::fixed<N>>>
+  {
+    static auto make(auto g, auto... args)
+    {
+      auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
+      return poison(eve::load(arr.data(), eve::fixed<N>{}));
+    }
+  };
+
 
   template<typename Fn, typename Wm, typename... Args>
   auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>

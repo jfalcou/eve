@@ -115,7 +115,7 @@ void store_ignore_test_pass(T what, eve::element_type_t<T> garbage_value, eve::e
 
 TTS_CASE_WITH( "Check store behavior with ignore"
         , eve::test::simd::all_types_wf16
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T data, L logical_data)
 {

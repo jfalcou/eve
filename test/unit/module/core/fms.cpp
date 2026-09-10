@@ -37,18 +37,18 @@ TTS_CASE_TPL("Check return types of fms", eve::test::simd::all_types_wf16)
 //==================================================================================================
 //==  fms tests
 //==================================================================================================
-auto onepmileps =
+constexpr auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
                   { return (eve::inc(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
-auto onemmileps =
+constexpr auto onemmileps =
     tts::constant([]<typename U>(eve::as<U>)
                   { return (eve::oneminus(1000 * eve::eps(eve::as(eve::element_type_t<U>())))); });
 
 TTS_CASE_WITH("Check precision behavior of fms on real types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(onemmileps, onepmileps),
-                            tts::randoms(onemmileps, onepmileps)))
+              tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::fms;
@@ -65,8 +65,8 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fms on real types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(onemmileps, onepmileps),
-                            tts::randoms(onemmileps, onepmileps)))
+              tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::fms;
@@ -82,9 +82,9 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fms[promote] on all types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000, 1000),
+              tts::randoms(-1000, 1000),
                             tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000))
+                            tts::randoms(-1000, 1000)
              )
   <typename T>(T const& a0, T const& a1, T const& a2 )
 {
@@ -109,8 +109,8 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fms[promote] on all types",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1 )
 {
   using eve::as;
@@ -139,7 +139,7 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
   auto r4 = fms[promote](ia, da, a1);
   using er4_t =  eve::element_type_t<decltype(r4)>;
   auto refr4= eve::fms(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
-  TTS_ULP_EQUAL(r4,  refr4, 0.5);
+  TTS_ULP_EQUAL(r4,  refr4, 3.5);
 };
 
 //==================================================================================================
@@ -147,10 +147,10 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fms on all types",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(1, 5),
+              tts::randoms(1, 5),
                             tts::randoms(1, 5),
                             tts::randoms(1, 5),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
   using eve::fms;

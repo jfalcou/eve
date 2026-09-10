@@ -30,13 +30,13 @@ TTS_CASE_TPL("Check return types of lerp", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // lerp tests
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return -eve::sqrtvalmax(tgt); });
+constexpr auto mini = tts::constant([](auto tgt) { return -eve::sqrtvalmax(tgt); });
 
 TTS_CASE_WITH("Check behavior of lerp on ieee floating",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(mini, eve::sqrtvalmax),
+              tts::randoms(mini, eve::sqrtvalmax),
                             tts::randoms(mini, eve::sqrtvalmax),
-                            tts::randoms(0.0, 1.0)))
+                            tts::randoms(0.0, 1.0))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::lerp;
@@ -55,10 +55,10 @@ TTS_CASE_WITH("Check behavior of lerp on ieee floating",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::lerp)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          T const& a2,

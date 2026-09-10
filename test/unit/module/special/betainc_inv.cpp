@@ -50,10 +50,10 @@ TTS_CASE_TPL("Check behavior of betainc_inv on wide", eve::test::simd::ieee_real
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::betainc_inv)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0),
+              tts::randoms(0.0, 10.0),
                             tts::randoms(0.0, 10.0),
                             tts::randoms(0.0, 10.0),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            T const& a1,
                            T const& a2,
@@ -66,9 +66,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::betainc_inv)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of erf on wide",
               eve::test::simd::ieee_reals,
-              tts::generate( tts::randoms(1, 10)
+               tts::randoms(1, 10)
                            , tts::randoms(1, 10)
-                           , tts::randoms(1, 10)))
+                           , tts::randoms(1, 10))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
    using eve::raw;

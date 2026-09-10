@@ -33,20 +33,40 @@ TTS_CASE_TPL("Check return types of dot", eve::test::simd::ieee_reals_wf16)
 
 TTS_CASE_WITH("Check behavior of dot on all types full range",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::abs;
   using eve::dot;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c, auto d) -> v_t { return a*c+b*d; };
+  auto prec = tts::prec<T>();
+  TTS_RELATIVE_EQUAL(dot((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_RELATIVE_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_RELATIVE_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), prec);
+  TTS_ULP_EQUAL(dot(a0, a1), a0*a1, 0.5);
+};
+
+//==================================================================================================
+// Same-sign data cannot cancel, so an ULP claim holds here.
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of dot(wide) without cancellation",
+              eve::test::simd::ieee_reals,
+              tts::randoms(1, 100),
+                            tts::randoms(1, 100),
+                            tts::randoms(1, 100),
+                            tts::randoms(1, 100))
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::dot;
+  using v_t = eve::element_type_t<T>;
+  auto m    = [](auto a, auto b, auto c, auto d) -> v_t { return a*c+b*d; };
   TTS_ULP_EQUAL(dot((a0), (a1), (a2), (a3)), tts::map(m, a0, a1, a2, a3), 2);
   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1, a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
   TTS_ULP_EQUAL(dot(kumi::tuple{a0, a1}, kumi::tuple{a2, a3}), tts::map(m, a0, a1, a2, a3), 2);
-  TTS_ULP_EQUAL(dot(a0, a1), a0*a1, 0.5);
 };
 
 
@@ -55,9 +75,9 @@ TTS_CASE_WITH("Check behavior of dot on all types full range",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::dot)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            T const& a1,
                            M const& mask)
@@ -68,10 +88,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::dot)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of dot kahan on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100)))
+                            tts::randoms(-100, 100))
 <typename T>(T const& a0, T const& a1,  T const&a2, T const& a3)
 {
   using eve::dot;

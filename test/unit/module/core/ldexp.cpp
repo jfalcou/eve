@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check return types of ldexp", eve::test::simd::ieee_reals_wf16)
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of ldexp on wide"
               , eve::test::simd::ieee_reals_wf16
-              , tts::generate(tts::randoms(-100.0, 100.0))
+              , tts::randoms(-100.0, 100.0)
               )
 <typename T>(T a0)
 {
@@ -91,7 +91,7 @@ TTS_CASE_WITH ( "Check behavior of ldexp on wide"
 
 TTS_CASE_WITH ( "Check behavior of ldexp[pedantic] on wide"
               , eve::test::simd::ieee_reals_wf16
-              , tts::generate(tts::randoms(-100.0, 100.0))
+              , tts::randoms(-100.0, 100.0)
               )
 <typename T>(T a0)
 {
@@ -157,7 +157,7 @@ TTS_CASE_WITH ( "Check behavior of ldexp[pedantic] on wide"
 //======================================================================================================================
 TTS_CASE_WITH ( "Check behavior of eve::masked(eve::ldexp)(eve::wide)"
               , eve::test::simd::ieee_reals_wf16
-              , tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
+              , tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)
               )
 <typename T, typename M>(T const& a0,
                          M const& mask)

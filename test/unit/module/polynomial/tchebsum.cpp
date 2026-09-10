@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of tchebsum on wide", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of tchebsum on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-3.0, 3.0))
+              tts::randoms(-3.0, 3.0)
              )
 <typename T>(T const& a0)
 {
@@ -50,12 +50,14 @@ TTS_CASE_WITH("Check behavior of tchebsum on wide",
     TTS_EQUAL(tchebsum(a0, T(0)), T(0));
     TTS_EQUAL(tchebsum(a0, T(1)), T(0.5));
     TTS_EQUAL(tchebsum(a0, T(1), T(2)), T(0.5)+T(2)*a0);
-    TTS_ULP_EQUAL(tchebsum(a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, 1.0);
+    // The sum crosses zero, where an ULP is meaningless: the relative distance keeps its meaning.
+    auto prec = tts::prec<T>();
+    TTS_RELATIVE_EQUAL(tchebsum(a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, prec);
 
     TTS_EQUAL(tchebsum[pedantic](a0, 0), T(0));
     TTS_EQUAL(tchebsum[pedantic](a0, 1), T(0.5));
     TTS_EQUAL(tchebsum[pedantic](a0, 1, 2),  T(0.5)+T(2)*a0);
-    TTS_ULP_EQUAL(tchebsum[pedantic](a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, 2.0);
+    TTS_RELATIVE_EQUAL(tchebsum[pedantic](a0, T(1), T(2), T(3)), T(0.5)+T(2)*a0+T(3)*t2, prec);
     TTS_ULP_EQUAL(tchebsum[widen](a0, T(1), T(2), T(3)), tchebsum(upgrade(a0), upgrade(T(1)), upgrade(T(2)), upgrade(T(3))), 0.5);
   }
 

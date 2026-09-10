@@ -27,19 +27,19 @@ TTS_CASE_TPL("Check return types of sec", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // sec  tests
 //==================================================================================================
-auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt); };
-auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
-auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
-auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium](tgt); };
+constexpr auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt); };
+constexpr auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
+constexpr auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
+constexpr auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
+constexpr auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
+constexpr auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium](tgt); };
 
 TTS_CASE_WITH("Check behavior of sec on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
+              tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c)),
                             tts::randoms(tts::constant(mhalf_c), tts::constant(half_c)),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::sec;
@@ -65,8 +65,8 @@ TTS_CASE_WITH("Check behavior of sec on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sec)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

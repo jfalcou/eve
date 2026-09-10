@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of eve::exponent(simd)", eve::test::simd::ieee_
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::exponent(simd)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0), tts::logicals(0, 3)))
+              tts::between(-1.0, 1.0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using i_t  = eve::as_integer_t<T>;

@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of tgamma", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of tgamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-10.0, 10.0)))
+              tts::randoms(-10.0, 10.0))
 <typename T>([[maybe_unused]] T const& a0)
 {
   using eve::tgamma;
@@ -61,8 +61,8 @@ TTS_CASE_WITH("Check behavior of tgamma on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::tgamma)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-10.0, 10.0),
-              tts::logicals(0, 3)))
+              tts::randoms(-10.0, 10.0),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -84,10 +84,10 @@ TTS_CASE_TPL("Check with edge cases", eve::test::scalar::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of tgamma on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 40.0)
+              tts::randoms(1.0, 40.0)
                            , tts::randoms(0.5, 20.0)
                            , tts::randoms(9.0, 11.0)
-                           )
+                           
              )
   <typename T>(T const& a0, T const& a1, T  a2)
 {

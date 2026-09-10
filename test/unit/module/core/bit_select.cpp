@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check return types of bit_select", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_select(simd) on integers",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t = eve::element_type_t<T>;

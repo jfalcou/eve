@@ -35,7 +35,7 @@ TTS_CASE_TPL( "Check behavior of swap_if - scalar values"
 
 TTS_CASE_WITH( "Check behavior of swap_if - wide arithmetic"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0), tts::ramp(10), tts::logicals(1,2) )
+        ,  tts::ramp(0), tts::ramp(10), tts::logicals(1,2) 
         )
 <typename T, typename L>(T lhs, T rhs, L mask)
 {
@@ -66,7 +66,7 @@ TTS_CASE_WITH( "Check behavior of swap_if - wide arithmetic"
 
 TTS_CASE_WITH( "Check behavior of swap_if - logical"
         , eve::test::simd::all_types
-        , tts::generate ( tts::logicals(1,2), tts::logicals(0,3), tts::logicals(1,2) )
+        ,  tts::logicals(1,2), tts::logicals(0,3), tts::logicals(1,2) 
         )
 <typename L>(L lhs, L rhs, L mask)
 {

@@ -69,7 +69,7 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types_wf16)
 TTS_CASE_WITH("Check behavior of div on wide",
               eve::test::simd::ieee_reals_wf16
               ,
-              tts::generate(tts::randoms(-100, 100), tts::randoms(-100, 100), tts::randoms(1, 11)))
+              tts::randoms(-100, 100), tts::randoms(-100, 100), tts::randoms(1, 11))
 <typename T>(T a0, T a1, T a2)
 {
   using eve::div;
@@ -120,14 +120,14 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::div variants on wide", eve::te
 //==================================================================================================
 //==  conditional div tests on simd
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of div on signed types",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
+              tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+                            tts::randoms(tts::constant(mini), 127))
 <typename T>(T a0, T a1, T a2)
 {
   using eve::div;
@@ -158,8 +158,8 @@ TTS_CASE_WITH("Check behavior of div on signed types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of div mod on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {

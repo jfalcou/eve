@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of countl_one on wide", eve::test::simd::unsign
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of countl_one(wide) on unsigned integral ",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, const M t)
 {
   using v_t = eve::element_type_t<T>;

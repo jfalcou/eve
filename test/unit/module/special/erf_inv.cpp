@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check return types of erf_inv", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of erf_inv on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1.0, 1.0)))
+              tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -81,8 +81,8 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::erf_inv)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1.0, 1.0),
-              tts::logicals(0, 3)))
+              tts::randoms(-1.0, 1.0),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

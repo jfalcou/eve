@@ -34,15 +34,15 @@ TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types_wf16)
 //==================================================================================================
 // Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return eve::smallestposval(tgt)*10; });
-auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 10; });
+constexpr auto mini = tts::constant([](auto tgt) { return eve::smallestposval(tgt)*10; });
+constexpr auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 10; });
 
 //==================================================================================================
 // Tests for eve::rec
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(mini, maxi), tts::logicals(0, 3)))
+              tts::randoms(mini, maxi), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::lower;
@@ -113,7 +113,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of rec mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1, 96))
+              tts::randoms(1, 96)
              )
   <typename T>(T const& ra0)
 {

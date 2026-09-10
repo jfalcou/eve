@@ -10,11 +10,11 @@ int main()
   std::vector<int>  w = {-9,3,-8,2,2,5,-5,7,-2,3};
 
   std::cout << " -> v                       = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> w                       = "
-            << tts::as_string(w)
+            << tts::as_text(w)
             << "\n";
 
   std::cout << " -> eve::algo::equal(v, v)  = " << std::boolalpha << eve::algo::equal(v, v) << "\n";

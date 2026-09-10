@@ -1,6 +1,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
-#include <tts/tts.hpp>  // as_string
+#include <tts/tts.hpp>  // as_text
 #include <vector>
 
 int main()
@@ -8,7 +8,7 @@ int main()
   std::vector<int> v{ 2, 4, -1, 4, 0, 1 };
 
   std::cout << " -> v                                                       = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> eve::algo::max_value(v)                                 = "

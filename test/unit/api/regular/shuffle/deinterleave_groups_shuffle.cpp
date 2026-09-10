@@ -38,12 +38,11 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
   auto actual = eve::deinterleave_groups_shuffle(a_, b_, eve::lane<1>);
 
   TTS_EQUAL(expected, actual)
-    << std::hex
     << "\na : " << a_
     << "\nb : " << b_
     << "\ne : " << expected
     << "\nr : " << actual
-    << '\n' << std::dec;
+    << '\n';
 };
 
 // This is identity
@@ -92,12 +91,11 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
 
       TTS_EQUAL(expected, r)
           << "\nG: " << G
-          << std::hex
           << "\na : " << av
           << "\nb : " << bv
           << "\ne : " << expected
           << "\nr : " << r << "\n"
-          << '\n' << std::dec;
+          << '\n';
     };
 
     (test( eve::lane<1 << I> ), ... );

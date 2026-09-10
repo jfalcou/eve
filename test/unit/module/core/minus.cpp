@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types_w
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::minus(eve::wide)",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
+              tts::randoms(-10, +10), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using v_t = eve::element_type_t<T>;
@@ -61,7 +61,7 @@ TTS_CASE_WITH("Check behavior of eve::minus(eve::wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::minus[eve::saturated](eve::wide)",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
 
@@ -103,7 +103,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::minus variants on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of minus mod on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 96))
+              tts::randoms(0, 96)
              )
   <typename T>(T const& ra0)
 {

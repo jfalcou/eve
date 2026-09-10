@@ -33,9 +33,9 @@ TTS_CASE_TPL("Check return types of sum_of_squares", eve::test::simd::ieee_reals
 
 TTS_CASE_WITH("Check behavior of sum_of_squares on all types full range",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::sqr;
@@ -54,9 +54,9 @@ TTS_CASE_WITH("Check behavior of sum_of_squares on all types full range",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sum_of_squares)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            T const& a1,
                            M const& mask)
@@ -67,9 +67,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sum_of_squares)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of sum_of_squares kahan on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::sum_of_squares;
@@ -85,10 +85,10 @@ TTS_CASE_WITH("Check behavior of sum_of_squares kahan on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sum_of_squares upper lower on all types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100, 100),
+              tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
                             tts::randoms(-100, 100),
-                            tts::randoms(-100, 100))
+                            tts::randoms(-100, 100)
              )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {

@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of newton on wide", eve::test::simd::ieee_reals
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of newton on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(0)))
+              tts::ramp(0))
 <typename T>(T const& a0)
 {
   using eve::fma;

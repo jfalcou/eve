@@ -41,10 +41,10 @@ TTS_CASE_TPL("Check return types of max", eve::test::simd::all_types_wf16)
 
 TTS_CASE_WITH("Check behavior of max on all types full range",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)
-              ))
+              )
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::abs;
@@ -95,8 +95,8 @@ TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals_wf16)
 
 TTS_CASE_WITH("Check predicate version of max",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmin),
-                            tts::randoms(eve::valmin, eve::valmin)))
+              tts::randoms(eve::valmin, eve::valmin),
+                            tts::randoms(eve::valmin, eve::valmin))
 <typename T>(T const& a0, T const& a1)
 {
   TTS_EXPR_IS(eve::max(eve::is_less), std::remove_cvref_t<decltype(eve::max)>);
@@ -128,9 +128,9 @@ TTS_CASE_WITH("Check predicate version of max",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::max[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

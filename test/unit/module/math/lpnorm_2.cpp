@@ -17,12 +17,12 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of lpnorm on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, eve::valmax),
+              tts::randoms(0.0, eve::valmax),
                             tts::randoms(0.0, eve::valmax),
                             tts::randoms(0.5, 2.0),
                             tts::randoms(0.5, 2.0),
                             tts::randoms(0.0, eve::valmax),
-                            tts::randoms(0.5, 2.0)))
+                            tts::randoms(0.5, 2.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
 {
 

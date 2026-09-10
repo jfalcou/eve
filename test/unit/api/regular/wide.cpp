@@ -12,7 +12,7 @@
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide enumerating constructor"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T ref, L logical_ref)
 {
@@ -50,7 +50,7 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
 
 TTS_CASE_WITH( "Check eve::wide generator constructor"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T ref, L logical_ref)
 {
@@ -112,7 +112,7 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide raw storage handling"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -140,7 +140,7 @@ TTS_CASE_WITH( "Check eve::wide raw storage handling"
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide::slice behavior"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T d, L ld)
 {
@@ -180,7 +180,7 @@ TTS_CASE_WITH( "Check eve::wide::slice behavior"
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide::combine behavior"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T d, L ld)
 {

@@ -31,8 +31,8 @@ TTS_CASE("eve.algo.reduce sum complex numbers")
   auto [re, im] = eve::algo::reduce(
       eve::algo::views::zip(real, img), std::pair {plus, cmplx {0.0, 0.0}}, cmplx {1, -1});
 
-  TTS_RELATIVE_EQUAL(re, 1.6, 0.0001);
-  TTS_RELATIVE_EQUAL(im, -1.6, 0.0001);
+  TTS_RELATIVE_EQUAL(re, 1.6f, 0.0001);
+  TTS_RELATIVE_EQUAL(im, -1.6f, 0.0001);
 };
 
 TTS_CASE("eve.algo.inclusive_scan a vector")

@@ -100,12 +100,12 @@ TTS_CASE("Run a ball simulation")
   eve::algo::soa_vector<ball> balls;
 
   // Some options from the command line ---------------------------------
-  auto gravity    = ::tts::arguments().value("--gravity"   , 9.81f);
-  auto time       = ::tts::arguments().value("--time_step" , 100  );
-  auto max_elast  = ::tts::arguments().value("--elasticity", 0.9f );
-  auto resolution = ::tts::arguments().value("--resolution", 1    );
-  auto max_bounce = ::tts::arguments().value("--bounce"    , 20   );
-  auto nb_balls   = ::tts::arguments().value("--size"      , 200  );
+  auto gravity    = ::tts::arguments().value(9.81f, "--gravity"   );
+  auto time       = ::tts::arguments().value(100  , "--time_step" );
+  auto max_elast  = ::tts::arguments().value(0.9f , "--elasticity");
+  auto resolution = ::tts::arguments().value(1    , "--resolution");
+  auto max_bounce = ::tts::arguments().value(20   , "--bounce"    );
+  auto nb_balls   = ::tts::arguments().value(200  , "--size"      );
   auto render_size = 16 * resolution;
 
   // Generates the balls ---------------------------------
@@ -135,7 +135,7 @@ TTS_CASE("Run a ball simulation")
                   );
     }
 
-    if(::tts::arguments()[{"-v","--verbose"}]) std::cout << screen.render();
+    if(::tts::arguments()("-v", "--verbose")) std::cout << screen.render();
   }
 
   TTS_PASS("Simulation completed");

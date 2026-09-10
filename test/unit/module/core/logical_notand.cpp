@@ -46,7 +46,7 @@ TTS_CASE_TPL("Check behavior of eve::logical_notand(invalid)", eve::test::scalar
 
 TTS_CASE_WITH("Check behavior of eve::logical_notand(logical<wide>)",
               eve::test::simd::all_types,
-              tts::generate(tts::logicals(0, 3), tts::logicals(1, 2), tts::randoms(0, 2)))
+              tts::logicals(0, 3), tts::logicals(1, 2), tts::randoms(0, 2))
 <typename M, typename T>(M const& l0, [[maybe_unused]] M const& l1, [[maybe_unused]] T const& a0)
 {
   using l_t = eve::element_type_t<M>;

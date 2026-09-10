@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check return types of eve::arg(simd)", eve::test::simd::ieee_reals
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::arg(simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::between(-1.0, 1.0)))
+              tts::between(-1.0, 1.0))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of eve::arg(simd)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::arg[eve::pedantic](simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::between(-1.0, 1.0)))
+              tts::between(-1.0, 1.0))
 <typename T>(T a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -62,8 +62,8 @@ TTS_CASE_WITH("Check behavior of eve::arg[eve::pedantic](simd)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::arg)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

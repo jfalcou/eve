@@ -46,9 +46,9 @@ TTS_CASE_TPL("Check return types of tchebytchev on wide", eve::test::simd::ieee_
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of tchebytchev on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0),
+              tts::between(-1.0, 1.0),
                             tts::between(1.0, 10.0),
-                            tts::as_integer(tts::ramp(0))))
+                            tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, T const& a1, I const&)
 {
   auto eve__tchebytchev = [](uint32_t n, auto x) { return eve::tchebytchev(n, x); };
@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of tchebytchev on wide",
 
 TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0)))
+              tts::between(-1.0, 1.0))
 <typename T>(T const& a0)
 {
   auto t3 = eve::tchebytchev(3, a0);

@@ -18,7 +18,7 @@
 //==================================================================================================
 TTS_CASE_WITH( "Check conditional load to wides from aligned pointer with alternatives"
         , eve::test::simd::all_types_wf16
-        , tts::generate(tts::ramp(50))
+        , tts::ramp(50)
         )
 <typename T>(T others)
 {

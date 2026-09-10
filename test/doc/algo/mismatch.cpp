@@ -10,11 +10,11 @@ int main()
   std::vector<int>  w = {2,5,-9, -9, -9,-8,2,-5,7,-2,3};
 
   std::cout << " -> v                             = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> w                             = "
-            << tts::as_string(w)
+            << tts::as_text(w)
             << "\n";
 
   auto [vv, ww] = eve::algo::mismatch(v, w);

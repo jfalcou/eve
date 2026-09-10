@@ -31,9 +31,9 @@ TTS_CASE_TPL( "Check return types of cosd"
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cosd on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-45, 45),
+              tts::randoms(-45, 45),
                             tts::randoms(-90, 90),
-                            tts::randoms(-5000, 5000)))
+                            tts::randoms(-5000, 5000))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::cosd;
@@ -73,8 +73,8 @@ TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::cosd)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

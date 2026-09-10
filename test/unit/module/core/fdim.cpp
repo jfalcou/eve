@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of eve::fdim(simd)", eve::test::simd::all_types
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::fdim(simd) floating",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::between(-1, 1), tts::between(1, -1)))
+              tts::between(-1, 1), tts::between(1, -1))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::as;
@@ -37,14 +37,14 @@ TTS_CASE_WITH("Check behavior of eve::fdim(simd) floating",
             tts::map([](auto e, auto f) -> v_t { return (e >= f) ? e - f : eve::zero(as(e)); }, a0, a1));
 };
 
-auto maxi =
+constexpr auto maxi =
     tts::constant([]<typename T>(eve::as<T> const&) { return eve::valmax(eve::as<T>()) / 4; });
-auto mini =
+constexpr auto mini =
     tts::constant([]<typename T>(eve::as<T> const&) { return eve::valmin(eve::as<T>()) / 4; });
 
 TTS_CASE_WITH("Check behavior of eve::fdim(simd) integral",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(mini, maxi), tts::randoms(mini, maxi)))
+              tts::randoms(mini, maxi), tts::randoms(mini, maxi))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::as;
@@ -62,9 +62,9 @@ TTS_CASE_WITH("Check behavior of eve::fdim(simd) integral",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::fdim)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

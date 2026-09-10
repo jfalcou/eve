@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check return types of eve::prevint", eve::test::simd::all_types_wf
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::prevint(eve::wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T a0)
 {
   if constexpr (eve::integral_value<T>)
@@ -74,8 +74,8 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prevint",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::prevint[cx](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::prevint[mask](a0), eve::if_else(mask, eve::prevint(a0), a0));

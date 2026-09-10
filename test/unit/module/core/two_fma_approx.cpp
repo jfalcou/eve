@@ -13,10 +13,10 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of two_fma_approx",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.)
-                           )
+                           
              )
 <typename T>(T a0, T a1, T a2)
 {

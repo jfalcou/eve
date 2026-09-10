@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check return types of powm1", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of powm1 on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 10.0), tts::randoms(-1.0, 1.0)))
+              tts::randoms(1.0, 10.0), tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -96,9 +96,9 @@ TTS_CASE_TPL("Check  powm1", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::powm1)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ie
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of reverse_horner on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::ramp(0)))
+              tts::ramp(0))
 <typename T>(T const& a0)
 {
   using eve::fma;

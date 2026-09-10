@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::bit_ternary return type" , eve::test::simd::all_types)
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x00 to 0x0f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -63,9 +63,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x00 to 0x0f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x10 to 0x1f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -97,9 +97,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x10 to 0x1f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x20 to 0x2f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -131,9 +131,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x20 to 0x2f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x30 to 0x3f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -165,9 +165,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x30 to 0x3f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x40 to 0x4f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -199,9 +199,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x40 to 0x4f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x50 to 0x5f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -233,9 +233,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x50 to 0x5f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x60 to 0x6f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -267,9 +267,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x60 to 0x6f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x70 to 0x7f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -301,9 +301,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x70 to 0x7f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x80 to 0x8f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -335,9 +335,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x80 to 0x8f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x90 to 0x9f",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -369,9 +369,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0x90 to 0x9f",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xa0 to 0xaf",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -403,9 +403,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xa0 to 0xaf",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xb0 to 0xbf",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -437,9 +437,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xb0 to 0xbf",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xc0 to 0xcf",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -471,9 +471,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xc0 to 0xcf",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xd0 to 0xdf",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -505,9 +505,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xd0 to 0xdf",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xe0 to 0xef",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;
@@ -539,9 +539,9 @@ TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xe0 to 0xef",
 
 TTS_CASE_WITH("Check behavior of bit_ternary on masks 0xf0 to 0xff",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a, T const& b, T const& c)
 {
   using eve::as;

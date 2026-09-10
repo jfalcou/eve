@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check return types of rem", eve::test::simd::all_types)
 TTS_CASE_WITH("Check behavior of rem on wide",
               eve::test::simd::integers // all_types
               ,
-              tts::generate(tts::randoms(1, 100), tts::randoms(1, 11), tts::randoms(1, 11)))
+              tts::randoms(1, 100), tts::randoms(1, 11), tts::randoms(1, 11))
 <typename T>(T a0, T, T a2)
 {
   using eve::downward;
@@ -162,14 +162,14 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rem variants on wide",
 //==================================================================================================
 //==  conditional rem tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of rem on signed types",
               eve::test::simd::signed_types,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
+              tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+                            tts::randoms(tts::constant(mini), 127))
 <typename T>(T a0, T a1, T a2)
 {
   using eve::downward;

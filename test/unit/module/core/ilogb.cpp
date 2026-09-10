@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of eve::ilogb(simd)", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::ilogb(simd)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::between(-1.0, 1.0))
+              tts::between(-1.0, 1.0)
              )
   <typename T>(T const& a0)
 {

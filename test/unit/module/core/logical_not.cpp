@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of eve::logical_not(simd)", eve::test::simd::al
 
 TTS_CASE_WITH("Check behavior of eve::logical_not(simd)",
               eve::test::simd::all_types,
-              tts::generate(tts::logicals(0, 3)))
+              tts::logicals(0, 3))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;

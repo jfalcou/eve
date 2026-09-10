@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of radinpi", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of radinpi on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   TTS_ULP_EQUAL(eve::radinpi(a0), a0 * T(0.31830988618379067153776752674502872406891929148092), 2);
@@ -42,8 +42,8 @@ TTS_CASE_WITH("Check behavior of radinpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::radinpi)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, 
                          M const& mask)
 {

@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of lo on wide", eve::test::simd::unsigned_integ
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of lo(wide) on unsigned integral ",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   using v_t       = eve::element_type_t<T>;

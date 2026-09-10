@@ -30,7 +30,7 @@
 // //==================================================================================================
 // TTS_CASE_WITH("Check behavior of log2 on wide",
 //               eve::test::simd::ieee_reals_wf16,
-//               tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.0)))
+//               tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.0))
 // <typename T>(T const& a0, T const& a1)
 // {
 //   using v_t = eve::element_type_t<T>;
@@ -69,8 +69,8 @@
 // //==================================================================================================
 // TTS_CASE_WITH("Check behavior of eve::masked(eve::log2)(eve::wide)",
 //               eve::test::simd::ieee_reals_wf16,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
+//               tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3))
 // <typename T, typename M>(T const& a0,
 //                          M const& mask)
 // {
@@ -80,9 +80,19 @@
 
 
 
+//==================================================================================================
+// raw and fast compute in float when the element is double, so the domain is float's.
+//==================================================================================================
+constexpr auto float_domain_max = []<typename T>(eve::as<T> const& tgt)
+{
+  using v_t = eve::element_type_t<T>;
+  if constexpr(std::same_as<v_t, double>) return T(eve::valmax(eve::as<float>()));
+  else                                    return eve::valmax(tgt);
+};
+
 TTS_CASE_WITH("Check behavior of log2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::eps, eve::valmax), tts::randoms(0.5, 2.01)))
+              tts::randoms(eve::eps, tts::constant(float_domain_max)), tts::randoms(0.5, 2.01))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

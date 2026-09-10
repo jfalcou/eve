@@ -9,7 +9,7 @@ int main()
   std::vector<int>  v = {2,6,-10,32,-8,2,-6,8,-2,4};
 
   std::cout << " -> v                                  = "
-            << tts::as_string(v)
+            << tts::as_text(v)
             << "\n";
 
   std::cout << " -> eve::algo::any_of(v, i >= 4)       = "
