@@ -6,6 +6,10 @@
 ##======================================================================================================================
 """Turn clang's -fproc-stat-report output into a Markdown report.
 
+The file carries two kinds of line, one per compiler invocation and one per linker invocation, told
+apart by the tool in the first column. They are reported separately: an object file and an
+executable answer different questions, and adding them would hide both.
+
 The summary is written for $GITHUB_STEP_SUMMARY, where GitHub renders it on the run page, and the full
 table for a file the run attaches. Give it a baseline to get a delta column, which is the part worth
 reading: a ranking of what is expensive today gets looked at twice, where "this file gained 400 MB
@@ -29,6 +33,9 @@ import sys
 # clang writes, with no header: "program","output",total_us,user_us,peak_rss_kb
 FIELDS = 5
 
+# The compiler names itself; every other tool the driver spawns is the linker, whichever one it is.
+COMPILERS = ("clang", "clang++", "clang-cl")
+
 
 def unit_of(output):
     """The source a CMake object path came from, as `module/core/add.cpp`.
@@ -42,14 +49,29 @@ def unit_of(output):
     return name[:-2] if name.endswith(".o") else name
 
 
+def target_of(output):
+    """The executable a link produced, as `unit.api.compress.small`, without its extension."""
+    name = os.path.basename(output)
+    return name[:-4] if name.endswith(".exe") else name
+
+
+def family_of(target):
+    """Where a target sits in the suite, as `core.regular`. Every name opens on the aggregate it
+    belongs to, `unit` or `doc`, which says nothing once the report is titled."""
+    parts = target.split(".")
+    if len(parts) > 1 and parts[0] in ("unit", "doc", "random", "examples"):
+        parts = parts[1:]
+    return ".".join(parts[:2]) if len(parts) > 2 else parts[0]
+
+
 def module_of(unit):
     """The two first path components, which is how the suite is laid out and reported."""
     parts = unit.split("/")
     return "/".join(parts[:2]) if len(parts) > 2 else (parts[0] if len(parts) > 1 else "top level")
 
 
-def read(path, strip=""):
-    """Peak RSS in KiB and CPU microseconds, keyed by the translation unit.
+def read(path, strip="", linking=False):
+    """Peak RSS in KiB and CPU microseconds, keyed by the unit or by the target.
 
     A multi-config generator files the objects under `<target>.dir/<config>/`, and that segment is
     build layout too: `strip` names it, and is left alone where it is not there.
@@ -59,11 +81,16 @@ def read(path, strip=""):
         for row in csv.reader(f):
             if len(row) != FIELDS:
                 continue
+            if (row[0] in COMPILERS) == linking:
+                continue
             try:
-                unit = unit_of(row[1])
-                if strip and unit.startswith(strip):
-                    unit = unit[len(strip):]
-                out[unit] = (int(row[4]), int(row[3]))
+                if linking:
+                    name = target_of(row[1])
+                else:
+                    name = unit_of(row[1])
+                    if strip and name.startswith(strip):
+                        name = name[len(strip):]
+                out[name] = (int(row[4]), int(row[3]))
             except ValueError:
                 continue
     return out
@@ -124,35 +151,35 @@ def table(rows, header, with_delta):
     return "\n".join(out)
 
 
-def by_module(measures):
+def by_module(measures, group=module_of):
     """Units grouped under their module, each group sorted heaviest first."""
     groups = {}
     for unit, (mem, cpu) in measures.items():
-        groups.setdefault(module_of(unit), []).append((unit, mem, cpu))
+        groups.setdefault(group(unit), []).append((unit, mem, cpu))
     for units in groups.values():
         units.sort(key=lambda u: u[1], reverse=True)
     return groups
 
 
-def headline(measures, title, level, grew_line=None):
+def headline(measures, title, level, grew_line=None, noun="translation unit", group=module_of):
     """The facts worth stating before any table, as a list rather than a paragraph."""
     peaks = sorted(m for m, _ in measures.values())
     total_cpu = sum(c for _, c in measures.values())
     worst, (worst_mem, worst_cpu) = max(measures.items(), key=lambda kv: kv[1][0])
 
-    groups = by_module(measures)
+    groups = by_module(measures, group)
     top_mod, top_units = max(groups.items(), key=lambda kv: sum(u[2] for u in kv[1]))
     top_cpu = sum(u[2] for u in top_units)
 
     out = ["%s %s\n" % ("#" * level, title)]
-    out.append("- **%d translation units**, %s of CPU in all."
-               % (len(measures), duration(total_cpu)))
+    out.append("- **%d %ss**, %s of CPU in all."
+               % (len(measures), noun, duration(total_cpu)))
     out.append("- The heaviest one is `%s`, peaking at **%s** over %s."
                % (worst, size(worst_mem), duration(worst_cpu)))
     out.append("- Half of them peak under %s, a tenth above %s."
                % (size(quantile(peaks, 0.5)), size(quantile(peaks, 0.9))))
     share = "%.0f %%" % (100.0 * top_cpu / total_cpu) if total_cpu else "n/a"
-    out.append("- `%s` carries %s of that CPU on its own, %s of the build, over %d units."
+    out.append("- `%s` carries %s of that CPU on its own, %s of the total, over %d of them."
                % (top_mod, duration(top_cpu), share, len(top_units)))
     if grew_line:
         out.append(grew_line)
@@ -173,11 +200,13 @@ def main():
     out = open(args.summary, "w") if args.summary else sys.stdout
 
     now = read(args.current, args.strip)
+    links = read(args.current, linking=True)
     if not now:
         print("No measurement in `%s`." % args.current, file=out)
         return 0
 
     was = read(args.baseline, args.strip) if args.baseline else {}
+    was_links = read(args.baseline, linking=True) if args.baseline else {}
     d = bool(was)
 
     # Regressions first: what changed is what gets acted on.
@@ -216,6 +245,13 @@ def main():
                 for u in units[: args.top]]
         print(table(rows, "Translation unit", d), file=out)
 
+    # Linking is a second population: one process per executable, against one per source above.
+    if links:
+        print("\n%s" % headline(links, "Linking", 3, noun="executable", group=family_of), file=out)
+        ranked_links = sorted(links.items(), key=lambda kv: kv[1][0], reverse=True)
+        print(table([(k, v[0], v[1], delta_cell(v[0], was_links.get(k, (None,))[0]))
+                     for k, v in ranked_links[:10]], "Executable", bool(was_links)), file=out)
+
     if args.full:
         # The summary is capped at a mebibyte and nobody reads seven hundred rows on a run page.
         # The whole table goes to a file the workflow attaches, so nothing measured is thrown away.
@@ -226,9 +262,20 @@ def main():
             f.write(table([(k, v[0], v[1], delta_cell(v[0], was.get(k, (None,))[0]))
                            for k, v in ranked], "Translation unit", d))
             f.write("\n")
-        print("\n*Every unit is measured. The complete table and the raw CSV are attached to this run.*", file=out)
+            if links:
+                ranked_links = sorted(links.items(), key=lambda kv: kv[1][0], reverse=True)
+                f.write("\n")
+                f.write(headline(links, "Linking, every executable", 1,
+                                 noun="executable", group=family_of))
+                f.write("\n")
+                f.write(table([(k, v[0], v[1], delta_cell(v[0], was_links.get(k, (None,))[0]))
+                               for k, v in ranked_links], "Executable", bool(was_links)))
+                f.write("\n")
+        print("\n*Every compilation and every link is measured. The complete tables and the raw CSV"
+              " are attached to this run.*", file=out)
     else:
-        print("\n*Every unit is measured; the full table is in the attached CSV.*", file=out)
+        print("\n*Every compilation and every link is measured; the full tables are in the attached"
+              " CSV.*", file=out)
 
     if args.summary:
         out.close()

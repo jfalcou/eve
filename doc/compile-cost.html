@@ -8,6 +8,9 @@
     compile cost workflow. Everything happens in the browser: the file is read locally and never
     leaves the machine, so a measurement can be opened from a laptop with no network at all.
 
+    The file holds two populations, told apart by the tool in its first column: one row per
+    compilation and one per link. The tabs describe the first, the last one describes the second.
+
     The theme variables are copied from doxygen-awesome.css rather than linked, so the page survives
     being saved and opened on its own.
 ==================================================================================================-->
@@ -298,6 +301,7 @@ footer a { color: var(--primary-color); }
       <button type="button" role="tab" id="tab-modules-cpu" aria-controls="panel-modules-cpu" aria-selected="false">Modules by CPU time</button>
       <button type="button" role="tab" id="tab-modules-rss" aria-controls="panel-modules-rss" aria-selected="false">Modules by peak RSS</button>
       <button type="button" role="tab" id="tab-units" aria-controls="panel-units" aria-selected="false">Every unit</button>
+      <button type="button" role="tab" id="tab-links" aria-controls="panel-links" aria-selected="false" hidden>Linking</button>
     </div>
 
     <div class="panel chart" id="panel-hist" role="tabpanel" aria-labelledby="tab-hist">
@@ -315,6 +319,16 @@ footer a { color: var(--primary-color); }
     <div class="panel chart" id="panel-modules-rss" role="tabpanel" aria-labelledby="tab-modules-rss" hidden>
       <button type="button" class="icon save" data-chart="modules-rss" title="Save as PNG" aria-label="Save as PNG"></button>
       <svg id="modules-rss" viewBox="0 0 1080 320" role="img" aria-label="Peak memory per module"></svg>
+    </div>
+    <div class="panel chart" id="panel-links" role="tabpanel" aria-labelledby="tab-links" hidden>
+      <button type="button" class="icon save" data-chart="links" title="Save as PNG" aria-label="Save as PNG"></button>
+      <svg id="links" viewBox="0 0 1080 380" role="img" aria-label="Histogram of link peak memory"></svg>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Executable</th><th class="num">Peak RSS</th><th class="num">CPU</th></tr></thead>
+          <tbody id="links-body"></tbody>
+        </table>
+      </div>
     </div>
     <div class="panel" id="panel-units" role="tabpanel" aria-labelledby="tab-units" hidden>
       <div class="controls">
@@ -344,6 +358,9 @@ footer a { color: var(--primary-color); }
 
 // ---- reading -----------------------------------------------------------------------------------
 // clang writes, with no header: "program","output",total_us,user_us,peak_rss_kb
+// The first field names the tool, so a compilation and a link are told apart by it. They are two
+// populations: an object file and an executable answer different questions.
+var COMPILERS = { clang: 1, "clang++": 1, "clang-cl": 1 };
 
 // The source a CMake object path came from. Objects live in
 // <build>/test/unit/CMakeFiles/<target>.dir/<path>.o, so everything before the .dir/ is build
@@ -374,7 +391,7 @@ function splitRow(line) {
 }
 
 function parse(text) {
-  var rows = [], seen = Object.create(null);
+  var rows = [], links = [], seen = Object.create(null), seenLink = Object.create(null);
   var lines = text.split(/\r?\n/);
   for (var i = 0; i < lines.length; i++) {
     if (!lines[i]) continue;
@@ -382,10 +399,17 @@ function parse(text) {
     if (f.length !== 5) continue;
     var rss = parseInt(f[4], 10), cpu = parseInt(f[3], 10);
     if (!isFinite(rss) || !isFinite(cpu)) continue;
-    var unit = unitOf(f[1]);
-    seen[unit] = { unit: unit, module: moduleOf(unit), rss: rss, cpu: cpu };
+    if (COMPILERS[f[0]]) {
+      var unit = unitOf(f[1]);
+      seen[unit] = { unit: unit, module: moduleOf(unit), rss: rss, cpu: cpu };
+    } else {
+      var target = f[1].slice(f[1].lastIndexOf("/") + 1);
+      seenLink[target] = { unit: target, rss: rss, cpu: cpu };
+    }
   }
   for (var k in seen) rows.push(seen[k]);
+  for (var l in seenLink) links.push(seenLink[l]);
+  rows.links = links;
   return rows;
 }
 
@@ -498,6 +522,14 @@ function renderFacts() {
            " of that CPU on its own, " + (100 * top.cpu / totalCpu).toFixed(0) +
            " % of the build, over " + top.units.length + " units.");
 
+  var links = rows.links || [];
+  if (links.length) {
+    var linkCpu = links.reduce(function (a, r) { return a + r.cpu; }, 0);
+    var worstLink = links.reduce(function (a, r) { return r.rss > a.rss ? r : a; }, links[0]);
+    out.push(links.length + " links, " + duration(linkCpu) + " of CPU, the heaviest <span class=\"mono\">" +
+             esc(worstLink.unit) + "</span> at " + size(worstLink.rss) + ".");
+  }
+
   if (state.base) {
     var grew = rows.filter(function (r) {
       var b = state.base[r.unit];
@@ -538,11 +570,12 @@ function groupByModule(rows) {
 // ---- charts ------------------------------------------------------------------------------------
 function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
 
-function histogram() {
-  var svg = document.getElementById("hist");
+function histogram(id, source, noun) {
+  var svg = document.getElementById(id || "hist");
   clear(svg);
   var W = 1080, H = 380, L = 44, R = 8, T = 14, B = 34;
-  var peaks = state.rows.map(function (r) { return r.rss; }).sort(function (a, b) { return a - b; });
+  noun = noun || "unit";
+  var peaks = (source || state.rows).map(function (r) { return r.rss; }).sort(function (a, b) { return a - b; });
   var max = peaks[peaks.length - 1], bins = 48, counts = new Array(bins).fill(0);
   peaks.forEach(function (v) { counts[Math.min(bins - 1, Math.floor(v / max * bins))]++; });
   var top = Math.max.apply(null, counts);
@@ -560,7 +593,7 @@ function histogram() {
     var h = (H - T - B) * c / top;
     var rect = el("rect", { class: "bar", x: L + i * bw + 0.5, y: H - B - h,
                             width: Math.max(1, bw - 1), height: h, rx: 1 });
-    attachTip(rect, "<b>" + c + " unit" + (c === 1 ? "" : "s") + "</b><br/>between " +
+    attachTip(rect, "<b>" + c + " " + noun + (c === 1 ? "" : "s") + "</b><br/>between " +
                     size(max * i / bins) + " and " + size(max * (i + 1) / bins));
     svg.appendChild(rect);
   });
@@ -771,6 +804,29 @@ function renderModuleFilter() {
   sel.value = keep;
 }
 
+// The twenty heaviest links, plain: there is no module to group them by and no baseline to compare
+// them against, since a link is named by its executable rather than by a source.
+function renderLinkTable() {
+  var body = document.getElementById("links-body");
+  body.innerHTML = "";
+  var links = (state.rows.links || []).slice()
+                .sort(function (a, b) { return b.rss - a.rss; }).slice(0, 20);
+  links.forEach(function (r) {
+    var tr = document.createElement("tr");
+    var name = document.createElement("td");
+    name.className = "mono";
+    name.textContent = r.unit;
+    var rss = document.createElement("td");
+    rss.className = "num";
+    rss.textContent = size(r.rss);
+    var cpu = document.createElement("td");
+    cpu.className = "num";
+    cpu.textContent = duration(r.cpu);
+    tr.appendChild(name); tr.appendChild(rss); tr.appendChild(cpu);
+    body.appendChild(tr);
+  });
+}
+
 function renderAll() {
   if (!state.rows.length) return;
   var groups = groupByModule(state.rows);
@@ -778,13 +834,20 @@ function renderAll() {
   document.getElementById("empty").hidden = true;
   document.getElementById("report").hidden = false;
   renderFacts();
-  histogram();
+  histogram("hist", state.rows, "unit");
   scatter();
   moduleBars("modules-cpu", "cpu");
   moduleBars("modules-rss", "rss");
   renderModuleFilter();
   renderHead();
   renderTable();
+
+  var links = state.rows.links || [];
+  document.getElementById("tab-links").hidden = !links.length;
+  if (links.length) {
+    histogram("links", links, "link");
+    renderLinkTable();
+  }
 }
 
 // ---- loading -------------------------------------------------------------------------------
