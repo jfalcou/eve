@@ -28,10 +28,6 @@ jobs:
         - { comp: 'clang' }
         - { comp: 'gcc'   }
     steps:
-      - name: Print Runner Info
-        run: |
-          system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
-          df -h /System/Volumes/Data
       - name: Fetch current branch
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
@@ -57,11 +53,6 @@ jobs:
         - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
         - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
     steps:
-      - name: Print Runner Info
-        run: |
-          echo "CPU cores: $(nproc)"
-          echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
-          echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
