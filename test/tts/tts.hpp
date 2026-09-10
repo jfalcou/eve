@@ -1646,7 +1646,7 @@ namespace tts
       }
     };
   }
-  template<typename T> struct display : _::builtin_display<T>
+  template<typename T> struct display
   {
   };
   template<> struct display<text>
@@ -1681,13 +1681,20 @@ namespace tts
 namespace tts::_
 {
   template<typename T>
-  concept described = !std::is_base_of_v<builtin_display<T>, display<T>>;
+  concept described = requires(T const& e) { display<T>::render(e); };
 }
 namespace tts
 {
   template<typename T> text as_text(T const& e)
   {
-    return display<T>::render(e);
+    if constexpr(_::described<T>) return display<T>::render(e);
+    else
+    {
+      static_assert(
+      !requires { display<T>::render; },
+      "[TTS] tts::display<T>::render does not accept a value of type T.");
+      return _::builtin_display<T>::render(e);
+    }
   }
   template<std::size_t N> auto as_text(char const (&t)[ N ])
   {
@@ -2802,12 +2809,19 @@ namespace tts
       }
     };
   }
-  template<typename T, typename V> struct conversion : _::builtin_conversion<T, V>
+  template<typename T, typename V> struct conversion
   {
   };
   template<typename T, typename V> auto convert_as(V const& v, type<T> const&)
   {
-    return conversion<T, V>::from(v);
+    if constexpr(requires { conversion<T, V>::from(v); }) return conversion<T, V>::from(v);
+    else
+    {
+      static_assert(
+      !requires { conversion<T, V>::from; },
+      "[TTS] tts::conversion<T, V>::from does not accept a value of type V.");
+      return _::builtin_conversion<T, V>::from(v);
+    }
   }
   template<tts::_::sequence Seq, typename U> struct rebuild;
   template<template<typename, typename...> typename Seq, typename T, typename... S, typename U>
@@ -2851,12 +2865,22 @@ namespace tts::_
 }
 namespace tts
 {
-  template<typename T> struct generation : _::builtin_generation<T>
+  template<typename T> struct generation
   {
   };
   template<typename T> auto produce(type<T> const&, auto g, auto... others)
   {
-    return generation<T>::make(g, others...);
+    if constexpr(requires { generation<T>::make(g, others...); })
+    {
+      return generation<T>::make(g, others...);
+    }
+    else
+    {
+      static_assert(
+      !requires { generation<T>::make; },
+      "[TTS] tts::generation<T>::make does not accept the generator.");
+      return _::builtin_generation<T>::make(g, others...);
+    }
   }
   template<typename T> struct base_type
   {
@@ -3440,7 +3464,7 @@ namespace tts::_
 }
 namespace tts
 {
-  template<typename L, typename R = L> struct comparison : _::builtin_comparison<L, R>
+  template<typename L, typename R = L> struct comparison
   {
   };
 }
@@ -3448,15 +3472,35 @@ namespace tts::_
 {
   template<typename L, typename R> inline constexpr bool bit_eq(L const& l, R const& r)
   {
-    return comparison<L, R>::bit_equal(l, r);
+    if constexpr(requires { comparison<L, R>::bit_equal(l, r); })
+    {
+      return comparison<L, R>::bit_equal(l, r);
+    }
+    else
+    {
+      static_assert(
+      !requires { comparison<L, R>::bit_equal; },
+      "[TTS] tts::comparison<L, R>::bit_equal does not accept the two operands.");
+      return builtin_comparison<L, R>::bit_equal(l, r);
+    }
   }
   template<typename L, typename R> inline constexpr bool bit_neq(L const& l, R const& r)
   {
-    return !comparison<L, R>::bit_equal(l, r);
+    return !bit_eq(l, r);
   }
   template<typename L, typename R> inline constexpr bool eq(L const& l, R const& r)
   {
-    return comparison<L, R>::equal(l, r);
+    if constexpr(requires { comparison<L, R>::equal(l, r); })
+    {
+      return comparison<L, R>::equal(l, r);
+    }
+    else
+    {
+      static_assert(
+      !requires { comparison<L, R>::equal; },
+      "[TTS] tts::comparison<L, R>::equal does not accept the two operands.");
+      return builtin_comparison<L, R>::equal(l, r);
+    }
   }
   template<typename L, typename R> inline constexpr bool neq(L const& l, R const& r)
   {
@@ -3464,7 +3508,17 @@ namespace tts::_
   }
   template<typename L, typename R> inline constexpr bool lt(L const& l, R const& r)
   {
-    return comparison<L, R>::less(l, r);
+    if constexpr(requires { comparison<L, R>::less(l, r); })
+    {
+      return comparison<L, R>::less(l, r);
+    }
+    else
+    {
+      static_assert(
+      !requires { comparison<L, R>::less; },
+      "[TTS] tts::comparison<L, R>::less does not accept the two operands.");
+      return builtin_comparison<L, R>::less(l, r);
+    }
   }
   template<typename L, typename R> inline constexpr bool le(L const& l, R const& r)
   {
@@ -3931,13 +3985,57 @@ namespace tts::_
 }
 namespace tts
 {
-  template<typename T> struct precision : _::builtin_precision<T>
+  template<typename T> struct precision
   {
   };
   namespace _
   {
+    template<typename T> inline double dispatch_absolute(T const& a, T const& b)
+    {
+      if constexpr(requires { precision<T>::absolute(a, b); }) return precision<T>::absolute(a, b);
+      else
+      {
+        static_assert(
+        !requires { precision<T>::absolute; },
+        "[TTS] tts::precision<T>::absolute does not accept the two operands.");
+        return builtin_precision<T>::absolute(a, b);
+      }
+    }
+    template<typename T> inline double dispatch_relative(T const& a, T const& b)
+    {
+      if constexpr(requires { precision<T>::relative(a, b); }) return precision<T>::relative(a, b);
+      else
+      {
+        static_assert(
+        !requires { precision<T>::relative; },
+        "[TTS] tts::precision<T>::relative does not accept the two operands.");
+        return builtin_precision<T>::relative(a, b);
+      }
+    }
+    template<typename T> inline double dispatch_ulp(T const& a, T const& b)
+    {
+      if constexpr(requires { precision<T>::ulp(a, b); }) return precision<T>::ulp(a, b);
+      else
+      {
+        static_assert(
+        !requires { precision<T>::ulp; },
+        "[TTS] tts::precision<T>::ulp does not accept the two operands.");
+        return builtin_precision<T>::ulp(a, b);
+      }
+    }
+    template<typename T> inline bool dispatch_ieee(T const& a, T const& b)
+    {
+      if constexpr(requires { precision<T>::ieee(a, b); }) return precision<T>::ieee(a, b);
+      else
+      {
+        static_assert(
+        !requires { precision<T>::ieee; },
+        "[TTS] tts::precision<T>::ieee does not accept the two operands.");
+        return builtin_precision<T>::ieee(a, b);
+      }
+    }
     template<typename T>
-    concept native_precision = std::is_base_of_v<builtin_precision<T>, precision<T>>;
+    concept native_precision = !requires { precision<T>::relative; };
     template<typename T, typename N> constexpr bool reads_as_percent(N const& n)
     {
       using type = std::remove_cvref_t<T>;
@@ -3954,7 +4052,7 @@ namespace tts
                   "Comparing through their common type would express the distance in the unit "
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
-    if constexpr(std::is_same_v<T, U>) return precision<T>::absolute(a, b);
+    if constexpr(std::is_same_v<T, U>) return _::dispatch_absolute(a, b);
     else return 0.;
   }
   template<typename T, typename U> inline double relative_check(T const& a, U const& b)
@@ -3964,7 +4062,7 @@ namespace tts
                   "Comparing through their common type would express the distance in the unit "
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
-    if constexpr(std::is_same_v<T, U>) return precision<T>::relative(a, b);
+    if constexpr(std::is_same_v<T, U>) return _::dispatch_relative(a, b);
     else return 0.;
   }
   template<typename T, typename U> inline double ulp_check(T const& a, U const& b)
@@ -3974,12 +4072,12 @@ namespace tts
                   "Comparing through their common type would express the distance in the unit "
                   "of the promoted type, which is not the one being tested. Convert the "
                   "expected value at the call site instead.");
-    if constexpr(std::is_same_v<T, U>) return precision<T>::ulp(a, b);
+    if constexpr(std::is_same_v<T, U>) return _::dispatch_ulp(a, b);
     else return 0.;
   }
   template<typename T, typename U> inline bool ieee_check(T const& a, U const& b)
   {
-    if constexpr(std::is_same_v<T, U>) return precision<T>::ieee(a, b);
+    if constexpr(std::is_same_v<T, U>) return _::dispatch_ieee(a, b);
     else if constexpr(std::is_floating_point_v<T>)
       return (a == b) || (_::is_nan(a) && _::is_nan(b));
     else return _::eq(a, b);

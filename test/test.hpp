@@ -49,8 +49,7 @@ namespace tts
 
     static bool equal(w_t const& l, w_t const& r) { return eve::all(l == r); }
 
-    // A partial wide sits in a full register, so the default memcmp would read lanes no operation
-    // ever writes.
+    // A partial wide sits in a full register, so a memcmp would read lanes no operation writes.
     static bool bit_equal(w_t const& l, w_t const& r)
     {
       using u_t = eve::as_uinteger_t<w_t>;
@@ -68,6 +67,8 @@ namespace tts
       if constexpr(eve::simd_value<T>)  return eve::all(l == r);
       else                              return l == r;
     }
+
+    static bool bit_equal(l_t const& l, l_t const& r) { return _::bit_eq(l.bits(), r.bits()); }
   };
 
   //================================================================================================
@@ -81,7 +82,7 @@ namespace tts
     {
       double max_ulp = 0;
       for(auto i = 0; i < l.size(); ++i)
-        max_ulp = std::max(max_ulp, precision<T>::ulp(T(l.get(i)), T(r.get(i))));
+        max_ulp = std::max(max_ulp, ulp_check(T(l.get(i)), T(r.get(i))));
       return max_ulp;
     }
 
@@ -90,7 +91,7 @@ namespace tts
       double max_dr = 0;
       for(auto i = 0; i < l.size(); ++i)
       {
-        auto dr = precision<T>::relative(T(l.get(i)), T(r.get(i)));
+        auto dr = relative_check(T(l.get(i)), T(r.get(i)));
         max_dr = (dr > max_dr) ? dr : max_dr;
       }
       return max_dr;
@@ -101,7 +102,7 @@ namespace tts
       double max_d = 0;
       for(auto i = 0; i < l.size(); ++i)
       {
-        auto d = precision<T>::absolute(T(l.get(i)), T(r.get(i)));
+        auto d = absolute_check(T(l.get(i)), T(r.get(i)));
         max_d = (d > max_d) ? d : max_d;
       }
       return max_d;
@@ -145,23 +146,17 @@ namespace tts
     }
     static double absolute(f_t const& l, f_t const& r)
     {
-      return _::builtin_precision<double>::absolute( eve::convert(l, eve::as<double>())
-                                                   , eve::convert(r, eve::as<double>())
-                                                   );
+      return absolute_check(eve::convert(l, eve::as<double>()), eve::convert(r, eve::as<double>()));
     }
 
     static double relative(f_t const& l, f_t const& r)
     {
-      return _::builtin_precision<double>::relative( eve::convert(l, eve::as<double>())
-                                                   , eve::convert(r, eve::as<double>())
-                                                   );
+      return relative_check(eve::convert(l, eve::as<double>()), eve::convert(r, eve::as<double>()));
     }
 
     static bool ieee(f_t const& l, f_t const& r)
     {
-      return _::builtin_precision<double>::ieee( eve::convert(l, eve::as<double>())
-                                               , eve::convert(r, eve::as<double>())
-                                               );
+      return ieee_check(eve::convert(l, eve::as<double>()), eve::convert(r, eve::as<double>()));
     }
   };
 
