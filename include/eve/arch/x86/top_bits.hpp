@@ -10,7 +10,7 @@
 namespace eve
 {
 template<logical_simd_value Logical>
-requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bits<Logical>
+requires(current_api >= avx512 && !aggregated_abi<Logical>) struct top_bits<Logical>
 {
   using logical_type = Logical;
   using scalar_type  = typename as_arithmetic_t<logical_type>::value_type;
@@ -134,7 +134,7 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
 
   EVE_FORCEINLINE friend std::ostream&
   operator<<(std::ostream& o,
-             top_bits      x) requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>)
+             top_bits      x) requires(current_api >= avx512 && !aggregated_abi<Logical>)
   {
     return o << x.storage.storage();
   }

@@ -61,7 +61,7 @@ struct compress_store_core
       store[keep_first(n)](T(buf.ptr()), o);
       return unalign(o) + n;
     }
-    else if constexpr( has_emulated_abi_v<T> )
+    else if constexpr( emulated_abi<T> )
     {
       auto offset = settings.c_in.offset(as(x));
       auto count  = settings.c_in.count(as(x));

@@ -203,8 +203,8 @@ namespace eve::_
   template<relative_conditional_expr C, _::data_source DS, typename Wide>
   EVE_FORCEINLINE Wide load_common(auto api, C const& cx, DS src, as<Wide> tgt) noexcept
   {
-    constexpr auto aggregated = has_aggregated_abi_v<Wide>;
-    constexpr auto emulated = has_emulated_abi_v<Wide>;
+    constexpr auto aggregated = aggregated_abi<Wide>;
+    constexpr auto emulated = emulated_abi<Wide>;
 
     if constexpr (aggregated || emulated)
     {
@@ -289,7 +289,7 @@ namespace eve::_
     {
       return load_unsafe_(opts, src, tgt);
     }
-    else if constexpr (has_bundle_abi_v<Wide>)
+    else if constexpr (bundle_abi<Wide>)
     {
       Wide res;
 

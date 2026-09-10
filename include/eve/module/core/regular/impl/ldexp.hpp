@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/maxexponent.hpp>
 #include <eve/module/core/constant/minexponent.hpp>

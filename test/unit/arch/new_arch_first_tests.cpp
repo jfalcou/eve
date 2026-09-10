@@ -50,7 +50,7 @@ TTS_CASE_TPL("Make all wides", eve::test::simd::all_types)
 
   for( int i = 0; i != T::size(); ++i ) { TTS_EQUAL((e_t)i, x.get(i)); }
 
-  if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
+  if constexpr( !eve::emulated_abi<decltype(x)> && T::size() < min_n )
   {
     auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, eve::fixed<min_n>>> {});
     for( int i = 0; i != full_wide.size(); ++i )
@@ -93,7 +93,7 @@ TTS_CASE_TPL("Make all wides, splat", eve::test::simd::all_types)
 
   for( int i = 0; i != x.size(); ++i ) { TTS_EQUAL((e_t)3, x.get(i)); }
 
-  if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
+  if constexpr( !eve::emulated_abi<decltype(x)> && T::size() < min_n )
   {
     auto full_wide = eve::bit_cast(x, eve::as<eve::wide<e_t, eve::fixed<min_n>>> {});
     for( int i = 0; i != full_wide.size(); ++i )
@@ -159,7 +159,7 @@ TTS_CASE_TPL("Make all logicals", eve::test::simd::all_types)
     TTS_EQUAL(test, x.get(i));
   }
 
-  if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
+  if constexpr( !eve::emulated_abi<decltype(x)> && T::size() < min_n )
   {
     auto full = eve::bit_cast(x, eve::as<eve::logical<eve::wide<e_t, eve::fixed<min_n>>>> {});
     for( int i = 0; i != full.size(); ++i )
@@ -184,7 +184,7 @@ TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
     TTS_EXPECT_NOT(y.get(i));
   }
 
-  if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
+  if constexpr( !eve::emulated_abi<decltype(x)> && T::size() < min_n )
   {
     using full_t = eve::logical<eve::wide<e_t, eve::fixed<min_n>>>;
     auto full_x = eve::bit_cast(x, eve::as<full_t>{});

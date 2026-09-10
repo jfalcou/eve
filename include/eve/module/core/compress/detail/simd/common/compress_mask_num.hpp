@@ -24,7 +24,7 @@ namespace eve::_
     using l_t = logical<wide<T>>;
 
     // can only be for 64 bit numbers on 128 bit register
-    if constexpr (has_aggregated_abi_v<w_t>)
+    if constexpr (aggregated_abi<w_t>)
     {
       return compress_store_swizzle_mask_num(c, convert(mask, as<logical<std::uint32_t>>{}));
     }

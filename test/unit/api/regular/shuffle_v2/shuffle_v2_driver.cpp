@@ -131,7 +131,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
 {
   using abi = typename T::abi_type;
   // emulation has separate logic
-  if constexpr( eve::has_emulated_abi_v<T> || !abi::is_wide_logical || T::size() == 1 )
+  if constexpr( eve::emulated_abi<T> || !abi::is_wide_logical || T::size() == 1 )
   {
     TTS_PASS("");
   }
@@ -151,7 +151,7 @@ TTS_CASE_TPL("shuffle_driver, wide logicals", eve::test::simd::all_types)
     using P2 = some_p2_t<T>;
     auto r   = hasShuffle(eve::logical<T> {true}, P {});
 
-    TTS_EQUAL(numTimesCalled, eve::has_aggregated_abi_v<T> ? 2 : 1);
+    TTS_EQUAL(numTimesCalled, eve::aggregated_abi<T> ? 2 : 1);
     TTS_TYPE_IS(decltype(r), eve::logical<T>);
     auto notFound = just_shuffle_test([](auto...) { return eve::_::no_matching_shuffle; });
 
@@ -314,7 +314,7 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
 TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if( T::size() < 4 || eve::has_aggregated_abi_v<T> || eve::current_api == eve::neon
+  if( T::size() < 4 || eve::aggregated_abi<T> || eve::current_api == eve::neon
       || !eve::supports_simd )
   {
     TTS_PASS("");

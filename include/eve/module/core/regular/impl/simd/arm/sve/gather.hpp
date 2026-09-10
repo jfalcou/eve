@@ -29,7 +29,7 @@ namespace eve::_
     // Ignore All case : just return the alternative if any
     if      constexpr (C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
     // Aggregation cases
-    else if constexpr (has_aggregated_abi_v<out_t>)        return gather.behavior(cpu_{}, opts, p, v);
+    else if constexpr (aggregated_abi<out_t>)        return gather.behavior(cpu_{}, opts, p, v);
     // Smaller data goes through the generic cases
     else if constexpr (sizeof(U) <= 2)                     return gather.behavior(cpu_{}, opts, p, v);
     // Small index get converted then we recall gather

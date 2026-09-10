@@ -39,7 +39,7 @@ namespace eve::_
   EVE_FORCEINLINE Wide scan_(EVE_REQUIRES(cpu_), O const&, Wide v, Op op, Zero z) noexcept
   {
     if constexpr( Wide::size() == 1 ) return v;
-    else if constexpr( has_emulated_abi_v<Wide> )
+    else if constexpr( emulated_abi<Wide> )
     {
       auto sum_value = v.get(0);
 

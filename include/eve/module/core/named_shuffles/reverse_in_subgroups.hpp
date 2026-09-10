@@ -86,7 +86,7 @@ struct reverse_in_subgroups_t
     if constexpr( SubG == 1 ) return 0;
     else if constexpr( SubG == 2 ) return swap_adjacent.level(tgt, g);
     else if constexpr( SubG == T::size() / G ) return reverse.level(tgt, g);
-    else if constexpr( eve::has_aggregated_abi_v<T> )
+    else if constexpr( eve::aggregated_abi<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
       using half_t = decltype(T {}.slice(lower_));

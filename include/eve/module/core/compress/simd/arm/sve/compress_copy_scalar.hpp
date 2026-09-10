@@ -19,7 +19,7 @@ template <typename I, typename L, typename O>
 EVE_FORCEINLINE O
 compress_copy_sparse_sve_no_limits(I f, L m, O o)
 {
-  if constexpr( has_aggregated_abi_v<L> )
+  if constexpr( aggregated_abi<L> )
   {
     auto [lo, hi] = m.slice();
     o             = compress_copy_sparse_sve_no_limits(f, lo, o);
@@ -42,7 +42,7 @@ template <typename I, typename L, typename O>
 EVE_FORCEINLINE O
 compress_copy_sparse_sve_limited(I f, L m, O o, O limit)
 {
-  if constexpr( has_aggregated_abi_v<L> )
+  if constexpr( aggregated_abi<L> )
   {
     auto [lo, hi] = m.slice();
     o             = compress_copy_sparse_sve_limited(f, lo, o, limit);

@@ -79,7 +79,7 @@ namespace eve::_
     constexpr std::size_t t_g_size  = T::size() / g;
 
          if constexpr ( n_vs == 1 || T::size() == G ) return values;
-    else if constexpr ( has_emulated_abi_v<T>       ) return _deinterleave_groups::emulate(lane<G>, v0, vs...);
+    else if constexpr ( emulated_abi<T>       ) return _deinterleave_groups::emulate(lane<G>, v0, vs...);
     else if constexpr ( n_vs == 2                   )
     {
       auto [l, h] = deinterleave_groups_shuffle(v0, get<1>(values), g).slice();
@@ -94,7 +94,7 @@ namespace eve::_
       return kumi::cat(r(even), r(odd));
     }
     else if constexpr ( T::size() == G ) return {v0, vs...};
-    else if constexpr ( n_vs == 4 && !has_emulated_abi_v<T> )
+    else if constexpr ( n_vs == 4 && !emulated_abi<T> )
     {
       T v1 = get<1>(values);
       T v2 = get<2>(values);

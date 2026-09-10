@@ -49,7 +49,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   auto cond = opts[condition_key];
 
   if constexpr( C::is_complete && !C::is_inverted ) return {};
-  else if constexpr( has_emulated_abi_v<T> )
+  else if constexpr( emulated_abi<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {

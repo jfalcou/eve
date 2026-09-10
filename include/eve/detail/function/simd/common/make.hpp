@@ -69,11 +69,11 @@ namespace eve::_
     using type = typename Target::storage_type;
     using v_type = typename Target::value_type;
 
-    if constexpr (has_aggregated_abi_v<Target>)
+    if constexpr (aggregated_abi<Target>)
     {
       return make_aggregated<Target>(v, vs...);
     }
-    else if constexpr (has_emulated_abi_v<Target>)
+    else if constexpr (emulated_abi<Target>)
     {
       return make_emulated<Target>(v, vs...);
     }

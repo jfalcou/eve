@@ -37,7 +37,7 @@ namespace eve::_
   {
     // Aggregate can be optimised if there is no mask
     // Mask would require slice on ignore_*** which we don't do atm
-    if constexpr(has_aggregated_abi_v<T> && !O::contains(condition_key))
+    if constexpr(aggregated_abi<T> && !O::contains(condition_key))
     {
       // slice and scatter both parts;
       auto[lv,hv] = v.slice();

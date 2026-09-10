@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/logical_ornot.hpp>

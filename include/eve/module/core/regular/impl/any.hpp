@@ -10,7 +10,7 @@
 #include <eve/arch/top_bits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/conditional.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 
@@ -32,7 +32,7 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
   auto cond = opts[condition_key];
   if constexpr( C::is_complete && !C::is_inverted ) return false;
   else if (C::is_complete) return eve::any(eve::top_bits { v });
-  else if constexpr( has_emulated_abi_v<T> )
+  else if constexpr( emulated_abi<T> )
   {
     if constexpr (relative_conditional_expr<C>)
     {
@@ -59,7 +59,7 @@ any_(EVE_REQUIRES(cpu_), O const& opts, T const& v) noexcept
       return false;
     }
   }
-  else if constexpr( has_aggregated_abi_v<T> && C::is_complete )
+  else if constexpr( aggregated_abi<T> && C::is_complete )
   {
     auto [l, h] = v.slice();
     return eve::any[ignore_none](l || h);

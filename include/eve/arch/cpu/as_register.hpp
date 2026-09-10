@@ -9,8 +9,8 @@
 
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/deps/kumi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <cstring>

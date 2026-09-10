@@ -117,7 +117,7 @@ namespace eve::_
     }
     else
     {
-      if constexpr( has_native_abi_v<T> )
+      if constexpr( native_abi<T> )
       {
         auto r       = nan(as(x));
         auto notdone = is_gtz(x);

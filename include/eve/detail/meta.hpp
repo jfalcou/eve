@@ -158,7 +158,7 @@ namespace eve::_
 
   ///////////////////////////////////////////////////////////////////
 
-  // Generate integral types from sign + size
+  // Generate floating point types from sign + size
   template<std::size_t Size>
   struct make_floating_point;
 

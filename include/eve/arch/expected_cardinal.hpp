@@ -11,6 +11,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/deps/kumi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/arch/abi_traits.hpp>
 
 namespace eve::_
 {

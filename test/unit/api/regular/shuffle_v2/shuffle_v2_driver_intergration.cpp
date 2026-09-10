@@ -108,7 +108,7 @@ TTS_CASE("integrating with fake native shuffle")
       eve::pattern<2, 0, 2, 3>);
 
   tst(T2 {5, 6, 1, 2, 5, 6, 7, 8},
-      eve::index < eve::has_aggregated_abi_v<T2> ? 2 : 4 >,
+      eve::index < eve::aggregated_abi<T2> ? 2 : 4 >,
       T2 {1, 2, 3, 4, 5, 6, 7, 8},
       eve::lane<2>,
       eve::pattern<2, 0, 2, 3>);
@@ -221,7 +221,7 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
         eve::lane<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(TxTxTxT {T {1}, T {2}, T {0}, T {0}},
-        eve::has_emulated_abi_v<T> ? 0 : 1,
+        eve::emulated_abi<T> ? 0 : 1,
         T {1},
         T {2},
         eve::lane<T::size() * 2>,
@@ -254,7 +254,7 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
         eve::lane<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(UxUxUxU {U {1, false}, U {2, true}, U {0, false}, U {0, false}},
-        eve::has_emulated_abi_v<T> && eve::has_emulated_abi_v<eve::wide<std::uint8_t>> ? 0 : 1,
+        eve::emulated_abi<T> && eve::emulated_abi<eve::wide<std::uint8_t>> ? 0 : 1,
         U {1, false},
         U {2, true},
         eve::lane<T::size() * 2>,

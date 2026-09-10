@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/is_native.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/concept/combinable.hpp>
@@ -30,18 +30,18 @@ namespace eve::_
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
-
-    if constexpr( is_emulated_v<abi_t<T, N>> )
+    
+    if constexpr( emulated_abi<abi_t<T,N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( has_aggregated_abi_v<that_t> )
+    else if constexpr( aggregated_abi<that_t> )
     {
       that_t that;
       that.storage().assign_parts(l, h);
       return that;
     }
-    else if constexpr( is_bundle_v<abi_t<T, N>> )
+    else if constexpr( bundle_abi<abi_t<T,N>> )
     {
       return that_t ( kumi::map ( local_combiner{}, l.storage(), h.storage() ) );
     }
@@ -53,11 +53,11 @@ namespace eve::_
   {
     using that_t = logical<wide<T, typename N::combined_type>>;
 
-    if constexpr( is_emulated_v<abi_t<T, N>> )
+    if constexpr( emulated_abi<abi_t<T, N>> )
     {
       return apply<N::value>([&](auto... I) { return that_t {l.get(I)..., h.get(I)...}; });
     }
-    else if constexpr( has_aggregated_abi_v<that_t> )
+    else if constexpr( aggregated_abi<that_t> )
     {
       that_t that;
       that.storage().assign_parts(l, h);

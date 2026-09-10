@@ -21,7 +21,7 @@ namespace eve::_
   {
     using type = typename Wide::bits_type;
 
-    if constexpr ( has_aggregated_abi_v<Wide> )
+    if constexpr ( aggregated_abi<Wide> )
     {
       auto [l, h] = p.slice();
       return type{l.bits(), h.bits()};
@@ -40,7 +40,7 @@ namespace eve::_
   {
     using type = typename Wide::mask_type;
 
-    if constexpr ( has_aggregated_abi_v<Wide> )
+    if constexpr ( aggregated_abi<Wide> )
     {
       auto [l, h] = p.slice();
       return type{l.mask(), h.mask()};
@@ -59,7 +59,7 @@ namespace eve::_
   {
     if constexpr(Wide::size() <= 64)
     {
-      if constexpr( has_aggregated_abi_v<Wide> )
+      if constexpr( aggregated_abi<Wide> )
       {
         std::size_t res{0};
         kumi::for_each_index( [&](auto i, auto v) { res |= (v.bitmap().to_ullong() << i*v.size()); }

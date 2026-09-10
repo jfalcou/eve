@@ -85,7 +85,7 @@ struct blend_t
   static constexpr std::ptrdiff_t level(eve::as<T>, eve::as<T>, eve::fixed<G> g, pattern_t<I...> p)
   {
     if constexpr( sizeof...(I) == 1 ) return 0;
-    else if constexpr( eve::has_aggregated_abi_v<T> )
+    else if constexpr( eve::aggregated_abi<T> )
     {
       using half_t = decltype(T {}.slice(lower_));
 

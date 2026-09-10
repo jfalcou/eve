@@ -24,7 +24,7 @@ basic_shuffle_(EVE_SUPPORTS(sve_),
   using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, p); }
+  if constexpr( aggregated_abi<that_t> ) { return aggregate_shuffler(v, p); }
   else
   {
     using idx_t = as_wide_t<wide<as_integer_t<T, unsigned>, N>, fixed<sz>>;
