@@ -1,7 +1,7 @@
 #include <iostream>
 #include <eve/module/core.hpp>
 
-using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::uint32_t, 4>;
 
 int main()
 {
@@ -9,6 +9,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- x                                        = " << x << '\n'
-            << "-> try_each_group_position(x, eve::lane<1>) = " << eve::try_each_group_position(x, eve::lane<1>) << '\n'
-            << "-> try_each_group_position(x, eve::lane<2>) = " << eve::try_each_group_position(x, eve::lane<2>) << '\n';
+            << "-> try_each_group_position(x, eve::lanes<1>) = " << eve::try_each_group_position(x, eve::lanes<1>) << '\n'
+            << "-> try_each_group_position(x, eve::lanes<2>) = " << eve::try_each_group_position(x, eve::lanes<2>) << '\n';
 }

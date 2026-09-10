@@ -21,7 +21,7 @@ namespace eve::bench
 {
   inline std::mt19937 pRNG = {};
 
-  template<typename T> using alloc = eve::aligned_allocator<T,fixed<64/sizeof(T)>>;
+  template<typename T> using alloc = eve::aligned_allocator<T,lanes_t<64/sizeof(T)>>;
   template<typename T> inline const auto optimal_size = 92*1024/sizeof(T);
 
   // -------------------------------------------------------------------------------------------------

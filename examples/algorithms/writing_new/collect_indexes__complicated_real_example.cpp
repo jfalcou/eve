@@ -54,8 +54,8 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   res.clear();
 
   // Over allocating to always use `compress_copy[unsafe]`.
-  // eve won't go beyound eve::expected_cardinal_v<IdxType> per wide here.
-  res.resize((r.end() - r.begin()) + eve::expected_cardinal_v<IdxType>);
+  // eve won't go beyound eve::expected_width_v<IdxType> per wide here.
+  res.resize((r.end() - r.begin()) + eve::expected_width_v<IdxType>);
   IdxType* out = res.data();
 
   // iota is going to be an iterator of 0, 1, 2, 3, ...
@@ -187,6 +187,6 @@ struct collect_indexes_generic_test
 TTS_CASE_TPL("Check collect indexes, lots", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using tgt_t = eve::wide<T, eve::fixed<eve::expected_cardinal_v<std::int64_t>>>;
+  using tgt_t = eve::wide<T, eve::expected_width_v<std::int64_t>>;
   algo_test::page_ends_test(eve::as<tgt_t>{}, collect_indexes_generic_test{});
 };

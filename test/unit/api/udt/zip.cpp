@@ -18,7 +18,7 @@ TTS_CASE_TPL( "Check eve::wide tuple like constructor", eve::test::simd::all_typ
 <typename T>(tts::type<T>)
 {
   constexpr auto sz = T::size();
-  using wide_grid   = eve::wide<udt::grid2d, eve::fixed<T::size()>>;
+  using wide_grid   = eve::wide<udt::grid2d, T::size()>;
 
   auto vp = [&]<std::size_t... N>(std::index_sequence<N...>)
             {

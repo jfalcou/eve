@@ -11,7 +11,7 @@ void show(char const* what, std::optional<std::ptrdiff_t> r)
 
 int main()
 {
-  eve::wide<std::int32_t, eve::fixed<8>> w = {1, 0, 3, 0, 5, 0, 0, 8};
+  eve::wide<std::int32_t, 8> w = {1, 0, 3, 0, 5, 0, 0, 8};
   auto m = w > 0;
 
   std::cout << "<- w                              = " << w << "\n";

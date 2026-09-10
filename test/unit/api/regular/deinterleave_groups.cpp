@@ -84,7 +84,7 @@ void deinterleave_groups_test()
 
   auto const res =
     kumi::apply(
-      [] (auto ... in) { return eve::deinterleave_groups(eve::lane<G>, in...); },
+      [] (auto ... in) { return eve::deinterleave_groups(eve::lanes<G>, in...); },
       aos_ts
     );
 

@@ -12,7 +12,7 @@
 
 //================================================================================================
 // Premade pattern generator
-template<std::ptrdiff_t G, std::ptrdiff_t I, std::ptrdiff_t N>
+template<std::ptrdiff_t G, std::ptrdiff_t I, eve::width_type N>
 inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) { return I*G + i%G; } );
 
 //==================================================================================================
@@ -45,8 +45,8 @@ TTS_CASE_TPL( "Check behavior of broadcast swizzle", eve::test::scalar::all_type
                 return simd.get(p(i,c));
               };
 
-      TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
-                                      , eve::index<Index::value>, eve::lane<eve::wide<s_t>::size()>
+      TTS_EQUAL ( eve::broadcast_group( simd, eve::lanes<grp>
+                                      , eve::index<Index::value>, eve::lanes<eve::wide<s_t>::size()>
                                       )
                 , ref
                 );

@@ -20,12 +20,12 @@ TTS_CASE_TPL( "Check behavior of broadcast for scalars", eve::test::scalar::all_
 
   auto f  = [&]<std::size_t... N>(std::index_sequence<N...>)
             {
-              auto check = []<std::ptrdiff_t L>(eve::fixed<L>)
+              auto check = []<std::ptrdiff_t L>(eve::lanes_t<L>)
               {
-                TTS_EQUAL(eve::broadcast(T{42},eve::lane<L>), (eve::wide<T,eve::fixed<L>>{42}));
+                TTS_EQUAL(eve::broadcast(T{42},eve::lanes<L>), (eve::wide<T, L>{42}));
               };
 
-              (check(eve::lane<(1<<N)>),...);
+              (check(eve::lanes<(1<<N)>),...);
             };
 
   f(std::make_index_sequence<8>{});
@@ -48,7 +48,7 @@ TTS_CASE_WITH( "Check behavior of broadcast swizzle"
               {
                 ([&]()
                 {
-                  typename S::template rescale<typename S::cardinal_type> ref(simd.get(V));
+                  typename S::template rescale<S::size()> ref(simd.get(V));
                   TTS_EQUAL(eve::shuffle(simd,broadcast<V,S::size()>) , ref);
                   TTS_EQUAL((eve::broadcast(simd, eve::index<V>))     , ref);
                 }(), ...);

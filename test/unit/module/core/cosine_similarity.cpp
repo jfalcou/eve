@@ -18,13 +18,13 @@ TTS_CASE_TPL("Check return types of cosine_similarity", eve::test::simd::ieee_re
   using v_t = eve::element_type_t<T>;
   using v3_t =      vec3<v_t>;
   using wv3_t = eve::wide<v3_t>;
-  using r_t =   eve::wide<v_t, eve::fixed<wv3_t::size()>>;
+  using r_t =   eve::wide<v_t, wv3_t::size()>;
   TTS_EXPR_IS(eve::cosine_similarity(wv3_t(), wv3_t()), r_t);
   TTS_EXPR_IS(eve::cosine_similarity(wv3_t(), v3_t()),  r_t);
   TTS_EXPR_IS(eve::cosine_similarity( v3_t(),wv3_t()),  r_t);
   TTS_EXPR_IS(eve::cosine_similarity(v3_t(),  v3_t()),  v_t);
   using uv_t =  eve::upgrade_t<v_t>;
-  using ur_t =   eve::wide<uv_t, eve::fixed<wv3_t::size()>>;
+  using ur_t =   eve::wide<uv_t, wv3_t::size()>;
   TTS_EXPR_IS(eve::cosine_similarity[eve::widen](wv3_t(), wv3_t()), ur_t);
   TTS_EXPR_IS(eve::cosine_similarity[eve::widen](wv3_t(), v3_t()),  ur_t);
   TTS_EXPR_IS(eve::cosine_similarity[eve::widen]( v3_t(),wv3_t()),  ur_t);
@@ -47,8 +47,8 @@ TTS_CASE_TPL("Check behavior of cosine_similarity(wide)", eve::test::simd::ieee_
 
 
   std::cout << std::setprecision(16);
-  using wv3_t =  eve::wide<v3_t, eve::fixed<4>>;
-  using  f4_t =  eve::wide<v_t, eve::fixed<4>>;
+  using wv3_t =  eve::wide<v3_t, 4>;
+  using  f4_t =  eve::wide<v_t, 4>;
 
   auto wa = wv3_t(a, a, b, b);
   auto wb = wv3_t(b, a, a, b);

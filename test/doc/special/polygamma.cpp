@@ -4,7 +4,7 @@
 
 int main()
 {
-  eve::wide<double, eve::fixed<4>> z{0.125, 15, -2.45, 1.0};
+  eve::wide<double, 4> z{0.125, 15, -2.45, 1.0};
 
   for(int i=0; i < 5 ; ++i)
   {

@@ -13,16 +13,16 @@ namespace eve::_
 {
   template<eve::relative_conditional_expr C, typename T>
   EVE_FORCEINLINE std::pair<int, int>
-  compress_store_swizzle_mask_num_(EVE_SUPPORTS(vmx_), C c, logical<wide<T, fixed<4>>> mask)
+  compress_store_swizzle_mask_num_(EVE_SUPPORTS(vmx_), C c, logical<wide<T, 4>> mask)
     requires (sizeof(T) == 4)
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {0, 0};
     else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num(ignore_none, mask && c.mask(as(mask)));
     else
     {
-      using l_t = logical<wide<T, fixed<4>>>;
+      using l_t = logical<wide<T, 4>>;
       using bits_type = typename l_t::bits_type;
-      using sbits_type = typename bits_type::rebind<std::int32_t, fixed<4>>;
+      using sbits_type = typename bits_type::rebind<std::int32_t, 4>;
 
       sbits_type sbits = bit_cast(mask.bits(), eve::as<sbits_type>{});
 

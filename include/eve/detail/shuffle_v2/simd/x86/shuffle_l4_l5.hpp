@@ -10,9 +10,9 @@
 namespace eve::_
 {
 
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_x86_shorts_lo_hi(P, fixed<G>, wide<T, N> x)
+shuffle_l4_x86_shorts_lo_hi(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
 
@@ -34,9 +34,9 @@ shuffle_l4_x86_shorts_lo_hi(P, fixed<G>, wide<T, N> x)
 
 // First shuffle 16 byte lanes and then shuffle the in betweeny thingies.
 // Only works for repeated patterns.
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
+shuffle_l4_l5_x86_put_u64x2_in_position(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
   if constexpr( P::reg_size < 32 ) return no;
@@ -48,16 +48,16 @@ shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
   {
     constexpr auto p0 = get<0>(*P::shuffle_16in16);
     constexpr auto p1 = get<1>(*P::shuffle_16in16);
-    auto [r0, l0]     = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
-    auto [r1, l1]     = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
+    auto [r0, l0]     = shuffle_v2_core(x, eve::lanes<G>, idxm::to_pattern<p0>());
+    auto [r1, l1]     = shuffle_v2_core(r0, eve::lanes<G>, idxm::to_pattern<p1>());
 
     return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
 }
 
-template<typename P, typename T, typename N, std::ptrdiff_t G>
+template<typename P, typename T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
+shuffle_l4_l5_x86_slide_less_than_16(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
   // Couldn't figure out how to generalize well
@@ -67,18 +67,18 @@ shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
   else if constexpr( constexpr auto slide = idxm::is_slide_left(P::idxs) )
   {
     static_assert(G == 1, "verifying assumptions");
-    constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide);
+    constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N>(P::g_size, *slide);
 
-    wide<T, N> y = shuffle_l<2>(x, lane<16 / sizeof(T)>, pattern<1, na_>);
+    wide<T, N> y = shuffle_l<2>(x, lanes<16 / sizeof(T)>, pattern<1, na_>);
 
     return kumi::tuple {shuffle_l<2>(x, y, idxm::to_pattern<alignr_p>()), index<4>};
   }
   else return no;
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l4_x86_shorts_lo_hi(p, g, x);
@@ -104,9 +104,9 @@ requires(P::out_reg_size == P::reg_size)
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_(EVE_SUPPORTS(avx512_), P p, fixed<G> g, logical<wide<T, N>> x)
+shuffle_l4_l5_(EVE_SUPPORTS(avx512_), P p, lanes_t<G> g, logical<wide<T, N>> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x);
@@ -117,9 +117,9 @@ requires(P::out_reg_size == P::reg_size)
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l4_l5_x86_slide_less_than_16_x2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
   if constexpr( P::reg_size != 32 || current_api < avx2 ) return no;
@@ -128,19 +128,19 @@ shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   {
     auto          ab  = x;
     auto          cd  = y;
-    auto          bc  = shuffle_l<2>(x, y, eve::lane<16 / sizeof(T)>, eve::pattern<1, 2>);
+    auto          bc  = shuffle_l<2>(x, y, eve::lanes<16 / sizeof(T)>, eve::pattern<1, 2>);
     constexpr int n16 = 16 / sizeof(T);
 
     auto r = bc;
 
     if constexpr( slide > n16 )
     {
-      constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide - n16);
+      constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N>(P::g_size, *slide - n16);
       r                       = shuffle_l<2>(bc, cd, idxm::to_pattern<alignr_p>());
     }
     else
     {
-      constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide);
+      constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N>(P::g_size, *slide);
       r                       = shuffle_l<2>(ab, bc, idxm::to_pattern<alignr_p>());
     }
     return kumi::tuple {r, eve::index<4>};
@@ -148,9 +148,9 @@ shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   else return no;
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l4_l5_x86_slide_less_than_16_x2(p, g, x, y);

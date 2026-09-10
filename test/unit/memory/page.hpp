@@ -11,13 +11,13 @@
 #include <numeric>
 #include <vector>
 
-template<typename T, typename N> auto page()
+template<typename T, auto N> auto page()
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::wide<T, N>>;
   using alloc_t = eve::aligned_allocator<T, N>;
 
   auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - std::max(algt,N::value);
+  auto start    = nb_elem - std::max(algt, N);
   std::vector<T, alloc_t> ref(nb_elem);
 
   T k = T {1};
@@ -26,13 +26,13 @@ template<typename T, typename N> auto page()
   return std::pair{ref,start};
 }
 
-template<typename T, typename N> auto logical_page()
+template<typename T, auto N> auto logical_page()
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::logical<eve::wide<T, N>>>;
   using alloc_t = eve::aligned_allocator<eve::logical<T>, N>;
 
   auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - std::max(algt,N::value);
+  auto start    = nb_elem - std::max(algt, N);
   std::vector<eve::logical<T>, alloc_t> ref(nb_elem);
 
   bool k = true;
@@ -41,13 +41,13 @@ template<typename T, typename N> auto logical_page()
   return std::pair{ref,start};
 }
 
-template<typename T, typename N> auto arithmetic_logical_page()
+template<typename T, auto N> auto arithmetic_logical_page()
 {
   constexpr std::ptrdiff_t algt = eve::alignment_v<eve::wide<T, N>>;
   using alloc_t = eve::aligned_allocator<T, N>;
 
   auto nb_elem  = 4096 / sizeof(T);
-  auto start    = nb_elem - std::max(algt, N::value);
+  auto start    = nb_elem - std::max(algt, N);
   std::vector<T, alloc_t> ref(nb_elem);
 
   bool k = true;

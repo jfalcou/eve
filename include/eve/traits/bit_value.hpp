@@ -28,7 +28,7 @@ namespace eve
 
     // SIMD/* case
     // Finding the proper size of the proper wide able to represent all the values
-    // in a bitwise call without losing bits requires a global analysis of all Type x Cardinal
+    // in a bitwise call without losing bits requires a global analysis of all Type x Width
     // combination. This is an helper function to handle this logic.
     template<typename T0, typename... Ts>
     constexpr auto adequate_size()
@@ -90,7 +90,7 @@ namespace eve
     static constexpr auto sz = _::adequate_size<T0,Ts...>();
     using type  = _::conditional_t< sz.is_scalar
                                     , T0
-                                    , as_wide_t<T0, fixed<sz.size / sizeof(T0)>>
+                                    , as_wide_t<T0, sz.size / sizeof(T0)>
                                     >;
   };
 

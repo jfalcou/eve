@@ -10,7 +10,7 @@
 namespace eve::_
 {
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t... I>
+template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t... I>
 EVE_FORCEINLINE wide<T, N>
                 sve_tbl(wide<T, N> x, pattern_t<I...>)
 {
@@ -18,9 +18,9 @@ EVE_FORCEINLINE wide<T, N>
   return svtbl(x, table);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_svetbl(P, fixed<G>, wide<T, N> x)
+shuffle_l3_svetbl(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto table_idxs =
       idxm::to_pattern<idxm::expand_group<G>(idxm::replace_we(P::idxs, eve::na_))>();
@@ -28,9 +28,9 @@ shuffle_l3_svetbl(P, fixed<G>, wide<T, N> x)
   return sve_tbl(x, table_idxs);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l3_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, wide<T, N> x)
 {
   return shuffle_l3_svetbl(p, g, x);
 }

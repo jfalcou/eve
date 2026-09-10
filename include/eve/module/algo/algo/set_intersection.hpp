@@ -240,7 +240,7 @@ namespace _
       auto f2 = eve::unalign(pr2.begin());
       auto o  = eve::unalign(pro.begin());
 
-      constexpr std::ptrdiff_t card = iterator_cardinal_v<decltype(f1)>;
+      constexpr std::ptrdiff_t card = iterator_width_v<decltype(f1)>;
 
       while( (pr1.end() - f1) >= card && (pr2.end() - f2) >= card && (pro.end() - o) >= card )
       {

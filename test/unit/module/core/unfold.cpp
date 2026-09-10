@@ -17,14 +17,14 @@
 TTS_CASE_TPL("Check return types of eve::unfold", eve::test::simd::all_types_wf16)
 <typename T>(tts::type<T>)
 {
-  constexpr auto N = eve::cardinal_v<T>;
+  constexpr auto N = eve::width_v<T>;
   if constexpr(N < 64)
   {
     using v_t = eve::element_type_t<T>;
 
-    TTS_EXPR_IS(eve::unfold(T()), (kumi::result::fill_t<eve::cardinal_v<T>, v_t>));
-    TTS_EXPR_IS(eve::unfold(T(), v_t()), (kumi::result::fill_t<eve::cardinal_v<T>+1, v_t>));
-    TTS_EXPR_IS(eve::unfold(T(), T(), v_t()), (kumi::result::fill_t<2*eve::cardinal_v<T>+1, v_t>));
+    TTS_EXPR_IS(eve::unfold(T()), (kumi::result::fill_t<eve::width_v<T>, v_t>));
+    TTS_EXPR_IS(eve::unfold(T(), v_t()), (kumi::result::fill_t<eve::width_v<T>+1, v_t>));
+    TTS_EXPR_IS(eve::unfold(T(), T(), v_t()), (kumi::result::fill_t<2*eve::width_v<T>+1, v_t>));
   }
   else
     TTS_PASS();
@@ -41,12 +41,12 @@ TTS_CASE_WITH("Check behavior of eve::unfold(eve::wide)",
   <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
-  constexpr auto N = eve::cardinal_v<T>;
+  constexpr auto N = eve::width_v<T>;
   if constexpr(N < 64)
   {
     auto gen =  [](auto x){
       auto g = [x](auto i){ return x.get(i); };
-      constexpr auto card = eve::cardinal_v<T>;
+      constexpr auto card = eve::width_v<T>;
       return kumi::generate<card>(g) ;
     };
     TTS_EQUAL(eve::unfold(a0), gen(a0));

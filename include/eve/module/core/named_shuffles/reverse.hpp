@@ -30,7 +30,7 @@ namespace eve
 //!
 //!    @code
 //!    template <simd_value T, std::ptrdiff_t G>
-//!    T reverse(T x, eve::fixed<G>);  // (1)
+//!    T reverse(T x, eve::lanes_t<G>);  // (1)
 //!
 //!    template <simd_value T>
 //!    T reverse(T x);  // (2)
@@ -55,13 +55,13 @@ namespace eve
 //================================================================================================
 struct reverse_t
 {
-  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::lanes_t<G>)
   {
     return eve::fix_pattern<T::size() / G>([](int i, int size) { return size - i - 1; });
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::lanes_t<G> g)
   {
     if constexpr( eve::has_aggregated_abi_v<T> )
     {
@@ -72,18 +72,18 @@ struct reverse_t
 
     const std::ptrdiff_t g_size     = sizeof(element_type_t<T>) * G;
     const std::size_t    reg_size   = sizeof(element_type_t<T>) * T::size();
-    const bool is_expected_cardinal = T::size() == eve::expected_cardinal_v<element_type_t<T>>;
+    const bool is_expected_width = T::size() == eve::expected_width_v<element_type_t<T>>;
 
     if( current_api >= sve )
     {
       if( !logical_value<T> )
       {
         if( reg_size <= 8 ) return 2;
-        if( is_expected_cardinal && g_size <= 8 ) return 2;
-        if( is_expected_cardinal && g_size == reg_size / 2 ) return 2;
+        if( is_expected_width && g_size <= 8 ) return 2;
+        if( is_expected_width && g_size == reg_size / 2 ) return 2;
         return 3;
       }
-      if( is_expected_cardinal && g_size <= 8 ) return 2;
+      if( is_expected_width && g_size <= 8 ) return 2;
       return level(_::mask_type(tgt), g) + 4;
     }
 

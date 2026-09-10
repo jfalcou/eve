@@ -28,8 +28,8 @@ struct fixture
 
   auto aligned_begin()
   {
-    using ap = eve::aligned_ptr<char, eve::fixed<4>>;
-    return eve::algo::ptr_iterator<ap, eve::fixed<4>> {ap(data.data())};
+    using ap = eve::aligned_ptr<char, 4>;
+    return eve::algo::ptr_iterator<ap, 4> {ap(data.data())};
   }
 
   auto aligned_end() { return aligned_begin() + data.size(); }
@@ -61,7 +61,7 @@ struct test_delegate
 
   bool step(auto it, auto ignore)
   {
-    auto  tgt = eve::as<eve::wide<std::int8_t, eve::fixed<4>>> {};
+    auto  tgt = eve::as<eve::wide<std::int8_t, 4>> {};
     char *ptr = it.ptr;
 
     std::ptrdiff_t it_idx = it.ptr - data;
@@ -135,7 +135,7 @@ template<bool align, int unroll> struct run_test_impl
           }
           else if constexpr( align && divisible )
           {
-            return eve::algo::traits {eve::algo::divisible_by_cardinal, eve::algo::unroll<unroll>};
+            return eve::algo::traits {eve::algo::divisible_by_width, eve::algo::unroll<unroll>};
           }
           else if constexpr( !align && !divisible )
           {
@@ -144,7 +144,7 @@ template<bool align, int unroll> struct run_test_impl
           else if constexpr( !align && divisible )
           {
             return eve::algo::traits {eve::algo::no_aligning,
-                                      eve::algo::divisible_by_cardinal,
+                                      eve::algo::divisible_by_width,
                                       eve::algo::unroll<unroll>};
           }
         }(),

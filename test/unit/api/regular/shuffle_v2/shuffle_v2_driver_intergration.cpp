@@ -49,30 +49,30 @@ TTS_CASE("integrating with fake native shuffle")
 {
   auto tst = tst_for_shuffler(perfect_shuffler);
 
-  using T = eve::wide<int, eve::fixed<4>>;
+  using T = eve::wide<int, 4>;
 
-  tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, 0>);
+  tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::lanes<2>, eve::pattern<1, 0>);
   tst(T {4, 3, 2, 1}, eve::index<4>, T {1, 2, 3, 4}, eve::pattern<3, 2, 1, 0>);
   tst(T {3, 4, 1, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::pattern<2, 3, 0, 1>);
-  tst(T {0, 0, 1, 2}, eve::index<1>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<eve::we_, 0>);
-  tst(T {3, 4, 0, 0}, eve::index<2>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1, eve::na_>);
+  tst(T {0, 0, 1, 2}, eve::index<1>, T {1, 2, 3, 4}, eve::lanes<2>, eve::pattern<eve::we_, 0>);
+  tst(T {3, 4, 0, 0}, eve::index<2>, T {1, 2, 3, 4}, eve::lanes<2>, eve::pattern<1, eve::na_>);
 
   // T05
-  using T025 = eve::wide<int, eve::fixed<1>>;
-  using T05  = eve::wide<int, eve::fixed<2>>;
-  using T2   = eve::wide<int, eve::fixed<8>>;
+  using T025 = eve::wide<int, 1>;
+  using T05  = eve::wide<int, 2>;
+  using T2   = eve::wide<int, 8>;
 
   tst(T05 {4, 2}, eve::index<2>, T {1, 2, 3, 4}, eve::pattern<3, 1>);
   tst((T {7, 5, 3, 1}), eve::index<4>, T {1, 2, 3, 4}, T {5, 6, 7, 8}, eve::pattern<6, 4, 2, 0>);
   tst((T {7, 5, 3, 1}), eve::index<4>, T2 {1, 2, 3, 4, 5, 6, 7, 8}, eve::pattern<6, 4, 2, 0>);
-  tst(T05 {3, 4}, eve::index<1>, T {1, 2, 3, 4}, eve::lane<2>, eve::pattern<1>);
+  tst(T05 {3, 4}, eve::index<1>, T {1, 2, 3, 4}, eve::lanes<2>, eve::pattern<1>);
   tst(T {7, 8, 3, 4},
       eve::index<2>,
       T {1, 2, 3, 4},
       T {5, 6, 7, 8},
-      eve::lane<2>,
+      eve::lanes<2>,
       eve::pattern<3, 1>);
-  tst(T {7, 8, 3, 4}, eve::index<2>, T2 {1, 2, 3, 4, 5, 6, 7, 8}, eve::lane<2>, eve::pattern<3, 1>);
+  tst(T {7, 8, 3, 4}, eve::index<2>, T2 {1, 2, 3, 4, 5, 6, 7, 8}, eve::lanes<2>, eve::pattern<3, 1>);
 
   // Common l0, l1
   tst(T025 {1}, eve::index<0>, T05 {1, 2}, eve::pattern<0>);
@@ -82,7 +82,7 @@ TTS_CASE("integrating with fake native shuffle")
   tst(T {0, 0, 0, 0},
       eve::index<1>,
       T {1, 2, 3, 4},
-      eve::lane<2>,
+      eve::lanes<2>,
       eve::pattern<eve::we_, eve::na_>);
 
   // L
@@ -93,57 +93,57 @@ TTS_CASE("integrating with fake native shuffle")
       eve::pattern<3, 2, 1, 0>);
 
   // To bigger size
-  using TxT = eve::wide<kumi::tuple<int, int>, T::cardinal_type>;
+  using TxT = eve::wide<kumi::tuple<int, int>, T::size()>;
   tst(TxT {T {3, 4, 1, 2}, T {1, 2, 1, 2}},
       eve::index<2>,
       T {1, 2, 3, 4},
-      eve::lane<2>,
+      eve::lanes<2>,
       eve::pattern<1, 0, 0, 0>);
 
   tst(TxT {T {5, 6, 1, 2}, T {5, 6, 7, 8}},
       eve::index<2>,
       T {1, 2, 3, 4},
       T {5, 6, 7, 8},
-      eve::lane<2>,
+      eve::lanes<2>,
       eve::pattern<2, 0, 2, 3>);
 
   tst(T2 {5, 6, 1, 2, 5, 6, 7, 8},
       eve::index < eve::has_aggregated_abi_v<T2> ? 2 : 4 >,
       T2 {1, 2, 3, 4, 5, 6, 7, 8},
-      eve::lane<2>,
+      eve::lanes<2>,
       eve::pattern<2, 0, 2, 3>);
 
   // Bundle
   {
     using ETxL     = kumi::tuple<int, eve::logical<int>>;
-    using TxL      = eve::wide<ETxL, T::cardinal_type>;
-    using TLxTL    = eve::wide<kumi::tuple<ETxL, ETxL>, T::cardinal_type>;
-    using TLxTLxTL = eve::wide<kumi::tuple<ETxL, ETxL, ETxL>, T::cardinal_type>;
+    using TxL      = eve::wide<ETxL, T::size()>;
+    using TLxTL    = eve::wide<kumi::tuple<ETxL, ETxL>, T::size()>;
+    using TLxTLxTL = eve::wide<kumi::tuple<ETxL, ETxL, ETxL>, T::size()>;
 
     TxL in {T {1, 2, 3, 4}, L {false, true, true, false}};
     TxL out {T {3, 4, 1, 2}, L {true, false, false, true}};
 
-    tst(out, eve::index<2>, in, eve::lane<2>, eve::pattern<1, 0>);
-    tst(in.slice(eve::upper_), eve::index<1>, in, eve::lane<2>, eve::pattern<1>);
-    tst(TLxTL {out, out}, eve::index<2>, in, eve::lane<2>, eve::pattern<1, 0, 1, 0>);
-    tst(TLxTLxTL {out, out, out}, eve::index<2>, in, eve::lane<2>, eve::pattern<1, 0, 1, 0, 1, 0>);
+    tst(out, eve::index<2>, in, eve::lanes<2>, eve::pattern<1, 0>);
+    tst(in.slice(eve::upper_), eve::index<1>, in, eve::lanes<2>, eve::pattern<1>);
+    tst(TLxTL {out, out}, eve::index<2>, in, eve::lanes<2>, eve::pattern<1, 0, 1, 0>);
+    tst(TLxTLxTL {out, out, out}, eve::index<2>, in, eve::lanes<2>, eve::pattern<1, 0, 1, 0, 1, 0>);
   }
 };
 
 TTS_CASE("identites and 0s masking integration tests")
 {
-  using T      = eve::wide<int, eve::fixed<4>>;
-  using half_T = eve::wide<int, eve::fixed<2>>;
+  using T      = eve::wide<int, 4>;
+  using half_T = eve::wide<int, 2>;
 
   // Identities
   {
     auto tst = tst_for_shuffler(never_native_shuffler);
-    tst(T {1, 2, 3, 4}, eve::index<0>, T {1, 2, 3, 4}, eve::lane<1>, eve::pattern<0, 1, 2, 3>);
+    tst(T {1, 2, 3, 4}, eve::index<0>, T {1, 2, 3, 4}, eve::lanes<1>, eve::pattern<0, 1, 2, 3>);
 
     tst(eve::supports_simd  ? T {1, 2, 3, 4} : T{1, 0, 3, 4},
         eve::index<0>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<0, eve::we_, 2, 3>);
   }
 
@@ -153,12 +153,12 @@ TTS_CASE("identites and 0s masking integration tests")
     tst(T {0, 0, 0, 0},
         eve::index<1>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<eve::na_, eve::na_, eve::na_, eve::na_>);
     tst(half_T {0, 0},
         eve::index<1>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<eve::na_, eve::na_>);
   }
 
@@ -177,12 +177,12 @@ TTS_CASE("identites and 0s masking integration tests")
     tst(T {1, 0, 3, 0},
         eve::index<2>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<0, eve::na_, 2, eve::na_>);
     tst(T {1, 2, 0, 0},
         eve::index<2>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<0, eve::we_, eve::na_, eve::na_>);
   }
 
@@ -192,12 +192,12 @@ TTS_CASE("identites and 0s masking integration tests")
     tst(T {0, 1, 3, 4},
         eve::index<3>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<eve::na_, 0, 2, 3>);
     tst(T {0, 1, 0, 0},
         eve::index<2>,
         T {1, 2, 3, 4},
-        eve::lane<1>,
+        eve::lanes<1>,
         eve::pattern<eve::na_, 0, eve::we_, eve::na_>);
   }
 };
@@ -210,25 +210,25 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
   // normal
   {
     using e_t     = eve::element_type_t<T>;
-    using TxT     = eve::wide<kumi::tuple<e_t, e_t>, typename T::cardinal_type>;
-    using TxTxTxT = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, typename T::cardinal_type>;
+    using TxT     = eve::wide<kumi::tuple<e_t, e_t>, T::size()>;
+    using TxTxTxT = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, T::size()>;
 
-    tst(TxT {T {0}, T {0}}, 0, T {0}, eve::lane<T::size()>, eve::pattern<0, 0>);
+    tst(TxT {T {0}, T {0}}, 0, T {0}, eve::lanes<T::size()>, eve::pattern<0, 0>);
     tst(TxTxTxT {T {0}, T {1}, T {0}, T {1}},
         0,
         T {0},
         T {1},
-        eve::lane<T::size() * 2>,
+        eve::lanes<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(TxTxTxT {T {1}, T {2}, T {0}, T {0}},
         eve::has_emulated_abi_v<T> ? 0 : 1,
         T {1},
         T {2},
-        eve::lane<T::size() * 2>,
+        eve::lanes<T::size() * 2>,
         eve::pattern<0, eve::na_>);
 
     auto [shuffled, l] =
-        never_native_shuffler(T {1}, T {2}, eve::lane<T::size() * 2>, eve::pattern<0, eve::we_>);
+        never_native_shuffler(T {1}, T {2}, eve::lanes<T::size() * 2>, eve::pattern<0, eve::we_>);
     auto [x0, x1, _0, _1] = shuffled;
     TTS_EQUAL(x0, T {1});
     TTS_EQUAL(x1, T {2});
@@ -238,30 +238,30 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
   // bundle
   {
     using e_t     = kumi::tuple<eve::element_type_t<T>, eve::logical<std::int8_t>>;
-    using U       = eve::wide<e_t, typename T::cardinal_type>;
-    using UxU     = eve::wide<kumi::tuple<e_t, e_t>, typename T::cardinal_type>;
-    using UxUxUxU = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, typename T::cardinal_type>;
+    using U       = eve::wide<e_t, T::size()>;
+    using UxU     = eve::wide<kumi::tuple<e_t, e_t>, T::size()>;
+    using UxUxUxU = eve::wide<kumi::tuple<e_t, e_t, e_t, e_t>, T::size()>;
 
     tst(UxU {U {0, false}, U {0, false}},
         0,
         U {0, false},
-        eve::lane<T::size()>,
+        eve::lanes<T::size()>,
         eve::pattern<0, 0>);
     tst(UxUxUxU {U {0, false}, U {1, true}, U {0, false}, U {1, true}},
         0,
         U {0, false},
         U {1, true},
-        eve::lane<T::size() * 2>,
+        eve::lanes<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(UxUxUxU {U {1, false}, U {2, true}, U {0, false}, U {0, false}},
         eve::has_emulated_abi_v<T> && eve::has_emulated_abi_v<eve::wide<std::uint8_t>> ? 0 : 1,
         U {1, false},
         U {2, true},
-        eve::lane<T::size() * 2>,
+        eve::lanes<T::size() * 2>,
         eve::pattern<0, eve::na_>);
 
     auto [shuffled, l] = never_native_shuffler(
-        U {1, false}, U {2, true}, eve::lane<T::size() * 2>, eve::pattern<0, eve::we_>);
+        U {1, false}, U {2, true}, eve::lanes<T::size() * 2>, eve::pattern<0, eve::we_>);
     auto [x0, x1, _0, _1] = shuffled;
     TTS_EQUAL(x0, (U {1, false}));
     TTS_EQUAL(x1, (U {2, true}));

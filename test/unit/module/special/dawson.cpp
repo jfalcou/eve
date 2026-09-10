@@ -58,16 +58,16 @@ TTS_CASE_TPL("Check behavior of dawson on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::dawson(T(2.5)), T(2.230837221674355e-01), 1.0);
   TTS_ULP_EQUAL(eve::dawson(T(0.9241388730)), T(5.410442246351818e-01), 0.5);
 
-  eve::wide<float, eve::fixed<8>> w {
+  eve::wide<float, 8> w {
       0.0f, 1.0f, 2.0f, 4.0f, 8.0f, 2.0, eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
-  eve::wide<float, eve::fixed<8>> rr {eve::dawson((0.0f)),
-                                     eve::dawson((1.0f)),
-                                     eve::dawson((2.0f)),
-                                     eve::dawson((4.0f)),
-                                     eve::dawson((8.0f)),
-                                     eve::dawson((2.0f)),
-                                     eve::dawson(eve::inf(eve::as<float>())),
-                                     eve::dawson(eve::nan(eve::as<float>()))};
+  eve::wide<float, 8> rr {eve::dawson((0.0f)),
+                          eve::dawson((1.0f)),
+                          eve::dawson((2.0f)),
+                          eve::dawson((4.0f)),
+                          eve::dawson((8.0f)),
+                          eve::dawson((2.0f)),
+                          eve::dawson(eve::inf(eve::as<float>())),
+                          eve::dawson(eve::nan(eve::as<float>()))};
   TTS_ULP_EQUAL(eve::dawson(w), rr, 2);
 };
 

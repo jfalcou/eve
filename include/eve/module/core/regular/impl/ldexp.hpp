@@ -73,7 +73,7 @@ constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
       if constexpr(scalar_value<T> != scalar_value<U>)
       {
         using w_t  = as_wide_as_t<T,U>;
-        using wi_t = _::conditional_t<simd_value<U>, U, wide<i_t,cardinal_t<T>>>;
+        using wi_t = _::conditional_t<simd_value<U>, U, wide<i_t, T::size()>>;
 
         return ldexp[o]( w_t(a), wi_t(b) );
       }

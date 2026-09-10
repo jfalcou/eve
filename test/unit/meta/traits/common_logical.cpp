@@ -69,21 +69,21 @@ TTS_CASE("eve::common_logical on special cases")
 template<typename T, typename U, typename ES, typename EW = ES>
 void test_with_types_simd()
 {
-  using es_t = eve::logical<eve::wide<ES, eve::fixed<2>>>;
-  using ew_t = eve::logical<eve::wide<EW, eve::fixed<2>>>;
+  using es_t = eve::logical<eve::wide<ES, 2>>;
+  using ew_t = eve::logical<eve::wide<EW, 2>>;
 
   using Lt  = eve::logical<T>;
-  using Wt  = eve::wide<T, eve::fixed<2>>;
+  using Wt  = eve::wide<T, 2>;
   using LWt = eve::logical<Wt>;
 
-  using Wu  = eve::wide<U, eve::fixed<2>>;
+  using Wu  = eve::wide<U, 2>;
   using LWu = eve::logical<Wu>;
 
   test_with_types<T, Wu, es_t>();
   test_with_types<Lt, Wu, es_t>();
   test_with_types<T, LWu, es_t>();
   test_with_types<Lt, LWu, es_t>();
-  
+
   test_with_types<Wt, Wu, ew_t>();
   test_with_types<LWt, Wu, ew_t>();
   test_with_types<Wt, LWu, ew_t>();
@@ -125,5 +125,5 @@ TTS_CASE("eve::common_logical on tuples")
   using t2 = kumi::tuple<long long, double>;
 
   TTS_TYPE_IS((eve::common_logical_t<t1, t2>), eve::logical<unsigned char>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::wide<t1, eve::fixed<2>>, eve::wide<t2, eve::fixed<2>>>), (eve::logical<eve::wide<unsigned char, eve::fixed<2>>>));
+  TTS_TYPE_IS((eve::common_logical_t<eve::wide<t1, 2>, eve::wide<t2, 2>>), (eve::logical<eve::wide<unsigned char, 2>>));
 };

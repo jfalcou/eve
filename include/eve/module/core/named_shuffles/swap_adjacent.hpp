@@ -31,7 +31,7 @@ namespace eve
 //!
 //!   @code
 //!   template<simd_value T, std::ptrdiff_t G>
-//!   T swap_adjacent(T x, fixed<G>)  // (1)
+//!   T swap_adjacent(T x, lanes_t<G>)  // (1)
 //!
 //!   template<simd_value T>
 //!   T swap_adjacent(T x)  // (2)
@@ -53,7 +53,7 @@ namespace eve
 struct swap_adjacent_t
 {
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  static constexpr auto pattern(eve::as<T>, eve::lanes_t<G>)
   requires(G < T::size())
   {
     return eve::fix_pattern<T::size() / G>(
@@ -65,11 +65,11 @@ struct swap_adjacent_t
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::lanes_t<G> g)
   {
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
-    const std::size_t fund_size = eve::fundamental_cardinal_v<std::uint8_t>;
+    const std::size_t fund_size = eve::fundamental_width_v<std::uint8_t>;
 
     if( current_api >= sve )
     {

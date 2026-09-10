@@ -17,10 +17,9 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 TTS_CASE_TPL( "Check eve::zip", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using N  = eve::fixed<T::size()>;
   using e_t = eve::element_type_t<T>;
-  using w_t = eve::wide<tuple_t<e_t>, N>;
-  using s_t = typename eve::wide<tuple_t<e_t>, N>::storage_type;
+  using w_t = eve::wide<tuple_t<e_t>, T::size()>;
+  using s_t = typename eve::wide<tuple_t<e_t>, T::size()>::storage_type;
   using w0_t = std::tuple_element_t<0, s_t>;
   using w1_t = std::tuple_element_t<1, s_t>;
   using w2_t = std::tuple_element_t<2, s_t>;

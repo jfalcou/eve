@@ -24,8 +24,8 @@ namespace _
     EVE_FORCEINLINE bool main_loop(Traits, I overflow_base, I& f, S l, Delegate& delegate) const
     requires(get_unrolling<Traits>() == 1)
     {
-      static_assert(get_overflow<Traits>() % iterator_cardinal_v<I> == 0);
-      static_assert(get_overflow<Traits>() >= iterator_cardinal_v<I>
+      static_assert(get_overflow<Traits>() % iterator_width_v<I> == 0);
+      static_assert(get_overflow<Traits>() >= iterator_width_v<I>
                                                   * (1 + std::max(needsBefore, needsAfter)));
 
       while( f != l )
@@ -36,7 +36,7 @@ namespace _
         while( f != cur_l )
         {
           if( delegate.step(f, eve::ignore_none, eve::index<0>) ) return true;
-          f += iterator_cardinal_v<I>;
+          f += iterator_width_v<I>;
         }
 
         bool reached_end    = f == l;
@@ -62,9 +62,9 @@ namespace _
     requires(get_unrolling<Traits>() > 1)
     {
       static constexpr std::ptrdiff_t unrolling = get_unrolling<Traits>();
-      static_assert(get_overflow<Traits>() % iterator_cardinal_v<I> == 0);
+      static_assert(get_overflow<Traits>() % iterator_width_v<I> == 0);
       static_assert(get_overflow<Traits>()
-                    >= iterator_cardinal_v<I> * (unrolling + std::max(needsBefore, needsAfter)));
+                    >= iterator_width_v<I> * (unrolling + std::max(needsBefore, needsAfter)));
 
       // In order to optimise for smaller ranges we not only finish but start with
       // single steps as well.
@@ -84,7 +84,7 @@ namespace _
 
         std::ptrdiff_t big_steps_count =
             std::min(l - f, get_overflow<Traits>() - (f - overflow_base))
-            / (iterator_cardinal_v<I> * unrolling);
+            / (iterator_width_v<I> * unrolling);
 
         while( big_steps_count )
         {
@@ -93,16 +93,16 @@ namespace _
               [&](auto idx) mutable
               {
                 arr[idx()] = f;
-                f += iterator_cardinal_v<I>;
+                f += iterator_width_v<I>;
               });
           if( delegate.unrolled_step(arr) ) return true;
           --big_steps_count;
         }
 
-        bool reached_end = (l - f) < unrolling * iterator_cardinal_v<I>;
+        bool reached_end = (l - f) < unrolling * iterator_width_v<I>;
         bool needs_one_more =
             get_overflow<Traits>()
-                - (needsAfter + unrolling) * iterator_cardinal_v<I> < (f - overflow_base);
+                - (needsAfter + unrolling) * iterator_width_v<I> < (f - overflow_base);
 
         if( !reached_end || needs_one_more )
         {
@@ -124,11 +124,11 @@ namespace _
     for_each_iteration_fixed_overflow_precise_f_l(Traits t, I i, S s)
         : traits(t), base(i), f(i), l(s)
     {
-      EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
-                 " len of the range is no divisible by cardinal "
-                     << "when `divisible by cardinal is passed`: "
+      EVE_ASSERT(((l - f) % iterator_width_v<I> == 0),
+                 " len of the range is no divisible by width "
+                     << "when `divisible by width is passed`: "
                      << "l - f: " << (l - f)
-                     << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
+                     << " iterator_width_v<I>: " << iterator_width_v<I>);
     }
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
@@ -150,7 +150,7 @@ namespace _
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
-      I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
+      I precise_l = f + (((l - f) / iterator_width_v<I>)*iterator_width_v<I>);
 
       if( main_loop<0, 1>(traits, base, f, precise_l, delegate) ) return;
 
@@ -188,14 +188,14 @@ namespace _
         // first chunk, maybe partial
         if( delegate.step(aligned_f, ignore_first, eve::index<0>) ) return;
         ignore_first = eve::ignore_first {0};
-        aligned_f += iterator_cardinal_v<I>;
+        aligned_f += iterator_width_v<I>;
 
         if( main_loop<1, 1>(traits, base, aligned_f, aligned_l, delegate) ) return;
 
         if( aligned_l == l ) return;
       }
 
-      eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
+      eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
       delegate.step(aligned_l, ignore_first && ignore_last, eve::index<0>);
     }
   };
@@ -209,7 +209,7 @@ struct
     EVE_ASSERT(f != l, "for_each_iteration_fixed_overflow requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )
       return _::for_each_iteration_fixed_overflow_aligning {traits, f, l};
-    else if constexpr( Traits::contains(divisible_by_cardinal) )
+    else if constexpr( Traits::contains(divisible_by_width) )
       return _::for_each_iteration_fixed_overflow_precise_f_l {traits, f, l};
     else return _::for_each_iteration_fixed_overflow_precise_f {traits, f, l};
   }

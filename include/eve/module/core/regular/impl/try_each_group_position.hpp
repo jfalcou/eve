@@ -14,7 +14,7 @@ namespace eve::_
 
 template<simd_value T, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-try_each_group_position_aggregation(T x, eve::fixed<G> g) noexcept
+try_each_group_position_aggregation(T x, eve::lanes_t<G> g) noexcept
 {
   auto [l, h] = x.slice();
   auto l_pos  = try_each_group_position(l, g);
@@ -26,7 +26,7 @@ try_each_group_position_aggregation(T x, eve::fixed<G> g) noexcept
 
 template<simd_value T, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-try_each_group_position_(EVE_SUPPORTS(cpu_), T x, eve::fixed<G> g) noexcept
+try_each_group_position_(EVE_SUPPORTS(cpu_), T x, eve::lanes_t<G> g) noexcept
 {
        if constexpr( T::size() == G ) { return kumi::tuple<T> {x}; }
   else if constexpr( logical_value<T> && T::abi_type::is_wide_logical )
@@ -40,8 +40,8 @@ try_each_group_position_(EVE_SUPPORTS(cpu_), T x, eve::fixed<G> g) noexcept
     // Doubling the group size is likely to yield better shuffles
     // over rotating many times by one.
     return kumi::cat(
-      try_each_group_position(x,                        eve::lane<G * 2>),
-      try_each_group_position(rotate(x, eve::index<G>), eve::lane<G * 2>)
+      try_each_group_position(x,                        eve::lanes<G * 2>),
+      try_each_group_position(rotate(x, eve::index<G>), eve::lanes<G * 2>)
     );
   }
 }

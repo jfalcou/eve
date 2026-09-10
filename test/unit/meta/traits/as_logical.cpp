@@ -14,7 +14,7 @@ TTS_CASE_TPL( "Check as_logical on scalar", ::tts::arithmetic_types )
 {
   using eve::as_logical_t;
   using eve::logical;
-  using eve::fixed;
+  using eve::lanes_t;
 
   TTS_TYPE_IS(as_logical_t<T>                         , logical<T>);
   TTS_TYPE_IS(as_logical_t<logical<T>>                , logical<T>);
@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check as_wide on wide", ::tts::arithmetic_types )
   using eve::as_logical_t;
   using eve::logical;
   using eve::wide;
-  using eve::fixed;
+  using eve::lanes_t;
 
   TTS_TYPE_IS(as_logical_t<wide<T>>                                   , logical<wide<T>>);
   TTS_TYPE_IS(as_logical_t<logical<wide<T>>>                          , logical<wide<T>>);
-  TTS_TYPE_IS((as_logical_t<wide<kumi::tuple<T, unsigned char, float>, fixed<4>>>) , (logical<wide<unsigned char,fixed<4>>>));
+  TTS_TYPE_IS((as_logical_t<wide<kumi::tuple<T, unsigned char, float>, 4>>) , (logical<wide<unsigned char, 4>>));
 };

@@ -13,7 +13,7 @@ int main()
   eve::wide w1{0.0, 25.0, 33.0, 12.0}; //, 20.0, 18.0, 6.0, 10.0};
 //   w0+= ttnmb/2;
 //   w1+= ttnmb-100;
-//  eve::wide<double, eve::fixed<8>> p(ttnmb-1);
+//  eve::wide<double, 8> p(ttnmb-1);
   double p(37); //ttnmb-1);
   std::cout << std::setprecision(20);
   std::cout << "<- p                    = " << p << "\n";

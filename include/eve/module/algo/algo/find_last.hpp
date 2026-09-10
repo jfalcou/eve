@@ -41,7 +41,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
     explicit delegate(UnalignedFwdI f, P pf) : found(f), p(pf) {}
 
     void set_found(auto back_it, std::ptrdiff_t m) {
-      found = unalign(back_it.base) - iterator_cardinal_v<UnalignedFwdI> + m;
+      found = unalign(back_it.base) - iterator_width_v<UnalignedFwdI> + m;
     }
 
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
@@ -69,7 +69,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
       std::optional<std::ptrdiff_t> match;
       std::size_t pos = find_branchless(tests, _::find_last_branchless_lambda {&match});
 
-      set_found(arr[0] + pos * iterator_cardinal_v<I>, *match);
+      set_found(arr[0] + pos * iterator_width_v<I>, *match);
 
       return true;
     }

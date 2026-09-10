@@ -31,7 +31,7 @@ namespace eve::algo
         {
           if( delegate.step(f, eve::ignore_none, eve::index<0>) )
             return true;
-          f += iterator_cardinal_v<I>;
+          f += iterator_width_v<I>;
         }
 
         return false;
@@ -51,7 +51,7 @@ namespace eve::algo
             if (f == l) return true;
 
             should_break = delegate.step(f, eve::ignore_none, eve::index<i>);
-            f += iterator_cardinal_v<I>;
+            f += iterator_width_v<I>;
             return should_break;
           }
       };
@@ -77,14 +77,14 @@ namespace eve::algo
             return should_break;
           }
 
-          std::ptrdiff_t big_steps_count = (l - f) / (iterator_cardinal_v<I> * unrolling);
+          std::ptrdiff_t big_steps_count = (l - f) / (iterator_width_v<I> * unrolling);
 
           while( big_steps_count )
           {
             std::array<I, unrolling> arr;
             eve::_::for_<0, 1, unrolling>([&](auto idx) mutable {
               arr[idx()] = f;
-              f += iterator_cardinal_v<I>;
+              f += iterator_width_v<I>;
             });
             if( delegate.unrolled_step(arr) )
               return true;
@@ -105,10 +105,10 @@ namespace eve::algo
       for_each_iteration_precise_f_l(Traits t, I i, S s) :
         traits(t), base(i), f(i), l(s)
       {
-        EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
-          " len of the range is no divisible by cardinal " <<
-          "when `divisible by cardinal is passed`: " <<
-          "l - f: " << (l - f) << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
+        EVE_ASSERT(((l - f) % iterator_width_v<I> == 0),
+          " len of the range is no divisible by width " <<
+          "when `divisible by width is passed`: " <<
+          "l - f: " << (l - f) << " iterator_width_v<I>: " << iterator_width_v<I>);
       }
 
       template <typename Delegate>
@@ -133,7 +133,7 @@ namespace eve::algo
       EVE_FORCEINLINE void operator()(Delegate& delegate)
       {
 
-        I precise_l = f + (((l - f) / iterator_cardinal_v<I>) * iterator_cardinal_v<I>);
+        I precise_l = f + (((l - f) / iterator_width_v<I>) * iterator_width_v<I>);
 
         if (main_loop(traits, f, precise_l, delegate)) return;
 
@@ -169,7 +169,7 @@ namespace eve::algo
           if( delegate.step(aligned_f, ignore_first, eve::index<0>) )
             return;
           ignore_first = eve::ignore_first {0};
-          aligned_f += iterator_cardinal_v<I>;
+          aligned_f += iterator_width_v<I>;
 
           if( main_loop(traits, aligned_f, aligned_l, delegate) )
             return;
@@ -178,7 +178,7 @@ namespace eve::algo
             return;
         }
 
-        eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
+        eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
         delegate.step(aligned_l, ignore_first && ignore_last, eve::index<0>);
       }
     };
@@ -191,7 +191,7 @@ namespace eve::algo
     {
       EVE_ASSERT(f != l, "for_each_iteration requires a non-empty range");
       if constexpr (!Traits::contains(no_aligning) && !partially_aligned_iterator<I> ) return _::for_each_iteration_aligning{traits, f, l};
-      else if constexpr (Traits::contains(divisible_by_cardinal)                          ) return _::for_each_iteration_precise_f_l{traits, f, l};
+      else if constexpr (Traits::contains(divisible_by_width)                          ) return _::for_each_iteration_precise_f_l{traits, f, l};
       else                                                                                  return _::for_each_iteration_precise_f{traits, f, l};
     }
   } inline constexpr for_each_iteration;

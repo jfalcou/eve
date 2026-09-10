@@ -105,7 +105,7 @@ TTS_CASE( "Check strlen, basic")
 
 TTS_CASE( "Check strlen_ example exchaustive" )
 {
- std::vector<char, eve::aligned_allocator<char, eve::fixed<4096>>> page(4096, 'a');
+ std::vector<char, eve::aligned_allocator<char, 4096>> page(4096, 'a');
 
   // 50 from the beginning
   auto* f = page.data();

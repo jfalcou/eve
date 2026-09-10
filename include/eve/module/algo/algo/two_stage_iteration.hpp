@@ -22,12 +22,12 @@ namespace _
       {
         std::ptrdiff_t left_space = delegate.left_for_stage1();
         left_space = std::min(left_space, l - f);
-        left_space /= iterator_cardinal_v<I>;
+        left_space /= iterator_width_v<I>;
 
         if( !left_space ) break;
         do {
           if( delegate.step_1(f) ) return true;
-          f += iterator_cardinal_v<I>;
+          f += iterator_width_v<I>;
         }
         while( --left_space );
       }
@@ -35,7 +35,7 @@ namespace _
       while( f != l )
       {
         if( delegate.step_2(f) ) return true;
-        f += iterator_cardinal_v<I>;
+        f += iterator_width_v<I>;
       }
 
       return false;
@@ -52,11 +52,11 @@ namespace _
 
     two_stage_iteration_precise_f_l(Traits t, I i, S s) : traits(t), base(i), f(i), l(s)
     {
-      EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
-                 " len of the range is no divisible by cardinal "
-                     << "when `divisible by cardinal is passed`: "
+      EVE_ASSERT(((l - f) % iterator_width_v<I> == 0),
+                 " len of the range is no divisible by width "
+                     << "when `divisible by width is passed`: "
                      << "l - f: " << (l - f)
-                     << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
+                     << " iterator_width_v<I>: " << iterator_width_v<I>);
     }
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
@@ -77,7 +77,7 @@ namespace _
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
-      I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
+      I precise_l = f + (((l - f) / iterator_width_v<I>)*iterator_width_v<I>);
 
       if( main_loop(traits, f, precise_l, delegate) ) return;
 
@@ -116,14 +116,14 @@ namespace _
         if( delegate.tail(aligned_f, ignore_first) ) return;
 
         ignore_first = eve::ignore_first {0};
-        aligned_f += iterator_cardinal_v<I>;
+        aligned_f += iterator_width_v<I>;
 
         if( main_loop(traits, aligned_f, aligned_l, delegate) ) return;
 
         if( aligned_l == l ) return;
       }
 
-      eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
+      eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
       delegate.tail(aligned_l, ignore_first && ignore_last);
     }
   };
@@ -138,7 +138,7 @@ struct
     EVE_ASSERT(f != l, "two_stage_iteration requires a non-empty range");
     if constexpr( !Traits::contains(no_aligning) && !partially_aligned_iterator<I> )
       return _::two_stage_iteration_aligning {traits, f, l};
-    else if constexpr( Traits::contains(divisible_by_cardinal) )
+    else if constexpr( Traits::contains(divisible_by_width) )
       return _::two_stage_iteration_precise_f_l {traits, f, l};
     else return _::two_stage_iteration_precise_f {traits, f, l};
   }

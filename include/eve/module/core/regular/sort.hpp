@@ -107,14 +107,14 @@ namespace eve
 
     template <typename T, typename Less, std::ptrdiff_t Full, std::ptrdiff_t G>
     constexpr EVE_FORCEINLINE
-    T bitonic_merge_impl(T x, Less less, fixed<Full> full, fixed<G> g) noexcept
+    T bitonic_merge_impl(T x, Less less, lanes_t<Full> full, lanes_t<G> g) noexcept
     {
       T ab = x;
       T ba = eve::swap_adjacent(ab, g);
       auto [aa, bb] = eve::minmax(less)(ab, ba);
       x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
 
-      if constexpr (G > 1) return bitonic_merge_impl(x, less, full, lane<G / 2>);
+      if constexpr (G > 1) return bitonic_merge_impl(x, less, full, lanes<G / 2>);
       else                 return x;
     }
 
@@ -123,7 +123,7 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T bitonic_merge(T x, Less less, index_t<G>) noexcept
     {
-      return bitonic_merge_impl(x, less, lane<G * 2>, lane<G>);
+      return bitonic_merge_impl(x, less, lanes<G * 2>, lanes<G>);
     }
 
     // G - length of monotonic sequence

@@ -28,7 +28,7 @@ namespace eve::_
     {
       EVE_FORCEINLINE auto operator()(auto ... x) const
       {
-        return deinterleave_groups(lane<G>, x...);
+        return deinterleave_groups(lanes<G>, x...);
       }
       EVE_FORCEINLINE auto operator()(eve::product_type auto t) const
       {
@@ -39,7 +39,7 @@ namespace eve::_
     template<std::ptrdiff_t G, typename T, typename... Ts>
     EVE_FORCEINLINE
     kumi::tuple<T, Ts...>
-    emulate(eve::fixed<G>, T v0, Ts... vs)
+    emulate(eve::lanes_t<G>, T v0, Ts... vs)
     {
       auto const values = kumi::make_tuple(v0,vs...);
       constexpr std::size_t n_vs = sizeof...(Ts) + 1;
@@ -71,7 +71,7 @@ namespace eve::_
   template<std::ptrdiff_t G, simd_value T, std::same_as<T>... Ts>
   EVE_FORCEINLINE
   kumi::tuple<T, Ts...>
-  deinterleave_groups_(EVE_SUPPORTS(cpu_), eve::fixed<G> g, T v0, Ts... vs) noexcept
+  deinterleave_groups_(EVE_SUPPORTS(cpu_), eve::lanes_t<G> g, T v0, Ts... vs) noexcept
     requires ( T::size() >= G)
   {
     auto const values = kumi::make_tuple(v0,vs...);
@@ -79,7 +79,7 @@ namespace eve::_
     constexpr std::size_t t_g_size  = T::size() / g;
 
          if constexpr ( n_vs == 1 || T::size() == G ) return values;
-    else if constexpr ( has_emulated_abi_v<T>       ) return _deinterleave_groups::emulate(lane<G>, v0, vs...);
+    else if constexpr ( has_emulated_abi_v<T>       ) return _deinterleave_groups::emulate(lanes<G>, v0, vs...);
     else if constexpr ( n_vs == 2                   )
     {
       auto [l, h] = deinterleave_groups_shuffle(v0, get<1>(values), g).slice();
@@ -108,6 +108,6 @@ namespace eve::_
       kumi::tie(v1, v3) = deinterleave_groups(g, v1, v3);
       return {v0, v1, v2, v3};
     }
-    else return _deinterleave_groups::emulate(lane<G>, v0, vs...);
+    else return _deinterleave_groups::emulate(lanes<G>, v0, vs...);
   }
 }

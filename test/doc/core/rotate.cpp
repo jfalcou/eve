@@ -1,7 +1,7 @@
 #include <iostream>
 #include <eve/module/core.hpp>
 
-using wide_it = eve::wide<std::uint64_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::uint64_t, 4>;
 
 int main()
 {

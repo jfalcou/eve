@@ -65,9 +65,9 @@ namespace algo_test
   {
     find_generic_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>>{}, alg, check);
 
-    find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<1>], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<2>], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<3>], check);
-    find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<4>], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<1>], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<2>], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<3>], check);
+    find_generic_test_page_ends(as_t, alg[eve::algo::force_width<T::size()>][eve::algo::unroll<4>], check);
   }
 }

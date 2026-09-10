@@ -27,7 +27,7 @@ test_indexes()
 
 #if 0
 TTS_CASE("Slide left 1, example") {
-  using w_i =  eve::wide<unsigned int, eve::fixed<8>>;
+  using w_i =  eve::wide<unsigned int, 8>;
   w_i x{[](int i, int) { return i; } };
   std::cerr << eve::shuffle_v2(x, eve::pattern<3, 4, 5, 6, 7, -1, -1, -1>) << std::endl;
   TTS_PASS("");
@@ -37,7 +37,7 @@ TTS_CASE("Slide left 1, example") {
 #if 0
 TTS_CASE("Explicit") {
   // constexpr auto na_ = eve::na_;
-  using w_i = eve::wide<std::uint32_t, eve::fixed<16>>;
+  using w_i = eve::wide<std::uint32_t, 16>;
   w_i x {[](int i, int) { return i + 1; }};
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1>);
   TTS_EQUAL(l(), 4);
@@ -45,7 +45,7 @@ TTS_CASE("Explicit") {
 #  if 0
   TTS_EQUAL(y, w_i({2, 0}));
 
-  TTS_EQUAL(eve::slide_left2.level(eve::as<w_i>{}, eve::fixed<1>{}, eve::index<1>), 2);
+  TTS_EQUAL(eve::slide_left2.level(eve::as<w_i>{}, eve::lanes_t<1>{}, eve::index<1>), 2);
   (void)y;
 
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<7, na_, na_, na_, na_, na_, na_, na_>);
@@ -71,7 +71,7 @@ TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
     shuffle_test::named_shuffle1_test<
         /*supports_G_eq_T_Size*/ true>(eve::as<T> {},
                                        eve::slide_left2,
-                                       []<std::ptrdiff_t G>(eve::fixed<G>)
+                                       []<std::ptrdiff_t G>(eve::lanes_t<G>)
                                        {
                                          auto idxs   = test_indexes<T, G>();
                                          auto lifted = kumi::map(
