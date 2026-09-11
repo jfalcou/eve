@@ -19,7 +19,7 @@ constexpr auto try_each_group_rotate_halfs_pattern = [](int i, int size)
 };
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 try_each_group_position_(EVE_SUPPORTS(avx2_), wide<T, N> x, eve::fixed<G>) noexcept
 requires std::same_as<abi_t<T, N>, x86_256_> && (G < N::value / 2)
 {

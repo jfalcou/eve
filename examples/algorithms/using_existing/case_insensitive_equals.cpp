@@ -25,7 +25,7 @@ namespace ascii
   {
     // Making this work for scalar is a bit tricky because scalar code tends to convert to ints alot.
     // So we are only doing wides.
-    EVE_FORCEINLINE auto operator()(eve::like<std::uint8_t> auto c) const
+    EVE_ABI auto operator()(eve::like<std::uint8_t> auto c) const
     {
       // eve::sub[condition](a, b) is an equivalent to `eve::if_else(condition, a - b, a)`
       // but it will also use masked instructions when those are avaliable.

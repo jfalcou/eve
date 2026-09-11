@@ -38,22 +38,22 @@ namespace eve::_
     wide_storage(storage_type const &r) : data_(r) {}
 
     //! @brief Retrieve the architecture-specific storage help by wide
-    EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
+     storage_type const& storage() const & noexcept { return data_; }
 
     //! @brief Retrieve the architecture-specific storage help by wide
-    EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
+     storage_type &      storage() &       noexcept { return data_; }
 
     //! @brief Retrieve the architecture-specific storage help by wide
-    EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
+     storage_type        storage() &&      noexcept { return data_; }
 
     //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
+     operator storage_type const& () const &  noexcept { return data_; }
 
     //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
+     operator storage_type&       () &        noexcept { return data_; }
 
     //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
+     operator storage_type        () &&       noexcept { return data_; }
 
     protected:
     Storage data_;

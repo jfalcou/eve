@@ -19,14 +19,14 @@ namespace eve
   struct maxrepint_t : constant_callable<maxrepint_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(as<T> tgt, Opts const&)
+    EVE_ABI static constexpr T value(as<T> tgt, Opts const&)
     {
       if constexpr (eve::integral_value<T>) return valmax(tgt);
       else                                  return maxflint(tgt);
     }
 
     template<arithmetic_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(maxrepint_t, maxrepint_);
   };

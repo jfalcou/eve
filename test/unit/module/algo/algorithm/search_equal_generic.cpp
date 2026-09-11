@@ -14,13 +14,13 @@
 template<typename TraitsSupport> struct search_equal_ : TraitsSupport
 {
   template<typename R1, typename R2>
-  EVE_FORCEINLINE bool operator()(const R1& roi1, const R2& roi2) const
+  EVE_ABI bool operator()(const R1& roi1, const R2& roi2) const
   {
     auto [r1, r2] = eve::views::zip(roi1, roi2);
     return operator()(r1, r2);
   }
 
-  EVE_FORCEINLINE bool operator()(eve::algo::relaxed_range auto const& r1,
+  EVE_ABI bool operator()(eve::algo::relaxed_range auto const& r1,
                                   eve::algo::relaxed_range auto const& r2) const
   {
     std::ptrdiff_t size1 = r1.end() - r1.begin();

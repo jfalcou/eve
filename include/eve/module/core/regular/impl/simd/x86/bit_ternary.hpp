@@ -20,7 +20,7 @@
 namespace eve::_
 {
   template<std::uint8_t K, scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
+   wide<T, N>
   bit_ternary_(EVE_REQUIRES(sse2_), O const& opts,
                std::integral_constant<std::uint8_t, K> const &,
                wide<T, N> const& x, wide<T, N> const &y, wide<T, N> const &z) noexcept

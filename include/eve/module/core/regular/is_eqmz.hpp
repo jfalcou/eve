@@ -17,7 +17,7 @@ namespace eve
   struct is_eqmz_t : elementwise_callable<is_eqmz_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    EVE_ABI constexpr as_logical_t<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -78,7 +78,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    constexpr as_logical_t<T>
     is_eqmz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       using u_t = as_uinteger_t<T>;

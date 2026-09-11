@@ -163,46 +163,46 @@ namespace eve::algo::views
                             storage);
       }
 
-      EVE_FORCEINLINE  auto read() const noexcept { return kumi::map(eve::read, storage); }
+        auto read() const noexcept { return kumi::map(eve::read, storage); }
 
-      EVE_FORCEINLINE void write(value_type v) const noexcept { kumi::for_each(eve::write, v, storage); }
+       void write(value_type v) const noexcept { kumi::for_each(eve::write, v, storage); }
 
-      EVE_FORCEINLINE operator zip_iterator<unaligned_t<Is>...>() const
+       operator zip_iterator<unaligned_t<Is>...>() const
       {
         return zip_iterator<unaligned_t<Is>...> {
             kumi::map([](auto x) { return eve::unalign(x); }, *this)};
       }
 
-      EVE_FORCEINLINE auto unalign() const noexcept { return zip_iterator<unaligned_t<Is>...>(*this); }
+       auto unalign() const noexcept { return zip_iterator<unaligned_t<Is>...>(*this); }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      EVE_FORCEINLINE friend bool operator==(Self const &x, Other const &y)
+       friend bool operator==(Self const &x, Other const &y)
       {
         return get<main_iterator_idx>(x) == get<main_iterator_idx>(y);
       }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      EVE_FORCEINLINE friend auto operator<=>(Self const& x, Other const &y)
+       friend auto operator<=>(Self const& x, Other const &y)
       {
         return spaceship_helper(get<main_iterator_idx>(x), get<main_iterator_idx>(y));
       }
 
       template<std::derived_from<zip_iterator_common> Self>
-      EVE_FORCEINLINE friend Self &operator+=(Self &x, std::ptrdiff_t n)
+       friend Self &operator+=(Self &x, std::ptrdiff_t n)
       {
         kumi::for_each([&](auto &m) { m += n; }, x);
         return x;
       }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
-      EVE_FORCEINLINE friend std::ptrdiff_t operator-(Self const& x, Other const& y)
+       friend std::ptrdiff_t operator-(Self const& x, Other const& y)
       {
         return get<main_iterator_idx>(x) - get<main_iterator_idx>(y);
       }
 
       template<typename Traits, std::derived_from<zip_iterator_common> Self,
                std::equality_comparable_with<std::tuple_element_t<0, tuple_type>> S>
-      EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
+       friend auto tagged_dispatch(preprocess_range_, Traits traits, Self self, S l)
       {
         // Here we use 0, zip can be distanced only with first range interface.
         // Main index is for our internal stuff.
@@ -222,7 +222,7 @@ namespace eve::algo::views
       }
 
       template <typename T>
-      EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, eve::as<T> tgt)
+       friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, eve::as<T> tgt)
       {
         return _::convert_zipped(self, tgt);
       }
@@ -233,7 +233,7 @@ namespace eve::algo::views
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
       template <callable_options O, typename N>
-      EVE_FORCEINLINE auto store(O const& opts, wide<value_type, N> v) const noexcept
+       auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
         auto cx = opts[condition_key];
@@ -251,7 +251,7 @@ namespace eve::algo::views
       }
 
       template <relative_conditional_expr C, typename N>
-      EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::store_equivalent_,
+       friend auto tagged_dispatch( eve::tag::store_equivalent_,
                                                    C c,
                                                    wide<value_type, N> v,
                                                    zip_iterator<Is...> self )
@@ -286,7 +286,7 @@ namespace eve::algo::views
     using base::base;
 
     template<typename Traits, compatible_zip_iterators<zip_iterator<Is...>> Other>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_iterator<Is...> self, Other other)
+    EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits traits, zip_iterator<Is...> self, Other other)
     {
       auto ranges = kumi::map([](auto f_, auto l_) {
         return as_range(f_, l_);
@@ -305,7 +305,7 @@ namespace eve::algo::views
 
     using base::base;
 
-    EVE_FORCEINLINE auto previous_partially_aligned() const
+    EVE_ABI auto previous_partially_aligned() const
     {
       if constexpr (partially_aligned_iterator<std::tuple_element_t<base::main_iterator_idx, zip_iterator<I, Is...>>>) return *this;
       else
@@ -330,7 +330,7 @@ namespace eve::algo::views
       }
     }
 
-    EVE_FORCEINLINE auto next_partially_aligned() const
+    EVE_ABI auto next_partially_aligned() const
     {
       if constexpr (partially_aligned_iterator<std::tuple_element_t<base::main_iterator_idx, zip_iterator<I, Is...>>>) return *this;
       else
@@ -358,7 +358,7 @@ namespace eve::algo::views
     static iterator_cardinal_t<I> iterator_cardinal() { return{}; }
 
     template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    EVE_ABI auto cardinal_cast(_Cardinal N) const
     {
       return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
         kumi::map([&](auto x) { return x.cardinal_cast(N); }, *this)
@@ -366,7 +366,7 @@ namespace eve::algo::views
     }
 
     template<callable_options O>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<zip_iterator>>) const
+    EVE_ABI auto load(O const& opts, as<wide_value_type_t<zip_iterator>>) const
     {
       wide_value_type_t<zip_iterator> res;
 

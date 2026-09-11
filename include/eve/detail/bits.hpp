@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template <typename N>
-  EVE_FORCEINLINE constexpr N set_lower_n_bits(std::ptrdiff_t n)
+   constexpr N set_lower_n_bits(std::ptrdiff_t n)
   {
     using uint_res = make_integer_t<sizeof(N), unsigned>;
 

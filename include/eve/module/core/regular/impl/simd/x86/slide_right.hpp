@@ -13,7 +13,7 @@
 namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE wide<T, N>
+     wide<T, N>
                     slide_right_(EVE_SUPPORTS(sse2_), wide<T, N> v, index_t<Shift>) noexcept
     requires(Shift <= N::value)
     && x86_abi<abi_t<T, N>>
@@ -119,7 +119,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE wide<T, N>
+     wide<T, N>
                     slide_right_(EVE_SUPPORTS(sse2_),
                                  wide<T, N> x,
                                  wide<T, N> y,
@@ -257,7 +257,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 }
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE logical<Wide>
+     logical<Wide>
                     slide_right_(EVE_SUPPORTS(avx512_), logical<Wide> v, index_t<Shift>) noexcept
     requires(Shift <= Wide::size())
     && native_simd_for_abi<Wide, x86_512_>
@@ -276,7 +276,7 @@ template<simd_value Wide, std::ptrdiff_t Shift>
 }
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE logical<Wide>
+     logical<Wide>
     slide_right_(EVE_SUPPORTS(avx512_), logical<Wide> x, logical<Wide> y, index_t<Shift>) noexcept
     requires(Shift <= Wide::size())
     && native_simd_for_abi<Wide, x86_512_>

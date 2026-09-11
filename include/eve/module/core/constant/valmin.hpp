@@ -17,14 +17,14 @@ namespace eve
   struct valmin_t : constant_callable<valmin_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
     {
       if constexpr (std::same_as<T, eve::float16_t>) return _::float16_from_bits(0xFBFF);
       else                                        return std::numeric_limits<T>::lowest();
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(valmin_t, valmin_);
   };

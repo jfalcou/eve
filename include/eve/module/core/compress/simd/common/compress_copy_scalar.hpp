@@ -22,7 +22,6 @@ template<typename I, typename O> struct copy_by_one_checking_each_lambda_unsafe
   I& f;
   O& o;
 
-  EVE_FORCEINLINE
   bool operator()(bool v)
   {
     eve::write(eve::read(f++), o);
@@ -40,7 +39,6 @@ template<typename I, typename O> struct copy_by_one_checking_each_lambda_safe
   I& f;
   O& o;
 
-  EVE_FORCEINLINE
   bool operator()(bool v)
   {
     I cur = f++;
@@ -58,7 +56,6 @@ template<typename I, typename O> struct copy_by_one_checking_each_lambda_checked
   O& o;
   O  limit;
 
-  EVE_FORCEINLINE
   bool operator()(bool v)
   {
     I cur = f++;
@@ -76,7 +73,6 @@ copy_by_one_checking_each_lambda_checked(I, O, O)
     -> copy_by_one_checking_each_lambda_checked<I, O>;
 
 template<typename M>
-EVE_FORCEINLINE
 bool
 for_each_until_m(M m, auto op)
 {
@@ -103,7 +99,7 @@ for_each_until_m(M m, auto op)
 }
 
 template<typename Settings, typename I, typename M, typename O>
-EVE_FORCEINLINE auto
+auto
 copy_by_one_checking_each(Settings settings, I f, M m, O o) -> O
 {
   static_assert(std::same_as<typename Settings::cond_in_t, ignore_none_>);
@@ -129,7 +125,7 @@ copy_by_one_checking_each(Settings settings, I f, M m, O o) -> O
 }
 
 template<typename I, typename L, typename O>
-EVE_FORCEINLINE auto
+auto
 copy_by_countr_zeroes_no_limits(I f, top_bits<L> m, O o) -> O
 {
   if constexpr( top_bits<L>::is_aggregated )
@@ -158,7 +154,7 @@ copy_by_countr_zeroes_no_limits(I f, top_bits<L> m, O o) -> O
 }
 
 template<typename I, typename L, typename O>
-EVE_FORCEINLINE auto
+auto
 copy_by_countr_zeroes_limited(I f, top_bits<L> m, O& o, O limit) -> O
 {
   if constexpr( top_bits<L>::is_aggregated )
@@ -187,7 +183,7 @@ copy_by_countr_zeroes_limited(I f, top_bits<L> m, O& o, O limit) -> O
 }
 
 template<typename Settings, typename I, typename L, typename O>
-EVE_FORCEINLINE auto
+auto
 copy_by_countr_zeroes(Settings settings, I f, top_bits<L> m, O o) -> O
 {
   static_assert(std::same_as<typename Settings::cond_in_t, ignore_none_>);
@@ -203,7 +199,7 @@ copy_by_countr_zeroes(Settings settings, I f, top_bits<L> m, O o) -> O
 }
 
 template<typename Settings, typename I, typename L, typename O>
-EVE_FORCEINLINE auto
+auto
 compress_copy_scalar_impl_(EVE_SUPPORTS(cpu_), Settings settings, I f, L m, O o) -> O
 {
   using IC = typename Settings::cond_in_t;
@@ -241,7 +237,7 @@ namespace eve
 struct compress_copy_scalar_core
 {
   template<typename Settings, typename I, logical_simd_value L, typename O>
-  EVE_FORCEINLINE auto operator()(Settings settings, I f_, L m, O o_) const -> unaligned_t<O>
+  EVE_ABI auto operator()(Settings settings, I f_, L m, O o_) const -> unaligned_t<O>
   {
     using CIn  = typename Settings::cond_in_t;
     using COut = typename Settings::cond_out_t;
@@ -261,7 +257,7 @@ struct compress_copy_scalar_core
   }
 
   template<typename Settings, typename I, logical_simd_value L, typename O>
-  EVE_FORCEINLINE auto operator()(Settings settings,
+  EVE_ABI auto operator()(Settings settings,
                                   I        f,
                                   as_wide_t<value_type_t<I>, typename L::cardinal_type>,
                                   L m,

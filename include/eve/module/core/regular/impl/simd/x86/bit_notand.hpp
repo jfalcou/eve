@@ -19,7 +19,7 @@
 namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sse2_),
+   wide<T, N> bit_notand_(EVE_REQUIRES(sse2_),
                                          O const          &opts,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept
@@ -31,7 +31,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
+   wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
                                          C const          &cx,
                                          O const          &,
                                          wide<T, N> const &v0,

@@ -22,7 +22,7 @@ namespace eve
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(atan2_t, atan2_);
@@ -119,7 +119,7 @@ namespace eve
   namespace _
   {
     template<typename T, typename U, callable_options O>
-    constexpr EVE_NOINLINE common_value_t<T, U>
+    EVE_NOINLINE constexpr common_value_t<T, U>
     atan2_(EVE_REQUIRES(cpu_), O const& o, T const& a0, const U a1) noexcept
     {
       if constexpr(O::contains(rad))

@@ -144,16 +144,16 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns the number of elements in the container
-    EVE_FORCEINLINE size_type size()  const noexcept { return size_; }
+    EVE_ABI size_type size()  const noexcept { return size_; }
 
     //! Returns the number of elements that the container has currently allocated space for
-    EVE_FORCEINLINE size_type capacity()  const noexcept { return storage.capacity(); }
+    EVE_ABI size_type capacity()  const noexcept { return storage.capacity(); }
 
     //! Requests the removal of unused capacity.
-    EVE_FORCEINLINE void shrink_to_fit() { grow(size(), size()); }
+    EVE_ABI void shrink_to_fit() { grow(size(), size()); }
 
     //! Checks if the container has no elements
-    EVE_FORCEINLINE bool empty() const noexcept { return !size(); }
+    EVE_ABI bool empty() const noexcept { return !size(); }
 
     //! @brief Increase the capacity of the vector to a value that's greater or equal to `n`.
     //!
@@ -206,7 +206,7 @@ namespace eve::algo
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
     //! invalidated.
     //! @param value [Value](@ref eve::scalar_value) to append
-    EVE_FORCEINLINE void push_back(value_type const& value) noexcept
+    EVE_ABI void push_back(value_type const& value) noexcept
     {
       if(size_ != capacity()) eve::write(value, begin()+size_);
       else                    push_slow_path(value);
@@ -217,7 +217,7 @@ namespace eve::algo
     //!
     //! Calling pop_back on an empty container results in undefined behavior.
     //! Iterators and references to the last element, as well as the end() iterator, are invalidated.
-    EVE_FORCEINLINE void pop_back() noexcept
+    EVE_ABI void pop_back() noexcept
     {
       EVE_ASSERT(!empty(), "soa_vector::pop_back() was called on empty container");
       size_--;
@@ -258,7 +258,7 @@ namespace eve::algo
     }
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_FORCEINLINE void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
+    EVE_ABI friend void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
 
     //! @brief Retrieves an instance of the current allocator
     Allocator get_allocator() { return storage.get_allocator(); }
@@ -273,25 +273,25 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns a zipped aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned() { return begin_aligned(); }
+    EVE_ABI auto data_aligned() { return begin_aligned(); }
 
     //! Returns a zipped aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  const  { return begin_aligned(); }
+    EVE_ABI auto data_aligned()  const  { return begin_aligned(); }
 
     //! Returns a zipped pointer to the beginning
-    EVE_FORCEINLINE auto data() { return begin(); }
+    EVE_ABI auto data() { return begin(); }
 
     //! Returns a constant zipped pointer to the beginning
-    EVE_FORCEINLINE auto data() const { return begin(); }
+    EVE_ABI auto data() const { return begin(); }
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
-    EVE_FORCEINLINE value_type get(size_type i) const { return eve::read(begin() + i); }
+    EVE_ABI value_type get(size_type i) const { return eve::read(begin() + i); }
 
     //! @brief Modify the value of the `i`th element of the container
     //! @param i Index of the value to write
     //! @param v Value to write
-    EVE_FORCEINLINE void set(size_type i, value_type const& v)
+    EVE_ABI void set(size_type i, value_type const& v)
     {
       return eve::write(v, begin() + i);
     }
@@ -308,43 +308,43 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned
+    EVE_ABI auto begin_aligned() -> iterator_aligned
     {
       return views::convert(storage.data_aligned(), eve::as<Type>{});
     }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned
+    EVE_ABI auto begin_aligned()  const -> const_iterator_aligned
     {
       return views::convert(storage.data_aligned(), eve::as<Type>{});
     }
 
     //! Returns a constant aligned iterator to the beginning
-    EVE_FORCEINLINE auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
+    EVE_ABI auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin() -> iterator
+    EVE_ABI auto begin() -> iterator
     {
       return views::convert(storage.data(), eve::as<Type>{});
     }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const -> const_iterator
+    EVE_ABI auto begin()  const -> const_iterator
     {
       return views::convert(storage.data(), eve::as<Type>{});
     }
 
     //! Returns a constant iterator to the beginning
-    EVE_FORCEINLINE auto cbegin() const -> const_iterator { return begin(); }
+    EVE_ABI auto cbegin() const -> const_iterator { return begin(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  -> iterator  { return begin() + size(); }
+    EVE_ABI auto end()  -> iterator  { return begin() + size(); }
 
     //! Returns an iterator to the end
-    EVE_FORCEINLINE auto end()  const -> const_iterator { return begin() + size(); }
+    EVE_ABI auto end()  const -> const_iterator { return begin() + size(); }
 
     //! Returns a constant iterator to the end
-    EVE_FORCEINLINE auto cend() const -> const_iterator { return end(); }
+    EVE_ABI auto cend() const -> const_iterator { return end(); }
 
     //==============================================================================================
     //! @}
@@ -381,7 +381,7 @@ namespace eve::algo
 
     template <typename Traits, typename Self>
     requires std::same_as<std::remove_reference_t<Self>, soa_vector>
-    EVE_FORCEINLINE friend auto tagged_dispatch(algo::preprocess_range_, Traits tr, Self& self)
+    EVE_ABI friend auto tagged_dispatch(algo::preprocess_range_, Traits tr, Self& self)
     {
       return algo::preprocess_range(tr, algo::as_range(self.begin_aligned(), self.end()));
     }

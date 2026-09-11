@@ -15,7 +15,7 @@ namespace eve::_
   struct insert_t : callable<insert_t, Options>
   {
     template<typename Wide, typename Val>
-    EVE_FORCEINLINE constexpr void operator()(Wide& w, std::size_t idx, Val v) const noexcept
+     constexpr void operator()(Wide& w, std::size_t idx, Val v) const noexcept
     {
       return EVE_DISPATCH_CALL_NT(translate_ref(w), idx, v);
     }
@@ -29,7 +29,7 @@ namespace eve::_
   struct extract_t : callable<extract_t, Options>
   {
     template<typename Wide>
-    EVE_FORCEINLINE constexpr element_type_t<Wide> operator()(Wide w, std::size_t idx) const noexcept
+     constexpr element_type_t<Wide> operator()(Wide w, std::size_t idx) const noexcept
     {
       return EVE_DISPATCH_CALL(w, idx);
     }

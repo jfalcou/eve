@@ -18,7 +18,7 @@ namespace eve::_
   // This is the main one as it is easier to specify optimisation on this interface than on tuple
   //================================================================================================
   template<callable_options OO, simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(cpu_), OO const&, T v0, Ts... vs) noexcept
+   auto interleave_(EVE_REQUIRES(cpu_), OO const&, T v0, Ts... vs) noexcept
   {
     auto const values = kumi::make_tuple(v0,vs...);
     constexpr auto nb   = 1 + sizeof...(Ts);
@@ -79,7 +79,7 @@ namespace eve::_
   }
 
   template<callable_options O, simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(cpu_), O const&, logical<T> v0, logical<Ts>... vs) noexcept
+   auto interleave_(EVE_REQUIRES(cpu_), O const&, logical<T> v0, logical<Ts>... vs) noexcept
   requires( T::abi_type::is_wide_logical )
   {
     auto that = interleave(v0.mask(),vs.mask()...);

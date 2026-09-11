@@ -23,7 +23,7 @@ namespace eve
   struct of_class_t : strict_elementwise_callable<of_class_t, Options>
   {
     template<std::uint8_t I, eve::floating_value T>
-    constexpr EVE_FORCEINLINE logical<T>
+    EVE_ABI constexpr logical<T>
     operator()(T v, fp_class<I> i) const noexcept
     { return EVE_DISPATCH_CALL( v, i); }
 
@@ -92,10 +92,8 @@ namespace eve
 
   namespace _
   {
-
     template<std::uint8_t I, typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    of_class_(EVE_REQUIRES(cpu_), O const &, T const& x,  fp_class<I>) noexcept
+    constexpr auto of_class_(EVE_REQUIRES(cpu_), O const &, T const& x,  fp_class<I>) noexcept
     {
       using li_t = logical<T>;
       li_t r{false};

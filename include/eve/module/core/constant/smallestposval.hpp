@@ -17,7 +17,7 @@ namespace eve
   struct smallestposval_t : constant_callable<smallestposval_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       if      constexpr(std::integral<T>       )  return T(1);
       else if constexpr(std::same_as<T, eve::float16_t>) return T(0x1p-14f);
@@ -26,7 +26,7 @@ namespace eve
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(smallestposval_t, smallestposval_);
   };

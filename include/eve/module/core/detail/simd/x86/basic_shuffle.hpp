@@ -28,7 +28,7 @@ namespace eve::_
 // Unary basic shuffle - logical on AVX512 ABI, call general case on others
 //================================================================================================
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(sse2_),
                logical<wide<T, N>> const& v,
                Pattern                    p) noexcept requires x86_abi<abi_t<T, N>>
@@ -60,7 +60,7 @@ is_x86_shuffle_compatible(pattern_t<I...> p)
 // SSE2-SSSE3 variant
 //================================================================================================
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(sse2_),
                wide<T, N> const& v,
                Pattern const&) requires std::same_as<abi_t<T, N>, x86_128_>
@@ -129,7 +129,7 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
 // AVX+ variant
 //================================================================================================
 template<typename T, typename N, shuffle_pattern Pattern>
-EVE_FORCEINLINE auto
+ auto
 basic_shuffle_(EVE_SUPPORTS(avx_),
                wide<T, N> const& v,
                Pattern const&) requires x86_abi<abi_t<T, N>>

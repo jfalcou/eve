@@ -16,7 +16,7 @@ namespace eve::_
 {
   // bit_shr[mask](wide_val, wide_mask)
   template<conditional_expr C, integral_scalar_value T, typename S, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T,N> bit_shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, wide<S, N> s) noexcept
+   wide<T,N> bit_shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, wide<S, N> s) noexcept
   requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {
       constexpr auto c = categorize<wide<T, N>>();
@@ -51,7 +51,7 @@ namespace eve::_
 
   // bit_shr[mask](wide_val, imm_mask)
   template<conditional_expr C, integral_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T,N> bit_shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, unsigned int s) noexcept
+   wide<T,N> bit_shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, unsigned int s) noexcept
   requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {
       constexpr auto c = categorize<wide<T, N>>();

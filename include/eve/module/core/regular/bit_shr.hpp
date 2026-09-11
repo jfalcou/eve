@@ -16,13 +16,13 @@ namespace eve
   struct bit_shr_t : strict_elementwise_callable<bit_shr_t, Options>
   {
     template<integral_value T, integral_value S>
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, S> operator()(T v, S s) const
+    EVE_ABI constexpr as_wide_as_t<T, S> operator()(T v, S s) const
     { 
       return EVE_DISPATCH_CALL(v, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
-    constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
+    EVE_ABI constexpr T operator()(T v, index_t<S> s) const
     {
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S >= 0), "[eve::bit_shr] Shift value is out of range.");

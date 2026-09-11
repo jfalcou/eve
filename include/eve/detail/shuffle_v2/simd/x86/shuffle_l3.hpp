@@ -11,7 +11,7 @@ namespace eve::_
 {
 
 template<typename N, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 x86_pshuvb(pattern_t<I...>, wide<std::uint8_t, N> x)
 {
   wide<std::uint8_t, N> mask {I...};
@@ -21,7 +21,7 @@ x86_pshuvb(pattern_t<I...>, wide<std::uint8_t, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( current_api < ssse3 ) return no_matching_shuffle;
@@ -39,7 +39,7 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( current_api < avx2 || P::reg_size < 32 ) return no_matching_shuffle;
@@ -69,7 +69,7 @@ shuffle_l3_x86_permutex(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
@@ -86,7 +86,7 @@ requires(P::out_reg_size == P::reg_size)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   // avx512 should not be considered here at all
@@ -105,7 +105,7 @@ shuffle_l3_x86_blendv(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( current_api < avx512 || P::g_size == 1 ) return no_matching_shuffle;
@@ -135,7 +135,7 @@ shuffle_l3_x86_permutex2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {

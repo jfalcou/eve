@@ -30,14 +30,14 @@ namespace eve
     using tuple_result = kumi::result::fill_t< T::size() , return_type<kumi::apply_traits_t<eve::common_value, T>>>;
 
     template<typename F, value T, value ...Ts>
-    EVE_FORCEINLINE constexpr result<T, Ts...>
+    EVE_ABI constexpr result<T, Ts...>
     operator()(F f, T t, Ts ... ts) const noexcept
     {
       return EVE_DISPATCH_CALL(f, t, ts...);
     }
 
     template<typename F, non_empty_product_type PT>
-    EVE_FORCEINLINE constexpr tuple_result<PT>
+    EVE_ABI constexpr tuple_result<PT>
     operator()(  F f, PT t) const noexcept
     {
       return EVE_DISPATCH_CALL(f, t);
@@ -102,9 +102,8 @@ namespace eve
 
   namespace _
   {
-
     template <typename F, eve::product_type PT, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumfun_(EVE_REQUIRES(cpu_), O const & o, F f, PT tup) noexcept
+    constexpr auto cumfun_(EVE_REQUIRES(cpu_), O const & o, F f, PT tup) noexcept
     {
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
@@ -142,7 +141,7 @@ namespace eve
     }
 
     template<typename F, value T, value ...Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     cumfun_(EVE_REQUIRES(cpu_), O const & o, F f, T t0, Ts... ts) noexcept
     {
       return eve::cumfun[o](f, kumi::make_tuple(t0, ts...));

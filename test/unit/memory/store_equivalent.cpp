@@ -20,13 +20,13 @@ struct my_ptr
 
   using value_type = std::uint32_t;
 
-  EVE_FORCEINLINE friend
+  EVE_ABI friend
   auto tagged_dispatch(eve::tag::store_equivalent_, auto ignore, u32s, my_ptr self)
   {
     return kumi::make_tuple(ignore, u8s{3}, self.equivalent);
   }
 
-  EVE_FORCEINLINE auto unalign() const noexcept { return equivalent; }
+  EVE_ABI auto unalign() const noexcept { return equivalent; }
 };
 
 TTS_CASE("store_equivalent")

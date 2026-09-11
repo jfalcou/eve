@@ -46,7 +46,7 @@ namespace eve
   {
 //     template<typename... Ts>
 //     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<_::internal_welford_t<Ts>...>  && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr _::welford_result<common_value_t<_::internal_welford_t<Ts>...>>
+//     EVE_ABI constexpr _::welford_result<common_value_t<_::internal_welford_t<Ts>...>>
 //     operator()(Ts...ts) const noexcept
 //     {
 //       return EVE_DISPATCH_CALL(ts...);
@@ -54,7 +54,7 @@ namespace eve
 
     template<typename... Ts>
     requires(sizeof...(Ts) !=  0 && eve::same_lanes_or_scalar<_::internal_welford_t<Ts>...>)//  && Options::contains(widen))
-      EVE_FORCEINLINE constexpr _::welford_result<upgrade_if_t<Options, common_value_t<_::internal_welford_t<Ts>...>>>
+    EVE_ABI constexpr _::welford_result<upgrade_if_t<Options, common_value_t<_::internal_welford_t<Ts>...>>>
     operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
@@ -62,14 +62,14 @@ namespace eve
 
    template<eve::non_empty_product_type Tup>
    requires(eve::same_lanes_or_scalar_tuple<Tup>)// && Options::contains(widen))
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     _::welford_result<upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
 //     template<eve::non_empty_product_type Tup>
 //     requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
-//       EVE_FORCEINLINE constexpr
+//     EVE_ABI constexpr
 //     _::welford_result<kumi::apply_traits_t<eve::common_value,Tup>>
 //     operator()(Tup const& t) const noexcept
 //     { return EVE_DISPATCH_CALL(t); }
@@ -142,14 +142,14 @@ namespace eve::_
 {
 
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto welford_average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+  constexpr auto welford_average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
   requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return welford_average[o.drop(widen)](upgrade(ts)...);
   }
 
   template<scalar_value T0, scalar_value ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   welford_average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
   requires(sizeof...(Ts)+1 >= wide<common_value_t<T0, Ts...>>::size())
   {
@@ -170,7 +170,7 @@ namespace eve::_
 
 
   template<typename T0, typename ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   welford_average_(EVE_REQUIRES(cpu_), O const & o, T0 a0, Ts const &... args) noexcept
   {
     using r_t =  common_value_t<_::internal_welford_t<T0>,  _::internal_welford_t<Ts>...>;
@@ -224,7 +224,7 @@ namespace eve::_
   }
 
   template< eve::non_empty_product_type T, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+  constexpr auto
   welford_average_(EVE_REQUIRES(cpu_), O const & o, T t) noexcept
   {
     return kumi::apply([o](auto... m){return welford_average[o](m...); }, t);

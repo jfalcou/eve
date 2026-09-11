@@ -31,16 +31,25 @@
 
 // Force a function to be inline
 #if defined(EVE_NO_FORCEINLINE)
-#  define EVE_FORCEINLINE inline
+#  define EVE_ABI inline
 #else
 #  if defined(_MSC_VER)
-#    define EVE_FORCEINLINE __forceinline
-#  elif defined(__GNUC__) && __GNUC__ > 3
-#    define EVE_FORCEINLINE inline __attribute__((__always_inline__))
+#    define EVE_ABI [[using msvc: forceinline, flatten]] inline
+#  elif defined(__GNUC__) || defined(__clang__)
+#    define EVE_ABI [[using gnu: always_inline, flatten, artificial]] inline
 #  else
-#    define EVE_FORCEINLINE inline
+#    define EVE_ABI inline
 #  endif
 #endif
+
+#if defined(_MSC_VER)
+  #define EVE_NOINLINE  [[msvc::noinline]] 
+#elif defined(__GNUC__) || defined(__clang__)
+  #define EVE_NOINLINE [[gnu::noinline]]
+#else
+  #define EVE_NOINLINE
+#endif
+
 
 // Assume an expression to be true at compile time
 #if defined(EVE_NO_ASSUME)
@@ -87,12 +96,4 @@
 #elif defined(EVE_NO_INVALIDS)
 #  define EVE_NO_NANS
 #  define EVE_NO_INFINITIES
-#endif
-
-#if defined(_MSC_VER)
-  #define EVE_NOINLINE __declspec(noinline)
-#elif defined(__GNUC__) || defined(__clang__)
-  #define EVE_NOINLINE __attribute__((noinline))
-#else
-  #define EVE_NOINLINE
 #endif

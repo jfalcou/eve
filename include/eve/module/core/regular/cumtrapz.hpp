@@ -31,28 +31,28 @@ namespace eve
     using tuple_result = kumi::result::fill_t< T::size() , return_type<kumi::apply_traits_t<eve::common_value, T>>>;
 
     template<value T, value ...Ts>
-    EVE_FORCEINLINE constexpr result<T, Ts...>
+    EVE_ABI constexpr result<T, Ts...>
     operator()(T t, Ts ... ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t, ts...);
     }
 
     template<non_empty_product_type T>
-    EVE_FORCEINLINE constexpr tuple_result<T>
+    EVE_ABI constexpr tuple_result<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
     }
 
     template<floating_value X, non_empty_product_type Y>
-    EVE_FORCEINLINE constexpr tuple_result<Y>
+    EVE_ABI constexpr tuple_result<Y>
     operator()(X dx, Y y) const noexcept
     {
       return EVE_DISPATCH_CALL(dx, y);
     }
 
     template<non_empty_product_type X, non_empty_product_type Y>
-    EVE_FORCEINLINE constexpr tuple_result<Y>
+    EVE_ABI constexpr tuple_result<Y>
     operator()(X x, Y y) const noexcept
     {
       return EVE_DISPATCH_CALL(x, y);
@@ -60,14 +60,14 @@ namespace eve
 
     template<typename F, non_empty_product_type X>
     requires (std::invocable<F, tuple_result<X>>)
-    EVE_FORCEINLINE constexpr tuple_result<X>
+    EVE_ABI constexpr tuple_result<X>
     operator()(F f, X x) const noexcept
     {
       return EVE_DISPATCH_CALL(f, x);
     }
 
     template<std::invocable F, value ...Ts>
-    EVE_FORCEINLINE constexpr result<Ts...>
+    EVE_ABI constexpr result<Ts...>
     operator()(F f, Ts ... ts) const noexcept
     {
       return EVE_DISPATCH_CALL(f, kumi::make_tuple(ts...));
@@ -141,9 +141,8 @@ namespace eve
 
   namespace _
   {
-
     template <eve::product_type PT, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
+    constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
@@ -164,7 +163,7 @@ namespace eve
     }
 
     template <floating_value DX, eve::product_type PT, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, DX dx, PT tup) noexcept
+    constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, DX dx, PT tup) noexcept
     {
       if constexpr(PT::size() == 0)
         return kumi::make_tuple();
@@ -176,7 +175,7 @@ namespace eve
     }
 
     template <eve::product_type PTX, eve::product_type PTY, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, PTX x, PTY tup) noexcept
+    constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, PTX x, PTY tup) noexcept
     requires( PTX::size() == PTY::size())
     {
       if constexpr(PTX::size() == 0)
@@ -197,7 +196,7 @@ namespace eve
     }
 
     template< typename F, eve::product_type PTX, callable_options O>
-    EVE_FORCEINLINE constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, F f, PTX x) noexcept
+    constexpr auto cumtrapz_(EVE_REQUIRES(cpu_), O const & o, F f, PTX x) noexcept
     {
       if constexpr(PTX::size() == 0)
         return kumi::make_tuple();
@@ -211,7 +210,7 @@ namespace eve
     }
 
     template<value T, value ...Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     cumtrapz_(EVE_REQUIRES(cpu_), O const & o, T t0, Ts... ts) noexcept
     {
       return eve::cumtrapz[o](kumi::make_tuple(t0, ts...));

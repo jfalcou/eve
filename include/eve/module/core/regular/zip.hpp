@@ -18,28 +18,28 @@ namespace eve
   struct zip_t : callable<zip_t, Options>
   {
     template<scalar_value... Vs>
-    constexpr EVE_FORCEINLINE kumi::tuple<Vs...>
+    EVE_ABI constexpr kumi::tuple<Vs...>
     operator()(Vs... vs) const noexcept { return EVE_DISPATCH_CALL(vs...); }
 
     template<eve::product_type Target, scalar_value... Vs>
-    constexpr EVE_FORCEINLINE Target
+    EVE_ABI constexpr Target
     operator()(as<Target> const& tgt, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(tgt, vs...); }
 
     template<simd_value V0, simd_value... Vs>
     requires( same_lanes<V0,Vs...> )
-    EVE_FORCEINLINE as_wide_as_t<kumi::tuple<element_type_t<V0>,element_type_t<Vs>...>, V0>
+    EVE_ABI as_wide_as_t<kumi::tuple<element_type_t<V0>,element_type_t<Vs>...>, V0>
     operator()(V0 v0, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(v0,vs...); }
 
     template<eve::product_type Target, simd_value V0, simd_value... Vs>
     requires((sizeof...(Vs)+1 == kumi::size_v<Target>) && same_lanes<V0,Vs...>)
-    EVE_FORCEINLINE wide<Target, cardinal_t<V0>>
+    EVE_ABI wide<Target, cardinal_t<V0>>
     operator()(as<Target> const& tgt, V0 v0, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(tgt, v0, vs...); }
 
     EVE_CALLABLE_OBJECT(zip_t, zip_);
 
     // Local helper callable with force inlining
-    struct to_ptr { EVE_FORCEINLINE auto operator()(auto& m)            const { return &m; } };
-    struct filler { EVE_FORCEINLINE auto operator()(auto in, auto *ptr) const { *ptr = in; } };
+    struct to_ptr { EVE_ABI auto operator()(auto& m)            const { return &m; } };
+    struct filler { EVE_ABI auto operator()(auto in, auto *ptr) const { *ptr = in; } };
   };
 
 // TODO DOC
@@ -95,13 +95,13 @@ namespace eve
 namespace eve::_
 {
   template<callable_options O, scalar_value... Vs>
-  EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, Vs... vs) noexcept
+  auto zip_(EVE_REQUIRES(cpu_), O const&, Vs... vs) noexcept
   {
     return kumi::tuple{vs...};
   }
 
   template<callable_options O, simd_value V0, simd_value... Vs>
-  EVE_FORCEINLINE auto
+  auto
   zip_(EVE_REQUIRES(cpu_), O const&, V0 w0, Vs... ws) noexcept
   {
     using r_t = as_wide_as_t<kumi::tuple<element_type_t<V0>,element_type_t<Vs>...>, V0>;
@@ -109,7 +109,7 @@ namespace eve::_
   }
 
   template<callable_options O, eve::product_type Target, scalar_value... Vs>
-  EVE_FORCEINLINE auto
+  auto
   zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, Vs... vs) noexcept
   {
     Target      res;
@@ -118,7 +118,7 @@ namespace eve::_
   }
 
   template<callable_options O, eve::product_type Target, simd_value V0, simd_value... Vs>
-  EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, V0 v0, Vs... vs) noexcept
+  auto zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, V0 v0, Vs... vs) noexcept
   {
     return wide<Target, cardinal_t<V0>>{v0, vs...};
   }

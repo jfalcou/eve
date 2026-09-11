@@ -20,7 +20,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 {
   template<simd_value T, integral_simd_value Idx, simd_compatible_ptr<T> Ptr>
   requires(T::size() == Idx::size())
-  EVE_FORCEINLINE void operator()(T const& v, Ptr ptr, Idx const& idx) const noexcept { EVE_DISPATCH_CALL(v,ptr,idx); }
+  EVE_ABI void operator()(T const& v, Ptr ptr, Idx const& idx) const noexcept { EVE_DISPATCH_CALL(v,ptr,idx); }
 
   EVE_CALLABLE_OBJECT(scatter_t, scatter_);
 };

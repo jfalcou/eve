@@ -18,12 +18,12 @@ namespace eve
   struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option, fast_option, pedantic_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
-    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    EVE_ABI constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(pow_abs_t, pow_abs_);
@@ -104,14 +104,14 @@ namespace eve
   {
 
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       return pow_abs[o](a0, T(a1));
     }
 
     template<typename T,  typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    constexpr common_value_t<T, U>
     pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
       using r_t = common_value_t<T, U>;

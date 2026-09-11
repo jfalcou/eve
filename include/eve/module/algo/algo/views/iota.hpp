@@ -42,7 +42,7 @@ namespace eve::algo::views
 
     iota_with_step_iterator() = default;
 
-    EVE_FORCEINLINE iota_with_step_iterator(value_type b,
+    EVE_ABI iota_with_step_iterator(value_type b,
                                               value_type s,
                                               std::ptrdiff_t i_) :
       base(b),
@@ -55,7 +55,7 @@ namespace eve::algo::views
       operator+=(i_);
     }
 
-    EVE_FORCEINLINE auto unalign() const noexcept { return *this; }
+    EVE_ABI auto unalign() const noexcept { return *this; }
 
     iota_with_step_iterator previous_partially_aligned() const { return *this; }
     iota_with_step_iterator next_partially_aligned()     const { return *this; }
@@ -92,10 +92,10 @@ namespace eve::algo::views
       return i <=> x.i;
     }
 
-    EVE_FORCEINLINE T read() const noexcept { return base + T(i) * step; }
+    EVE_ABI T read() const noexcept { return base + T(i) * step; }
 
     template <typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, iota_with_step_iterator self, eve::as<U> tgt)
+    EVE_ABI friend auto tagged_dispatch(convert_, iota_with_step_iterator self, eve::as<U> tgt)
     {
       return iota_with_step_iterator<U, N>{
         eve::convert(self.base, tgt),
@@ -105,7 +105,7 @@ namespace eve::algo::views
     }
 
     template <callable_options O>
-    EVE_FORCEINLINE wv_type load(O const& opts, as<wv_type>) const
+    EVE_ABI wv_type load(O const& opts, as<wv_type>) const
     {
       using C = rbr::result::fetch_t<condition_key, O>;
 
@@ -137,14 +137,14 @@ namespace eve::algo::views
   struct
   {
     template <typename T>
-    EVE_FORCEINLINE auto operator()(T base, T step) const
+    EVE_ABI auto operator()(T base, T step) const
     {
       using N = eve::fixed<eve::nofs_cardinal_v<T>>;
       return iota_with_step_iterator<T, N>{base, step, 0};
     }
 
     template <typename T>
-    EVE_FORCEINLINE auto operator()(T base, T step, std::ptrdiff_t size) const
+    EVE_ABI auto operator()(T base, T step, std::ptrdiff_t size) const
     {
       auto f = operator()(base, step);
       auto l = f + size;
@@ -169,13 +169,13 @@ namespace eve::algo::views
   struct
   {
     template <typename T>
-    EVE_FORCEINLINE auto operator()(T base) const
+    EVE_ABI auto operator()(T base) const
     {
       return iota_with_step(base, T{1});
     }
 
     template <typename T>
-    EVE_FORCEINLINE auto operator()(T base, std::ptrdiff_t size) const
+    EVE_ABI auto operator()(T base, std::ptrdiff_t size) const
     {
       return iota_with_step(base, T{1}, size);
     }

@@ -16,7 +16,7 @@ namespace eve
   struct last_true_t : conditional_callable<last_true_t, Options>
   {
     template<relaxed_logical_value T>
-    EVE_FORCEINLINE std::optional<std::ptrdiff_t> operator()(T v) const noexcept
+    EVE_ABI std::optional<std::ptrdiff_t> operator()(T v) const noexcept
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
         "[eve::last_true] - Cannot use a relative conditional expression or a simd value to mask a scalar value");
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<logical_simd_value T>
-    EVE_FORCEINLINE std::optional<std::ptrdiff_t> operator()(top_bits<T> v) const noexcept
+    EVE_ABI std::optional<std::ptrdiff_t> operator()(top_bits<T> v) const noexcept
     {
       return EVE_DISPATCH_CALL(v);
     }

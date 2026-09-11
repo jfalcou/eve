@@ -13,7 +13,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N, integral_scalar_value S>
-  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T, N> w, wide<S, N> s) noexcept
+   wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T, N> w, wide<S, N> s) noexcept
     requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(S))
   {
     auto const si = convert(s, as<as_integer_t<T, unsigned>>{});
@@ -23,7 +23,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, integral_scalar_value S>
-  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T,N> w, S s) noexcept
+   wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T,N> w, S s) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     auto const si = wide<as_integer_t<T, unsigned>, N>{s};
@@ -33,7 +33,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, std::ptrdiff_t S>
-  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T,N> w, index_t<S>) noexcept
+   wide<T, N> shr_(EVE_REQUIRES(sve_), O const&, wide<T,N> w, index_t<S>) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     auto const si = as_integer_t<T, unsigned>{S};

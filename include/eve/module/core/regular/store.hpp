@@ -18,13 +18,13 @@ namespace eve
   struct store_t : relative_conditional_callable<store_t, Options>
   {
     template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
-    EVE_FORCEINLINE void operator()(T value, Ptr ptr) const noexcept
+    EVE_ABI void operator()(T value, Ptr ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(value, ptr);
     }
 
     template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
-    EVE_FORCEINLINE void operator()(T value, Ptr ptr) const noexcept
+    EVE_ABI void operator()(T value, Ptr ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(value, ptr);
     }

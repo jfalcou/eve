@@ -14,7 +14,7 @@
 namespace eve::_
 {
 template<callable_options O, scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, wide<T, N> vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -22,7 +22,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, scalar_value T, typename N, scalar_value U>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -39,7 +39,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, scalar_value T, typename N>
-EVE_FORCEINLINE logical<wide<T, N>>
+ logical<wide<T, N>>
                 if_else_( EVE_REQUIRES(rvv_),
                           O const&,
                           logical<wide<T, N>> c,

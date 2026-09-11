@@ -20,7 +20,7 @@
 namespace eve::_
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sse2_),
+   wide<T, N> countl_zero_(EVE_REQUIRES(sse2_),
                                           O const& opts,
                                           wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -65,7 +65,7 @@ namespace eve::_
 // -----------------------------------------------------------------------------------------------
 // Masked case
   template<int S, conditional_expr C, integral_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(avx512_),
+   wide<T, N> countl_zero_(EVE_REQUIRES(avx512_),
                                           C const          & cx,
                                           O const          & opts,
                                           wide<T, N> const & a0) noexcept requires x86_abi<abi_t<T, N>>

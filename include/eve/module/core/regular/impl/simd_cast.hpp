@@ -13,7 +13,7 @@
 namespace eve::_
 {
 template<callable_options O, typename T, typename Target>
-EVE_FORCEINLINE constexpr Target
+ constexpr Target
 simd_cast_(EVE_REQUIRES(cpu_), O const&, T x, as<Target> tgt) noexcept
 {
   if constexpr( product_simd_value<T> )

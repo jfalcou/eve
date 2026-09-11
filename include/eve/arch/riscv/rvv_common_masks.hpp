@@ -12,7 +12,7 @@
 namespace eve::_
 {
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE logical<wide<T, N>>
+logical<wide<T, N>>
                 rvv_true()
 {
   static constexpr size_t ratio = rvv_logical_ratio_v<T, N>;

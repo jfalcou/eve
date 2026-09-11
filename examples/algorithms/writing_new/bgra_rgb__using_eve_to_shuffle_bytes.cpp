@@ -66,7 +66,7 @@ constexpr eve::pattern_t bgra_to_rgb_pattern_v = eve::fix_pattern<Size>(
 struct
 {
   template<typename N>
-  EVE_FORCEINLINE void operator()(std::uint8_t const *&f, std::uint8_t *&o, N n) const
+  EVE_ABI void operator()(std::uint8_t const *&f, std::uint8_t *&o, N n) const
   {
     eve::wide<std::uint8_t, N> loaded   = eve::load(f, n);
     eve::wide<std::uint8_t, N> shuffled = eve::shuffle(loaded,bgra_to_rgb_pattern_v<n()>);
@@ -81,7 +81,7 @@ struct
 struct
 {
   template<typename N>
-  EVE_FORCEINLINE void operator()(eve::relative_conditional_expr auto ignore,
+  EVE_ABI void operator()(eve::relative_conditional_expr auto ignore,
                                   std::uint8_t const                *&f,
                                   std::uint8_t                      *&o,
                                   N                                   n) const

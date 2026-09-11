@@ -23,18 +23,18 @@ namespace eve
   {
     template<floating_value X, value ... Ts>
     requires(eve::same_lanes_or_scalar<X, Ts...>)
-    EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<X, Ts...>>
+    EVE_ABI constexpr upgrade_if_t<Options, common_value_t<X, Ts...>>
     operator()(X x, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, ts...); }
 
     template<floating_value X, eve::product_type Tup>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     upgrade_if_t<Options, eve::common_value_t<kumi::apply_traits_t<eve::common_value,coefficients<Tup>>, X>>
     operator()(X x, coefficients<Tup> const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
 
     template<floating_value X, eve::_::range R>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     upgrade_if_t<Options, eve::common_value_t<typename R::value_type, X>>
     operator()(X x, R const& t) const noexcept
     { return EVE_DISPATCH_CALL(x, t); }
@@ -123,14 +123,14 @@ namespace eve
   {
 
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto reverse_horner_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return reverse_horner[o.drop(widen)](upgrade(ts)...);
     }
 
     template<value X, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const &, X ) noexcept
     {
       if constexpr(O::contains(widen))
@@ -140,7 +140,7 @@ namespace eve
     }
 
     template<typename X, value C, value... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
     {
       using r_t          = common_value_t<X, C, Cs...>;
@@ -177,14 +177,14 @@ namespace eve
     }
 
     template<typename X, eve::product_type Tuple, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x, coefficients<Tuple> const & tup) noexcept
     {
       return horner[o](x, coefficients<Tuple>(kumi::reverse(tup)));
     }
 
     template<typename X, range R, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, R const& r) noexcept
     {
       using r_t  = common_value_t<X, typename R::value_type>;

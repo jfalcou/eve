@@ -20,12 +20,12 @@ namespace eve
   struct pow1p_t : elementwise_callable<pow1p_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
-    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    EVE_ABI constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::floating_value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(pow1p_t, pow1p_);
@@ -86,14 +86,14 @@ namespace eve
   {
 
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     pow1p_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       return pow1p[o](a0, T(a1));
     }
 
     template<typename T,  typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    constexpr common_value_t<T, U>
     pow1p_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
       if constexpr(O::contains(fast) ||O::contains(raw) || integral_value<U>)

@@ -17,7 +17,7 @@ namespace eve
   struct bit_mask_t : elementwise_callable<bit_mask_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE typename as_logical_t<T>::mask_type operator()(T v) const
+    EVE_ABI constexpr typename as_logical_t<T>::mask_type operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);
@@ -74,7 +74,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     bit_mask_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       return is_nez(v).mask();

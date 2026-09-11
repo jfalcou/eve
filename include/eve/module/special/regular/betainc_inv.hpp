@@ -25,7 +25,7 @@ namespace eve
   {
     template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
     requires (same_lanes_or_scalar<T0, T1, T2>)
-    EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+    EVE_ABI constexpr eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     EVE_CALLABLE_OBJECT(betainc_inv_t, betainc_inv_);

@@ -20,7 +20,7 @@ namespace eve
   struct gd_t : elementwise_callable<gd_t, Options, raw_option, fast_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(gd_t, gd_);
   };
@@ -88,7 +88,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T gd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr T gd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::gd[o], a0);

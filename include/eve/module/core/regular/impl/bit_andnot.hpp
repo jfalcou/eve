@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_andnot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+   constexpr bit_value_t<T, U> bit_andnot_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
     if constexpr (simd_value<T>)
     {
@@ -45,7 +45,7 @@ namespace eve::_
   // N parameters
   //================================================================================================
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   bit_andnot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     return bit_andnot(a, bit_and(b, args...));

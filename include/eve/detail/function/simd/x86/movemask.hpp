@@ -14,14 +14,14 @@
 namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
+   auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
     requires ( !abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
   {
     return std::pair{v.storage(), eve::lane<1>};
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
+   auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
     requires ( abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
   {
     auto raw = [&] {

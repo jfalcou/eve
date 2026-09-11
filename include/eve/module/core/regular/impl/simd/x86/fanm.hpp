@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<typename T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> fanm_(EVE_REQUIRES(sse2_),
+   wide<T, N> fanm_(EVE_REQUIRES(sse2_),
                                    O const& opts,
                                    wide<T, N> const& a,
                                    wide<T, N> const& b,
@@ -30,7 +30,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> fanm_(EVE_REQUIRES(avx512_),
+   wide<T, N> fanm_(EVE_REQUIRES(avx512_),
                                    C const            &mask,
                                    wide<T, N> const   &v,
                                    wide<T, N> const   &w,
