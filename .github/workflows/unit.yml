@@ -392,6 +392,7 @@ jobs:
   ## Windows Targets
   ##################################################################################################
   windows:
+    name: windows (${{ matrix.cfg.name }}, ${{ matrix.chunk.name }})
     runs-on: [windows-2022]
     defaults:
       run:
