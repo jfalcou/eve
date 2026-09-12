@@ -42,16 +42,16 @@ jobs:
   generic:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v10
+      image: ghcr.io/jfalcou/compilers:v11
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang, arch: x86    , opts: -mavx2     }
         - { comp: clang, arch: arm    , opts: -Wno-psabi }
-        - { comp: gcc  , arch: x86    , opts: -msse2     }
-        - { comp: gcc  , arch: sve128 , opts: -Wno-psabi }
-        - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
+        - { comp: gcc16, arch: x86    , opts: -msse2     }
+        - { comp: gcc16, arch: sve128 , opts: -Wno-psabi }
+        - { comp: gcc16, arch: ppc64  , opts: -Wno-psabi }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6

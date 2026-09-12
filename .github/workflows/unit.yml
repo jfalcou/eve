@@ -461,21 +461,20 @@ jobs:
         run: cd build && ctest --output-on-failure -j 10  --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
-  ## Host 1 - PPC & ARM SVE256/512 Tests
+  ## Host 1 - PPC & ARM SVE Tests
   ##################################################################################################
   other-arch:
-    needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v10
+      image: ghcr.io/jfalcou/compilers:v11
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc, arch: sve   , opts: -Wno-psabi}
-        - { comp: gcc, arch: sve2  , opts: -Wno-psabi}
-        - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
+        - { comp: gcc16, arch: sve   , opts: -Wno-psabi}
+        - { comp: gcc16, arch: sve2  , opts: -Wno-psabi}
+        - { comp: gcc16, arch: ppc64 , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
@@ -494,8 +493,6 @@ jobs:
   ## Host 1 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
   x86-gcc:
-    ## Chaining this behind other-arch lowers no load: two agents run two legs either way.
-    needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
@@ -579,15 +576,15 @@ jobs:
   preemptive:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v10
+      image: ghcr.io/jfalcou/compilers:v11
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang20, arch: x86    , opts: "-std=c++26"  }
+        - { comp: clang22, arch: x86    , opts: "-std=c++26"  }
+        - { comp: gcc16  , arch: x86    , opts: "-std=c++26"  }
         - { comp: gcc15  , arch: x86    , opts: "-std=c++26"  }
-        - { comp: gcc    , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
