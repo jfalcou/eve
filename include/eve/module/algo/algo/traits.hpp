@@ -106,7 +106,7 @@ namespace eve::algo
   //!   @code{.cpp}
   //!   namespace eve::algo
   //!   {
-  //!     template<int N> inline constexpr auto unroll = implementation_defined;
+  //!     template<int N> inline constexpr auto unroll = eve_implementation_defined;
   //!   }
   //!   @endcode
   //!   </div>
