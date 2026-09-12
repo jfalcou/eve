@@ -19,8 +19,8 @@
 //!   @defgroup eve_algo_concepts Algorithms Concepts
 //!   @brief Provides Concepts for algorithms and related components
 //!
-//!   @defgroup eve_algo_traits AlgoTraits
-//!   @brief Different customisation for algorithms.
+//!   @defgroup eve_algo_traits Options
+//!   @brief Traits a call passes between brackets to tune an algorithm.
 //! @}
 //==================================================================================================
 #include <eve/module/core.hpp>

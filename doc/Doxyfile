@@ -22,7 +22,7 @@ GENERATE_TAGFILE       = $(EVE_DOXYGEN_OUPUT)/eve.tag
 ALLOW_UNICODE_NAMES    = NO
 
 BRIEF_MEMBER_DESC      = YES
-REPEAT_BRIEF           = NO
+REPEAT_BRIEF           = YES
 ABBREVIATE_BRIEF       = "The $name class" \
                          "The $name widget" \
                          "The $name file" \
@@ -50,6 +50,7 @@ ALIASES += "raberu=[RABERU](https://jfalcou.github.io/raberu/) \1"
 ALIASES += "godbolt{1}=@include \1"
 ALIASES += "groupheader{1}=<h2 class=\"groupheader\"> \1 </h2>"
 ALIASES += "subgroupheader{1}=<h3 class=\"groupheader\"> \1 </h3>"
+ALIASES += "headerfile{1}=<div class=\"headerfile\"><b>Header file</b> <code>\#include &lt;\1&gt;</code></div>"
 ALIASES += "nullable=[NullablePointer](https://en.cppreference.com/w/cpp/named_req/NullablePointer)"
 ALIASES += "callable=[Callable Object](https://en.cppreference.com/w/cpp/named_req/Callable)"
 ALIASES += "container=[Container](https://en.cppreference.com/w/cpp/named_req/Container)"

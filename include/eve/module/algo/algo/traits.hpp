@@ -24,33 +24,59 @@ namespace eve::algo
   //! @addtogroup eve_algo_traits
   //! @{
   //!   @struct traits
+  //!   @brief Compile time set of tuning parameters an algorithm accepts.
   //!
-  //!   @brief A compile time set of all the tuning parameters passed to the algorithm.
-  //!   These allow you to fine-tune the loops and not being stuck with our defaults.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   Unless you write your own algorithms like eve's, you probably won't need to use
-  //!   this class. If you do that, we suggest to looking at one of the algorithms from
-  //!   eve/module/algo/algo.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename Settings>
+  //!     struct traits : Settings
+  //!     {
+  //!       template<rbr::concepts::option... Options>
+  //!       constexpr explicit traits(Options&&... options);
   //!
-  //!   When calling you just pass individual traits via [], i.e.
+  //!       template<typename... Options>
+  //!       constexpr traits(rbr::settings<Options...> const& options);
+  //!     };
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   @tparam Settings Deduced keyword settings, never spelled by hand.
+  //!
+  //!   Every algorithm carries a default set and accepts traits between brackets. Naming them one
+  //!   at a time builds the set as the call is written:
   //!
   //!   @code
-  //!   eve::algo::find_if[eve::algo::expensive_callable][eve::algo::cosider_types<double>]()
+  //!   find_if[expensive_callable][consider_types<double>](r, p);
   //!   @endcode
   //!
-  //!   You can also pass traits struct:
+  //!   The same traits gathered in a set pass in a single pair of brackets, which is worth doing
+  //!   when several calls share them:
+  //!
   //!   @code
-  //!   eve::algo::find_if[eve::algo::traits{eve::algo::expensive_callable, eve::algo::cosider_types<double>}]()
+  //!   constexpr auto tr = traits{expensive_callable, consider_types<double>};
+  //!   find_if[tr](r, p);
+  //!   find_if[tr](q, p);
   //!   @endcode
-  //!   This is useful for prebuilding traits (for example eve::algo::default_simple_algo_traits)
+  //!
+  //!   Traits a call passes override the algorithm's defaults. Those it leaves out keep their
+  //!   default value.
+  //!
+  //!   @see eve_algo_traits_dev to read a set from inside an algorithm.
   //! @}
   //================================================================================================
   template <typename Settings>
   struct traits : Settings
   {
+    //! @brief Builds a set from the traits named one by one.
     template <rbr::concepts::option... Options>
     constexpr explicit traits(Options && ... options) : Settings(EVE_FWD(options) ...) {}
 
+    //! @brief Builds a set from an existing keyword settings object.
     template <typename... Options>
     constexpr traits(rbr::settings<Options...> const& options) : Settings(options) {}
   };

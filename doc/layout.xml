@@ -101,8 +101,10 @@
 
   <!-- Layout definition for a class page -->
   <class>
-    <briefdescription visible="yes"/>
-    <includes visible="$SHOW_HEADERFILE"/>
+    <!-- REPEAT_BRIEF opens the detailed description with the brief, so the top block goes. -->
+    <briefdescription visible="no"/>
+    <!-- The convenience header each entry documents itself replaces the real one. -->
+    <includes visible="no"/>
     <detaileddescription title=""/>
     <memberdecl>
       <nestedclasses visible="yes" title=""/>
