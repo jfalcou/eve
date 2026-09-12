@@ -437,7 +437,7 @@ namespace eve::algo
   // getters -------------------
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns unrolling requested by traits (default 1)
   //! @tparam Traits
   //================================================================================================
@@ -448,7 +448,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns extra types to consider requested by traits as a kumi::tuple
   //! @tparam Traits
   //================================================================================================
@@ -456,7 +456,7 @@ namespace eve::algo
   using extra_types_to_consider = rbr::result::fetch_t<(consider_types_key | kumi::tuple{}), Traits>;
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns all types that should be considered for a given Traits and Range/Iterator
   //!        (as a kumi::tuple)
   //! @tparam Traits, RangeOrIterator
@@ -475,7 +475,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns cardinal which should be used.
   //! @tparam Traits, RangeOrIterator
   //================================================================================================
@@ -486,7 +486,7 @@ namespace eve::algo
                         >;
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns specified overflow
   //! @tparam Traits
   //================================================================================================
@@ -497,7 +497,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns expected_smaller_r if one is specified
   //! @tparam Traits
   //================================================================================================
@@ -523,7 +523,7 @@ namespace eve::algo
   }  // namespace _
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns specified if any, otherwise the default index type suggested by the library
   //! @tparam Traits
   //================================================================================================
@@ -533,7 +533,7 @@ namespace eve::algo
                            Traits>::type;
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @var default_to
   //! @brief taking user traits and default traits, returns new traits
   //!        where user take precedent over defaults
@@ -560,7 +560,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief removes a given key from traits.
   //================================================================================================
   template <typename K, typename Traits>
@@ -571,7 +571,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief removes a given key from traits if and only if the condition is true
   //================================================================================================
   template <bool cond, typename K, typename Traits>
@@ -582,7 +582,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @var has_type_overrides_v
   //! @brief (for zip traits) do the traits have any type overrides requested
   //================================================================================================
@@ -590,7 +590,7 @@ namespace eve::algo
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief returns eve::sparse or eve::dense (default is eve::dense)
   //! @tparam Traits
   //================================================================================================
@@ -603,7 +603,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @brief some traits should just be replaced with a combination of different traits.
   //! do that replacement
   //================================================================================================
@@ -617,7 +617,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @var default_simple_algo_traits
   //! @brief what we use by default for algorithms that do not execute too many instructions.
   //! At this point it is just unroll<4>
@@ -625,7 +625,7 @@ namespace eve::algo
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @var no_traits
   //! @brief empty algo traits.
   //================================================================================================
@@ -663,7 +663,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @ingroup eve_algo_traits
   //! @var function_with_traits
   //!
   //! @brief A helper to declare algorithms like eve::algo. See how we do it in
