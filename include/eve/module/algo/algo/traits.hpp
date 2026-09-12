@@ -96,6 +96,7 @@ namespace eve::algo
   //============================================================================
   //! @defgroup algo_unroll unroll
   //! @ingroup eve_algo_traits
+  //! @brief Defines the number of computations an algorithm handles per loop step.
   //! @{
   //!   @var unroll
   //!   @brief Defines the number of computations an algorithm handles per loop step.
@@ -144,18 +145,33 @@ namespace eve::algo
   inline constexpr force_cardinal_key_t force_cardinal_key;
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_force_cardinal force_cardinal
+  //! @ingroup eve_algo_traits
+  //! @brief Overrides the cardinal an algorithm iterates with.
   //! @{
   //!   @var force_cardinal
+  //!   @brief Overrides the cardinal an algorithm iterates with.
   //!
-  //!   @brief A trait that overrides all other cardinal selection and just says
-  //!   to use a certain one. The main use-case for this is ease of interaction with
-  //!   native register code.
+  //!   @headerfile{eve/module/algo.hpp}
+  //!
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<int N> inline constexpr auto force_cardinal = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   @tparam N Lanes handled at once.
+  //!
+  //!   Cardinal selection weighs the types a range carries and whether frequency scaling is
+  //!   allowed. This trait sets it outright, which is what interacting with hand-written register
+  //!   code asks for, the register width being fixed there.
   //!
   //!   @snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
   //!
-  //!   @see consider_types if maybe using some extra type is the reason you want
-  //!   to change cardinal.
+  //!   @see consider_types, allow_frequency_scaling
   //! @}
   //=============================================================================
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
@@ -164,15 +180,31 @@ namespace eve::algo
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_consider_types consider_types
+  //! @ingroup eve_algo_traits
+  //! @brief Adds types to the cardinal selection.
   //! @{
   //!   @var consider_types
+  //!   @brief Adds types to the cardinal selection.
   //!
-  //!   @brief A trait that tells the algorithm to take an extra type into account when
-  //!   selecting a cardinal. This is, for example, used by `reduce` algorithm
-  //!   to consider the sum type.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   @see also algo::views::convert if that's maybe what you need.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename... Ts> auto consider_types = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   @tparam Ts Extra types the selection weighs.
+  //!
+  //!   An algorithm picks its cardinal from the types its range carries. A computation that
+  //!   widens on the way, as @b reduce does when it sums into a larger type, has to weigh that
+  //!   type too, and this trait names it.
+  //!
+  //!   @see force_cardinal, eve::algo::views::convert
   //! @}
   //=============================================================================
   template <typename ...Ts> auto consider_types = ( consider_types_key = kumi::tuple<Ts...>{} );
@@ -182,18 +214,31 @@ namespace eve::algo
 
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_force_type force_type
+  //! @ingroup eve_algo_traits
+  //! @brief Converts every part of a zip to one type.
   //! @{
-  //!    @var force_type
+  //!   @var force_type
+  //!   @brief Converts every part of a zip to one type.
   //!
-  //!    @brief A `zip` trait for converting all the types in a zip.
-  //!    You can get identical results with `views::convert` but this is a convenience.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!    Just adds conversion for all of the types in a zipped iterator/range to the given one.
-  //!    No examples in the basic algorithms but we believe can be useful in a special case.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename T> auto force_type = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!    @see common_type
-  //!    @see common_with_types
+  //!   @tparam T Type every part converts to.
+  //!
+  //!   A zipped range carries one type per part, and an algorithm reading it sees them all. This
+  //!   trait converts each of them to @b T on load, which eve::algo::views::convert also does, one
+  //!   part at a time.
+  //!
+  //!   @see common_type, common_with_types
   //! @}
   //=============================================================================
   template <typename T> auto force_type = (force_type_key = std::type_identity<T>{});
@@ -202,42 +247,58 @@ namespace eve::algo
   inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_common_with_types common_with_types
+  //! @ingroup eve_algo_traits
+  //! @brief Converts every part of a zip to a common type, extra types included.
   //! @{
-  //!    @var common_with_types
+  //!   @var common_with_types
+  //!   @brief Converts every part of a zip to a common type, extra types included.
   //!
-  //!    @brief A `zip` trait for converting all the types in a zip.
-  //!    You can get identical results with `views::convert` but this is a convenience.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!    Figures out a common type between all of the types in a zipped iterator/range +
-  //!    all types passed to the trait. Common type is computed via `eve::common_type`.
-  //!    Most of the common cases just need `eve::algo::common_type` trait but we think
-  //!    it come in handy in some more esoteric cases.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename... Ts> inline constexpr auto common_with_types = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!    @see common_type
-  //!    @see force_type
+  //!   @tparam Ts Types weighed alongside the zip's own.
+  //!
+  //!   The common type of a zip's own parts and of @b Ts, computed by eve::common_type, becomes the
+  //!   type every part converts to. Naming no extra type is what eve::algo::common_type does.
+  //!
+  //!   @see common_type, force_type
   //! @}
   //=============================================================================
   template <typename ...Ts>
   inline constexpr auto common_with_types = (common_with_types_key = eve::common_type<Ts...>{});
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_common_type common_type
+  //! @ingroup eve_algo_traits
+  //! @brief Converts every part of a zip to their common type.
   //! @{
-  //!    @var common_type
+  //!   @var common_type
+  //!   @brief Converts every part of a zip to their common type.
   //!
-  //!    @brief A `zip` trait for converting all the types in a zip,
-  //!    equivalent of common_with_types<>.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!    You can get identical results with `views::convert` but this is a convenience.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto common_type = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!    Take all types in a zip_iterator/zip_range and convert them to a common type.
+  //!   Equivalent to eve::algo::common_with_types with no extra type. Algorithms comparing two
+  //!   ranges of different types rely on it, as @b equal and @b mismatch do.
   //!
-  //!    This is, for example, used by `equal` and `mismatch` algorithms to compare
-  //!    different types
-  //!
-  //!    @see common_with_types
-  //!    @see force_type
+  //!   @see common_with_types, force_type
   //! @}
   //!=============================================================================
   inline constexpr auto common_type = common_with_types<>;
@@ -245,25 +306,33 @@ namespace eve::algo
   struct divisible_by_cardinal_tag {};
 
   //=============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_divisible_by_cardinal divisible_by_cardinal
+  //! @ingroup eve_algo_traits
+  //! @brief States that a range holds a whole number of lane blocks.
   //! @{
-  //!    @var divisible_by_cardinal
+  //!   @var divisible_by_cardinal
+  //!   @brief States that a range holds a whole number of lane blocks.
   //!
-  //!    @brief an trait to tell that the input data is strictly divisible by cardinal.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!    Aligning takes precedent over this: if the data accesses are going to be aligned,
-  //!    the tail handling comes back. You can pass `eve::algo::no_aligning`.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto divisible_by_cardinal = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!    In other words only does anything if the pointer is aligned_ptr or `no_aligning` is passed.
+  //!   A loop whose range divides evenly needs no tail, so the trait drops that handling. Alignment
+  //!   takes precedence: a loop that aligns its accesses reads a partial first block, and the tail
+  //!   handling comes back. The trait therefore bites on an unaligned pointer, or alongside
+  //!   eve::algo::no_aligning.
   //!
-  //!    @note this trait is deduced automatically if both begin and end of the range are
-  //!    aligned_ptr with alignment >= cardinal. If you are using this, consider aligning
-  //!    your data too.
+  //!   A range whose two ends are aligned pointers with an alignment at least the cardinal carries
+  //!   this trait already, deduced.
   //!
-  //!    @see inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries
-  //!    in parallel algorithms.
-  //!
-  //!    @see no_aligning
+  //!   @see no_aligning
   //! @}
   //=============================================================================
   inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
@@ -271,25 +340,56 @@ namespace eve::algo
   struct no_aligning_tag {};
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_no_aligning no_aligning
+  //! @ingroup eve_algo_traits
+  //! @brief Stops an algorithm from aligning its accesses.
   //! @{
   //!   @var no_aligning
+  //!   @brief Stops an algorithm from aligning its accesses.
   //!
-  //!   @brief Traits for disabling alignment handling in algorithm
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   Modify an algorithm semantic to not perform any additional operations to force the
-  //!   exploitation of the alignment of processed data.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto no_aligning = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   A loop reaching an aligned boundary loads faster, and gets there by reading a partial first
+  //!   block. That trade pays on a long range and costs on a short one, which this trait settles
+  //!   the other way.
+  //!
+  //!   @see divisible_by_cardinal, expensive_callable
   //! @}
   //================================================================================================
   inline constexpr auto no_aligning = ::rbr::flag( no_aligning_tag{} );
 
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_no_unrolling no_unrolling
+  //! @ingroup eve_algo_traits
+  //! @brief One lane block a loop step.
   //! @{
   //!   @var no_unrolling
+  //!   @brief One lane block a loop step.
   //!
-  //!   @brief Convenient equivalent to unroll<1>.
+  //!   @headerfile{eve/module/algo.hpp}
+  //!
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto no_unrolling = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   Shorthand for eve::algo::unroll with one block, which the page of that trait explains.
+  //!
+  //!   @see unroll, expensive_callable
   //! @}
   //================================================================================================
   inline constexpr auto no_unrolling = unroll<1>;
@@ -297,16 +397,30 @@ namespace eve::algo
   struct expensive_callable_tag {};
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_expensive_callable expensive_callable
+  //! @ingroup eve_algo_traits
+  //! @brief States that the operation dominates the loop.
   //! @{
   //!   @var expensive_callable
+  //!   @brief States that the operation dominates the loop.
   //!
-  //!   @brief *NOTE*: equivalent to no_aligning + no_unrolling + single_pass
-  //!          By default eve algorithms will assume that the passed predicates/computation
-  //!          are failry simple and will unroll and align data accesses.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!          However, if your callback and/or iterators are very heavy, those transformations
-  //!          will not help you. In that case passing `expensive_callable` trait will help.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto expensive_callable = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   Algorithms assume a light predicate, so they unroll and align to spend their time in the
+  //!   loop body rather than around it. A heavy callable or a heavy iterator turns both into
+  //!   overhead, and this trait stands for eve::algo::no_aligning, eve::algo::no_unrolling and
+  //!   eve::algo::single_pass together.
+  //!
+  //!   @see no_aligning, no_unrolling, single_pass
   //! @}
   //================================================================================================
   inline constexpr auto expensive_callable = ::rbr::flag( expensive_callable_tag{} );
@@ -315,36 +429,59 @@ namespace eve::algo
   struct single_pass_tag {};
 
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_single_pass single_pass
+  //! @ingroup eve_algo_traits
+  //! @brief Tracks the index as the loop runs rather than searching afterwards.
   //! @{
   //!   @var single_pass
+  //!   @brief Tracks the index as the loop runs rather than searching afterwards.
   //!
-  //!   @brief Trait that changes the algorithm for min_element/max_element for index tracking.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!          By default min/max algorithms are min_value + find, since that proves to be faster
-  //!          on our benchmarks. However, if the body of your loop is expensive, you probably want
-  //!          to use index tracking.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto single_pass = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!          *NOTE*: consider if you should pass `expensive_callable` instead.
-  //!          *NOTE*: in a discussion [here](https://stackoverflow.com/a/70813588/5021064) Peter
-  //!          Cordes suspected that for large enough array one pass will be better as well - you can
-  //!          try.
+  //!   eve::algo::min_element and eve::algo::max_element take two passes by default, the value then
+  //!   its position, which measures faster on eve's benchmarks. A loop body heavy enough to make a
+  //!   second pass expensive wants the index tracked in one, which this trait asks for.
+  //!
+  //!   @see expensive_callable
   //! @}
   //================================================================================================
   inline constexpr auto single_pass = ::rbr::flag(single_pass_tag {});
 
   struct fuse_operations_tag {};
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_fuse_operations fuse_operations
+  //! @ingroup eve_algo_traits
+  //! @brief Lets an algorithm run its operations as one.
   //! @{
   //!   @var fuse_operations
+  //!   @brief Lets an algorithm run its operations as one.
   //!
-  //!   @brief Some algorithms (for example `transform_reduce`) can be implemented more efficient
-  //!   if you fuse multiple operations provided in a single function.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   Example: if you want to use `fma` instead of doing `multiply` + `add`.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto fuse_operations = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!   This flag replaces the functions with their more parameter equivalents.
+  //!   An algorithm taking several callables can sometimes call a single wider one instead, a
+  //!   multiply and an add becoming an eve::fma. This trait swaps the operations an algorithm
+  //!   expects for their fused equivalents, so eve::algo::transform_reduce takes one callable of
+  //!   more parameters.
+  //!
+  //!   @see expensive_callable
   //! @}
   //================================================================================================
   inline constexpr auto fuse_operations = ::rbr::flag( fuse_operations_tag{} );
@@ -359,37 +496,60 @@ namespace eve::algo
   inline constexpr expect_smaller_range_key_t expect_smaller_range_key;
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_expect_smaller_range expect_smaller_range
+  //! @ingroup eve_algo_traits
+  //! @brief Names the range an algorithm should expect to be the shorter one.
   //! @{
   //!   @var expect_smaller_range
+  //!   @brief Names the range an algorithm should expect to be the shorter one.
   //!
-  //!   @brief some algorithms (for example set_intersection) have a better
-  //!   implementation if we know that one of the input ranges is smaller.
-  //!   Then you can give the library this information by passing [expect_smaller_range<idx>]
-  //!   (idx - base 0 index of the range that you expect to be smaller).
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   @note smaller is often not quite the right word to describe when an
-  //!   algorithm is better: benchmark, tune and experiment.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<int N> inline constexpr auto expect_smaller_range = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
+  //!   @tparam N Zero-based position of that range among the arguments.
+  //!
+  //!   An algorithm reading two ranges, as eve::algo::set_intersection does, has a faster shape
+  //!   when it knows which one runs out first. Shorter is a rough guide rather than a rule, so the
+  //!   choice is worth benchmarking on the data at hand.
+  //!
+  //!   @see eve::algo::set_intersection
   //! @}
   //============================================================================
   template<int N> inline constexpr auto expect_smaller_range = (expect_smaller_range_key = eve::index<N>);
 
   struct allow_frequency_scaling_tag {};
   //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_allow_frequency_scaling allow_frequency_scaling
+  //! @ingroup eve_algo_traits
+  //! @brief Lets an algorithm use the widest registers, frequency scaling included.
   //! @{
   //!   @var allow_frequency_scaling
+  //!   @brief Lets an algorithm use the widest registers, frequency scaling included.
   //!
-  //!   @brief You can find more explanations in the 'frequency scaling tutorial'.
-  //!          On intel using 64 byte registers requires processor to scale down it's frequency.
-  //!          This is only beneficial if you have a very large set of data to process. Otherwise
-  //!          it will likely degrade performance not only of the SIMD code but also of the code
-  //!          that follows.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!          By default this flag is off.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto allow_frequency_scaling = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!    **See also nofs**
+  //!   An Intel core running 64 byte registers lowers its clock, and the code that follows runs at
+  //!   that clock too. Algorithms therefore stay one width below by default, and this trait lifts
+  //!   that, which a long enough range repays.
+  //!
+  //!   @see force_cardinal
   //! @}
   //================================================================================================
   inline constexpr auto allow_frequency_scaling = ::rbr::flag( allow_frequency_scaling_tag{} );
@@ -404,11 +564,30 @@ namespace eve::algo
   inline constexpr overflow_key_t overflow_key;
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_overflow overflow
+  //! @ingroup eve_algo_traits
+  //! @brief Number of lanes a loop may write past its range.
   //! @{
   //!   @var overflow
+  //!   @brief Number of lanes a loop may write past its range.
   //!
-  //!   @brief A trait for advanced usage only as parameter for for_each_iteration_fixed_overflow
+  //!   @headerfile{eve/module/algo.hpp}
+  //!
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<std::ptrdiff_t N> inline constexpr auto overflow = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   @tparam N Lanes the loop may overrun.
+  //!
+  //!   Read by eve::algo::for_each_iteration_fixed_overflow, which an algorithm of your own drives
+  //!   directly. Calling an algorithm needs none of it.
+  //!
+  //!   @see eve_algo_traits_dev
   //! @}
   //============================================================================
   template<std::ptrdiff_t N> inline constexpr auto overflow = (overflow_key = eve::index<N>);
@@ -424,16 +603,31 @@ namespace eve::algo
   inline constexpr index_type_key_t index_type_key;
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_index_type index_type
+  //! @ingroup eve_algo_traits
+  //! @brief Integral type an algorithm counts indices in.
   //! @{
   //!   @var index_type
+  //!   @brief Integral type an algorithm counts indices in.
   //!
-  //!   @brief A trait that allows to override the default index type for algorithms
-  //!   that require to keep track of an index.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   index type, by default, matches the bit size of the max type used in the
-  //!   algorithm, but is at least u16 (for chars we don't want to overflow every 255
-  //!   elements)
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<std::unsigned_integral T> inline constexpr auto index_type = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   @tparam T Unsigned integral type holding an index.
+  //!
+  //!   An algorithm tracking positions counts in a type wide enough for the widest element it
+  //!   reads, and never narrower than @c std::uint16_t, so a range of chars does not wrap every 255
+  //!   elements. This trait sets that type outright.
+  //!
+  //!   @see eve_algo_traits_dev
   //! @}
   //============================================================================
   template<std::unsigned_integral T> inline constexpr auto index_type = (index_type_key = std::type_identity<T>{});
@@ -448,33 +642,57 @@ namespace eve::algo
   inline constexpr density_key_t density_key;
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_sparse_output sparse_output
+  //! @ingroup eve_algo_traits
+  //! @brief Optimises a filtering algorithm for few elements kept per step.
   //! @{
   //!   @var sparse_output
+  //!   @brief Optimises a filtering algorithm for few elements kept per step.
   //!
-  //!   @brief for algorithms that output data based on input (eve::algo::copy_if,
-  //!   eve::algo::remove_if, eve::algo::set_intersection etc),
-  //!   tells the algorithm to optimize for the case where there will be fairly few
-  //!   elements per iteration.
-  //!   eve::algo::dense_output is default since it's better in most cases measured.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   @see eve::algo::dense_output
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto sparse_output = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   eve::algo::copy_if, eve::algo::remove_if and eve::algo::set_intersection write what they
+  //!   keep, and their shape depends on how much that is. This trait suits a step keeping a handful
+  //!   of lanes, where eve::algo::dense_output, the default, suits a step keeping most of them.
+  //!
+  //!   @see dense_output
   //! @}
   //============================================================================
   inline constexpr auto sparse_output = (density_key = eve::sparse);
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_dense_output dense_output
+  //! @ingroup eve_algo_traits
+  //! @brief Optimises a filtering algorithm for most elements kept per step.
   //! @{
   //!   @var dense_output
+  //!   @brief Optimises a filtering algorithm for most elements kept per step.
   //!
-  //!   @brief for algorithms that output data based on input (eve::algo::copy_if,
-  //!   eve::algo::remove_if, eve::algo::set_intersection etc),
-  //!   tells the algorithm to optimize for the case where there will be many
-  //!   elements per iteration.
-  //!   eve::algo::dense_output is default since it's better in most cases measured.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   @see eve::algo::sparse_output
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr auto dense_output = eve_implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   eve::algo::copy_if, eve::algo::remove_if and eve::algo::set_intersection write what they
+  //!   keep, and their shape depends on how much that is. This is the default, measured better in most
+  //!   cases, where eve::algo::sparse_output suits a step keeping a handful of lanes.
+  //!
+  //!   @see sparse_output
   //! @}
   //============================================================================
   inline constexpr auto dense_output = (density_key = eve::dense);

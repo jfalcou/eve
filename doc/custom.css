@@ -178,6 +178,11 @@ div.header:has(+ div.contents div.synopsis) div.summary {
     display: none;
 }
 
+/* The group description already carries the brief, which REPEAT_BRIEF puts on the member too. */
+div.contents:has(div.synopsis) div.memdoc > p:first-of-type {
+    display: none;
+}
+
 /* An entry's prose reads in the same order as a class page's, and lives in memdoc. */
 div.memdoc {
     display: flex;
