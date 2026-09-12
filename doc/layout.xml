@@ -242,7 +242,7 @@
     <detaileddescription title=""/>
     <groupgraph visible="$GROUP_GRAPHS"/>
     <memberdecl>
-      <nestedgroups visible="yes" title=""/>
+      <nestedgroups visible="yes" title="Contents"/>
       <namespaces visible="yes" title=""/>
       <classes visible="yes" title=""/>
       <defines title=""/>

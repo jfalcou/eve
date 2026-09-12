@@ -43,7 +43,7 @@ STRIP_FROM_PATH       += /home/jt/falcoudev
 STRIP_FROM_PATH       += /home/falcou/dev
 STRIP_FROM_INC_PATH    = ../include
 
-SEPARATE_MEMBER_PAGES  = YES
+SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 2
 
 ALIASES += "raberu=[RABERU](https://jfalcou.github.io/raberu/) \1"
@@ -203,12 +203,15 @@ HIDE_COMPOUND_REFERENCE= NO
 
 SHOW_INCLUDE_FILES     = YES
 
+## The convenience header each entry documents itself replaces the real one.
+SHOW_HEADERFILE        = NO
+
 # If the SHOW_GROUPED_MEMB_INC tag is set to YES then Doxygen will add for each
 # grouped member an include statement to the documentation, telling the reader
 # which file to include in order to use the member.
 # The default value is: NO.
 
-SHOW_GROUPED_MEMB_INC  = YES
+SHOW_GROUPED_MEMB_INC  = NO
 
 # If the FORCE_LOCAL_INCLUDES tag is set to YES then doxygen will list include
 # files with double quotes in the documentation rather than with sharp brackets.
@@ -645,7 +648,9 @@ INPUT_FILTER           =
 # need to set EXTENSION_MAPPING for the extension otherwise the files are not
 # properly processed by doxygen.
 
-FILTER_PATTERNS        =
+## Renders eve::algo::_:: names as eve_implementation_defined, on that module alone.
+## Rapatriated from copacabana, which applies it to a whole project.
+FILTER_PATTERNS        = */module/algo/*="python3 asset/filter.py --prefix eve"
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER) will also be used to filter the input files that are used for

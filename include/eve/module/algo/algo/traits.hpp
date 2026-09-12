@@ -94,23 +94,42 @@ namespace eve::algo
   inline constexpr unroll_key_t unroll_key;
 
   //============================================================================
-  //! @addtogroup eve_algo_traits
+  //! @defgroup algo_unroll unroll
+  //! @ingroup eve_algo_traits
   //! @{
   //!   @var unroll
+  //!   @brief Defines the number of computations an algorithm handles per loop step.
   //!
-  //!   @brief A trait that overrides how much algorithm should be unrolled.
-  //!   Keep in mind that by default we will unroll simple algorithms for you
-  //!   (see individual algorithms for default settings).
-  //!   So this is only useful if you want to override that default.
-  //!   Note that sometimes compilers can unroll loops as well,
-  //!   that has nothing to do with us.
+  //!   @headerfile{eve/module/algo.hpp}
   //!
-  //!   @see expensive_callable if you just want to tell the library to stop.
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     template<int N> inline constexpr auto unroll = implementation_defined;
+  //!   }
+  //!   @endcode
+  //!   </div>
   //!
-  //!   @note when not just using our algorithms but writing your own, avoid
-  //!   having dependencies between unrolled loop iterations if possible.
-  //!   Maybe you'd have to use `for_each_iteration` as oppose to just `for_each`
-  //!   to do that.
+  //!   @tparam N Blocks handled per step, one or more.
+  //!
+  //!   Unrolling widens a loop step: the algorithm handles @b N blocks of lanes before testing its
+  //!   loop condition again, which spreads the loop overhead over more work and lets independent
+  //!   operations overlap. Simple algorithms already pick a default, so a larger @b N pays when the
+  //!   body is short and its iterations are independent, and costs when the body is expensive or an
+  //!   iteration reads what the previous one wrote.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!
+  //!   // A single comparison per lane, so eight blocks a step keep the pipeline fed.
+  //!   auto found = find_if[unroll<8>](data, [](auto x) { return x > 0.f; });
+  //!   @endcode
+  //!
+  //!   <code>unroll&lt;1&gt;</code> cancels unrolling, one block a step, and
+  //!   eve::algo::no_unrolling is the shorthand for it.
+  //!
+  //!   @see no_unrolling, expensive_callable
   //! @}
   //============================================================================
   template<int N> inline constexpr auto unroll = (unroll_key = eve::index<N>);
@@ -471,6 +490,10 @@ namespace eve::algo
   //! @ref eve_algo_traits it accepts.
   //!
   //! **Convenience header:** @code{.cpp} #include <eve/module/algo.hpp> @endcode
+  //!
+  //! Unrolled iterations run on the same loop step, so an algorithm of your own keeps them free
+  //! of dependencies, `for_each_iteration` rather than `for_each` when that takes a hand-written
+  //! loop.
   //!
   //! @see algo_rationale for the order these tools are used in.
   //================================================================================================
