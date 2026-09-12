@@ -574,17 +574,18 @@ jobs:
   ## C++26 preemptive test
   ##################################################################################################
   preemptive:
+    name: preemptive (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.cfg.opts }})
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v11
+      image: ghcr.io/jfalcou/compilers:${{ matrix.cfg.image }}
       options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang22, arch: x86    , opts: "-std=c++26 -Wno-c2y-extensions"  }
-        - { comp: gcc16  , arch: x86    , opts: "-std=c++26"  }
-        - { comp: gcc15  , arch: x86    , opts: "-std=c++26"  }
+        - { comp: clang20, arch: x86    , image: v10, opts: "-std=c++26"  }
+        - { comp: gcc16  , arch: x86    , image: v11, opts: "-std=c++26"  }
+        - { comp: gcc15  , arch: x86    , image: v11, opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
