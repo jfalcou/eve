@@ -75,7 +75,8 @@
         </tab>
       </tab>
       <tab type="usergroup" visible="yes" title="Developer API">
-        <tab type="user" url="@ref eve_traits"      title="Type Traits"/>
+        <tab type="user" url="@ref eve_traits"          title="Type Traits"/>
+        <tab type="user" url="@ref eve_algo_traits_dev" title="Algorithm Traits"/>
         <tab type="user" url="@ref eve_arch"        title="Architecture Helpers"/>
         <tab type="user" url="@ref eve_extensions"  title="Functions and Callables"/>
         <tab type="user" url="@ref eve_struct"      title="User-Defined Types Supports"/>

@@ -434,12 +434,30 @@ namespace eve::algo
   //============================================================================
   inline constexpr auto dense_output = (density_key = eve::dense);
 
-  // getters -------------------
+  //================================================================================================
+  //! @defgroup eve_algo_traits_dev Algorithm Traits
+  //! @brief  Reading, rewriting and carrying a set of algorithm traits
+  //!
+  //! Writing an algorithm the way **EVE** writes its own means reading what the caller asked for.
+  //! The tools below answer that: the readers report a decision, the rewriters turn a caller's set
+  //! into the canonical one an algorithm loops on, and `function_with_traits` builds the callable
+  //! that accepts a set at all. Calling an algorithm needs none of them, only the
+  //! @ref eve_algo_traits it accepts.
+  //!
+  //! **Convenience header:** @code{.cpp} #include <eve/module/algo.hpp> @endcode
+  //!
+  //! @see algo_rationale for the order these tools are used in.
+  //================================================================================================
+
+  // Reading a trait set ----------------------------------------------------------------------
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns unrolling requested by traits (default 1)
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Number of lane blocks handled per loop step.
+  //!
+  //! @tparam Traits Trait set to read.
+  //!
+  //! Reports `1` when the set carries no eve::algo::unroll.
   //================================================================================================
   template <typename Traits>
   constexpr std::ptrdiff_t get_unrolling()
@@ -448,18 +466,24 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns extra types to consider requested by traits as a kumi::tuple
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Types eve::algo::consider_types added to the set, as a kumi::tuple.
+  //!
+  //! @tparam Traits Trait set to read.
+  //!
+  //! Empty tuple when the set carries no eve::algo::consider_types.
   //================================================================================================
   template <typename Traits>
   using extra_types_to_consider = rbr::result::fetch_t<(consider_types_key | kumi::tuple{}), Traits>;
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns all types that should be considered for a given Traits and Range/Iterator
-  //!        (as a kumi::tuple)
-  //! @tparam Traits, RangeOrIterator
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Every type the cardinal selection weighs, as a kumi::tuple.
+  //!
+  //! @tparam Traits Trait set to read.
+  //! @tparam RorI   Range or iterator the algorithm walks.
+  //!
+  //! The types `RorI` carries, followed by those eve::algo::consider_types added.
   //================================================================================================
   template <typename Traits, typename RorI>
   using get_types_to_consider_for =
@@ -475,9 +499,19 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns cardinal which should be used.
-  //! @tparam Traits, RangeOrIterator
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Cardinal an algorithm iterates with.
+  //!
+  //! @tparam Traits Trait set to read.
+  //! @tparam RorI   Range or iterator the algorithm walks.
+  //!
+  //! | Trait set                          | Result                                        |
+  //! |:-----------------------------------|:----------------------------------------------|
+  //! | carries eve::algo::force_cardinal  | that cardinal                                 |
+  //! | carries allow_frequency_scaling    | expected cardinal of the considered types     |
+  //! | otherwise                          | cardinal that avoids frequency scaling        |
+  //!
+  //! @see get_types_to_consider_for
   //================================================================================================
   template <typename Traits, typename RorI>
   using iteration_cardinal_t =
@@ -486,9 +520,10 @@ namespace eve::algo
                         >;
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns specified overflow
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Number of lanes the loop may write past its range.
+  //!
+  //! @tparam Traits Trait set to read, which has to carry eve::algo::overflow.
   //================================================================================================
   template <typename Traits>
   constexpr std::ptrdiff_t get_overflow()
@@ -497,9 +532,12 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns expected_smaller_r if one is specified
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Which of two ranges eve::algo::expect_smaller_range named, if any.
+  //!
+  //! @tparam Traits Trait set to read.
+  //!
+  //! Empty optional when the set names none.
   //================================================================================================
   template<typename Traits>
   constexpr std::optional<std::ptrdiff_t>
@@ -523,9 +561,16 @@ namespace eve::algo
   }  // namespace _
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns specified if any, otherwise the default index type suggested by the library
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Integral type an algorithm counts indices in.
+  //!
+  //! @tparam Traits Trait set to read.
+  //! @tparam RorI   Range or iterator the algorithm walks.
+  //!
+  //! | Trait set                      | Result                                    |
+  //! |:-------------------------------|:------------------------------------------|
+  //! | carries eve::algo::index_type  | that type                                 |
+  //! | otherwise                      | smallest unsigned type covering `RorI`    |
   //================================================================================================
   template<typename Traits, typename RorI>
   using get_index_type_t =
@@ -533,10 +578,15 @@ namespace eve::algo
                            Traits>::type;
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
+  // Rewriting a trait set --------------------------------------------------------------------
+
+  //================================================================================================
+  //! @ingroup eve_algo_traits_dev
   //! @var default_to
-  //! @brief taking user traits and default traits, returns new traits
-  //!        where user take precedent over defaults
+  //! @brief Trait set where a caller's choices override an algorithm's defaults.
+  //!
+  //! Both sets keep their eve::algo::consider_types entries, which add up rather than replace one
+  //! another. Every other key comes from the caller when present.
   //================================================================================================
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
@@ -560,8 +610,14 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief removes a given key from traits.
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Trait set without the key `k`.
+  //!
+  //! @tparam K      Keyword to remove.
+  //! @tparam Traits Trait set to strip.
+  //!
+  //! Called once the decision `k` carried is taken, so the rest of the loop cannot read it again.
+  //! @see drop_key_if
   //================================================================================================
   template <typename K, typename Traits>
   EVE_FORCEINLINE constexpr auto drop_key(K k, Traits tr)
@@ -571,8 +627,14 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief removes a given key from traits if and only if the condition is true
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Trait set without the key `k`, when `cond` holds.
+  //!
+  //! @tparam cond   Condition deciding the removal.
+  //! @tparam K      Keyword to remove.
+  //! @tparam Traits Trait set to strip.
+  //!
+  //! Keeps an `if constexpr` out of the call site.
   //================================================================================================
   template <bool cond, typename K, typename Traits>
   EVE_FORCEINLINE constexpr auto drop_key_if(K k, Traits tr)
@@ -582,17 +644,24 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
+  //! @ingroup eve_algo_traits_dev
   //! @var has_type_overrides_v
-  //! @brief (for zip traits) do the traits have any type overrides requested
+  //! @brief Whether a zip trait set asks for a type conversion.
+  //!
+  //! @tparam Traits Trait set to read.
+  //!
+  //! True when the set carries eve::algo::force_type or eve::algo::common_with_types.
   //================================================================================================
   template <typename Traits>
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief returns eve::sparse or eve::dense (default is eve::dense)
-  //! @tparam Traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Output density a compressing copy writes with.
+  //!
+  //! @tparam Traits Trait set to read.
+  //!
+  //! eve::sparse when the set carries eve::algo::sparse_output, eve::dense otherwise.
   //================================================================================================
   template<typename Traits>
   constexpr auto
@@ -603,9 +672,17 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @brief some traits should just be replaced with a combination of different traits.
-  //! do that replacement
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Trait set with every shorthand expanded.
+  //!
+  //! @tparam Settings Settings of the trait set to expand.
+  //!
+  //! | Written                          | Stands for                                      |
+  //! |:---------------------------------|:------------------------------------------------|
+  //! | eve::algo::expensive_callable    | no_aligning, unroll<1> and single_pass          |
+  //!
+  //! An algorithm reads this first, so the rest of its loop sees one canonical set.
+  //! @see algo_rationale
   //================================================================================================
   template <typename Settings>
   inline constexpr auto process_equivalents(traits<Settings> tr) {
@@ -617,17 +694,24 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @var default_simple_algo_traits
-  //! @brief what we use by default for algorithms that do not execute too many instructions.
-  //! At this point it is just unroll<4>
+  //! @addtogroup eve_algo_traits
+  //! @{
+  //!   @var default_simple_algo_traits
+  //!   @brief Predefined trait set algorithms light on instructions start from.
+  //!
+  //!   @code
+  //!   algo::traits{algo::unroll<4>}
+  //!   @endcode
+  //! @}
   //================================================================================================
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
-  //! @var no_traits
-  //! @brief empty algo traits.
+  //! @addtogroup eve_algo_traits
+  //! @{
+  //!   @var no_traits
+  //!   @brief Empty trait set.
+  //! @}
   //================================================================================================
   inline constexpr algo::traits no_traits{};
 
@@ -663,11 +747,27 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits
+  // Declaring an algorithm -------------------------------------------------------------------
+
+  //================================================================================================
+  //! @ingroup eve_algo_traits_dev
   //! @var function_with_traits
+  //! @brief Callable accepting a trait set, built from an algorithm's implementation.
   //!
-  //! @brief A helper to declare algorithms like eve::algo. See how we do it in
-  //! eve/module/algo/algo if necessary.
+  //! @tparam F Implementation template, taking the type that carries the traits.
+  //!
+  //! @code{.cpp}
+  //! template<typename TraitsSupport>
+  //! struct my_algo_ : TraitsSupport
+  //! {
+  //!   template<relaxed_range R> auto operator()(R&& r) const;
+  //! };
+  //!
+  //! inline constexpr auto my_algo = function_with_traits<my_algo_>[default_simple_algo_traits];
+  //! @endcode
+  //!
+  //! Every algorithm under `eve/module/algo/algo` is declared this way.
+  //! @see algo_rationale
   //================================================================================================
   template <template<typename> typename F>
   constexpr auto function_with_traits = F<_::supports_traits<F, decltype(no_traits)>>{};
