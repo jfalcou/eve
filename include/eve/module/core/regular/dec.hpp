@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/detail/modular.hpp>
+#include <eve/module/core/decorator/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
 namespace eve

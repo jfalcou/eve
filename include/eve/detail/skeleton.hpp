@@ -11,7 +11,7 @@
 #include <eve/deps/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/traits/apply_fp16.hpp>
 #include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>

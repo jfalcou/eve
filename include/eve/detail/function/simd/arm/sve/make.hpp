@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/sve/sve_true.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/load.hpp>

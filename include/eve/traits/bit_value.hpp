@@ -17,21 +17,21 @@ namespace eve
     // SIMD/* drive case
     // Equality of sizeof of type/element_type is enough
     template<typename T0, typename T1>
-    static constexpr inline bool bit_compatibility = false;
+    inline constexpr bool bit_compatibility = false;
 
     template<simd_value T0, simd_value T1>
-    static constexpr inline bool
+    inline constexpr bool
     bit_compatibility<T0,T1>  = T0::size() * sizeof(element_type_t<T0>) == T1::size() * sizeof(element_type_t<T1>);
 
     template<simd_value T0, scalar_value T1>
-    static constexpr inline bool bit_compatibility<T0,T1> = sizeof(T1) == sizeof(element_type_t<T0>);
+    inline constexpr bool bit_compatibility<T0,T1> = sizeof(T1) == sizeof(element_type_t<T0>);
 
     // SIMD/* case
     // Finding the proper size of the proper wide able to represent all the values
     // in a bitwise call without losing bits requires a global analysis of all Type x Cardinal
     // combination. This is an helper function to handle this logic.
     template<typename T0, typename... Ts>
-    constexpr auto adequate_size()
+    consteval auto adequate_size()
     {
       struct result
       {

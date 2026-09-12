@@ -9,7 +9,7 @@
 
 #include <eve/deps/kumi.hpp>
 #include <eve/memory/stack_buffer.hpp>
-#include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/compress/compress.hpp>

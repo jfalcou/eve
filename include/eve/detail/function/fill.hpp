@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/forward.hpp>
 #include <eve/arch.hpp>
 

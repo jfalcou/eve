@@ -9,7 +9,7 @@
 
 #include <eve/concept/simd.hpp>
 #include <eve/traits/element_type.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/detail/wide_forward.hpp>
 

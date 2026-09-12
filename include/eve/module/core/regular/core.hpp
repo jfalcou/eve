@@ -206,7 +206,7 @@
 #include <eve/module/core/regular/rshl.hpp>
 #include <eve/module/core/regular/rshr.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
-#include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/module/core/regular/safe_scale.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/scan.hpp>
@@ -244,7 +244,7 @@
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unfold.hpp>
-#include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/module/core/regular/variance.hpp>
 #include <eve/module/core/regular/veltkamp.hpp>
 #include <eve/module/core/regular/welford_average.hpp>

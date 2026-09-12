@@ -13,7 +13,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::_

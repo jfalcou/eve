@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 
 namespace eve::_
 {

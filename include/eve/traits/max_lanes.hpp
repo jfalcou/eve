@@ -14,12 +14,8 @@ namespace eve
     template<typename... Ts>
     consteval auto compute_max_lanes()
     {
-      std::ptrdiff_t cards[] = { cardinal_v<Ts>... };
-
-      auto max_card = cards[0];
-      for(auto c : cards) max_card = max_card < c ? c : max_card;
-
-      return max_card;
+      std::ptrdiff_t max = 0;
+      return ((max = (max > cardinal_v<Ts> ? max : cardinal_v<Ts>)), ...);
     }
   }
 

@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/maxrepint.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/detail/modular.hpp>
+#include <eve/module/core/decorator/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
 namespace eve

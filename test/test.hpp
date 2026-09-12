@@ -12,7 +12,7 @@
 //==================================================================================================
 // EVE Specific testing overloads
 //==================================================================================================
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>

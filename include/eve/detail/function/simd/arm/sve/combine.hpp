@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/constant/iota.hpp>
 
