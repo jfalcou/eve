@@ -53,6 +53,42 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto direct_mask_callable(auto arch, O const& opts, T x0, Ts... xs) const
+    {
+      if constexpr (!O::contains(condition_key) || match_option<condition_key, O, ignore_none_>)
+      {
+        return adapt_call(arch, opts, x0, xs...);
+      }
+      else
+      {
+        // Grab the condition and drop it from the callable
+        auto [cond, rmv_cond] = opts.extract(condition_key);
+        using cond_t =  decltype(cond);
+        [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
+
+        // Check that the mask and the value are of same kind if simd
+        constexpr bool compatible_mask = _::validate_mask_for<cond_t, decltype(f(x0, xs...))>();
+        static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
+
+         // Shush any other cascading errors
+        if constexpr(!compatible_mask) return _::ignore{};
+        else
+        {
+          // Check if func_(arch, cond, opts, ...) exists
+          constexpr bool supports_mask  = requires(cond_t c){ func_t::deferred_call(arch, c, opts, x0, xs...); };
+
+          if constexpr (supports_mask)
+          {
+            // If the conditional call is supported, call it
+            // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
+            return func_t::deferred_call(arch, cond, rmv_cond, x0, xs...);
+          }
+          else return _::ignore{};
+        }
+      }
+    }
+
+    template<callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       if constexpr (!O::contains(condition_key) || match_option<condition_key, O, ignore_none_>)
