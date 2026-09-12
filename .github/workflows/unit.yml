@@ -582,7 +582,7 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang22, arch: x86    , opts: "-std=c++26"  }
+        - { comp: clang22, arch: x86    , opts: "-std=c++26 -Wno-c2y-extensions"  }
         - { comp: gcc16  , arch: x86    , opts: "-std=c++26"  }
         - { comp: gcc15  , arch: x86    , opts: "-std=c++26"  }
     steps:
