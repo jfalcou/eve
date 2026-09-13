@@ -11,10 +11,23 @@
 //! @addtogroup eve_simd
 //! @{
 //!   @defgroup eve_algorithms Algorithms and Views
-//!   @brief Algorithms and Views
+//!   @brief SIMD versions of the standard range-based algorithms.
 //!
-//!   This module provides implementation of SIMD versions of some std ranges algorithms.
-//!   Take care that some prerequisite and syntaxes are not fully standard conformant
+//!   An algorithm of this module processes its data with SIMD operations, through eve::wide, with
+//!   the loop, the alignment and the tail handled by the library. A call looks like its
+//!   `std::ranges` counterpart, and the callable receives SIMD values in place of scalars:
+//!
+//!   @code
+//!   std::vector<float> in(1024), out(1024);
+//!   eve::algo::transform_to(in, out, [](auto x) { return x * x; });
+//!   @endcode
+//!
+//!   Two things differ from the standard:
+//!
+//!   - an algorithm takes ranges, never an iterator pair, which `eve::algo::as_range` turns into
+//!     a range;
+//!   - the callable is called on eve::wide values of any cardinal, so it is written for a SIMD
+//!     value and never for a scalar alone.
 //!
 //!   **Required header:** @code{.cpp} #include <eve/module/algo.hpp> @endcode
 //! @}

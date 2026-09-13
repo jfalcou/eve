@@ -123,3 +123,117 @@ dl.success {
 dl.success dt{
     color: var(--note-color-dark);
 }
+
+/* A reference entry reads header, synopsis, parameters, then prose, whatever order
+   doxygen emits them in. Everything unnamed here keeps its document order, after those. */
+div.textblock {
+    display: flex;
+    flex-direction: column;
+}
+
+div.textblock > *                      { order:  2; }
+div.textblock > div.headerfile         { order: -2; }
+div.textblock > div.synopsis           { order: -1; }
+div.textblock > dl.tparams             { order:  0; }
+div.textblock > p:first-of-type        { order:  1; }
+
+/* Flex items keep both margins where block flow would collapse them: a paragraph followed by
+   a list opened a double gap. The bottom margin of the previous block is the whole gap. */
+div.textblock > :is(p, ul, ol, dl, div.fragment) + :is(p, ul, ol, dl, div.fragment) {
+    margin-top: 0;
+}
+
+/* A header path is one line, label included, closed by a rule rather than a heading. */
+div.headerfile {
+    border-bottom: 1px solid var(--separator-color);
+    margin: var(--spacing-small) 0 var(--spacing-large) 0;
+    padding-bottom: var(--spacing-medium);
+}
+
+div.headerfile b {
+    margin-right: var(--spacing-small);
+}
+
+/* A group page carrying a single entry needs neither its one-row index nor the heading
+   above that entry: the page title already names it. */
+div.contents:has(div.synopsis) > h2#header-var-members,
+div.contents:has(div.synopsis) > table.memberdecls,
+div.contents:has(div.synopsis) > h2#header-doc-var-members,
+div.contents:has(div.synopsis) > h2#header-details,
+div.contents:has(div.synopsis) > h2.memtitle,
+div.contents:has(div.synopsis) div.memitem > div.memproto {
+    display: none;
+}
+
+/* The page title already names the entry, so its frame carries no header of its own. */
+div.contents:has(div.synopsis) div.memitem {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.contents:has(div.synopsis) div.memdoc {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* The banner's jump link points at an index this page hides. */
+div.header:has(+ div.contents div.synopsis) div.summary {
+    display: none;
+}
+
+/* An entry's prose reads in the same order as a class page's, and lives in memdoc. */
+div.memdoc {
+    display: flex;
+    flex-direction: column;
+}
+
+div.memdoc > *                    { order:  2; }
+div.memdoc > div.headerfile       { order: -2; }
+div.memdoc > div.synopsis         { order: -1; }
+div.memdoc > dl.tparams           { order:  0; }
+div.memdoc > p:first-of-type      { order:  1; }
+
+/* A paragraph holding nothing but a bold run is a section label, the form eve::add uses
+   for **Parameters**. An entry written as a group has no dl to carry one. */
+div.textblock > p:has(> b:only-child) {
+    border-bottom: 1px solid var(--separator-color);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: var(--spacing-large) 0 var(--spacing-small) 0;
+    padding-bottom: var(--spacing-small);
+}
+
+div.textblock > p:has(> b:only-child) > b {
+    font-weight: inherit;
+}
+
+/* The list under such a label holds the same rows a dl.tparams would. */
+div.textblock > p:has(> b:only-child) + ul {
+    list-style: none;
+    margin: 0;
+    padding-left: var(--spacing-large);
+}
+
+div.textblock > p:has(> b:only-child) + ul > li > code:first-child {
+    background: none;
+    border: none;
+    font-weight: 600;
+}
+
+/* Parameter lists carry more than a header path, so their label reads as a section. */
+dl.tparams > dt, dl.params > dt, dl.retval > dt {
+    border-bottom: 1px solid var(--separator-color);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: var(--spacing-large) 0 var(--spacing-small) 0;
+    padding-bottom: var(--spacing-small);
+    width: 100%;
+}
+
+/* A class writes its own synopsis in a code block, so doxygen's caption is redundant. */
+div.textblock > .compoundTemplParams {
+    display: none;
+}
