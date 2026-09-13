@@ -137,6 +137,12 @@ div.textblock > div.synopsis           { order: -1; }
 div.textblock > dl.tparams             { order:  0; }
 div.textblock > p:first-of-type        { order:  1; }
 
+/* Flex items keep both margins where block flow would collapse them: a paragraph followed by
+   a list opened a double gap. The bottom margin of the previous block is the whole gap. */
+div.textblock > :is(p, ul, ol, dl, div.fragment) + :is(p, ul, ol, dl, div.fragment) {
+    margin-top: 0;
+}
+
 /* A header path is one line, label included, closed by a rule rather than a heading. */
 div.headerfile {
     border-bottom: 1px solid var(--separator-color);
@@ -175,11 +181,6 @@ div.contents:has(div.synopsis) div.memdoc {
 
 /* The banner's jump link points at an index this page hides. */
 div.header:has(+ div.contents div.synopsis) div.summary {
-    display: none;
-}
-
-/* The group description already carries the brief, which REPEAT_BRIEF puts on the member too. */
-div.contents:has(div.synopsis) div.memdoc > p:first-of-type {
     display: none;
 }
 

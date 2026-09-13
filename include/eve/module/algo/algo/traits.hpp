@@ -22,6 +22,44 @@ namespace eve::algo
 {
   //================================================================================================
   //! @addtogroup eve_algo_traits
+  //!
+  //! An option tunes the way an algorithm runs: the width of its loop step, the type it computes
+  //! in, what it may assume of its ranges. Every algorithm carries a default
+  //! set, tuned for the common case, and takes options between brackets, before its arguments,
+  //! one pair per option; those a call passes override the defaults, and those it leaves out keep
+  //! their default value:
+  //!
+  //! @code
+  //! find_if[unroll<8>][expensive_callable](data, [](auto x) { return x > 0.f; });
+  //! @endcode
+  //!
+  //! The options come in three kinds, listed below: the lanes and the types an algorithm computes
+  //! on, the shape of its loop, and the preconditions a call asserts on its ranges.
+  //!
+  //! @note eve::algo::traits, the set of options several calls share, the two sets the library
+  //! predefines, and the reading of options from within an algorithm are the developer's side,
+  //! @ref eve_algo_traits_dev.
+  //================================================================================================
+
+  //================================================================================================
+  //! @defgroup eve_algo_options_loop Loop
+  //! @ingroup eve_algo_traits
+  //! @brief Options that shape the loop: its step, its alignment, what it fuses, how it searches.
+  //!
+  //! @defgroup eve_algo_options_types Lanes and types
+  //! @ingroup eve_algo_traits
+  //! @brief Options that choose the lanes an algorithm computes on, and the types it computes in.
+  //!
+  //! @defgroup eve_algo_options_data Range preconditions
+  //! @ingroup eve_algo_traits
+  //! @brief Preconditions on the ranges, which an algorithm turns into a shorter loop.
+  //!
+  //! A precondition is trusted, never checked: a false one is undefined behaviour, and the page
+  //! of each says what it requires.
+  //================================================================================================
+
+  //================================================================================================
+  //! @addtogroup eve_algo_traits_dev
   //! @{
   //!   @struct traits
   //!   @brief Compile time set of tuning parameters an algorithm accepts.
@@ -54,8 +92,7 @@ namespace eve::algo
   //!   find_if[expensive_callable][consider_types<double>](r, p);
   //!   @endcode
   //!
-  //!   The same traits gathered in a set pass in a single pair of brackets, which is worth doing
-  //!   when several calls share them:
+  //!   A set gathers several traits in a single pair of brackets, which several calls can share:
   //!
   //!   @code
   //!   constexpr auto tr = traits{expensive_callable, consider_types<double>};
@@ -94,12 +131,11 @@ namespace eve::algo
   inline constexpr unroll_key_t unroll_key;
 
   //============================================================================
-  //! @defgroup algo_unroll unroll
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_unroll unroll
+  //! @ingroup eve_algo_options_loop
   //! @brief Defines the number of computations an algorithm handles per loop step.
   //! @{
   //!   @var unroll
-  //!   @brief Defines the number of computations an algorithm handles per loop step.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -112,23 +148,23 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   @tparam N Blocks handled per step, one or more.
+  //!   @tparam N Registers handled per step, one or more.
   //!
-  //!   Unrolling widens a loop step: the algorithm handles @b N blocks of lanes before testing its
-  //!   loop condition again, which spreads the loop overhead over more work and lets independent
-  //!   operations overlap. Simple algorithms already pick a default, so a larger @b N pays when the
-  //!   body is short and its iterations are independent, and costs when the body is expensive or an
-  //!   iteration reads what the previous one wrote.
+  //!   Sets the number of SIMD registers a loop step handles: @b N registers are processed before
+  //!   the loop condition is tested again, which spreads the loop overhead over more work and lets
+  //!   independent operations overlap. Simple algorithms are unrolled by default. A larger @b N is
+  //!   better when the body is short and its iterations are independent, and worse when the body
+  //!   is expensive or an iteration reads what the previous iteration wrote.
+  //!
+  //!   <code>unroll&lt;1&gt;</code> is no unrolling, a single register a step, and
+  //!   eve::algo::no_unrolling is its shorthand.
   //!
   //!   @code
   //!   std::vector<float> data(1024);
   //!
-  //!   // A single comparison per lane, so eight blocks a step keep the pipeline fed.
+  //!   // One comparison per lane: eight registers a step amortise the loop overhead.
   //!   auto found = find_if[unroll<8>](data, [](auto x) { return x > 0.f; });
   //!   @endcode
-  //!
-  //!   <code>unroll&lt;1&gt;</code> cancels unrolling, one block a step, and
-  //!   eve::algo::no_unrolling is the shorthand for it.
   //!
   //!   @see no_unrolling, expensive_callable
   //! @}
@@ -145,12 +181,11 @@ namespace eve::algo
   inline constexpr force_cardinal_key_t force_cardinal_key;
 
   //=============================================================================
-  //! @defgroup algo_force_cardinal force_cardinal
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_force_cardinal force_cardinal
+  //! @ingroup eve_algo_options_types
   //! @brief Overrides the cardinal an algorithm iterates with.
   //! @{
   //!   @var force_cardinal
-  //!   @brief Overrides the cardinal an algorithm iterates with.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -165,9 +200,10 @@ namespace eve::algo
   //!
   //!   @tparam N Lanes handled at once.
   //!
-  //!   Cardinal selection weighs the types a range carries and whether frequency scaling is
-  //!   allowed. This trait sets it outright, which is what interacting with hand-written register
-  //!   code asks for, the register width being fixed there.
+  //!   Sets the cardinal of the loop, the number of lanes handled at once, to @b N. By default the
+  //!   cardinal comes from the types the range carries and from whether frequency scaling is
+  //!   allowed. Interacting with hand-written register code requires the trait, the register width
+  //!   being fixed there.
   //!
   //!   @snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
   //!
@@ -180,12 +216,11 @@ namespace eve::algo
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
 
   //=============================================================================
-  //! @defgroup algo_consider_types consider_types
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_consider_types consider_types
+  //! @ingroup eve_algo_options_types
   //! @brief Adds types to the cardinal selection.
   //! @{
   //!   @var consider_types
-  //!   @brief Adds types to the cardinal selection.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -200,9 +235,20 @@ namespace eve::algo
   //!
   //!   @tparam Ts Extra types the selection weighs.
   //!
-  //!   An algorithm picks its cardinal from the types its range carries. A computation that
-  //!   widens on the way, as @b reduce does when it sums into a larger type, has to weigh that
-  //!   type too, and this trait names it.
+  //!   Adds @b Ts to the types the cardinal selection is based on. By default the cardinal of an
+  //!   algorithm is chosen from the types of its range; if the computation widens on the way, as a
+  //!   sum into a larger type does, the wider type is to be taken into account as well.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!
+  //!   // The body computes in double: with double weighed, the cardinal halves and a double
+  //!   // value holds in one register rather than two.
+  //!   transform_inplace[consider_types<double>](data, [](auto x) {
+  //!     auto d = eve::convert(x, eve::as<double>{});
+  //!     return eve::convert(eve::exp(d), eve::as<float>{});
+  //!   });
+  //!   @endcode
   //!
   //!   @see force_cardinal, eve::algo::views::convert
   //! @}
@@ -214,12 +260,11 @@ namespace eve::algo
 
 
   //=============================================================================
-  //! @defgroup algo_force_type force_type
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_force_type force_type
+  //! @ingroup eve_algo_options_types
   //! @brief Converts every part of a zip to one type.
   //! @{
   //!   @var force_type
-  //!   @brief Converts every part of a zip to one type.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -234,11 +279,22 @@ namespace eve::algo
   //!
   //!   @tparam T Type every part converts to.
   //!
-  //!   A zipped range carries one type per part, and an algorithm reading it sees them all. This
-  //!   trait converts each of them to @b T on load, which eve::algo::views::convert also does, one
-  //!   part at a time.
+  //!   Converts every part of a zip to @b T before the computation, and the conversion is
+  //!   narrowing if @b T is narrower, where eve::algo::common_type and
+  //!   eve::algo::common_with_types reach their type by reduction.
   //!
-  //!   @see common_type, common_with_types
+  //!   eve::algo::inclusive_scan_to applies it with the type of its initial value: a scan over
+  //!   narrow input is accumulated in the wider type of that value:
+  //!
+  //!   @code
+  //!   std::vector<std::int8_t> v {100, 100, 100, 100};
+  //!   std::vector<int>         w (v.size());
+  //!
+  //!   // int init, so the running sum is read and written as int rather than wrapping at 127.
+  //!   inclusive_scan_to(views::zip[force_type<int>](v, w), std::pair{eve::add, eve::zero}, 0);
+  //!   @endcode
+  //!
+  //!   @see eve::algo::views::zip, common_type, common_with_types
   //! @}
   //=============================================================================
   template <typename T> auto force_type = (force_type_key = std::type_identity<T>{});
@@ -247,12 +303,11 @@ namespace eve::algo
   inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
   //=============================================================================
-  //! @defgroup algo_common_with_types common_with_types
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_common_with_types common_with_types
+  //! @ingroup eve_algo_options_types
   //! @brief Converts every part of a zip to a common type, extra types included.
   //! @{
   //!   @var common_with_types
-  //!   @brief Converts every part of a zip to a common type, extra types included.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -265,24 +320,40 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   @tparam Ts Types weighed alongside the zip's own.
+  //!   @tparam Ts Types taken into account besides the zip's own.
   //!
-  //!   The common type of a zip's own parts and of @b Ts, computed by eve::common_type, becomes the
-  //!   type every part converts to. Naming no extra type is what eve::algo::common_type does.
+  //!   Converts every part of a zip to the common type of the parts and of @b Ts, as
+  //!   eve::common_type reduces them. The trait is for a computation that reads the parts in a
+  //!   type none of them is of.
   //!
-  //!   @see common_type, force_type
+  //!   @code
+  //!   std::vector<int>    x      {1,   3,   -5,   10,   1};
+  //!   std::vector<int>    y      {2,   1,    4,  -10,   3};
+  //!   std::vector<double> within {5.0, 6.0,  7.6, 10.1, 6.0};
+  //!
+  //!   // Both parts read as double, so the squared distance computes in double.
+  //!   auto x_y = views::zip[common_with_types<double>](x, y);
+  //!
+  //!   auto found = mismatch(x_y, within,
+  //!     [](auto p, auto r)
+  //!     {
+  //!       auto [vx, vy] = p;
+  //!       return vx * vx + vy * vy <= r * r;
+  //!     });
+  //!   @endcode
+  //!
+  //!   @see eve::algo::views::zip, common_type, force_type
   //! @}
   //=============================================================================
   template <typename ...Ts>
   inline constexpr auto common_with_types = (common_with_types_key = eve::common_type<Ts...>{});
 
   //=============================================================================
-  //! @defgroup algo_common_type common_type
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_common_type common_type
+  //! @ingroup eve_algo_options_types
   //! @brief Converts every part of a zip to their common type.
   //! @{
   //!   @var common_type
-  //!   @brief Converts every part of a zip to their common type.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -295,23 +366,34 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   Equivalent to eve::algo::common_with_types with no extra type. Algorithms comparing two
-  //!   ranges of different types rely on it, as @b equal and @b mismatch do.
+  //!   Converts every part of a zip to the type eve::common_type reduces the parts to. A zipped
+  //!   range carries a type per part, and after the conversion every lane is of a single type.
   //!
-  //!   @see common_with_types, force_type
+  //!   eve::algo::equal and eve::algo::mismatch apply the trait themselves, and a comparison
+  //!   between ranges of different types is run on a single type. A custom predicate receives the
+  //!   parts as they are; if they are to be converted, the trait is passed on the algorithm.
+  //!
+  //!   @code
+  //!   std::vector<int> const   v {1, 2, 3, 4};
+  //!   std::vector<std::int8_t> c {'a', 'b', 'c', 'd'};
+  //!
+  //!   // Both parts read as int, as zipping the converted range would give.
+  //!   auto zipped = views::zip[common_type](v, c);
+  //!   @endcode
+  //!
+  //!   @see eve::algo::views::zip, common_with_types, force_type
   //! @}
-  //!=============================================================================
+  //=============================================================================
   inline constexpr auto common_type = common_with_types<>;
 
   struct divisible_by_cardinal_tag {};
 
   //=============================================================================
-  //! @defgroup algo_divisible_by_cardinal divisible_by_cardinal
-  //! @ingroup eve_algo_traits
-  //! @brief States that a range holds a whole number of lane blocks.
+  //! @defgroup eve_algo_divisible_by_cardinal divisible_by_cardinal
+  //! @ingroup eve_algo_options_data
+  //! @brief States that a range holds a whole number of SIMD registers.
   //! @{
   //!   @var divisible_by_cardinal
-  //!   @brief States that a range holds a whole number of lane blocks.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -324,13 +406,21 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   A loop whose range divides evenly needs no tail, so the trait drops that handling. Alignment
-  //!   takes precedence: a loop that aligns its accesses reads a partial first block, and the tail
-  //!   handling comes back. The trait therefore bites on an unaligned pointer, or alongside
-  //!   eve::algo::no_aligning.
+  //!   States that the range holds a whole number of SIMD registers, so the loop needs no tail
+  //!   handling. Alignment takes precedence: a loop that aligns its accesses reads a partial first
+  //!   register, and the tail handling returns. The trait therefore takes effect on an unaligned
+  //!   pointer, or with eve::algo::no_aligning.
   //!
   //!   A range whose two ends are aligned pointers with an alignment at least the cardinal carries
   //!   this trait already, deduced.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!   auto positive = [](auto x) { return x > 0.f; };
+  //!
+  //!   // 1024 is a multiple of every cardinal: no tail, the accesses left unaligned.
+  //!   auto found = find_if[divisible_by_cardinal][no_aligning](data, positive);
+  //!   @endcode
   //!
   //!   @see no_aligning
   //! @}
@@ -340,12 +430,11 @@ namespace eve::algo
   struct no_aligning_tag {};
 
   //================================================================================================
-  //! @defgroup algo_no_aligning no_aligning
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_no_aligning no_aligning
+  //! @ingroup eve_algo_options_loop
   //! @brief Stops an algorithm from aligning its accesses.
   //! @{
   //!   @var no_aligning
-  //!   @brief Stops an algorithm from aligning its accesses.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -358,9 +447,17 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   A loop reaching an aligned boundary loads faster, and gets there by reading a partial first
-  //!   block. That trade pays on a long range and costs on a short one, which this trait settles
-  //!   the other way.
+  //!   Disables the alignment of memory accesses. By default a partial first register is read so
+  //!   that every following register is at an aligned address, and the loads are faster. With the
+  //!   trait the loop is started at the first element and the accesses are not aligned, which is
+  //!   cheaper on a short range, where the partial register is not repaid.
+  //!
+  //!   @code
+  //!   std::vector<float> data(24);
+  //!
+  //!   // A range this short does not repay the partial first register an aligned loop reads.
+  //!   auto found = find_if[no_aligning](data, [](auto x) { return x > 0.f; });
+  //!   @endcode
   //!
   //!   @see divisible_by_cardinal, expensive_callable
   //! @}
@@ -369,12 +466,11 @@ namespace eve::algo
 
 
   //================================================================================================
-  //! @defgroup algo_no_unrolling no_unrolling
-  //! @ingroup eve_algo_traits
-  //! @brief One lane block a loop step.
+  //! @defgroup eve_algo_no_unrolling no_unrolling
+  //! @ingroup eve_algo_options_loop
+  //! @brief Disables loop unrolling.
   //! @{
   //!   @var no_unrolling
-  //!   @brief One lane block a loop step.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -387,7 +483,15 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   Shorthand for eve::algo::unroll with one block, which the page of that trait explains.
+  //!   Disables loop unrolling: a loop step is a single SIMD register, as with
+  //!   <code>unroll&lt;1&gt;</code>. The effect of unrolling is described on eve::algo::unroll.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!
+  //!   // One register a step: the body is long enough on its own.
+  //!   transform_inplace[no_unrolling](data, [](auto x) { return eve::exp(x); });
+  //!   @endcode
   //!
   //!   @see unroll, expensive_callable
   //! @}
@@ -397,12 +501,11 @@ namespace eve::algo
   struct expensive_callable_tag {};
 
   //================================================================================================
-  //! @defgroup algo_expensive_callable expensive_callable
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_expensive_callable expensive_callable
+  //! @ingroup eve_algo_options_loop
   //! @brief States that the operation dominates the loop.
   //! @{
   //!   @var expensive_callable
-  //!   @brief States that the operation dominates the loop.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -415,10 +518,19 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   Algorithms assume a light predicate, so they unroll and align to spend their time in the
-  //!   loop body rather than around it. A heavy callable or a heavy iterator turns both into
-  //!   overhead, and this trait stands for eve::algo::no_aligning, eve::algo::no_unrolling and
-  //!   eve::algo::single_pass together.
+  //!   States that the callable or the iterator dominates the loop, and is equivalent to
+  //!   eve::algo::no_aligning, eve::algo::no_unrolling and eve::algo::single_pass together. By
+  //!   default the predicate is assumed to be light, and the loop is unrolled and aligned so that
+  //!   its time is spent in the body rather than around it; if the body is heavy, both are
+  //!   overhead.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!
+  //!   // A body of dozens of operations: neither alignment nor unrolling repays its cost.
+  //!   auto damped = [](auto x) { return eve::sin(x) * eve::exp(-x); };
+  //!   transform_inplace[expensive_callable](data, damped);
+  //!   @endcode
   //!
   //!   @see no_aligning, no_unrolling, single_pass
   //! @}
@@ -429,12 +541,11 @@ namespace eve::algo
   struct single_pass_tag {};
 
   //================================================================================================
-  //! @defgroup algo_single_pass single_pass
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_single_pass single_pass
+  //! @ingroup eve_algo_options_loop
   //! @brief Tracks the index as the loop runs rather than searching afterwards.
   //! @{
   //!   @var single_pass
-  //!   @brief Tracks the index as the loop runs rather than searching afterwards.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -447,9 +558,17 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   eve::algo::min_element and eve::algo::max_element take two passes by default, the value then
-  //!   its position, which measures faster on eve's benchmarks. A loop body heavy enough to make a
-  //!   second pass expensive wants the index tracked in one, which this trait asks for.
+  //!   Makes a search track the index of its candidate as the loop runs, rather than search for
+  //!   it afterwards. By default eve::algo::min_element and eve::algo::max_element are two passes,
+  //!   the value then its position, which is faster on eve's benchmarks; the trait is for a body
+  //!   that is expensive enough for a second pass to cost more than the tracking.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1024);
+  //!
+  //!   // The values come from a computation: a second pass over them costs as much as the first.
+  //!   auto best = min_element[single_pass](views::map(data, [](auto x) { return eve::exp(x); }));
+  //!   @endcode
   //!
   //!   @see expensive_callable
   //! @}
@@ -458,12 +577,11 @@ namespace eve::algo
 
   struct fuse_operations_tag {};
   //================================================================================================
-  //! @defgroup algo_fuse_operations fuse_operations
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_fuse_operations fuse_operations
+  //! @ingroup eve_algo_options_loop
   //! @brief Lets an algorithm run its operations as one.
   //! @{
   //!   @var fuse_operations
-  //!   @brief Lets an algorithm run its operations as one.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -476,10 +594,21 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   An algorithm taking several callables can sometimes call a single wider one instead, a
-  //!   multiply and an add becoming an eve::fma. This trait swaps the operations an algorithm
-  //!   expects for their fused equivalents, so eve::algo::transform_reduce takes one callable of
-  //!   more parameters.
+  //!   Fuses the transformation and the accumulation of eve::algo::transform_reduce into a
+  //!   single call: the callable is given the running sum as a second argument and returns the new
+  //!   sum, a multiply and an add being a single eve::fma for example. By default the two are
+  //!   separate operations, the transformation then the addition. The addition and its zero are
+  //!   still used, to initialise the partial sums and to reduce them at the end.
+  //!
+  //!   @code
+  //!   std::vector<float> a(1024), b(1024);
+  //!
+  //!   // The callable takes the running sum too: one eve::fma replaces the multiply and the add.
+  //!   auto dot = transform_reduce[fuse_operations](views::zip(a, b), [](auto p, auto sum) {
+  //!     auto [x, y] = p;
+  //!     return eve::fma(x, y, sum);
+  //!   }, 0.f);
+  //!   @endcode
   //!
   //!   @see expensive_callable
   //! @}
@@ -496,12 +625,11 @@ namespace eve::algo
   inline constexpr expect_smaller_range_key_t expect_smaller_range_key;
 
   //============================================================================
-  //! @defgroup algo_expect_smaller_range expect_smaller_range
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_expect_smaller_range expect_smaller_range
+  //! @ingroup eve_algo_options_data
   //! @brief Names the range an algorithm should expect to be the shorter one.
   //! @{
   //!   @var expect_smaller_range
-  //!   @brief Names the range an algorithm should expect to be the shorter one.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -516,9 +644,17 @@ namespace eve::algo
   //!
   //!   @tparam N Zero-based position of that range among the arguments.
   //!
-  //!   An algorithm reading two ranges, as eve::algo::set_intersection does, has a faster shape
-  //!   when it knows which one runs out first. Shorter is a rough guide rather than a rule, so the
-  //!   choice is worth benchmarking on the data at hand.
+  //!   Names the range, by its zero-based position among the arguments, that is expected to run
+  //!   out first. An algorithm that reads two ranges, as eve::algo::set_intersection does, is
+  //!   faster when it is told which of them is the shorter. Shorter is a rough guide rather than a
+  //!   rule, and the choice is to be benchmarked on the data at hand.
+  //!
+  //!   @code
+  //!   std::vector<int> a(1 << 16), b(64), out(64);
+  //!
+  //!   // b runs out first: the loop is shaped around it.
+  //!   auto r = set_intersection[expect_smaller_range<1>](a, b, out);
+  //!   @endcode
   //!
   //!   @see eve::algo::set_intersection
   //! @}
@@ -527,12 +663,11 @@ namespace eve::algo
 
   struct allow_frequency_scaling_tag {};
   //================================================================================================
-  //! @defgroup algo_allow_frequency_scaling allow_frequency_scaling
-  //! @ingroup eve_algo_traits
-  //! @brief Lets an algorithm use the widest registers, frequency scaling included.
+  //! @defgroup eve_algo_allow_frequency_scaling allow_frequency_scaling
+  //! @ingroup eve_algo_options_loop
+  //! @brief Lets an algorithm use the widest registers, despite frequency scaling.
   //! @{
   //!   @var allow_frequency_scaling
-  //!   @brief Lets an algorithm use the widest registers, frequency scaling included.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -545,9 +680,21 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   An Intel core running 64 byte registers lowers its clock, and the code that follows runs at
-  //!   that clock too. Algorithms therefore stay one width below by default, and this trait lifts
-  //!   that, which a long enough range repays.
+  //!   Allows the algorithm to use the widest registers of the target. By default the cardinal
+  //!   stays clear of 512 bit registers, because some Intel cores lower their clock while AVX-512
+  //!   instructions run and for a while after, which slows the scalar code that follows. With
+  //!   this trait the algorithm takes the full width, which is worth it on a long range only. The
+  //!   @ref freqscale tutorial measures the effect.
+  //!
+  //!   @code
+  //!   std::vector<float> data(1 << 20);
+  //!
+  //!   // A range this long amortises the clock drop, so the 512 bit registers win.
+  //!   auto found = find_if[allow_frequency_scaling](data, [](auto x) { return x < 0.f; });
+  //!   @endcode
+  //!
+  //!   @groupheader{External references}
+  //!    *  [Travis Downs: Gathering Intel on Intel AVX-512 Transitions](https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html)
   //!
   //!   @see force_cardinal
   //! @}
@@ -564,12 +711,11 @@ namespace eve::algo
   inline constexpr overflow_key_t overflow_key;
 
   //============================================================================
-  //! @defgroup algo_overflow overflow
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_overflow overflow
+  //! @ingroup eve_algo_options_data
   //! @brief Number of lanes a loop may write past its range.
   //! @{
   //!   @var overflow
-  //!   @brief Number of lanes a loop may write past its range.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -584,8 +730,9 @@ namespace eve::algo
   //!
   //!   @tparam N Lanes the loop may overrun.
   //!
-  //!   Read by eve::algo::for_each_iteration_fixed_overflow, which an algorithm of your own drives
-  //!   directly. Calling an algorithm needs none of it.
+  //!   Sets the number of lanes a loop may write past the end of its range.
+  //!   eve::algo::for_each_iteration_fixed_overflow reads it, which a custom algorithm drives
+  //!   directly; calling an algorithm needs none of it.
   //!
   //!   @see eve_algo_traits_dev
   //! @}
@@ -603,12 +750,11 @@ namespace eve::algo
   inline constexpr index_type_key_t index_type_key;
 
   //============================================================================
-  //! @defgroup algo_index_type index_type
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_index_type index_type
+  //! @ingroup eve_algo_options_types
   //! @brief Integral type an algorithm counts indices in.
   //! @{
   //!   @var index_type
-  //!   @brief Integral type an algorithm counts indices in.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -623,9 +769,17 @@ namespace eve::algo
   //!
   //!   @tparam T Unsigned integral type holding an index.
   //!
-  //!   An algorithm tracking positions counts in a type wide enough for the widest element it
-  //!   reads, and never narrower than @c std::uint16_t, so a range of chars does not wrap every 255
-  //!   elements. This trait sets that type outright.
+  //!   Sets the unsigned integral type indices are counted in. By default the type is the
+  //!   smallest one that covers the widest element the algorithm reads, and is never narrower than
+  //!   @c std::uint16_t, so that the index of a range of bytes is not reset every 255 elements.
+  //!
+  //!   @code
+  //!   std::vector<std::int8_t> samples(100'000);
+  //!
+  //!   // The index runs in 32 bits: the loop flushes it every four billion elements instead of
+  //!   // every 65535, in exchange for wider index registers.
+  //!   auto lowest = min_element[index_type<std::uint32_t>](samples);
+  //!   @endcode
   //!
   //!   @see eve_algo_traits_dev
   //! @}
@@ -642,12 +796,11 @@ namespace eve::algo
   inline constexpr density_key_t density_key;
 
   //============================================================================
-  //! @defgroup algo_sparse_output sparse_output
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_sparse_output sparse_output
+  //! @ingroup eve_algo_options_data
   //! @brief Optimises a filtering algorithm for few elements kept per step.
   //! @{
   //!   @var sparse_output
-  //!   @brief Optimises a filtering algorithm for few elements kept per step.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -660,9 +813,17 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   eve::algo::copy_if, eve::algo::remove_if and eve::algo::set_intersection write what they
-  //!   keep, and their shape depends on how much that is. This trait suits a step keeping a handful
-  //!   of lanes, where eve::algo::dense_output, the default, suits a step keeping most of them.
+  //!   Shapes a filtering algorithm for a step that keeps a handful of lanes. eve::algo::copy_if,
+  //!   eve::algo::remove_if and eve::algo::set_intersection write what they keep, and their loop
+  //!   has one shape per expected density; eve::algo::dense_output, the default, suits a step that
+  //!   keeps most of its lanes.
+  //!
+  //!   @code
+  //!   std::vector<int> in(1024), out(1024);
+  //!
+  //!   // One element in a hundred passes: a step keeps a handful of lanes.
+  //!   auto end = copy_if[sparse_output](in, out, [](auto x) { return x > 990; });
+  //!   @endcode
   //!
   //!   @see dense_output
   //! @}
@@ -670,12 +831,11 @@ namespace eve::algo
   inline constexpr auto sparse_output = (density_key = eve::sparse);
 
   //============================================================================
-  //! @defgroup algo_dense_output dense_output
-  //! @ingroup eve_algo_traits
+  //! @defgroup eve_algo_dense_output dense_output
+  //! @ingroup eve_algo_options_data
   //! @brief Optimises a filtering algorithm for most elements kept per step.
   //! @{
   //!   @var dense_output
-  //!   @brief Optimises a filtering algorithm for most elements kept per step.
   //!
   //!   @headerfile{eve/module/algo.hpp}
   //!
@@ -688,9 +848,18 @@ namespace eve::algo
   //!   @endcode
   //!   </div>
   //!
-  //!   eve::algo::copy_if, eve::algo::remove_if and eve::algo::set_intersection write what they
-  //!   keep, and their shape depends on how much that is. This is the default, measured better in most
-  //!   cases, where eve::algo::sparse_output suits a step keeping a handful of lanes.
+  //!   Shapes a filtering algorithm for a step that keeps most of its lanes, which is the
+  //!   default. eve::algo::copy_if, eve::algo::remove_if and eve::algo::set_intersection write
+  //!   what they keep, and their loop has one shape per expected density; this one measures
+  //!   better in most cases, and eve::algo::sparse_output suits a step that keeps a handful of
+  //!   lanes.
+  //!
+  //!   @code
+  //!   std::vector<int> in(1024), out(1024);
+  //!
+  //!   // Almost every element passes: the default shape, named to make the choice explicit.
+  //!   auto end = copy_if[dense_output](in, out, [](auto x) { return x != 0; });
+  //!   @endcode
   //!
   //!   @see sparse_output
   //! @}
@@ -709,7 +878,7 @@ namespace eve::algo
   //!
   //! **Convenience header:** @code{.cpp} #include <eve/module/algo.hpp> @endcode
   //!
-  //! Unrolled iterations run on the same loop step, so an algorithm of your own keeps them free
+  //! Unrolled iterations run on the same loop step, so a custom algorithm keeps them free
   //! of dependencies, `for_each_iteration` rather than `for_each` when that takes a hand-written
   //! loop.
   //!
@@ -720,7 +889,7 @@ namespace eve::algo
 
   //================================================================================================
   //! @ingroup eve_algo_traits_dev
-  //! @brief Number of lane blocks handled per loop step.
+  //! @brief Number of SIMD registers handled per loop step.
   //!
   //! @tparam Traits Trait set to read.
   //!
@@ -913,7 +1082,7 @@ namespace eve::algo
   //================================================================================================
   //! @ingroup eve_algo_traits_dev
   //! @var has_type_overrides_v
-  //! @brief Whether a zip trait set asks for a type conversion.
+  //! @brief Whether a zip trait set requests a type conversion.
   //!
   //! @tparam Traits Trait set to read.
   //!
@@ -960,26 +1129,67 @@ namespace eve::algo
     }
   }
 
-  //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //============================================================================
+  //! @defgroup eve_algo_default_simple_algo_traits default_simple_algo_traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Predefined set the algorithms with a short body start from.
   //! @{
   //!   @var default_simple_algo_traits
-  //!   @brief Predefined trait set algorithms light on instructions start from.
+  //!
+  //!   @headerfile{eve/module/algo.hpp}
+  //!
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr traits default_simple_algo_traits{unroll<4>};
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   The set the algorithms with a short body start from: four SIMD registers a step, every
+  //!   other option at its default. eve::algo::copy, eve::algo::fill, eve::algo::find_if,
+  //!   eve::algo::all_of and eve::algo::transform_reduce start from it, and a custom algorithm
+  //!   with the same profile does too:
   //!
   //!   @code
-  //!   algo::traits{algo::unroll<4>}
+  //!   inline constexpr auto my_algo = function_with_traits<my_algo_>[default_simple_algo_traits];
   //!   @endcode
+  //!
+  //!   @see no_traits, unroll
   //! @}
-  //================================================================================================
+  //============================================================================
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
 
-  //================================================================================================
-  //! @addtogroup eve_algo_traits
+  //============================================================================
+  //! @defgroup eve_algo_no_traits no_traits
+  //! @ingroup eve_algo_traits_dev
+  //! @brief Empty set, for an algorithm that starts from no default.
   //! @{
   //!   @var no_traits
-  //!   @brief Empty trait set.
+  //!
+  //!   @headerfile{eve/module/algo.hpp}
+  //!
+  //!   <div class="synopsis">
+  //!   @code{.cpp}
+  //!   namespace eve::algo
+  //!   {
+  //!     inline constexpr traits no_traits{};
+  //!   }
+  //!   @endcode
+  //!   </div>
+  //!
+  //!   The empty set: every option is at its default. The scans are started from it,
+  //!   eve::algo::inclusive_scan_inplace and eve::algo::inclusive_scan_to, and so is
+  //!   eve::algo::function_with_traits when no set is named:
+  //!
+  //!   @code
+  //!   inline constexpr auto my_scan = function_with_traits<my_scan_>[no_traits];
+  //!   @endcode
+  //!
+  //!   @see default_simple_algo_traits, traits
   //! @}
-  //================================================================================================
+  //============================================================================
   inline constexpr algo::traits no_traits{};
 
   // Function helper
