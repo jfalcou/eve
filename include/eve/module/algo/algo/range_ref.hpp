@@ -13,14 +13,14 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve_algorithms
+  //! @addtogroup eve_algo_concepts
   //! @{
   //!   @struct range_ref_wrapper
   //!   @brief a non_owning_range wrapper around owning range.
   //!          Should be created via `range_ref`
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/range_ref.hpp>`
-  //!
+  //! @}
   //================================================================================================
 
   template<relaxed_range Rng>
@@ -44,9 +44,6 @@ namespace eve::algo
       {
         return preprocess_range(traits, *self.rng);
       }
-  //================================================================================================
-  //!  @}
-  //================================================================================================
   };
 
   //================================================================================================

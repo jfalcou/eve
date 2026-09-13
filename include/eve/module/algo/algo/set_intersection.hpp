@@ -16,7 +16,10 @@ namespace eve::algo
 
 //================================================================================================
 //! @addtogroup eve_algos
-//! return type from set_intersection
+//! @{
+//!   @struct set_intersection_result
+//!   @brief Return type of eve::algo::set_intersection: where each input stopped, and the output.
+//! @}
 //================================================================================================
 template<typename I1, typename I2, typename O> struct set_intersection_result
 {

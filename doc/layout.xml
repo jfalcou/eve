@@ -67,7 +67,7 @@
           <tab type="user" url="@ref eve_core_named_shuffles" title="Named Shuffles"/>
           <tab type="user" url="@ref eve_core_reduction"      title="Reductions"/>
         </tab>
-        <tab type="usergroup" visible="yes" title="Algorithms &amp; Views">
+        <tab type="usergroup" visible="yes" title="Algorithms &amp; Views" url="@ref eve_algorithms">
           <tab type="user" url="@ref eve_algos"         title="Algorithms"/>
           <tab type="user" url="@ref eve_views"         title="Views"/>
           <tab type="user" url="@ref eve_algo_traits"   title="Options"/>
